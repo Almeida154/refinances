@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://i.ibb.co/553jhzz/Evoke-White-Lines.png" border="0">
+  <img width="600" src="https://i.ibb.co/553jhzz/Evoke-White-Lines.png" border="0">
 </div>
 
 <br>
@@ -21,7 +21,7 @@
   <br>
   <img alt="Web" src="https://img.shields.io/static/v1?label=web&message=React&color=5C45F9">
   <img alt="Mobile" src="https://img.shields.io/static/v1?label=mobile&message=React%20Native&color=5C45F9">
-  <img alt="Server" src="https://img.shields.io/static/v1?label=server&message=PHP&color=5C45F9">
+  <img alt="Server" src="https://img.shields.io/static/v1?label=server&message=NodeJS&color=5C45F9">
 </div>
 
 <h3 align="center">💰 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</h3>
@@ -89,11 +89,11 @@ As seguintes ferramentas foram usadas na construção do projeto:
 <h2>🚀 Como usar</h2>
 
 Antes de tudo, você precisa ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). Além disso, é bom ter um editor para trabalhar com o código, como [VSCode](https://code.visualstudio.com/). É preciso, também, do ts-node [TS-Node](https://www.npmjs.com/package/ts-node) e [Nodemon](https://www.npmjs.com/package/nodemon)
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). Além disso, é bom ter um editor para trabalhar com o código, como [VSCode](https://code.visualstudio.com/). É preciso, também, do ts-node [TS-Node](https://www.npmjs.com/package/ts-node) e [Nodemon](https://www.npmjs.com/package/nodemon).
 
 Como já visto acima, esse projeto é divido em duas partes:
 - 🎲 Server (Backend)
-- 📱 Mobile (Frontend)
+- 📱 Mobile
 
 Para começar:
 ```bash
@@ -103,7 +103,7 @@ $ git clone https://github.com/Almeida154/refinances.git
 
 Entre na pasta:
 ```bash
-$ cd frontend
+$ cd mobile
 ```
 
 Agora, precisamos instalar as dependências e estaremos prontos para rodar:
