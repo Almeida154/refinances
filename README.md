@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="600" src="https://i.ibb.co/553jhzz/Evoke-White-Lines.png" border="0">
+  <img width="400" src="https://i.ibb.co/553jhzz/Evoke-White-Lines.png" border="0">
 </div>
 
 <br>
