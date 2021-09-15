@@ -17,13 +17,18 @@ export const Title = styled.Text`
     font-weight: bold;    
 `
 
-export const ContainerForm = styled.View`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 95%;
-    padding: 5px;
+export const TextButton = styled.Text`
+    color: #fff;
+    font-weight: bold;    
 `
+
+export const Header = styled.View`
+    display: flex;
+    align-items: center;    
+    width: 100%;
+    background-color: #EE4266;
+`
+
 
 export const SectionButtons = styled.View`
     display: flex;
@@ -58,36 +63,4 @@ export const ButtonTransferencia = styled.TouchableHighlight`
     align-items: center;
     justify-content: center;    
     color: #EE4266;       
-`
-
-export const InputControl = styled.View`
-    display: flex;
-    width: 90%;
-    margin-top: 10px;
-`
-
-export const TextInput = styled.TextInput`
-    border-bottom-width: 2px;
-    width: 100%;
-    color: #858c87;
-    height: 40px;
-    border-color: #858c87;
-    opacity: 0.7;
-`
-
-export const Label = styled.Text`
-    font-size: 17px;
-    font-weight: bold;
-`
-
-export const TextButton = styled.Text`
-    color: #fff;
-    font-weight: bold
-`
-
-export const Header = styled.View`
-    display: flex;
-    align-items: center;    
-    width: 100%;
-    background-color: #EE4266;
 `

@@ -1,25 +1,19 @@
 import React, { useRef, useState } from 'react';
 import { ScrollView, StatusBar } from 'react-native';
 
-import PickerLugar from './components/PickerLugar'
-import PickerCategoria from './components/PickerCategoria'
+import FormDespesa from './components/FormDespesa'
 
 
 
 import {
     Container,
-    Title,    
-    ContainerForm,
-    SectionButtons,
+    Title,   
+    Header,
+    TextButton,
     ButtonDespesa,
     ButtonReceita,
-    InputControl,
-    TextInput,
-    Label,
-    TextButton,
-    Header,
-    ButtonTransferencia
-
+    ButtonTransferencia,
+    SectionButtons
 } from './styles'
 
 const FormLancamento = () => {
@@ -37,46 +31,8 @@ const FormLancamento = () => {
                     </SectionButtons>
                 </Header>
 
-                <ContainerForm>
-
-                    <InputControl>
-                        <Label>Descrição</Label>
-                        <TextInput
-                            placeholder="Mercadinho"></TextInput>
-                    </InputControl>
-
-                    <InputControl>
-                        <Label>Valor(R$) </Label>
-                        <TextInput
-                            placeholder="R$0,00"></TextInput>
-                    </InputControl>
-
-                    <InputControl>
-                        <Label>Para onde será lançado?</Label>
-
-                        <PickerLugar />
-                    </InputControl>
-
-                    <InputControl>
-                        <Label>Categoria</Label>
-
-                        <PickerCategoria />
-                    </InputControl>
-
-                    <InputControl>
-                        <Label>Parcelas</Label>
-                        <TextInput
-                            placeholder="1"></TextInput>
-                    </InputControl>
-
-                    <InputControl>
-                        <Label>Vencimento</Label>
-                        <TextInput
-                            placeholder="21/12/2021"></TextInput>
-                    </InputControl>
-
-
-                </ContainerForm>
+                <FormDespesa />
+                
             </Container>
         </ScrollView>
     );
