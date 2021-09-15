@@ -37,22 +37,42 @@ export type PropsNavigation = {
 const Cadastrar = ({navigation}: PropsNavigation) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [senhaConfirm, setSenhaConfirm] = useState('');
   const [erro, setErro] = useState('');
   const { user, handleRegister } = UseAuth();
 
   async function SetUser() {
+
+    if(verifsenha(senha, senhaConfirm)){
+
     user.emailUsuario = email;
     user.senhaUsuario = senha;
 
     const response = await handleRegister();
 
-    if(response == 'Nome não especificado') {
+    if(response == 'Nome não especificado') { 
       navigation.navigate("InserirNome");
       setErro('');
       return;
     }
 
     setErro(response);
+
+    }else{
+      setErro('Senhas não coincidem');
+      console.log(senha);
+      console.log(senhaConfirm)
+    }
+
+    
+  }
+
+  //Verificação das senhas
+  function verifsenha(senha, senhaConfirm){
+    if(senha === senhaConfirm) {
+      return true;
+    } 
+    else return false;
   }
  
   return (
@@ -88,6 +108,16 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
               onChangeText={(text) => setSenha(text)}></TextInput>
           </View>
 
+          <View style={styles.inputControl}>
+            <Text style={styles.label}>Confirme sua senha</Text>
+            <TextInput style={styles.textInput}
+              placeholder="Insira sua senha aqui"
+              placeholderTextColor="#0000001d"
+              secureTextEntry={true}
+              value={senhaConfirm}
+              onChangeText={(text) => setSenhaConfirm(text)}></TextInput>
+          </View>
+
           <Text style={{ color: 'red' }}>{erro}</Text>
           
           <Button onPress={SetUser}>
@@ -96,12 +126,12 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
 
           <Txt>Ou</Txt>
 
-          <ButtonGoogle onPress={() => console.log('Google button pressed')}>
+          {/*<ButtonGoogle onPress={() => console.log('Google button pressed')}>
             <ContainerContentButtonGoogle>
               <GoogleIcon height={35} width={35} />
               <ButtonTextGoogle>Cadastrar com o Google</ButtonTextGoogle>
             </ContainerContentButtonGoogle>
-          </ButtonGoogle>
+          </ButtonGoogle> */}
 
           <TxtBottom
             onPress={() => navigation.navigate('Entrar')}>
