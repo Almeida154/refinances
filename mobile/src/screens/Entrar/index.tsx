@@ -43,7 +43,7 @@ const Entrar = ({navigation}: PropsNavigation) => {
     const loginUser = user;
     loginUser.emailUsuario = email;
     loginUser.senhaUsuario = senha;
-
+    console.log(loginUser)
     updateUserProps(loginUser);
     const response = await handleLogin();
 
@@ -68,6 +68,8 @@ const Entrar = ({navigation}: PropsNavigation) => {
               placeholder="email@exemplo.com"
               placeholderTextColor="#0000001d"
               value={email}
+              autoCapitalize="none"
+              keyboardType="email-address"
               onChangeText={(text) => setEmail(text)}></TextInput>
           </View>
 
@@ -89,12 +91,12 @@ const Entrar = ({navigation}: PropsNavigation) => {
 
           <Txt>Ou</Txt>
 
-          <ButtonGoogle onPress={() => console.log('Google button pressed')}>
+          {/* <ButtonGoogle onPress={() => console.log('Google button pressed')}>
             <ContainerContentButtonGoogle>
               <GoogleIcon height={35} width={35} />
               <ButtonTextGoogle>Entrar com o Google</ButtonTextGoogle>
             </ContainerContentButtonGoogle>
-          </ButtonGoogle>
+          </ButtonGoogle> */}
 
           <TxtBottom
             onPress={() => navigation.navigate('Cadastrar')}>

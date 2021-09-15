@@ -21,7 +21,8 @@ interface AuthContextType {
 
     handleLogin(): Promise<string>
     handleRegister(): Promise<string>
-    updateUserProps(userProps: User): void    
+    updateUserProps(userProps: User): void 
+    handleLogout(): void
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -29,8 +30,7 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const UseAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = useState<User>({} as User);
-    const { setupCategorias } = UseCategorias();
+    const [user, setUser] = useState<User>({} as User);    
     
     async function handleLogin() {
         try {
@@ -40,13 +40,15 @@ export const AuthProvider: React.FC = ({ children }) => {
             });
             
             if( response.data.error) {
+                console.log('response.data=' + response.data.error)
                 return response.data.error;
             }
+
 
             const loginUser: User = response.data.user;
             loginUser.signed = true;
             setUser(loginUser)            
-            console.log(user)
+            await AsyncStorage.setItem('user', JSON.stringify(loginUser))
 
             return '';
 
@@ -79,12 +81,31 @@ export const AuthProvider: React.FC = ({ children }) => {
         }
     }    
 
+    function handleLogout() {
+        AsyncStorage.clear()
+
+        setUser({} as User)
+    }
+
     function updateUserProps(userProps: User) {
         setUser(userProps);
     }
 
+    useEffect(() => {
+        async function VerifyLogin() {
+            const storagedUser = await AsyncStorage.getItem('user')
+            console.log(storagedUser)
+
+            if(storagedUser) {
+                setUser(JSON.parse(storagedUser))
+            }
+        }
+
+        VerifyLogin()
+    }, [])
+
     return (
-        <AuthContext.Provider value={{ user, handleLogin, token: '', handleRegister, updateUserProps }}>
+        <AuthContext.Provider value={{ user, handleLogout, handleLogin, token: '', handleRegister, updateUserProps }}>
             {children}
         </AuthContext.Provider>
     );

@@ -71,6 +71,8 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
             <Text style={styles.label}>Email</Text>
             <TextInput style={styles.textInput}
               placeholder="email@exemplo.com"
+              keyboardType="email-address"
+              autoCapitalize="none"
               placeholderTextColor="#0000001d"
               value={email}
               onChangeText={(text) => setEmail(text)}></TextInput>

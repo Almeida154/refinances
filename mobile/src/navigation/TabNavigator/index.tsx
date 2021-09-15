@@ -10,7 +10,7 @@ import FormLancamentos from '../../screens/FormLancamento';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Fontisto';
 
-import { GestureResponderEvent, TouchableOpacity, View } from 'react-native';
+import { GestureResponderEvent, TouchableOpacity, View, Text } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,13 +43,13 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
 
 const TabNavigator = () => {
     return (
-        <Tab.Navigator
+        <Tab.Navigator                
             screenOptions={{
                 tabBarStyle: {
                     borderTopColor: '#66666666',
                     backgroundColor: 'transparent',
                     elevation: 0,
-                    zIndex: 999 
+                    zIndex: 999 ,                                        
                 }
                                  
                 // activeTintColor: 'white',
@@ -73,7 +73,8 @@ const TabNavigator = () => {
             
                 <Tab.Screen name="Post" component={FormLancamentos} options={{                
                     tabBarLabel: () => null,
-                    tabBarIcon: ({ color }) => <Icon name='plus' color={color} size={24} />,
+                    headerShown: false,
+                    tabBarIcon: ({ color }) => <Icon name='plus' color={color} size={24} />,                    
                     tabBarButton: (props) => {
                         return (< CustomTabBarButton children={props.children} onPress={props.onPress} />
                         )

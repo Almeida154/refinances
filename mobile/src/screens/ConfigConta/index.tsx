@@ -169,56 +169,58 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
   }, []);
 
   return (
-    <Container>
-      <Boundaries>
-        <Header>
-          <ArrowBackGrey
-            onPress={() => navigation.navigate('InserirNome')}
-            height={26}
-            style={{ marginLeft: -16, marginBottom: 20 }} />
-          <Title>Bom, {user.nomeUsuario}</Title>
-          <SubTitle>Precisamos configurar sua conta</SubTitle>
-        </Header>
+    <ScrollView>
+      <Container>
+        <Boundaries>
+          <Header>
+            <ArrowBackGrey
+              onPress={() => navigation.navigate('InserirNome')}
+              height={26}
+              style={{ marginLeft: -16, marginBottom: 20 }} />
+            <Title>Bom, {user.nomeUsuario}</Title>
+            <SubTitle>Precisamos configurar sua conta</SubTitle>
+          </Header>
 
-        <Content>
-          <Card>
-            <CardTitle>Adicionar ganhos</CardTitle>
-            <CardLine/>
-            <CardDescription>Registraremos o quanto você ganha</CardDescription>
-            <CardButtonContainer>
-              <CardButton
-                style={[configuracoesDeConta[0]
-                  ? { backgroundColor: 'green' }
-                  : { backgroundColor: '#EE4266' }]}
-                onPress={() => navigation.navigate('Ganhos')}>
-                <TextCardButton>{configuracoesDeConta[0] ? "Pronto" : "Começar"}</TextCardButton>
-              </CardButton>
-            </CardButtonContainer>
-          </Card>
-              
-          <Card>
-            <CardTitle>Adicionar gastos essenciais</CardTitle>
-            <CardLine/>
-            <CardDescription>Registraremos alguns dos seus gastos essenciais (aqueles indispensáveis)</CardDescription>
-            <CardButtonContainer>
-              <CardButton
-                style={[configuracoesDeConta[1]
-                  ? { backgroundColor: 'green' }
-                  : { backgroundColor: '#EE4266' }]}
-                onPress={() => navigation.navigate('ConfigCategorias')}>
-                <TextCardButton>{configuracoesDeConta[1] ? "Pronto" : "Começar"}</TextCardButton>
-              </CardButton>
-            </CardButtonContainer>
-          </Card>
-        </Content>
-        
-        <NextButton onPress={buttonRegistrar}>
-          <ContainerNextButtonContent>
-            <TextButton>Registrar</TextButton>
-          </ContainerNextButtonContent>
-        </NextButton>
-      </Boundaries>
-    </Container>
+          <Content>
+            <Card>
+              <CardTitle>Adicionar ganhos</CardTitle>
+              <CardLine/>
+              <CardDescription>Registraremos o quanto você ganha</CardDescription>
+              <CardButtonContainer>
+                <CardButton
+                  style={[configuracoesDeConta[0]
+                    ? { backgroundColor: 'green' }
+                    : { backgroundColor: '#EE4266' }]}
+                  onPress={() => navigation.navigate('Ganhos')}>
+                  <TextCardButton>{configuracoesDeConta[0] ? "Pronto" : "Começar"}</TextCardButton>
+                </CardButton>
+              </CardButtonContainer>
+            </Card>
+                
+            <Card>
+              <CardTitle>Adicionar gastos essenciais</CardTitle>
+              <CardLine/>
+              <CardDescription>Registraremos alguns dos seus gastos essenciais (aqueles indispensáveis)</CardDescription>
+              <CardButtonContainer>
+                <CardButton
+                  style={[configuracoesDeConta[1]
+                    ? { backgroundColor: 'green' }
+                    : { backgroundColor: '#EE4266' }]}
+                  onPress={() => navigation.navigate('ConfigCategorias')}>
+                  <TextCardButton>{configuracoesDeConta[1] ? "Pronto" : "Começar"}</TextCardButton>
+                </CardButton>
+              </CardButtonContainer>
+            </Card>
+          </Content>
+          
+          <NextButton onPress={buttonRegistrar}>
+            <ContainerNextButtonContent>
+              <TextButton>Registrar</TextButton>
+            </ContainerNextButtonContent>
+          </NextButton>
+        </Boundaries>
+      </Container>
+    </ScrollView>
 
   );
 }

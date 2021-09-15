@@ -8,12 +8,14 @@ import {
     ScrollView,
     StatusBar,
     FlatList,
+    TouchableHighlight
 } from 'react-native';
 
 import ContasList from './components/contas'
 import TetoDeGastos from './components/tetoDeGastos'
 
 import Icon from 'react-native-vector-icons/AntDesign'
+
 
 const { width } = Dimensions.get('screen');
 
@@ -23,8 +25,8 @@ const ITEM_HEIGHT = ITEM_WIDTH * 0.9;
 import {UseAuth} from '../../contexts/AuthContext'
 
 const Home = () => {
-    const { user } = UseAuth()    
-    
+    const { user, handleLogout } = UseAuth()    
+        
     return (
         <ScrollView >
 
@@ -32,7 +34,7 @@ const Home = () => {
                 <View style={styles.headerContainer}>
                     <View style={styles.containerProfile}>
                         <View style={styles.iconProfile}>
-
+    
                         </View>
 
                         <View style={styles.textBoasVindas}>
@@ -43,9 +45,9 @@ const Home = () => {
                     </View>
 
                     <View style={styles.containerSetting}>
-                        <Icon name='setting' color='#000000' size={40}>
+                        <Icon name='setting' color='#000000' size={40} style={{marginRight: 20}}/>
 
-                        </Icon>
+                        <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#000000" size={40} /></TouchableHighlight>
                     </View>
                 </View>
                 {/* Scrollable Content */}
@@ -101,10 +103,11 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     containerSetting: {
-        width: 50,
+        width: 80,
         height: 50,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'row'
     },
     containerBody: {
         flex: 1,
