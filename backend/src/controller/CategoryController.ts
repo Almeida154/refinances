@@ -88,6 +88,29 @@ class CategoryController {
         return response.send({ idCategory: idCategory.id });
     }   
 
+    async FindByUser(request: Request, response: Response, next: NextFunction) {
+        const categoryRepository = getRepository(Category);
+        const userRepository = getRepository(User);
+
+        const user = await userRepository.findOne({
+            where: {
+                id: request.params.iduser
+            }
+        })
+
+        if(!user) {
+            return response.send({error: "usuário não encontrado"})
+        }
+
+        const categories = (await categoryRepository.find({
+            where: { tipoCategoria: request.body.tipoCategoria, 
+                    userCategory: user 
+                   }
+        }));        
+
+        return response.send({ categories });
+    }   
+
     async remove(request: Request, response: Response, next: NextFunction) {
         const categoryRepository = getRepository(Category);
         let categoryToRemove = await categoryRepository.findOne(request.params.id);

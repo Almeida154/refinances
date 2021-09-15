@@ -80,6 +80,24 @@ class CategoryContaController {
         return response.send({ idCategoryConta: idCategory.id });
     }       
 
+    async FindByUser(request: Request, response: Response, next: NextFunction) {
+        const categoryContaRepository = getRepository(CategoryConta);
+        const userRepository = getRepository(User)
+
+        const user = await userRepository.findOne({where: {id: request.params.iduser}})
+
+        if(user == undefined) {
+            return response.send({error: "usuário não encontrado"})
+        }
+
+        const categoriesConta = await categoryContaRepository.find({where: {                
+                userCategoryConta: user
+            }
+        })      
+
+        return response.send({ categoriesConta });
+    }       
+
     async edit(request: Request, response: Response, next: NextFunction) {
         const categoryContaRepository = getRepository(CategoryConta);  
         const userRepository = getRepository(User);
