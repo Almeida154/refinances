@@ -4,9 +4,8 @@ import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../services/api';
-import { UseCategorias } from './CategoriesContext';
 
-type User = {
+export type User = {
     id: number,
     nomeUsuario: string,
     emailUsuario: string,
@@ -73,7 +72,8 @@ export const AuthProvider: React.FC = ({ children }) => {
             
             const newUser: User = response.data.message;
             updateUserProps(newUser);
-            await AsyncStorage.setItem('idUser', String(newUser.id));
+            
+            await AsyncStorage.setItem('user', JSON.stringify(newUser))
             return '';
 
         } catch (error) {

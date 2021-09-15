@@ -45,7 +45,7 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
     user.senhaUsuario = senha;
 
     const response = await handleRegister();
-
+    
     if(response == 'Nome não especificado') {
       navigation.navigate("InserirNome");
       setErro('');

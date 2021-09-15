@@ -54,6 +54,7 @@ const InserirNome = ({route, navigation}: PropsNavigation) => {
   function setUser() {
     if (nome == '') return;
     const userProps = user;
+    console.log(user)
     userProps.nomeUsuario = nome;
     updateUserProps(userProps);
     navigation.navigate('ConfigConta');
