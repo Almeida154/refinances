@@ -39,45 +39,29 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaConfirm, setSenhaConfirm] = useState('');
-  const [erro, setErro] = useState('');
+  const [erro, setErro] = useState('pode ir');
   const { user, handleRegister, updateUserProps } = UseAuth();
 
-  async function SetUser() {
+  async function SetUser() {    
 
-    if(verifsenha(senha, senhaConfirm)){
-
+    if(senha != senhaConfirm) 
+      return setErro('Senhas não coincidem')
+      
     user.emailUsuario = email;
     user.senhaUsuario = senha;
 
     const response = await handleRegister();
 
     console.log("response: ", response)
-    if(response == 'Nome não especificado') { 
-    
+        
     if(response == 'Nome não especificado') {
       navigation.navigate("InserirNome");
       setErro('');
       return;
     }
 
-    setErro(response);
-
-    }else{
-      setErro('Senhas não coincidem');
-      console.log(senha);
-      console.log(senhaConfirm)
-    }
-
-    
-  }
-}
-
-  //Verificação das senhas
-  function verifsenha(senha: string, senhaConfirm: string){
-    if(senha === senhaConfirm) {
-      return true;
-    } 
-    else return false;
+  
+    setErro(response);      
   }
 
   useEffect(() => {
