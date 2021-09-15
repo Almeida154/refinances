@@ -51,6 +51,8 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
     const response = await handleRegister();
 
     if(response == 'Nome não especificado') { 
+    
+    if(response == 'Nome não especificado') {
       navigation.navigate("InserirNome");
       setErro('');
       return;

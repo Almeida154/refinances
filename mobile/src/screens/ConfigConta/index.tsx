@@ -62,8 +62,8 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
     const response = await handleRegister();
     console.log(user);
 
-    const getItemId = await AsyncStorage.getItem('idUser');
-    const idUser = parseInt(getItemId == null ? '-1' : getItemId);
+    const getUser = await AsyncStorage.getItem('user')
+    const idUser = JSON.parse(getUser).id
     const renda = await AsyncStorage.getItem('rendaTemp');
 
     console.log('rendaTemp', rendaTemp);
