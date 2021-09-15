@@ -28,8 +28,7 @@ export const UseLancamentos = () => useContext(LancamentoContext);
 
 export const LancamentoProvider: React.FC = ({ children }) => {
     const [lancamentos, setLancamentos] = useState<Lancamento[]>([{}] as Lancamento[]);
-    const { handleAdicionarParcela } = UseParcelas();
-    const { user } = UseAuth();
+    const { handleAdicionarParcela } = UseParcelas();    
     
     async function handleAdicionarLancamento(lancamento: Lancamento, idUser: number) {
         
