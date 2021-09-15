@@ -51,12 +51,11 @@ const InserirNome = ({route, navigation}: PropsNavigation) => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
 
-  function setUser() {
+  async function setUser() {
     if (nome == '') return;
-    const userProps = user;
-    console.log(user)
-    userProps.nomeUsuario = nome;
-    updateUserProps(userProps);
+    
+    await AsyncStorage.setItem('nomeUser', nome)
+    
     navigation.navigate('ConfigConta');
   }
 
@@ -78,7 +77,7 @@ const InserirNome = ({route, navigation}: PropsNavigation) => {
               placeholder="Seu nome ou apelido"
               placeholderTextColor="gray"
               value={nome}
-              onChangeText={(text) => setNome(text)}
+              onChangeText={setNome}
             ></TextInput>
           </View>
         </Content>
@@ -87,7 +86,7 @@ const InserirNome = ({route, navigation}: PropsNavigation) => {
           <ContainerNextButtonContent>
             <TextButton>Continuar</TextButton>
             <ArrowNextGrey
-              onPress={() => navigation.navigate('ConfigConta')}
+              onPress={setUser}
               height={18}/>
           </ContainerNextButtonContent>
         </NextButton>

@@ -22,16 +22,14 @@ const ContaContext = createContext<ContaContextType>({} as ContaContextType);
 export const UseContas = () => useContext(ContaContext);
 
 export const ContasProvider: React.FC = ({ children }) => {
-    const [contas, setContas] = useState<Conta[]>({} as Conta[]);
+    const [contas, setContas] = useState<Conta[]>([{}] as Conta[]);
 
     async function handleAdicionarConta(conta: Conta) {
         console.log(conta.userConta);
         try {                    
             const responseCategoryConta = await api.post(`/categoryconta/findbyname/${conta.userConta}`, {
                 descricaoCategoriaConta: conta.categoryConta
-            });
-
-            console.log(responseCategoryConta.data);
+            });            
 
             const response = await api.post('/conta/create', {
                 saldoConta: conta.saldoConta,
@@ -42,6 +40,7 @@ export const ContasProvider: React.FC = ({ children }) => {
 
             if(response.data.error) console.log(response.data.error);
 
+            console.log('response.data', response.data)
             await AsyncStorage.setItem('idConta', String(response.data.message.id));
 
             const newContas = contas;

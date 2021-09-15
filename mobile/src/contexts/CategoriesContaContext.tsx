@@ -15,7 +15,7 @@ export type CategoriaConta = {
 interface CategoriaContaContextType {        
     categoriasConta: CategoriaConta[],
     handleAdicionarCategoriaConta(categoriaProps: CategoriaConta): Promise<void>
-    setupCategoriasConta(): Promise<void>
+    setupCategoriasConta(idUser: number): Promise<void>
 }
 
 const CategoriaContaContext = createContext<CategoriaContaContextType>({} as CategoriaContaContextType);
@@ -25,8 +25,7 @@ export const UseCategoriasConta = () => useContext(CategoriaContaContext);
 export const CategoriasContaProvider: React.FC = ({ children }) => {
     const [categoriasConta, setCategoriasConta] = useState<CategoriaConta[]>([{}] as CategoriaConta[]);
 
-    async function setupCategoriasConta(){
-        const idUser = await AsyncStorage.getItem('idUser');
+    async function setupCategoriasConta(idUser: number){        
         const nomesCategoriasContaPadroes = ["Carteira", "Poupança", "Investimentos"];
         const newCategoriasConta = categoriasConta;
 
@@ -34,7 +33,7 @@ export const CategoriasContaProvider: React.FC = ({ children }) => {
             const response = await api.post('/categoryconta/create', {
                 descricaoCategoryConta: item,
                 iconeCategoryConta: null,
-                userCategoryConta: parseInt(idUser == null ? '-1' : idUser)
+                userCategoryConta: idUser
             });
 
             newCategoriasConta.push(response.data.message);

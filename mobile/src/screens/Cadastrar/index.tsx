@@ -10,7 +10,7 @@ import {
 
 // Navigation | Auth
 import { StackNavigationProp } from '@react-navigation/stack';
-import { UseAuth } from '../../contexts/AuthContext';
+import { UseAuth, User } from '../../contexts/AuthContext';
 import RootStackParamAuth from '../../@types/RootStackParamAuth';
 
 // Styles
@@ -29,6 +29,7 @@ import ButtonGoogle from '../../components/ButtonGoogle';
 // Icons
 import GoogleIcon from '../../assets/images/svg/google-icon.svg';
 import BackArrowPink from '../../assets/images/svg/arrow-back-pink.svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, "Cadastrar">
@@ -39,7 +40,7 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
   const [senha, setSenha] = useState('');
   const [senhaConfirm, setSenhaConfirm] = useState('');
   const [erro, setErro] = useState('');
-  const { user, handleRegister } = UseAuth();
+  const { user, handleRegister, updateUserProps } = UseAuth();
 
   async function SetUser() {
 
@@ -50,6 +51,7 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
 
     const response = await handleRegister();
 
+    console.log("response: ", response)
     if(response == 'Nome não especificado') { 
     
     if(response == 'Nome não especificado') {
@@ -68,14 +70,24 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
 
     
   }
+}
 
   //Verificação das senhas
-  function verifsenha(senha, senhaConfirm){
+  function verifsenha(senha: string, senhaConfirm: string){
     if(senha === senhaConfirm) {
       return true;
     } 
     else return false;
   }
+
+  useEffect(() => {
+    async function resetUser() {
+      await AsyncStorage.clear()
+      updateUserProps({} as User)
+    }
+
+    resetUser()
+  }, [])
  
   return (
 <Container>
@@ -145,6 +157,7 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
     </Container>
   );
 }
+
 
 const styles = StyleSheet.create({
   label: {

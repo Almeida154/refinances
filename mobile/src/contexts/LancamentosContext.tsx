@@ -19,7 +19,7 @@ export type Lancamento = {
 interface LancamentoContextType {        
     lancamentos: Lancamento[],
 
-    handleAdicionarLancamento(lancamentoProps: Lancamento ): Promise<void>
+    handleAdicionarLancamento(lancamentoProps: Lancamento, idUser: number ): Promise<void>
 }
 
 const LancamentoContext = createContext<LancamentoContextType>({} as LancamentoContextType)
@@ -31,10 +31,10 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     const { handleAdicionarParcela } = UseParcelas();
     const { user } = UseAuth();
     
-    async function handleAdicionarLancamento(lancamento: Lancamento) {
-        const userId = await AsyncStorage.getItem('idUser');
+    async function handleAdicionarLancamento(lancamento: Lancamento, idUser: number) {
+        
         try {
-            const responseCategory = await api.post(`/category/findbyname/${userId}`, {
+            const responseCategory = await api.post(`/category/findbyname/${idUser}`, {
                 nomeCategoria: lancamento.categoryLancamento
             });
 

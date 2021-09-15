@@ -53,17 +53,21 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
   const { categoriasConta, setupCategoriasConta } = UseCategoriasConta();
   const { contas, handleAdicionarConta } = UseContas();
 
+  const [nomeUser, setNomeUser] = useState('')
+
   const useForceUpdate = () => {
     const set = useState(0)[1];
     return () => set((s) => s + 1);
   }
 
   async function buttonRegistrar() {
+    const getNome = await AsyncStorage.getItem('nomeUser')
+    user.nomeUsuario = getNome == null ? "usuario" : getNome
     const response = await handleRegister();
     console.log(user);
 
     const getUser = await AsyncStorage.getItem('user')
-    const idUser = JSON.parse(getUser).id
+    const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
     const renda = await AsyncStorage.getItem('rendaTemp');
 
     console.log('rendaTemp', rendaTemp);
@@ -73,7 +77,7 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
       // Adicionar Categoria Conta Carteira     
       console.log('Sessão da categoria Conta');
 
-      await setupCategoriasConta();
+      await setupCategoriasConta(idUser);
       console.log('categoriasConta + ', categoriasConta);
 
       // Adicionar as categorias padrões
@@ -136,7 +140,7 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
         }]
       }
       
-      await handleAdicionarLancamento(newLancamento);
+      await handleAdicionarLancamento(newLancamento, idUser);
       console.log(lancamentos);
       
       console.log(categoriasConta[0]);
@@ -157,6 +161,9 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
   useEffect(() => {
     (async function () {
       try {
+        const aux = await AsyncStorage.getItem('nomeUser')
+        setNomeUser(aux == null ? "Nome não encontrado" : aux)
+        
         if (configuracoesDeConta.length == 0) {
           setupConfiguracaoConta(2);
         }
@@ -177,7 +184,7 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
               onPress={() => navigation.navigate('InserirNome')}
               height={26}
               style={{ marginLeft: -16, marginBottom: 20 }} />
-            <Title>Bom, {user.nomeUsuario}</Title>
+            <Title>Bom, {nomeUser}</Title>
             <SubTitle>Precisamos configurar sua conta</SubTitle>
           </Header>
 
