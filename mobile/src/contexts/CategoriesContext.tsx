@@ -14,10 +14,12 @@ export type Categoria = {
 }
 
 interface CategoriaContextType {        
-    categorias: Categoria[] ,
+    categorias: Categoria[]
+    loading: boolean
 
     handleAdicionar(categoriaProps: Categoria): Promise<void>
     setupCategorias(): Promise<void>
+    handleReadByUserCategorias(idUser: number, tipoCategoria: string): Promise<void>
 }
 
 const CategoriaContext = createContext<CategoriaContextType>({} as CategoriaContextType);
@@ -25,12 +27,12 @@ const CategoriaContext = createContext<CategoriaContextType>({} as CategoriaCont
 export const UseCategorias = () => useContext(CategoriaContext);
 
 export const CategoriasProvider: React.FC = ({ children }) => {
-    const [categorias, setCategorias] = useState<Categoria[]>([{}] as Categoria[]);
+    const [categorias, setCategorias] = useState<Categoria[]>([{}] as Categoria[]);    
+    const [loading, setLoading] = useState(false)
+
     const { user } = UseAuth();
 
-    async function setupCategorias(){
-        console.log("Foi aqui");
-
+    async function setupCategorias(){        
         const nomesCategoriasPadroes = [
             "Educação", "Casa",
             "Restaurantes", "Família",
@@ -80,10 +82,24 @@ export const CategoriasProvider: React.FC = ({ children }) => {
             console.log("Deu um erro no handleAdicionar: " + error);
         }
     }
+
+    async function handleReadByUserCategorias(idUser: number, tipoCategoria: string) {
+        setLoading(true)
+        try {
+            const response = await api.post(`/category/findbyname/${idUser}`, {
+                tipoCategoria
+            })
+
+            console.log(response.data)
+            setLoading(false)
+        } catch (error) {
+            
+        }
+    }
     
 
     return (
-        <CategoriaContext.Provider value={{ categorias, handleAdicionar, setupCategorias }}>
+        <CategoriaContext.Provider value={{ categorias, loading, handleReadByUserCategorias, handleAdicionar, setupCategorias }}>
             {children}
         </CategoriaContext.Provider>
     );
