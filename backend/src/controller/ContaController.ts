@@ -86,6 +86,27 @@ class ContaController {
         return response.send({ contas });
     }   
 
+    async FindByUser(request: Request, response: Response, next: NextFunction) {
+        const contaRepository = getRepository(Conta);
+        const userRepository = getRepository(User);
+
+        const user = await userRepository.findOne({
+            where: {
+                id: request.params.iduser
+            }
+        })
+
+        if(!user) {
+            return response.send({error: "usuário não encontrado"})
+        }
+
+        const contas = (await contaRepository.find({
+            where: { userConta: user }
+        }));        
+
+        return response.send({ contas });
+    }   
+
     async edit(request: Request, response: Response, next: NextFunction) {
         const contaRepository = getRepository(Conta);  
         const userRepository = getRepository(User);

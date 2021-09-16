@@ -49,6 +49,7 @@ Routes.delete('/categoryconta/remove', categoryContaController.removeAll);
 Routes.post('/conta/create', contaController.save);
 Routes.get('/conta/read', contaController.showRelations);
 Routes.get('/conta/read/:id', contaController.one);
+Routes.post('/conta/findbyuser/:iduser', contaController.FindByUser);
 Routes.put('/conta/edit/:id', contaController.edit);
 Routes.delete('/conta/remove/:id', contaController.remove);
 Routes.delete('/conta/remove', contaController.removeAll);
