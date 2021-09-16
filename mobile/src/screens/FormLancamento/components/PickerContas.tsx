@@ -1,15 +1,20 @@
-import react, { useState, useRef, SetStateAction } from 'react'
+import React, { useState, useRef, SetStateAction, useEffect } from 'react'
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Picker } from '@react-native-picker/picker'
 
 import { StyleSheet, View } from 'react-native'
 
+import {UseContas} from '../../../contexts/ContasContext'
+
 type PropsPickerContas = {
     conta: number,
-    setConta: react.Dispatch<react.SetStateAction<number>>
+    setConta: React.Dispatch<React.SetStateAction<number>>
 }
-const PickerContas = ({conta, setConta}: PropsPickerContas) => {
+const PickerContas = () => {
     const [selectedItem, setSelectedItem] = useState(0)
+    const {contas, handleReadByUserContas, loading} = UseContas()
 
     const pickerRef = useRef();
 /*
@@ -21,7 +26,26 @@ const PickerContas = ({conta, setConta}: PropsPickerContas) => {
         pickerRef.current.blur();
     }
 */
-    
+    const onChangePicker = (selItem: SetStateAction<number>) => {
+        setSelectedItem(selItem)
+    }
+
+    useEffect(() => {
+        try {
+            async function loadContas() {
+                const getItem = await AsyncStorage.getItem('user')
+                const id = getItem == null ? 0 : JSON.parse(getItem).id
+                console.log(id)
+                handleReadByUserContas(id)
+            }
+            
+            loadContas()
+            console.log(contas)
+            
+        } catch (error) {
+            console.log('Erro ao carregar as contas: ', error)
+        }
+    }, [])
 
     return (
         <View style={styles.containerPicker}>
@@ -29,12 +53,18 @@ const PickerContas = ({conta, setConta}: PropsPickerContas) => {
                 itemStyle={styles.pickerItem}
                 style={styles.picker}
                 // ref={pickerRef}
-                selectedValue={conta}
-                onValueChange={setConta}
+                selectedValue={selectedItem}
+                onValueChange={onChangePicker}
             >
-                <Picker.Item style={{ backgroundColor: 'orange' }} label="Alimentação" value={0} />
-                <Picker.Item style={{ backgroundColor: 'orange' }} label="Planejado" value={1} />
-                <Picker.Item style={{ backgroundColor: 'orange' }} label="Para a Lista de Otimização" value={2} />
+                 {
+                    loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={0} />
+                    :
+                    contas.map((item, index) => {
+                        return (
+                            <Picker.Item style={{ backgroundColor: 'orange' }} label={item.descricao} value={item.id} />
+                        )
+                    })
+                }
 
             </Picker>
         </View>

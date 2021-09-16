@@ -18,7 +18,6 @@ import {Parcela} from '../../../../contexts/ParcelaContext'
 
 import PickerLugar from '../PickerLugar'
 import PickerCategoria from '../PickerCategoria'
-import PickerContas from '../PickerContas';
 
 type CardParcelaProps = {
     data: number,
@@ -26,8 +25,9 @@ type CardParcelaProps = {
     conta: string
 }
 
-import {PropsNavigation} from '../../'
+import {PropsNavigation} from '../..'
 import { Text } from 'react-native-paper';
+import PickerContas from '../PickerContas';
 
 const CardParcela = ({data, valor, conta}: CardParcelaProps) => {
     return (
@@ -35,7 +35,7 @@ const CardParcela = ({data, valor, conta}: CardParcelaProps) => {
     )
 }
 
-const FormDespesa= ({route, navigation}: PropsNavigation) => {
+const FormReceita= ({route, navigation}: PropsNavigation) => {
     const [detalhes, setDetalhes] = useState(false)
     console.log(navigation.navigate)
     const [dataParcelas, setDataParcelas] = useState([{}] as Parcela[])
@@ -76,7 +76,7 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
         <InputControl>
             <Label>Categoria</Label>
 
-           <PickerCategoria tipoCategoria="despesa"/>
+           <PickerCategoria tipoCategoria="receita"/>
         </InputControl>
 
         <InputControl>
@@ -86,7 +86,7 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
         </InputControl>
 
         <InputControl>
-            <Label>Data de Pagamento</Label>
+            <Label>Data de Recebimento</Label>
             <TextInput
                 value={dataPagamento}
                 onChangeText={setDataPagamento}
@@ -123,4 +123,4 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
     )
 }
 
-export default FormDespesa
+export default FormReceita
