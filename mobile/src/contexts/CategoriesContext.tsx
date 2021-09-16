@@ -75,7 +75,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
 
             const newCategorias: Categoria[] = categorias
             newCategorias.push(response.data.message);
-
+            
             setCategorias(newCategorias);
 
         } catch (error) {
@@ -84,14 +84,20 @@ export const CategoriasProvider: React.FC = ({ children }) => {
     }
 
     async function handleReadByUserCategorias(idUser: number, tipoCategoria: string) {
+        console.log('foia qui')
         setLoading(true)
         try {
-            const response = await api.post(`/category/findbyname/${idUser}`, {
+            const response = await api.post(`/category/findbyuser/${idUser}`, {
                 tipoCategoria
             })
 
-            console.log(response.data)
+        
+            
             setLoading(false)
+
+            setCategorias(response.data.categories)
+            
+
         } catch (error) {
             
         }

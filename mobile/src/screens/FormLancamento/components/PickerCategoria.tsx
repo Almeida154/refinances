@@ -1,11 +1,15 @@
-import React, { useState, useRef, SetStateAction } from 'react'
+import React, { useState, useRef, SetStateAction, useEffect } from 'react'
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Picker } from '@react-native-picker/picker'
+import {UseCategorias} from '../../../contexts/CategoriesContext'
 
 import { StyleSheet, View } from 'react-native'
 
-const PickerCategoria = () => {
+const PickerCategoria = ({tipoCategoria}: {tipoCategoria: string}) => {
     const [selectedItem, setSelectedItem] = useState(0)
+    const {categorias, handleReadByUserCategorias, loading} = UseCategorias()
 
     const pickerRef = useRef();
 /*
@@ -21,6 +25,23 @@ const PickerCategoria = () => {
         setSelectedItem(selItem)
     }
 
+    useEffect(() => {
+        try {
+            async function loadCategorias() {
+                const getItem = await AsyncStorage.getItem('user')
+                const id = getItem == null ? 0 : JSON.parse(getItem).id
+                console.log(id)
+                handleReadByUserCategorias(id, tipoCategoria)
+            }
+            
+            loadCategorias()
+            console.log(categorias)
+            
+        } catch (error) {
+            console.log('Erro ao carregar as categorias: ', error)
+        }
+    }, [])
+
     return (
         <View style={styles.containerPicker}>
             <Picker
@@ -30,9 +51,15 @@ const PickerCategoria = () => {
                 selectedValue={selectedItem}
                 onValueChange={onChangePicker}
             >
-                <Picker.Item style={{ backgroundColor: 'orange' }} label="Alimentação" value={0} />
-                <Picker.Item style={{ backgroundColor: 'orange' }} label="Planejado" value={1} />
-                <Picker.Item style={{ backgroundColor: 'orange' }} label="Para a Lista de Otimização" value={2} />
+                {
+                    loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={0} />
+                    :
+                    categorias.map((item, index) => {
+                        return (
+                            <Picker.Item style={{ backgroundColor: 'orange' }} label={item.nomeCategoria} value={item.nomeCategoria} />
+                        )
+                    })
+                }
 
             </Picker>
         </View>
