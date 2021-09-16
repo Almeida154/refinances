@@ -22,24 +22,24 @@ import {
 
 // Components
 import Button from '../../components/Button';
-import ButtonGoogle from '../../components/ButtonGoogle';
 
 // Icons
 import BackArrowPink from '../../assets/images/svg/arrow-back-pink.svg';
-import GoogleIcon from '../../assets/images/svg/google-icon.svg';
 
 export type PropsNavigation = {
-  navigation: StackNavigationProp<RootStackParamAuth, "Entrar">
+  navigation: StackNavigationProp<RootStackParamAuth, "RecuperarConta">
 };
 
-const Entrar = ({navigation}: PropsNavigation) => {
+const RecuperarConta = ({navigation}: PropsNavigation) => {
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
-
   const { user, updateUserProps, handleLogin } = UseAuth();
 
-  async function LoginUser() {
+  async function recuperar(){
+    
+  }
+
+  /*async function LoginUser() {
     const loginUser = user;
     loginUser.emailUsuario = email;
     loginUser.senhaUsuario = senha;
@@ -48,7 +48,7 @@ const Entrar = ({navigation}: PropsNavigation) => {
     const response = await handleLogin();
 
     if (response != '') setErro(response);
-  }
+  }*/
   
   return (
     <Container>
@@ -58,12 +58,12 @@ const Entrar = ({navigation}: PropsNavigation) => {
           onPress={() => console.log('back')}
           height={26}
           style={{ marginLeft: -16, marginBottom: 20 }} />
-        <Title>Seja bem-vindo(a)</Title>
+        <Title>Vamos recuperar sua conta!</Title>
       </Header>
       <Boundaries>
         <Content>
           <View style={styles.inputControl}>
-            <Text style={styles.label}>Email</Text>
+            <Text style={styles.label}>Digite seu e-mail cadastrado</Text>
             <TextInput style={styles.textInput}
               placeholder="email@exemplo.com"
               placeholderTextColor="#0000001d"
@@ -73,35 +73,13 @@ const Entrar = ({navigation}: PropsNavigation) => {
               onChangeText={(text) => setEmail(text)}></TextInput>
           </View>
 
-          <View style={styles.inputControl}>
-            <Text style={styles.label}>Senha</Text>
-            <TextInput style={styles.textInput}
-              placeholder="Insira sua senha aqui"
-              placeholderTextColor="#0000001d"
-              secureTextEntry={true}
-              value={senha}
-              onChangeText={(text) => setSenha(text)}></TextInput>
-          </View>
-
           <Text style={{ color: 'red' }}>{erro}</Text>
           
-          <Button onPress={LoginUser}>
-            <ButtonText>Entrar</ButtonText>
+          <Button onPress={recuperar}>
+            <ButtonText>Enviar</ButtonText>
           </Button>
 
           <Txt>Ou</Txt>
-
-          {/* <ButtonGoogle onPress={() => console.log('Google button pressed')}>
-            <ContainerContentButtonGoogle>
-              <GoogleIcon height={35} width={35} />
-              <ButtonTextGoogle>Entrar com o Google</ButtonTextGoogle>
-            </ContainerContentButtonGoogle>
-          </ButtonGoogle> */}
-
-          <TxtBottom
-            onPress={() => navigation.navigate('RecuperarConta')}>
-            Esqueci minha senha
-          </TxtBottom>
           
           <TxtBottom
             onPress={() => navigation.navigate('Cadastrar')}>
@@ -136,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Entrar
+export default RecuperarConta;

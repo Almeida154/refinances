@@ -5,6 +5,7 @@ import InserirNome from '../screens/InserirNome';
 import ConfigConta from '../screens/ConfigConta';
 import Ganhos from '../screens/Ganhos';
 import ConfigCategorias from '../screens/ConfigCategorias';
+import RecuperarConta from '../screens/RecuperarConta';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -19,6 +20,7 @@ const AuthRoutes: React.FC = () => {
             <AuthStack.Screen name="ConfigConta" component={ConfigConta} />
             <AuthStack.Screen name="ConfigCategorias" component={ConfigCategorias} />
             <AuthStack.Screen name="Ganhos" component={Ganhos} />
+            <AuthStack.Screen name="RecuperarConta" component={RecuperarConta} />
         </AuthStack.Navigator>
     );
 }

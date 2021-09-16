@@ -6,7 +6,8 @@ type PropsNavigationAuth = {
     InserirNome: undefined;
     ConfigConta: undefined;
     Ganhos: undefined;
-    ConfigCategorias: undefined;    
+    ConfigCategorias: undefined;   
+    RecuperarConta: undefined; 
 }
 
 export default PropsNavigationAuth;

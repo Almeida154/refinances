@@ -62,11 +62,11 @@ class UserController {
 
         const { nomeUsuario, emailUsuario, senhaUsuario } = request.body;
         if (!VerificaSeOEmailExiste(emailUsuario)) return response.send({ error: "Formato de email inválido" });
-        if (emailUsuario == '' || emailUsuario == undefined) return response.send({ error: "Email não especificado" });
-        if (senhaUsuario == '' || senhaUsuario == undefined) return response.send({ error: "Senha Não especificado" });
+        if (emailUsuario == '' || emailUsuario == undefined) return response.send({ error: "Digite seu email!" });
+        if (senhaUsuario == '' || senhaUsuario == undefined) return response.send({ error: "Digite sua senha!" });
         
         const userexists = await userRepository.find({ where: { emailUsuario } });
-        if (userexists.length > 0) return response.send({ error: "email já cadastrado" });
+        if (userexists.length > 0) return response.send({ error: "Email já cadastrado" });
         if (nomeUsuario == '' || nomeUsuario == undefined) return response.send({ error: "Nome não especificado" });
         
         const user = userRepository.create(request.body);
@@ -80,7 +80,7 @@ class UserController {
         const id = parseInt(request.params.id);
 
         const {nomeUsuario, emailUsuario, senhaUsuario, fotoPerfilUsuario} = request.body
-        if (nomeUsuario == '') return response.send({ error: "nome em branco!" });
+        if (nomeUsuario == '') return response.send({ error: "Nome em branco!" });
         if (emailUsuario == '') return response.send({ error: "Email em branco!" });
         if (senhaUsuario == '') return response.send({ error: "Senha em branco!" });
 
@@ -91,7 +91,7 @@ class UserController {
         console.log(id);
 
         if (userexists.length > 1 || (userexists.length == 1 && userexists[0].id != (id)))
-            return response.send({ error: "email já cadastrado" });
+            return response.send({ error: "Email já cadastrado" });
 
         await userRepository.update(id, request.body);
         const updatedUser = await userRepository.findOne({ where: { id } });
