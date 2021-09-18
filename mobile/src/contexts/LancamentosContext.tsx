@@ -18,7 +18,7 @@ export type Lancamento = {
 
 interface LancamentoContextType {        
     lancamentos: Lancamento[],
-
+    handleLoadLancamentos(idUser: number): Promise<void>
     handleAdicionarLancamento(lancamentoProps: Lancamento, idUser: number ): Promise<void>
 }
 
@@ -30,6 +30,10 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     const [lancamentos, setLancamentos] = useState<Lancamento[]>([{}] as Lancamento[]);
     const { handleAdicionarParcela } = UseParcelas();    
     
+    async function handleLoadLancamentos(idUser: number) {
+
+    }
+
     async function handleAdicionarLancamento(lancamento: Lancamento, idUser: number) {
         
         try {
@@ -44,8 +48,11 @@ export const LancamentoProvider: React.FC = ({ children }) => {
                 categoryLancamento: responseCategory.data.idCategory
             });
 
-            if (lancamento.parcelas[0].lancamentoParcela == -1)
-                lancamento.parcelas[0].lancamentoParcela = response.data.message.id
+            if(response.data.error) throw response.data.error
+
+            lancamento.parcelas.map((item, index) => {
+                lancamento.parcelas[index] = lancamento.parcelas[index].lancamentoParcela == -1 ? response.data.message.id : lancamento.parcelas[index].lancamentoParcela
+            })            
             
             handleAdicionarParcela(lancamento.parcelas);
             const newLancamentos: Lancamento[] = lancamentos
@@ -58,7 +65,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     }
     
     return (
-        <LancamentoContext.Provider value={{ lancamentos, handleAdicionarLancamento }}>
+        <LancamentoContext.Provider value={{ handleLoadLancamentos, lancamentos, handleAdicionarLancamento }}>
             {children}
         </LancamentoContext.Provider>
     );

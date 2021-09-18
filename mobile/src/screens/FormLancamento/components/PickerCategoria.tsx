@@ -7,8 +7,13 @@ import {UseCategorias} from '../../../contexts/CategoriesContext'
 
 import { StyleSheet, View } from 'react-native'
 
-const PickerCategoria = ({tipoCategoria}: {tipoCategoria: string}) => {
-    const [selectedItem, setSelectedItem] = useState(0)
+type PropsPickerCategorias = {
+    tipoCategoria: string,
+    categoria: string,
+    setCategoria: React.Dispatch<React.SetStateAction<string>>
+}
+
+const PickerCategoria = ({categoria, setCategoria, tipoCategoria}: PropsPickerCategorias) => {    
     const {categorias, handleReadByUserCategorias, loading} = UseCategorias()
 
     const pickerRef = useRef();
@@ -21,8 +26,8 @@ const PickerCategoria = ({tipoCategoria}: {tipoCategoria: string}) => {
         pickerRef.current.blur();
     }
 */
-    const onChangePicker = (selItem: SetStateAction<number>) => {
-        setSelectedItem(selItem)
+    const onChangePicker = (selItem: SetStateAction<string>) => {
+        setCategoria(selItem)
     }
 
     useEffect(() => {
@@ -48,13 +53,15 @@ const PickerCategoria = ({tipoCategoria}: {tipoCategoria: string}) => {
                 itemStyle={styles.pickerItem}
                 style={styles.picker}
                 // ref={pickerRef}
-                selectedValue={selectedItem}
+                selectedValue={categoria}
                 onValueChange={onChangePicker}
             >
                 {
-                    loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={0} />
+                    loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={'0'} />
                     :
                     categorias.map((item, index) => {
+                        if(index == 0) 
+                            setCategoria(item.nomeCategoria)
                         return (
                             <Picker.Item style={{ backgroundColor: 'orange' }} label={item.nomeCategoria} value={item.nomeCategoria} />
                         )

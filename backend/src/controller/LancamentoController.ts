@@ -58,6 +58,10 @@ class LancamentoController {
         return response.send({ lancamentos });
     }   
 
+    async FindByUser(request: Request, response: Response, next: NextFunction) {
+        // Fazer depois
+    }   
+
     async edit(request: Request, response: Response, next: NextFunction) {
         const lancamentoRepository = getRepository(Lancamento);  
         const categoryRepository = getRepository(Category);

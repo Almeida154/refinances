@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../../screens/Home';
 import Charts from '../../screens/Charts';
 import Variados from '../../screens/Variados';
+import Extrato from '../../screens/Extrato';
 import FormLancamentos from '../../screens/FormLancamento';
 
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -63,7 +64,7 @@ const TabNavigator = () => {
 
             }}
             />
-            <Tab.Screen name="Lançamentos" component={Home} options={{
+            <Tab.Screen name="Extrato" component={Extrato} options={{
                 tabBarIcon: ({ color }) => <Icon name='inbox' color={color} size={24} />,
 
             }}

@@ -12,8 +12,8 @@ type PropsPickerContas = {
     conta: number,
     setConta: React.Dispatch<React.SetStateAction<number>>
 }
-const PickerContas = () => {
-    const [selectedItem, setSelectedItem] = useState(0)
+
+const PickerContas = ({conta, setConta}: PropsPickerContas) => {    
     const {contas, handleReadByUserContas, loading} = UseContas()
 
     const pickerRef = useRef();
@@ -27,7 +27,7 @@ const PickerContas = () => {
     }
 */
     const onChangePicker = (selItem: SetStateAction<number>) => {
-        setSelectedItem(selItem)
+        setConta(selItem)
     }
 
     useEffect(() => {
@@ -53,13 +53,14 @@ const PickerContas = () => {
                 itemStyle={styles.pickerItem}
                 style={styles.picker}
                 // ref={pickerRef}
-                selectedValue={selectedItem}
+                selectedValue={conta}
                 onValueChange={onChangePicker}
             >
                  {
                     loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={0} />
                     :
                     contas.map((item, index) => {
+                        if(index == 0) setConta(item.id)
                         return (
                             <Picker.Item style={{ backgroundColor: 'orange' }} label={item.descricao} value={item.id} />
                         )

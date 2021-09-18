@@ -136,7 +136,7 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
           contaParcela: parseInt(idConta == null ? '-1' : idConta),
           lancamentoParcela: -1,
           valorParcela: parseInt(renda == null ? '0' : renda),
-          dateParcela: String(Date.now())
+          dateParcela: (new Date(Date.now())).toLocaleDateString()
         }]
       }
       
