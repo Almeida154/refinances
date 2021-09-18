@@ -131,7 +131,7 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
         descricaoLancamento: 'Salário',
         lugarLancamento: 'extrato',
         tipoLancamento: 'receita',
-        parcelas: [{
+        parcelasLancamento: [{
           id: -1,
           contaParcela: parseInt(idConta == null ? '-1' : idConta),
           lancamentoParcela: -1,

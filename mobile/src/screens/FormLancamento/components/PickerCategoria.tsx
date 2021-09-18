@@ -27,7 +27,7 @@ const PickerCategoria = ({categoria, setCategoria, tipoCategoria}: PropsPickerCa
     }
 */
     const onChangePicker = (selItem: SetStateAction<string>) => {
-        setCategoria(selItem)
+        setCategoria(selItem)        
     }
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const PickerCategoria = ({categoria, setCategoria, tipoCategoria}: PropsPickerCa
                     loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={'0'} />
                     :
                     categorias.map((item, index) => {
-                        if(index == 0) 
+                        if(index == 0 && categoria == '0') 
                             setCategoria(item.nomeCategoria)
                         return (
                             <Picker.Item style={{ backgroundColor: 'orange' }} label={item.nomeCategoria} value={item.nomeCategoria} />

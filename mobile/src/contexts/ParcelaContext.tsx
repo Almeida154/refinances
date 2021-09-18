@@ -22,11 +22,12 @@ export const ParcelaProvider: React.FC = ({ children }) => {
     const [parcelas, setParcelas] = useState<Parcela[]>([{}] as Parcela[])
 
     async function handleAdicionarParcela(parcelasProps: Parcela[]) {
-        console.log('foi bem aqui');
+        console.log('foi bem aqui na Parcela');
         try {
-            const arrayParcelas: Parcela[] = parcelas;
+            const arrayParcelas: Parcela[] = parcelasProps;
 
             parcelasProps.map(async item => {
+                console.log("item=>", item)
                 const response = await api.post('/parcela/create', {
                     dataParcela: item.dateParcela,
                     valorParcela: item.valorParcela,
@@ -37,15 +38,13 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                 if(response.data.error) {
                     throw response.data.error
                 };
-
-                console.log('response.data.message');
-                console.log(response.data.message);
+                            
                 arrayParcelas.push(response.data.message);
             })
 
             setParcelas(arrayParcelas);
         } catch (error) {
-            console.log(error);
+            console.log("Deu um erro ao adicionar a parcela: ", error);
         }
     }
     

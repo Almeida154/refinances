@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import {TouchableHighlight, FlatList, View} from 'react-native'
 
@@ -132,8 +132,7 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
     const [selectedCategoria, setSelectedCategoria] = useState('0')
     const [selectedConta, setSelectedConta] = useState(0)
 
-    const [parcelas, setParcelas] =  useState('1')
-    const [selectedParcela, setSelectedParcela] = useState(0)
+    const [parcelas, setParcelas] =  useState('1')    
     
     const [dataParcelas, setDataParcelas] = useState([{
         id: 0,
@@ -142,6 +141,7 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
         data: dataPagamento
     },
     ])
+    const [dataParcelaAlterado, setDataParcelaAlterado] = useState(false)
     
     const {handleAdicionarLancamento} = UseLancamentos()
 
@@ -169,22 +169,31 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
         
         console.log('data=', dataParcelas)
 
+        let valorParcelaDividido = (parseFloat(valor) / dataParcelas.length).toFixed(2) 
+
         if(num < dataParcelas.length) {
             for(var i = 0;i < num;i++) {
+                dataParcelas[i].valor = parseFloat(valorParcelaDividido)
                 aux.push(dataParcelas[i])
             }
 
             setDataParcelas(aux)
         } else if(num > dataParcelas.length) {
-            aux = dataParcelas
-            for(var i = aux.length;i < num;i++) {
-                const mesAnterior = toDate(aux[i-1].data)
+            aux = []
+            for(var i = 0;i < num;i++) {                                
+                if(i < dataParcelas.length) {
+                    dataParcelas[i].valor = parseFloat((parseFloat(valor) / num).toFixed(2))
+                    aux.push(dataParcelas[i])
+                    continue
+                }
+
+                const mesAnterior = toDate(aux[i-1] == undefined ? new Date(Date.now()).toLocaleDateString() : aux[i-1].data)
                 console.log('mesAnterior: ', mesAnterior)
                 aux.push({
                     id: i,
                     conta: 'Conta Principal',
                     data: addMonths(mesAnterior, 1).toLocaleDateString(),
-                    valor: parseInt(valor)/num
+                    valor: parseFloat((parseFloat(valor) / num).toFixed(2))
                 })
             }
 
@@ -194,46 +203,52 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
 
     }
 
-    async function handleSubmit() {
+    async function handleSubmit() {        
         try {
             const newParcelas: Parcela[] = []
-
+            
             dataParcelas.map(item => {
                 newParcelas.push({
                     id: -1,
                     lancamentoParcela: -1,
                     contaParcela: parseInt(item.conta),
                     dateParcela: item.data,
-                    valorParcela: item.valor
-
+                    valorParcela: item.valor                    
                 })
-            })
+            })            
 
-            console.log("Foi?")
-
+            
             const newLancamento: Lancamento = {
                 id: -1,
                 descricaoLancamento: descricao,
                 lugarLancamento: 'extrato',
                 tipoLancamento: 'despesa',
                 categoryLancamento: selectedCategoria,
-
-                parcelas: newParcelas
+                
+                parcelasLancamento: newParcelas
             }
-
             
-
+            
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
-
-            await handleAdicionarLancamento(newLancamento, idUser);
+            
+            await handleAdicionarLancamento(newLancamento, idUser);            
+            
             console.log(newLancamento)
         } catch (error) {
             console.log("Deu erro lá no formulario de despesa para adicionar Lancamento: ", error)
         }
     }
 
+    const useForceUpdate = () => {
+        const set = useState(0)[1];
+        return () => set((s) => s + 1);
+    }
+
+    const forceUpdate = useForceUpdate()
+
     function DefinirDetalhes() {
+        console.log(selectedCategoria)
         setDetalhes(detalhes => detalhes ? false : true)
     }
 
@@ -249,8 +264,30 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
         setDataPagamento(date.toLocaleDateString())
         hideDatePicker();
       };
+
+      useEffect(() => {                      
+        setDataParcelaAlterado(false)
+    }, [dataParcelaAlterado])
+
+      useEffect(() => {
+          if(valor == '') return
+          
+          const parcelas = dataParcelas
+
+          const valorParcela = (parseFloat(valor) / dataParcelas.length).toFixed(2)
+
+          parcelas.map((item, index) => {
+              parcelas[index].valor = parseFloat(valorParcela)
+          })
+
+          setDataParcelas(parcelas)
+          setDataParcelaAlterado(true)
+
+      }, [valor])
    
+
     return (
+
 
     <ContainerForm>
 
@@ -316,7 +353,7 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
 
                 <SectionCardsParcelas>
                     {
-                        <FlatList 
+                        !dataParcelaAlterado && <FlatList 
                             data={dataParcelas}
                             renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} />}
                             horizontal

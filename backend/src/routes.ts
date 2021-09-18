@@ -66,7 +66,7 @@ Routes.delete('/necessidade/remove', NecessidadeController.removeAll);
 Routes.post('/lancamento/create', LancamentoController.save);
 Routes.get('/lancamento/read', LancamentoController.showRelations);
 Routes.get('/lancamento/read/:id', LancamentoController.one);
-Routes.post('/lancamento/findbyuser/:id', LancamentoController.FindByUser);
+Routes.post('/lancamento/findbyuser/:iduser', LancamentoController.FindByUser);
 Routes.put('/lancamento/edit/:id', LancamentoController.edit);
 Routes.delete('/lancamento/remove/:id', LancamentoController.remove);
 Routes.delete('/lancamento/remove', LancamentoController.removeAll);

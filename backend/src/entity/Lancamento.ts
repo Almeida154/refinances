@@ -11,6 +11,7 @@ import {
 import { Category } from './Category';
 import { ConectaNecessidade } from './ConectaNecessidade';
 import { Parcela } from './Parcela';
+import { User } from './User';
 
 @Entity()
 export class Lancamento {
@@ -30,6 +31,9 @@ export class Lancamento {
     
     @ManyToOne(type => Category, category => category.lancamentosCategory)
     categoryLancamento: Category
+
+    @ManyToOne(type => User, user => user.lancamentosUser)
+    userLancamento: User
 
     @OneToMany(type => Parcela, parcela => parcela.lancamentoParcela)
     parcelasLancamento: Parcela[]

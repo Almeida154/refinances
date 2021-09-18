@@ -13,11 +13,13 @@ export type Lancamento = {
     lugarLancamento: string,
     categoryLancamento: string,    
 
-    parcelas: Parcela[];
+    parcelasLancamento: Parcela[];
 }
 
 interface LancamentoContextType {        
     lancamentos: Lancamento[],
+    loading: boolean
+
     handleLoadLancamentos(idUser: number): Promise<void>
     handleAdicionarLancamento(lancamentoProps: Lancamento, idUser: number ): Promise<void>
 }
@@ -28,15 +30,31 @@ export const UseLancamentos = () => useContext(LancamentoContext);
 
 export const LancamentoProvider: React.FC = ({ children }) => {
     const [lancamentos, setLancamentos] = useState<Lancamento[]>([{}] as Lancamento[]);
+    const [loading, setLoading] = useState(false);
+
     const { handleAdicionarParcela } = UseParcelas();    
     
     async function handleLoadLancamentos(idUser: number) {
+        try {
+            setLoading(true)
 
+            const response = await api.post(`/lancamento/findbyuser/${idUser}`)
+
+            if(response.data.error) throw response.data.error            
+                        
+
+            setLancamentos(response.data.message)
+            setLoading(false)
+            
+        } catch (error) {
+            console.log("Deu um erro no handleLoadLancamentos: ", error)
+        }
     }
 
     async function handleAdicionarLancamento(lancamento: Lancamento, idUser: number) {
         
         try {
+            setLoading(true)
             const responseCategory = await api.post(`/category/findbyname/${idUser}`, {
                 nomeCategoria: lancamento.categoryLancamento
             });
@@ -50,22 +68,26 @@ export const LancamentoProvider: React.FC = ({ children }) => {
 
             if(response.data.error) throw response.data.error
 
-            lancamento.parcelas.map((item, index) => {
-                lancamento.parcelas[index] = lancamento.parcelas[index].lancamentoParcela == -1 ? response.data.message.id : lancamento.parcelas[index].lancamentoParcela
+            
+
+            lancamento.parcelasLancamento.map((item, index) => {
+                lancamento.parcelasLancamento[index].lancamentoParcela = lancamento.parcelasLancamento[index].lancamentoParcela == -1 ? response.data.message.id : lancamento.parcelasLancamento[index].lancamentoParcela
+                console.log(`parcela ${index}: `, item)
             })            
             
-            handleAdicionarParcela(lancamento.parcelas);
+            handleAdicionarParcela(lancamento.parcelasLancamento);
             const newLancamentos: Lancamento[] = lancamentos
             newLancamentos.push(response.data.message);
             setLancamentos(newLancamentos);
             
+            setLoading(false)
         } catch (error) {
             console.log("Deu um erro no handleAdicionarLancamento: " + error);
         }
     }
     
     return (
-        <LancamentoContext.Provider value={{ handleLoadLancamentos, lancamentos, handleAdicionarLancamento }}>
+        <LancamentoContext.Provider value={{ loading, handleLoadLancamentos, lancamentos, handleAdicionarLancamento }}>
             {children}
         </LancamentoContext.Provider>
     );
