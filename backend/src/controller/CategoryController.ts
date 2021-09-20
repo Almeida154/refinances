@@ -83,7 +83,9 @@ class CategoryController {
             where: { nomeCategoria: request.body.nomeCategoria, userCategory: user }
         }));
 
-        console.log(idCategory);
+        if(!idCategory) {
+            return response.send({error: `Não existe uma categoria com esse nome, nome inserido: ${request.body.nomeCategoria}`})
+        }
 
         return response.send({ idCategory: idCategory.id });
     }   

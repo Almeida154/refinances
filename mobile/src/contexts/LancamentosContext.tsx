@@ -5,13 +5,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UseAuth } from './AuthContext';
 
 import { Parcela, UseParcelas } from './ParcelaContext';
+import {Categoria} from './CategoriesContext'
 
 export type Lancamento = {
     id: number,
     descricaoLancamento: string,
     tipoLancamento: string,
     lugarLancamento: string,
-    categoryLancamento: string,    
+    categoryLancamento: Categoria | string,    
 
     parcelasLancamento: Parcela[];
 }
@@ -37,12 +38,14 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     async function handleLoadLancamentos(idUser: number) {
         try {
             setLoading(true)
-
+            
             const response = await api.post(`/lancamento/findbyuser/${idUser}`)
 
             if(response.data.error) throw response.data.error            
                         
+            console.log("Lancamentos carregados, ", response.data.message)
 
+            
             setLancamentos(response.data.message)
             setLoading(false)
             
@@ -71,16 +74,29 @@ export const LancamentoProvider: React.FC = ({ children }) => {
             
 
             lancamento.parcelasLancamento.map((item, index) => {
-                lancamento.parcelasLancamento[index].lancamentoParcela = lancamento.parcelasLancamento[index].lancamentoParcela == -1 ? response.data.message.id : lancamento.parcelasLancamento[index].lancamentoParcela
+                lancamento.parcelasLancamento[index].lancamentoParcela = lancamento.parcelasLancamento[index].lancamentoParcela == -1 ? response.data.message.id : lancamento.parcelasLancamento[index].lancamentoParcela                
                 console.log(`parcela ${index}: `, item)
             })            
             
-            handleAdicionarParcela(lancamento.parcelasLancamento);
-            const newLancamentos: Lancamento[] = lancamentos
-            newLancamentos.push(response.data.message);
-            setLancamentos(newLancamentos);
+            await handleAdicionarParcela(lancamento.parcelasLancamento);
+
+            const newLancamento: Lancamento = response.data.message
+            
+            console.log(lancamento.parcelasLancamento)
+
+            newLancamento.parcelasLancamento = lancamento.parcelasLancamento
+
+
+            const loadLancamentos: Lancamento[] = lancamentos
+
+            
+
+            loadLancamentos.push(newLancamento);
+            setLancamentos(loadLancamentos);
             
             setLoading(false)
+
+            console.log("LAnãmentos: ", lancamentos)
         } catch (error) {
             console.log("Deu um erro no handleAdicionarLancamento: " + error);
         }

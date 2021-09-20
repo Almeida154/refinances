@@ -93,11 +93,11 @@ export const CategoriasProvider: React.FC = ({ children }) => {
 
         
             
-            setLoading(false)
-
+            
             setCategorias(response.data.categories)
             
-
+            
+            setLoading(false)
         } catch (error) {
             
         }

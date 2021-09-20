@@ -22,7 +22,7 @@ export const ParcelaProvider: React.FC = ({ children }) => {
     const [parcelas, setParcelas] = useState<Parcela[]>([{}] as Parcela[])
 
     async function handleAdicionarParcela(parcelasProps: Parcela[]) {
-        console.log('foi bem aqui na Parcela');
+        
         try {
             const arrayParcelas: Parcela[] = parcelasProps;
 
@@ -39,14 +39,27 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                     throw response.data.error
                 };
                             
-                arrayParcelas.push(response.data.message);
+                arrayParcelas.push(response.data.message);                
             })
 
             setParcelas(arrayParcelas);
+            
         } catch (error) {
             console.log("Deu um erro ao adicionar a parcela: ", error);
         }
     }
+
+    /*
+    async function handleLoadParcelas(idUser: number) {
+        
+        try {            
+            const response = await api.post(`/parcela/findbyuser/${idUser}`)
+                        
+            return response.data.message
+        } catch (error) {
+            console.log("Deu um erro ao adicionar a parcela: ", error);
+        }
+    }*/
     
     return (
         <ParcelasContext.Provider value={{ parcelas, handleAdicionarParcela }}>

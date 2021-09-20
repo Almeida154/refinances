@@ -8,8 +8,11 @@ export type RootStackParamAppFormLancamento = {
 }
 
 type PropsNavigationApp = {
-    Main: undefined;
-    FormLancamento: NavigatorScreenParams<RootStackParamAppFormLancamento>;      
+    Home: undefined;
+    Lancamentos: NavigatorScreenParams<RootStackParamAppFormLancamento>;      
+    Extrato: undefined;
+    Gráficos: undefined;
+    Otimizar: undefined;
 }
 
 export default PropsNavigationApp;

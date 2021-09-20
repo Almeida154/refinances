@@ -58,5 +58,29 @@ export const ButtonDetalhes = styled.TouchableHighlight`
 `
 
 export const SectionCardsParcelas = styled.View`
-    
+    margin-top: 20px;
+    height: 500px;
+`
+
+export const ContainerCardParcela = styled.SafeAreaView`
+    width: 200px;
+    height: 150px;
+    border-radius: 20px;
+    padding: 10px;    
+
+    border-width: 2px;
+    margin-right: 20px;
+    border-color: #EE4266;
+`
+export const TituloCardParcela = styled.Text`
+    font-family: "Nunito";
+    font-weight: bold;
+`
+export const LabelCardParcela = styled.Text`
+
+`
+
+export const InputCardParcela = styled.TextInput`
+    font-size: 20px;
+    color: black
 `

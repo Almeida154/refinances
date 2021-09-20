@@ -143,9 +143,10 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
     ])
     const [dataParcelaAlterado, setDataParcelaAlterado] = useState(false)
     
-    const {handleAdicionarLancamento} = UseLancamentos()
+    const {handleAdicionarLancamento, handleLoadLancamentos} = UseLancamentos()
 
-    const changeParcela = (text: string) => {
+    
+    const changeParcela = (text: string, date: string) => {
         setParcelas(text)
         
         if(text == '') return
@@ -165,48 +166,48 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
 
         let aux: CardParcela[] = []
 
-        const num = parseInt(text)
-        
-        console.log('data=', dataParcelas)
+        const num = parseInt(text)            
 
-        let valorParcelaDividido = (parseFloat(valor) / dataParcelas.length).toFixed(2) 
+        let valorParcelaDividido =parseFloat((parseFloat(valor) / num).toFixed(2))
 
         if(num < dataParcelas.length) {
             for(var i = 0;i < num;i++) {
-                dataParcelas[i].valor = parseFloat(valorParcelaDividido)
+                dataParcelas[i].valor = valorParcelaDividido
+                dataParcelas[i].data = i == 0 ? date : addMonths(toDate(date), 1).toLocaleDateString()
+
                 aux.push(dataParcelas[i])
             }
 
-            setDataParcelas(aux)
-        } else if(num > dataParcelas.length) {
-            aux = []
-            for(var i = 0;i < num;i++) {                                
+            
+        } else if(num > dataParcelas.length) {            
+            for(var i = 0;i < num;i++) {         
+                const adicaoDeUmMes = aux[i-1] == undefined ? date : addMonths(toDate(aux[i-1].data), 1).toLocaleDateString()
                 if(i < dataParcelas.length) {
-                    dataParcelas[i].valor = parseFloat((parseFloat(valor) / num).toFixed(2))
+                    dataParcelas[i].valor = valorParcelaDividido
+                    dataParcelas[i].data = adicaoDeUmMes,
                     aux.push(dataParcelas[i])
                     continue
-                }
-
-                const mesAnterior = toDate(aux[i-1] == undefined ? new Date(Date.now()).toLocaleDateString() : aux[i-1].data)
-                console.log('mesAnterior: ', mesAnterior)
+                }                
+                
                 aux.push({
                     id: i,
                     conta: 'Conta Principal',
-                    data: addMonths(mesAnterior, 1).toLocaleDateString(),
-                    valor: parseFloat((parseFloat(valor) / num).toFixed(2))
+                    data: adicaoDeUmMes,
+                    valor: valorParcelaDividido
                 })
             }
 
-            setDataParcelas(aux)
         }
 
+        setDataParcelas(aux)
+        setDataParcelaAlterado(true)
 
     }
 
-    async function handleSubmit() {        
-        try {
+    async function handleSubmit() {                    
             const newParcelas: Parcela[] = []
             
+            console.log("dataParcelas, ", dataParcelas)
             dataParcelas.map(item => {
                 newParcelas.push({
                     id: -1,
@@ -227,25 +228,17 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
                 
                 parcelasLancamento: newParcelas
             }
-            
+                        
+            console.log('newLancamento: ', newLancamento)
             
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
             
             await handleAdicionarLancamento(newLancamento, idUser);            
             
-            console.log(newLancamento)
-        } catch (error) {
-            console.log("Deu erro lá no formulario de despesa para adicionar Lancamento: ", error)
-        }
-    }
 
-    const useForceUpdate = () => {
-        const set = useState(0)[1];
-        return () => set((s) => s + 1);
+            navigation.navigate('Extrato')
     }
-
-    const forceUpdate = useForceUpdate()
 
     function DefinirDetalhes() {
         console.log(selectedCategoria)
@@ -261,7 +254,10 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
       };
     
       const handleConfirm = (date: Date) => {
+          console.log(parcelas, date.toLocaleDateString())
         setDataPagamento(date.toLocaleDateString())
+
+        changeParcela(parcelas, date.toLocaleDateString())
         hideDatePicker();
       };
 
@@ -346,8 +342,9 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
                     <Label>Parcelas</Label>
                     <TextInput
                         value={parcelas}
-                        onChangeText={changeParcela}
+                        onChangeText={(text) => changeParcela(text, dataPagamento)}
                         placeholder="1"
+                        keyboardType="numeric"
                         ></TextInput>
                 </InputControl>
 
@@ -357,7 +354,7 @@ const FormDespesa= ({route, navigation}: PropsNavigation) => {
                             data={dataParcelas}
                             renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} />}
                             horizontal
-                            keyExtractor={(item) => String(item.id)}
+                            keyExtractor={(item, index) => String(index)}
                         />                          
                     }
                 </SectionCardsParcelas>

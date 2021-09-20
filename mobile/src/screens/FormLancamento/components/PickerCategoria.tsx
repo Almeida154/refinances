@@ -40,7 +40,7 @@ const PickerCategoria = ({categoria, setCategoria, tipoCategoria}: PropsPickerCa
             }
             
             loadCategorias()
-            console.log(categorias)
+            // console.log('categorias que foram: ', categorias)
             
         } catch (error) {
             console.log('Erro ao carregar as categorias: ', error)
@@ -59,11 +59,13 @@ const PickerCategoria = ({categoria, setCategoria, tipoCategoria}: PropsPickerCa
                 {
                     loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={'0'} />
                     :
-                    categorias.map((item, index) => {
-                        if(index == 0 && categoria == '0') 
+                    categorias.map((item, index) => {                        
+                        if(index == 0 && (!categoria || categoria == '0')) {                            
                             setCategoria(item.nomeCategoria)
+                            console.log("Fpo aqui")
+                        }
                         return (
-                            <Picker.Item style={{ backgroundColor: 'orange' }} label={item.nomeCategoria} value={item.nomeCategoria} />
+                            <Picker.Item key={index} style={{ backgroundColor: 'orange' }} label={item.nomeCategoria} value={item.nomeCategoria} />
                         )
                     })
                 }

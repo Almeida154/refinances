@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import RootStackParamApp from '../../@types/RootStackParamApp'
 
 import Home from '../../screens/Home';
 import Charts from '../../screens/Charts';
@@ -13,7 +14,7 @@ import Icon2 from 'react-native-vector-icons/Fontisto';
 
 import { GestureResponderEvent, TouchableOpacity, View, Text } from 'react-native';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootStackParamApp>();
 
 type PropsCustomBar = {
     children: React.ReactNode;
@@ -72,7 +73,7 @@ const TabNavigator = () => {
 
             
             
-                <Tab.Screen name="Post" component={FormLancamentos} options={{                
+                <Tab.Screen name="Lancamentos" component={FormLancamentos} options={{                
                     tabBarLabel: () => null,
                     headerShown: false,
                     tabBarIcon: ({ color }) => <Icon name='plus' color={color} size={24} />,                    
@@ -89,7 +90,7 @@ const TabNavigator = () => {
                 tabBarIcon: ({ color }) => <Icon name='piechart' color={color} size={24} />,
 
             }} />
-            <Tab.Screen name="Variados" component={Variados} options={{
+            <Tab.Screen name="Otimizar" component={Variados} options={{
                 tabBarIcon: ({ color }) => <Icon2  name='preview' color={color} size={24} />,
 
             }} />

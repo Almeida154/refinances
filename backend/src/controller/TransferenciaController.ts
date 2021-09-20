@@ -34,8 +34,9 @@ class TransferenciaController {
         const transferenciaRepository = getRepository(Transferencia);  
         const contaRepository = getRepository(Conta);
 
-        const { valorTransferencia, dataTransferencia, contaOrigem, contaDestino } = request.body;
+        const { descricaoTransferencia, valorTransferencia, dataTransferencia, contaOrigem, contaDestino } = request.body;
 
+        if (descricaoTransferencia == undefined) return response.send({ error: "Descrição da transferencia não especificado!" });
         if (valorTransferencia == undefined) return response.send({ error: "valor da transferencia não especificado!" });
         if (dataTransferencia == undefined) return response.send({ error: "data da transferência não especificado!" });
         if (contaOrigem == undefined) return response.send({ error: "conta origem não especificado!" });

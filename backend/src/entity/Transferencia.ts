@@ -15,6 +15,9 @@ export class Transferencia {
     id: number;
 
     @Column()
+    descricaoTransferencia: string;
+
+    @Column()
     valorTransferencia: number;
 
     @Column()

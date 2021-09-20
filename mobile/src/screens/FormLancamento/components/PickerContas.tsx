@@ -40,7 +40,7 @@ const PickerContas = ({conta, setConta}: PropsPickerContas) => {
             }
             
             loadContas()
-            console.log(contas)
+            // console.log(contas)
             
         } catch (error) {
             console.log('Erro ao carregar as contas: ', error)
@@ -62,7 +62,7 @@ const PickerContas = ({conta, setConta}: PropsPickerContas) => {
                     contas.map((item, index) => {
                         if(index == 0) setConta(item.id)
                         return (
-                            <Picker.Item style={{ backgroundColor: 'orange' }} label={item.descricao} value={item.id} />
+                            <Picker.Item key={index} style={{ backgroundColor: 'orange' }} label={item.descricao} value={item.id} />
                         )
                     })
                 }
