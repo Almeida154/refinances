@@ -24,7 +24,7 @@ interface CategoriaContextType {
 
 const CategoriaContext = createContext<CategoriaContextType>({} as CategoriaContextType);
 
-export const UseCategorias = () => useContext(CategoriaContext);
+export const UseCategories = () => useContext(CategoriaContext);
 
 export const CategoriasProvider: React.FC = ({ children }) => {
     const [categorias, setCategorias] = useState<Categoria[]>([{}] as Categoria[]);    
@@ -75,9 +75,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
 
             const newCategorias: Categoria[] = categorias
             newCategorias.push(response.data.message);
-            
             setCategorias(newCategorias);
-
         } catch (error) {
             console.log("Deu um erro no handleAdicionar: " + error);
         }
@@ -90,13 +88,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
             const response = await api.post(`/category/findbyuser/${idUser}`, {
                 tipoCategoria
             })
-
-        
-            
-            
             setCategorias(response.data.categories)
-            
-            
             setLoading(false)
         } catch (error) {
             

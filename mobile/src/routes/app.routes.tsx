@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Main from '../screens/main';
-import FormLancamento from '../screens/FormLancamento'
-import SelectionCategorias from '../screens/FormLancamento/components/SelectionCategorias'
+import FormLancamento from '../screens/dashboard/Entries'
+import SelectionCategorias from '../screens/dashboard/Entries/components/SelectionCategories'
 
 import RootStackParamApp, {RootStackParamAppFormLancamento} from '../@types/RootStackParamApp'
 

@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import RootStackParamApp from '../../@types/RootStackParamApp'
 
-import Home from '../../screens/Home';
-import Charts from '../../screens/Charts';
-import Variados from '../../screens/Variados';
-import Extrato from '../../screens/Extrato';
-import FormLancamentos from '../../screens/FormLancamento';
+import Home from '../../screens/dashboard/Home';
+import Charts from '../../screens/dashboard/Charts';
+import Variados from '../../screens/dashboard/Sundry';
+import Extrato from '../../screens/dashboard/Extract';
+import FormLancamentos from '../../screens/dashboard/Entries';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Fontisto';

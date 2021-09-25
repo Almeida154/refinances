@@ -1,11 +1,11 @@
 import * as React from 'react';
-import Entrar from '../screens/Entrar';
-import Cadastrar from '../screens/Cadastrar';
-import InserirNome from '../screens/InserirNome';
-import ConfigConta from '../screens/ConfigConta';
-import Ganhos from '../screens/Ganhos';
-import ConfigCategorias from '../screens/ConfigCategorias';
-import RecuperarConta from '../screens/RecuperarConta';
+import PasswordRecovery from '../screens/auth/PasswordRecovery';
+import Login from '../screens/auth/LogIn';
+import ConfigAccount from '../screens/auth/SignIn/ConfigAccount';
+import RegisterMain from '../screens/auth/SignIn/RegisterMain';
+import RegisterName from '../screens/auth/SignIn/RegisterName';
+import RegisterEarnings from '../screens/auth/SignIn/RegisterEarnings';
+import RegisterCategories from '../screens/auth/SignIn/RegisterCategories';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -14,13 +14,13 @@ const AuthStack = createStackNavigator();
 const AuthRoutes: React.FC = () => {
     return (
         <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-            <AuthStack.Screen name="Entrar" component={Entrar} />
-            <AuthStack.Screen name="Cadastrar" component={Cadastrar} />
-            <AuthStack.Screen name="InserirNome" component={InserirNome} />
-            <AuthStack.Screen name="ConfigConta" component={ConfigConta} />
-            <AuthStack.Screen name="ConfigCategorias" component={ConfigCategorias} />
-            <AuthStack.Screen name="Ganhos" component={Ganhos} />
-            <AuthStack.Screen name="RecuperarConta" component={RecuperarConta} />
+            <AuthStack.Screen name="Entrar" component={Login} />
+            <AuthStack.Screen name="Cadastrar" component={RegisterMain} />
+            <AuthStack.Screen name="InserirNome" component={RegisterName} />
+            <AuthStack.Screen name="ConfigConta" component={ConfigAccount} />
+            <AuthStack.Screen name="ConfigCategorias" component={RegisterCategories} />
+            <AuthStack.Screen name="Ganhos" component={RegisterEarnings} />
+            <AuthStack.Screen name="PasswordRecovery" component={PasswordRecovery} />
         </AuthStack.Navigator>
     );
 }

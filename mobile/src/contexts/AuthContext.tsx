@@ -1,6 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../services/api';
@@ -17,7 +15,6 @@ export type User = {
 interface AuthContextType {    
     token: string;
     user: User,
-
     handleLogin(): Promise<string>
     handleRegister(): Promise<string>
     updateUserProps(userProps: User): void 
@@ -29,7 +26,18 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const UseAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = useState<User>({} as User);    
+    const [user, setUser] = useState<User>({} as User);
+
+    useEffect(() => {
+        (async () => {
+            const storagedUser = await AsyncStorage.getItem('user')
+            console.log(storagedUser)
+
+            if (storagedUser) {
+                setUser(JSON.parse(storagedUser))
+            }
+        })();
+    }, []);
     
     async function handleLogin() {
         try {
@@ -64,7 +72,7 @@ export const AuthProvider: React.FC = ({ children }) => {
                 senhaUsuario: user.senhaUsuario,
             });
 
-            console.log(response.data);
+            console.debug('AuthContext | handleRegister(): ', response.data);
 
             if (response.data.error) {           
                 return response.data.error.toString();
@@ -77,32 +85,18 @@ export const AuthProvider: React.FC = ({ children }) => {
             return '';
 
         } catch (error) {
-            console.log("Deu erro no Registrar:", error);
+            console.debug("Deu erro no Registrar: ", error);
         }
     }    
 
     function handleLogout() {
         AsyncStorage.clear()
-
         setUser({} as User)
     }
 
     function updateUserProps(userProps: User) {
         setUser(userProps);
     }
-
-    useEffect(() => {
-        async function VerifyLogin() {
-            const storagedUser = await AsyncStorage.getItem('user')
-            console.log(storagedUser)
-
-            if(storagedUser) {
-                setUser(JSON.parse(storagedUser))
-            }
-        }
-
-        VerifyLogin()
-    }, [])
 
     return (
         <AuthContext.Provider value={{ user, handleLogout, handleLogin, token: '', handleRegister, updateUserProps }}>

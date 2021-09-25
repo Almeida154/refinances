@@ -11,7 +11,7 @@
     "typescript": "^4.3.2"
   },
   "scripts": {
-    "start": "npx nodemon --exec ts-node --files src/server.ts"
+    "dev": "npx nodemon --exec ts-node --files src/server.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

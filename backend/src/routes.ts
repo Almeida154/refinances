@@ -1,15 +1,15 @@
 import { Router } from 'express';
 
-import UserController from "./controller/UserController";
-import categoryController from "./controller/CategoryController";
-import categoryContaController from "./controller/CategoryContaController";
-import contaController from "./controller/ContaController";
-import NecessidadeController from "./controller/NecessidadeController";
-import LancamentoController from './controller/LancamentoController';
-import ConectaNecessidadesController from './controller/ConectaNecessidadesController';
-import MetaController from './controller/MetaController';
-import ParcelaController from './controller/ParcelaController';
-import TransferenciaController from './controller/TransferenciaController';
+import UserController from "./controllers/UserController";
+import CategoryController from "./controllers/CategoryController";
+import CategoryAccountController from "./controllers/CategoryAccountController";
+import AccountController from "./controllers/AccountController";
+import NecessityController from "./controllers/NecessityController";
+import EntryController from './controllers/EntryController';
+import ConnectNecessityController from './controllers/ConnectNecessityController';
+import GoalController from './controllers/GoalController';
+import InstallmentController from './controllers/InstallmentController';
+import TransferController from './controllers/TransferController';
 
 import authMiddleware from './middlewares/authMiddleware';
 
@@ -26,81 +26,81 @@ Routes.delete('/user/remove/:id', UserController.remove);
 Routes.delete('/user/remove', UserController.removeAll);
 
 // Category
-Routes.post('/category/create', categoryController.save);
-Routes.get('/category/read', categoryController.showRelations);
-Routes.get('/category/read/:id', categoryController.one);
-Routes.post('/category/findbyname/:iduser', categoryController.FindByName);
-Routes.post('/category/findbyuser/:iduser', categoryController.FindByUser);
-Routes.put('/category/edit/:id', categoryController.edit);
-Routes.delete('/category/remove/:id', categoryController.remove);
-Routes.delete('/category/remove', categoryController.removeAll);
+Routes.post('/category/create', CategoryController.save);
+Routes.get('/category/read', CategoryController.showRelations);
+Routes.get('/category/read/:id', CategoryController.one);
+Routes.post('/category/findbyname/:iduser', CategoryController.FindByName);
+Routes.post('/category/findbyuser/:iduser', CategoryController.FindByUser);
+Routes.put('/category/edit/:id', CategoryController.edit);
+Routes.delete('/category/remove/:id', CategoryController.remove);
+Routes.delete('/category/remove', CategoryController.removeAll);
 
 // CategoryConta
-Routes.post('/categoryconta/create', categoryContaController.save);
-Routes.get('/categoryconta/read', categoryContaController.showRelations);
-Routes.get('/categoryconta/read/:id', categoryContaController.one);
-Routes.post('/categoryconta/findbyname/:iduser', categoryContaController.FindByName);
-Routes.post('/categoryconta/findbyuser/:iduser', categoryContaController.FindByUser);
-Routes.put('/categoryconta/edit/:id', categoryContaController.edit);
-Routes.delete('/categoryconta/remove/:id', categoryContaController.remove);
-Routes.delete('/categoryconta/remove', categoryContaController.removeAll);
+Routes.post('/categoryAccount/create', CategoryAccountController.save);
+Routes.get('/categoryAccount/read', CategoryAccountController.showRelations);
+Routes.get('/categoryAccount/read/:id', CategoryAccountController.one);
+Routes.post('/categoryAccount/findbyname/:iduser', CategoryAccountController.FindByName);
+Routes.post('/categoryAccount/findbyuser/:iduser', CategoryAccountController.FindByUser);
+Routes.put('/categoryAccount/edit/:id', CategoryAccountController.edit);
+Routes.delete('/categoryAccount/remove/:id', CategoryAccountController.remove);
+Routes.delete('/categoryAccount/remove', CategoryAccountController.removeAll);
 
 // Conta
-Routes.post('/conta/create', contaController.save);
-Routes.get('/conta/read', contaController.showRelations);
-Routes.get('/conta/read/:id', contaController.one);
-Routes.post('/conta/findbyuser/:iduser', contaController.FindByUser);
-Routes.put('/conta/edit/:id', contaController.edit);
-Routes.delete('/conta/remove/:id', contaController.remove);
-Routes.delete('/conta/remove', contaController.removeAll);
+Routes.post('/account/create', AccountController.save);
+Routes.get('/account/read', AccountController.showRelations);
+Routes.get('/account/read/:id', AccountController.one);
+Routes.post('/account/findbyuser/:iduser', AccountController.FindByUser);
+Routes.put('/account/edit/:id', AccountController.edit);
+Routes.delete('/account/remove/:id', AccountController.remove);
+Routes.delete('/account/remove', AccountController.removeAll);
 
 // Necessidade
-Routes.post('/necessidade/create', NecessidadeController.save);
-Routes.get('/necessidade/read', NecessidadeController.showRelations);
-Routes.get('/necessidade/read/:id', NecessidadeController.one);
-Routes.put('/necessidade/edit/:id', NecessidadeController.edit);
-Routes.delete('/necessidade/remove/:id', NecessidadeController.remove);
-Routes.delete('/necessidade/remove', NecessidadeController.removeAll);
-
-// Lançamento
-Routes.post('/lancamento/create', LancamentoController.save);
-Routes.get('/lancamento/read', LancamentoController.showRelations);
-Routes.get('/lancamento/read/:id', LancamentoController.one);
-Routes.post('/lancamento/findbyuser/:iduser', LancamentoController.FindByUser);
-Routes.put('/lancamento/edit/:id', LancamentoController.edit);
-Routes.delete('/lancamento/remove/:id', LancamentoController.remove);
-Routes.delete('/lancamento/remove', LancamentoController.removeAll);
+Routes.post('/necessity/create', NecessityController.save);
+Routes.get('/necessity/read', NecessityController.showRelations);
+Routes.get('/necessity/read/:id', NecessityController.one);
+Routes.put('/necessity/edit/:id', NecessityController.edit);
+Routes.delete('/necessity/remove/:id', NecessityController.remove);
+Routes.delete('/necessity/remove', NecessityController.removeAll);
 
 // Conecta Necessidades
-Routes.post('/conectanecessidades/create', ConectaNecessidadesController.save);
-Routes.get('/conectanecessidades/read', ConectaNecessidadesController.showRelations);
-Routes.get('/conectanecessidades/read/:id', ConectaNecessidadesController.one);
-Routes.put('/conectanecessidades/edit/:id', ConectaNecessidadesController.edit);
-Routes.delete('/conectanecessidades/remove/:id', ConectaNecessidadesController.remove);
-Routes.delete('/conectanecessidades/remove', ConectaNecessidadesController.removeAll);
+Routes.post('/connectNecessity/create', ConnectNecessityController.save);
+Routes.get('/connectNecessity/read', ConnectNecessityController.showRelations);
+Routes.get('/connectNecessity/read/:id', ConnectNecessityController.one);
+Routes.put('/connectNecessity/edit/:id', ConnectNecessityController.edit);
+Routes.delete('/connectNecessity/remove/:id', ConnectNecessityController.remove);
+Routes.delete('/connectNecessity/remove', ConnectNecessityController.removeAll);
+
+// Lançamento
+Routes.post('/entry/create', EntryController.save);
+Routes.get('/entry/read', EntryController.showRelations);
+Routes.get('/entry/read/:id', EntryController.one);
+Routes.post('/entry/findbyuser/:iduser', EntryController.FindByUser);
+Routes.put('/entry/edit/:id', EntryController.edit);
+Routes.delete('/entry/remove/:id', EntryController.remove);
+Routes.delete('/entry/remove', EntryController.removeAll);
 
 // Meta
-Routes.post('/meta/create', MetaController.save);
-Routes.get('/meta/read', MetaController.showRelations);
-Routes.get('/meta/read/:id', MetaController.one);
-Routes.put('/meta/edit/:id', MetaController.edit);
-Routes.delete('/meta/remove/:id', MetaController.remove);
-Routes.delete('/meta/remove', MetaController.removeAll);
+Routes.post('/goal/create', GoalController.save);
+Routes.get('/goal/read', GoalController.showRelations);
+Routes.get('/goal/read/:id', GoalController.one);
+Routes.put('/goal/edit/:id', GoalController.edit);
+Routes.delete('/goal/remove/:id', GoalController.remove);
+Routes.delete('/goal/remove', GoalController.removeAll);
 
 // Parcela
-Routes.post('/parcela/create', ParcelaController.save);
-Routes.get('/parcela/read', ParcelaController.showRelations);
-Routes.get('/parcela/read/:id', ParcelaController.one);
-Routes.put('/parcela/edit/:id', ParcelaController.edit);
-Routes.delete('/parcela/remove/:id', ParcelaController.remove);
-Routes.delete('/parcela/remove', ParcelaController.removeAll);
+Routes.post('/installment/create', InstallmentController.save);
+Routes.get('/installment/read', InstallmentController.showRelations);
+Routes.get('/installment/read/:id', InstallmentController.one);
+Routes.put('/installment/edit/:id', InstallmentController.edit);
+Routes.delete('/installment/remove/:id', InstallmentController.remove);
+Routes.delete('/installment/remove', InstallmentController.removeAll);
 
 // Transferencia
-Routes.post('/transferencia/create', TransferenciaController.save);
-Routes.get('/transferencia/read', TransferenciaController.showRelations);
-Routes.get('/transferencia/read/:id', TransferenciaController.one);
-Routes.put('/transferencia/edit/:id', TransferenciaController.edit);
-Routes.delete('/transferencia/remove/:id', TransferenciaController.remove);
-Routes.delete('/transferencia/remove', TransferenciaController.removeAll);
+Routes.post('/transfer/create', TransferController.save);
+Routes.get('/transfer/read', TransferController.showRelations);
+Routes.get('/transfer/read/:id', TransferController.one);
+Routes.put('/transfer/edit/:id', TransferController.edit);
+Routes.delete('/transfer/remove/:id', TransferController.remove);
+Routes.delete('/transfer/remove', TransferController.removeAll);
 
 export default Routes;
