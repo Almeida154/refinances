@@ -15,6 +15,7 @@ import { Necessidade } from "./Necessidade";
 
 import bcrypt from 'bcryptjs';
 import { Lancamento } from "./Lancamento";
+import { Transferencia } from "./Transferencia";
 
 @Entity()
 export class User {
@@ -55,4 +56,7 @@ export class User {
 
     @OneToMany(type => Necessidade, necessidade => necessidade.userNecessidade)
     necessidadesUsuario: Necessidade[];
+
+    @OneToMany(type => Transferencia, transferencia => transferencia.userTransferencia)
+    transferenciasUser: Transferencia[];
 }

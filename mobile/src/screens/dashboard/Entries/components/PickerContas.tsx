@@ -60,7 +60,9 @@ const PickerContas = ({conta, setConta}: PropsPickerContas) => {
                     loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={0} />
                     :
                     contas.map((item, index) => {
-                        if(index == 0) setConta(item.id)
+                        if(index == 0 && (!conta || conta == 0)) {                            
+                            setConta(item.id)                            
+                        }
                         return (
                             <Picker.Item key={index} style={{ backgroundColor: 'orange' }} label={item.descricao} value={item.id} />
                         )

@@ -19,7 +19,9 @@ export class Parcela {
     @Column()
     dataParcela: string;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
     valorParcela: number;
    
     // Foreign Keys

@@ -18,7 +18,9 @@ export class Conta {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
     saldoConta: number;
 
     @Column()

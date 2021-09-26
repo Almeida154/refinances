@@ -5,8 +5,8 @@ import RootStackParamApp from '../../../@types/RootStackParamApp'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import FormDespesa from './components/ExpenseForm'
-import FormReceita from './components/IncomeForm'
+import FormCadastro from './components/FormCadastro'
+import FormTransferencia from './components/TransferForm'
 
 import {
     Container,
@@ -21,8 +21,10 @@ import {
 
 
 export type PropsNavigation = {
-    navigation: StackNavigationProp<RootStackParamApp, "FormLancamento">,    
-    route: RouteProp<RootStackParamApp, "FormLancamento">
+    navigation: StackNavigationProp<RootStackParamApp, "Lancamentos">,    
+    route: RouteProp<RootStackParamApp, "Lancamentos">,
+    tipoLancamento: string
+    
 }
 
 const FormLancamento = ({route, navigation}: PropsNavigation) => {
@@ -42,13 +44,16 @@ const FormLancamento = ({route, navigation}: PropsNavigation) => {
                 </Header>
 
                 {
-                    selected == 0 && <FormDespesa route={route} navigation={navigation}/>   
+                    selected == 0 && <FormCadastro route={route} navigation={navigation} tipoLancamento={"despesa"}/>   
+            
+                }
+                {
+                    selected == 1 && <FormCadastro route={route} navigation={navigation} tipoLancamento={"receita"}/>   
+                }
+                {
+                    selected == 2 && <FormTransferencia route={route} navigation={navigation} tipoLancamento={"receita"}/>   
                 }
 
-                {
-                    selected == 1 && <FormReceita route={route} navigation={navigation}/>   
-                }
-                
             </Container>
         </ScrollView>
     );

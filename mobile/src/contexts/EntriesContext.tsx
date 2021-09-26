@@ -22,7 +22,7 @@ interface LancamentoContextType {
     loading: boolean
 
     handleLoadLancamentos(idUser: number): Promise<void>
-    handleAdicionarLancamento(lancamentoProps: Lancamento, idUser: number ): Promise<void>
+    handleAdicionarLancamento(lancamentoProps: Lancamento, idUser: number ): Promise<string>
 }
 
 const LancamentoContext = createContext<LancamentoContextType>({} as LancamentoContextType)
@@ -43,7 +43,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
 
             if(response.data.error) throw response.data.error            
                         
-            console.log("Lancamentos carregados, ", response.data.message)
+            // console.log("Lancamentos carregados, ", response.data.message)
 
             
             setLancamentos(response.data.message)
@@ -69,7 +69,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
                 categoryLancamento: responseCategory.data.idCategory
             });
 
-            if(response.data.error) throw response.data.error
+            if(response.data.error) return response.data.error
 
             
 
@@ -82,7 +82,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
 
             const newLancamento: Lancamento = response.data.message
             
-            console.log(lancamento.parcelasLancamento)
+            // console.log(lancamento.parcelasLancamento)
 
             newLancamento.parcelasLancamento = lancamento.parcelasLancamento
 
@@ -95,8 +95,9 @@ export const LancamentoProvider: React.FC = ({ children }) => {
             setLancamentos(loadLancamentos);
             
             setLoading(false)
+            return ''
 
-            console.log("LAnãmentos: ", lancamentos)
+            // console.log("LAnãmentos: ", lancamentos)
         } catch (error) {
             console.log("Deu um erro no handleAdicionarLancamento: " + error);
         }

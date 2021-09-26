@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import { Conta } from './Conta';
+import { User } from './User';
 
 @Entity()
 export class Transferencia {
@@ -17,14 +18,19 @@ export class Transferencia {
     @Column()
     descricaoTransferencia: string;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
     valorTransferencia: number;
 
     @Column()
-    dataTransferencia: Date;
+    dataTransferencia: string;
 
     // Foreign Key
        
+    @ManyToOne(type => User, user => user.transferenciasUser)
+    userTransferencia: User;
+
     @ManyToOne(type => Conta, conta => conta.transferenciasEnviadas)
     contaOrigem: Conta
 

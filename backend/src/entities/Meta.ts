@@ -17,17 +17,21 @@ export class Meta {
     @Column()
     descMeta: string;
 
-    @Column()
+    @Column({
+        type: 'float'
+    })
+    saldoFinalMeta: number;
+
+    @Column({
+        type: 'float'
+    })
     saldoAtualMeta: number;
 
     @Column()
-    saldoMeta: number;
+    dataInicioMeta: string;
 
     @Column()
-    despesasAtualMeta: number;
-
-    @Column()
-    previsao: Date;
+    dataFimMetaMeta: string;
 
     @Column()
     realizacaoMeta: boolean;

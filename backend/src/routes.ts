@@ -96,9 +96,11 @@ Routes.delete('/installment/remove/:id', InstallmentController.remove);
 Routes.delete('/installment/remove', InstallmentController.removeAll);
 
 // Transferencia
+
 Routes.post('/transfer/create', TransferController.save);
 Routes.get('/transfer/read', TransferController.showRelations);
 Routes.get('/transfer/read/:id', TransferController.one);
+Routes.post('/transfer/findbyuser/:iduser', TransferController.FindByUser);
 Routes.put('/transfer/edit/:id', TransferController.edit);
 Routes.delete('/transfer/remove/:id', TransferController.remove);
 Routes.delete('/transfer/remove', TransferController.removeAll);

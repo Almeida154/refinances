@@ -61,8 +61,7 @@ const PickerCategoria = ({categoria, setCategoria, tipoCategoria}: PropsPickerCa
                     :
                     categorias.map((item, index) => {                        
                         if(index == 0 && (!categoria || categoria == '0')) {                            
-                            setCategoria(item.nomeCategoria)
-                            console.log("Fpo aqui")
+                            setCategoria(item.nomeCategoria)                            
                         }
                         return (
                             <Picker.Item key={index} style={{ backgroundColor: 'orange' }} label={item.nomeCategoria} value={item.nomeCategoria} />

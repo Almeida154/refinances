@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-import {TouchableHighlight} from 'react-native'
+import { Alert, ScrollView, TouchableHighlight } from 'react-native'
 
 import {
     ContainerForm,
@@ -14,113 +13,111 @@ import {
     SectionCardsParcelas
 } from './styles'
 
-import {Parcela} from '../../../../../contexts/InstallmentContext'
+import { UseTransferencias, Transferencia } from '../../../../../contexts/TransferContext'
 
-import PickerLugar from '../PickerLugar'
-import PickerCategoria from '../PickerCategoria'
+import { Parcela } from '../../../../../contexts/InstallmentContext'
 
-type CardParcelaProps = {
-    data: number,
-    valor: number,
-    conta: string
-}
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
-import {PropsNavigation} from '../..'
-import { Text } from 'react-native-paper';
-import PickerContas from '../PickerContas';
+import { PropsNavigation } from '../..'
+import { Text, ToastAndroid } from 'react-native'
+import PickerContas from '../PickerContas'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const CardParcela = ({data, valor, conta}: CardParcelaProps) => {
-    return (
-        <></>
-    )
-}
-
-const FormReceita= ({route, navigation}: PropsNavigation) => {
-    const [detalhes, setDetalhes] = useState(false)
-    console.log(navigation.navigate)
-    const [dataParcelas, setDataParcelas] = useState([{}] as Parcela[])
-
+const FormTransferencia= ({route, navigation}: PropsNavigation) => {
+    const [selectedContaOrigem, setSelectedContaOrigem] = useState(0)
+    const [selectedContaDestino, setSelectedContaDestino] = useState(0)
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
     const [valor, setValor] =  useState('')
     const [descricao, setDescricao] =  useState('')
-    const [dataPagamento, setDataPagamento] =  useState('')    
-    const [parcelas, setParcelas] =  useState('1')
+    const [dataPagamento, setDataPagamento] =  useState(new Date(Date.now()).toLocaleDateString())        
 
-    function DefinirDetalhes() {
-        setDetalhes(detalhes => detalhes ? false : true)
+    const {handleAdicionarTransferencia, handleLoadTransferencias} = UseTransferencias()
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const handleConfirm = (date: Date) => {       
+        hideDatePicker();
+        setDataPagamento(date.toLocaleDateString())
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleSubmit = async () => {        
+        const newTransferencia: Transferencia = {
+            id: -1,
+            contaOrigem: selectedContaOrigem,
+            contaDestino: selectedContaDestino,
+            dataTransferencia: dataPagamento,
+            descricaoTransferencia: descricao,
+            valorTransferencia: parseFloat(valor)
+        }        
+
+        const getUser = await AsyncStorage.getItem('user')
+        const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
+
+        const message = await handleAdicionarTransferencia(newTransferencia)
+        
+        if(message == '') {
+            await handleLoadTransferencias(idUser)
+            navigation.navigate('Extrato')            
+        }
+        else {
+            ToastAndroid.show(message, ToastAndroid.SHORT)            
+        }
     }
 
     return (
-
-    <ContainerForm>
-
-        <InputControl>
-            <Label>Valor(R$) </Label>
-            <TextInputValor
-                value={valor}
-                onChangeText={setValor}
-                placeholder="0,00"
-                keyboardType="numeric"
-                placeholderTextColor={"#bbb"}></TextInputValor>
-        </InputControl>
-
-        <InputControl>
-            <Label>Descrição</Label>
-            <TextInput
-                value={descricao}
-                onChangeText={setDescricao}
-                placeholder="Mercadinho"
-                placeholderTextColor={"#bbb"}></TextInput>
-        </InputControl>
-
-
-        <InputControl>
-            <Label>Categoria</Label>
-
-           <PickerCategoria tipoCategoria="receita"/>
-        </InputControl>
-
-        <InputControl>
-            <Label>Conta</Label>
-
-            <PickerContas />
-        </InputControl>
-
-        <InputControl>
-            <Label>Data de Recebimento</Label>
-            <TextInput
-                value={dataPagamento}
-                onChangeText={setDataPagamento}
-                placeholder="21/12/2021"></TextInput>
-        </InputControl>   
-
-        <SectionDetalhes>
-            <ButtonDetalhes onPress={DefinirDetalhes}>
-                <TextDetalhes>{detalhes ? 'Menos' : 'Mais'} detalhes</TextDetalhes>
-            </ButtonDetalhes>
-        </SectionDetalhes>
-
-        {detalhes &&
-            <>
+        <ScrollView style={{width: '100%'}}>
+            <ContainerForm>
                 <InputControl>
-                    <Label>Parcelas</Label>
-                    <TextInput
-                        value={parcelas}
-                        onChangeText={setParcelas}
-                        placeholder="1"></TextInput>
+                    <Label>Valor(R$) </Label>
+                    <TextInputValor
+                        value={valor}
+                        onChangeText={setValor}
+                        placeholder="0,00"
+                        keyboardType="numeric"
+                        placeholderTextColor={"#bbb"}></TextInputValor>
                 </InputControl>
 
-                <SectionCardsParcelas>
-                    {
-                        
-                    }
-                </SectionCardsParcelas>
+                <InputControl>
+                    <Label>Descrição </Label>
+                    <TextInputValor
+                        value={descricao}
+                        onChangeText={setDescricao}                
+                        placeholderTextColor={"#bbb"}></TextInputValor>
+                </InputControl>
 
-            </>
-        }
+                <InputControl>
+                    <Label>De: </Label>           
+                    <PickerContas conta={selectedContaOrigem} setConta={setSelectedContaOrigem}/>
+                </InputControl>
 
+                <InputControl>
+                    <Label>Para: </Label>           
+                    <PickerContas conta={selectedContaDestino} setConta={setSelectedContaDestino}/>
+                </InputControl>
 
-    </ContainerForm>
+                <InputControl style={{marginBottom: 50}}>
+                    <Label>Data de Transferencia</Label>
+                    <Text onPress={showDatePicker} >{dataPagamento}</Text>
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                        // date={toDate(dataPagamento)}
+                    />
+                </InputControl>   
+
+                <TouchableHighlight onPress={handleSubmit} style={{marginBottom: 100}}><Text>Botao Provisorio</Text></TouchableHighlight>
+            </ContainerForm>
+        </ScrollView>
     )
 }
 
-export default FormReceita
+export default FormTransferencia

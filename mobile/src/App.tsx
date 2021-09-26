@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { AuthProvider } from './contexts/AuthContext';
 import { CategoriasProvider } from './contexts/CategoriesContext';
+import { TransferenciaProvider } from './contexts/TransferContext';
 import { LancamentoProvider } from './contexts/EntriesContext';
 import { DadosTempProvider } from './contexts/TemporaryDataContext';
 import { CategoriasContaProvider } from './contexts/CategoriesAccountContext';
@@ -21,11 +22,13 @@ const App = () => {
           <ContasProvider>
             <ParcelaProvider>
               <LancamentoProvider>
-                <CategoriasProvider>          
-                  <CategoriasContaProvider>
-                      <Routes />
-                  </CategoriasContaProvider>
-                </CategoriasProvider>
+                <TransferenciaProvider>
+                  <CategoriasProvider>          
+                    <CategoriasContaProvider>
+                        <Routes />
+                    </CategoriasContaProvider>
+                  </CategoriasProvider>
+                </TransferenciaProvider>
               </LancamentoProvider>
             </ParcelaProvider>
           </ContasProvider>

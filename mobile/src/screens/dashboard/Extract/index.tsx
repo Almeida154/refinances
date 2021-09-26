@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {Transferencia, UseTransferencias} from '../../../contexts/TransferContext'
 import {Lancamento, UseLancamentos} from '../../../contexts/EntriesContext'
 
 import { ScrollView } from 'react-native-gesture-handler';
@@ -18,9 +19,19 @@ import {
 
 const Extrato = () => {
     const {lancamentos, loading, handleLoadLancamentos} = UseLancamentos()
+    const {transferencias, loadingTransferencia, handleLoadTransferencias} = UseTransferencias()
 
-    
+    //Lancamento e transferencia
+    const [todosDados, setTodosDados] = useState([] as (Lancamento | Transferencia)[])
+
     useEffect(() => {
+        async function loadTransferencias() {
+            const getUser = await AsyncStorage.getItem('user')
+            const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
+                        
+            handleLoadTransferencias(idUser)
+        }
+
         async function loadLancamentos() {
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
@@ -29,39 +40,76 @@ const Extrato = () => {
         }
         
         loadLancamentos()
+        loadTransferencias()
         
     }, [])
 
+    useEffect(() => {
+        console.log('Transferencias: ', transferencias)
+        if(!loading && !loadingTransferencia)
+            setTodosDados([...lancamentos, ...transferencias])
+    }, [loadingTransferencia])
     
-    
+    useEffect(() => {
+        if(!loading && !loadingTransferencia)
+            setTodosDados([...lancamentos, ...transferencias])
+
+            
+    }, [loading])        
     return (
         <ScrollView>
             <View style={styles.container}>
-                <View style={styles.contentContainer}>                    
+                <View style={styles.contentContainer}>      
                     {
-                        loading ? <Text>Carregando</Text> : 
-                        lancamentos.map((item, index) => {      
-                            let total = 0
-                            
-                            if(item.id == undefined) return
+                        console.log(`lancamento: ${typeof lancamentos} e transferencia: ${transferencias}`)
+                    }              
+                    {
+                        loading || loadingTransferencia || todosDados.length == 0  ? <Text>Carregando</Text> : 
+                        todosDados.map((item, index) => {                              
                             console.log(`item ${index}: `, item)                                          
-                            
-                            item.parcelasLancamento.map(item => {
-                                total += item.valorParcela
-                            })
+                            try {                                
+                                if(item.descricaoLancamento)    {
+                                    const readLancamento = item as Lancamento                                
+    
+                                    if(readLancamento.id == undefined) return
+                                    
+                                    let total = 0
+                                    readLancamento.parcelasLancamento.map(item => {
+                                        total += item.valorParcela
+                                    })
+                                    
+                                    console.log(readLancamento)
+                                    return (
+                                        <CardItem key={index}>
+                                            <Section>
+                                                <LabelDescricao>{readLancamento.descricaoLancamento}</LabelDescricao>
+                                                <LabelCategoria>{(typeof readLancamento.categoryLancamento).toString() == 'string' ? readLancamento.categoryLancamento : readLancamento.categoryLancamento.nomeCategoria}</LabelCategoria></Section>
+                                            <Section>
+                                                <LabelLancamento>{readLancamento.tipoLancamento}</LabelLancamento>
+                                                <LabelTotal>{total}</LabelTotal>
+                                            </Section>
+                                        </CardItem>
+                                    )
+                                } else if(item.contaOrigem) {
+                                    const readTransferencia = item as Transferencia
+                                    
+                                    return (
+                                        <CardItem key={index}>
+                                            <Section>
+                                                <LabelDescricao>{readTransferencia.descricaoTransferencia}</LabelDescricao>
+                                                <LabelCategoria>{readTransferencia.valorTransferencia}</LabelCategoria></Section>
+                                            <Section>
+                                                <LabelLancamento>{readTransferencia.contaOrigem.descricao}</LabelLancamento>
+                                                <LabelTotal>{readTransferencia.contaDestino.descricao}</LabelTotal>
+                                            </Section>
+                                        </CardItem>
+                                    )
+                                }                                                    
+                            } catch (error) {
+                                
+                            }
                             
 
-                            return (
-                                <CardItem key={index}>
-                                    <Section>
-                                        <LabelDescricao>{item.descricaoLancamento}</LabelDescricao>
-                                        <LabelCategoria>{(typeof item.categoryLancamento).toString() == 'string' ? item.categoryLancamento : item.categoryLancamento.nomeCategoria}</LabelCategoria></Section>
-                                    <Section>
-                                        <LabelLancamento>{item.tipoLancamento}</LabelLancamento>
-                                        <LabelTotal>{total}</LabelTotal>
-                                    </Section>
-                                </CardItem>
-                            )
                         })
                     }
                 </View>

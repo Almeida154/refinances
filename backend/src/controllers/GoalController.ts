@@ -28,25 +28,25 @@ class MetaController {
         const metaRepository = getRepository(Meta);  
         const userRepository = getRepository(User);
 
-        const {descMeta, saldoAtualMeta, saldoMeta, despesasAtualMeta, previsao, realizacaoMeta, userMeta} = request.body
+        const {descMeta, saldoFinalMeta, SaldoAtualMeta, dataInicioMeta, dataFimMeta, realizacaoMeta, userMeta} = request.body
 
         if(descMeta == '') return response.send({error: "nome em branco!"})        
-        if (saldoAtualMeta == undefined) return response.send({ error: "Saldo atual da meta não inserido" });
-        if (saldoMeta == undefined) return response.send({ error: "saldo da meta não inserido!" });
-        if (despesasAtualMeta == undefined) return response.send({ error: "despesas atual da meta não inserido!" });
-        if (previsao == undefined) return response.send({ error: "previsão não inserido!" });
+        if (saldoFinalMeta == undefined) return response.send({ error: "Saldo final da meta não inserido" });
+        if (SaldoAtualMeta == undefined) return response.send({ error: "saldo atual da meta não inserido!" });
+        if (dataInicioMeta == undefined) return response.send({ error: "data inicial da meta não inserido!" });
+        if (dataFimMeta == undefined) return response.send({ error: "data final da meta não inserido!" });
         if (realizacaoMeta == undefined) return response.send({ error: "realização da meta não inserido!" });
         if (userMeta == undefined) return response.send({ error: "user da meta não inserido!" });
 
-        const userExists = await userRepository.find({where: {id: userMeta}})        
+        const userExists = await userRepository.findOne({where: {id: userMeta}})        
 
-        if (userExists.length == 0) return response.send({
-            error: "Não existe esse user aí"
+        if (!userExists) return response.send({
+            error: "Não existe esse id de user"
         });
         
         const newMeta = request.body;
-        newMeta.userMeta = userExists[0];
-        newMeta.previsao = new Date(newMeta.previsao);
+        newMeta.userMeta = userExists;
+
         const meta = metaRepository.create(newMeta);
         await metaRepository.save(meta);
 
@@ -68,28 +68,28 @@ class MetaController {
         const metaRepository = getRepository(Meta);  
         const userRepository = getRepository(User);
 
-        const { descMeta, saldoAtualMeta, saldoMeta, despesasAtualMeta, previsao, realizacaoMeta, userMeta } = request.body;
+        const { descMeta, saldoFinalMeta, SaldoAtualMeta, dataInicioMeta, realizacaoMeta, dataFimMeta, userMeta } = request.body;
         const id = parseInt(request.params.id);
 
-        if (descMeta == '') return response.send({ error: "nome em branco!" });
-        if (saldoAtualMeta == undefined) return response.send({ error: "Saldo atual da meta não inserido" });
-        if (saldoMeta == undefined) return response.send({ error: "saldo da meta não inserido!" });
-        if (despesasAtualMeta == undefined) return response.send({ error: "despesas atual da meta não inserido!" });
-        if (previsao == undefined) return response.send({ error: "previsão não inserido!" });
+        if(descMeta == '') return response.send({error: "nome em branco!"})        
+        if (saldoFinalMeta == undefined) return response.send({ error: "Saldo final da meta não inserido" });
+        if (SaldoAtualMeta == undefined) return response.send({ error: "saldo atual da meta não inserido!" });
+        if (dataInicioMeta == undefined) return response.send({ error: "data inicial da meta não inserido!" });
+        if (dataFimMeta == undefined) return response.send({ error: "data final da meta não inserido!" });
         if (realizacaoMeta == undefined) return response.send({ error: "realização da meta não inserido!" });
         if (userMeta == undefined) return response.send({ error: "user da meta não inserido!" });
 
-        const userExists = await userRepository.find({
+        const userExists = await userRepository.findOne({
             where: { id: userMeta }
         });
 
-        if (userExists.length == 0) return response.send({
+        if (!userExists) return response.send({
             error: "Não existe esse user aí"
         });
         
         const updateMeta = request.body;
-        updateMeta.userMeta = userExists[0];
-        updateMeta.previsao = new Date(updateMeta.previsao);
+        updateMeta.userMeta = userExists;
+        
         await metaRepository.update(id, updateMeta);
         const meta = await metaRepository.findOne({where: {id}});
 
