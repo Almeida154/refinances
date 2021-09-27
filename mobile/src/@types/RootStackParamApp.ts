@@ -1,15 +1,21 @@
 import react from 'react';
 import { NavigatorScreenParams } from '@react-navigation/native'
 
-export type RootStackParamAppFormLancamento = {
+export type HomeLancamentoStack = {
+    Main: undefined;
+
+    CreateAccount: undefined;
+}
+
+export type FormLancamentoStack = {
     Main: undefined;      
     
-    SelectionCategorias: undefined;
+    AddCategory: {tipoCategoria: string};
 }
 
 type PropsNavigationApp = {
     Home: undefined;
-    Lancamentos: NavigatorScreenParams<RootStackParamAppFormLancamento>;      
+    Lancamentos: NavigatorScreenParams<FormLancamentoStack>;      
     Extrato: undefined;
     Gráficos: undefined;
     Otimizar: undefined;

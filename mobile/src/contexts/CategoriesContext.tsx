@@ -59,7 +59,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
     }
 
     async function handleAdicionar(categoria: Categoria) {
-        
+        setLoading(true)
         try {                     
             const response = await api.post('/category/create', {
                 nomeCategoria: categoria.nomeCategoria,
@@ -76,6 +76,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
             const newCategorias: Categoria[] = categorias
             newCategorias.push(response.data.message);
             setCategorias(newCategorias);
+            setLoading(false)
         } catch (error) {
             console.log("Deu um erro no handleAdicionar: " + error);
         }

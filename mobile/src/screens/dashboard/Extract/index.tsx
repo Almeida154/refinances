@@ -44,6 +44,7 @@ const Extrato = () => {
         
     }, [])
 
+    //Esses useEffect para caso ocorra alguma alteração nos dados, recarregar todos no TodosDados
     useEffect(() => {
         console.log('Transferencias: ', transferencias)
         if(!loading && !loadingTransferencia)

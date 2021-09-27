@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 
-import RootStackParamApp from '../../@types/RootStackParamApp'
+import RootStackParamApp, {FormLancamentoStack, HomeLancamentoStack} from '../../@types/RootStackParamApp'
 
 import Home from '../../screens/dashboard/Home';
 import Charts from '../../screens/dashboard/Charts';
 import Variados from '../../screens/dashboard/Sundry';
 import Extrato from '../../screens/dashboard/Extract';
 import FormLancamentos from '../../screens/dashboard/Entries';
+import AddCategory from '../../screens/dashboard/Entries/components/AddCategory'
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Fontisto';
@@ -19,6 +21,28 @@ const Tab = createBottomTabNavigator<RootStackParamApp>();
 type PropsCustomBar = {
     children: React.ReactNode;
     onPress: ((e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent) => void) | undefined
+}
+
+const FormStack = createStackNavigator<FormLancamentoStack>()
+const FormLancamentoStackNavigation = ({route, navigation}) => {
+    
+    return (
+        <FormStack.Navigator>
+            <FormStack.Screen name="Main" component={FormLancamentos}/>
+            <FormStack.Screen name="AddCategory" component={AddCategory}/>
+        </FormStack.Navigator>
+    )
+}
+
+const HomeStack = createStackNavigator<HomeLancamentoStack>()
+const HomeLancamentoStackNavigation = ({route, navigation}) => {
+    
+    return (
+        <HomeStack.Navigator>
+            <HomeStack.Screen name="Main" component={Home}/>
+            
+        </HomeStack.Navigator>
+    )
 }
 
 const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
@@ -73,7 +97,7 @@ const TabNavigator = () => {
 
             
             
-                <Tab.Screen name="Lancamentos" component={FormLancamentos} options={{                
+                <Tab.Screen name="Lancamentos" component={FormLancamentoStackNavigation} options={{                
                     tabBarLabel: () => null,
                     headerShown: false,
                     tabBarIcon: ({ color }) => <Icon name='plus' color={color} size={24} />,                    

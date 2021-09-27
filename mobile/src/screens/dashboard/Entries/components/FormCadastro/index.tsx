@@ -291,7 +291,7 @@ const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
 
             <InputControl>
                 <Label>Categoria</Label>
-                <SelectionCategorias tipoCategoria={tipoLancamento} categoria={selectedCategoria} setCategoria={setSelectedCategoria}/>
+                <SelectionCategorias tipoCategoria={tipoLancamento} categoria={selectedCategoria} setCategoria={setSelectedCategoria} navigation={navigation}/>
             </InputControl>
 
             <InputControl>

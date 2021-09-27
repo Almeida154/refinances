@@ -20,11 +20,22 @@ import {
 } from './styles'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import {FormLancamentoStack} from '../../../../../@types/RootStackParamApp'
+
 import {
     CustomPicker,
     FieldTemplateSettings,
     OptionTemplateSettings
 } from 'react-native-custom-picker'
+import { StackNavigationProp } from '@react-navigation/stack'
+
+
+type PropsSelectionCategorias = {
+    tipoCategoria: string,
+    categoria: string,
+    setCategoria: React.Dispatch<React.SetStateAction<string>>,
+    navigation: StackNavigationProp<FormLancamentoStack, "Main">,    
+}
 
 const RenderOption = (settings: OptionTemplateSettings) => {
     const { item, getLabel } = settings
@@ -54,51 +65,77 @@ const RenderHeader = ({search, setSearch}: PropsRenderHeader) => {
     )
 }
 
-const RenderFooter = () => {    
+type PropsRenderFooter = {
+    navigation: StackNavigationProp<FormLancamentoStack, "Main">,    
+    tipoCategoria: string
+}
+
+
+const RenderFooter = ({navigation, tipoCategoria}: PropsRenderFooter) => {    
     return (
         <BotaoAdicionarCategoria>
-            <LabelAdicionarCategoria>Adicionar Categoria</LabelAdicionarCategoria>
+            <LabelAdicionarCategoria onPress={() => navigation.navigate('AddCategory', {
+                tipoCategoria
+            })}>Adicionar Categoria</LabelAdicionarCategoria>
         </BotaoAdicionarCategoria>
     )
 }
 
 
-type PropsSelectionCategorias = {
-    tipoCategoria: string,
-    categoria: string,
-    setCategoria: React.Dispatch<React.SetStateAction<string>>
-}
 
-const SelectionCategorias = ({tipoCategoria, categoria, setCategoria}: PropsSelectionCategorias) => {        
+const SelectionCategorias = ({tipoCategoria, categoria, navigation}: PropsSelectionCategorias) => {        
+    const {categorias, loading, handleReadByUserCategorias} = UseCategories()    
+
     const [search, setSearch] = useState('') 
-
-    const {categorias, loading, handleReadByUserCategorias} = UseCategories()
-
+    const [categoriasAtual, setCategoriasAtual] = useState([] as Categoria[])
     
-
     useEffect(() => {
         async function loadCategorias() {
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? '{}' : getUser).id
-            handleReadByUserCategorias(idUser, 'despesa')
+            handleReadByUserCategorias(idUser, tipoCategoria)
         }
 
         loadCategorias()
     }, [])
 
+    useEffect(() => {
+        setCategoriasAtual(categorias)
+    }, [categorias])
+
+    useEffect(() => {
+        if(search == '') {
+            setCategoriasAtual(categorias)
+        } else {
+            const aux: Categoria[] = []
+
+            categorias.map((item, index) => {
+                if(item.nomeCategoria.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !=  -1) {
+                    aux.push(item)
+                }
+            })
+
+            setCategoriasAtual(aux)
+        }
+    }, [search])
     return (
         <Container>
 
             {
-                console.log("Categorias: ", categorias)
+                console.log("Categorias: ", categoriasAtual)
+            }
+            {
+                console.log(loading)
             }
             <CustomPicker 
-                placeholder="Selecione a categoria para esse lançamento"
-                options={categorias}
+                placeholder={loading ? "Carregando" : "Selecione a categoria para esse lançamento" }
+                options={loading ? [{}] : categoriasAtual}
                 getLabel={item => item.nomeCategoria}
                 optionTemplate={RenderOption}
                 headerTemplate={() => <RenderHeader search={search} setSearch={setSearch} />}
-                footerTemplate={RenderFooter}
+                footerTemplate={() => <RenderFooter navigation={navigation} tipoCategoria={tipoCategoria}/>}                
+                maxHeight={400}
+                modalStyle={{minHeight: 400}}
             />
 {/*             
                 
