@@ -10,7 +10,8 @@ export type Categoria = {
     tetoDeGastos: number,
     tipoCategoria: string,
     essencial: boolean,    
-    userCategoria: number
+    userCategoria: number,
+    iconeCategoria: string
 }
 
 interface CategoriaContextType {        
@@ -34,21 +35,22 @@ export const CategoriasProvider: React.FC = ({ children }) => {
 
     async function setupCategorias(){        
         const nomesCategoriasPadroes = [
-            "Educação", "Casa",
-            "Restaurantes", "Família",
-            "Impostos", "Lazer",
-            "Mercado", "Pets",
-            "Transporte", "Viagem"
-        ];
+            ["Educação", "FontAwesome:book"], ["Casa", "MaterialCommunityIcons:home-variant"],
+            ["Restaurantes", "Ionicons:restaurant-sharp"], ["Família", "MaterialIcons:family-restroom"],
+            ["Impostos", "FontAwesome5:file-invoice-dollar"], ["Lazer", "MaterialIcons:park"],
+            ["Mercado", "MaterialCommunityIcons:point-of-sale"], ["Pets", "MaterialIcons:pets"],
+            ["Transporte", "FontAwesome5:car-side"], ["Viagem", "Fontisto:plane"]
+        ];        
 
         const newCategorias = categorias;
 
         nomesCategoriasPadroes.map(async item => {
             const response = await api.post('/category/create', {
-                nomeCategoria: item,
+                nomeCategoria: item[0],
                 tetoDeGastos: null,
                 tipoCategoria: "despesa",
                 essencial: false,
+                iconeCategoria: item[1],
                 userCategory: user.id
             });
 
@@ -66,6 +68,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
                 tetoDeGastos: categoria.tetoDeGastos,
                 tipoCategoria: categoria.tipoCategoria,
                 essencial: categoria.essencial,
+                iconeCategoria: categoria.iconeCategoria,
                 userCategory: categoria.userCategoria
             });
 

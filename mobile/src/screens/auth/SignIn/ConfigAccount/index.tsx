@@ -81,13 +81,22 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
       console.log('categoriasConta + ', categoriasConta);
 
       // Adicionar as categorias padrões
-      categoriasTemp.map(async (item) => {
+      const nomesCategoriasPadroes = [
+          ["Educação", "FontAwesome:book"], ["Casa", "MaterialCommunityIcons:home-variant"],
+          ["Restaurantes", "Ionicons:restaurant-sharp"], ["Família", "MaterialIcons:family-restroom"],
+          ["Impostos", "FontAwesome5:file-invoice-dollar"], ["Lazer", "MaterialIcons:park"],
+          ["Mercado", "MaterialCommunityIcons:point-of-sale"], ["Pets", "MaterialIcons:pets"],
+          ["Transporte", "FontAwesome5:car-side"], ["Viagem", "Fontisto:plane"]
+      ];      
+
+      categoriasTemp.map(async (item, index) => {
         const newCategoria: Categoria = {
           id: item.id,
           nomeCategoria: item.nomeCategoria,
           tetoDeGastos: item.tetoDeGastos,
           tipoCategoria: item.tipoCategoria,
           essencial: item.essencial,
+          iconeCategoria: nomesCategoriasPadroes[index][1],
           userCategoria: idUser
         }
 
@@ -103,6 +112,7 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
         tetoDeGastos: 0,
         tipoCategoria: 'receita',
         essencial: true,
+        iconeCategoria: 'FontAwesome5:toolbox',
         userCategoria: idUser
       }
 

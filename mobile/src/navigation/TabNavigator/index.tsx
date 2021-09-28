@@ -76,10 +76,9 @@ const TabNavigator = () => {
                     backgroundColor: 'transparent',
                     elevation: 0,
                     zIndex: 999 ,                                        
-                }
-                                 
-                // activeTintColor: 'white',
-                // inactiveTintColor: '#d9d9d9',
+                },
+                tabBarActiveTintColor: '#EE4266',                
+                tabBarInactiveTintColor: '#ddd'                                                
                 
             }}
         >

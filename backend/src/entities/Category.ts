@@ -19,6 +19,9 @@ export class Category {
     @Column({length: 200})
     nomeCategoria: string;
 
+    @Column()
+    iconeCategoria: string;
+
     @Column({nullable: true})
     tetoDeGastos: number;    
 

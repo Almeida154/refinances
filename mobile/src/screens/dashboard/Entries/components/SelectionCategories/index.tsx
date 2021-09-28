@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import {Text} from 'react-native'
+import {Alert, Text} from 'react-native'
 import {Categoria, UseCategories} from '../../../../../contexts/CategoriesContext'
 
 import {Searchbar} from 'react-native-paper'
-import Icon from 'react-native-vector-icons/FontAwesome'
+
+import Icon from '../../../../../helpers/gerarIconePelaString'
 
 import {
     Container,
@@ -31,8 +32,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 
 
 type PropsSelectionCategorias = {
-    tipoCategoria: string,
-    categoria: string,
+    tipoCategoria: string,    
     setCategoria: React.Dispatch<React.SetStateAction<string>>,
     navigation: StackNavigationProp<FormLancamentoStack, "Main">,    
 }
@@ -42,13 +42,14 @@ const RenderOption = (settings: OptionTemplateSettings) => {
 
     return (
         <ContainerItem>
-            <Icon size={24} name="dollar"/>
+            <Icon size={24} stringIcon={item.iconeCategoria} color={'red'}/>
             <NomeItem >{getLabel(item)}</NomeItem>
 
             <Separator />
         </ContainerItem>
     )
 }
+
 
 type PropsRenderHeader = {
     search: string,
@@ -65,11 +66,11 @@ const RenderHeader = ({search, setSearch}: PropsRenderHeader) => {
     )
 }
 
+
 type PropsRenderFooter = {
     navigation: StackNavigationProp<FormLancamentoStack, "Main">,    
     tipoCategoria: string
 }
-
 
 const RenderFooter = ({navigation, tipoCategoria}: PropsRenderFooter) => {    
     return (
@@ -83,7 +84,7 @@ const RenderFooter = ({navigation, tipoCategoria}: PropsRenderFooter) => {
 
 
 
-const SelectionCategorias = ({tipoCategoria, categoria, navigation}: PropsSelectionCategorias) => {        
+const SelectionCategorias = ({tipoCategoria, setCategoria, navigation}: PropsSelectionCategorias) => {        
     const {categorias, loading, handleReadByUserCategorias} = UseCategories()    
 
     const [search, setSearch] = useState('') 
@@ -121,12 +122,7 @@ const SelectionCategorias = ({tipoCategoria, categoria, navigation}: PropsSelect
     return (
         <Container>
 
-            {
-                console.log("Categorias: ", categoriasAtual)
-            }
-            {
-                console.log(loading)
-            }
+            
             <CustomPicker 
                 placeholder={loading ? "Carregando" : "Selecione a categoria para esse lançamento" }
                 options={loading ? [{}] : categoriasAtual}
@@ -136,6 +132,9 @@ const SelectionCategorias = ({tipoCategoria, categoria, navigation}: PropsSelect
                 footerTemplate={() => <RenderFooter navigation={navigation} tipoCategoria={tipoCategoria}/>}                
                 maxHeight={400}
                 modalStyle={{minHeight: 400}}
+                onValueChange={value => {
+                    setCategoria(value.nomeCategoria)
+                }}
             />
 {/*             
                 

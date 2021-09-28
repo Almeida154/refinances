@@ -25,7 +25,7 @@ class CategoryController {
     async save(request: Request, response: Response, next: NextFunction) {                        
         const categoryRepository = getRepository(Category);  
         const userRepository = getRepository(User);
-        const { nomeCategoria, tetoDeGastos, tipoCategoria, essencial, userCategory } = request.body;
+        const { nomeCategoria, tetoDeGastos, tipoCategoria, essencial, userCategory, iconeCategoria } = request.body;
 
         if (nomeCategoria == '') return response.send({ error: "nome em branco!" });
 
