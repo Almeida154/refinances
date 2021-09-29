@@ -4,7 +4,7 @@ import api from '../services/api'
 
 export type Parcela = {
     id: number,
-    dateParcela: string,
+    dateParcela: Date,
     valorParcela: number,
     contaParcela: number
     lancamentoParcela: number

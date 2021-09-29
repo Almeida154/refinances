@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import { Parcela } from "../entities/Parcela";
 import { Conta } from "../entities/Conta";
 import { Lancamento } from "../entities/Lancamento";
+import { User } from "../entities/User";
 
 class ParcelaController {       
 
@@ -18,15 +19,10 @@ class ParcelaController {
 
         const parcelas = await parcelaRepository.createQueryBuilder("parcela")
             .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
-            .getMany();
-
-        const parcelasConta = await parcelaRepository.createQueryBuilder("parcela")
             .leftJoinAndSelect("parcela.contaParcela", "conta")
-            .getMany();
+            .leftJoinAndSelect("parcela.userParcela", "user")
+            .getMany();        
 
-        parcelas.map((item, index) => {
-            parcelas[index].contaParcela = parcelasConta[index].contaParcela
-        });
 
         return response.send({ parcelas });
     }
@@ -43,21 +39,30 @@ class ParcelaController {
         if (contaParcela == undefined) return response.send({ error: "Conta não especificada!" });
         if (lancamentoParcela == undefined) return response.send({ error: "Sem lançamento!" });
 
-        const lancamentoExists = await lancamentoRepository.find({ where: { id: lancamentoParcela } });
-        const contaExists = await contaRepository.find({ where: { id: contaParcela } });
+        const lancamentoExists = await lancamentoRepository.findOne({ where: { id: lancamentoParcela } });
+        const contaExists = await contaRepository.findOne({ 
+            where: { id: contaParcela },
+            join: {
+                alias: 'conta',
+                leftJoinAndSelect: {
+                    user: 'conta.userConta'
+                }
+            }
+        });
 
-        if (lancamentoExists.length == 0) return response.send({
+        if (!lancamentoExists) return response.send({
             error: "Não existe um lançamento com esse id"
         });
 
-        if (contaExists.length == 0) return response.send({
+        if (!contaExists) return response.send({
             error: "Não existe uma conta com esse id"
         });
-        
+        console.log(contaExists)
         const newParcela = request.body;
 
-        newParcela.lancamentoParcela = lancamentoExists[0];
-        newParcela.contaParcela = contaExists[0];
+        newParcela.lancamentoParcela = lancamentoExists;
+        newParcela.contaParcela = contaExists;
+        newParcela.userParcela = contaExists.userConta;
 
         console.log(newParcela.contaParcela);
         const parcela = parcelaRepository.create(newParcela);
@@ -66,6 +71,67 @@ class ParcelaController {
         return response.send({ message: parcela });
     }
     
+    async GroupByDate(request: Request, response: Response, next: NextFunction) {
+        const parcelaRepository = getRepository(Parcela);
+        const userRepository = getRepository(User);
+
+        const user = await userRepository.findOne({where: {id: request.params.iduser}})
+        console.log(user)
+
+        if(!user) {
+            return response.send({error: "Não existe um user com esse id"})
+        }
+        const data = await parcelaRepository.createQueryBuilder("parcela")
+            .leftJoinAndSelect("parcela.contaParcela", "conta")
+            .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
+            .leftJoinAndSelect("parcela.userParcela", "user")
+            .where("user.id = :id", {id: user.id})
+            .orderBy("parcela.dataParcela", "ASC")            
+            .getMany()       
+
+        if(data.length == 0) {
+            return response.send({message: []})
+        }
+        const parcelas = []
+
+        let atual = data[0].dataParcela.toLocaleDateString()        
+
+        let aux = []
+
+        let lancamento = new Map()
+        
+        data.map((item: any, index) => {
+            const parcelaData = item.dataParcela.toLocaleDateString()
+
+            const keyLancamento = lancamento.get(item.lancamentoParcela.id)
+            if(!keyLancamento) {
+                lancamento.set(item.lancamentoParcela.id, 1)
+
+                item.indexOfLancamento = 1
+            } else {
+                lancamento.set(item.lancamentoParcela.id, keyLancamento+1)
+
+                item.indexOfLancamento = keyLancamento+1
+            }
+
+            if(parcelaData == atual) {
+                aux.push(item)
+            } else {
+                parcelas.push(aux)
+                aux = []
+
+                atual = parcelaData
+                aux.push(item)
+            }
+
+        })
+
+        if(aux.length != 0) {
+            parcelas.push(aux)
+        }
+
+        return response.send({message: parcelas})
+    }
     async one(request: Request, response: Response, next: NextFunction) {
         const parcelaRepository = getRepository(Parcela);
 

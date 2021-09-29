@@ -36,7 +36,7 @@ import { Text } from 'react-native-paper'
 type CardParcela = {
     id: number;
     conta: string;
-    data: string;
+    data: Date;
     valor: number;
 }
 
@@ -62,7 +62,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas}: CardParcelaProps
 
     const handleConfirm = (date: Date) => {
         const aux = item
-        aux.data = date.toLocaleDateString()
+        aux.data = date
         dataParcelas[aux.id] = aux
         setDataParcelas(dataParcelas)
         hideDatePicker();
@@ -85,7 +85,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas}: CardParcelaProps
 
     return (
         <ContainerCardParcela>
-            <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data}</TituloCardParcela>
+            <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data.toLocaleDateString()}</TituloCardParcela>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"
@@ -112,7 +112,7 @@ const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
 
     const [valor, setValor] =  useState('0')
     const [descricao, setDescricao] =  useState('')
-    const [dataPagamento, setDataPagamento] =  useState((new Date(Date.now())).toLocaleDateString())    
+    const [dataPagamento, setDataPagamento] =  useState((new Date(Date.now())))    
 
     const [selectedCategoria, setSelectedCategoria] = useState('0')
     const [selectedConta, setSelectedConta] = useState(0)
@@ -145,7 +145,7 @@ const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
         return date;
     }
     
-    const changeParcela = (text: string, date: string, newDataParcelas: CardParcela[]) => {
+    const changeParcela = (text: string, date: Date, newDataParcelas: CardParcela[]) => {
         setParcelas(text)
         console.log(`text: ${text} e date: ${date}`)
 
@@ -159,14 +159,14 @@ const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
         if (num < newDataParcelas.length) {
             for (var i = 0; i < num; i++) {
                 newDataParcelas[i].valor = valorParcelaDividido
-                newDataParcelas[i].data = i == 0 ? date : addMonths(toDate(date), 1).toLocaleDateString()
+                newDataParcelas[i].data = i == 0 ? date : addMonths(date, 1)
 
                 aux.push(newDataParcelas[i])
             }
         } else if (num > newDataParcelas.length) {            
             for (var i = 0; i < num; i++) {
                 
-                const adicaoDeUmMes = aux[i-1] == undefined ? date : addMonths(toDate(aux[i-1].data), 1).toLocaleDateString()
+                const adicaoDeUmMes = aux[i-1] == undefined ? date : addMonths(aux[i-1].data, 1)
                 if(i < newDataParcelas.length) {
                     newDataParcelas[i].valor = valorParcelaDividido
                     newDataParcelas[i].data = adicaoDeUmMes,
@@ -243,9 +243,9 @@ const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
       };
     
     const handleConfirm = (date: Date) => {                
-        setDataPagamento(date.toLocaleDateString())
+        setDataPagamento(date)
         hideDatePicker();
-        changeParcela(parcelas, date.toLocaleDateString(), dataParcelas)
+        changeParcela(parcelas, date, dataParcelas)
     };    
 
     useEffect(() => {                            
@@ -301,7 +301,7 @@ const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
 
             <InputControl>
                 <Label>Data de Pagamento</Label>
-                <Text onPress={showDatePicker} >{dataPagamento}</Text>
+                <Text onPress={showDatePicker} >{dataPagamento.toLocaleDateString()}</Text>
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="date"

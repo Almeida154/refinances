@@ -11,7 +11,7 @@ export type Transferencia = {
     valorTransferencia: number,
     contaOrigem: number | Conta,
     contaDestino: number | Conta,
-    dataTransferencia: string,
+    dataTransferencia: Date,
 }
 
 interface TransferenciaContextType {        

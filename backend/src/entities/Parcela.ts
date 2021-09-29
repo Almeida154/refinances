@@ -9,6 +9,7 @@ import {
 
 import { Category } from './Category';
 import { Conta } from './Conta';
+import { User } from './User';
 import { Lancamento } from './Lancamento';
 
 @Entity()
@@ -17,7 +18,7 @@ export class Parcela {
     id: number;
 
     @Column()
-    dataParcela: string;
+    dataParcela: Date;
 
     @Column({
         type: 'float'
@@ -28,6 +29,9 @@ export class Parcela {
     
     @ManyToOne(type => Conta, conta => conta.parcelasConta)
     contaParcela: Conta
+
+    @ManyToOne(type => User, user => user.parcelasUser)
+    userParcela: User
 
     @ManyToOne(type => Lancamento, lancamento => lancamento.parcelasLancamento)
     lancamentoParcela: Lancamento

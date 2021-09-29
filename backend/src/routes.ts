@@ -92,6 +92,7 @@ Routes.post('/installment/create', InstallmentController.save);
 Routes.get('/installment/read', InstallmentController.showRelations);
 Routes.get('/installment/read/:id', InstallmentController.one);
 Routes.put('/installment/edit/:id', InstallmentController.edit);
+Routes.post('/installment/groupbydate/:iduser', InstallmentController.GroupByDate);
 Routes.delete('/installment/remove/:id', InstallmentController.remove);
 Routes.delete('/installment/remove', InstallmentController.removeAll);
 
@@ -101,6 +102,7 @@ Routes.post('/transfer/create', TransferController.save);
 Routes.get('/transfer/read', TransferController.showRelations);
 Routes.get('/transfer/read/:id', TransferController.one);
 Routes.post('/transfer/findbyuser/:iduser', TransferController.FindByUser);
+Routes.post('/transfer/groupbydate/:iduser', TransferController.GroupByDate);
 Routes.put('/transfer/edit/:id', TransferController.edit);
 Routes.delete('/transfer/remove/:id', TransferController.remove);
 Routes.delete('/transfer/remove', TransferController.removeAll);

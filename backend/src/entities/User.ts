@@ -11,6 +11,7 @@ import {
 import { Category } from "./Category";
 import { Meta } from "./Meta";
 import { Conta } from "./Conta";
+import { Parcela } from "./Parcela";
 import { Necessidade } from "./Necessidade";
 
 import bcrypt from 'bcryptjs';
@@ -44,6 +45,9 @@ export class User {
 
     @OneToMany(type => Category, category => category.userCategory)
     categoriesUser: Category[];
+
+    @OneToMany(type => Parcela, Parcela => Parcela.userParcela)
+    parcelasUser: Parcela[];
 
     @OneToMany(type => Meta, meta => meta.userMeta)
     metasUser: Meta[];

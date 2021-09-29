@@ -63,7 +63,7 @@ class LancamentoController {
             .getMany();
         
         return response.send({ lancamentos });
-    }   
+    }       
 
     async FindByUser(request: Request, response: Response, next: NextFunction) {
         const lancamentoRepository = getRepository(Lancamento)

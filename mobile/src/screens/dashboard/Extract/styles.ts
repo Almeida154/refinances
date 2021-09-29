@@ -1,5 +1,24 @@
 import styled from 'styled-components/native'
 
+export const Header = styled.View`
+
+`
+export const PeriodoAnterior = styled.View`
+
+`
+export const PeriodoAtual = styled.View`
+
+`
+export const PeriodoPosterior = styled.View`
+
+`
+export const LabelPeriodo = styled.Text`
+
+`
+export const Body = styled.View`
+
+`
+
 export const CardItem = styled.View`
     width: 100%;
     display: flex;

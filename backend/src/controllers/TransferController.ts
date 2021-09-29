@@ -91,6 +91,65 @@ class TransferenciaController {
 
         return response.send({ message: transferencia });
     }
+
+    async GroupByDate(request: Request, response: Response, next: NextFunction) {
+        const transferenciaaRepository = getRepository(Transferencia);
+        const userRepository = getRepository(User);
+
+        const user = await userRepository.findOne({where: {id: request.params.iduser}})
+        console.log(user)
+
+        if(!user) {
+            return response.send({error: "Não existe um user com esse id"})
+        }
+        const data = await transferenciaaRepository.createQueryBuilder("transferencia")
+            .leftJoinAndSelect("transferencia.contaOrigem", "conta")
+            
+            .leftJoinAndSelect("transferencia.userTransferencia", "user")
+            .where("user.id = :id", {id: user.id})
+            .orderBy("transferencia.dataTransferencia", "ASC")            
+            .getMany()       
+
+        const dataContaDestino = await transferenciaaRepository.createQueryBuilder("transferencia")
+        .leftJoinAndSelect("transferencia.contaDestino", "conta")                    
+        .leftJoinAndSelect("transferencia.userTransferencia", "user")
+        .where("user.id = :id", {id: user.id})
+        .orderBy("transferencia.dataTransferencia", "ASC")            
+        .getMany()    
+
+
+        const transferencias = []
+
+        if(data.length == 0) {
+            return response.send({message: []})
+        }
+        let atual = data[0].dataTransferencia.toLocaleDateString()        
+
+        let aux = []        
+        
+        data.map((item, index) => {
+            const transferenciaData = item.dataTransferencia.toLocaleDateString()
+
+            item.contaDestino = dataContaDestino[index].contaDestino
+            
+            if(transferenciaData == atual) {
+                aux.push(item)
+            } else {
+                transferencias.push(aux)
+                aux = []
+
+                atual = transferenciaData
+                aux.push(item)
+            }
+
+        })
+
+        if(aux.length != 0) {
+            transferencias.push(aux)
+        }
+
+        return response.send({message: transferencias})
+    }
     
     async one(request: Request, response: Response, next: NextFunction) {
         const transferenciaRepository = getRepository(Transferencia);

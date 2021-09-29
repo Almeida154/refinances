@@ -24,7 +24,7 @@ export class Transferencia {
     valorTransferencia: number;
 
     @Column()
-    dataTransferencia: string;
+    dataTransferencia: Date;
 
     // Foreign Key
        

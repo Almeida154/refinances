@@ -30,7 +30,7 @@ const FormTransferencia= ({route, navigation}: PropsNavigation) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
     const [valor, setValor] =  useState('')
     const [descricao, setDescricao] =  useState('')
-    const [dataPagamento, setDataPagamento] =  useState(new Date(Date.now()).toLocaleDateString())        
+    const [dataPagamento, setDataPagamento] =  useState(new Date(Date.now()))        
 
     const {handleAdicionarTransferencia, handleLoadTransferencias} = UseTransferencias()
 
@@ -40,7 +40,7 @@ const FormTransferencia= ({route, navigation}: PropsNavigation) => {
 
     const handleConfirm = (date: Date) => {       
         hideDatePicker();
-        setDataPagamento(date.toLocaleDateString())
+        setDataPagamento(date)
     };
 
     const hideDatePicker = () => {
@@ -104,7 +104,7 @@ const FormTransferencia= ({route, navigation}: PropsNavigation) => {
 
                 <InputControl style={{marginBottom: 50}}>
                     <Label>Data de Transferencia</Label>
-                    <Text onPress={showDatePicker} >{dataPagamento}</Text>
+                    <Text onPress={showDatePicker} >{dataPagamento.toLocaleDateString()}</Text>
                     <DateTimePickerModal
                         isVisible={isDatePickerVisible}
                         mode="date"

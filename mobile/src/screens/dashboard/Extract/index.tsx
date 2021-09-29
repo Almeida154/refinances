@@ -9,6 +9,12 @@ import {Lancamento, UseLancamentos} from '../../../contexts/EntriesContext'
 import { ScrollView } from 'react-native-gesture-handler';
 
 import {
+    Header,
+    PeriodoAnterior,
+    PeriodoAtual,
+    PeriodoPosterior,
+    LabelPeriodo,
+    Body,
     CardItem,
     LabelDescricao,
     LabelCategoria,
@@ -60,10 +66,21 @@ const Extrato = () => {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <View style={styles.contentContainer}>      
-                    {
-                        console.log(`lancamento: ${typeof lancamentos} e transferencia: ${transferencias}`)
-                    }              
+                <Header>
+                    <PeriodoAnterior>
+                        <LabelPeriodo>Agosto</LabelPeriodo>
+                    </PeriodoAnterior>
+                    
+                    <PeriodoAtual>
+                        <LabelPeriodo>Setembro</LabelPeriodo>
+                    </PeriodoAtual>
+
+                    <PeriodoPosterior>
+                        <LabelPeriodo>Outubro</LabelPeriodo>
+                    </PeriodoPosterior>
+                </Header>
+                <Body style={styles.contentContainer}>      
+                            
                     {
                         loading || loadingTransferencia || todosDados.length == 0  ? <Text>Carregando</Text> : 
                         todosDados.map((item, index) => {                              
@@ -113,7 +130,7 @@ const Extrato = () => {
 
                         })
                     }
-                </View>
+                </Body>
             </View>
         </ScrollView>
     );
