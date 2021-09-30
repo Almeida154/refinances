@@ -16,7 +16,7 @@ export const LabelPeriodo = styled.Text`
 
 `
 export const Body = styled.View`
-
+    background-color: #fff
 `
 
 export const CardItem = styled.View`

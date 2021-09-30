@@ -85,6 +85,7 @@ class ParcelaController {
             .leftJoinAndSelect("parcela.contaParcela", "conta")
             .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
             .leftJoinAndSelect("parcela.userParcela", "user")
+            .leftJoinAndSelect("lancamento.categoryLancamento", "category")
             .where("user.id = :id", {id: user.id})
             .orderBy("parcela.dataParcela", "ASC")            
             .getMany()       

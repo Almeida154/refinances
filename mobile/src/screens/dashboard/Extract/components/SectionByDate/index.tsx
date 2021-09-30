@@ -1,11 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect } from 'react'
 
-import {Lancamento} from '../../../../../contexts/EntriesContext'
+import {Parcela} from '../../../../../contexts/InstallmentContext'
 import {UseTransferencias, Transferencia} from '../../../../../contexts/TransferContext'
 
-import CardEntry from '../CardEntry'
+import CardInstallment from '../CardInstallment'
 import CardTransfer from '../CardTransfer'
+
+import converterDataParaManuscrito from '../../../../../helpers/converterDataParaManuscrito'
 
 import {
     Container,
@@ -16,27 +18,41 @@ import {
 
 type PropsSectionByDate = {
     date: string,
-    lancamentos: Lancamento[],
+    parcelas: Parcela[],
     transferencias: Transferencia[]
 }
 
-const SectionByDate = ({date, lancamentos, transferencias}: PropsSectionByDate) => {    
-    
+const SectionByDate = ({date, parcelas, transferencias}: PropsSectionByDate) => {    
+        
+    let temTransferencias = true
+    let temParcelas = true
+
+    try {
+        transferencias.map(item => {})
+    } catch (error) {
+        temTransferencias = false
+    }
+        
+    try {
+        parcelas.map(item => {})
+    } catch (error) {
+        temParcelas = false
+    }
     return (
         <Container>
             <HeaderDate>
-                <LabelDate>{date}</LabelDate>
+                <LabelDate>{converterDataParaManuscrito(date)}</LabelDate>
             </HeaderDate>
             <BodyEntries>
                 {
-                    lancamentos.map((item, index) =>
-                        <CardEntry item={item} key={index}/>
+                    temParcelas && parcelas.map((item, index) =>
+                        <CardInstallment item={item} key={index}/>
                     )
 
                 }
                 {
-                    transferencias.map((item, index) =>
-                        <CardTransfer item={item} key={index}/>
+                    temTransferencias && transferencias.map((item, index) =>
+                        <CardTransfer item={item} key={-index}/>
                     )
                 }
             </BodyEntries>

@@ -17,6 +17,8 @@ type CardTransferProps = {
 }
 
 const CardTransfer = ({item}: CardTransferProps) => {
+    
+    
     return(
         <ContainerItem>
             <SectionIcon>

@@ -4,9 +4,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {Transferencia, UseTransferencias} from '../../../contexts/TransferContext'
-import {Lancamento, UseLancamentos} from '../../../contexts/EntriesContext'
+import {Parcela, UseParcelas} from '../../../contexts/InstallmentContext'
 
 import { ScrollView } from 'react-native-gesture-handler';
+
+import SectionByDate from './components/SectionByDate'
 
 import {
     Header,
@@ -24,45 +26,36 @@ import {
 } from './styles'
 
 const Extrato = () => {
-    const {lancamentos, loading, handleLoadLancamentos} = UseLancamentos()
-    const {transferencias, loadingTransferencia, handleLoadTransferencias} = UseTransferencias()
-
-    //Lancamento e transferencia
-    const [todosDados, setTodosDados] = useState([] as (Lancamento | Transferencia)[])
+    const {parcelas, loadingParcela, handleInstallmentGroupByDate} = UseParcelas()
+    const {transferencias, loadingTransferencia, handleTransferGroupByDate} = UseTransferencias()        
+    
+    let indexOfTransfer = 0
 
     useEffect(() => {
         async function loadTransferencias() {
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
                         
-            handleLoadTransferencias(idUser)
+            handleTransferGroupByDate(idUser)
         }
 
-        async function loadLancamentos() {
+        async function loadParcelas() {
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
                         
-            handleLoadLancamentos(idUser)
+            handleInstallmentGroupByDate(idUser)
         }
         
-        loadLancamentos()
+        loadParcelas()
         loadTransferencias()
         
     }, [])
 
-    //Esses useEffect para caso ocorra alguma alteração nos dados, recarregar todos no TodosDados
-    useEffect(() => {
-        console.log('Transferencias: ', transferencias)
-        if(!loading && !loadingTransferencia)
-            setTodosDados([...lancamentos, ...transferencias])
-    }, [loadingTransferencia])
-    
-    useEffect(() => {
-        if(!loading && !loadingTransferencia)
-            setTodosDados([...lancamentos, ...transferencias])
+    // useEffect(() => {
+    //     console.log(!parcelas ? "Nao foi" : parcelas)
+    //     console.log(!transferencias ? "Nao foi" : transferencias)
+    // }, [parcelas, transferencias])
 
-            
-    }, [loading])        
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -81,55 +74,32 @@ const Extrato = () => {
                 </Header>
                 <Body style={styles.contentContainer}>      
                             
-                    {
-                        loading || loadingTransferencia || todosDados.length == 0  ? <Text>Carregando</Text> : 
-                        todosDados.map((item, index) => {                              
-                            console.log(`item ${index}: `, item)                                          
-                            try {                                
-                                if(item.descricaoLancamento)    {
-                                    const readLancamento = item as Lancamento                                
-    
-                                    if(readLancamento.id == undefined) return
-                                    
-                                    let total = 0
-                                    readLancamento.parcelasLancamento.map(item => {
-                                        total += item.valorParcela
-                                    })
-                                    
-                                    console.log(readLancamento)
-                                    return (
-                                        <CardItem key={index}>
-                                            <Section>
-                                                <LabelDescricao>{readLancamento.descricaoLancamento}</LabelDescricao>
-                                                <LabelCategoria>{(typeof readLancamento.categoryLancamento).toString() == 'string' ? readLancamento.categoryLancamento : readLancamento.categoryLancamento.nomeCategoria}</LabelCategoria></Section>
-                                            <Section>
-                                                <LabelLancamento>{readLancamento.tipoLancamento}</LabelLancamento>
-                                                <LabelTotal>{total}</LabelTotal>
-                                            </Section>
-                                        </CardItem>
-                                    )
-                                } else if(item.contaOrigem) {
-                                    const readTransferencia = item as Transferencia
-                                    
-                                    return (
-                                        <CardItem key={index}>
-                                            <Section>
-                                                <LabelDescricao>{readTransferencia.descricaoTransferencia}</LabelDescricao>
-                                                <LabelCategoria>{readTransferencia.valorTransferencia}</LabelCategoria></Section>
-                                            <Section>
-                                                <LabelLancamento>{readTransferencia.contaOrigem.descricao}</LabelLancamento>
-                                                <LabelTotal>{readTransferencia.contaDestino.descricao}</LabelTotal>
-                                            </Section>
-                                        </CardItem>
-                                    )
-                                }                                                    
-                            } catch (error) {
-                                
-                            }
-                            
+                {
+                    !loadingParcela && parcelas.map((item: any, index) => {
+                        if(index == 0)
+                            indexOfTransfer = 0
 
-                        })
-                    }
+                        if(!item[0]) return
+
+                        const dateOfInstallment  = new Date(item[0].dataParcela)
+
+                        let aux: any  = []
+
+                        for(var i = indexOfTransfer;i < transferencias.length;i++) {
+                            if(transferencias[i][0] && dateOfInstallment > new Date(transferencias[i][0].dataTransferencia)) {
+                                indexOfTransfer = i
+                                break
+                            }
+
+                            aux = transferencias[i]
+                        }
+
+                       return(
+                           <SectionByDate date={dateOfInstallment.toLocaleDateString()} parcelas={item} transferencias={aux}/>
+                       )
+                    })
+                }
+
                 </Body>
             </View>
         </ScrollView>

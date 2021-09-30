@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { ToastAndroid } from 'react-native';
 
 import api from '../services/api'
 
@@ -12,7 +13,10 @@ export type Parcela = {
 
 interface ParcelaContextType {        
     parcelas: Parcela[] ,
+
+    loadingParcela: boolean,
     handleAdicionarParcela(parcelas: Parcela[]): Promise<void>,
+    handleInstallmentGroupByDate(idUser: number): Promise<void>,
 }
 
 const ParcelasContext = createContext<ParcelaContextType>({} as ParcelaContextType);
@@ -20,6 +24,7 @@ export const UseParcelas = () => useContext(ParcelasContext);
 
 export const ParcelaProvider: React.FC = ({ children }) => {
     const [parcelas, setParcelas] = useState<Parcela[]>([{}] as Parcela[])
+    const [loadingParcela, setLoadingParcela] = useState(false)
 
     async function handleAdicionarParcela(parcelasProps: Parcela[]) {
         
@@ -49,6 +54,23 @@ export const ParcelaProvider: React.FC = ({ children }) => {
         }
     }
 
+    async function handleInstallmentGroupByDate(idUser: number) {
+        setLoadingParcela(true)
+        try {
+            const response = await api.post(`/installment/groupbydate/${idUser}`)
+
+            if(response.data.error) {
+                ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
+            }
+            
+            setParcelas(response.data.message)
+
+            setLoadingParcela(false)
+        } catch (error) {
+            console.log("Deu um erro no handleLoadGroupByDate", error)
+        }
+    }
+
     /*
     async function handleLoadParcelas(idUser: number) {
         
@@ -62,7 +84,7 @@ export const ParcelaProvider: React.FC = ({ children }) => {
     }*/
     
     return (
-        <ParcelasContext.Provider value={{ parcelas, handleAdicionarParcela }}>
+        <ParcelasContext.Provider value={{ parcelas, handleAdicionarParcela, handleInstallmentGroupByDate, loadingParcela }}>
             {children}
         </ParcelasContext.Provider>
     );

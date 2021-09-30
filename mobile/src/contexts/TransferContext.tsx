@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { Alert } from 'react-native';
+import { Alert, ToastAndroid } from 'react-native';
 
 import api from '../services/api'
 
@@ -20,6 +20,7 @@ interface TransferenciaContextType {
 
     handleAdicionarTransferencia(transferencia: Transferencia): Promise<string>,
     handleLoadTransferencias(idUser: number): Promise<void>
+    handleTransferGroupByDate(idUser: number): Promise<void>
 }
 
 const TransferenciasContext = createContext<TransferenciaContextType>({} as TransferenciaContextType);
@@ -50,6 +51,23 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
         }
     }    
 
+    async function handleTransferGroupByDate(idUser: number) {
+        setLoadingTransferencia(true)
+        try {
+            const response = await api.post(`/transfer/groupbydate/${idUser}`)
+
+            if(response.data.error) {
+                ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
+            }
+
+            setTransferencias(response.data.message)
+
+            setLoadingTransferencia(false)
+        } catch (error) {
+            console.log("Deu um erro no handleLoadGroupByDate", error)
+        }
+    }
+
     async function handleLoadTransferencias(idUser: number) {
         setLoadingTransferencia(true)
         try {
@@ -64,7 +82,7 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
     }
     
     return (
-        <TransferenciasContext.Provider value={{ transferencias, loadingTransferencia, handleLoadTransferencias, handleAdicionarTransferencia }}>
+        <TransferenciasContext.Provider value={{ handleTransferGroupByDate, transferencias, loadingTransferencia, handleLoadTransferencias, handleAdicionarTransferencia }}>
             {children}
         </TransferenciasContext.Provider>
     );
