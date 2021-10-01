@@ -20,6 +20,7 @@ export type Lancamento = {
 interface LancamentoContextType {        
     lancamentos: Lancamento[],
     loading: boolean
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
 
     handleLoadLancamentos(idUser: number): Promise<void>
     handleAdicionarLancamento(lancamentoProps: Lancamento, idUser: number ): Promise<string>
@@ -93,8 +94,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
 
             loadLancamentos.push(newLancamento);
             setLancamentos(loadLancamentos);
-            
-            setLoading(false)
+                        
             return ''
 
             // console.log("LAnãmentos: ", lancamentos)
@@ -104,7 +104,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     }
     
     return (
-        <LancamentoContext.Provider value={{ loading, handleLoadLancamentos, lancamentos, handleAdicionarLancamento }}>
+        <LancamentoContext.Provider value={{ setLoading, loading, handleLoadLancamentos, lancamentos, handleAdicionarLancamento }}>
             {children}
         </LancamentoContext.Provider>
     );

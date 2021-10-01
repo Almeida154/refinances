@@ -27,7 +27,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
     // item.parcelasLancamento.map(item => {
     //     total += item.valorParcela
     // })
-    console.log(item)
+    // console.log(item)
     return (
         <ContainerItem>
             <SectionLancamento>

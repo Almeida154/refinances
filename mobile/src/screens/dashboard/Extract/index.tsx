@@ -3,10 +3,15 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
 import {Transferencia, UseTransferencias} from '../../../contexts/TransferContext'
 import {Parcela, UseParcelas} from '../../../contexts/InstallmentContext'
 
 import { ScrollView } from 'react-native-gesture-handler';
+
+import {converterNumeroParaData} from '../../../helpers/converterDataParaManuscrito'
+import {addMonths, toDate} from '../../../helpers/manipularDatas'
 
 import SectionByDate from './components/SectionByDate'
 
@@ -17,22 +22,76 @@ import {
     PeriodoPosterior,
     LabelPeriodo,
     Body,
-    CardItem,
-    LabelDescricao,
-    LabelCategoria,
-    LabelLancamento,
-    LabelTotal,
-    Section
+    Container,
+   
 } from './styles'
 
 const Extrato = () => {
     const {parcelas, loadingParcela, handleInstallmentGroupByDate} = UseParcelas()
     const {transferencias, loadingTransferencia, handleTransferGroupByDate} = UseTransferencias()        
+    const [dateCurrent, setDateCurrent] = useState(new Date(Date.now()).toLocaleDateString())
     
+    const [allDatas, setAllDatas] = useState<any>([])
+
     let indexOfTransfer = 0
 
-    useEffect(() => {
-        async function loadTransferencias() {
+    function loadInAllDatas() {
+        var i=0, j=0
+        console.log("Foi aqui no load")
+        
+       if(!parcelas[i][0]){
+            loadParcelas()
+            return
+        }
+
+        if(!transferencias[i][0]){
+            loadTransferencias()
+            return
+        }
+
+        let aux = []
+        
+            while(i < parcelas.length) {
+            const dateOfInstallment = new Date(parcelas[i][0].dataParcela).toLocaleDateString()
+            const dateOfTransfer = new Date(transferencias[j][0].dataTransferencia).toLocaleDateString()
+
+                // console.log(toDate(dateOfInstallment), toDate(dateOfTransfer))
+
+                if(toDate(dateOfInstallment) > toDate(dateOfTransfer)) {
+                    aux.push([[], transferencias[j]])
+                    j++
+                }
+                else if(dateOfInstallment == dateOfTransfer) {
+                    aux.push([parcelas[i], transferencias[j]])
+                    j++;
+                    i++
+                }
+                else{
+                    aux.push([parcelas[i], []])
+                    i++
+                }
+            
+             }
+
+             while(j < transferencias.length) {
+                aux.push([[], transferencias[j]])
+                j++
+             }
+
+            //  console.log(j, transferencias.length)
+            //  console.log(aux)
+
+             setAllDatas(aux)
+             console.log("Mudou o alldatas")
+    }
+
+    function updateDate(action: number) {
+        const newDate = addMonths(toDate(dateCurrent), action)
+        setDateCurrent(newDate.toLocaleDateString())
+        console.log(newDate.toLocaleDateString())
+    }
+
+    async function loadTransferencias() {
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
                         
@@ -45,77 +104,74 @@ const Extrato = () => {
                         
             handleInstallmentGroupByDate(idUser)
         }
-        
+
+    useEffect(() => {            
         loadParcelas()
         loadTransferencias()
         
     }, [])
 
-    // useEffect(() => {
-    //     console.log(!parcelas ? "Nao foi" : parcelas)
-    //     console.log(!transferencias ? "Nao foi" : transferencias)
-    // }, [parcelas, transferencias])
+   
+    useEffect(() => {
+        console.log("Foi aqui transfer")
+        loadInAllDatas()
+        
+    }, [transferencias])
+
+    useEffect(() => {
+        console.log("Foi aqui parcelas")
+        loadInAllDatas()
+    }, [parcelas])        
+    
+
+    useEffect(() => {
+        console.log(dateCurrent)
+    }, [dateCurrent])
+
+    function GetMonth(date: string) {
+        const [dia, mes, ano] = dateCurrent
+        return mes
+    }
 
     return (
         <ScrollView>
-            <View style={styles.container}>
+            <Container >
                 <Header>
-                    <PeriodoAnterior>
-                        <LabelPeriodo>Agosto</LabelPeriodo>
+                    <PeriodoAnterior onPress={() => updateDate(-1)}>
+                        <Icon size={24} name={"arrow-back-ios"}/>
                     </PeriodoAnterior>
                     
                     <PeriodoAtual>
-                        <LabelPeriodo>Setembro</LabelPeriodo>
+                        <LabelPeriodo>{converterNumeroParaData(GetMonth(dateCurrent))}</LabelPeriodo>
                     </PeriodoAtual>
 
-                    <PeriodoPosterior>
-                        <LabelPeriodo>Outubro</LabelPeriodo>
+                    <PeriodoPosterior onPress={() => updateDate(1)}>
+                        <Icon size={24} name={"arrow-forward-ios"}/>
                     </PeriodoPosterior>
                 </Header>
-                <Body style={styles.contentContainer}>      
-                            
+                <Body>      
+
                 {
-                    !loadingParcela && parcelas.map((item: any, index) => {
-                        if(index == 0)
-                            indexOfTransfer = 0
+                    allDatas.length != 0 && allDatas.map(((item, index) => {
+                        const date: Date = !item[0][0] ? new Date(item[1][0].dataTransferencia) : new Date(item[0][0].dataParcela)
 
-                        if(!item[0]) return
-
-                        const dateOfInstallment  = new Date(item[0].dataParcela)
-
-                        let aux: any  = []
-
-                        for(var i = indexOfTransfer;i < transferencias.length;i++) {
-                            if(transferencias[i][0] && dateOfInstallment > new Date(transferencias[i][0].dataTransferencia)) {
-                                indexOfTransfer = i
-                                break
-                            }
-
-                            aux = transferencias[i]
-                        }
+                        // console.log(date.toLocaleDateString())
+                        // console.log('parcelas', item[0])
+                        // console.log('transferencias', item[1])
 
                        return(
-                           <SectionByDate date={dateOfInstallment.toLocaleDateString()} parcelas={item} transferencias={aux}/>
+                           <SectionByDate date={date.toLocaleDateString()} parcelas={item[0]} transferencias={item[1]}/>
                        )
-                    })
+                    }))
                 }
 
                 </Body>
-            </View>
+            </Container>
         </ScrollView>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'pink',
-    },
-    contentContainer: {
-        marginTop: 50,
-        alignItems: 'center',
-        paddingHorizontal: 20,
-    },
+const styles = StyleSheet.create({       
     title: {
         fontSize: 20,
         color: '#fff',
