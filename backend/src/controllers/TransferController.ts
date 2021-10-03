@@ -95,18 +95,21 @@ class TransferenciaController {
     async GroupByDate(request: Request, response: Response, next: NextFunction) {
         const transferenciaaRepository = getRepository(Transferencia);
         const userRepository = getRepository(User);
+        const rawDate = new Date(request.body.rawDate)
 
         const user = await userRepository.findOne({where: {id: request.params.iduser}})
-        console.log(user)
+
+        const firstDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth(), 1)
+        const lastDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth() + 1, 0)        
 
         if(!user) {
             return response.send({error: "Não existe um user com esse id"})
         }
         const data = await transferenciaaRepository.createQueryBuilder("transferencia")
-            .leftJoinAndSelect("transferencia.contaOrigem", "conta")
-            
+            .leftJoinAndSelect("transferencia.contaOrigem", "conta")            
             .leftJoinAndSelect("transferencia.userTransferencia", "user")
             .where("user.id = :id", {id: user.id})
+            .where("transferencia.dataTransferencia BETWEEN :firstDayOfMonth AND :lastDayOfMonth", {firstDayOfMonth, lastDayOfMonth})
             .orderBy("transferencia.dataTransferencia", "ASC")            
             .getMany()       
 
@@ -114,6 +117,7 @@ class TransferenciaController {
         .leftJoinAndSelect("transferencia.contaDestino", "conta")                    
         .leftJoinAndSelect("transferencia.userTransferencia", "user")
         .where("user.id = :id", {id: user.id})
+        .where("transferencia.dataTransferencia BETWEEN :firstDayOfMonth AND :lastDayOfMonth", {firstDayOfMonth, lastDayOfMonth})
         .orderBy("transferencia.dataTransferencia", "ASC")            
         .getMany()    
 

@@ -37,3 +37,31 @@ export const TextButton = styled.Text`
     color: #000;
     font-size: 18px;
 `
+
+export const ButtonPress = styled.TouchableHighlight`
+
+`
+
+export const Circle = styled.View`
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+
+    border-radius: 50px;
+`
+
+export const BodyModalize = styled.View`
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+    flex-direction: column;
+    padding: 50px;
+
+`
+
+export const RowColor = styled.View`
+    display: flex;
+
+    flex-direction: row;
+`

@@ -33,18 +33,19 @@ const Extrato = () => {
     
     const [allDatas, setAllDatas] = useState<any>([])
 
-    let indexOfTransfer = 0
+    let carregandoParcelas = false, carregandoTransferencias = false
 
     function loadInAllDatas() {
         var i=0, j=0
-        console.log("Foi aqui no load")
-        
-       if(!parcelas[i][0]){
+        console.log("Foi aqui no load")                
+
+        console.log(parcelas)
+       if(parcelas[i] && !parcelas[i][0]){
             loadParcelas()
             return
         }
 
-        if(!transferencias[i][0]){
+        if(transferencias[i] && !transferencias[i][0]){
             loadTransferencias()
             return
         }
@@ -52,37 +53,46 @@ const Extrato = () => {
         let aux = []
         
             while(i < parcelas.length) {
-            const dateOfInstallment = new Date(parcelas[i][0].dataParcela).toLocaleDateString()
-            const dateOfTransfer = new Date(transferencias[j][0].dataTransferencia).toLocaleDateString()
+                // console.log(i)
 
-                // console.log(toDate(dateOfInstallment), toDate(dateOfTransfer))
+                // console.log(transferencias[j])
 
-                if(toDate(dateOfInstallment) > toDate(dateOfTransfer)) {
-                    aux.push([[], transferencias[j]])
-                    j++
+                const dateOfInstallment = new Date(parcelas[i][0].dataParcela).toLocaleDateString()
+                let dateOfTransfer
+
+                if(transferencias[j])
+                    dateOfTransfer = new Date(transferencias[j][0].dataTransferencia).toLocaleDateString()                
+
+
+                    // console.log(toDate(dateOfInstallment), toDate(dateOfTransfer))
+
+                    if(!dateOfTransfer || toDate(dateOfInstallment) < toDate(dateOfTransfer)) {
+                        aux.push([parcelas[i], []])
+                        i++
+                    }
+                    else if(toDate(dateOfInstallment) > toDate(dateOfTransfer)) {
+                        aux.push([[], transferencias[j]])
+                        j++
+                    }
+                    else {
+                        aux.push([parcelas[i], transferencias[j]])
+                        j++;
+                        i++
+                    }
+                
                 }
-                else if(dateOfInstallment == dateOfTransfer) {
-                    aux.push([parcelas[i], transferencias[j]])
-                    j++;
-                    i++
-                }
-                else{
-                    aux.push([parcelas[i], []])
-                    i++
-                }
+
             
-             }
-
-             while(j < transferencias.length) {
+            while(j < transferencias.length) {
                 aux.push([[], transferencias[j]])
                 j++
-             }
+            }
 
             //  console.log(j, transferencias.length)
             //  console.log(aux)
 
-             setAllDatas(aux)
-             console.log("Mudou o alldatas")
+            setAllDatas(aux)
+            console.log("Mudou o alldatas")
     }
 
     function updateDate(action: number) {
@@ -92,17 +102,20 @@ const Extrato = () => {
     }
 
     async function loadTransferencias() {
+           carregandoTransferencias = true
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
                         
-            handleTransferGroupByDate(idUser)
+            handleTransferGroupByDate(idUser, toDate(dateCurrent).toISOString())
         }
 
         async function loadParcelas() {
+            console.log("Veio aqui")
+            carregandoTransferencias = false
             const getUser = await AsyncStorage.getItem('user')
             const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
                         
-            handleInstallmentGroupByDate(idUser)
+            handleInstallmentGroupByDate(idUser, toDate(dateCurrent).toISOString())
         }
 
     useEffect(() => {            
@@ -110,26 +123,31 @@ const Extrato = () => {
         loadTransferencias()
         
     }, [])
-
+    
    
     useEffect(() => {
-        console.log("Foi aqui transfer")
-        loadInAllDatas()
+        carregandoTransferencias = false
+
+        if(!carregandoParcelas)
+            loadInAllDatas()
         
     }, [transferencias])
 
     useEffect(() => {
-        console.log("Foi aqui parcelas")
-        loadInAllDatas()
+        carregandoParcelas = false
+
+        if(!carregandoTransferencias)
+            loadInAllDatas()
     }, [parcelas])        
     
 
     useEffect(() => {
-        console.log(dateCurrent)
+        loadParcelas()
+        loadTransferencias()
     }, [dateCurrent])
 
     function GetMonth(date: string) {
-        const [dia, mes, ano] = dateCurrent
+        const [dia, mes, ano] = dateCurrent.split('/')
         return mes
     }
 

@@ -11,9 +11,6 @@ import {
     TouchableHighlight
 } from 'react-native';
 
-import ContasList from './components/contas'
-import TetoDeGastos from './components/tetoDeGastos'
-
 import Icon from 'react-native-vector-icons/AntDesign'
 
 
@@ -23,6 +20,8 @@ const ITEM_WIDTH = width * 0.9;
 const ITEM_HEIGHT = ITEM_WIDTH * 0.9;
 
 import {UseAuth} from '../../../contexts/AuthContext'
+
+import SectionAccount from './components/SectionAccount'
 
 const Home = () => {
     const { user, handleLogout } = UseAuth()    
@@ -38,7 +37,7 @@ const Home = () => {
                         </View>
 
                         <View style={styles.textBoasVindas}>
-                            <Text style={{ color: '#A58383', fontSize: 20 }}>Boa tarde!</Text>
+                            <Text style={{ color: '#fff', fontSize: 20 }}>Boa tarde!</Text>
 
                             <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{user.nomeUsuario}</Text>
                         </View>
@@ -52,13 +51,8 @@ const Home = () => {
                 </View>
                 {/* Scrollable Content */}
                 <View style={styles.containerBody}>
-                    <View style={styles.sectionSaldoGeral}>
-                        <Text style={{ color: '#ffffff', fontSize: 25 }}>Saldo Geral</Text>
-                        <Text style={{ color: '#74b57c', fontSize: 20 }}> R$ 0,000.00</Text>
-                    </View>
-
-                    <ContasList />
-                    <TetoDeGastos />
+                    
+                    <SectionAccount />
                 </View>
             </View>
         </ScrollView>
@@ -70,7 +64,7 @@ export default Home;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#12181d',
+        backgroundColor: '#E0E0E0',
     },
     headerContainer: {
         alignItems: 'center',

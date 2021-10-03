@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Repository,  } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 
 import { Parcela } from "../entities/Parcela";
@@ -74,9 +74,12 @@ class ParcelaController {
     async GroupByDate(request: Request, response: Response, next: NextFunction) {
         const parcelaRepository = getRepository(Parcela);
         const userRepository = getRepository(User);
+        const rawDate = new Date(request.body.rawDate)
 
-        const user = await userRepository.findOne({where: {id: request.params.iduser}})
-        console.log(user)
+        const firstDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth(), 1)
+        const lastDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth() + 1, 0)        
+
+        const user = await userRepository.findOne({where: {id: request.params.iduser}})        
 
         if(!user) {
             return response.send({error: "Não existe um user com esse id"})
@@ -87,6 +90,7 @@ class ParcelaController {
             .leftJoinAndSelect("parcela.userParcela", "user")
             .leftJoinAndSelect("lancamento.categoryLancamento", "category")
             .where("user.id = :id", {id: user.id})
+            .where("parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth", {firstDayOfMonth, lastDayOfMonth})
             .orderBy("parcela.dataParcela", "ASC")            
             .getMany()       
 

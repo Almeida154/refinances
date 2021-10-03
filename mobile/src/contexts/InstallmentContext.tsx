@@ -16,7 +16,7 @@ interface ParcelaContextType {
 
     loadingParcela: boolean,
     handleAdicionarParcela(parcelas: Parcela[]): Promise<void>,
-    handleInstallmentGroupByDate(idUser: number): Promise<void>,
+    handleInstallmentGroupByDate(idUser: number, rawDate: string): Promise<void>,
 }
 
 const ParcelasContext = createContext<ParcelaContextType>({} as ParcelaContextType);
@@ -54,10 +54,12 @@ export const ParcelaProvider: React.FC = ({ children }) => {
         }
     }
 
-    async function handleInstallmentGroupByDate(idUser: number) {
+    async function handleInstallmentGroupByDate(idUser: number, rawDate: string) {
         setLoadingParcela(true)
         try {
-            const response = await api.post(`/installment/groupbydate/${idUser}`)
+            const response = await api.post(`/installment/groupbydate/${idUser}`, {
+                rawDate
+            })
 
             if(response.data.error) {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)

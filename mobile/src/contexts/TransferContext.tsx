@@ -20,7 +20,7 @@ interface TransferenciaContextType {
 
     handleAdicionarTransferencia(transferencia: Transferencia): Promise<string>,
     handleLoadTransferencias(idUser: number): Promise<void>
-    handleTransferGroupByDate(idUser: number): Promise<void>
+    handleTransferGroupByDate(idUser: number, rawDate: string): Promise<void>
 }
 
 const TransferenciasContext = createContext<TransferenciaContextType>({} as TransferenciaContextType);
@@ -51,10 +51,12 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
         }
     }    
 
-    async function handleTransferGroupByDate(idUser: number) {
+    async function handleTransferGroupByDate(idUser: number, rawDate: string) {
         setLoadingTransferencia(true)
         try {
-            const response = await api.post(`/transfer/groupbydate/${idUser}`)
+            const response = await api.post(`/transfer/groupbydate/${idUser}`, {
+                rawDate
+            })
 
             if(response.data.error) {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
