@@ -1,5 +1,7 @@
 import styled from 'styled-components/native'
 
+import {Dimensions} from 'react-native'
+
 export const Container = styled.View`
 
 `
@@ -36,7 +38,13 @@ export const Body = styled.View`
 
     padding-left: 20px;
     padding-right: 20px;
+
     
+
+`
+
+export const ScrollBody = styled.ScrollView`
+    height: ${`${Dimensions.get('window').height * 0.65}px`};
 `
 
 export const CardItem = styled.View`
@@ -51,5 +59,34 @@ export const CardItem = styled.View`
 
 export const Section = styled.View`
     display: flex;    
-    flex-direction: column
+    flex-direction: column;
+`
+
+export const Footer = styled.View`
+    display: flex;
+    
+    background-color: #fff;
+
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    padding: 20px;
+`
+export const CardBalance = styled.View`
+
+    width: 100px;
+    height: 100px;
+
+    align-items: center;
+    padding: 10px;
+
+    background-color: #F6F6F6;
+    border-radius: 10px;
+`
+export const LabelBalance = styled.Text`
+    font-weight: bold;
+`
+export const LabelValueBalance = styled.Text`
+
 `

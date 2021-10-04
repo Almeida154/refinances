@@ -23,7 +23,11 @@ import {
     LabelPeriodo,
     Body,
     Container,
-   
+    Footer,
+    CardBalance,
+    LabelBalance,
+    LabelValueBalance,
+    ScrollBody
 } from './styles'
 
 const Extrato = () => {
@@ -33,7 +37,29 @@ const Extrato = () => {
     
     const [allDatas, setAllDatas] = useState<any>([])
 
+    const [gasto, setGasto] = useState('00,00')
+    const [ganho, setGanho] = useState('00,00')
+    const [saldo, setSaldo] = useState('00,00')
+
     let carregandoParcelas = false, carregandoTransferencias = false
+
+    function calcBalance(alldata: any[]) {
+        let gastos = 0, ganhos = 0, balance = 0
+
+        alldata.map((item, index) => {
+            item[0].map((parcela: Parcela) => {
+                if(parcela.lancamentoParcela.tipoLancamento == 'despesa') {
+                    gastos += parcela.valorParcela
+                } else if(parcela.lancamentoParcela.tipoLancamento == 'receita') {
+                    ganhos += parcela.valorParcela
+                }
+            })
+        })
+
+        setGasto(gastos.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}))
+        setGanho(ganhos.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}))
+        setSaldo((ganhos - gastos).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}))
+    }
 
     function loadInAllDatas() {
         var i=0, j=0
@@ -92,6 +118,8 @@ const Extrato = () => {
             //  console.log(aux)
 
             setAllDatas(aux)
+            calcBalance(aux)
+
             console.log("Mudou o alldatas")
     }
 
@@ -152,40 +180,56 @@ const Extrato = () => {
     }
 
     return (
-        <ScrollView>
-            <Container >
-                <Header>
-                    <PeriodoAnterior onPress={() => updateDate(-1)}>
-                        <Icon size={24} name={"arrow-back-ios"}/>
-                    </PeriodoAnterior>
-                    
-                    <PeriodoAtual>
-                        <LabelPeriodo>{converterNumeroParaData(GetMonth(dateCurrent))}</LabelPeriodo>
-                    </PeriodoAtual>
+        <Container >
+                <ScrollBody>
+                    <Header>
+                        <PeriodoAnterior onPress={() => updateDate(-1)}>
+                            <Icon size={24} name={"arrow-back-ios"}/>
+                        </PeriodoAnterior>
+                        
+                        <PeriodoAtual>
+                            <LabelPeriodo>{converterNumeroParaData(GetMonth(dateCurrent))}</LabelPeriodo>
+                        </PeriodoAtual>
 
-                    <PeriodoPosterior onPress={() => updateDate(1)}>
-                        <Icon size={24} name={"arrow-forward-ios"}/>
-                    </PeriodoPosterior>
-                </Header>
-                <Body>      
+                        <PeriodoPosterior onPress={() => updateDate(1)}>
+                            <Icon size={24} name={"arrow-forward-ios"}/>
+                        </PeriodoPosterior>
+                    </Header>
+                    <Body>      
 
-                {
-                    allDatas.length != 0 && allDatas.map(((item, index) => {
-                        const date: Date = !item[0][0] ? new Date(item[1][0].dataTransferencia) : new Date(item[0][0].dataParcela)
+                    {
+                        allDatas.length != 0 && allDatas.map(((item, index) => {
+                            const date: Date = !item[0][0] ? new Date(item[1][0].dataTransferencia) : new Date(item[0][0].dataParcela)
 
-                        // console.log(date.toLocaleDateString())
-                        // console.log('parcelas', item[0])
-                        // console.log('transferencias', item[1])
+                            // console.log(date.toLocaleDateString())
+                            // console.log('parcelas', item[0])
+                            // console.log('transferencias', item[1])
 
-                       return(
-                           <SectionByDate date={date.toLocaleDateString()} parcelas={item[0]} transferencias={item[1]}/>
-                       )
-                    }))
-                }
+                        return(
+                            <SectionByDate date={date.toLocaleDateString()} parcelas={item[0]} transferencias={item[1]}/>
+                        )
+                        }))
+                    }
 
-                </Body>
+                    </Body>
+                </ScrollBody>
+                <Footer>
+                    <CardBalance>
+                        <LabelBalance >Ganhos</LabelBalance>
+                        <LabelValueBalance style={{color: '#6CB760'}}>{ganho}</LabelValueBalance>
+                    </CardBalance>
+
+                    <CardBalance>
+                        <LabelBalance >Gastos</LabelBalance>
+                        <LabelValueBalance style={{color: '#EE4266'}}>{gasto}</LabelValueBalance>
+                    </CardBalance>
+
+                    <CardBalance>
+                        <LabelBalance >Saldo Atual</LabelBalance>
+                        <LabelValueBalance style={{color: '#999'}}>{saldo}</LabelValueBalance>
+                    </CardBalance>
+                </Footer>
             </Container>
-        </ScrollView>
     );
 };
 
