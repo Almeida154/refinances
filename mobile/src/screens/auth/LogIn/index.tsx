@@ -23,6 +23,7 @@ import {
 // Components
 import Button from '../../../components/Button';
 import ButtonGoogle from '../../../components/ButtonGoogle';
+import InputText from '../../../components/InputText';
 
 // Icons
 import BackArrowPink from '../../../assets/images/svg/arrow-back-pink.svg';
@@ -62,26 +63,22 @@ const Entrar = ({navigation}: PropsNavigation) => {
       </Header>
       <Boundaries>
         <Content>
-          <View style={styles.inputControl}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput style={styles.textInput}
-              placeholder="email@exemplo.com"
-              placeholderTextColor="#0000001d"
-              value={email}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              onChangeText={(text) => setEmail(text)}></TextInput>
-          </View>
 
-          <View style={styles.inputControl}>
-            <Text style={styles.label}>Senha</Text>
-            <TextInput style={styles.textInput}
-              placeholder="Insira sua senha aqui"
-              placeholderTextColor="#0000001d"
-              secureTextEntry={true}
-              value={senha}
-              onChangeText={(text) => setSenha(text)}></TextInput>
-          </View>
+          <InputText
+            label="Email"
+            placeholder="Exemplo@gmail.com"
+            value={email}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            onChangeText={txt => setEmail(txt)} />
+            
+          <InputText
+            label="Senha"
+            placeholder="Sua senha"
+            value={senha}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            onChangeText={txt => setSenha(txt)} />
 
           <Text style={{ color: 'red' }}>{erro}</Text>
           
@@ -90,13 +87,6 @@ const Entrar = ({navigation}: PropsNavigation) => {
           </Button>
 
           <Txt>Ou</Txt>
-
-          {/* <ButtonGoogle onPress={() => console.log('Google button pressed')}>
-            <ContainerContentButtonGoogle>
-              <GoogleIcon height={35} width={35} />
-              <ButtonTextGoogle>Entrar com o Google</ButtonTextGoogle>
-            </ContainerContentButtonGoogle>
-          </ButtonGoogle> */}
 
           <TxtBottom
             onPress={() => navigation.navigate('RecuperarConta')}>
