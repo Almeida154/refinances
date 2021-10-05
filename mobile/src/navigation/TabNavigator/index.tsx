@@ -4,17 +4,22 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 
 import RootStackParamApp, {FormLancamentoStack, HomeLancamentoStack} from '../../@types/RootStackParamApp'
 
+import {UseDadosTemp} from '../../contexts/TemporaryDataContext'
+
 import Home from '../../screens/dashboard/Home';
 import Charts from '../../screens/dashboard/Charts';
 import Variados from '../../screens/dashboard/Sundry';
 import Extrato from '../../screens/dashboard/Extract';
 import FormLancamentos from '../../screens/dashboard/Entries';
 import AddCategory from '../../screens/dashboard/Entries/components/AddCategory'
+import ManageAccount from '../../screens/dashboard/Home/components/ManageAccount'
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Fontisto';
 
 import { GestureResponderEvent, TouchableOpacity, View, Text } from 'react-native';
+
+
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
@@ -24,26 +29,20 @@ type PropsCustomBar = {
 }
 
 const FormStack = createStackNavigator<FormLancamentoStack>()
-const FormLancamentoStackNavigation = ({route, navigation}) => {
-    
+const FormLancamentoStackNavigation = () => {
+    const {navigation} = UseDadosTemp()
+
+    useLayoutEffect(() => {
+        navigation.navigate('Lancamentos', {screen: 'Main'})
+    }, [])
     return (
-        <FormStack.Navigator>
-            <FormStack.Screen name="Main" component={FormLancamentos}/>
-            <FormStack.Screen name="AddCategory" component={AddCategory}/>
-        </FormStack.Navigator>
+        <Text>
+            Carregando
+        </Text>
     )
 }
 
-const HomeStack = createStackNavigator<HomeLancamentoStack>()
-const HomeLancamentoStackNavigation = ({route, navigation}) => {
-    
-    return (
-        <HomeStack.Navigator>
-            <HomeStack.Screen name="Main" component={Home}/>
-            
-        </HomeStack.Navigator>
-    )
-}
+
 
 const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
     return (
@@ -68,6 +67,7 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
 }
 
 const TabNavigator = () => {
+    
     return (
         <Tab.Navigator                
             screenOptions={{

@@ -1,9 +1,9 @@
 import react from 'react';
 import { NavigatorScreenParams } from '@react-navigation/native'
 
-export type HomeLancamentoStack = {
-    Main: undefined;
+export type HomeAccountStack = {    
 
+    ManageAccount: undefined;
     CreateAccount: undefined;
 }
 
@@ -19,6 +19,12 @@ type PropsNavigationApp = {
     Extrato: undefined;
     Gráficos: undefined;
     Otimizar: undefined;
+}
+
+export type PropsMainRoutes = {
+    Main: NavigatorScreenParams<PropsNavigationApp>
+    StackAccount: NavigatorScreenParams<HomeAccountStack>
+    Lancamentos: NavigatorScreenParams<FormLancamentoStack>      
 }
 
 export default PropsNavigationApp;

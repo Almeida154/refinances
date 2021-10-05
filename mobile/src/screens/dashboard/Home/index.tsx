@@ -1,3 +1,5 @@
+import { RouteProp } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react'
 import {
     View,
@@ -12,7 +14,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/AntDesign'
-
+import PropsNavigationApp from '../../../@types/RootStackParamApp'
 
 const { width } = Dimensions.get('screen');
 
@@ -23,7 +25,12 @@ import {UseAuth} from '../../../contexts/AuthContext'
 
 import SectionAccount from './components/SectionAccount'
 
-const Home = () => {
+type PropsHome = {
+    navigation: StackNavigationProp<PropsNavigationApp, "Home">,    
+    route: RouteProp<PropsNavigationApp, "Home">,
+}
+
+const Home = ({route, navigation}: PropsHome) => {
     const { user, handleLogout } = UseAuth()    
         
     return (

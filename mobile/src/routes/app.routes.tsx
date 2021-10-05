@@ -1,28 +1,44 @@
 import * as React from 'react';
 import Main from '../screens/main';
 import FormLancamento from '../screens/dashboard/Entries'
-import SelectionCategorias from '../screens/dashboard/Entries/components/SelectionCategories'
+import AddCategory from '../screens/dashboard/Entries/components/AddCategory'
 
-import RootStackParamApp, {RootStackParamAppFormLancamento} from '../@types/RootStackParamApp'
+import RootStackParamApp, {HomeAccountStack, PropsMainRoutes, FormLancamentoStack} from '../@types/RootStackParamApp'
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-const MainStack = createStackNavigator<RootStackParamApp>();
-const Tab = createStackNavigator<RootStackParamAppFormLancamento>();
+import ManageAccount from '../screens/dashboard/Home/components/ManageAccount';
+import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
 
-function FormLancamentosNavigators() {
+const MainStack = createStackNavigator<PropsMainRoutes>();
+
+const HomeStack = createStackNavigator<HomeAccountStack>()
+const HomeAccountStackNavigation = () => {
     return (
-        <Tab.Navigator > 
-            <Tab.Screen name="Main" component={FormLancamento} />                
-            <Tab.Screen name="SelectionCategorias" component={SelectionCategorias} />
-        </Tab.Navigator>
+        <HomeStack.Navigator>            
+            <HomeStack.Screen name="ManageAccount" component={ManageAccount}/>
+            <HomeStack.Screen name="CreateAccount" component={CreateAccount}/>
+        </HomeStack.Navigator>
     )
 }
+
+const LancamentosStack = createStackNavigator<FormLancamentoStack>()
+export const LancamentosStackNavigation = () => {
+    return (
+        <LancamentosStack.Navigator>            
+            <LancamentosStack.Screen name="Main" component={FormLancamento}/>
+            <LancamentosStack.Screen name="AddCategory" component={AddCategory}/>
+        </LancamentosStack.Navigator>
+    )
+}
+
 const MainRoutes: React.FC = () => {
     return (
         <MainStack.Navigator screenOptions={{ headerShown: false }}>
             <MainStack.Screen name="Main" component={Main} />
-            <MainStack.Screen name="FormLancamento" component={FormLancamentosNavigators} />                
+
+            <MainStack.Screen name="StackAccount" component={HomeAccountStackNavigation} />                
+            <MainStack.Screen name="Lancamentos" component={LancamentosStackNavigation} />                
         </MainStack.Navigator>
     );
 }
