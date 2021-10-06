@@ -1,17 +1,18 @@
 import React from 'react';
-import { Btn } from './styles';
+import { Container, Text } from './styles';
 
-interface Props {
-    children?: React.ReactNode;
-    onPress: () => void;
+interface IProps {
+  onPress: () => void;
+  title?: string;
+  color?: string;
 }
 
-const Button: React.FC<Props> = ({ onPress, children }) => { 
+const Button: React.FC<IProps> = ({ onPress, title, color }) => {
   return (
-    <Btn onPress={onPress}>
-        {children}
-    </Btn>
+    <Container onPress={onPress}>
+      <Text>{title}</Text>
+    </Container>
   );
-}
+};
 
 export default Button;

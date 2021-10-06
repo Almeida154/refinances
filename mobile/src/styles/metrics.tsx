@@ -1,9 +1,13 @@
+import { StatusBar } from 'react-native';
+
 export default {
-    default: {
-        padding: '20px'
-    },
-    inputText: {
-        height: '40px',
-        radius: '10px'
-    }
-}
+  default: {
+    boundaries: 32,
+    padding: 20,
+    statusBarHeight: StatusBar.currentHeight,
+  },
+  inputText: {
+    height: 40,
+    radius: 10,
+  },
+};
