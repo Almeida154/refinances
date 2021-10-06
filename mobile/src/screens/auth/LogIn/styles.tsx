@@ -8,6 +8,8 @@ export const Container = styled.View`
 
 export const Boundaries = styled.View`
   padding: ${`${metrics.default.boundaries}px`};
+
+  height: 100%;
 `;
 
 export const Header = styled.View`
@@ -19,13 +21,13 @@ export const Content = styled.View`
   position: absolute;
   bottom: 0;
   width: 100%;
+  min-height: ${`${metrics.screen.height * 0.6}px`};
   background-color: ${colors.cultured};
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
 `;
 
 export const Form = styled.View`
-  flex: 1;
   justify-content: center;
   background-color: ${colors.white};
   border-top-left-radius: 40px;
@@ -38,6 +40,7 @@ export const Title = styled.Text`
   font-size: ${`${fonts.size.bigger}px`};
   color: ${colors.davysGrey};
   opacity: 0.7;
+  line-height: 40px;
   padding: 20px;
 `;
 

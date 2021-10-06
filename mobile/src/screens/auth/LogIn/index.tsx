@@ -54,9 +54,9 @@ const Entrar = ({ navigation }: PropsNavigation) => {
       <StatusBar translucent={true} backgroundColor="transparent" />
       <LinearGradient
         style={{ flex: 1, paddingTop: metrics.default.statusBarHeight }}
-        start={{ x: 0.8, y: 0 }}
-        end={{ x: 1, y: 2 }}
-        locations={[0, 0.2]}
+        start={{ x: 0.1, y: 0.1 }}
+        end={{ x: 1, y: 0.3 }}
+        locations={[0, 1.4]}
         colors={[colors.paradisePink, colors.bigDipOruby]}>
         <Header>
           <BackArrowPink
@@ -64,10 +64,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
             onPress={() => console.log('back')}
             height={26}
           />
-          <LoginIcon
-            style={{ position: 'absolute', left: 14, top: 40 }}
-            height={'50%'}
-          />
+          <LoginIcon style={{ left: 1, top: '10%' }} height={'20%'} />
         </Header>
         <Content
           style={{
@@ -91,8 +88,9 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 label="Email"
                 placeholder="Exemplo@gmail.com"
                 value={email}
-                keyboardType="email-address"
                 autoCapitalize="none"
+                textContentType="emailAddress"
+                secureTextEntry={false}
                 onChangeText={txt => setEmail(txt)}
               />
 
@@ -100,12 +98,24 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 label="Senha"
                 placeholder="Sua senha"
                 value={senha}
-                keyboardType="email-address"
                 autoCapitalize="none"
+                textContentType="password"
+                secureTextEntry
                 onChangeText={txt => setSenha(txt)}
               />
 
-              <Button onPress={LoginUser} title="Entrar" />
+              <LinearGradient
+                style={{ borderRadius: metrics.inputText.radius }}
+                start={{ x: 0, y: 2 }}
+                end={{ x: 1, y: 3 }}
+                locations={[0, 1]}
+                colors={[colors.paradisePink, colors.bigDipOruby]}>
+                <Button
+                  color={'transparent'}
+                  onPress={LoginUser}
+                  title="Entrar"
+                />
+              </LinearGradient>
 
               <TextForgotPassword
                 onPress={() => navigation.navigate('RecuperarConta')}>
