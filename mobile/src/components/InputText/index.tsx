@@ -1,88 +1,20 @@
-import React from 'react';
+import React, { forwardRef, Ref } from 'react';
 
-import { TextInputProps } from 'react-native';
+import { TextInput, TextInputProps } from 'react-native';
+
 import { Container, Input, Label } from './styles';
-
 import { colors } from '../../styles';
 
 interface IProps extends TextInputProps {
-  placeholder?: string;
   label?: string;
   lastOne?: boolean;
-  value?: string;
-  returnKeyType?:
-    | 'none'
-    | 'done'
-    | 'search'
-    | 'default'
-    | 'go'
-    | 'next'
-    | 'send'
-    | 'previous'
-    | 'google'
-    | 'join'
-    | 'route'
-    | 'yahoo'
-    | 'emergency-call';
-  keyboardType?:
-    | 'default'
-    | 'email-address'
-    | 'numeric'
-    | 'phone-pad'
-    | 'visible-password'
-    | 'ascii-capable'
-    | 'numbers-and-punctuation'
-    | 'url'
-    | 'number-pad'
-    | 'name-phone-pad'
-    | 'decimal-pad'
-    | 'twitter'
-    | 'web-search'
-    | undefined;
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | undefined;
-  textContentType?:
-    | 'none'
-    | 'addressCity'
-    | 'addressCityAndState'
-    | 'addressState'
-    | 'countryName'
-    | 'creditCardNumber'
-    | 'emailAddress'
-    | 'familyName'
-    | 'URL'
-    | 'fullStreetAddress'
-    | 'givenName'
-    | 'jobTitle'
-    | 'location'
-    | 'middleName'
-    | 'name'
-    | 'namePrefix'
-    | 'nickname'
-    | 'middleName'
-    | 'organizationName'
-    | 'postalCode'
-    | 'streetAddressLine1'
-    | 'streetAddressLine2'
-    | 'sublocality'
-    | 'telephoneNumber'
-    | 'username'
-    | 'password'
-    | undefined;
-  secureTextEntry?: boolean;
-  onChangeText: (text: string) => void;
+  placeholder?: string;
 }
 
-const InputText: React.FC<IProps> = ({
-  placeholder,
-  label,
-  lastOne,
-  value,
-  keyboardType,
-  autoCapitalize,
-  textContentType,
-  secureTextEntry,
-  onChangeText,
-}) => {
+const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
+  { label, lastOne, placeholder, ...rest },
+  ref,
+) => {
   return (
     <Container
       style={[
@@ -94,20 +26,22 @@ const InputText: React.FC<IProps> = ({
           shadowRadius: 20,
           elevation: 20,
         },
-      ]}>
-      <Label>{label != undefined ? label : 'Sem label'}</Label>
-      <Input
-        placeholder={placeholder != undefined ? placeholder : 'Sem placeholder'}
-        placeholderTextColor={colors.platinum}
-        value={value}
-        keyboardType={keyboardType}
-        autoCapitalize={autoCapitalize}
-        textContentType={textContentType}
-        secureTextEntry={secureTextEntry}
-        onChangeText={text => onChangeText(text)}
-      />
+      ]}
+      underlayColor={colors.white}
+      onPress={() => ref?.current.focus()}>
+      <>
+        <Label>{label != undefined ? label : 'Sem label'}</Label>
+        <Input
+          placeholder={
+            placeholder != undefined ? placeholder : 'Sem placeholder'
+          }
+          placeholderTextColor={colors.platinum}
+          ref={ref}
+          {...rest}
+        />
+      </>
     </Container>
   );
 };
 
-export default InputText;
+export default forwardRef(InputText);

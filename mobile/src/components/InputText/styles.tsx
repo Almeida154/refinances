@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { colors, fonts, metrics } from '../../styles';
 
-export const Container = styled.View`
+export const Container = styled.TouchableHighlight`
   width: 100%;
   background-color: ${colors.white};
   border-radius: ${`${metrics.inputText.radius}px`};

@@ -1,8 +1,8 @@
+import React, { useState, useRef } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useState } from 'react';
 
 // React components
-import { StatusBar } from 'react-native';
+import { StatusBar, TextInput, TextInputComponent } from 'react-native';
 
 // Navigation | Auth
 import { UseAuth, User } from '../../../contexts/AuthContext';
@@ -40,6 +40,9 @@ const Entrar = ({ navigation }: PropsNavigation) => {
   const [erro, setErro] = useState('');
 
   const { user, updateUserProps, handleLogin } = UseAuth();
+
+  const emailInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
 
   async function LoginUser() {
     user.emailUsuario = email;
@@ -91,7 +94,11 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 autoCapitalize="none"
                 textContentType="emailAddress"
                 secureTextEntry={false}
+                returnKeyType="next"
+                blurOnSubmit={false}
+                ref={emailInputRef}
                 onChangeText={txt => setEmail(txt)}
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
               />
 
               <InputText
@@ -101,6 +108,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 autoCapitalize="none"
                 textContentType="password"
                 secureTextEntry
+                ref={passwordInputRef}
                 onChangeText={txt => setSenha(txt)}
               />
 
