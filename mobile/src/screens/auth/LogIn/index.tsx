@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
 
 // Navigation | Auth
-import { UseAuth } from '../../../contexts/AuthContext';
+import { UseAuth, User } from '../../../contexts/AuthContext';
 import RootStackParamAuth from '../../../@types/RootStackParamAuth';
 
 // Styles
@@ -42,11 +42,8 @@ const Entrar = ({ navigation }: PropsNavigation) => {
   const { user, updateUserProps, handleLogin } = UseAuth();
 
   async function LoginUser() {
-    const loginUser = user;
-    loginUser.emailUsuario = email;
-    loginUser.senhaUsuario = senha;
-    console.log(loginUser);
-    updateUserProps(loginUser);
+    user.emailUsuario = email;
+    user.senhaUsuario = senha;
     const response = await handleLogin();
 
     if (response != '') setErro(response);

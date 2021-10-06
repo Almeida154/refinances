@@ -1,6 +1,10 @@
+import { RouteProp } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 
 import Icon from 'react-native-vector-icons/AntDesign'
+
+
 
 import {
     Container,
@@ -23,6 +27,8 @@ import {
     SectionIcon
 } from './styles'
 
+
+
 const CardAccount = () => {
     return(
         <ContainerCardAccount>
@@ -42,7 +48,12 @@ const CardAccount = () => {
     )
 }
 
+import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+
 const SectionAccount = () => {
+    const {navigation} = UseDadosTemp()
+
+
     return (
         <Container>
             <SectionBalance>
@@ -57,7 +68,7 @@ const SectionAccount = () => {
 
                 <CardAccount />
 
-                <ButtonManager><LabelManager>Gerenciar</LabelManager></ButtonManager>
+                <ButtonManager onPress={() => navigation.navigate('StackAccount', {screen: 'ManageAccount'})}><LabelManager>Gerenciar</LabelManager></ButtonManager>
             </ContainerAccount>
         </Container>
     )

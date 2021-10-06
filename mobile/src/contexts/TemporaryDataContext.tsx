@@ -7,13 +7,17 @@ import { UseAuth } from './AuthContext';
 import { Lancamento } from './EntriesContext';
 import { Categoria } from './CategoriesContext';
 import { Conta } from './AccountContext';
+import { PropsMainRoutes } from '../@types/RootStackParamApp';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface DadosTempContextType {        
     categoriasTemp: Categoria[] ,
     rendaTemp: string,
     contaTemp: Conta,
     configuracoesDeConta: boolean[]
+    navigation: StackNavigationProp<PropsMainRoutes, "Main">,    
 
+    setNavigation: React.Dispatch<React.SetStateAction<StackNavigationProp<PropsMainRoutes, "Main">>>
     setupCategoriasPadroes(): void
     setupConta(conta: Conta): Promise<void>
     setRendaTemp: React.Dispatch<React.SetStateAction<string>>
@@ -31,9 +35,10 @@ export const DadosTempProvider: React.FC = ({ children }) => {
     const [rendaTemp, setRendaTemp] = useState('00.00');
     const [contaTemp, setContaTemp] = useState<Conta>({} as Conta);
     const [configuracoesDeConta, setConfiguracoesDeConta] = useState([] as boolean[]);
-    
-    const { user } = UseAuth()
+    const [navigation, setNavigation] = useState({} as StackNavigationProp<PropsMainRoutes, "Main">)
 
+    const { user } = UseAuth()
+    
     function setupCategoriasPadroes(){        
         const nomesCategoriasPadroes = [
             "Educação", "Casa",
@@ -89,7 +94,7 @@ export const DadosTempProvider: React.FC = ({ children }) => {
     }
 
     return (
-        <DadosTempContext.Provider value={{ contaTemp, configuracoesDeConta, mudarConfiguracaoConta, setupConfiguracaoConta, categoriasTemp, rendaTemp, setRendaTemp, setupConta, setupCategoriasPadroes, setCategoriasTemp }}>
+        <DadosTempContext.Provider value={{ setNavigation, navigation, contaTemp, configuracoesDeConta, mudarConfiguracaoConta, setupConfiguracaoConta, categoriasTemp, rendaTemp, setRendaTemp, setupConta, setupCategoriasPadroes, setCategoriasTemp }}>
             {children}
         </DadosTempContext.Provider>
     );
