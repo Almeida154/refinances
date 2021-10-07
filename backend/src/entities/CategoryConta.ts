@@ -19,8 +19,8 @@ export class CategoryConta {
     @Column()
     descricaoCategoryConta: string;
 
-    @Column("blob", { nullable: true})
-    iconeCategoryConta: Buffer;
+    @Column()
+    iconeCategoryConta: string;
 
     // Foreign Keys
     

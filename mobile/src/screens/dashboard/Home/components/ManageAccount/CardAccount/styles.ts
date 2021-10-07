@@ -8,6 +8,8 @@ export const Container = styled.View`
     border-radius: 10px;
 
     padding: 20px;
+
+    margin-bottom: 20px;
 `
 
 export const Upside = styled.View`
