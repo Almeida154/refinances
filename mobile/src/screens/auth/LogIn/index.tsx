@@ -39,15 +39,17 @@ const Entrar = ({ navigation }: PropsNavigation) => {
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
 
-  const { user, updateUserProps, handleLogin } = UseAuth();
+  let { updateUserProps, handleLogin } = UseAuth();
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
   async function LoginUser() {
-    user.emailUsuario = email;
-    user.senhaUsuario = senha;
-    const response = await handleLogin();
+    const loguser = {} as User
+    loguser.emailUsuario = email;
+    loguser.senhaUsuario = senha;
+
+    const response = await handleLogin(loguser);
 
     if (response != '') setErro(response);
   }

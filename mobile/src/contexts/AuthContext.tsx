@@ -15,7 +15,7 @@ export type User = {
 interface AuthContextType {    
     token: string;
     user: User,
-    handleLogin(): Promise<string>
+    handleLogin(logUser: User): Promise<string>
     handleRegister(): Promise<string>
     updateUserProps(userProps: User): void 
     handleLogout(): void
@@ -39,11 +39,11 @@ export const AuthProvider: React.FC = ({ children }) => {
         })();
     }, []);
     
-    async function handleLogin() {
+    async function handleLogin(logUser: User) {
         try {
             const response = await api.post('/user/auth', {
-                emailUsuario: user.emailUsuario,
-                senhaUsuario: user.senhaUsuario
+                emailUsuario: logUser.emailUsuario,
+                senhaUsuario: logUser.senhaUsuario
             });
             
             if( response.data.error) {
