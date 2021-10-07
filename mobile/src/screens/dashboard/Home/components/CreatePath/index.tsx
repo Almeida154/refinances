@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 
 import Icon from 'react-native-vector-icons/AntDesign'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import {
     Container,
@@ -16,49 +17,82 @@ import {
     Plus,
     SectionIcon,
     ContainerCreate,
-    LabelDescriptionCreate
+    LabelDescriptionCreate,
+    SectionCreate
 
 } from './styles'
 
 
 
-const CardAccount = () => {
+const CreateCategory = () => {
     return(
-        <ContainerCardCreate>
-            <SectionDescription>
-                <SectionIcon>
-                    <Icon name="home" size={25} color="gray"/>
-                </SectionIcon>
-                <SectionName>
-                    <LabelCategory>Você pode criar categorias para se organizar melhor.</LabelCategory>
-                </SectionName>
-            </SectionDescription>
-                        
-        </ContainerCardCreate>
+        <ContainerCreate>
+            <LabelDescriptionCreate>Criar categoria</LabelDescriptionCreate>
 
-        
+            <ContainerCardCreate>
+                <SectionDescription>
+                    <SectionIcon>
+                        <Icon name="addfolder" size={20} color="gray"/>
+                    </SectionIcon>
+                    <SectionName>
+                        <LabelCategory>Você pode criar categorias e definir limites para se organizar.</LabelCategory>
+                    </SectionName>
+                </SectionDescription>
+                        
+            </ContainerCardCreate>
+
+        </ContainerCreate>
+
+    )
+}
+
+const CreateGoal = () => {
+    return(
+        <ContainerCreate>
+            <LabelDescriptionCreate>Criar meta</LabelDescriptionCreate>
+
+            <ContainerCardCreate>
+                <SectionDescription>
+                    <SectionIcon>
+                        <Ionicons name="medal-outline" size={25} color="gray"/>
+                    </SectionIcon>
+                    <SectionName>
+                        <LabelCategory>Metas financeiras são importantes para o seu avanço pessoal.</LabelCategory>
+                    </SectionName>
+                </SectionDescription>
+                        
+            </ContainerCardCreate>
+
+        </ContainerCreate>
+
     )
 }
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 const SectionAccount = () => {
-    const {navigation} = UseDadosTemp()
 
     return (
-        <Container>
+        <SectionCreate>
+            <Container>
+                <CreateCategory />
+                
+                <SectionButton>
+                    <Plus>+</Plus>                    
+                </SectionButton>
+                
+            </Container>
 
-            <ContainerCreate>
-                <LabelDescriptionCreate>Criar categoria</LabelDescriptionCreate>
+            <Container>
+                <CreateGoal />
+                
+                <SectionButton onPress={()=>console.log('foi')}>
+                    <Plus>+</Plus>                    
+                </SectionButton>
+                
+            </Container>
+        </SectionCreate>
 
-                <CardAccount />
-
-            </ContainerCreate>
-
-            <SectionButton>
-                <Plus>+</Plus>                    
-            </SectionButton>
-        </Container>
     )
 }
 

@@ -13,7 +13,8 @@ import {
     TouchableHighlight
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon2 from 'react-native-vector-icons/Feather'
 import PropsNavigationApp from '../../../@types/RootStackParamApp'
 
 const { width } = Dimensions.get('screen');
@@ -53,9 +54,9 @@ const Home = ({route, navigation}: PropsHome) => {
                     </View>
 
                     <View style={styles.containerSetting}>
-                        <Icon name='setting' color='#000000' size={30} style={{marginRight: 20}}/>
+                        <Icon2 name='settings' color='#9D3147' size={30} style={{marginRight: 20}}/>
 
-                        <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#000000" size={30} /></TouchableHighlight>
+                        <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#9D3147" size={30} /></TouchableHighlight>
                     </View>
                 </View>
                 {/* Scrollable Content */}
@@ -66,6 +67,7 @@ const Home = ({route, navigation}: PropsHome) => {
                         <SectionAccount />
 
                         <CreatePath />
+
                     </View>
                 </ScrollView>
                     

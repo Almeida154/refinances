@@ -1,33 +1,34 @@
 import styled from 'styled-components/native'
 
+
 export const Container = styled.View`
     display: flex;
     align-items: center;
     background-color: white;
     width: 90%;
-    height: 25%;
+    height: 30%;
     border-radius: 15px;
-    margin-bottom: 15px;
     margin-top: 15px;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
 
 `
-export const SectionButton = styled.View`
+export const SectionButton = styled.TouchableHighlight`
     background: #EE4266;
     height: 100%;
     width: 15%;
-    border-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
     justifyContent: center;
     alignItems: center;
-    flex:1;
+    flex: 1;
     padding: 0
 `
 
 export const Plus = styled.Text`
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 50px;
+    color: #9D3147;
     
 `
 export const LabelDescriptionCreate = styled.Text`
@@ -44,12 +45,11 @@ export const LabelManager = styled.Text`
 
 export const ContainerCardCreate = styled.View`
     display: flex;
-
     justify-content: space-between;
     flex-direction: row;
-
     align-items: center;
     margin-top: 15px;
+    padding: 1%
 `
 export const SectionDescription = styled.View`
     display: flex;
@@ -71,10 +71,12 @@ export const LabelName = styled.Text`
 `
 export const LabelCategory = styled.Text`
     color: #888;
-    font-size: 15px;
+    font-size: 14px;
 `
 export const SectionCreate = styled.View`
-
+    width: 100%;
+    display: flex;
+    align-items: center;;
 `
 export const LabelCreate = styled.Text`
     font-size: 18px;

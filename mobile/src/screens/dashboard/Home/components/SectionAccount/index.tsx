@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 
@@ -34,7 +34,7 @@ const CardAccount = () => {
         <ContainerCardAccount>
             <SectionDescription>
                 <SectionIcon>
-                    <Icon name="home" size={25} color="gray"/>
+                    <Icon name="wallet-outline" size={25} color="gray"/>
                 </SectionIcon>
                 <SectionName>
                     <LabelName>Carteira</LabelName>
