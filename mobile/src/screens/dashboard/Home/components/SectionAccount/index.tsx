@@ -34,7 +34,7 @@ const CardAccount = () => {
         <ContainerCardAccount>
             <SectionDescription>
                 <SectionIcon>
-                    <Icon name="home" size={30} color="gray"/>
+                    <Icon name="home" size={25} color="gray"/>
                 </SectionIcon>
                 <SectionName>
                     <LabelName>Carteira</LabelName>

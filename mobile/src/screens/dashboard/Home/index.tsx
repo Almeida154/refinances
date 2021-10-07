@@ -25,6 +25,8 @@ import {UseAuth} from '../../../contexts/AuthContext'
 
 import SectionAccount from './components/SectionAccount'
 
+import CreatePath from './components/CreatePath'
+
 type PropsHome = {
     navigation: StackNavigationProp<PropsNavigationApp, "Home">,    
     route: RouteProp<PropsNavigationApp, "Home">,
@@ -51,16 +53,22 @@ const Home = ({route, navigation}: PropsHome) => {
                     </View>
 
                     <View style={styles.containerSetting}>
-                        <Icon name='setting' color='#000000' size={40} style={{marginRight: 20}}/>
+                        <Icon name='setting' color='#000000' size={30} style={{marginRight: 20}}/>
 
-                        <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#000000" size={40} /></TouchableHighlight>
+                        <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#000000" size={30} /></TouchableHighlight>
                     </View>
                 </View>
                 {/* Scrollable Content */}
-                <View style={styles.containerBody}>
+
+                <ScrollView style={styles.scroll}>
+                    <View style={styles.containerBody}>
+                        
+                        <SectionAccount />
+
+                        <CreatePath />
+                    </View>
+                </ScrollView>
                     
-                    <SectionAccount />
-                </View>
             </View>
         </ScrollView>
     );
@@ -86,7 +94,7 @@ const styles = StyleSheet.create({
     iconProfile: {
         width: 70,
         height: 70,
-        backgroundColor: 'yellow',
+        backgroundColor: '#444',
         borderRadius: 50,
         borderColor: 'black',
         borderWidth: 1,
@@ -115,6 +123,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        
+    },
+    scroll: {
         top: -15,
     },
     sectionSaldoGeral: {
@@ -123,5 +134,17 @@ const styles = StyleSheet.create({
         height: 80,
         padding: 10,
         borderRadius: 20
+    },
+
+    atalhoCriar: {
+
+    },
+
+    criarLeft: {
+
+    },
+
+    criarBtn: {
+
     }
 });
