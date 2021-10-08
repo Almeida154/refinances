@@ -2,7 +2,7 @@ import React, {useLayoutEffect} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 
-import RootStackParamApp, {FormLancamentoStack, HomeLancamentoStack} from '../../@types/RootStackParamApp'
+import RootStackParamApp, {FormLancamentoStack} from '../../@types/RootStackParamApp'
 
 import {UseDadosTemp} from '../../contexts/TemporaryDataContext'
 
@@ -30,19 +30,6 @@ type PropsCustomBar = {
     onPress: ((e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent) => void) | undefined
 }
 
-const FormStack = createStackNavigator<FormLancamentoStack>()
-const FormLancamentoStackNavigation = () => {
-    const {navigation} = UseDadosTemp()
-
-    useLayoutEffect(() => {
-        navigation.navigate('Lancamentos', {screen: 'Main'})
-    }, [])
-    return (
-        <Text>
-            Carregando
-        </Text>
-    )
-}
 
 
 
@@ -78,7 +65,7 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
 }
 
 const TabNavigator = () => {
-    
+    const {navigation} = UseDadosTemp()
     return (
         <Tab.Navigator                
             screenOptions={{
@@ -108,12 +95,12 @@ const TabNavigator = () => {
 
             
             
-                <Tab.Screen name="Lancamentos" component={FormLancamentoStackNavigation} options={{                
+                <Tab.Screen name="Lancamentos" component={() => <View />} options={{                
                     tabBarLabel: () => null,
                     headerShown: false,
                     tabBarIcon: () => <Icon4 name='plus' color={'#EE4266'} size={24} />,                    
                     tabBarButton: (props) => {
-                        return (< CustomTabBarButton children={props.children} onPress={props.onPress} />
+                        return (< CustomTabBarButton children={props.children} onPress={() => navigation.navigate('Lancamentos', {screen: 'Main'})} />
                         )
                     }
 
