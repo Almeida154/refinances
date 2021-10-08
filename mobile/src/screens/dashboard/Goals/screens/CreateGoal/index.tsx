@@ -16,7 +16,7 @@
    TextInput
  } from 'react-native';
  
- const CreateGoal = ({navigation}) => {
+ const CreateGoal = () => {
  
     const [meta, setMeta] = useState('');
     const [valorMeta, setValorMeta] = useState();
