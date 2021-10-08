@@ -12,7 +12,7 @@ import goalsJson from './goals.json';
 //import { ProgressBar } from '@react-native-community/progress-bar-android';
 import { ProgressBar, Colors } from 'react-native-paper';
 
-const GoalDetails = ({ navigation }) => {
+const GoalDetails = () => {
   const [goals, setGoals] = useState(goalsJson);
   const [accomplishedGoals, setAccomplishedGoals] = useState(
     goals.filter(goal => !goal.isAccomplished),
@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: '4%',
     marginTop: '5%',
-    borderColor: '#000',
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#525252',
