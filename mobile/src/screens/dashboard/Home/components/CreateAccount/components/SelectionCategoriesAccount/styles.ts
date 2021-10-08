@@ -32,7 +32,7 @@ export const Separator = styled.View`
 
 `
 
-export const BotaoAdicionarCategoria = styled.View`
+export const BotaoAdicionarCategoria = styled.TouchableOpacity`
     width: 100%;
     height: 50px;
     align-items: center;

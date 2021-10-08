@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import {Alert, Text} from 'react-native'
 import {Categoria, UseCategories} from '../../../../../contexts/CategoriesContext'
+
 
 import {Searchbar} from 'react-native-paper'
 
@@ -90,6 +91,7 @@ const SelectionCategorias = ({tipoCategoria, setCategoria, navigation}: PropsSel
     const [search, setSearch] = useState('') 
     const [categoriasAtual, setCategoriasAtual] = useState([] as Categoria[])
     
+    const PickerRef = useRef<CustomPicker>(null)
     useEffect(() => {
         async function loadCategorias() {
             const getUser = await AsyncStorage.getItem('user')
@@ -119,11 +121,16 @@ const SelectionCategorias = ({tipoCategoria, setCategoria, navigation}: PropsSel
             setCategoriasAtual(aux)
         }
     }, [search])
+
+    const onOpen = () => {
+        PickerRef.current?.showOptions()
+    }
     return (
         <Container>
 
             
             <CustomPicker 
+                ref={PickerRef}
                 placeholder={loading ? "Carregando" : "Selecione a categoria para esse lançamento" }
                 options={loading ? [{}] : categoriasAtual}
                 getLabel={item => item.nomeCategoria}

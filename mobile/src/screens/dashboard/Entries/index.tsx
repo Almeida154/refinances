@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ScrollView, StatusBar } from 'react-native';
+import { ScrollView, StatusBar, View } from 'react-native';
 
 import RootStackParamApp from '../../../@types/RootStackParamApp'
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,48 +10,67 @@ import FormTransferencia from './components/TransferForm'
 
 import {
     Container,
-    Title,   
+    InputControlValue,
+    LabelCifrao,
+    AlinhaParaDireita,
+    TextInputValue,
     Header,
     TextButton,
-    ButtonDespesa,
-    ButtonReceita,
-    ButtonTransferencia,
+    Buttons,
     SectionButtons
 } from './styles'
+import { Text } from '../../../components/Button/styles';
 
 
 export type PropsNavigation = {
     navigation: StackNavigationProp<RootStackParamApp, "Lancamentos">,    
     route: RouteProp<RootStackParamApp, "Lancamentos">,
-    tipoLancamento: string
+    tipoLancamento: string,
+    valor: string,
+    setValor: React.Dispatch<React.SetStateAction<string>>
     
 }
 
 const FormLancamento = ({route, navigation}: PropsNavigation) => {
     const [selected, setSelected] = useState(0)
+    navigation.setOptions({headerShown: false})
+
+    const [valor, setValor] = useState('')
 
     return (
         <ScrollView>
-            <StatusBar backgroundColor={'#EE4266'}/>
+            <StatusBar backgroundColor={selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}/>
             <Container>
-                <Header>
-                    <Title>Adicionar Lançamento</Title>
+                <Header style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}>
+                <AlinhaParaDireita>
+                    <View></View>
+                    <InputControlValue>
+                        <LabelCifrao>R$</LabelCifrao>    
+                            <TextInputValue
+                                keyboardType='numeric'
+                                placeholder="00,00"
+                                placeholderTextColor="#fff"
+                                value={valor}
+                                onChangeText={setValor}                                
+                            />
+                    </InputControlValue>
+                </AlinhaParaDireita>
                     <SectionButtons>
-                        <ButtonDespesa onPress={() => setSelected(0)}><TextButton>despesa</TextButton></ButtonDespesa>
-                        <ButtonReceita onPress={() => setSelected(1)}><TextButton>receita</TextButton></ButtonReceita>
-                        <ButtonTransferencia onPress={() => setSelected(2)}><TextButton>transferência</TextButton></ButtonTransferencia>
+                        <Buttons onPress={() => setSelected(0)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>despesa</TextButton></Buttons>
+                        <Buttons onPress={() => setSelected(1)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>receita</TextButton></Buttons>
+                        <Buttons onPress={() => setSelected(2)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>transferência</TextButton></Buttons>
                     </SectionButtons>
                 </Header>
 
                 {
-                    selected == 0 && <FormCadastro route={route} navigation={navigation} tipoLancamento={"despesa"}/>   
+                    selected == 0 && <FormCadastro route={route} navigation={navigation} valor={valor} setValor={setValor} tipoLancamento={"despesa"}/>   
             
                 }
                 {
-                    selected == 1 && <FormCadastro route={route} navigation={navigation} tipoLancamento={"receita"}/>   
+                    selected == 1 && <FormCadastro route={route} navigation={navigation} valor={valor} setValor={setValor}  tipoLancamento={"receita"}/>   
                 }
                 {
-                    selected == 2 && <FormTransferencia route={route} navigation={navigation} tipoLancamento="Nenhum"/>   
+                    selected == 2 && <FormTransferencia route={route} navigation={navigation} valor={valor} setValor={setValor}  tipoLancamento="Nenhum"/>   
                 }
 
             </Container>

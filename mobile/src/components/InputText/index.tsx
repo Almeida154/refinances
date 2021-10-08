@@ -9,10 +9,11 @@ interface IProps extends TextInputProps {
   label?: string;
   lastOne?: boolean;
   placeholder?: string;
+  colorLabel?: string;
 }
 
 const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
-  { label, lastOne, placeholder, ...rest },
+  { label, colorLabel, lastOne, placeholder, ...rest },
   ref,
 ) => {
   return (
@@ -30,7 +31,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
       underlayColor={colors.white}
       onPress={() => ref?.current.focus()}>
       <>
-        <Label>{label != undefined ? label : 'Sem label'}</Label>
+        <Label style={{color: colorLabel}}>{label != undefined ? label : 'Sem label'}</Label>
         <Input
           placeholder={
             placeholder != undefined ? placeholder : 'Sem placeholder'

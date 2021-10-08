@@ -5,6 +5,7 @@ export type HomeAccountStack = {
 
     ManageAccount: undefined;
     CreateAccount: undefined;
+    AddCategoryAccount: undefined;
 
 }
 

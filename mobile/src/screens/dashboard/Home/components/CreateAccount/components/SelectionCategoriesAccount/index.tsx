@@ -75,7 +75,7 @@ type PropsRenderFooter = {
 
 const RenderFooter = ({navigation}: PropsRenderFooter) => {    
     return (
-        <BotaoAdicionarCategoria>
+        <BotaoAdicionarCategoria onPress={() => {navigation.navigate('AddCategoryAccount')}}>
             <LabelAdicionarCategoria>Adicionar Categoria</LabelAdicionarCategoria>
         </BotaoAdicionarCategoria>
     )
@@ -100,6 +100,8 @@ const SelectionCategorias = ({setCategoriaConta, navigation}: PropsSelectionCate
 
     useEffect(() => {
         setCategoriasAtual(categoriasConta)
+
+        console.log(categoriasConta)
     }, [categoriasConta])
 
     useEffect(() => {

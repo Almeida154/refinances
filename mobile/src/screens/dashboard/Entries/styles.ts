@@ -24,9 +24,10 @@ export const TextButton = styled.Text`
 
 export const Header = styled.View`
     display: flex;
-    align-items: center;    
-    width: 100%;
-    background-color: #EE4266;
+    width: 100%;    
+    padding-top: 120px;
+     
+    
 `
 
 
@@ -38,29 +39,38 @@ export const SectionButtons = styled.View`
     justify-content: center;
 `
 
-export const ButtonDespesa = styled.TouchableHighlight`
+export const Buttons = styled.TouchableHighlight`
     width: 34%;
-    background-color: #EE4266;
     padding: 10px;
     align-items: center;
     justify-content: center;    
 `
 
-export const ButtonReceita = styled.TouchableHighlight`
-    width: 34%;
-    background-color: #EE4266;
-    padding: 10px;
-    align-items: center;
-    justify-content: center;    
-    color: #EE4266;   
+export const InputControlValue = styled.View`
+    display: flex;
+    
+    flex-direction: row;
+      
+
+    
 `
 
+export const AlinhaParaDireita = styled.View`
+    justify-content: space-between; 
+    flex-direction: row;
 
-export const ButtonTransferencia = styled.TouchableHighlight`
-    width: 34%;
-    background-color: #EE4266;
-    padding: 10px;
-    align-items: center;
-    justify-content: center;    
-    color: #EE4266;       
+    padding-left: 20px;
+    padding-right: 20px;
+`
+
+export const LabelCifrao = styled.Text`
+    font-size: 20px;
+    color: #fff;
+`
+export const TextInputValue = styled.TextInput`
+    
+    height: 80px;    
+    opacity: 0.7;
+    font-size: 50px; 
+    color: #fff;
 `

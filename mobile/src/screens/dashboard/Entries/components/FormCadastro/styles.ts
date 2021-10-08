@@ -69,8 +69,7 @@ export const ContainerCardParcela = styled.SafeAreaView`
     padding: 10px;    
 
     border-width: 2px;
-    margin-right: 20px;
-    border-color: #EE4266;
+    margin-right: 20px;    
 `
 export const TituloCardParcela = styled.Text`
     font-family: "Nunito";
