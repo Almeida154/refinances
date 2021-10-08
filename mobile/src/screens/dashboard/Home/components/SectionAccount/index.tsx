@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -49,16 +49,35 @@ const CardAccount = () => {
 }
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
+import { UseContas } from '../../../../../contexts/AccountContext'
 
 const SectionAccount = () => {
     const {navigation} = UseDadosTemp()
+    const {contas, loading, handleReadByUserContas} = UseContas()
+    const [saldo, setSaldo] = useState('R$ 00,00')
 
+    useEffect(() => {
+        let aux = 0
 
+        contas.map(item => {
+            aux += item.saldoConta
+        })
+
+        setSaldo(aux.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
+
+    }, [contas])
+
+    useEffect(() => {
+        (async function(){
+            handleReadByUserContas(await retornarIdDoUsuario())
+        })()               
+    }, [])
     return (
         <Container>
             <SectionBalance>
                 <LabelDescriptionBalance>Saldo total</LabelDescriptionBalance>
-                <LabelBalance>R$ 00,00</LabelBalance>
+                <LabelBalance>{saldo}</LabelBalance>
             </SectionBalance>
 
             <Separator />
