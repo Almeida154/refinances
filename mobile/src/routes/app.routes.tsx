@@ -10,6 +10,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ManageAccount from '../screens/dashboard/Home/components/ManageAccount';
 import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
 
+import TopBarNavigator from '../screens/dashboard/Goals/navigators/TopBarNavigator';
+
 const MainStack = createStackNavigator<PropsMainRoutes>();
 
 const HomeStack = createStackNavigator<HomeAccountStack>()
@@ -36,9 +38,9 @@ const MainRoutes: React.FC = () => {
     return (
         <MainStack.Navigator screenOptions={{ headerShown: false }}>
             <MainStack.Screen name="Main" component={Main} />
-
             <MainStack.Screen name="StackAccount" component={HomeAccountStackNavigation} />                
-            <MainStack.Screen name="Lancamentos" component={LancamentosStackNavigation} />                
+            <MainStack.Screen name="Lancamentos" component={LancamentosStackNavigation} />   
+            <MainStack.Screen name="Goals" component={TopBarNavigator} />             
         </MainStack.Navigator>
     );
 }

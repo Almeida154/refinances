@@ -5,6 +5,9 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+import PropsNavigationApp from '../../../../../@types/RootStackParamApp'
+import {HomeAccountStack} from '../../../../../@types/RootStackParamApp'
+
 import {
     Container,
 
@@ -21,8 +24,6 @@ import {
     SectionCreate
 
 } from './styles'
-
-
 
 const CreateCategory = () => {
     return(
@@ -72,6 +73,8 @@ import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 const SectionAccount = () => {
 
+    const {navigation} = UseDadosTemp()
+
     return (
         <SectionCreate>
             <Container>
@@ -86,7 +89,10 @@ const SectionAccount = () => {
             <Container>
                 <CreateGoal />
                 
-                <SectionButton onPress={()=>console.log('foi')}>
+                <SectionButton onPress={() => {
+                                    navigation.navigate('Goals', {screen: 'Goals'});
+                                }}
+                                underlayColor={'#9D3147'}>
                     <Plus>+</Plus>                    
                 </SectionButton>
                 

@@ -5,7 +5,6 @@ import {
     View,
     Text,
     StyleSheet,
-    Image,
     Dimensions,
     ScrollView,
     StatusBar,
@@ -67,6 +66,7 @@ const Home = ({route, navigation}: PropsHome) => {
                         <SectionAccount />
 
                         <CreatePath />
+
 
                     </View>
                 </ScrollView>

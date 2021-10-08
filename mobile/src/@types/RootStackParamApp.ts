@@ -5,6 +5,13 @@ export type HomeAccountStack = {
 
     ManageAccount: undefined;
     CreateAccount: undefined;
+
+}
+
+export type GoalsStack = {    
+
+    Goals: undefined;
+    
 }
 
 export type FormLancamentoStack = {
@@ -24,7 +31,8 @@ type PropsNavigationApp = {
 export type PropsMainRoutes = {
     Main: NavigatorScreenParams<PropsNavigationApp>
     StackAccount: NavigatorScreenParams<HomeAccountStack>
-    Lancamentos: NavigatorScreenParams<FormLancamentoStack>      
+    Lancamentos: NavigatorScreenParams<FormLancamentoStack>
+    Goals: NavigatorScreenParams<GoalsStack>  
 }
 
 export default PropsNavigationApp;

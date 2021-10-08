@@ -31,8 +31,6 @@ type PropsCustomBar = {
 }
 
 
-
-
 const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
     return (
         <TouchableOpacity
