@@ -191,7 +191,7 @@ const ConfigConta = ({route, navigation}: PropsNavigation) => {
         <Boundaries>
           <Header>
             <ArrowBackGrey
-              onPress={() => navigation.navigate('InserirNome')}
+              onPress={() => navigation.navigate('InserirImage')}
               height={26}
               style={{ marginLeft: -16, marginBottom: 20 }} />
             <Title>Bom, {nomeUser}</Title>

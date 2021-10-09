@@ -56,7 +56,7 @@ const InserirNome = ({route, navigation}: PropsNavigation) => {
     
     await AsyncStorage.setItem('nomeUser', nome)
     
-    navigation.navigate('ConfigConta');
+    navigation.navigate('InserirImage');
   }
 
   return (
