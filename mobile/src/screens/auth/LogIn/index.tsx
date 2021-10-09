@@ -36,22 +36,44 @@ export type PropsNavigation = {
 
 const Entrar = ({ navigation }: PropsNavigation) => {
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [erro, setErro] = useState('');
+  const [password, setPassword] = useState('');
 
-  let { updateUserProps, handleLogin } = UseAuth();
+  const { user, handleLogin } = UseAuth();
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
+  type error = {
+    error?: string;
+    message?: string;
+    ok?: boolean;
+  };
+
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+
   async function LoginUser() {
-    const loguser = {} as User
-    loguser.emailUsuario = email;
-    loguser.senhaUsuario = senha;
+    user.emailUsuario = email;
+    user.senhaUsuario = password;
 
-    const response = await handleLogin(loguser);
+    const response: error = await handleLogin(user);
 
-    if (response != '') setErro(response);
+    if (!response.ok) {
+      switch (response.error) {
+        case 'both':
+          setPasswordError(response.message);
+          setEmailError(response.message);
+          break;
+        case 'senha':
+          setPasswordError(response.message);
+          break;
+        case 'email':
+          setEmailError(response.message);
+          break;
+        default:
+          return;
+      }
+    }
   }
 
   return (
@@ -94,25 +116,43 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 label="Email"
                 placeholder="Exemplo@gmail.com"
                 value={email}
+                error={emailError}
                 autoCapitalize="none"
                 textContentType="emailAddress"
                 secureTextEntry={false}
                 returnKeyType="next"
                 blurOnSubmit={false}
                 ref={emailInputRef}
-                onChangeText={txt => setEmail(txt)}
+                showClearIcon={email != ''}
+                onClear={() => {
+                  setEmailError(null);
+                  setEmail('');
+                }}
+                onChangeText={txt => {
+                  setEmailError(null);
+                  setEmail(txt);
+                }}
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
               />
 
               <InputText
                 label="Senha"
                 placeholder="Sua senha"
-                value={senha}
+                value={password}
+                error={passwordError}
                 autoCapitalize="none"
                 textContentType="password"
                 secureTextEntry
                 ref={passwordInputRef}
-                onChangeText={txt => setSenha(txt)}
+                showClearIcon={password != ''}
+                onClear={() => {
+                  setPasswordError(null);
+                  setPassword('');
+                }}
+                onChangeText={txt => {
+                  setPasswordError(null);
+                  setPassword(txt);
+                }}
               />
 
               <LinearGradient
