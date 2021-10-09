@@ -13,7 +13,7 @@ interface IProps extends TextInputProps {
 
 const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
   { label, lastOne, placeholder, ...rest },
-  ref,
+  ref: any,
 ) => {
   return (
     <Container

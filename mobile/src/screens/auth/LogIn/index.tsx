@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 // React components
-import { StatusBar, TextInput, TextInputComponent } from 'react-native';
+import { StatusBar, TextInput } from 'react-native';
 
 // Navigation | Auth
 import { UseAuth, User } from '../../../contexts/AuthContext';
@@ -69,6 +69,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
           />
           <LoginIcon style={{ left: 1, top: '10%' }} height={'20%'} />
         </Header>
+
         <Content
           style={{
             shadowColor: 'rgba(0, 0, 0, .4)',
