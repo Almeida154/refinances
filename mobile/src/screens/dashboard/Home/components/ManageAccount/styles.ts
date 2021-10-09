@@ -10,18 +10,19 @@ export const Container = styled.View`
 `
 
 export const ButtonAdd = styled.TouchableHighlight`
-    background-color: #ccc;
+    margin-top: 15px;
     width: 100%;
-    height: 50px;
-    justify-content: center;
     align-items: center;
-
-    margin-top: 40px;
+    justify-content: center;
+    background-color: #ccc;
+    height: 60px;
+    border-radius: 5px;
 `
 
 export const TextButton = styled.Text`
-    color: #000;
-    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    font-size: 20px;
 `
 export const LabelButton = styled.Text`
 

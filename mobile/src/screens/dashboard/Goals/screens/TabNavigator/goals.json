@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "desc": "Mercedes-Benz C 180",
+    "isAccomplished": false,
+    "startDate": "10/10/2021",
+    "endDate": "20/10/2021",
+    "totalAmount": 135000,
+    "currentAmount": 91800
+  },
+  {
+    "id": 2,
+    "desc": "PS5",
+    "isAccomplished": false,
+    "startDate": "10/10/2021",
+    "endDate": "20/10/2021",
+    "totalAmount": 4960,
+    "currentAmount": 2480
+  },
+  {
+    "id": 3,
+    "desc": "Brastemp 2 portas",
+    "isAccomplished": false,
+    "startDate": "10/10/2021",
+    "endDate": "20/10/2021",
+    "totalAmount": 300,
+    "currentAmount": 100
+  },
+  {
+    "id": 4,
+    "desc": "Iphone 67",
+    "isAccomplished": true,
+    "startDate": "10/10/2021",
+    "endDate": "20/10/2021",
+    "totalAmount": 300,
+    "currentAmount": 100
+  },
+  {
+    "id": 5,
+    "desc": "Fanta Laranja",
+    "isAccomplished": true,
+    "startDate": "10/10/2021",
+    "endDate": "20/10/2021",
+    "totalAmount": 300,
+    "currentAmount": 100
+  },
+  {
+    "id": 6,
+    "desc": "Xbox One",
+    "isAccomplished": true,
+    "startDate": "10/10/2021",
+    "endDate": "20/10/2021",
+    "totalAmount": 300,
+    "currentAmount": 100
+  },
+  {
+    "id": 7,
+    "desc": "Pc Gamer",
+    "isAccomplished": true,
+    "startDate": "10/10/2021",
+    "endDate": "20/10/2021",
+    "totalAmount": 300,
+    "currentAmount": 100
+  }
+]

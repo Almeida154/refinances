@@ -4,11 +4,11 @@ import { TouchableHighlight, FlatList, View, ToastAndroid } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import InputText from '../../../../../components/InputText'
 import {
     ContainerForm,
     InputControl,
     Label,
-    TextInputValor,
     TextInput,
     SectionDetalhes,
     TextDetalhes,
@@ -105,12 +105,11 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas}: CardParcelaProps
     )
 }
 
-const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
+const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: PropsNavigation) => {
     const [detalhes, setDetalhes] = useState(false)
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
-
-    const [valor, setValor] =  useState('0')
+    
     const [descricao, setDescricao] =  useState('')
     const [dataPagamento, setDataPagamento] =  useState((new Date(Date.now())))    
 
@@ -270,23 +269,16 @@ const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
     return (
         <ContainerForm>
             
-            <InputControl>
-                <Label>Valor(R$) </Label>
-                <TextInputValor
-                    value={valor}
-                    onChangeText={setValor}
-                    placeholder="0,00"
-                    keyboardType="numeric"
-                    placeholderTextColor={"#bbb"}></TextInputValor>
-            </InputControl>
+           
 
             <InputControl>
-                <Label>Descrição</Label>
-                <TextInput
+                <InputText
+                    label="Descrição"
                     value={descricao}
                     onChangeText={setDescricao}
                     placeholder="Mercadinho"
-                    placeholderTextColor={"#bbb"}></TextInput>
+                    placeholderTextColor={"#bbb"}
+                    colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}></InputText>
             </InputControl>
 
             <InputControl>
@@ -320,13 +312,16 @@ const FormCadastro= ({route, navigation, tipoLancamento}: PropsNavigation) => {
             {detalhes &&
                 <>
                     <InputControl>
-                        <Label>Parcelas</Label>
-                        <TextInput
+                        <InputText
+                            label="Quantidade de Parcelas"
+                            colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
                             value={parcelas}
                             onChangeText={(text) => changeParcela(text, dataPagamento, dataParcelas)}
                             placeholder="1"
-                            keyboardType="numeric">
-                        </TextInput>
+                            keyboardType="numeric"
+                            />
+                                
+                        
                     </InputControl>
                     
                     <SectionCardsParcelas>

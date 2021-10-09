@@ -42,7 +42,6 @@ export const ButtonManager = styled.TouchableHighlight`
     width: 100%;
     align-items: center;
     justify-content: center;
-
     background-color: #F5F2F3;
     height: 60px;
     border-radius: 5px;
@@ -90,12 +89,11 @@ export const LabelBalanceAccount = styled.Text`
     font-size: 18px;
 `
 export const SectionIcon = styled.View`
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50px;
-    border-width: 6px;
-    border-color: #444;
-
+    border-width: 4px;
+    border-color: #6bb760;
     align-items: center;
     justify-content: center;
 `

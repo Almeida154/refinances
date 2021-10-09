@@ -4,10 +4,11 @@ import api from '../services/api';
 import { UseAuth } from './AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Buffer } from 'buffer';
+import { ToastAndroid } from 'react-native';
 
 export type CategoriaConta = {    
     descricaoCategoryConta: string,
-    iconeCategoryConta: Buffer | null,
+    iconeCategoryConta: string,
     userCategoryConta: number,
     id: number
 }
@@ -16,6 +17,7 @@ interface CategoriaContaContextType {
     categoriasConta: CategoriaConta[],
     handleAdicionarCategoriaConta(categoriaProps: CategoriaConta): Promise<void>
     setupCategoriasConta(idUser: number): Promise<void>
+    handleReadByUserCategoriesAccount(idUser: number): Promise<void>
 }
 
 const CategoriaContaContext = createContext<CategoriaContaContextType>({} as CategoriaContaContextType);
@@ -26,13 +28,13 @@ export const CategoriasContaProvider: React.FC = ({ children }) => {
     const [categoriasConta, setCategoriasConta] = useState<CategoriaConta[]>([{}] as CategoriaConta[]);
 
     async function setupCategoriasConta(idUser: number){        
-        const nomesCategoriasContaPadroes = ["Carteira", "Poupança", "Investimentos"];
+        const nomesCategoriasContaPadroes = [["Carteira", "Entypo:wallet"], ["Poupança", "MaterialCommunityIcons:currency-usd-circle", ], ["Investimentos", "MaterialIcons:show-chart"]];
         const newCategoriasConta = categoriasConta;
 
         nomesCategoriasContaPadroes.map(async item => {
             const response = await api.post('/categoryAccount/create', {
-                descricaoCategoryConta: item,
-                iconeCategoryConta: null,
+                descricaoCategoryConta: item[0],
+                iconeCategoryConta: item[1],
                 userCategoryConta: idUser
             });
 
@@ -63,8 +65,21 @@ export const CategoriasContaProvider: React.FC = ({ children }) => {
         }
     }
     
+    async function handleReadByUserCategoriesAccount(idUser: number) {
+        try {
+            const response = await api.post(`/categoryaccount/findbyuser/${idUser}`)
+
+            if(response.data.error) {
+                return ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
+            }
+
+            setCategoriasConta(response.data.categoriesConta)
+        } catch (error) {
+            console.log("Ocorreu um erro no handleReadByUserCategoriesAccount", error)
+        }
+    }
     return (
-        <CategoriaContaContext.Provider value={{ categoriasConta, handleAdicionarCategoriaConta, setupCategoriasConta }}>
+        <CategoriaContaContext.Provider value={{ handleReadByUserCategoriesAccount, categoriasConta, handleAdicionarCategoriaConta, setupCategoriasConta }}>
             {children}
         </CategoriaContaContext.Provider>
     );

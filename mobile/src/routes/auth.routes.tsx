@@ -4,6 +4,7 @@ import Login from '../screens/auth/LogIn';
 import ConfigAccount from '../screens/auth/SignIn/ConfigAccount';
 import RegisterMain from '../screens/auth/SignIn/RegisterMain';
 import RegisterName from '../screens/auth/SignIn/RegisterName';
+import RegisterImage from '../screens/auth/SignIn/RegisterImage';
 import RegisterEarnings from '../screens/auth/SignIn/RegisterEarnings';
 import RegisterCategories from '../screens/auth/SignIn/RegisterCategories';
 
@@ -17,6 +18,7 @@ const AuthRoutes: React.FC = () => {
             <AuthStack.Screen name="Entrar" component={Login} />
             <AuthStack.Screen name="Cadastrar" component={RegisterMain} />
             <AuthStack.Screen name="InserirNome" component={RegisterName} />
+            <AuthStack.Screen name="InserirImage" component={RegisterImage} />
             <AuthStack.Screen name="ConfigConta" component={ConfigAccount} />
             <AuthStack.Screen name="ConfigCategorias" component={RegisterCategories} />
             <AuthStack.Screen name="Ganhos" component={RegisterEarnings} />

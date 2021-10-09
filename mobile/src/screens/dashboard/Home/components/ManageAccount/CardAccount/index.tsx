@@ -3,6 +3,7 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import IconCategory from '../../../../../../components/IconCategory'
+import {Conta} from '../../../../../../contexts/AccountContext'
 
 import {
     Container,
@@ -16,21 +17,25 @@ import {
     LabelBalance
 } from './styles'
 
-const CardAccount = () => {
+type PropsCardAccount = {
+    item: Conta
+}
+
+const CardAccount = ({item}: PropsCardAccount) => {
     return (
         <Container>
             <Upside>
                 <SectionLeft>
                     <IconCategory stringIcon="Entypo:wallet" color="gray"/>
                     <SectionDescription>
-                        <LabelDescriptionAccount>Carteira</LabelDescriptionAccount>
-                        <LabelCategoryAccount>Conta Corrente</LabelCategoryAccount>
+                        <LabelDescriptionAccount>{item.descricao}</LabelDescriptionAccount>
+                        <LabelCategoryAccount>{item.categoryConta}</LabelCategoryAccount>
                     </SectionDescription>
                 </SectionLeft>
                 <Icon name="arrow-forward-ios" color="gray" size={23}/>
             </Upside>
             <Bottom>
-                <LabelBalance>R$ 129,00</LabelBalance>
+                <LabelBalance>{item.saldoConta.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</LabelBalance>
             </Bottom>
         </Container>
     )

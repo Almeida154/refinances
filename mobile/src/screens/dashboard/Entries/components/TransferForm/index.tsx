@@ -15,7 +15,7 @@ import {
 
 import { UseTransferencias, Transferencia } from '../../../../../contexts/TransferContext'
 
-import { Parcela } from '../../../../../contexts/InstallmentContext'
+import InputText from '../../../../../components/InputText'
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
@@ -24,11 +24,10 @@ import { Text, ToastAndroid } from 'react-native'
 import PickerContas from '../PickerContas'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const FormTransferencia= ({route, navigation}: PropsNavigation) => {
+const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation) => {
     const [selectedContaOrigem, setSelectedContaOrigem] = useState(0)
     const [selectedContaDestino, setSelectedContaDestino] = useState(0)
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-    const [valor, setValor] =  useState('')
     const [descricao, setDescricao] =  useState('')
     const [dataPagamento, setDataPagamento] =  useState(new Date(Date.now()))        
 
@@ -73,23 +72,15 @@ const FormTransferencia= ({route, navigation}: PropsNavigation) => {
 
     return (
         <ScrollView style={{width: '100%'}}>
-            <ContainerForm>
+            <ContainerForm>               
                 <InputControl>
-                    <Label>Valor(R$) </Label>
-                    <TextInputValor
-                        value={valor}
-                        onChangeText={setValor}
-                        placeholder="0,00"
-                        keyboardType="numeric"
-                        placeholderTextColor={"#bbb"}></TextInputValor>
-                </InputControl>
-
-                <InputControl>
-                    <Label>Descrição </Label>
-                    <TextInputValor
+                    <InputText
+                        label="Descrição"
+                        colorLabel="#333333"
                         value={descricao}
                         onChangeText={setDescricao}                
-                        placeholderTextColor={"#bbb"}></TextInputValor>
+                        placeholderTextColor={"#bbb"}
+                        placeholder="Descrição de sua transferência"></InputText>
                 </InputControl>
 
                 <InputControl>

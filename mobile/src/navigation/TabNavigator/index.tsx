@@ -2,7 +2,7 @@ import React, {useLayoutEffect} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 
-import RootStackParamApp, {FormLancamentoStack, HomeLancamentoStack} from '../../@types/RootStackParamApp'
+import RootStackParamApp, {FormLancamentoStack} from '../../@types/RootStackParamApp'
 
 import {UseDadosTemp} from '../../contexts/TemporaryDataContext'
 
@@ -15,7 +15,9 @@ import AddCategory from '../../screens/dashboard/Entries/components/AddCategory'
 import ManageAccount from '../../screens/dashboard/Home/components/ManageAccount'
 
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Fontisto';
+import Icon2 from 'react-native-vector-icons/Feather';
+import Icon3 from 'react-native-vector-icons/Ionicons';
+import Icon4 from 'react-native-vector-icons/Entypo';
 
 import { GestureResponderEvent, TouchableOpacity, View, Text } from 'react-native';
 
@@ -27,21 +29,6 @@ type PropsCustomBar = {
     children: React.ReactNode;
     onPress: ((e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent) => void) | undefined
 }
-
-const FormStack = createStackNavigator<FormLancamentoStack>()
-const FormLancamentoStackNavigation = () => {
-    const {navigation} = UseDadosTemp()
-
-    useLayoutEffect(() => {
-        navigation.navigate('Lancamentos', {screen: 'Main'})
-    }, [])
-    return (
-        <Text>
-            Carregando
-        </Text>
-    )
-}
-
 
 
 const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
@@ -55,10 +42,19 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
             onPress={onPress}>
             <View
                 style={{
-                    width: 70,
-                    height: 70,
+                    width: 60,
+                    height: 60,
                     borderRadius: 35,
-                    backgroundColor: '#e32f45'
+                    backgroundColor: '#fff',
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 4,
+                    },
+                    shadowOpacity: 0.32,
+                    shadowRadius: 5.46,
+
+                    elevation: 9,
                 }}>
                 {children}
             </View>
@@ -67,41 +63,42 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
 }
 
 const TabNavigator = () => {
-    
+    const {navigation} = UseDadosTemp()
     return (
         <Tab.Navigator                
             screenOptions={{
                 tabBarStyle: {
-                    borderTopColor: '#66666666',
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#fff',
                     elevation: 0,
-                    zIndex: 999 ,                                        
+                    zIndex: 999 ,       
+                    padding: 5,
+                    height: '8%'
                 },
                 tabBarActiveTintColor: '#EE4266',                
-                tabBarInactiveTintColor: '#ddd'                                                
+                tabBarInactiveTintColor: '#bbb'                                                
                 
             }}
         >
 
             <Tab.Screen name="Home" component={Home} options={{
-                tabBarIcon: ({ color }) => <Icon name='home' color={color} size={24} />,
+                tabBarIcon: ({ color }) => <Icon3 name='md-home' color={color} size={24} />,
 
             }}
             />
             <Tab.Screen name="Extrato" component={Extrato} options={{
-                tabBarIcon: ({ color }) => <Icon name='inbox' color={color} size={24} />,
+                tabBarIcon: ({ color }) => <Icon2 name='file-text' color={color} size={24} />,
 
             }}
             />
 
             
             
-                <Tab.Screen name="Lancamentos" component={FormLancamentoStackNavigation} options={{                
+                <Tab.Screen name="Lancamentos" component={() => <View />} options={{                
                     tabBarLabel: () => null,
                     headerShown: false,
-                    tabBarIcon: ({ color }) => <Icon name='plus' color={color} size={24} />,                    
+                    tabBarIcon: () => <Icon4 name='plus' color={'#EE4266'} size={24} />,                    
                     tabBarButton: (props) => {
-                        return (< CustomTabBarButton children={props.children} onPress={props.onPress} />
+                        return (< CustomTabBarButton children={props.children} onPress={() => navigation.navigate('Lancamentos', {screen: 'Main'})} />
                         )
                     }
 
@@ -110,11 +107,11 @@ const TabNavigator = () => {
             
             
             <Tab.Screen name="Gráficos" component={Charts} options={{
-                tabBarIcon: ({ color }) => <Icon name='piechart' color={color} size={24} />,
+                tabBarIcon: ({ color }) => <Icon3 name='stats-chart' color={color} size={24} />,
 
             }} />
             <Tab.Screen name="Otimizar" component={Variados} options={{
-                tabBarIcon: ({ color }) => <Icon2  name='preview' color={color} size={24} />,
+                tabBarIcon: ({ color }) => <Icon3  name='rocket' color={color} size={24} />,
 
             }} />
         </Tab.Navigator >

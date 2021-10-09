@@ -1,25 +1,61 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-import InputText from '../../../../../components/InputText'
+import { Modalize } from 'react-native-modalize';
+import {Text} from 'react-native'
+
+import InputText from './components/InputText'
 import Button from '../../../../../components/Button'
+import {Conta, UseContas} from '../../../../../contexts/AccountContext'
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
+
+import SelectionCategoriesAccount from './components/SelectionCategoriesAccount'
 
 import {
     Container,
-    ButtonText
+    ButtonText,
+    
 } from './styles'
-import { useColorScheme } from 'react-native'
+import { TouchableOpacity } from 'react-native'
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/core';
+import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 
-const CreateAccount = () => {
+type PropsManageAccount = {
+    navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">,    
+    route: RouteProp<HomeAccountStack, "CreateAccount">,
+}
+
+const CreateAccount = ({navigation, route}: PropsManageAccount) => {
+    const {handleAdicionarConta} = UseContas()
     const [description, setDescription] = useState('')
-    const [value, setValue] = useState('')
-    const [color, setColor] = useState('')
-    const [icon, setIcon] = useState('')
+    const [value, setValue] = useState('')    
+    const [categoriaConta, setCategoriaConta] = useState('')
 
+    const modalizeRef = useRef<Modalize>(null);
+
+    const onOpen = () => {
+        modalizeRef.current?.open();
+    };
+
+    
     async function handleCreateAccount() {
+        const newConta = {
+            descricao: description,
+            categoryConta: categoriaConta,
+            saldoConta: parseFloat(value),
+            userConta: await retornarIdDoUsuario()
+        } as Conta
 
+        console.log(newConta)
+
+        handleAdicionarConta(newConta)
+        
+        navigation.goBack()
     }
+
     return (
         <Container>
+            
             <InputText 
                 onChangeText={setDescription}
                 value={description}
@@ -32,28 +68,20 @@ const CreateAccount = () => {
                 value={value}
                 label="Saldo"
                 placeholder="Saldo de sua nova conta"
+                keyboardType='decimal-pad'
             />
 
-            <InputText 
-                onChangeText={setColor}
-                value={color}
-                label="Cor"
-                placeholder="Cor da borda da categoria"
-            />
 
-            <InputText 
-                onChangeText={setIcon}
-                value={icon}
-                label="Ícone"
-                placeholder="Ícone de sua nova conta"
-            />
+            <SelectionCategoriesAccount navigation={navigation} setCategoriaConta={setCategoriaConta}/>
 
             <Button 
                 onPress={handleCreateAccount}
+                title="Criar"
+            />              
 
-            >
-                <ButtonText>Criar</ButtonText>
-            </Button>
+            <Modalize ref={modalizeRef}
+                modalStyle={{elevation: 50}}
+            ><Text>...your content</Text></Modalize>  
         </Container>
     )
 }

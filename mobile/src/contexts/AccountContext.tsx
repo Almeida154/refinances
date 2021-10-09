@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UseAuth } from './AuthContext';
+import { ToastAndroid } from 'react-native';
 
 export type Conta = {
     id: number,
@@ -57,13 +58,15 @@ export const ContasProvider: React.FC = ({ children }) => {
     }
     
     async function handleReadByUserContas(idUser: number) {
-        console.log('foia qui')
+        console.log(idUser)
         setLoading(true)
         try {
             const response = await api.post(`/account/findbyuser/${idUser}`)
                 
-            
-            
+            if(response.data.error) {
+                ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
+            }
+            console.log(response.data.contas)
             setContas(response.data.contas)
             
             setLoading(false)

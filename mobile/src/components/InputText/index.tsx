@@ -9,6 +9,7 @@ interface IProps extends TextInputProps {
   label?: string;
   lastOne?: boolean;
   placeholder?: string;
+  colorLabel?: string;
 }
 
 const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (

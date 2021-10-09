@@ -9,6 +9,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ManageAccount from '../screens/dashboard/Home/components/ManageAccount';
 import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
+import AddCategoryAccount from '../screens/dashboard/Home/components/CreateAccount/components/AddCategoryAccount';
+
+// import TopBarNavigator from '../screens/dashboard/Goals/navigators/TopBarNavigator';
 
 const MainStack = createStackNavigator<PropsMainRoutes>();
 
@@ -18,6 +21,7 @@ const HomeAccountStackNavigation = () => {
         <HomeStack.Navigator>            
             <HomeStack.Screen name="ManageAccount" component={ManageAccount}/>
             <HomeStack.Screen name="CreateAccount" component={CreateAccount}/>
+            <HomeStack.Screen name="AddCategoryAccount" component={AddCategoryAccount}/>
         </HomeStack.Navigator>
     )
 }
@@ -36,9 +40,9 @@ const MainRoutes: React.FC = () => {
     return (
         <MainStack.Navigator screenOptions={{ headerShown: false }}>
             <MainStack.Screen name="Main" component={Main} />
-
             <MainStack.Screen name="StackAccount" component={HomeAccountStackNavigation} />                
-            <MainStack.Screen name="Lancamentos" component={LancamentosStackNavigation} />                
+            <MainStack.Screen name="Lancamentos" component={LancamentosStackNavigation} />   
+            {/* <MainStack.Screen name="Goals" component={TopBarNavigator} />              */}
         </MainStack.Navigator>
     );
 }

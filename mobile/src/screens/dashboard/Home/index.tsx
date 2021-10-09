@@ -5,7 +5,6 @@ import {
     View,
     Text,
     StyleSheet,
-    Image,
     Dimensions,
     ScrollView,
     StatusBar,
@@ -13,7 +12,8 @@ import {
     TouchableHighlight
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon2 from 'react-native-vector-icons/Feather'
 import PropsNavigationApp from '../../../@types/RootStackParamApp'
 
 const { width } = Dimensions.get('screen');
@@ -24,6 +24,8 @@ const ITEM_HEIGHT = ITEM_WIDTH * 0.9;
 import {UseAuth} from '../../../contexts/AuthContext'
 
 import SectionAccount from './components/SectionAccount'
+
+import CreatePath from './components/CreatePath'
 
 type PropsHome = {
     navigation: StackNavigationProp<PropsNavigationApp, "Home">,    
@@ -51,16 +53,24 @@ const Home = ({route, navigation}: PropsHome) => {
                     </View>
 
                     <View style={styles.containerSetting}>
-                        <Icon name='setting' color='#000000' size={40} style={{marginRight: 20}}/>
+                        <Icon2 name='settings' color='#9D3147' size={30} style={{marginRight: 20}}/>
 
-                        <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#000000" size={40} /></TouchableHighlight>
+                        <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#9D3147" size={30} /></TouchableHighlight>
                     </View>
                 </View>
                 {/* Scrollable Content */}
-                <View style={styles.containerBody}>
+
+                <ScrollView style={styles.scroll}>
+                    <View style={styles.containerBody}>
+                        
+                        <SectionAccount />
+
+                        <CreatePath />
+
+
+                    </View>
+                </ScrollView>
                     
-                    <SectionAccount />
-                </View>
             </View>
         </ScrollView>
     );
@@ -86,7 +96,7 @@ const styles = StyleSheet.create({
     iconProfile: {
         width: 70,
         height: 70,
-        backgroundColor: 'yellow',
+        backgroundColor: '#444',
         borderRadius: 50,
         borderColor: 'black',
         borderWidth: 1,
@@ -115,6 +125,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        
+    },
+    scroll: {
         top: -15,
     },
     sectionSaldoGeral: {
@@ -123,5 +136,17 @@ const styles = StyleSheet.create({
         height: 80,
         padding: 10,
         borderRadius: 20
+    },
+
+    atalhoCriar: {
+
+    },
+
+    criarLeft: {
+
+    },
+
+    criarBtn: {
+
     }
 });
