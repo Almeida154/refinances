@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react'
-import {Alert, Text} from 'react-native'
+import {Alert, TextInput} from 'react-native'
 import {Categoria, UseCategories} from '../../../../../contexts/CategoriesContext'
 
 
 import {Searchbar} from 'react-native-paper'
 
 import Icon from '../../../../../helpers/gerarIconePelaString'
+import InputText from '../../../../../components/InputText'
 
 import {
     Container,
@@ -30,12 +31,14 @@ import {
     OptionTemplateSettings
 } from 'react-native-custom-picker'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
 type PropsSelectionCategorias = {
     tipoCategoria: string,    
     setCategoria: React.Dispatch<React.SetStateAction<string>>,
     navigation: StackNavigationProp<FormLancamentoStack, "Main">,    
+    categoria: string
 }
 
 const RenderOption = (settings: OptionTemplateSettings) => {
@@ -85,13 +88,14 @@ const RenderFooter = ({navigation, tipoCategoria}: PropsRenderFooter) => {
 
 
 
-const SelectionCategorias = ({tipoCategoria, setCategoria, navigation}: PropsSelectionCategorias) => {        
+const SelectionCategorias = ({categoria, tipoCategoria, setCategoria, navigation}: PropsSelectionCategorias) => {        
     const {categorias, loading, handleReadByUserCategorias} = UseCategories()    
 
     const [search, setSearch] = useState('') 
     const [categoriasAtual, setCategoriasAtual] = useState([] as Categoria[])
     
     const PickerRef = useRef<CustomPicker>(null)
+
     useEffect(() => {
         async function loadCategorias() {
             const getUser = await AsyncStorage.getItem('user')
@@ -125,10 +129,23 @@ const SelectionCategorias = ({tipoCategoria, setCategoria, navigation}: PropsSel
     const onOpen = () => {
         PickerRef.current?.showOptions()
     }
+
+    
     return (
         <Container>
 
-            
+            <TouchableOpacity onPress={onOpen}>
+                <InputText 
+                    label="Categoria"
+                    value={categoria == '0' ? '' : categoria}
+                    placeholder="Selecione uma categoria para seu lançamento"
+                    placeholderTextColor={"#bbb"}
+                    colorLabel={tipoCategoria == 'despesa' ? '#EE4266' : '#6CB760'} 
+                    editable={false}
+                />
+
+            </TouchableOpacity>
+
             <CustomPicker 
                 ref={PickerRef}
                 placeholder={loading ? "Carregando" : "Selecione a categoria para esse lançamento" }
@@ -142,6 +159,7 @@ const SelectionCategorias = ({tipoCategoria, setCategoria, navigation}: PropsSel
                 onValueChange={value => {
                     setCategoria(value.nomeCategoria)
                 }}
+                style={{display: 'none'}}
             />
 {/*             
                 

@@ -15,8 +15,8 @@ export type User = {
 interface AuthContextType {    
     token: string;
     user: User,
-    handleLogin(logUser: User): Promise<string>
-    handleRegister(): Promise<string>
+    handleLogin(regUser: User): Promise<string>
+    handleRegister(regUser: User): Promise<string>
     updateUserProps(userProps: User): void 
     handleLogout(): void
 }
@@ -64,12 +64,12 @@ export const AuthProvider: React.FC = ({ children }) => {
         }
     }
 
-    async function handleRegister() {
+    async function handleRegister(regUser: User) {
         try {
             const response = await api.post('/user/create', {
-                nomeUsuario: user.nomeUsuario,
-                emailUsuario: user.emailUsuario,
-                senhaUsuario: user.senhaUsuario,
+                nomeUsuario: regUser.nomeUsuario,
+                emailUsuario: regUser.emailUsuario,
+                senhaUsuario: regUser.senhaUsuario,
             });
 
             console.debug('AuthContext | handleRegister(): ', response.data);

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 
 export const Container = styled.View`
-
+    
 `
 
 export const Header = styled.View`
@@ -42,4 +42,9 @@ export const BotaoAdicionarCategoria = styled.View`
 
 export const LabelAdicionarCategoria = styled.Text`
 
+`
+
+export const ButtonText = styled.TouchableOpacity`
+    
+    
 `

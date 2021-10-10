@@ -28,27 +28,31 @@ import PickerCategoria from '../PickerCategoria'
 import PickerContas from '../PickerContas'
 import SelectionCategorias from '../SelectionCategories'
 
+import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 import {PropsNavigation} from '../..'
 import { Text } from 'react-native-paper'
+import { Conta } from '../../../../../contexts/AccountContext';
 
 
 type CardParcela = {
     id: number;
-    conta: string;
+    conta: Conta | number;
     data: Date;
     valor: number;
+    
 }
 
 type CardParcelaProps = {
     item: CardParcela;
     dataParcelas: CardParcela[];
     setDataParcelas: React.Dispatch<React.SetStateAction<CardParcela[]>>;
+    tipoLancamento: string;
 }
 
-const ItemCardParcela = ({item, dataParcelas, setDataParcelas}: CardParcelaProps) => {
+const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: CardParcelaProps) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
-    const [selectedConta, setSelectedConta] = useState(0)
+    const [selectedConta, setSelectedConta] = useState<Conta | number>(0)
 
     const [valor, setValor] = useState(String(item.valor))    
 
@@ -78,8 +82,9 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas}: CardParcelaProps
 
     useEffect(() => {
         const aux = item
-        aux.conta = String(selectedConta)
+        aux.conta = selectedConta
         dataParcelas[aux.id] = aux
+        // console.log(dataParcelas[aux.id])
         setDataParcelas(dataParcelas)
     }, [selectedConta])
 
@@ -100,12 +105,13 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas}: CardParcelaProps
                value={valor}
                onChangeText={onChangeValor}
             />
-            <PickerContas conta={selectedConta} setConta={setSelectedConta}/>
+            <PickerContas conta={selectedConta} setConta={setSelectedConta} tipoLancamento={tipoLancamento}/>
         </ContainerCardParcela>
     )
 }
 
-const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: PropsNavigation) => {
+const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: PropsNavigation) => {
+
     const [detalhes, setDetalhes] = useState(false)
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
@@ -114,14 +120,14 @@ const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: Props
     const [dataPagamento, setDataPagamento] =  useState((new Date(Date.now())))    
 
     const [selectedCategoria, setSelectedCategoria] = useState('0')
-    const [selectedConta, setSelectedConta] = useState(0)
+    const [selectedConta, setSelectedConta] = useState<Conta | number>(0)
 
     const [parcelas, setParcelas] =  useState('1')    
     
-    const [dataParcelas, setDataParcelas] = useState([
+    const [dataParcelas, setDataParcelas] = useState<CardParcela[]>([
         {
             id: 0,
-            conta: "Conta Principal",
+            conta: (typeof selectedConta == 'number' ? 0 : selectedConta.descricao),
             valor: 0,
             data: dataPagamento
         },
@@ -146,15 +152,15 @@ const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: Props
     
     const changeParcela = (text: string, date: Date, newDataParcelas: CardParcela[]) => {
         setParcelas(text)
-        console.log(`text: ${text} e date: ${date}`)
-
+        
         if (text == '') return
     
         let aux: CardParcela[] = []
         const num = parseInt(text)            
-
+        
         let valorParcelaDividido =parseFloat((parseFloat(valor) / num).toFixed(2))
 
+        console.log(`num: ${num} e newDataParcelas.length: ${newDataParcelas.length}`)
         if (num < newDataParcelas.length) {
             for (var i = 0; i < num; i++) {
                 newDataParcelas[i].valor = valorParcelaDividido
@@ -164,21 +170,26 @@ const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: Props
             }
         } else if (num > newDataParcelas.length) {            
             for (var i = 0; i < num; i++) {
-                
+                // console.log(`data atual = ${date.toLocaleString()} | anterior = ${aux[i-1] ? aux[i-1].data.toLocaleDateString() : "Não tem"}`)
                 const adicaoDeUmMes = aux[i-1] == undefined ? date : addMonths(aux[i-1].data, 1)
+                console.log("adicaodeumes, ", adicaoDeUmMes.toLocaleDateString())
                 if(i < newDataParcelas.length) {
                     newDataParcelas[i].valor = valorParcelaDividido
                     newDataParcelas[i].data = adicaoDeUmMes,
+                    console.log(newDataParcelas[i])   
                     aux.push(newDataParcelas[i])
-                    continue
-                }                
                 
-                aux.push({
-                    id: i,
-                    conta: 'Conta Principal',
-                    data: adicaoDeUmMes,
-                    valor: valorParcelaDividido
-                })
+                } else {
+                    aux.push({
+                        id: i,
+                        conta: selectedConta,
+                        data: adicaoDeUmMes,
+                        valor: valorParcelaDividido
+                    })          
+                    console.log(aux[i])             
+                } 
+
+                
             }
         }        
 
@@ -199,7 +210,7 @@ const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: Props
             newParcelas.push({
                 id: -1,
                 lancamentoParcela: -1,
-                contaParcela: parseInt(item.conta),
+                contaParcela: typeof item.conta == 'number' ? 0 : item.conta.id,
                 dateParcela: item.data,
                 valorParcela: item.valor                    
             })
@@ -222,7 +233,12 @@ const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: Props
         const message = await handleAdicionarLancamento(newLancamento, idUser);            
         
         if(message == '') {
-            navigation.navigate('Extrato')
+            ToastAndroid.show("Lançamento adicionado", ToastAndroid.SHORT)
+            setDescricao('')
+            setValor('')
+            setSelectedCategoria('0')
+            setSelectedConta(0)
+            setParcelas('1')
         }
         else {
             ToastAndroid.show(message, ToastAndroid.SHORT)
@@ -282,13 +298,11 @@ const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: Props
             </InputControl>
 
             <InputControl>
-                <Label>Categoria</Label>
                 <SelectionCategorias tipoCategoria={tipoLancamento} categoria={selectedCategoria} setCategoria={setSelectedCategoria} navigation={navigation}/>
             </InputControl>
 
             <InputControl>
-                <Label>Conta</Label>
-                <PickerContas conta={selectedConta} setConta={setSelectedConta}/>
+                <PickerContas conta={selectedConta} setConta={setSelectedConta} tipoLancamento={tipoLancamento}/>
             </InputControl>
 
             <InputControl>
@@ -327,7 +341,7 @@ const FormCadastro= ({route, valor, setValor, navigation, tipoLancamento}: Props
                     <SectionCardsParcelas>
                         {!dataParcelaAlterado && <FlatList 
                             data={dataParcelas}
-                            renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} />}
+                            renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} tipoLancamento={tipoLancamento}/>}
                             horizontal
                             keyExtractor={(item, index) => String(index)} />}
                     </SectionCardsParcelas>

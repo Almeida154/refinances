@@ -24,7 +24,6 @@ import {
 
 // Components
 import Button from '../../../../components/Button';
-import ButtonGoogle from '../../../../components/ButtonGoogle';
 
 // Icons
 import GoogleIcon from '../../../../assets/images/svg/google-icon.svg';
@@ -46,11 +45,12 @@ const Cadastrar = ({navigation}: PropsNavigation) => {
 
     if(senha != senhaConfirm) 
       return setErro('Senhas não coincidem')
-      
-    user.emailUsuario = email;
-    user.senhaUsuario = senha;
+      const regUser = {
+        emailUsuario: email,
+        senhaUsuario: senha
+      } as User    
 
-    const response = await handleRegister();
+    const response = await handleRegister(regUser);
 
     console.log("response: ", response)
         

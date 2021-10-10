@@ -2,32 +2,35 @@ import React, { useState, useRef, SetStateAction, useEffect } from 'react'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Picker } from '@react-native-picker/picker'
+import { Picker, PickerProps } from '@react-native-picker/picker'
 
 import { StyleSheet, View } from 'react-native'
 
-import {UseContas} from '../../../../contexts/AccountContext'
+import {Conta, UseContas} from '../../../../contexts/AccountContext'
+
+import InputText from '../../../../components/InputText'
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
 type PropsPickerContas = {
-    conta: number,
-    setConta: React.Dispatch<React.SetStateAction<number>>
+    conta: Conta | number,
+    setConta: React.Dispatch<React.SetStateAction<Conta | number>>
+    tipoLancamento: string
 }
 
-const PickerContas = ({conta, setConta}: PropsPickerContas) => {    
+const PickerContas = ({conta, setConta, tipoLancamento}: PropsPickerContas) => {    
     const {contas, handleReadByUserContas, loading} = UseContas()
 
     const pickerRef = useRef();
-/*
-    function open() {
-        pickerRef.current.focus();
-    }
 
-    function close() {
-        pickerRef.current.blur();
-    }
-*/
-    const onChangePicker = (selItem: SetStateAction<number>) => {
-        setConta(selItem)
+    
+    function open() {
+        if(pickerRef.current)
+            pickerRef.current.focus();
+    }   
+
+    const onChangePicker = (index: number) => {
+        if(index == 0) return
+        setConta(contas[index])
     }
 
     useEffect(() => {
@@ -35,7 +38,7 @@ const PickerContas = ({conta, setConta}: PropsPickerContas) => {
             async function loadContas() {
                 const getItem = await AsyncStorage.getItem('user')
                 const id = getItem == null ? 0 : JSON.parse(getItem).id
-                console.log(id)
+                // console.log(id)
                 handleReadByUserContas(id)
             }
             
@@ -46,25 +49,36 @@ const PickerContas = ({conta, setConta}: PropsPickerContas) => {
             console.log('Erro ao carregar as contas: ', error)
         }
     }, [])
-
+  
+   
+    
     return (
         <View style={styles.containerPicker}>
+
+                <TouchableOpacity onPress={open}>
+                    <InputText 
+                        label="Conta"
+                        value={typeof conta == 'number' ? '' : conta.descricao}
+                        placeholder="Selecione uma conta"
+                        placeholderTextColor={"#bbb"}
+                        colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'} 
+                        editable={false}
+                    />
+                </TouchableOpacity>
             <Picker
                 itemStyle={styles.pickerItem}
                 style={styles.picker}
-                // ref={pickerRef}
-                selectedValue={conta}
+                ref={pickerRef}
+                selectedValue={typeof conta == 'number' ? 0 : conta.id}
                 onValueChange={onChangePicker}
             >
                  {
                     loading ? <Picker.Item style={{ backgroundColor: 'orange' }} label="Carregando" value={0} />
                     :
-                    contas.map((item, index) => {
-                        if(index == 0 && (!conta || conta == 0)) {                            
-                            setConta(item.id)                            
-                        }
+                    contas.map((item, index) => {  
+                       
                         return (
-                            <Picker.Item key={index} style={{ backgroundColor: 'orange' }} label={item.descricao} value={item.id} />
+                            <Picker.Item key={index} style={{ backgroundColor: 'orange' }} label={item.descricao} value={index} />
                         )
                     })
                 }
@@ -77,12 +91,12 @@ const PickerContas = ({conta, setConta}: PropsPickerContas) => {
 const styles = StyleSheet.create({
     containerPicker: {
         width: '100%',
-        height: 50,
-        borderBottomWidth: 2,
-        borderColor: '#858c87',
-        opacity: 0.7
+        
+        
+        
     },
     picker: {
+        display: 'none',
         width: '100%',
         height: 50,
         color: '#555',
