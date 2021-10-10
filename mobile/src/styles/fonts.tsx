@@ -5,6 +5,7 @@ export default {
     medium: 18,
     big: 22,
     bigger: 26,
+    super: 32,
   },
   familyType: {
     italic: 'Nunito-Italic',

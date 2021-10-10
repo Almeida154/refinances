@@ -5,6 +5,7 @@ export default {
 
   cultured: '#f6f6f6',
   white: '#ffffff',
+  diffWhite: '#fbfbfb',
   platinum: '#E6E6E6',
 
   bigDipOruby: '#9d3147',

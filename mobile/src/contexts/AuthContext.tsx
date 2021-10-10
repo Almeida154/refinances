@@ -12,10 +12,16 @@ export type User = {
   signed: boolean;
 };
 
+export interface error {
+  error?: string;
+  message?: string;
+  ok?: boolean;
+}
+
 interface AuthContextType {
   token: string;
   user: User;
-  handleLogin(logUser: User): Promise<string>;
+  handleLogin(logUser: User): Promise<error>;
   handleRegister(): Promise<string>;
   updateUserProps(userProps: User): void;
   handleLogout(): void;
@@ -31,7 +37,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     (async () => {
       const storagedUser = await AsyncStorage.getItem('user');
-      console.log(storagedUser);
+      console.debug('AuthContext | useEffect(): ', storagedUser);
 
       if (storagedUser) {
         setUser(JSON.parse(storagedUser));

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { BackHandler, View } from 'react-native';
+import { BackHandler } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -10,6 +10,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
+// Styles
+import {
+  Container,
+  Boundaries,
+  Content,
+  Input,
+  Writting,
+  Error,
+} from './styles';
+import { colors, fonts, metrics } from '../../../../styles';
+
+// Icon
+import IonIcons from 'react-native-vector-icons/Ionicons';
+
+// Components
+import Header from '../../components/Header';
+import BottomNavigation from '../../components/BottomNavigation';
+
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Name'>;
   route: RouteProp<RootStackParamAuth, 'Name'>;
@@ -17,9 +35,11 @@ export type PropsNavigation = {
 
 const Name = ({ navigation }: PropsNavigation) => {
   const [name, setName] = useState('');
+  const [hasError, setError] = useState(true);
   const { user, updateUserProps } = UseAuth();
 
   useEffect(() => {
+    console.debug('Name | SetUser(): ', user);
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
@@ -34,12 +54,54 @@ const Name = ({ navigation }: PropsNavigation) => {
   };
 
   async function setUser() {
-    if (name == '') return;
-    await AsyncStorage.setItem('@userName', name);
-    navigation.navigate('Email');
+    if (name == '') {
+      setError(true);
+      return;
+    }
+    const newUser = user;
+    newUser.name = name;
+    updateUserProps(newUser);
+    console.debug('Name | SetUser(): ', user);
+    //navigation.navigate('Email');
   }
 
-  return <View></View>;
+  return (
+    <Container>
+      <Header
+        onBackButton={() => console.log('btnback')}
+        title="Como quer ser chamado?"
+      />
+      <Content>
+        <Boundaries>
+          <Writting>
+            <Input
+              placeholder="Seu nome"
+              placeholderTextColor={'rgba(52, 52, 52, .3)'}
+              selectionColor={colors.davysGrey}
+              keyboardType="default"
+              autoCapitalize="words"
+              value={name}
+              onChangeText={text => {
+                setName(text);
+                setError(false);
+              }}
+            />
+            {name.length > 0 && (
+              <IonIcons
+                style={{ marginLeft: 32 }}
+                name="close"
+                size={32}
+                color={`rgba(82, 82, 82, .08)`}
+                onPress={() => setName('')}
+              />
+            )}
+          </Writting>
+          {hasError && <Error>Preencha este campo!</Error>}
+        </Boundaries>
+      </Content>
+      <BottomNavigation onPress={() => setUser()} description="Próximo" />
+    </Container>
+  );
 };
 
 export default Name;

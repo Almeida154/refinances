@@ -62,6 +62,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
               }
               placeholderTextColor={colors.platinum}
               ref={ref}
+              selectionColor={colors.davysGrey}
               {...rest}
             />
           </Writting>

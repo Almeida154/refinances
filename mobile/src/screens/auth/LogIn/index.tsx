@@ -9,7 +9,7 @@ import { UseAuth, User } from '../../../contexts/AuthContext';
 import RootStackParamAuth from '../../../@types/RootStackParamAuth';
 
 // Styles
-import { colors, fonts, metrics } from '../../../styles';
+import { colors, metrics } from '../../../styles';
 import {
   Container,
   Header,
@@ -27,7 +27,7 @@ import Button from '../../../components/Button';
 import InputText from '../../../components/InputText';
 
 // Icons
-import BackArrowPink from '../../../assets/images/svg/arrow-back-pink.svg';
+import IonIcons from 'react-native-vector-icons/Ionicons';
 import LoginIcon from '../../../assets/images/svg/login-icon.svg';
 
 export type PropsNavigation = {
@@ -42,21 +42,14 @@ const Entrar = ({ navigation }: PropsNavigation) => {
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
-
-  type error = {
-    error?: string;
-    message?: string;
-    ok?: boolean;
-  };
-
-  const [emailError, setEmailError] = useState(null);
-  const [passwordError, setPasswordError] = useState(null);
+  const [emailError, setEmailError] = useState<any | null>(null);
+  const [passwordError, setPasswordError] = useState<any | null>(null);
 
   async function LoginUser() {
     user.email = email;
     user.password = password;
 
-    const response: error = await handleLogin(user);
+    const response = await handleLogin(user);
 
     if (!response.ok) {
       switch (response.error) {
@@ -86,10 +79,12 @@ const Entrar = ({ navigation }: PropsNavigation) => {
         locations={[0, 1.4]}
         colors={[colors.paradisePink, colors.bigDipOruby]}>
         <Header>
-          <BackArrowPink
-            style={{ position: 'absolute', left: 14, top: 40 }}
+          <IonIcons
+            style={{ position: 'absolute', left: 32, marginTop: 16 + 32 }}
+            name="md-arrow-back-sharp"
+            size={40}
+            color={colors.bigDipOruby}
             onPress={() => console.log('back')}
-            height={26}
           />
           <LoginIcon style={{ left: 1, top: '10%' }} height={'20%'} />
         </Header>

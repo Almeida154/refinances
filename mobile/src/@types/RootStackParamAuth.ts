@@ -2,6 +2,9 @@ import react from 'react';
 
 type PropsNavigationAuth = {
   Login: undefined;
+
+  PasswordRecovery: undefined;
+
   Name: undefined;
   Email: undefined;
   Password: undefined;
