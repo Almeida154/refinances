@@ -1,14 +1,22 @@
 import react from 'react';
 
 type PropsNavigationAuth = {
-    Entrar: undefined;
-    Cadastrar: undefined;
-    InserirNome: undefined;
-    InserirImage: undefined;
-    ConfigConta: undefined;
-    Ganhos: undefined;
-    ConfigCategorias: undefined;   
-    RecuperarConta: undefined; 
-}
+  Login: undefined;
+  Name: undefined;
+  Email: undefined;
+  Password: undefined;
+  ConfirmPassword: undefined;
+  Photo: undefined;
+
+  FixedExpenses: undefined;
+  EachFixedExpense: undefined;
+  EachFixedExpenseCategory: undefined;
+
+  FixedIncomes: undefined;
+  EachFixedIncome: undefined;
+  EachIncomeExpenseCategory: undefined;
+
+  StatsInitial: undefined;
+};
 
 export default PropsNavigationAuth;

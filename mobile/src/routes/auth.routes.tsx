@@ -1,30 +1,58 @@
 import * as React from 'react';
-import PasswordRecovery from '../screens/auth/PasswordRecovery';
+
 import Login from '../screens/auth/LogIn';
-import ConfigAccount from '../screens/auth/SignIn/ConfigAccount';
-import RegisterMain from '../screens/auth/SignIn/RegisterMain';
-import RegisterName from '../screens/auth/SignIn/RegisterName';
-import RegisterImage from '../screens/auth/SignIn/RegisterImage';
-import RegisterEarnings from '../screens/auth/SignIn/RegisterEarnings';
-import RegisterCategories from '../screens/auth/SignIn/RegisterCategories';
+
+import PasswordRecovery from '../screens/auth/PasswordRecovery';
+
+import Name from '../screens/auth/SignIn/Name';
+import Email from '../screens/auth/SignIn/Email';
+import Password from '../screens/auth/SignIn/Password';
+import ConfirmPassword from '../screens/auth/SignIn/ConfirmPassword';
+import Photo from '../screens/auth/SignIn/Photo';
+
+import FixedExpenses from '../screens/auth/SignIn/FixedExpenses';
+import EachFixedExpense from '../screens/auth/SignIn/EachFixedExpense';
+import EachFixedExpenseCategory from '../screens/auth/SignIn/EachFixedExpenseCategory';
+
+import FixedIncomes from '../screens/auth/SignIn/FixedIncomes';
+import EachFixedIncome from '../screens/auth/SignIn/EachFixedIncome';
+import EachFixedIncomeCategory from '../screens/auth/SignIn/EachFixedIncomeCategory';
+
+import StatsInitial from '../screens/auth/SignIn/StatsInitial';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
 const AuthStack = createStackNavigator();
 
 const AuthRoutes: React.FC = () => {
-    return (
-        <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-            <AuthStack.Screen name="Entrar" component={Login} />
-            <AuthStack.Screen name="Cadastrar" component={RegisterMain} />
-            <AuthStack.Screen name="InserirNome" component={RegisterName} />
-            <AuthStack.Screen name="InserirImage" component={RegisterImage} />
-            <AuthStack.Screen name="ConfigConta" component={ConfigAccount} />
-            <AuthStack.Screen name="ConfigCategorias" component={RegisterCategories} />
-            <AuthStack.Screen name="Ganhos" component={RegisterEarnings} />
-            <AuthStack.Screen name="PasswordRecovery" component={PasswordRecovery} />
-        </AuthStack.Navigator>
-    );
-}
+  return (
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+      <AuthStack.Screen name="Login" component={Login} />
+      <AuthStack.Screen name="PasswordRecovery" component={PasswordRecovery} />
+
+      <AuthStack.Screen name="Name" component={Name} />
+      <AuthStack.Screen name="Email" component={Email} />
+      <AuthStack.Screen name="Password" component={Password} />
+      <AuthStack.Screen name="ConfirmPassword" component={ConfirmPassword} />
+      <AuthStack.Screen name="Photo" component={Photo} />
+
+      <AuthStack.Screen name="FixedExpenses" component={FixedExpenses} />
+      <AuthStack.Screen name="EachFixedExpense" component={EachFixedExpense} />
+      <AuthStack.Screen
+        name="EachFixedExpenseCategory"
+        component={EachFixedExpenseCategory}
+      />
+
+      <AuthStack.Screen name="FixedIncomes" component={FixedIncomes} />
+      <AuthStack.Screen name="EachIncomeExpense" component={EachFixedIncome} />
+      <AuthStack.Screen
+        name="EachFixedIncomeCategory"
+        component={EachFixedIncomeCategory}
+      />
+
+      <AuthStack.Screen name="StatsInitial" component={StatsInitial} />
+    </AuthStack.Navigator>
+  );
+};
 
 export default AuthRoutes;

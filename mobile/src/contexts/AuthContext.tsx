@@ -5,10 +5,10 @@ import api from '../services/api';
 
 export type User = {
   id: number;
-  nomeUsuario: string;
-  emailUsuario: string;
-  fotoPerfilUsuario: Buffer;
-  senhaUsuario: string;
+  name: string;
+  email: string;
+  photo: Buffer;
+  password: string;
   signed: boolean;
 };
 
@@ -42,8 +42,8 @@ export const AuthProvider: React.FC = ({ children }) => {
   async function handleLogin(logUser: User) {
     try {
       const response = await api.post('/user/auth', {
-        emailUsuario: logUser.emailUsuario,
-        senhaUsuario: logUser.senhaUsuario,
+        emailUsuario: logUser.email,
+        senhaUsuario: logUser.password,
       });
 
       if (response.data.error) {
@@ -65,9 +65,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   async function handleRegister() {
     try {
       const response = await api.post('/user/create', {
-        nomeUsuario: user.nomeUsuario,
-        emailUsuario: user.emailUsuario,
-        senhaUsuario: user.senhaUsuario,
+        nomeUsuario: user.name,
+        emailUsuario: user.email,
+        senhaUsuario: user.password,
       });
 
       console.debug('AuthContext | handleRegister(): ', response.data);

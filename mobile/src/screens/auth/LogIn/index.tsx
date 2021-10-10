@@ -31,7 +31,7 @@ import BackArrowPink from '../../../assets/images/svg/arrow-back-pink.svg';
 import LoginIcon from '../../../assets/images/svg/login-icon.svg';
 
 export type PropsNavigation = {
-  navigation: StackNavigationProp<RootStackParamAuth, 'Entrar'>;
+  navigation: StackNavigationProp<RootStackParamAuth, 'Login'>;
 };
 
 const Entrar = ({ navigation }: PropsNavigation) => {
@@ -53,8 +53,8 @@ const Entrar = ({ navigation }: PropsNavigation) => {
   const [passwordError, setPasswordError] = useState(null);
 
   async function LoginUser() {
-    user.emailUsuario = email;
-    user.senhaUsuario = password;
+    user.email = email;
+    user.password = password;
 
     const response: error = await handleLogin(user);
 
@@ -169,11 +169,11 @@ const Entrar = ({ navigation }: PropsNavigation) => {
               </LinearGradient>
 
               <TextForgotPassword
-                onPress={() => navigation.navigate('RecuperarConta')}>
+                onPress={() => navigation.navigate('PasswordRecovery')}>
                 Esqueci minha senha
               </TextForgotPassword>
 
-              <TextNoAccount onPress={() => navigation.navigate('Cadastrar')}>
+              <TextNoAccount onPress={() => navigation.navigate('Name')}>
                 Ainda não tenho conta
               </TextNoAccount>
             </Boundaries>
