@@ -2,14 +2,14 @@ import React, { useState, useRef } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 // React components
-import { StatusBar, TextInput, TextInputComponent } from 'react-native';
+import { StatusBar, TextInput } from 'react-native';
 
 // Navigation | Auth
 import { UseAuth, User } from '../../../contexts/AuthContext';
 import RootStackParamAuth from '../../../@types/RootStackParamAuth';
 
 // Styles
-import { colors, fonts, metrics } from '../../../styles';
+import { colors, metrics } from '../../../styles';
 import {
   Container,
   Header,
@@ -27,31 +27,46 @@ import Button from '../../../components/Button';
 import InputText from '../../../components/InputText';
 
 // Icons
-import BackArrowPink from '../../../assets/images/svg/arrow-back-pink.svg';
+import IonIcons from 'react-native-vector-icons/Ionicons';
 import LoginIcon from '../../../assets/images/svg/login-icon.svg';
 
 export type PropsNavigation = {
-  navigation: StackNavigationProp<RootStackParamAuth, 'Entrar'>;
+  navigation: StackNavigationProp<RootStackParamAuth, 'Login'>;
 };
 
 const Entrar = ({ navigation }: PropsNavigation) => {
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [erro, setErro] = useState('');
+  const [password, setPassword] = useState('');
 
-  let { updateUserProps, handleLogin } = UseAuth();
+  const { user, handleLogin } = UseAuth();
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
+  const [emailError, setEmailError] = useState<any | null>(null);
+  const [passwordError, setPasswordError] = useState<any | null>(null);
 
   async function LoginUser() {
-    const loguser = {} as User
-    loguser.emailUsuario = email;
-    loguser.senhaUsuario = senha;
+    user.email = email;
+    user.password = password;
 
-    const response = await handleLogin(loguser);
+    const response = await handleLogin(user);
 
-    if (response != '') setErro(response);
+    if (!response.ok) {
+      switch (response.error) {
+        case 'both':
+          setPasswordError(response.message);
+          setEmailError(response.message);
+          break;
+        case 'senha':
+          setPasswordError(response.message);
+          break;
+        case 'email':
+          setEmailError(response.message);
+          break;
+        default:
+          return;
+      }
+    }
   }
 
   return (
@@ -64,13 +79,16 @@ const Entrar = ({ navigation }: PropsNavigation) => {
         locations={[0, 1.4]}
         colors={[colors.paradisePink, colors.bigDipOruby]}>
         <Header>
-          <BackArrowPink
-            style={{ position: 'absolute', left: 14, top: 40 }}
+          <IonIcons
+            style={{ position: 'absolute', left: 32, marginTop: 16 + 32 }}
+            name="md-arrow-back-sharp"
+            size={40}
+            color={colors.bigDipOruby}
             onPress={() => console.log('back')}
-            height={26}
           />
           <LoginIcon style={{ left: 1, top: '10%' }} height={'20%'} />
         </Header>
+
         <Content
           style={{
             shadowColor: 'rgba(0, 0, 0, .4)',
@@ -93,25 +111,43 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 label="Email"
                 placeholder="Exemplo@gmail.com"
                 value={email}
+                error={emailError}
                 autoCapitalize="none"
                 textContentType="emailAddress"
                 secureTextEntry={false}
                 returnKeyType="next"
                 blurOnSubmit={false}
                 ref={emailInputRef}
-                onChangeText={txt => setEmail(txt)}
+                showClearIcon={email != ''}
+                onClear={() => {
+                  setEmailError(null);
+                  setEmail('');
+                }}
+                onChangeText={txt => {
+                  setEmailError(null);
+                  setEmail(txt);
+                }}
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
               />
 
               <InputText
                 label="Senha"
                 placeholder="Sua senha"
-                value={senha}
+                value={password}
+                error={passwordError}
                 autoCapitalize="none"
                 textContentType="password"
                 secureTextEntry
                 ref={passwordInputRef}
-                onChangeText={txt => setSenha(txt)}
+                showClearIcon={password != ''}
+                onClear={() => {
+                  setPasswordError(null);
+                  setPassword('');
+                }}
+                onChangeText={txt => {
+                  setPasswordError(null);
+                  setPassword(txt);
+                }}
               />
 
               <LinearGradient
@@ -128,11 +164,11 @@ const Entrar = ({ navigation }: PropsNavigation) => {
               </LinearGradient>
 
               <TextForgotPassword
-                onPress={() => navigation.navigate('RecuperarConta')}>
+                onPress={() => navigation.navigate('PasswordRecovery')}>
                 Esqueci minha senha
               </TextForgotPassword>
 
-              <TextNoAccount onPress={() => navigation.navigate('Cadastrar')}>
+              <TextNoAccount onPress={() => navigation.navigate('Name')}>
                 Ainda não tenho conta
               </TextNoAccount>
             </Boundaries>

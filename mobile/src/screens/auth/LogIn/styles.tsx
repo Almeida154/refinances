@@ -8,7 +8,6 @@ export const Container = styled.View`
 
 export const Boundaries = styled.View`
   padding: ${`${metrics.default.boundaries}px`};
-
   height: 100%;
 `;
 
@@ -41,7 +40,7 @@ export const Title = styled.Text`
   color: ${colors.davysGrey};
   opacity: 0.7;
   line-height: 40px;
-  padding: 20px;
+  padding: 14px;
 `;
 
 export const TextForgotPassword = styled.Text`

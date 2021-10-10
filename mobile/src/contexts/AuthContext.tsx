@@ -4,21 +4,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
 
 export type User = {
-    id: number,
-    nomeUsuario: string,
-    emailUsuario: string,
-    fotoPerfilUsuario: Buffer,
-    senhaUsuario: string,
-    signed: boolean
+  id: number;
+  name: string;
+  email: string;
+  photo: Buffer;
+  password: string;
+  signed: boolean;
+};
+
+export interface error {
+  error?: string;
+  message?: string;
+  ok?: boolean;
 }
 
-interface AuthContextType {    
-    token: string;
-    user: User,
-    handleLogin(regUser: User): Promise<string>
-    handleRegister(regUser: User): Promise<string>
-    updateUserProps(userProps: User): void 
-    handleLogout(): void
+// interface AuthContextType {    
+//     token: string;
+//     user: User,
+//     handleLogin(regUser: User): Promise<string>
+//     handleRegister(regUser: User): Promise<string>
+//     updateUserProps(userProps: User): void 
+//     handleLogout(): void
+// }
+
+interface AuthContextType {
+  token: string;
+  user: User;
+  handleLogin(logUser: User): Promise<error>;
+  handleRegister(): Promise<string>;
+  updateUserProps(userProps: User): void;
+  handleLogout(): void;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -26,81 +41,116 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const UseAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<User>({} as User);
 
-    useEffect(() => {
-        (async () => {
-            const storagedUser = await AsyncStorage.getItem('user')
-            console.log(storagedUser)
+  useEffect(() => {
+    (async () => {
+      const storagedUser = await AsyncStorage.getItem('user');
+      console.debug('AuthContext | useEffect(): ', storagedUser);
 
-            if (storagedUser) {
-                setUser(JSON.parse(storagedUser))
-            }
-        })();
-    }, []);
-    
-    async function handleLogin(logUser: User) {
-        try {
-            const response = await api.post('/user/auth', {
-                emailUsuario: logUser.emailUsuario,
-                senhaUsuario: logUser.senhaUsuario
-            });
-            
-            if( response.data.error) {
-                console.log('response.data=' + response.data.error)
-                return response.data.error;
-            }
+      if (storagedUser) {
+        setUser(JSON.parse(storagedUser));
+      }
+    })();
+  }, []);
 
+  async function handleLogin(logUser: User) {
+    try {
+      const response = await api.post('/user/auth', {
+        emailUsuario: logUser.email,
+        senhaUsuario: logUser.password,
+      });
 
-            const loginUser: User = response.data.user;
-            loginUser.signed = true;
-            setUser(loginUser)            
-            await AsyncStorage.setItem('user', JSON.stringify(loginUser))
+      if (response.data.error) {
+        console.debug('AuthContext | handleLogin(): ', response.data.error);
+        return response.data;
+      }
 
-            return '';
+      const loginUser: User = response.data.user;
+      loginUser.signed = true;
+      setUser(loginUser);
+      await AsyncStorage.setItem('user', JSON.stringify(loginUser));
 
-        } catch (error) {
-            console.log("Deu erro no Login:", error);
-        }
+      return { ok: true };
+    } catch (error) {
+      console.log('AuthContext | handleLogin(): ', error);
     }
+  }
 
-    async function handleRegister(regUser: User) {
-        try {
-            const response = await api.post('/user/create', {
-                nomeUsuario: regUser.nomeUsuario,
-                emailUsuario: regUser.emailUsuario,
-                senhaUsuario: regUser.senhaUsuario,
-            });
+    // async function handleRegister(regUser: User) {
+    //     try {
+    //         const response = await api.post('/user/create', {
+    //             nomeUsuario: regUser.name,
+    //             emailUsuario: regUser.email,
+    //             senhaUsuario: regUser.password,
+    //         });
 
-            console.debug('AuthContext | handleRegister(): ', response.data);
+    //         console.debug('AuthContext | handleRegister(): ', response.data);
 
-            if (response.data.error) {           
-                return response.data.error.toString();
-            }
+    //         if (response.data.error) {           
+    //             return response.data.error.toString();
+    //         }
             
-            const newUser: User = response.data.message;
-            updateUserProps(newUser);
+    //         const newUser: User = response.data.message;
+    //         updateUserProps(newUser);
             
-            await AsyncStorage.setItem('user', JSON.stringify(newUser))
-            return '';
+    //         await AsyncStorage.setItem('user', JSON.stringify(newUser))
+    //         return '';
 
-        } catch (error) {
-            console.debug("Deu erro no Registrar: ", error);
-        }
-    }    
+    //     } catch (error) {
+    //         console.debug("Deu erro no Registrar: ", error);
+    //     }
+    // }    
 
-    function handleLogout() {
-        AsyncStorage.clear()
-        setUser({} as User)
+    // function handleLogout() {
+    //     AsyncStorage.clear()
+    //     setUser({} as User)
+    // }
+
+  async function handleRegister() {
+    try {
+      const response = await api.post('/user/create', {
+        nomeUsuario: user.name,
+        emailUsuario: user.email,
+        senhaUsuario: user.password,
+      });
+
+      console.debug('AuthContext | handleRegister(): ', response.data);
+
+      if (response.data.error) {
+        return response.data.error.toString();
+      }
+
+      const newUser: User = response.data.message;
+      updateUserProps(newUser);
+
+      await AsyncStorage.setItem('user', JSON.stringify(newUser));
+      return '';
+    } catch (error) {
+      console.debug('Deu erro no Registrar: ', error);
     }
+  }
 
-    function updateUserProps(userProps: User) {
-        setUser(userProps);
-    }
+  function handleLogout() {
+    AsyncStorage.clear();
+    setUser({} as User);
+  }
 
-    return (
-        <AuthContext.Provider value={{ user, handleLogout, handleLogin, token: '', handleRegister, updateUserProps }}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
+  function updateUserProps(userProps: User) {
+    setUser(userProps);
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        handleLogout,
+        handleLogin,
+        token: '',
+        handleRegister,
+        updateUserProps,
+      }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
