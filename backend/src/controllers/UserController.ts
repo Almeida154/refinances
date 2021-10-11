@@ -93,6 +93,7 @@ class UserController {
     const userexists = await userRepository.find({ where: { emailUsuario } });
     if (userexists.length > 0)
       return response.send({ error: "Email já cadastrado" });
+
     if (nomeUsuario == "" || nomeUsuario == undefined)
       return response.send({ error: "Nome não especificado" });
 
@@ -142,6 +143,15 @@ class UserController {
     let userToRemove = await userRepository.find();
     await userRepository.remove(userToRemove);
     return response.send({ mes: "foi" });
+  }
+
+  async emailExists(request: Request, response: Response, next: NextFunction) {
+    const userRepository = getRepository(User);
+    const { emailUsuario } = request.body;
+
+    const existing = await userRepository.find({ where: { emailUsuario } });
+    if (existing.length > 0) return response.send({ exists: true });
+    return response.send({ exists: false });
   }
 }
 

@@ -36,14 +36,15 @@ export type PropsNavigation = {
 const Name = ({ navigation }: PropsNavigation) => {
   const [name, setName] = useState('');
   const [hasError, setError] = useState(false);
+
   const { user, updateUserProps } = UseAuth();
 
-  useEffect(() => {
-    console.debug('Name | SetUser(): ', user);
-    BackHandler.addEventListener('hardwareBackPress', backAction);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-  }, []);
+  // useEffect(() => {
+  //   console.debug('Name | SetUser(): ', user);
+  //   BackHandler.addEventListener('hardwareBackPress', backAction);
+  //   return () =>
+  //     BackHandler.removeEventListener('hardwareBackPress', backAction);
+  // }, []);
 
   const backAction = () => {
     navigation.goBack();
@@ -62,7 +63,7 @@ const Name = ({ navigation }: PropsNavigation) => {
     newUser.name = name;
     updateUserProps(newUser);
     console.debug('Name | SetUser(): ', user);
-    //navigation.navigate('Email');
+    navigation.navigate('Email');
   }
 
   return (
