@@ -2,6 +2,7 @@ export default {
   eerieBlack: '#1c1c1c',
   jet: '#292929',
   davysGrey: '#525252',
+  silver: '#c4c4c4',
 
   cultured: '#f6f6f6',
   white: '#ffffff',

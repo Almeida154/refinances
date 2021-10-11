@@ -59,9 +59,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
       return;
     }
     console.debug('ConfirmPassword | SetUser(): ', user);
-    console.log('Batem!');
-
-    //navigation.navigate('Photo');
+    navigation.navigate('Photo');
   }
 
   return (
@@ -70,7 +68,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
       <Content>
         <Writting>
           <Input
-            placeholder="Defina aqui"
+            placeholder="Confirme aqui"
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
             selectionColor={colors.davysGrey}
             value={confirmPassword}

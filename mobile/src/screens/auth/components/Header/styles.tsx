@@ -20,7 +20,8 @@ export const Title = styled.Text`
 export const Subtitle = styled.Text`
   font-family: ${fonts.familyType.bold};
   color: ${colors.davysGrey};
-  line-height: 34px;
-  font-size: ${`${fonts.size.medium}px`};
+  margin-top: 2%;
+  line-height: 18px;
+  font-size: ${`${fonts.size.small}px`};
   opacity: 0.3;
 `;
