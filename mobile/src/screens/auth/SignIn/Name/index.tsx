@@ -35,7 +35,7 @@ export type PropsNavigation = {
 
 const Name = ({ navigation }: PropsNavigation) => {
   const [name, setName] = useState('');
-  const [hasError, setError] = useState(true);
+  const [hasError, setError] = useState(false);
   const { user, updateUserProps } = UseAuth();
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const Name = ({ navigation }: PropsNavigation) => {
   return (
     <Container>
       <Header
-        onBackButton={() => console.log('btnback')}
+        onBackButton={() => backAction()}
         title="Como quer ser chamado?"
       />
       <Content>
