@@ -28,7 +28,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 
-// Function
+// Util
 import { isValid } from '../../../../helpers/verifyEmail';
 
 export type PropsNavigation = {
@@ -69,7 +69,6 @@ const Email = ({ navigation }: PropsNavigation) => {
       setErrorMessage('E-mail inválido, tente novamente!');
       return;
     }
-    console.log(await emailExists(email));
     if (await emailExists(email)) {
       setError(true);
       setErrorMessage('E-mail já cadastrado!');
@@ -80,7 +79,7 @@ const Email = ({ navigation }: PropsNavigation) => {
     newUser.email = email;
     updateUserProps(newUser);
     console.debug('Email | SetUser(): ', user);
-    //navigation.navigate('Password');
+    navigation.navigate('Password');
   }
 
   return (
@@ -107,7 +106,10 @@ const Email = ({ navigation }: PropsNavigation) => {
                 name="close"
                 size={32}
                 color={`rgba(82, 82, 82, .08)`}
-                onPress={() => setEmail('')}
+                onPress={() => {
+                  setEmail('');
+                  setError(false);
+                }}
               />
             )}
           </Writting>
