@@ -113,7 +113,7 @@ const Password = ({ navigation }: PropsNavigation) => {
     newUser.password = password;
     updateUserProps(newUser);
     console.debug('Password | SetUser(): ', user);
-    //navigation.navigate('ConfirmPassword');
+    navigation.navigate('ConfirmPassword');
   }
 
   return (
@@ -138,7 +138,10 @@ const Password = ({ navigation }: PropsNavigation) => {
           {password.length > 0 && (
             <>
               <IonIcons
-                style={{ marginLeft: 32 }}
+                style={{
+                  padding: 6,
+                  marginLeft: 32,
+                }}
                 name="close"
                 size={32}
                 color={`rgba(82, 82, 82, .08)`}
@@ -149,7 +152,10 @@ const Password = ({ navigation }: PropsNavigation) => {
                 }}
               />
               <Feather
-                style={{ marginLeft: 16 }}
+                style={{
+                  padding: 6,
+                  marginLeft: 8,
+                }}
                 name={securePassword ? 'eye' : 'eye-off'}
                 size={28}
                 color={`rgba(82, 82, 82, .08)`}

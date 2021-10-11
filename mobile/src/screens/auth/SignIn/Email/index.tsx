@@ -11,14 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
-import {
-  Container,
-  Boundaries,
-  Content,
-  Input,
-  Writting,
-  Error,
-} from './styles';
+import { Container, Content, Input, Writting, Error } from './styles';
 import { colors, fonts, metrics } from '../../../../styles';
 
 // Icon
@@ -86,35 +79,36 @@ const Email = ({ navigation }: PropsNavigation) => {
     <Container>
       <Header onBackButton={() => backAction()} title="Qual seu e-mail?" />
       <Content>
-        <Boundaries>
-          <Writting>
-            <Input
-              placeholder="Email@exemplo.com"
-              placeholderTextColor={'rgba(52, 52, 52, .3)'}
-              selectionColor={colors.davysGrey}
-              keyboardType="default"
-              autoCapitalize="words"
-              value={email}
-              onChangeText={text => {
-                setEmail(text);
+        <Writting>
+          <Input
+            placeholder="Email@exemplo.com"
+            placeholderTextColor={'rgba(52, 52, 52, .3)'}
+            selectionColor={colors.davysGrey}
+            keyboardType="default"
+            autoCapitalize="words"
+            value={email}
+            onChangeText={text => {
+              setEmail(text);
+              setError(false);
+            }}
+          />
+          {email.length > 0 && (
+            <IonIcons
+              style={{
+                padding: 6,
+                marginLeft: 32,
+              }}
+              name="close"
+              size={32}
+              color={`rgba(82, 82, 82, .08)`}
+              onPress={() => {
+                setEmail('');
                 setError(false);
               }}
             />
-            {email.length > 0 && (
-              <IonIcons
-                style={{ marginLeft: 32 }}
-                name="close"
-                size={32}
-                color={`rgba(82, 82, 82, .08)`}
-                onPress={() => {
-                  setEmail('');
-                  setError(false);
-                }}
-              />
-            )}
-          </Writting>
-          {hasError && <Error>{errorMessage}</Error>}
-        </Boundaries>
+          )}
+        </Writting>
+        {hasError && <Error>{errorMessage}</Error>}
       </Content>
       <BottomNavigation onPress={() => setUser()} description="Próximo" />
     </Container>
