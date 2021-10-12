@@ -5,6 +5,8 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 
+import {HomeAccountStackNavigation, LancamentosStackNavigation} from '../../routes/app.routes'
+
 import RootStackParamApp, {
   FormLancamentoStack,
 } from '../../@types/RootStackParamApp';
@@ -32,6 +34,8 @@ import {
 } from 'react-native';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
+
+
 
 type PropsCustomBar = {
   children: React.ReactNode;
@@ -76,7 +80,6 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
 };
 
 const TabNavigator = () => {
-  const { navigation } = UseDadosTemp();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -92,7 +95,7 @@ const TabNavigator = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeAccountStackNavigation}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon3 name="md-home" color={color} size={24} />
@@ -111,7 +114,7 @@ const TabNavigator = () => {
 
       <Tab.Screen
         name="Lancamentos"
-        component={() => <View />}
+        component={LancamentosStackNavigation}
         options={{
           tabBarLabel: () => null,
           headerShown: false,
@@ -120,9 +123,7 @@ const TabNavigator = () => {
             return (
               <CustomTabBarButton
                 children={props.children}
-                onPress={() =>
-                  navigation.navigate('Lancamentos', { screen: 'Main' })
-                }
+                onPress={props.onPress}
               />
             );
           },
