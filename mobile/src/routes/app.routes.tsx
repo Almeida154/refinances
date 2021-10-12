@@ -3,7 +3,7 @@ import Main from '../screens/main';
 import FormLancamento from '../screens/dashboard/Entries'
 import AddCategory from '../screens/dashboard/Entries/components/AddCategory'
 
-import RootStackParamApp, {HomeAccountStack, PropsMainRoutes, FormLancamentoStack} from '../@types/RootStackParamApp'
+import RootStackParamApp, {HomeAccountStack, PropsMainRoutes, FormLancamentoStack, GoalsStack} from '../@types/RootStackParamApp'
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -11,7 +11,11 @@ import ManageAccount from '../screens/dashboard/Home/components/ManageAccount';
 import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
 import AddCategoryAccount from '../screens/dashboard/Home/components/CreateAccount/components/AddCategoryAccount';
 
-import DashboardGoal from '../screens/dashboard/Goals/screens/Dashboard/index'
+import DashboardGoal from '../screens/dashboard/Goals/screens/Dashboard';
+import GoalsList from '../screens/dashboard/Goals/navigators/TopBarNavigator';
+import InvestGoals from '../screens/dashboard/Goals/screens/Invest';
+import GoalDetails from '../screens/dashboard/Goals/screens/GoalDetails';
+import CreateGoal from '../screens/dashboard/Goals/screens/CreateGoal';
 
 const MainStack = createStackNavigator<PropsMainRoutes>();
 
@@ -23,6 +27,19 @@ const HomeAccountStackNavigation = () => {
             <HomeStack.Screen name="CreateAccount" component={CreateAccount}/>
             <HomeStack.Screen name="AddCategoryAccount" component={AddCategoryAccount}/>
         </HomeStack.Navigator>
+    )
+}
+
+const GoalStack = createStackNavigator<GoalsStack>()
+const GoalsStackNavigation = () => {
+    return (
+        <GoalStack.Navigator>            
+            <GoalStack.Screen name="GoalsList" component={GoalsList}/>
+            <GoalStack.Screen name="CreateGoals" component={CreateGoal}/>
+            <GoalStack.Screen name="InvestGoals" component={InvestGoals}/>
+            <GoalStack.Screen name="GoalDetails" component={GoalDetails}/>
+            <GoalStack.Screen name="GoalsDashboard" component={DashboardGoal}/>
+        </GoalStack.Navigator>
     )
 }
 
@@ -42,7 +59,7 @@ const MainRoutes: React.FC = () => {
             <MainStack.Screen name="Main" component={Main} />
             <MainStack.Screen name="StackAccount" component={HomeAccountStackNavigation} />                
             <MainStack.Screen name="Lancamentos" component={LancamentosStackNavigation} />   
-            <MainStack.Screen name="Goals" component={DashboardGoal} />             
+            <MainStack.Screen name="GoalsStack" component={GoalsStackNavigation} />        
         </MainStack.Navigator>
     );
 }

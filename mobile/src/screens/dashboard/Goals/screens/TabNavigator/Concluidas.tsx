@@ -3,72 +3,49 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
   View,
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import Icon from 'react-native-vector-icons/Entypo';
+
+import goalsJson from './goals.json';
+
+import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 //import { ProgressBar } from '@react-native-community/progress-bar-android';
 
-const GoalDetails = ({ navigation }) => {
-  let [progress, setProgress] = useState(1);
+const GoalsAccomplished = () => {
+  const [goals, setGoals] = useState(goalsJson);
+  const [accomplishedGoals, setAccomplishedGoals] = useState(
+    goals.filter(goal => !goal.isAccomplished),
+);
+
+const {navigation} = UseDadosTemp()
 
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
       <View style={styles.container}>
-        <Text
-          style={{
-            marginBottom: '2%',
-            fontSize: 30,
-            color: '#292929',
-            fontWeight: '700',
-            textAlign: 'center',
-          }}>
-          PS5
-        </Text>
 
-        <View style={styles.vwvalor}>
-          <Text style={styles.txtrs}>R$</Text>
-          <Text style={styles.txtvalor}>2.480,00</Text>
-        </View>
-
-        <View style={styles.progress}>
-          {/* <ProgressBar
-            styleAttr="Horizontal"
-            indeterminate={false}
-            progress={0.5}
-            color={'#ee4266'}
-          /> */}
-        </View>
+        <Icon name="emoji-sad" size={50}
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 30
+        }}/>
 
         <Text style={{ fontWeight: '400', textAlign: 'center', fontSize: 17 }}>
-          Você já progrediu sua meta em
-          <Text style={styles.txtgoals}> 50% </Text>
-          de <Text style={styles.txtgoals}>R$ 4.960,00</Text>
+          Você ainda não concluiu nenhuma meta! {'\n\n'}
+
+          Mas não desanime, invista em suas metas mensalmente para concluí-las mais rápido!
         </Text>
 
-        <View style={styles.goal}>
-          <Text style={{ fontSize: 17, marginBottom: 10 }}>
-            Faltam: 5 meses
-          </Text>
 
-          <View style={styles.goaldate}>
-            <Text style={styles.txtgoalsh}>Início</Text>
-            <Text style={styles.txtlighterh}>08/03/2021</Text>
-          </View>
-
-          <View style={styles.goaldate}>
-            <Text style={styles.txtgoalsh}>Previsão</Text>
-            <Text style={styles.txtlighterh}>08/08/2021</Text>
-          </View>
-        </View>
-
-        <TouchableHighlight
+        <TouchableOpacity
           style={styles.btn}
-          onPress={() => {
-            navigation.navigate('CreateGoal');
-          }}>
-          <Text style={styles.txtbtn}>Criar</Text>
-        </TouchableHighlight>
+          onPress={() => {navigation.navigate('GoalsStack', {screen: 'InvestGoals'}); }}>
+          <Text style={styles.txtbtn}>Investir</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -77,6 +54,8 @@ const GoalDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     margin: '10%',
+    flex: 1,
+    alignItems: 'center'
   },
 
   txtgoals: {
@@ -105,7 +84,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: '4%',
     marginTop: '5%',
-    borderColor: '#000',
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#525252',
@@ -135,6 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ee4266',
     padding: '5%',
     marginTop: '10%',
+    width: '100%'
   },
 
   vwvalor: {
@@ -154,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GoalDetails;
+export default GoalsAccomplished;

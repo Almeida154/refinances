@@ -25,7 +25,9 @@ import {UseAuth} from '../../../contexts/AuthContext'
 
 import SectionAccount from './components/SectionAccount'
 
-import CreatePath from './components/CreatePath'
+import CreateCategoryGoals from './components/CreateCategoryGoals'
+
+import ManageCategoryGoals from './components/ManageCategoryGoals'
 
 type PropsHome = {
     navigation: StackNavigationProp<PropsNavigationApp, "Home">,    
@@ -65,8 +67,9 @@ const Home = ({route, navigation}: PropsHome) => {
                         
                         <SectionAccount />
 
-                        <CreatePath />
+                        <CreateCategoryGoals />
 
+                        <ManageCategoryGoals />
 
                     </View>
                 </ScrollView>

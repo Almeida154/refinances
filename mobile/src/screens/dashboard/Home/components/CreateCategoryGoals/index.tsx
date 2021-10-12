@@ -71,7 +71,7 @@ const CreateGoal = () => {
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
-const SectionAccount = () => {
+const CreateCategoryGoals = () => {
 
     const {navigation} = UseDadosTemp()
 
@@ -90,9 +90,8 @@ const SectionAccount = () => {
                 <CreateGoal />
                 
                 <SectionButton onPress={() => {
-                                    navigation.navigate('Goals', {screen: 'Goals'});
-                                }}
-                                underlayColor={'#9D3147'}>
+                                    navigation.navigate('GoalsStack', {screen: 'CreateGoals'});
+                                }}>
                     <Plus>+</Plus>                    
                 </SectionButton>
                 
@@ -102,4 +101,4 @@ const SectionAccount = () => {
     )
 }
 
-export default SectionAccount
+export default CreateCategoryGoals

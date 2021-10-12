@@ -9,10 +9,9 @@ import {
 
 import goalsJson from './goals.json';
 
-//import { ProgressBar } from '@react-native-community/progress-bar-android';
 import { ProgressBar, Colors } from 'react-native-paper';
 
-const GoalDetails = () => {
+const Goals = () => {
   const [goals, setGoals] = useState(goalsJson);
   const [accomplishedGoals, setAccomplishedGoals] = useState(
     goals.filter(goal => !goal.isAccomplished),
@@ -198,4 +197,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GoalDetails;
+export default Goals;

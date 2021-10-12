@@ -6,15 +6,16 @@ export const Container = styled.View`
     align-items: center;
     background-color: white;
     width: 90%;
-    height: 30%;
+    height: 120px;
     border-radius: 15px;
     margin-top: 15px;
+    margin-bottom: 15px;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
 
 `
-export const SectionButton = styled.TouchableHighlight`
+export const SectionButton = styled.TouchableOpacity`
     background: #EE4266;
     height: 100%;
     width: 15%;

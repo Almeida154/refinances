@@ -8,7 +8,11 @@ export type HomeAccountStack = {
 };
 
 export type GoalsStack = {
-  Goals: undefined;
+  GoalsList: undefined;
+  CreateGoals: undefined;
+  InvestGoals: undefined;
+  GoalDetails: undefined;
+  GoalsDashboard: undefined;
 };
 
 export type FormLancamentoStack = {
@@ -29,7 +33,7 @@ export type PropsMainRoutes = {
   Main: NavigatorScreenParams<PropsNavigationApp>;
   StackAccount: NavigatorScreenParams<HomeAccountStack>;
   Lancamentos: NavigatorScreenParams<FormLancamentoStack>;
-  Goals: NavigatorScreenParams<GoalsStack>;
+  GoalsStack: NavigatorScreenParams<GoalsStack>;
 };
 
 export default PropsNavigationApp;
