@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
-
+import {PropsHome} from '../../'
 
 import {
     Container,
@@ -52,10 +52,11 @@ import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 import { UseContas } from '../../../../../contexts/AccountContext'
 
-const SectionAccount = () => {
-    const {navigation} = UseDadosTemp()
+const SectionAccount = ({navigation}: PropsHome) => {
     const {contas, loading, handleReadByUserContas} = UseContas()
-    const [saldo, setSaldo] = useState('R$ 00,00')
+    const [saldo, setSaldo] = useState('0')
+
+    console.log(navigation)
 
     useEffect(() => {
         let aux = 0
@@ -87,7 +88,7 @@ const SectionAccount = () => {
 
                 <CardAccount />
 
-                <ButtonManager onPress={() => navigation.navigate('StackAccount', {screen: 'ManageAccount'})}><LabelManager>Gerenciar</LabelManager></ButtonManager>
+                <ButtonManager onPress={() => navigation.navigate('ManageAccount')}><LabelManager>Gerenciar</LabelManager></ButtonManager>
             </ContainerAccount>
         </Container>
     )

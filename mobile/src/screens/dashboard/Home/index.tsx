@@ -14,7 +14,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Icon2 from 'react-native-vector-icons/Feather'
-import PropsNavigationApp from '../../../@types/RootStackParamApp'
+import PropsNavigationApp, {HomeAccountStack} from '../../../@types/RootStackParamApp'
 
 const { width } = Dimensions.get('screen');
 
@@ -29,12 +29,11 @@ import CreateCategoryGoals from './components/CreateCategoryGoals'
 
 import ManageCategoryGoals from './components/ManageCategoryGoals'
 
-type PropsHome = {
-    navigation: StackNavigationProp<PropsNavigationApp, "Home">,    
-    route: RouteProp<PropsNavigationApp, "Home">,
+export type PropsHome = {
+    navigation: StackNavigationProp<HomeAccountStack, "Home">,    
 }
 
-const Home = ({route, navigation}: PropsHome) => {
+const Home = ({navigation}: PropsHome) => {
     const { user, handleLogout } = UseAuth()    
         
     return (
@@ -65,7 +64,7 @@ const Home = ({route, navigation}: PropsHome) => {
                 <ScrollView style={styles.scroll}>
                     <View style={styles.containerBody}>
                         
-                        <SectionAccount />
+                        <SectionAccount navigation={navigation}/>
 
                         <CreateCategoryGoals />
 

@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ManageAccount from '../screens/dashboard/Home/components/ManageAccount';
 import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
+import Home from '../screens/dashboard/Home';
 import AddCategoryAccount from '../screens/dashboard/Home/components/CreateAccount/components/AddCategoryAccount';
 
 import DashboardGoal from '../screens/dashboard/Goals/screens/Dashboard';
@@ -20,12 +21,15 @@ import CreateGoal from '../screens/dashboard/Goals/screens/CreateGoal';
 const MainStack = createStackNavigator<PropsMainRoutes>();
 
 const HomeStack = createStackNavigator<HomeAccountStack>()
-const HomeAccountStackNavigation = () => {
+export const HomeAccountStackNavigation = () => {
     return (
-        <HomeStack.Navigator>            
+        <HomeStack.Navigator screenOptions={{headerShown: false}}>           
+            <HomeStack.Screen name="Home" component={Home}/> 
             <HomeStack.Screen name="ManageAccount" component={ManageAccount}/>
             <HomeStack.Screen name="CreateAccount" component={CreateAccount}/>
             <HomeStack.Screen name="AddCategoryAccount" component={AddCategoryAccount}/>
+
+            <MainStack.Screen name="Goals" component={DashboardGoal} />
         </HomeStack.Navigator>
     )
 }
@@ -46,7 +50,7 @@ const GoalsStackNavigation = () => {
 const LancamentosStack = createStackNavigator<FormLancamentoStack>()
 export const LancamentosStackNavigation = () => {
     return (
-        <LancamentosStack.Navigator>            
+        <LancamentosStack.Navigator>                        
             <LancamentosStack.Screen name="Main" component={FormLancamento}/>
             <LancamentosStack.Screen name="AddCategory" component={AddCategory}/>
         </LancamentosStack.Navigator>
