@@ -29,7 +29,9 @@ const Button: React.FC<IProps> = ({
           : {},
         lastOne ? { marginBottom: 0 } : { marginBottom: 10 },
       ]}>
-      <Text style={{ color }}>{title}</Text>
+      <Text style={color ? { color } : { color: colors.cultured }}>
+        {title}
+      </Text>
     </Container>
   );
 };

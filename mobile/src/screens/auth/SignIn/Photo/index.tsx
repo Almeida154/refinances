@@ -12,6 +12,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+
 // Styles
 import {
   Container,
@@ -148,36 +152,34 @@ const Photo = ({ navigation }: PropsNavigation) => {
         />
       </Content>
 
-      <Modalize
-        ref={modalizeRef}
-        title="Escolha uma opção"
-        backgroundColor={colors.cultured}>
-        <>
-          <Button
-            title="Abrir a câmera"
-            onPress={() => {
-              openCamera();
-              closeModalize();
-            }}
-            backgroundColor={colors.platinum}
-            color={colors.silver}
-          />
-          <Button
-            title="Abrir a galeria"
-            onPress={() => {
-              openGalery();
-              closeModalize();
-            }}
-            backgroundColor={colors.platinum}
-            color={colors.silver}
-          />
-        </>
-      </Modalize>
-
       <BottomNavigation
         onPress={() => setUser()}
         description={uri == null ? 'Pular' : 'Próximo'}
       />
+
+      <Modalize
+        ref={modalizeRef}
+        title="Escolha uma opção"
+        backgroundColor={colors.cultured}>
+        <Button
+          title="Abrir a câmera"
+          onPress={() => {
+            openCamera();
+            closeModalize();
+          }}
+          backgroundColor={colors.platinum}
+          color={colors.silver}
+        />
+        <Button
+          title="Abrir a galeria"
+          onPress={() => {
+            openGalery();
+            closeModalize();
+          }}
+          backgroundColor={colors.platinum}
+          color={colors.silver}
+        />
+      </Modalize>
     </Container>
   );
 };

@@ -21,9 +21,7 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
     <Modal
       ref={ref}
       adjustToContentHeight
-      modalStyle={{
-        backgroundColor: backgroundColor || colors.white,
-      }}
+      modalStyle={{ backgroundColor: backgroundColor || colors.white }}
       HeaderComponent={
         <Boundaries style={{ paddingBottom: 0 }}>
           <Title>{title}</Title>
