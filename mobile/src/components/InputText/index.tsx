@@ -1,9 +1,9 @@
-import React, { forwardRef, Ref } from 'react';
+import React, { forwardRef } from 'react';
 
 import { TextInput, TextInputProps } from 'react-native';
 
 import { Container, Writting, IconClean, Input, Label, Error } from './styles';
-import { colors, metrics } from '../../styles';
+import { colors } from '../../styles';
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 

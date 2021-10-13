@@ -5,16 +5,31 @@ import { Container, Text } from './styles';
 interface IProps {
   onPress: () => void;
   title?: string;
+  backgroundColor?: string;
   color?: string;
+  lastOne?: boolean;
 }
 
-const Button: React.FC<IProps> = ({ onPress, title, color }) => {
+const Button: React.FC<IProps> = ({
+  onPress,
+  title,
+  backgroundColor,
+  color,
+  lastOne,
+}) => {
   return (
     <Container
       onPress={onPress}
-      underlayColor={color != undefined ? color : colors.redCrayola}
-      style={color != undefined ? { backgroundColor: color } : {}}>
-      <Text>{title}</Text>
+      underlayColor={
+        backgroundColor != undefined ? backgroundColor : colors.redCrayola
+      }
+      style={[
+        backgroundColor != undefined
+          ? { backgroundColor: backgroundColor }
+          : {},
+        lastOne ? { marginBottom: 0 } : { marginBottom: 10 },
+      ]}>
+      <Text style={{ color }}>{title}</Text>
     </Container>
   );
 };

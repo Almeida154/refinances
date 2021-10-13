@@ -157,9 +157,10 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 locations={[0, 1]}
                 colors={[colors.paradisePink, colors.bigDipOruby]}>
                 <Button
-                  color={'transparent'}
+                  backgroundColor={'transparent'}
                   onPress={LoginUser}
                   title="Entrar"
+                  lastOne
                 />
               </LinearGradient>
 

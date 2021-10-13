@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
-import { BackHandler } from 'react-native';
+import { BackHandler, Text, View } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+
+import { Modalize as Modal } from 'react-native-modalize';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,6 +29,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
+import Modalize from '../../../../components/Modalize';
 import {
   CameraOptions,
   ImageLibraryOptions,
@@ -40,13 +43,10 @@ export type PropsNavigation = {
 };
 
 const Photo = ({ navigation }: PropsNavigation) => {
-  const [password, setPassword] = useState('');
-  const [hasError, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [path, setPath] = useState('');
-  const [uri, setUri] = useState(null);
-
   const { user, updateUserProps } = UseAuth();
+
+  const [uri, setUri] = useState(null);
+  const modalizeRef = useRef<Modal>(null);
 
   // useEffect(() => {
   //   console.debug('Name | SetUser(): ', user);
@@ -112,6 +112,14 @@ const Photo = ({ navigation }: PropsNavigation) => {
     });
   };
 
+  const openModalize = () => {
+    modalizeRef.current?.open();
+  };
+
+  const closeModalize = () => {
+    modalizeRef.current?.close();
+  };
+
   return (
     <Container>
       <Header
@@ -127,17 +135,45 @@ const Photo = ({ navigation }: PropsNavigation) => {
             <Pic source={uri} />
           )}
           <CameraDetail
-            onPress={() => openGalery()}
+            onPress={() => openModalize()}
             underlayColor={colors.paradisePink}>
             <Feather name="camera" size={20} color={colors.white} />
           </CameraDetail>
         </PhotoContainer>
         <Button
-          color={colors.platinum}
+          backgroundColor={colors.platinum}
+          color={colors.silver}
           title="Escolher"
-          onPress={() => openGalery()}
+          onPress={() => openModalize()}
         />
       </Content>
+
+      <Modalize
+        ref={modalizeRef}
+        title="Escolha uma opção"
+        backgroundColor={colors.cultured}>
+        <>
+          <Button
+            title="Abrir a câmera"
+            onPress={() => {
+              openCamera();
+              closeModalize();
+            }}
+            backgroundColor={colors.platinum}
+            color={colors.silver}
+          />
+          <Button
+            title="Abrir a galeria"
+            onPress={() => {
+              openGalery();
+              closeModalize();
+            }}
+            backgroundColor={colors.platinum}
+            color={colors.silver}
+          />
+        </>
+      </Modalize>
+
       <BottomNavigation
         onPress={() => setUser()}
         description={uri == null ? 'Pular' : 'Próximo'}
