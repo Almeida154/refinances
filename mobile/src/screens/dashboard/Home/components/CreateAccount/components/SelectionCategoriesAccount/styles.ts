@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 
 export const Container = styled.View`
-
+    width: 100%;
 `
 
 export const Header = styled.View`
@@ -32,7 +32,7 @@ export const Separator = styled.View`
 
 `
 
-export const BotaoAdicionarCategoria = styled.TouchableOpacity`
+export const BotaoAdicionarCategoria = styled.View`
     width: 100%;
     height: 50px;
     align-items: center;
@@ -42,4 +42,9 @@ export const BotaoAdicionarCategoria = styled.TouchableOpacity`
 
 export const LabelAdicionarCategoria = styled.Text`
 
+`
+
+export const ButtonText = styled.TouchableOpacity`
+    
+    
 `

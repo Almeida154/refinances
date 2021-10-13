@@ -23,42 +23,59 @@ type PropsIcon = {
 }
 
 const Icon = ({stringIcon, color, size}: PropsIcon) => {
-    const [biblioteca, nomeIcone] = stringIcon.split(':')
-    
-     switch(biblioteca) {
-         case "AntDesign":
-             return <IconAntDesign color={color} size={size} name={nomeIcone}/>
-        case "Entypo":
-            return <IconEntypo color={color} size={size} name={nomeIcone}/>
-        case "EvilIcons":
-            return <IconEvilIcons color={color} size={size} name={nomeIcone}/>
-        case "Feather":
-            return <IconFeather color={color} size={size} name={nomeIcone}/>
-        case "FontAwesome":
-            return <IconFontAwesome color={color} size={size} name={nomeIcone}/>
-        case "FontAwesome5":
-            return <IconFontAwesome5 color={color} size={size} name={nomeIcone}/>
-        case "FontAwesome5Pro":
-            return <IconFontAwesome5Pro color={color} size={size} name={nomeIcone}/>
-        case "Ionicons":
-            return <IconIonicons color={color} size={size} name={nomeIcone}/>
-        case "Foundation":
-            return <IconFoundation color={color} size={size} name={nomeIcone}/>
-        case "Fontisto":
-            return <IconFontisto color={color} size={size} name={nomeIcone}/>
-        case "MaterialCommunityIcons":
-            return <IconMaterialCommunityIcons color={color} size={size} name={nomeIcone}/>
-        case "MaterialIcons":
-            return <IconMaterialIcons color={color} size={size} name={nomeIcone}/>
-        case "Octicons":
-            return <IconOcticons color={color} size={size} name={nomeIcone}/>
-        case "SimpleLineIcons":
-            return <IconSimpleLineIcons color={color} size={size} name={nomeIcone}/>
-        case "Zocial":
-            return <IconZocial color={color} size={size} name={nomeIcone}/>
-        default:
-            return <IconMaterialIcons color={color} size={size} name="error"/>
-     }
+    if(stringIcon.indexOf('/') == -1) {
+
+        const [biblioteca, nomeIcone] = stringIcon.split(':')
+        
+         switch(biblioteca) {
+             case "AntDesign":
+                 return <IconAntDesign color={color} size={size} name={nomeIcone}/>
+            case "Entypo":
+                return <IconEntypo color={color} size={size} name={nomeIcone}/>
+            case "EvilIcons":
+                return <IconEvilIcons color={color} size={size} name={nomeIcone}/>
+            case "Feather":
+                return <IconFeather color={color} size={size} name={nomeIcone}/>
+            case "FontAwesome":
+                return <IconFontAwesome color={color} size={size} name={nomeIcone}/>
+            case "FontAwesome5":
+                return <IconFontAwesome5 color={color} size={size} name={nomeIcone}/>
+            case "FontAwesome5Pro":
+                return <IconFontAwesome5Pro color={color} size={size} name={nomeIcone}/>
+            case "Ionicons":
+                return <IconIonicons color={color} size={size} name={nomeIcone}/>
+            case "Foundation":
+                return <IconFoundation color={color} size={size} name={nomeIcone}/>
+            case "Fontisto":
+                return <IconFontisto color={color} size={size} name={nomeIcone}/>
+            case "MaterialCommunityIcons":
+                return <IconMaterialCommunityIcons color={color} size={size} name={nomeIcone}/>
+            case "MaterialIcons":
+                return <IconMaterialIcons color={color} size={size} name={nomeIcone}/>
+            case "Octicons":
+                return <IconOcticons color={color} size={size} name={nomeIcone}/>
+            case "SimpleLineIcons":
+                return <IconSimpleLineIcons color={color} size={size} name={nomeIcone}/>
+            case "Zocial":
+                return <IconZocial color={color} size={size} name={nomeIcone}/>
+            default:
+                return <IconMaterialIcons color={color} size={size} name="error"/>
+         }
+    } else {
+        const [diretorio, nomeDoArquivo] = stringIcon.split('/')
+
+        try {
+            const requisicao = `../assets/images/svg/${diretorio}/${nomeDoArquivo}`
+            const Icon = require('../assets/images/svg/CategoryAccount/banco-amazonia')            
+            
+            return Icon
+        } catch (error) {
+            console.log("não foi encontrado esse diretório")
+            return (
+                <IconMaterialIcons color={'gray'} size={24} name="error"/>
+            )
+        }
+    }
 }
 
 export default Icon

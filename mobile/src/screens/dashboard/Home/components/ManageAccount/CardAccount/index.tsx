@@ -26,10 +26,10 @@ const CardAccount = ({item}: PropsCardAccount) => {
         <Container>
             <Upside>
                 <SectionLeft>
-                    <IconCategory stringIcon="Entypo:wallet" color="gray"/>
+                    <IconCategory stringIcon={typeof item.categoryConta == 'string' ? "Entypo:wallet" : item.categoryConta.iconeCategoryConta} color="gray"/>
                     <SectionDescription>
                         <LabelDescriptionAccount>{item.descricao}</LabelDescriptionAccount>
-                        <LabelCategoryAccount>{item.categoryConta}</LabelCategoryAccount>
+                        <LabelCategoryAccount>{typeof item.categoryConta == 'string' ? item.categoryConta: item.categoryConta.descricaoCategoryConta}</LabelCategoryAccount>
                     </SectionDescription>
                 </SectionLeft>
                 <Icon name="arrow-forward-ios" color="gray" size={23}/>

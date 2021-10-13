@@ -100,9 +100,16 @@ class ContaController {
             return response.send({error: "usuário não encontrado"})
         }
 
-        const contas = (await contaRepository.find({
-            where: { userConta: user }
-        }));        
+        const contas = await contaRepository.find({            
+            where: { userConta: user },
+            join: {
+                alias: 'conta',
+                leftJoinAndSelect: {
+                    CategoryConta: 'conta.categoryConta'
+                }
+            }
+            
+        });        
 
         return response.send({ contas });
     }   

@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
-
+import {ScrollView} from 'react-native'
 
 import CardAccount from './CardAccount'
 
@@ -25,31 +25,36 @@ type PropsManageAccount = {
 const ManageAccount = ({route, navigation}: PropsManageAccount) => {
     const {contas, loading, handleReadByUserContas} = UseContas()
     
+        
     
     useLayoutEffect(() => {
-        (async function(){
-            handleReadByUserContas(await retornarIdDoUsuario())
-        }) ()
+        // Caso nenhuma conta foi carregada, recarregar
+        if(!contas[0].id)
+            (async function(){
+                handleReadByUserContas(await retornarIdDoUsuario())
+            }) ()
                
     }, [])
+
+    
     return (
-        <Container>
-            {
-                !loading && contas.map((item, index) => {
-                   if(item.descricao == undefined) return
+        <ScrollView>
+            <Container>
+                {
+                    !loading && contas[0].id && contas.map((item, index) => {                    
+                        return (
+                            <CardAccount item={item} key={index}/>
+                        )
+                    })   
+                }
 
-                    return (
-                        <CardAccount item={item} key={index}/>
-                    )
-                })   
-            }
+                <ButtonAdd onPress={() => navigation.navigate('CreateAccount')}>
+                    <TextButton>Adicionar</TextButton>
+                </ButtonAdd>
 
-            <ButtonAdd onPress={() => navigation.navigate('CreateAccount')}>
-                <TextButton>Adicionar</TextButton>
-            </ButtonAdd>
-
-            
-        </Container>
+                
+            </Container>
+        </ScrollView>
     )
 }
 

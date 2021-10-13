@@ -2,9 +2,14 @@ import { RouteProp } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 
-import Icon from 'react-native-vector-icons/Ionicons'
-
 import {PropsHome} from '../../'
+
+import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
+import Icon from '../../../../../helpers/gerarIconePelaString'
+
+import { UseContas, Conta } from '../../../../../contexts/AccountContext'
 
 import {
     Container,
@@ -28,51 +33,51 @@ import {
 } from './styles'
 
 
+type CardAccount = {
+    item: Conta
+}
 
-const CardAccount = () => {
+const CardAccount = ({item}: CardAccount) => {
     return(
         <ContainerCardAccount>
             <SectionDescription>
                 <SectionIcon>
-                    <Icon name="wallet-outline" size={25} color="gray"/>
+                    <Icon size={25} color='gray' stringIcon={typeof item.categoryConta == 'string' ? 'Ionics:wallet' : item.categoryConta.iconeCategoryConta}/>
                 </SectionIcon>
                 <SectionName>
-                    <LabelName>Carteira</LabelName>
+                    <LabelName>{item.descricao}</LabelName>
                     <LabelCategory>Conta Corrente</LabelCategory>
                 </SectionName>
             </SectionDescription>
             <SectionBalanceAccount>
-                <LabelBalanceAccount>997,00</LabelBalanceAccount>                    
+                <LabelBalanceAccount>{item.saldoConta}</LabelBalanceAccount>                    
             </SectionBalanceAccount>            
         </ContainerCardAccount>
     )
 }
 
-import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
-import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
-import { UseContas } from '../../../../../contexts/AccountContext'
+
 
 const SectionAccount = ({navigation}: PropsHome) => {
-    const {contas, loading, handleReadByUserContas} = UseContas()
+    const {contas, handleReadByUserContas} = UseContas()
     const [saldo, setSaldo] = useState('0')
-
-    console.log(navigation)
 
     useEffect(() => {
         let aux = 0
 
-        contas.map(item => {
+        contas && contas[0].id && contas.map(item => {
             aux += item.saldoConta
         })
 
         setSaldo(aux.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
-
+        
     }, [contas])
 
     useEffect(() => {
         (async function(){
             handleReadByUserContas(await retornarIdDoUsuario())
-        })()               
+        })()    
+        console.log('contas', contas[0])           
     }, [])
     return (
         <Container>
@@ -86,7 +91,17 @@ const SectionAccount = ({navigation}: PropsHome) => {
             <ContainerAccount>
                 <LabelDescriptionAccount>Minhas contas</LabelDescriptionAccount>
 
-                <CardAccount />
+                {
+                    
+                    contas && contas[0].id && contas.map((item, index) => {
+                        if(index > 1 )
+                            return
+
+                        return (
+                            <CardAccount key={index} item={item}/>
+                        )
+                    })
+                }
 
                 <ButtonManager onPress={() => navigation.navigate('ManageAccount')}><LabelManager>Gerenciar</LabelManager></ButtonManager>
             </ContainerAccount>

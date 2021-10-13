@@ -28,8 +28,6 @@ export const HomeAccountStackNavigation = () => {
             <HomeStack.Screen name="ManageAccount" component={ManageAccount}/>
             <HomeStack.Screen name="CreateAccount" component={CreateAccount}/>
             <HomeStack.Screen name="AddCategoryAccount" component={AddCategoryAccount}/>
-
-            <MainStack.Screen name="Goals" component={DashboardGoal} />
         </HomeStack.Navigator>
     )
 }

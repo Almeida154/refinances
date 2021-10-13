@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Modalize } from 'react-native-modalize';
 import {Text} from 'react-native'
 
-import InputText from './components/InputText'
+import InputText from '../../../../../components/InputText'
+
 import Button from '../../../../../components/Button'
 import {Conta, UseContas} from '../../../../../contexts/AccountContext'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
@@ -61,6 +62,10 @@ const CreateAccount = ({navigation, route}: PropsManageAccount) => {
                 value={description}
                 label="Descrição"
                 placeholder="Descrição de sua nova conta"
+                showClearIcon={description != ''}
+                onClear={() => {
+                    setDescription('')
+                }}
             />
 
             <InputText 
@@ -69,10 +74,15 @@ const CreateAccount = ({navigation, route}: PropsManageAccount) => {
                 label="Saldo"
                 placeholder="Saldo de sua nova conta"
                 keyboardType='decimal-pad'
+
+                showClearIcon={value != ''}
+                onClear={() => {
+                    setValue('')
+                }}
             />
 
 
-            <SelectionCategoriesAccount navigation={navigation} setCategoriaConta={setCategoriaConta}/>
+            <SelectionCategoriesAccount navigation={navigation} categoriaConta={categoriaConta} setCategoriaConta={setCategoriaConta}/>
 
             <Button 
                 onPress={handleCreateAccount}

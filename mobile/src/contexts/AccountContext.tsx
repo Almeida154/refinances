@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UseAuth } from './AuthContext';
+import { CategoriaConta } from './CategoriesAccountContext';
 import { ToastAndroid } from 'react-native';
 
 export type Conta = {
@@ -10,7 +10,7 @@ export type Conta = {
     saldoConta: number,
     descricao: string,
     userConta: number,
-    categoryConta: string,
+    categoryConta: CategoriaConta | string,
 }
 
 interface ContaContextType {        
@@ -29,7 +29,7 @@ export const ContasProvider: React.FC = ({ children }) => {
     const [loading, setLoading] = useState(false)
 
     async function handleAdicionarConta(conta: Conta) {
-        console.log(conta.userConta);
+        setLoading(true)
         try {                    
             const responseCategoryConta = await api.post(`/categoryAccount/findbyname/${conta.userConta}`, {
                 descricaoCategoriaConta: conta.categoryConta
@@ -42,16 +42,15 @@ export const ContasProvider: React.FC = ({ children }) => {
                 categoryConta: responseCategoryConta.data.idCategoryConta,
             });
 
-            if(response.data.error) console.log(response.data.error);
+            if(response.data.error) 
+                return ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
 
-            console.log('response.data', response.data)
             await AsyncStorage.setItem('idConta', String(response.data.message.id));
 
             const newContas = contas;
             newContas.push(response.data.message);
-
             setContas(newContas);
-
+            setLoading(false)
         } catch (error) {
             console.log("Deu um erro no handleAdicionarConta: " + error);
         }
@@ -66,7 +65,7 @@ export const ContasProvider: React.FC = ({ children }) => {
             if(response.data.error) {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
             }
-            console.log(response.data.contas)
+            console.debug('handleReadByUserContas | response.data', response.data)
             setContas(response.data.contas)
             
             setLoading(false)

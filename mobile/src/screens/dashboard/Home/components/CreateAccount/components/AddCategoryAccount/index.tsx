@@ -9,6 +9,7 @@ import {TouchableOpacity, Text} from 'react-native'
 import {UseCategoriasConta, CategoriaConta} from '../../../../../../../contexts/CategoriesAccountContext'
 
 import retornarIdDoUsuario from '../../../../../../../helpers/retornarIdDoUsuario'
+import Icon from '../../../../../../../assets/images/svg/login-icon'
 
 import {
     Container,
@@ -53,7 +54,7 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
 
     const dataColors = [['#DF5C5C', '#D5DF5C', '#5C89DF'], ['#96DF5C', '#525252', '#E3E3E3'], ['#DF5CD2']]
 
-    const dataIcons = [['#DF5C5C', '#D5DF5C', '#5C89DF'], ['#96DF5C', '#525252', '#E3E3E3'], ['#DF5CD2']]
+    const dataIcons = [['CategoryConta/banco-amazonia', 'CategoryConta/banco-brasil', 'CategoryConta/banco-brasilia'], ['CategoryConta/banco-nordeste', 'CategoryConta/banco-real', 'CategoryConta/bank-boston'], ['CategoryConta/banestes']]
 
     async function handleSubmit() {
         
@@ -160,16 +161,15 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
             modalHeight={300}>
                 <BodyModalize>
                 {
-                    dataColors.map((item, index) => {
+                    dataIcons.map((item, index) => {
                         return (
                             <RowColor>
                                 {
                                     item.map((item2, index2) => {
+                                        console.log(item2)
                                         return (
-                                            <ButtonPress onPress={() => setColorSelected(item2)}>
-                                                <Circle style={{backgroundColor: item2}}>
-                                                    
-                                                </Circle>
+                                            <ButtonPress onPress={() => setColorSelected(item2)} style={{margin: 10}}>
+                                                <Icon style={{ left: 1, top: '10%' }} height={'20%'} />
                                             </ButtonPress>
                                         )
                                     })

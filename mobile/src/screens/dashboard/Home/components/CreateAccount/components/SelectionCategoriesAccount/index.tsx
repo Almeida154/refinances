@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import {Alert, Text} from 'react-native'
+import React, { useEffect, useState, useRef } from 'react'
+import {Alert, TextInput} from 'react-native'
 import {CategoriaConta, UseCategoriasConta} from '../../../../../../../contexts/CategoriesAccountContext'
+
+import retornarIdDoUsuario from '../../../../../../../helpers/retornarIdDoUsuario'
 
 import {Searchbar} from 'react-native-paper'
 
 import Icon from '../../../../../../../helpers/gerarIconePelaString'
-
-import retornarIdDoUsuario from '../../../../../../../helpers/retornarIdDoUsuario'
+import InputText from '../../../../../../../components/InputText'
 
 import {
     Container,
@@ -22,8 +23,6 @@ import {
     LabelAdicionarCategoria
 } from './styles'
 
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
 import {HomeAccountStack} from '../../../../../../../@types/RootStackParamApp'
 
 import {
@@ -32,19 +31,16 @@ import {
     OptionTemplateSettings
 } from 'react-native-custom-picker'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
-type PropsSelectionCategorias = {
-    setCategoriaConta: React.Dispatch<React.SetStateAction<string>>,
-    navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">,    
-}
+
 
 const RenderOption = (settings: OptionTemplateSettings) => {
     const { item, getLabel } = settings
-
     return (
         <ContainerItem>
-            <Icon size={24} stringIcon={item.iconeCategoryConta} color={'red'}/>
+            <Icon size={24} stringIcon={'Entypo:wallet'} color={'red'}/>
             <NomeItem >{getLabel(item)}</NomeItem>
 
             <Separator />
@@ -71,27 +67,34 @@ const RenderHeader = ({search, setSearch}: PropsRenderHeader) => {
 
 type PropsRenderFooter = {
     navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">,    
+    
 }
 
 const RenderFooter = ({navigation}: PropsRenderFooter) => {    
     return (
-        <BotaoAdicionarCategoria onPress={() => {navigation.navigate('AddCategoryAccount')}}>
-            <LabelAdicionarCategoria>Adicionar Categoria</LabelAdicionarCategoria>
+        <BotaoAdicionarCategoria>
+            <LabelAdicionarCategoria onPress={() => navigation.navigate('AddCategoryAccount')}>Adicionar Categoria</LabelAdicionarCategoria>
         </BotaoAdicionarCategoria>
     )
 }
 
 
+type PropsSelectionCategorias = {
+    setCategoriaConta: React.Dispatch<React.SetStateAction<string>>,
+    navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">,    
+    categoriaConta: string
+}
 
-const SelectionCategorias = ({setCategoriaConta, navigation}: PropsSelectionCategorias) => {        
+const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta, navigation}: PropsSelectionCategorias) => {        
     const {categoriasConta, handleReadByUserCategoriesAccount} = UseCategoriasConta()    
 
     const [search, setSearch] = useState('') 
     const [categoriasAtual, setCategoriasAtual] = useState([] as CategoriaConta[])
     
+    const PickerRef = useRef<CustomPicker>(null)
+
     useEffect(() => {
-        async function loadCategorias() {
-            
+        async function loadCategorias() {            
             handleReadByUserCategoriesAccount(await retornarIdDoUsuario())
         }
 
@@ -100,8 +103,6 @@ const SelectionCategorias = ({setCategoriaConta, navigation}: PropsSelectionCate
 
     useEffect(() => {
         setCategoriasAtual(categoriasConta)
-
-        console.log(categoriasConta)
     }, [categoriasConta])
 
     useEffect(() => {
@@ -110,7 +111,7 @@ const SelectionCategorias = ({setCategoriaConta, navigation}: PropsSelectionCate
         } else {
             const aux: CategoriaConta[] = []
 
-            categoriasConta.map((item, index) => {
+            categoriasConta.map((item: CategoriaConta) => {
                 if(item.descricaoCategoryConta.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !=  -1) {
                     aux.push(item)
                 }
@@ -120,27 +121,46 @@ const SelectionCategorias = ({setCategoriaConta, navigation}: PropsSelectionCate
         }
     }, [search])
 
-    
+    const onOpen = () => {
+        PickerRef.current?.showOptions()
+    }
 
+    
     return (
         <Container>
 
-            
+            <TouchableOpacity onPress={onOpen}>
+                <InputText 
+                    label="Categoria"
+                    value={categoriaConta == '0' ? '' : categoriaConta}
+                    placeholder="Selecione uma categoria conta"
+                    placeholderTextColor={"#bbb"}
+                    editable={false}
+                    showClearIcon={false}
+                    onClear={() => {}}
+                />
+
+            </TouchableOpacity>
+
             <CustomPicker 
-                placeholder={!categoriasAtual ? "Carregando" : "Selecione a categoria para esse lançamento" }
-                options={!categoriasAtual  ? [{}] : categoriasAtual}
-                getLabel={item => item.descricaoCategoryConta}
+                ref={PickerRef}
+                placeholder={"Selecione a categoria para esse lançamento" }
+                options={categoriasAtual}
+                getLabel={(item: CategoriaConta) => item.descricaoCategoryConta}
                 optionTemplate={RenderOption}
                 headerTemplate={() => <RenderHeader search={search} setSearch={setSearch} />}
-                footerTemplate={() => <RenderFooter navigation={navigation} />}                
+                footerTemplate={() => <RenderFooter navigation={navigation}/>}                
                 maxHeight={400}
                 modalStyle={{minHeight: 400}}
-                onValueChange={value => {
+                onValueChange={(value: CategoriaConta) => {
                     setCategoriaConta(value.descricaoCategoryConta)
+                    
                 }}
+                style={{display: 'none'}}
             />
+            
         </Container>
     )
 }
 
-export default SelectionCategorias
+export default SelectionCategoriesAccount
