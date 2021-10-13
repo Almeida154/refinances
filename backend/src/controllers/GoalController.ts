@@ -52,6 +52,27 @@ class MetaController {
 
         return response.send({ message: meta });
     }
+
+    async FindByUser(request: Request, response: Response, next: NextFunction) {
+        const metaRepository = getRepository(Meta);
+        const userRepository = getRepository(User);
+
+        const user = await userRepository.findOne({
+            where: {
+                id: request.params.iduser
+            }
+        })
+
+        if(!user) {
+            return response.send({error: "usuário não encontrado"})
+        }
+
+        const metas = (await metaRepository.find({
+            where: { userMeta: user }
+        }));        
+
+        return response.send({ metas });
+    }
     
     async one(request: Request, response: Response, next: NextFunction) {
         const metaRepository = getRepository(Meta);

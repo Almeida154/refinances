@@ -58,7 +58,7 @@ const CreateGoal = () => {
                         <Ionicons name="medal-outline" size={25} color="gray"/>
                     </SectionIcon>
                     <SectionName>
-                        <LabelCategory>Metas financeiras são importantes para o seu avanço pessoal.</LabelCategory>
+                        <LabelCategory>Crie metas financeiras e observe seus avanços.</LabelCategory>
                     </SectionName>
                 </SectionDescription>
                         

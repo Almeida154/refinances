@@ -94,6 +94,7 @@ Routes.delete("/entry/remove", EntryController.removeAll);
 Routes.post("/goal/create", GoalController.save);
 Routes.get("/goal/read", GoalController.showRelations);
 Routes.get("/goal/read/:id", GoalController.one);
+Routes.post("/goal/findbyuser/:iduser", GoalController.FindByUser);
 Routes.put("/goal/edit/:id", GoalController.edit);
 Routes.delete("/goal/remove/:id", GoalController.remove);
 Routes.delete("/goal/remove", GoalController.removeAll);
