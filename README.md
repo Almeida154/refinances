@@ -1,8 +1,12 @@
 <div align="center">
-  <img width="400" src="https://i.ibb.co/553jhzz/Evoke-White-Lines.png" border="0">
+  <img width="300" src="https://i.ibb.co/Pj5fBVY/RepoLogo.png" border="0">
 </div>
 
 <br>
+
+<img src="https://i.ibb.co/c2t86Nv/Register-Fixed-Expenses.png" alt="Register-Fixed-Expenses" border="0">
+<img src="https://i.ibb.co/Y7kNqKf/Extract-Bottom-Sheet.png" alt="Extract-Bottom-Sheet" border="0">
+<img src="https://i.ibb.co/ysh1Qjx/Login.png" alt="Login" border="0">
 
 <div align="center">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?color=f6f6f6">
@@ -14,7 +18,7 @@
   <a href="https://evoke.com">
     <img alt="Feito pela EVOKE" src="https://img.shields.io/static/v1?label=made%20by&message=Evoke&color=EE4266">
   </a>
-  <img alt="Progresso" src="https://img.shields.io/static/v1?label=progress&message=23%&color=EE4266">
+  <img alt="Progresso" src="https://img.shields.io/static/v1?label=progress&message=48%&color=EE4266">
   <a href="https://github.com/Almeida154/refinances/stargazers">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/Almeida154/refinances?style=social">
   </a>
@@ -37,9 +41,9 @@
 <br>
 
 <p align="center">
-  <img align="center" width="250" src="https://i.ibb.co/pwgvrqR/splash.png" alt="splash">  &nbsp;&nbsp;&nbsp;
-  <img align="center" width="250" src="https://i.ibb.co/j8LsBqV/register.png" alt="register">  &nbsp;&nbsp;&nbsp;
-  <img align="center" width="250" src="https://i.ibb.co/9sdyNv6/home.png" alt="home">  &nbsp;&nbsp;&nbsp;
+  <img align="center" width="250" src="https://i.ibb.co/ysh1Qjx/Login.png" alt="home">  &nbsp;&nbsp;&nbsp;
+  <img align="center" width="250" src="https://i.ibb.co/c2t86Nv/Register-Fixed-Expenses.png" alt="splash">  &nbsp;&nbsp;&nbsp;
+  <img align="center" width="250" src="https://i.ibb.co/Y7kNqKf/Extract-Bottom-Sheet.png" alt="register">  &nbsp;&nbsp;&nbsp;
 </p>
 
 <br><br>
@@ -54,18 +58,30 @@
 <h2>🛠 Tecnologias</h2>
 As seguintes ferramentas foram usadas na construção do projeto:
 
-### 👉 ***Server***
+### 👉 **_Backend_**
+
 - NodeJS
-- mySql
-- Lorem
+- Express
+- Type Orm
+- My Sql
+- Typescript
 
-### 👉 ***Mobile***
-- React-Native
-- React-Navigation
+### 👉 **_Mobile_**
+
+- React Native
+- React Navigation
+- React Native Paper
 - Axios
-- Lorem
+- Modalize
+- Typescript
 
-### 👉 ***Desenvolvimento Geral***
+### 👉 **_Frontend_**
+
+- React
+- Typescript
+
+### 👉 **_Desenvolvimento Geral_**
+
 - Editor:
   - Visual Studio Code
 - Prototipagem:
@@ -91,43 +107,66 @@ As seguintes ferramentas foram usadas na construção do projeto:
 Antes de tudo, você precisa ter instalado em sua máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). Além disso, é bom ter um editor para trabalhar com o código, como [VSCode](https://code.visualstudio.com/). É preciso, também, do ts-node [TS-Node](https://www.npmjs.com/package/ts-node) e [Nodemon](https://www.npmjs.com/package/nodemon).
 
-Como já visto acima, esse projeto é divido em duas partes:
-- 🎲 Server (Backend)
-- 📱 Mobile
+O projeto é divido em três partes:
 
-Para começar:
+- 🎲 Backend (Servidor)
+- 📱 Mobile (Aplicativo)
+- 💻 Frontend (Painel de administração)
+
 ```bash
 # Clone o repositório
 $ git clone https://github.com/Almeida154/refinances.git
 ```
 
-Entre na pasta:
-```bash
-$ cd mobile
-```
+##### 👉 **_Backend:_**
 
-Agora, precisamos instalar as dependências e estaremos prontos para rodar:
 ```bash
-# Instale as dependências
-$ npm install
-
-# Você pode startar com
-$ npm start
-$ react-native run-android
-```
-
-Precisamos instalar na pasta backend também:
-```bash
-# Instale as dependências
-$ cd ..
 $ cd backend
-$ npm install
-
-# Você pode startar com
-$ npx nodemon --exec ts-node --files src/server.ts
 ```
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+Instale as dependências:
+
+```bash
+# Pode usar o npm se quiser
+$ yarn install
+```
+
+Rode o servidor:
+
+```bash
+# Você precisa do Xampp rodando a partir de agora
+$ yarn dev
+```
+
+##### 👉 **_Mobile:_**
+
+```bash
+# Pode usar npm se quiser
+$ cd ..
+$ cd mobile
+$ yarn install
+```
+
+Rode o aplicativo:
+
+```bash
+  yarn android
+```
+
+##### 👉 **_Frontend:_**
+
+```bash
+# Pode usar npm se quiser
+$ cd ..
+$ cd frontend
+$ yarn install
+```
+
+Rode o site:
+
+```bash
+  yarn start
+```
 
 <br>
 
@@ -138,25 +177,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <table border="0" align="center">
   <tr>
     <td align="center">
-      <img src="https://i.ibb.co/xgBf2Fy/DavidPPT.png" width="160px" alt="Foto do David Almeida"/><br>
+      <img src="https://i.ibb.co/xF3gPdD/David.png" width="160px" alt="Foto do David Almeida"/><br>
       <sub>
         <a href="https://www.github.com/Almeida154">@David Almeida</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/H47KHFY/Wallace-PPT.png" width="160px" alt="Foto do Wallace"/><br>
+      <img src="https://i.ibb.co/3SFG6sq/Wallace.png" width="160px" alt="Foto do Wallace"/><br>
       <sub>
         <a href="https://www.github.com/wallaceMMO">@Wallace Moura</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/SJNmhTH/Samuel-PPT.png" width="160px" alt="Foto do Samuel"/><br>
+      <img src="https://i.ibb.co/wLG6ZSj/Samuel.png" width="160px" alt="Foto do Samuel"/><br>
       <sub>
         <a href="https://www.github.com/SamG1002">@Samuel Guerra</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/b50x6Ss/Phillip-PPT.png" width="160px" alt="Foto do Phillip"/><br>
+      <img src="https://i.ibb.co/L91XMk2/Phillip.png" width="160px" alt="Foto do Phillip"/><br>
       <sub>
         <a href="https://www.github.com/Almeida154">@Phillip Anselmo</a>
       </sub>
@@ -167,19 +206,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <table align="center">
   <tr>    
     <td align="center">
-      <img src="https://i.ibb.co/2gS15DD/IsaPPT.png" width="160px" alt="Foto da Isabela"/><br>
+      <img src="https://i.ibb.co/cL9dFsy/Isa.png" width="160px" alt="Foto da Isabela"/><br>
       <sub>
         <a href="https://www.github.com/IsabelaSaori">@Isabela Saori</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/pW86FxZ/ItaloPPT.png" width="160px" alt="Foto do Italo"/><br>
+      <img src="https://i.ibb.co/xhhbtp5/Italo.png" width="160px" alt="Foto do Italo"/><br>
       <sub>
         <a href="https://www.github.com/ItaloCabral">@Italo Cabral</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/bFXJHmK/Mariana-PPT.png" width="160px" alt="Foto da Mariana"/><br>
+      <img src="https://i.ibb.co/D5qwy8h/Mariana.png" width="160px" alt="Foto da Mariana"/><br>
       <sub>
         <a href="https://github.com/mariana-santos">@Mariana Santos</a>
       </sub>
@@ -190,6 +229,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <br>
 
 <h2>🧾 Licença</h2>
-Esse repositório está licenciado pela ***MIT LICENSE***. Para informações detalhadas, leia o arquivo <a href="https://github.com/Almeida154/refinances/blob/main/LICENSE">LICENSE</a> contido nesse repositório.
+Esse repositório está licenciado pela **_MIT LICENSE_**. Para informações detalhadas, leia o arquivo <a href="https://github.com/Almeida154/refinances/blob/main/LICENSE">LICENSE</a> contido nesse repositório.
 
 <br><br>
