@@ -55,7 +55,7 @@ const SectionManage = () => {
     return (
         <Container>
             <SectionTop>
-                <LabelDescription>As metas são úteis para o seu avanço pessoal e financeiro.</LabelDescription>
+                <LabelDescription>Gerencie suas metas acompanhe seus avanços.</LabelDescription>
             </SectionTop>
 
             <Separator />

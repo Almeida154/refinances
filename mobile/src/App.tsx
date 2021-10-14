@@ -11,6 +11,7 @@ import { DadosTempProvider } from './contexts/TemporaryDataContext';
 import { CategoriasContaProvider } from './contexts/CategoriesAccountContext';
 import { ContasProvider } from './contexts/AccountContext';
 import { ParcelaProvider } from './contexts/InstallmentContext';
+import { MetasProvider } from './contexts/GoalsContext';
 
 import Routes from './routes'
 
@@ -20,17 +21,19 @@ const App = () => {
       <AuthProvider>        
         <DadosTempProvider>          
           <ContasProvider>
-            <ParcelaProvider>
-              <LancamentoProvider>
-                <TransferenciaProvider>
-                  <CategoriasProvider>          
-                    <CategoriasContaProvider>
-                        <Routes />
-                    </CategoriasContaProvider>
-                  </CategoriasProvider>
-                </TransferenciaProvider>
-              </LancamentoProvider>
-            </ParcelaProvider>
+            <MetasProvider>
+              <ParcelaProvider>
+                <LancamentoProvider>
+                  <TransferenciaProvider>
+                    <CategoriasProvider>          
+                      <CategoriasContaProvider>
+                          <Routes />
+                      </CategoriasContaProvider>
+                    </CategoriasProvider>
+                  </TransferenciaProvider>
+                </LancamentoProvider>
+              </ParcelaProvider>
+            </MetasProvider>
           </ContasProvider>
         </DadosTempProvider>
       </AuthProvider>            
