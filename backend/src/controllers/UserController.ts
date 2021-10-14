@@ -81,8 +81,9 @@ class UserController {
 
   async save(request: Request, response: Response, next: NextFunction) {
     const userRepository = getRepository(User);
+    const { nomeUsuario, emailUsuario, senhaUsuario, fotoPerfilUsuario } =
+      request.body;
 
-    const { nomeUsuario, emailUsuario, senhaUsuario } = request.body;
     if (!VerificaSeOEmailExiste(emailUsuario))
       return response.send({ error: "Formato de email inválido" });
     if (emailUsuario == "" || emailUsuario == undefined)
@@ -109,6 +110,7 @@ class UserController {
 
     const { nomeUsuario, emailUsuario, senhaUsuario, fotoPerfilUsuario } =
       request.body;
+
     if (nomeUsuario == "") return response.send({ error: "Nome em branco!" });
     if (emailUsuario == "") return response.send({ error: "Email em branco!" });
     if (senhaUsuario == "") return response.send({ error: "Senha em branco!" });
