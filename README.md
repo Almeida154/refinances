@@ -1,12 +1,8 @@
 <div align="center">
-  <img width="300" src="https://i.ibb.co/Pj5fBVY/RepoLogo.png" border="0">
+  <img width="100" src="https://i.ibb.co/Pj5fBVY/RepoLogo.png" border="0">
 </div>
 
 <br>
-
-<img src="https://i.ibb.co/c2t86Nv/Register-Fixed-Expenses.png" alt="Register-Fixed-Expenses" border="0">
-<img src="https://i.ibb.co/Y7kNqKf/Extract-Bottom-Sheet.png" alt="Extract-Bottom-Sheet" border="0">
-<img src="https://i.ibb.co/ysh1Qjx/Login.png" alt="Login" border="0">
 
 <div align="center">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?color=f6f6f6">
@@ -141,9 +137,9 @@ $ yarn dev
 ##### 👉 **_Mobile:_**
 
 ```bash
-# Pode usar npm se quiser
 $ cd ..
 $ cd mobile
+# Pode usar npm se quiser
 $ yarn install
 ```
 
@@ -156,9 +152,9 @@ Rode o aplicativo:
 ##### 👉 **_Frontend:_**
 
 ```bash
-# Pode usar npm se quiser
 $ cd ..
 $ cd frontend
+# Pode usar npm se quiser
 $ yarn install
 ```
 
