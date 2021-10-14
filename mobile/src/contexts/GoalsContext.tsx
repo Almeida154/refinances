@@ -2,7 +2,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UseAuth } from './AuthContext';
 import { ToastAndroid } from 'react-native';
 import { StackDescriptorMap } from '@react-navigation/stack/lib/typescript/src/types';
 
@@ -12,9 +11,9 @@ export type Meta = {
     saldoFinalMeta: number,
     saldoAtualMeta: number,
     dataInicioMeta: string, 
-    dataFimMeta: StackDescriptorMap
+    dataFimMeta: string,
     realizacaoMeta: boolean,
-    userMeta: number
+    userMetaId: number
 }
 
 interface MetaContextType {        
@@ -33,7 +32,7 @@ export const MetasProvider: React.FC = ({ children }) => {
     const [loading, setLoading] = useState(false)
 
     async function handleAdicionarMeta(meta: Meta) {
-        console.log(meta.userMeta);
+        console.log(meta.userMetaId);
         try {
 
             const response = await api.post('/goal/create', {
@@ -43,7 +42,7 @@ export const MetasProvider: React.FC = ({ children }) => {
                 dataInicioMeta: meta.dataInicioMeta,
                 dataFimMeta: meta.dataFimMeta,
                 realizacaoMeta: meta.realizacaoMeta,
-                userMeta: meta.userMeta,
+                userMetaId: meta.userMetaId,
             });
 
             if(response.data.error) console.log(response.data.error);

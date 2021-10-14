@@ -113,7 +113,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
 const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: PropsNavigation) => {
 
     const [detalhes, setDetalhes] = useState(false)
-
+    
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
     
     const [descricao, setDescricao] =  useState('')
@@ -282,6 +282,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
         setDataParcelaAlterado(true)
     }, [valor])
 
+    
     return (
         <ContainerForm>
             

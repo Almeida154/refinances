@@ -46,10 +46,14 @@ const Entrar = ({ navigation }: PropsNavigation) => {
   const [passwordError, setPasswordError] = useState<any | null>(null);
 
   async function LoginUser() {
-    user.email = email;
-    user.password = password;
+    const logUser = {} as User;
+    logUser.email = email;
+    logUser.password = password;
 
-    const response = await handleLogin(user);
+    // user.email = email
+    // user.password = password
+
+    const response = await handleLogin(logUser);
 
     if (!response.ok) {
       switch (response.error) {

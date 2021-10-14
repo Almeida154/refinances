@@ -22,9 +22,7 @@ type PropsIcon = {
     size: number
 }
 
-const Icon = ({stringIcon, color, size}: PropsIcon) => {
-    if(stringIcon.indexOf('/') == -1) {
-
+const Icon = ({stringIcon, color, size}: PropsIcon) => {    
         const [biblioteca, nomeIcone] = stringIcon.split(':')
         
          switch(biblioteca) {
@@ -61,21 +59,6 @@ const Icon = ({stringIcon, color, size}: PropsIcon) => {
             default:
                 return <IconMaterialIcons color={color} size={size} name="error"/>
          }
-    } else {
-        const [diretorio, nomeDoArquivo] = stringIcon.split('/')
-
-        try {
-            const requisicao = `../assets/images/svg/${diretorio}/${nomeDoArquivo}`
-            const Icon = require('../assets/images/svg/CategoryAccount/banco-amazonia')            
-            
-            return Icon
-        } catch (error) {
-            console.log("não foi encontrado esse diretório")
-            return (
-                <IconMaterialIcons color={'gray'} size={24} name="error"/>
-            )
-        }
-    }
 }
 
 export default Icon

@@ -80,6 +80,8 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
 };
 
 const TabNavigator = () => {
+  const {navigation} = UseDadosTemp()
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -123,7 +125,7 @@ const TabNavigator = () => {
             return (
               <CustomTabBarButton
                 children={props.children}
-                onPress={props.onPress}
+                onPress={() => navigation.navigate('Lancamentos', {screen: 'Main'})}
               />
             );
           },
