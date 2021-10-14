@@ -16,18 +16,19 @@ import {
     ButtonText,
     
 } from './styles'
+
+import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+
 import { TouchableOpacity } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/core';
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 
-type PropsManageAccount = {
-    navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">,    
-    route: RouteProp<HomeAccountStack, "CreateAccount">,
-}
 
-const CreateAccount = ({navigation, route}: PropsManageAccount) => {
+const CreateAccount = () => {
     const {handleAdicionarConta} = UseContas()
+    const {navigation} = UseDadosTemp()
+
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')    
     const [categoriaConta, setCategoriaConta] = useState('')

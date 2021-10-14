@@ -58,9 +58,11 @@ const CardAccount = ({item}: CardAccount) => {
 
 
 
-const SectionAccount = ({navigation}: PropsHome) => {
+const SectionAccount = () => {
     const {contas, handleReadByUserContas} = UseContas()
     const [saldo, setSaldo] = useState('0')
+
+    const {navigation}  = UseDadosTemp()
 
     useEffect(() => {
         let aux = 0
@@ -103,7 +105,7 @@ const SectionAccount = ({navigation}: PropsHome) => {
                     })
                 }
 
-                <ButtonManager onPress={() => navigation.navigate('ManageAccount')}><LabelManager>Gerenciar</LabelManager></ButtonManager>
+                <ButtonManager onPress={() => navigation.navigate('StackAccount', {screen: 'ManageAccount'})}><LabelManager>Gerenciar</LabelManager></ButtonManager>
             </ContainerAccount>
         </Container>
     )

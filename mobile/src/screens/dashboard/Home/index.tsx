@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
-import * as React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     View,
     Text,
@@ -14,7 +14,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Icon2 from 'react-native-vector-icons/Feather'
-import PropsNavigationApp, {HomeAccountStack} from '../../../@types/RootStackParamApp'
+import PropsNavigationApp, {PropsMainRoutes} from '../../../@types/RootStackParamApp'
 
 const { width } = Dimensions.get('screen');
 
@@ -22,6 +22,7 @@ const ITEM_WIDTH = width * 0.9;
 const ITEM_HEIGHT = ITEM_WIDTH * 0.9;
 
 import {UseAuth} from '../../../contexts/AuthContext'
+import {UseDadosTemp} from '../../../contexts/TemporaryDataContext'
 
 import SectionAccount from './components/SectionAccount'
 
@@ -30,50 +31,79 @@ import CreateCategoryGoals from './components/CreateCategoryGoals'
 import ManageCategoryGoals from './components/ManageCategoryGoals'
 
 export type PropsHome = {
-    navigation: StackNavigationProp<HomeAccountStack, "Home">,    
+    navigation: StackNavigationProp<PropsMainRoutes, "Main">,    
 }
 
-const Home = ({navigation}: PropsHome) => {
+const Home = () => {
     const { user, handleLogout } = UseAuth()    
+    const {navigation} = UseDadosTemp()
+
+    const [stateReload, setStateReload] = useState(false)
+
+    const useForceUpdate = () => {
+        const set = useState(0)[1];
+        return () => set((s) => s + 1);
+    }
+    
+    const forceUpdate = useForceUpdate()
+
+    useEffect(() => {
+        if(!navigation.addListener)
+            return
+        const focus = navigation.addListener('focus', () => {
+            setStateReload(false)
+            console.log("Foi")
+        })
+
+        const blur = navigation.addListener('blur', () => {
+            setStateReload(true)
+            console.log(stateReload)
+        })
+
         
+    }, [navigation])
+
     return (
         <ScrollView >
 
-            <View style={styles.container}>
-                <View style={styles.headerContainer}>
-                    <View style={styles.containerProfile}>
-                        <View style={styles.iconProfile}>
-    
+            {
+                stateReload ? <Text>Carregando</Text> :
+                <View style={styles.container}>
+                    <View style={styles.headerContainer}>
+                        <View style={styles.containerProfile}>
+                            <View style={styles.iconProfile}>
+        
+                            </View>
+
+                            <View style={styles.textBoasVindas}>
+                                <Text style={{ color: '#fff', fontSize: 20 }}>Boa tarde!</Text>
+
+                                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{user.nomeUsuario}</Text>
+                            </View>
                         </View>
 
-                        <View style={styles.textBoasVindas}>
-                            <Text style={{ color: '#fff', fontSize: 20 }}>Boa tarde!</Text>
+                        <View style={styles.containerSetting}>
+                            <Icon2 name='settings' color='#9D3147' size={30} style={{marginRight: 20}}/>
 
-                            <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{user.nomeUsuario}</Text>
+                            <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#9D3147" size={30} /></TouchableHighlight>
                         </View>
                     </View>
+                    {/* Scrollable Content */}
 
-                    <View style={styles.containerSetting}>
-                        <Icon2 name='settings' color='#9D3147' size={30} style={{marginRight: 20}}/>
+                    <ScrollView style={styles.scroll}>
+                        <View style={styles.containerBody}>
+                            
+                            <SectionAccount />
 
-                        <TouchableHighlight onPress={handleLogout}><Icon name='logout' color="#9D3147" size={30} /></TouchableHighlight>
-                    </View>
-                </View>
-                {/* Scrollable Content */}
+                            <CreateCategoryGoals />
 
-                <ScrollView style={styles.scroll}>
-                    <View style={styles.containerBody}>
+                            <ManageCategoryGoals />
+
+                        </View>
+                    </ScrollView>
                         
-                        <SectionAccount navigation={navigation}/>
-
-                        <CreateCategoryGoals />
-
-                        <ManageCategoryGoals />
-
-                    </View>
-                </ScrollView>
-                    
-            </View>
+                </View>
+            }
         </ScrollView>
     );
 };

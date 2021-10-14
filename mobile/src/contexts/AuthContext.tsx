@@ -72,7 +72,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         emailUsuario: logUser.email,
         senhaUsuario: logUser.password,
       });
-
+        
       if (response.data.error) {
         console.debug('AuthContext | handleLogin(): ', response.data.error);
         return response.data;
