@@ -18,7 +18,7 @@ interface CategoriaContextType {
     categorias: Categoria[]
     loading: boolean
 
-    handleAdicionar(categoriaProps: Categoria): Promise<void>
+    handleAdicionar(categoriaProps: Categoria): Promise<string>
     setupCategorias(): Promise<void>
     handleReadByUserCategorias(idUser: number, tipoCategoria: string): Promise<void>
 }
@@ -62,6 +62,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
 
     async function handleAdicionar(categoria: Categoria) {
         setLoading(true)
+        console.log('veio aqui no handleAdicionar')
         try {                     
             const response = await api.post('/category/create', {
                 nomeCategoria: categoria.nomeCategoria,
@@ -72,14 +73,17 @@ export const CategoriasProvider: React.FC = ({ children }) => {
                 userCategory: categoria.userCategoria
             });
 
-            if (response.data.error) {
-                console.log(response.data.error);
+
+            if (response.data.error) {                
+                return response.data.error
             }
 
             const newCategorias: Categoria[] = categorias
             newCategorias.push(response.data.message);
             setCategorias(newCategorias);
             setLoading(false)
+
+            return ''
         } catch (error) {
             console.log("Deu um erro no handleAdicionar: " + error);
         }

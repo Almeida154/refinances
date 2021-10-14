@@ -24,10 +24,13 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/core';
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 
+type PropsCreateAccount = {
+    navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">
+}
 
-const CreateAccount = () => {
+const CreateAccount = ({navigation}: PropsCreateAccount) => {
     const {handleAdicionarConta} = UseContas()
-    const {navigation} = UseDadosTemp()
+        
 
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')    

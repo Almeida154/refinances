@@ -48,7 +48,7 @@ const Home = () => {
     const forceUpdate = useForceUpdate()
 
     useEffect(() => {
-        if(!navigation.addListener)
+        if(!navigation || !navigation.addListener)
             return
         const focus = navigation.addListener('focus', () => {
             setStateReload(false)
@@ -63,6 +63,7 @@ const Home = () => {
         
     }, [navigation])
 
+    console.log(navigation && navigation.getState ? navigation.getState() : "Não carregou o navigation")
     return (
         <ScrollView >
 

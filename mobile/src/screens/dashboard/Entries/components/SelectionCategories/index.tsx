@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import {Alert, TextInput} from 'react-native'
+import {Alert, TextInput, View} from 'react-native'
 import {Categoria, UseCategories} from '../../../../../contexts/CategoriesContext'
 
 
@@ -43,6 +43,11 @@ type PropsSelectionCategorias = {
 
 const RenderOption = (settings: OptionTemplateSettings) => {
     const { item, getLabel } = settings
+
+    if(!item.iconeCategoria)
+        return (
+            <View />
+        )
 
     return (
         <ContainerItem>
@@ -111,11 +116,12 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria, navigation
     }, [categorias])
 
     useEffect(() => {
+        console.debug('SelectionCategorias | categorias', categorias)
         if(search == '') {
             setCategoriasAtual(categorias)
-        } else {
+        } else if(categorias) {
             const aux: Categoria[] = []
-
+            
             categorias.map((item, index) => {
                 if(item.nomeCategoria.toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !=  -1) {
                     aux.push(item)
