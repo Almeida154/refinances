@@ -1,11 +1,11 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    OneToMany,
-    BeforeInsert,
-    BeforeUpdate,
-    AfterLoad
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  BeforeInsert,
+  BeforeUpdate,
+  AfterLoad,
 } from "typeorm";
 
 import { Category } from "./Category";
@@ -14,53 +14,59 @@ import { Conta } from "./Conta";
 import { Parcela } from "./Parcela";
 import { Necessidade } from "./Necessidade";
 
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 import { Lancamento } from "./Lancamento";
 import { Transferencia } from "./Transferencia";
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    nomeUsuario: string;
+  @Column()
+  nomeUsuario: string;
 
-    @Column()
-    emailUsuario: string;
+  @Column()
+  emailUsuario: string;
 
-    @Column()
-    senhaUsuario: string;
-    
-    @BeforeInsert()
-    @BeforeUpdate()
-    hashPassword() {
-        this.senhaUsuario = bcrypt.hashSync(this.senhaUsuario, 8);
-    }
+  @Column()
+  senhaUsuario: string;
 
-    @Column("blob", { nullable: true})
-    fotoPerfilUsuario: Buffer;
-    
-    // Foreign Keys
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashPassword() {
+    this.senhaUsuario = bcrypt.hashSync(this.senhaUsuario, 8);
+  }
 
-    @OneToMany(type => Category, category => category.userCategory)
-    categoriesUser: Category[];
+  @Column("longblob", { nullable: true }) //mediumblob = 16mb
+  fotoPerfilUsuario: Buffer;
 
-    @OneToMany(type => Parcela, Parcela => Parcela.userParcela)
-    parcelasUser: Parcela[];
+  // Foreign Keys
 
-    @OneToMany(type => Meta, meta => meta.userMeta)
-    metasUser: Meta[];
+  @OneToMany((type) => Category, (category) => category.userCategory)
+  categoriesUser: Category[];
 
-    @OneToMany(type => Conta, conta => conta.userConta)
-    contasUser: Conta[];
-    
-    @OneToMany(type => Lancamento, lancamento => lancamento.userLancamento)
-    lancamentosUser: Lancamento[];
+  @OneToMany((type) => Parcela, (Parcela) => Parcela.userParcela)
+  parcelasUser: Parcela[];
 
-    @OneToMany(type => Necessidade, necessidade => necessidade.userNecessidade)
-    necessidadesUsuario: Necessidade[];
+  @OneToMany((type) => Meta, (meta) => meta.userMeta)
+  metasUser: Meta[];
 
-    @OneToMany(type => Transferencia, transferencia => transferencia.userTransferencia)
-    transferenciasUser: Transferencia[];
+  @OneToMany((type) => Conta, (conta) => conta.userConta)
+  contasUser: Conta[];
+
+  @OneToMany((type) => Lancamento, (lancamento) => lancamento.userLancamento)
+  lancamentosUser: Lancamento[];
+
+  @OneToMany(
+    (type) => Necessidade,
+    (necessidade) => necessidade.userNecessidade
+  )
+  necessidadesUsuario: Necessidade[];
+
+  @OneToMany(
+    (type) => Transferencia,
+    (transferencia) => transferencia.userTransferencia
+  )
+  transferenciasUser: Transferencia[];
 }

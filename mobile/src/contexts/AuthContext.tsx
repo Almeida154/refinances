@@ -7,7 +7,7 @@ export type User = {
   id: number;
   name: string;
   email: string;
-  photo: Buffer;
+  avatar: string;
   password: string;
   signed: boolean;
 };
@@ -47,7 +47,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     (async () => {
       const storagedUser = await AsyncStorage.getItem('user');
-      console.debug('AuthContext | useEffect(): ', storagedUser);
+      //console.debug('AuthContext | useEffect(): ', storagedUser);
 
       if (storagedUser) {
         setUser(JSON.parse(storagedUser));
@@ -125,6 +125,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         nomeUsuario: user.name,
         emailUsuario: user.email,
         senhaUsuario: user.password,
+        fotoPerfilUsuario: user.avatar,
       });
 
       console.debug('AuthContext | handleRegister(): ', response.data);

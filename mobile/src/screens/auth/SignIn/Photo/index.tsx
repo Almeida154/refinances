@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { BackHandler, Text, View } from 'react-native';
+import { BackHandler } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -41,15 +41,18 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 
+import { Buffer } from 'buffer';
+
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Photo'>;
   route: RouteProp<RootStackParamAuth, 'Photo'>;
 };
 
 const Photo = ({ navigation }: PropsNavigation) => {
-  const { user, updateUserProps } = UseAuth();
+  const { user, updateUserProps, handleRegister } = UseAuth();
 
-  const [uri, setUri] = useState(null);
+  const [avatar, setAvatar] = useState({ uri: '' });
+  const [avatarBase64, setAvatarBase64] = useState('');
   const modalizeRef = useRef<Modal>(null);
 
   // useEffect(() => {
@@ -63,14 +66,6 @@ const Photo = ({ navigation }: PropsNavigation) => {
     navigation.goBack();
     return true;
   };
-
-  async function setUser() {
-    const newUser = user;
-    newUser.password = password;
-    updateUserProps(newUser);
-    console.debug('Photo | SetUser(): ', user);
-    //navigation.navigate('FixedExpenses');
-  }
 
   const openCamera = () => {
     const options: CameraOptions = {
@@ -90,11 +85,11 @@ const Photo = ({ navigation }: PropsNavigation) => {
       const source = {
         uri: `data:image/jpeg;base64,${response!.assets[0]!.base64}`,
       };
-      setUri(source);
+      setAvatar(source);
     });
   };
 
-  const openGalery = () => {
+  const openGallery = () => {
     const options: ImageLibraryOptions = {
       mediaType: 'photo',
       includeBase64: true,
@@ -109,12 +104,22 @@ const Photo = ({ navigation }: PropsNavigation) => {
         console.debug('ImagePicker Error Code: ' + response.errorCode);
         return;
       }
-      const source = {
-        uri: `data:image/jpeg;base64,${response!.assets[0]!.base64}`,
-      };
-      setUri(source);
+      let asset = response.assets[0];
+      setAvatar({ uri: `data:${asset.type};base64,${asset.base64}` });
+      setAvatarBase64(asset.base64);
     });
   };
+
+  async function setImage() {
+    const newUser = user;
+    newUser.avatar = avatarBase64;
+    updateUserProps(newUser);
+    //console.debug('Photo | SetUser(): ', user);
+
+    const response = await handleRegister();
+    //console.log(response);
+    //navigation.navigate('FixedExpenses');
+  }
 
   const openModalize = () => {
     modalizeRef.current?.open();
@@ -133,10 +138,10 @@ const Photo = ({ navigation }: PropsNavigation) => {
       />
       <Content>
         <PhotoContainer>
-          {uri == null ? (
+          {avatar.uri == '' ? (
             <Pic source={require('./picdefault.png')} />
           ) : (
-            <Pic source={uri} />
+            <Pic source={{ uri: avatar.uri }} />
           )}
           <CameraDetail
             onPress={() => openModalize()}
@@ -153,8 +158,8 @@ const Photo = ({ navigation }: PropsNavigation) => {
       </Content>
 
       <BottomNavigation
-        onPress={() => setUser()}
-        description={uri == null ? 'Pular' : 'Próximo'}
+        onPress={() => setImage()}
+        description={avatar.uri == null ? 'Pular' : 'Próximo'}
       />
 
       <Modalize
@@ -173,7 +178,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
         <Button
           title="Abrir a galeria"
           onPress={() => {
-            openGalery();
+            openGallery();
             closeModalize();
           }}
           backgroundColor={colors.platinum}

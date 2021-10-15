@@ -4,9 +4,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import {Modalize} from 'react-native-modalize'
 
-import {TouchableHighlight, Text} from 'react-native'
+import {TouchableOpacity, Text, ToastAndroid} from 'react-native'
 
 import {UseCategories, Categoria} from '../../../../../contexts/CategoriesContext'
+
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
+import Icon from '../../../../../helpers/gerarIconePelaString'
 
 import {
     Container,
@@ -22,6 +25,7 @@ import {
     RowColor
 
 } from './styles'
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type PropsNavigation = {
@@ -30,85 +34,108 @@ type PropsNavigation = {
     
 }
 
-const AddCategory = ({route, navigation}: PropsNavigation) => {
-    const {handleAdicionar, loading, categorias} = UseCategories()
-
-    const modalizeRef = useRef<Modalize>(null);
-
-    const [nome, setNome] = useState('')
-    const [cor, setCor] = useState('')
-    const [icone, setIcone] = useState('')
-
-    const onOpen = () => {
-        modalizeRef.current?.open()
-    }
+const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
 
     const {tipoCategoria} = route.params
 
     navigation.setOptions({title: `Nova categoria de ${tipoCategoria}`})
 
-    //Se ele detectar que a categoria foi adicionada, voltar lá pra seleção de categorias
-    // useEffect(() => {
-    //     navigation.goBack()
-    // }, [loading])
-    
-    const dataColors = [['#DF5C5C', '#D5DF5C', '#5C89DF'], ['#96DF5C', '#525252', '#E3E3E3'], ['#DF5CD2']]
+    const {handleAdicionar} = UseCategories()
 
-    async function handleSubmit() {
-        const getUser = await AsyncStorage.getItem('user')
-        const idUser = JSON.parse(getUser == null ? '{id: 0}' : getUser).id
+    const modalizeColor = useRef<Modalize>(null);
+    const modalizeIcon = useRef<Modalize>(null);
 
-        const novaCategoria = {
-            essencial: false,
-            nomeCategoria: nome,
-            tetoDeGastos: 0,
-            tipoCategoria,
-            userCategoria: idUser
-        } as Categoria        
+    const [descricao, setDescricao] = useState('')
+    const [cor, setCor] = useState('')
+    const [icone, setIcone] = useState('')
 
-        console.log(novaCategoria)
-        handleAdicionar(novaCategoria)
-        navigation.goBack()
+    const onOpenModalizeColor = () => {
+        modalizeColor.current?.open()
     }
 
-    function setColorSelected() {
+    const onOpenModalizeIcon = () => {
+        modalizeIcon.current?.open()
+    }
 
+    const dataColors = [['#DF5C5C', '#D5DF5C', '#5C89DF'], ['#96DF5C', '#525252', '#E3E3E3'], ['#DF5CD2']]
+
+    const dataIcons = [['AntDesign:customerservice', 'AntDesign:creditcard', 'AntDesign:camera'], ['AntDesign:pushpin', 'Entypo:aircraft', 'Entypo:baidu'], ['Entypo:bell', 'Entypo:briefcase', 'Entypo:bug'], ['Entypo:cup', 'Entypo:drink', 'Entypo:flower'], ['Entypo:game-controller', 'Entypo:heart', 'Entypo:leaf'], ['Entypo:key', 'Entypo:music', 'Entypo:clapperboard']]
+
+    async function handleSubmit() {
+        
+
+        const novaCategoria = {
+           nomeCategoria: descricao,
+           iconeCategoria: icone,
+           tipoCategoria: tipoCategoria,
+           userCategoria: await retornarIdDoUsuario(),           
+           essencial: false,
+           tetoDeGastos: 0,
+           id: -1
+        } as Categoria        
+
+        const response = await handleAdicionar(novaCategoria)
+
+        console.debug('handleSubmit() | response', response)
+
+        if(response == '') {
+            navigation.goBack()
+        } else {
+            ToastAndroid.show(response, ToastAndroid.SHORT)
+        }
+    }
+
+    function setColorSelected(item2: string) {        
+        setCor(item2)
+
+        modalizeColor.current?.close()
+    }
+
+    function setIconSelected(item2: string) {
+        setIcone(item2)
+
+        modalizeIcon.current?.close()
     }
 
     return (
         <Container>            
             <Form>
                 <InputControl>
-                <LabelForm>Nome</LabelForm>
+                <LabelForm>Descrição</LabelForm>
                     <TextInputAdd 
-                        placeholder="Nome da categoria" 
+                        placeholder="Descrição da categoria" 
                         placeholderTextColor="#ddd"
-                        value={nome}
-                        onChangeText={setNome}
+                        value={descricao}
+                        onChangeText={setDescricao}
+                        
                     />                    
                 </InputControl>
 
                 <InputControl>
                 <LabelForm>Cor da categoria</LabelForm>
-                <TouchableHighlight onPress={onOpen}>
-                    <TextInputAdd 
-                        placeholder="Selecione uma cor"
-                        placeholderTextColor="#ddd"
-                        value={cor}
-                        onChangeText={setCor}
-                        editable={false}
-                    />              
-                </TouchableHighlight>                      
+                    <TouchableOpacity onPress={onOpenModalizeColor}>
+                        <TextInputAdd 
+                            placeholder="Selecione uma cor"
+                            placeholderTextColor="#ddd"
+                            value={cor}
+                            onChangeText={setCor}
+                            editable={false}
+                            style={cor == '' ? {color: '#000'} : {color: cor}}
+                        />              
+                    </TouchableOpacity>                      
                 </InputControl>
 
                 <InputControl>
-                <LabelForm>Ícone</LabelForm>
-                    <TextInputAdd 
-                        placeholder="Selecione um ícone"
-                        placeholderTextColor="#ddd"
-                        value={icone}
-                        onChangeText={setIcone}
-                    />                                            
+                    <TouchableOpacity onPress={onOpenModalizeIcon}>
+                        <LabelForm>Ícone</LabelForm>
+                            <TextInputAdd 
+                                placeholder="Selecione um ícone"
+                                placeholderTextColor="#ddd"
+                                value={icone}
+                                onChangeText={setIcone}
+                                editable={false}
+                            />       
+                    </TouchableOpacity>                                     
                 </InputControl>
                 <ButtonAdd onPress={handleSubmit}>
                     <TextButton>Adicionar</TextButton>
@@ -117,7 +144,7 @@ const AddCategory = ({route, navigation}: PropsNavigation) => {
             </Form>
 
             <Modalize 
-            ref={modalizeRef}
+            ref={modalizeColor}
             modalHeight={300}>
                 <BodyModalize>
                 {
@@ -141,8 +168,33 @@ const AddCategory = ({route, navigation}: PropsNavigation) => {
                 }
                 </BodyModalize>
             </Modalize>
+
+            <Modalize 
+            ref={modalizeIcon}
+            modalHeight={300}>
+                <BodyModalize>
+                {
+                    dataIcons.map((item, index) => {
+                        return (
+                            <RowColor>
+                                {
+                                    item.map((item2, index2) => {                                        
+                                        return (
+                                            <ButtonPress onPress={() => setIconSelected(item2)} style={{margin: 10}}>
+                                                
+                                                <Icon color="gray" size={60} stringIcon={item2} />
+                                            </ButtonPress>
+                                        )
+                                    })
+                                }
+                            </RowColor>
+                        )
+                    })
+                }
+                </BodyModalize>
+            </Modalize>
         </Container>
     )
 }
 
-export default AddCategory
+export default AddCategoryAccount
