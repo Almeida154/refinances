@@ -48,7 +48,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
         console.warn("Previsão data final meta: ", date.toLocaleDateString());
         setdtPrevError(null);
       }else {
-        setdtPrevError('Insira uma data válida!')
         setPrevisao(dataAtual)
       }
   
@@ -67,13 +66,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
           userMetaId: await retornarIdDoUsuario()
           
       } as Meta
-
-      console.log(newGoal)
-      if (meta != '' && parseFloat(valorMeta) > 0 && valorMeta != '' && 
-      parseFloat(investidoMeta) >= 0 && investidoMeta != '' && previsao >= dataAtual) {
       handleAdicionarMeta(newGoal); 
-      console.log('veio aqui');
-
+      console.log(newGoal)
+      if (meta != '' 
+        && parseFloat(valorMeta) > 0 
+        && valorMeta != undefined 
+        && parseFloat(investidoMeta) >= 0 
+        && investidoMeta != undefined
+        && previsao >= dataAtual) {
+          
       }else if (meta == ''){
         setdescError('Descrição obrigatória!')
       }if(parseFloat(valorMeta) <= 0 || valorMeta == ''){
@@ -135,7 +136,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
                 onChangeText={txt => {
                   setvalorTError(null);
                   setValorMeta(txt);
-                }}/>
+                }}
+                keyboardType="numeric"
+                />
           </View>
 
           <View>
@@ -152,7 +155,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
                 onChangeText={txt => {
                   setinvestidoError(null);
                   setInvestido(txt);
-                }}/>
+                }}
+                keyboardType="numeric"
+                />
           </View>
 
           {/* DatePicker */}

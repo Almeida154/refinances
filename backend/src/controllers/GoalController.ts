@@ -24,20 +24,12 @@ class MetaController {
         return response.send({ metas });
     }
     
-    async save(request: Request, response: Response, next: NextFunction) {                        
+    async save(request: Request, response: Response, next: NextFunction) {    
+        console.log("SAlve") ;                   
         const metaRepository = getRepository(Meta);  
         const userRepository = getRepository(User);
 
         const {descMeta, saldoFinalMeta, saldoAtualMeta, dataInicioMeta, dataFimMeta, realizacaoMeta, userMetaId} = request.body
-
-        if(descMeta == '') return response.send({error: "nome em branco!"})        
-        if (saldoFinalMeta == undefined) return response.send({ error: "Saldo final da meta não inserido" });
-        if (saldoAtualMeta == undefined) return response.send({ error: "saldo atual da meta não inserido!" })
-        if (dataInicioMeta == undefined) return response.send({ error: "data inicial da meta não inserido!" });
-        if (dataFimMeta == undefined) return response.send({ error: "data final da meta não inserido!" });
-        if (realizacaoMeta == undefined) return response.send({ error: "realização da meta não inserido!" });
-        if (userMetaId == undefined) return response.send({ error: "user da meta não inserido!" });
-
         const userExists = await userRepository.findOne({where: {id: userMetaId}})        
 
         if (!userExists) return response.send({
