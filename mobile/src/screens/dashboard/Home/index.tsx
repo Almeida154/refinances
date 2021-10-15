@@ -80,7 +80,7 @@ const Home = () => {
               <Image
                 source={{
                   uri: `data:image/jpg;base64,${Buffer.from(
-                    user.fotoPerfilUsuario == null ? '' : user.fotoPerfilUsuario,
+                      user.avatar == null ? "" : user.avatar,
                     'base64',
                   )}`,
                 }}
@@ -91,7 +91,7 @@ const Home = () => {
                 <Text style={{ color: '#fff', fontSize: 20 }}>Boa tarde!</Text>
 
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                  {user.nomeUsuario}
+                  {user.name}
                 </Text>
               </View>
             </View>
