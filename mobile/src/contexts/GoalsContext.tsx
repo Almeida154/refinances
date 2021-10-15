@@ -54,7 +54,7 @@ export const MetasProvider: React.FC = ({ children }) => {
             newMetas.push(response.data.message);
 
             setMetas(newMetas);
-
+            return { ok: true };
         } catch (error) {
             console.log("Deu um erro no handleAdicionarMeta: " + error);
         }

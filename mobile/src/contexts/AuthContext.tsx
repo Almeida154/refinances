@@ -88,36 +88,36 @@ export const AuthProvider: React.FC = ({ children }) => {
       console.log('AuthContext | handleLogin(): ', error);
     }
   }
+/* 
+  async function handleRegister(regUser: User) {
+      try {
+          const response = await api.post('/user/create', {
+              nomeUsuario: regUser.name,
+              emailUsuario: regUser.email,
+              senhaUsuario: regUser.password,
+          });
 
-  // async function handleRegister(regUser: User) {
-  //     try {
-  //         const response = await api.post('/user/create', {
-  //             nomeUsuario: regUser.name,
-  //             emailUsuario: regUser.email,
-  //             senhaUsuario: regUser.password,
-  //         });
+          console.debug('AuthContext | handleRegister(): ', response.data);
 
-  //         console.debug('AuthContext | handleRegister(): ', response.data);
+          if (response.data.error) {
+              return response.data.error.toString();
+          }
 
-  //         if (response.data.error) {
-  //             return response.data.error.toString();
-  //         }
+          const newUser: User = response.data.message;
+          updateUserProps(newUser);
 
-  //         const newUser: User = response.data.message;
-  //         updateUserProps(newUser);
+          await AsyncStorage.setItem('user', JSON.stringify(newUser))
+          return '';
 
-  //         await AsyncStorage.setItem('user', JSON.stringify(newUser))
-  //         return '';
+      } catch (error) {
+          console.debug("Deu erro no Registrar: ", error);
+      }
+  }
 
-  //     } catch (error) {
-  //         console.debug("Deu erro no Registrar: ", error);
-  //     }
-  // }
-
-  // function handleLogout() {
-  //     AsyncStorage.clear()
-  //     setUser({} as User)
-  // }
+  function handleLogout() {
+      AsyncStorage.clear()
+      setUser({} as User)
+  } */
 
   async function handleRegister() {
     try {

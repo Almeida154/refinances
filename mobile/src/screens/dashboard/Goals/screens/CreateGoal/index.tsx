@@ -17,9 +17,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
     const [meta, setMeta] = useState('');
     const [valorMeta, setValorMeta] = useState('');
     const [investidoMeta, setInvestido] = useState('');
-    const [previsao, setPrevisao] = useState((new Date(Date.now())).toLocaleDateString());
+    const [previsao, setPrevisao] = useState(new Date().toLocaleDateString());
     const [realizado, setRealizado] = useState(false);
 
+/*     //erros
+    const [descError, setdescError] = useState<any | null>(null);
+    const [valorTError, setvalorTError] = useState<any | null>(null);
+    const [investidoError, setinvestidoError] = useState<any | null>(null);
+    const [dtPrevError, setdtPrevError] = useState<any | null>(null);
+ */
     const {handleAdicionarMeta} = UseMetas()
     const {navigation} = UseDadosTemp()
 
@@ -57,6 +63,27 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
       console.log(newGoal)
 
       handleAdicionarMeta(newGoal)
+      /* const response = await handleAdicionarMeta(newGoal);
+
+      if (!response.ok) {
+        switch (response.error) {
+          case 'descMeta':
+            setdescError(response.message);
+            break;
+          case 'saldoFinal':
+            setvalorTError(response.message);
+            break;
+          case 'saldoAtual':
+            setinvestidoError(response.message);
+            break;
+          case 'dtPrev':
+            setdtPrevError(response.message);
+            break;
+          default:
+            return;
+        }
+      }
+       */
       
       navigation.goBack()
     }
@@ -87,6 +114,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
               value={meta}
               label="Descrição"
               placeholder="Ex.: Carro novo"
+              //error={descError}
               showClearIcon={meta != ''}
               onClear={() => {
                   setMeta('')
@@ -97,6 +125,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
             <InputText
               onChangeText={setValorMeta}
               value={valorMeta}
+              //error={valorTError}
               label="Valor total da meta"
               placeholder="Ex.: R$ 1.000,00"
               showClearIcon={valorMeta != ''}
@@ -111,6 +140,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
               value={investidoMeta}
               label="Valor já investido"
               placeholder="Ex.: R$ 100,00"
+              //error={investidoError}
               showClearIcon={investidoMeta != ''}
               onClear={() => {
                   setInvestido('')
@@ -122,6 +152,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
               label="Previsão conclusão"
               value={previsao}
               placeholder={previsao}
+              //error={dtPrevError}
               showClearIcon={previsao != dataAtual}
               onPressIn={showDatePicker}
               

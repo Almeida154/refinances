@@ -21,7 +21,7 @@ export default function TopBarNavigator() {
         backgroundColor: '#fff',
         flex: 1,
       }}>
-      <StatusBar translucent backgroundColor="transparent" />
+      <StatusBar backgroundColor="transparent" />
 
       <View
         style={{
@@ -35,7 +35,7 @@ export default function TopBarNavigator() {
             opacity: 0.6,
             fontSize: 30,
           }}>
-          Metas
+          
         </Text>
       </View>
 
