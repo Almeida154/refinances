@@ -19,12 +19,13 @@ import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 import { Text } from '../../../../../components/Button/styles'
 
-const ManageAccount = () => {
-    const {contas, loading, handleReadByUserContas} = UseContas()
-    const [stateReload, setStateReload] = useState(false)
+type PropsManageAccount = {
+    navigation: StackNavigationProp<HomeAccountStack, "ManageAccount">
+}
 
-    const {navigation} = UseDadosTemp()
-    
+const ManageAccount = ({navigation}: PropsManageAccount) => {
+    const {contas, loading, handleReadByUserContas} = UseContas()
+    const [stateReload, setStateReload] = useState(false)    
 
     useEffect(() => {
         if(!navigation.addListener)
@@ -40,15 +41,16 @@ const ManageAccount = () => {
             
         })
 
-        console.log(stateReload)
+        
     }, [navigation])
     
-    if(stateReload)
-        setStateReload(false)
 
+    console.log("foi dew volta", stateReload)
+        console.log(navigation.isFocused())
+        
     useEffect(() => {
         // Caso nenhuma conta foi carregada, recarregar
-        if(!contas[0].id)
+        if(!contas)
             (async function(){
                 handleReadByUserContas(await retornarIdDoUsuario())
             }) ()
@@ -56,20 +58,22 @@ const ManageAccount = () => {
     }, [])
 
     
+
     return (
         <ScrollView>
             {
                 stateReload ? <Text>Carregando</Text> :
                 <Container>
                     {
-                        !loading && contas[0].id && contas.map((item, index) => {                    
+                       contas && contas.map((item, index) => {
+                           console.log("Item",)                    
                             return (
                                 <CardAccount item={item} key={index}/>
                             )
                         })   
                     }
 
-                    <ButtonAdd onPress={() => navigation.navigate('StackAccount', {screen: 'CreateAccount'})}>
+                    <ButtonAdd onPress={() => navigation.navigate('CreateAccount')}>
                         <TextButton>Adicionar</TextButton>
                     </ButtonAdd>
 

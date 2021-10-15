@@ -14,7 +14,7 @@ export type Conta = {
 }
 
 interface ContaContextType {        
-    contas: Conta[]
+    contas: Conta[] | null
     loading: boolean
     handleAdicionarConta(contaProps: Conta): Promise<void>    
     handleReadByUserContas(idUser: number): Promise<void>
@@ -25,7 +25,7 @@ const ContaContext = createContext<ContaContextType>({} as ContaContextType);
 export const UseContas = () => useContext(ContaContext);
 
 export const ContasProvider: React.FC = ({ children }) => {
-    const [contas, setContas] = useState<Conta[]>([{}] as Conta[]);
+    const [contas, setContas] = useState<Conta[] | null>(null);
     const [loading, setLoading] = useState(false)
 
     async function handleAdicionarConta(conta: Conta) {
@@ -47,9 +47,18 @@ export const ContasProvider: React.FC = ({ children }) => {
 
             await AsyncStorage.setItem('idConta', String(response.data.message.id));
 
-            const newContas = contas;
-            newContas.push(response.data.message);
-            setContas(newContas);
+            if(contas != null) {
+                const newContas = contas;
+    
+                
+                newContas.push(response.data.message);
+                setContas(newContas);
+            } else {
+                const newContas = []
+                newContas.push(response.data.message)
+                setContas(newContas)
+            }
+            
             setLoading(false)
         } catch (error) {
             console.log("Deu um erro no handleAdicionarConta: " + error);

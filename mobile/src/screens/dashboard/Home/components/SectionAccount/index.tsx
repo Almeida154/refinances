@@ -67,7 +67,7 @@ const SectionAccount = () => {
     useEffect(() => {
         let aux = 0
 
-        contas && contas[0].id && contas.map(item => {
+        contas && contas.map(item => {
             aux += item.saldoConta
         })
 
@@ -79,7 +79,7 @@ const SectionAccount = () => {
         (async function(){
             handleReadByUserContas(await retornarIdDoUsuario())
         })()    
-        console.log('contas', contas[0])           
+        console.log('contas', contas == null ? "Foi nada " : contas)           
     }, [])
     return (
         <Container>
@@ -95,7 +95,8 @@ const SectionAccount = () => {
 
                 {
                     
-                    contas && contas[0].id && contas.map((item, index) => {
+                    contas && contas.map((item, index) => {
+                        console.log('item', item)
                         if(index > 1 )
                             return
 

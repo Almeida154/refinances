@@ -80,7 +80,7 @@ const Home = () => {
               <Image
                 source={{
                   uri: `data:image/jpg;base64,${Buffer.from(
-                    user.fotoPerfilUsuario,
+                    user.fotoPerfilUsuario == null ? '' : user.fotoPerfilUsuario,
                     'base64',
                   )}`,
                 }}
