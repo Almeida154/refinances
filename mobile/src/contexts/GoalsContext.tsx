@@ -34,7 +34,6 @@ export const MetasProvider: React.FC = ({ children }) => {
     async function handleAdicionarMeta(meta: Meta) {
         console.log(meta.userMetaId);
         try {
-
             const response = await api.post('/goal/create', {
                 descMeta: meta.descMeta,
                 saldoFinalMeta: meta.saldoFinalMeta,
@@ -54,7 +53,7 @@ export const MetasProvider: React.FC = ({ children }) => {
             newMetas.push(response.data.message);
 
             setMetas(newMetas);
-            return { ok: true };
+
         } catch (error) {
             console.log("Deu um erro no handleAdicionarMeta: " + error);
         }
