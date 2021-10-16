@@ -1,207 +1,222 @@
 import React, { useState, useEffect } from 'react';
 
- import InputText from '../../../../../components/InputText'
- import Button from '../../../../../components/Button'
+import InputText from '../../../../../components/InputText';
+import Button from '../../../../../components/Button';
 
- import {Meta, UseMetas} from '../../../../../contexts/GoalsContext'
- import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
+import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
- import {DadosTempProvider, UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+import {
+  DadosTempProvider,
+  UseDadosTemp,
+} from '../../../../../contexts/TemporaryDataContext';
 
- import {ScrollView,StyleSheet,Text,TouchableHighlight,View,TextInput} from 'react-native';
- import DateTimePickerModal from "react-native-modal-datetime-picker";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+  TextInput,
+} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
- import fonts from '../../../../../styles/fonts'
- 
- const CreateGoal = () => {
- 
-    const [meta, setMeta] = useState('');
-    const [valorMeta, setValorMeta] = useState('');
-    const [investidoMeta, setInvestido] = useState('');
-    const [previsao, setPrevisao] = useState(new Date());
-    const [realizado, setRealizado] = useState(false);
+import fonts from '../../../../../styles/fonts';
 
-     //erros
-    const [descError, setdescError] = useState<any | null>(null);
-    const [valorTError, setvalorTError] = useState<any | null>(null);
-    const [investidoError, setinvestidoError] = useState<any | null>(null);
-    const [dtPrevError, setdtPrevError] = useState<any | null>(null);
- 
-    const {handleAdicionarMeta} = UseMetas()
-    const {navigation} = UseDadosTemp()
+const CreateGoal = () => {
+  const [meta, setMeta] = useState('');
+  const [valorMeta, setValorMeta] = useState('');
+  const [investidoMeta, setInvestido] = useState('');
+  const [previsao, setPrevisao] = useState(new Date());
+  const [realizado, setRealizado] = useState(false);
 
-    const dataAtual = new Date();
+  //erros
+  const [descError, setdescError] = useState<any | null>(null);
+  const [valorTError, setvalorTError] = useState<any | null>(null);
+  const [investidoError, setinvestidoError] = useState<any | null>(null);
+  const [dtPrevError, setdtPrevError] = useState<any | null>(null);
 
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const { handleAdicionarMeta } = UseMetas();
+  const { navigation } = UseDadosTemp();
 
-    const showDatePicker = () => {
-      setDatePickerVisibility(true);
-    };
+  const dataAtual = new Date();
 
-    const hideDatePicker = () => {
-      setDatePickerVisibility(false);
-    };
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-    const handleConfirm = (date: Date) => {
-      
-      if(date >= dataAtual) {
-        setPrevisao(date);
-        console.warn("Previsão data final meta: ", date.toLocaleDateString());
-        setdtPrevError(null);
-      }else {
-        setPrevisao(dataAtual)
-      }
-  
-      hideDatePicker();
-    };
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
 
-    async function handleCreateGoal() {
-      
-      const newGoal = {
-          descMeta: meta,
-          saldoFinalMeta: parseFloat(valorMeta),
-          saldoAtualMeta: parseFloat(investidoMeta),
-          dataInicioMeta: dataAtual.toLocaleDateString(),
-          dataFimMeta: previsao.toLocaleDateString(),
-          realizacaoMeta: realizacao(),
-          userMetaId: await retornarIdDoUsuario()
-          
-      } as Meta
-      handleAdicionarMeta(newGoal); 
-      console.log(newGoal)
-      if (meta != '' 
-        && parseFloat(valorMeta) > 0 
-        && valorMeta != undefined 
-        && parseFloat(investidoMeta) >= 0 
-        && investidoMeta != undefined
-        && previsao >= dataAtual) {
-          
-      }else if (meta == ''){
-        setdescError('Descrição obrigatória!')
-      }if(parseFloat(valorMeta) <= 0 || valorMeta == ''){
-        setvalorTError('Insira um valor válido!')
-      }if(parseFloat(investidoMeta) < 0 || investidoMeta == ''){
-        setinvestidoError('Insira um valor válido!');
-      }
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date: Date) => {
+    if (date >= dataAtual) {
+      setPrevisao(date);
+      console.warn('Previsão data final meta: ', date.toLocaleDateString());
+      setdtPrevError(null);
+    } else {
+      setPrevisao(dataAtual);
     }
 
-    const realizacao = () => {
-      parseFloat(investidoMeta) >= parseFloat(valorMeta) ? setRealizado(true) : setRealizado(false);
-      return realizado;
+    hideDatePicker();
+  };
+
+  async function handleCreateGoal() {
+    const newGoal = {
+      descMeta: meta,
+      saldoFinalMeta: parseFloat(valorMeta),
+      saldoAtualMeta: parseFloat(investidoMeta),
+      dataInicioMeta: dataAtual.toLocaleDateString(),
+      dataFimMeta: previsao.toLocaleDateString(),
+      realizacaoMeta: realizacao(),
+      userMetaId: await retornarIdDoUsuario(),
+    } as Meta;
+    handleAdicionarMeta(newGoal);
+    console.log(newGoal);
+    if (
+      meta != '' &&
+      parseFloat(valorMeta) > 0 &&
+      valorMeta != undefined &&
+      parseFloat(investidoMeta) >= 0 &&
+      investidoMeta != undefined &&
+      previsao >= dataAtual
+    ) {
+    } else if (meta == '') {
+      setdescError('Descrição obrigatória!');
     }
- 
-   return (
-     <ScrollView style={{backgroundColor: '#f6f6f6'}}>
- 
-       <View style={styles.container}>
- 
-         <Text 
-         style={{marginBottom: '2%', 
-         fontSize: 20,
-         color: '#292929',
-         fontFamily: fonts.familyType.black
-         }}>Que bom que decidiu criar uma meta!</Text>
+    if (parseFloat(valorMeta) <= 0 || valorMeta == '') {
+      setvalorTError('Insira um valor válido!');
+    }
+    if (parseFloat(investidoMeta) < 0 || investidoMeta == '') {
+      setinvestidoError('Insira um valor válido!');
+    }
+  }
 
-        <Text style={{marginBottom: '10%', 
-         fontSize: 15,
-         fontFamily: fonts.familyType.regular,
-         color: '#292929'}}>Calcularemos seu investimento mensal e te notificaremos para não esquecer ;)</Text>
- 
-          <View>
-            <InputText
-              value={meta}
-              label="Descrição"
-              placeholder="Ex.: Carro novo"
-              error={descError}
-              showClearIcon={meta != ''}
-                onClear={() => {
-                  setdescError(null);
-                  setMeta('');
-                }}
-                onChangeText={txt => {
-                  setdescError(null);
-                  setMeta(txt);
-                }}/>
-          </View>
+  const realizacao = () => {
+    parseFloat(investidoMeta) >= parseFloat(valorMeta)
+      ? setRealizado(true)
+      : setRealizado(false);
+    return realizado;
+  };
 
-          <View>
-            <InputText
-              value={valorMeta}
-              label="Valor"
-              placeholder="Ex.: R$ 1.000,00"
-              error={valorTError}
-              showClearIcon={valorMeta != ''}
-                onClear={() => {
-                  setvalorTError(null);
-                  setValorMeta('');
-                }}
-                onChangeText={txt => {
-                  setvalorTError(null);
-                  setValorMeta(txt);
-                }}
-                keyboardType="numeric"
-                />
-          </View>
+  return (
+    <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+      <View style={styles.container}>
+        <Text
+          style={{
+            marginBottom: '2%',
+            fontSize: 20,
+            color: '#292929',
+            fontFamily: fonts.familyType.black,
+          }}>
+          Que bom que decidiu criar uma meta!
+        </Text>
 
-          <View>
-            <InputText 
-              value={investidoMeta}
-              label="Valor já investido"
-              placeholder="Ex.: R$ 100,00"
-              error={investidoError}
-              showClearIcon={investidoMeta != ''}
-                onClear={() => {
-                  setinvestidoError(null);
-                  setInvestido('');
-                }}
-                onChangeText={txt => {
-                  setinvestidoError(null);
-                  setInvestido(txt);
-                }}
-                keyboardType="numeric"
-                />
-          </View>
+        <Text
+          style={{
+            marginBottom: '10%',
+            fontSize: 15,
+            fontFamily: fonts.familyType.regular,
+            color: '#292929',
+          }}>
+          Calcularemos seu investimento mensal e te notificaremos para não
+          esquecer ;)
+        </Text>
 
-          {/* DatePicker */}
-            <InputText 
-              label="Previsão conclusão"
-              value={previsao.toLocaleDateString()}
-              placeholder={previsao.toLocaleDateString()}
-              error={dtPrevError}
-              showClearIcon={previsao != dataAtual}
-              onPressIn={showDatePicker}
-              onClear={() => {
-                  setPrevisao(dataAtual)
-                  setdtPrevError(null)
-              }}></InputText>
+        <View>
+          <InputText
+            value={meta}
+            label="Descrição"
+            placeholder="Ex.: Carro novo"
+            error={descError}
+            showClearIcon={meta != ''}
+            onClear={() => {
+              setdescError(null);
+              setMeta('');
+            }}
+            onChangeText={txt => {
+              setdescError(null);
+              setMeta(txt);
+            }}
+          />
+        </View>
 
-            <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-            />
+        <View>
+          <InputText
+            value={valorMeta}
+            label="Valor"
+            placeholder="Ex.: R$ 1.000,00"
+            error={valorTError}
+            showClearIcon={valorMeta != ''}
+            onClear={() => {
+              setvalorTError(null);
+              setValorMeta('');
+            }}
+            onChangeText={txt => {
+              setvalorTError(null);
+              setValorMeta(txt);
+            }}
+            keyboardType="numeric"
+          />
+        </View>
 
-            
-            <Button
-                onPress={handleCreateGoal}
-                title="Criar"
-                backgroundColor="#CCC"
-                color="#444"
-                lastOne={true}
-                
-            />   
- 
-       </View>
-     </ScrollView>
-   );
- };
- 
- const styles = StyleSheet.create({
- 
-   container: {
-     margin: '10%'
-   },
- });
- 
- export default CreateGoal;
+        <View>
+          <InputText
+            value={investidoMeta}
+            label="Valor já investido"
+            placeholder="Ex.: R$ 100,00"
+            error={investidoError}
+            showClearIcon={investidoMeta != ''}
+            onClear={() => {
+              setinvestidoError(null);
+              setInvestido('');
+            }}
+            onChangeText={txt => {
+              setinvestidoError(null);
+              setInvestido(txt);
+            }}
+            keyboardType="numeric"
+          />
+        </View>
+
+        {/* DatePicker */}
+        <InputText
+          label="Previsão conclusão"
+          value={previsao.toLocaleDateString()}
+          placeholder={previsao.toLocaleDateString()}
+          error={dtPrevError}
+          showClearIcon={previsao != dataAtual}
+          onPressIn={showDatePicker}
+          onClear={() => {
+            setPrevisao(dataAtual);
+            setdtPrevError(null);
+          }}></InputText>
+
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+
+        <Button
+          onPress={handleCreateGoal}
+          title="Criar"
+          backgroundColor="#CCC"
+          color="#444"
+          lastOne={true}
+        />
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    margin: '10%',
+  },
+});
+
+export default CreateGoal;

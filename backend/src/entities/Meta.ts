@@ -1,43 +1,43 @@
 import {
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-    PrimaryGeneratedColumn
-} from 'typeorm';
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
-import { User } from './User';
+import { User } from "./User";
 
 @Entity()
 export class Meta {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    descMeta: string;
+  @Column()
+  descMeta: string;
 
-    @Column({
-        type: 'float'
-    })
-    saldoFinalMeta: number;
+  @Column({
+    type: "float",
+  })
+  saldoFinalMeta: number;
 
-    @Column({
-        type: 'float'
-    })
-    saldoAtualMeta: number;
+  @Column({
+    type: "float",
+  })
+  saldoAtualMeta: number;
 
-    @Column()
-    dataInicioMeta: string;
+  @Column()
+  dataInicioMeta: string;
 
-    @Column()
-    dataFimMetaMeta: string;
+  @Column()
+  dataFimMetaMeta: string;
 
-    @Column()
-    realizacaoMeta: boolean;
+  @Column()
+  realizacaoMeta: boolean;
 
-    // Foreign Key
-    
-    @ManyToOne(type => User, user => user.metasUser)
-    userMeta: User
+  // Foreign Key
+
+  @ManyToOne((type) => User, (user) => user.metasUser)
+  userMeta: User;
 }
