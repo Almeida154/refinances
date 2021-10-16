@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Buffer } from 'buffer';
 
 import api from '../services/api';
 
 export type User = {
   id: number;
-  name: string;
-  email: string;
-  avatar: string;
-  password: string;
+  nomeUsuario: string;
+  emailUsuario: string;
+  fotoPerfilUsuario: string | undefined | null;
+  senhaUsuario: string;
   signed: boolean;
 };
 
@@ -18,15 +19,6 @@ export interface error {
   ok?: boolean;
 }
 
-// interface AuthContextType {
-//     token: string;
-//     user: User,
-//     handleLogin(regUser: User): Promise<string>
-//     handleRegister(regUser: User): Promise<string>
-//     updateUserProps(userProps: User): void
-//     handleLogout(): void
-// }
-
 interface AuthContextType {
   token: string;
   user: User;
@@ -35,6 +27,7 @@ interface AuthContextType {
   updateUserProps(userProps: User): void;
   handleLogout(): void;
   emailExists(email: string): Promise<boolean>;
+  userAvatar(): Promise<string | undefined | null>;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -47,11 +40,8 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     (async () => {
       const storagedUser = await AsyncStorage.getItem('user');
-      //console.debug('AuthContext | useEffect(): ', storagedUser);
-
-      if (storagedUser) {
-        setUser(JSON.parse(storagedUser));
-      }
+      console.debug('ASYNC STORAGE: ', await AsyncStorage.getItem('user'));
+      if (storagedUser) setUser(JSON.parse(storagedUser));
     })();
   }, []);
 
@@ -66,81 +56,67 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  async function handleLogin(logUser: User) {
+  async function userAvatar() {
     try {
-      const response = await api.post('/user/auth', {
-        emailUsuario: logUser.email,
-        senhaUsuario: logUser.password,
-      });
-        
-      if (response.data.error) {
-        console.debug('AuthContext | handleLogin(): ', response.data.error);
-        return response.data;
+      if (user.id != undefined) {
+        const response = await api.get(`/user/avatar/${user.id}`);
+        return JSON.stringify(response.data.avatar);
       }
-
-      const loginUser: User = response.data.user;
-      loginUser.signed = true;
-      setUser(loginUser);
-      await AsyncStorage.setItem('user', JSON.stringify(loginUser));
-
-      return { ok: true };
+      console.debug('AuthContext | getUserAvatar(): ', 'Algo deu errado!');
     } catch (error) {
-      console.log('AuthContext | handleLogin(): ', error);
+      console.debug('AuthContext | getUserAvatar(): ', error);
     }
   }
-/* 
-  async function handleRegister(regUser: User) {
-      try {
-          const response = await api.post('/user/create', {
-              nomeUsuario: regUser.name,
-              emailUsuario: regUser.email,
-              senhaUsuario: regUser.password,
-          });
-
-          console.debug('AuthContext | handleRegister(): ', response.data);
-
-          if (response.data.error) {
-              return response.data.error.toString();
-          }
-
-          const newUser: User = response.data.message;
-          updateUserProps(newUser);
-
-          await AsyncStorage.setItem('user', JSON.stringify(newUser))
-          return '';
-
-      } catch (error) {
-          console.debug("Deu erro no Registrar: ", error);
-      }
-  }
-
-  function handleLogout() {
-      AsyncStorage.clear()
-      setUser({} as User)
-  } */
 
   async function handleRegister() {
     try {
       const response = await api.post('/user/create', {
-        nomeUsuario: user.name,
-        emailUsuario: user.email,
-        senhaUsuario: user.password,
-        fotoPerfilUsuario: user.avatar,
+        nomeUsuario: user.nomeUsuario,
+        emailUsuario: user.emailUsuario,
+        senhaUsuario: user.senhaUsuario,
+        fotoPerfilUsuario: user.fotoPerfilUsuario,
       });
-
-      console.debug('AuthContext | handleRegister(): ', response.data);
 
       if (response.data.error) {
         return response.data.error.toString();
       }
 
-      const newUser: User = response.data.message;
-      updateUserProps(newUser);
-
+      const newUser: User = response.data.user;
+      newUser.fotoPerfilUsuario =
+        newUser.fotoPerfilUsuario != null ? 'base64' : null; // Definindo 'base64' porque a imagem é gigante
+      newUser.signed = true;
       await AsyncStorage.setItem('user', JSON.stringify(newUser));
+
       return '';
     } catch (error) {
-      console.debug('Deu erro no Registrar: ', error);
+      console.debug('AuthContext | handleRegister(): ', error);
+    }
+  }
+
+  async function handleLogin(user: User) {
+    try {
+      const response = await api.post('/user/auth', {
+        emailUsuario: user.emailUsuario,
+        senhaUsuario: user.senhaUsuario,
+      });
+
+      if (response.data.error) {
+        console.debug('AuthContext | handleLogin(): ', response.data.error);
+        return response.data;
+      }
+
+      const loggedUser: User = response.data.user;
+
+      loggedUser.fotoPerfilUsuario =
+        loggedUser.fotoPerfilUsuario != null ? 'base64' : null; // Definindo 'base64' porque a imagem é gigante
+      loggedUser.signed = true;
+
+      setUser(loggedUser);
+      await AsyncStorage.setItem('user', JSON.stringify(loggedUser));
+
+      return { ok: true };
+    } catch (error) {
+      console.log('AuthContext | handleLogin(): ', error);
     }
   }
 
@@ -163,6 +139,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         handleRegister,
         updateUserProps,
         emailExists,
+        userAvatar,
       }}>
       {children}
     </AuthContext.Provider>

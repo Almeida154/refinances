@@ -36,17 +36,17 @@ const Email = ({ navigation }: PropsNavigation) => {
 
   const { user, updateUserProps, emailExists } = UseAuth();
 
-  // useEffect(() => {
-  //   console.debug('Name | SetUser(): ', user);
-  //   BackHandler.addEventListener('hardwareBackPress', backAction);
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', backAction);
-  // }, []);
+  useEffect(() => {
+    console.debug('Name | SetUser(): ', user);
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
 
   const backAction = () => {
     navigation.goBack();
     const newUser = user;
-    newUser.email = '';
+    newUser.emailUsuario = '';
     updateUserProps(newUser);
     return true;
   };
@@ -69,7 +69,7 @@ const Email = ({ navigation }: PropsNavigation) => {
     }
 
     const newUser = user;
-    newUser.email = email;
+    newUser.emailUsuario = email;
     updateUserProps(newUser);
     console.debug('Email | SetUser(): ', user);
     navigation.navigate('Password');

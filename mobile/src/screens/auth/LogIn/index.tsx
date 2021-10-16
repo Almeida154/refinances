@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 // React components
-import { StatusBar, TextInput } from 'react-native';
+import { StatusBar, Text, TextInput } from 'react-native';
 
 // Navigation | Auth
 import { UseAuth, User } from '../../../contexts/AuthContext';
@@ -36,9 +36,9 @@ export type PropsNavigation = {
 
 const Entrar = ({ navigation }: PropsNavigation) => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('ttt555');
 
-  const { user, handleLogin } = UseAuth();
+  const { handleLogin } = UseAuth();
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -47,13 +47,11 @@ const Entrar = ({ navigation }: PropsNavigation) => {
 
   async function LoginUser() {
     const logUser = {} as User;
-    logUser.email = email;
-    logUser.password = password;
-
-    // user.email = email
-    // user.password = password
+    logUser.emailUsuario = email;
+    logUser.senhaUsuario = password;
 
     const response = await handleLogin(logUser);
+    console.debug('Login | LoginUser(): ', response);
 
     if (!response.ok) {
       switch (response.error) {

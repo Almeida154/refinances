@@ -54,17 +54,17 @@ const Password = ({ navigation }: PropsNavigation) => {
 
   const { user, updateUserProps } = UseAuth();
 
-  // useEffect(() => {
-  //   console.debug('Name | SetUser(): ', user);
-  //   BackHandler.addEventListener('hardwareBackPress', backAction);
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', backAction);
-  // }, []);
+  useEffect(() => {
+    console.debug('Name | SetUser(): ', user);
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
 
   const backAction = () => {
     navigation.goBack();
     const newUser = user;
-    newUser.password = '';
+    newUser.senhaUsuario = '';
     updateUserProps(newUser);
     return true;
   };
@@ -110,7 +110,7 @@ const Password = ({ navigation }: PropsNavigation) => {
       return;
     }
     const newUser = user;
-    newUser.password = password;
+    newUser.senhaUsuario = password;
     updateUserProps(newUser);
     console.debug('Password | SetUser(): ', user);
     navigation.navigate('ConfirmPassword');

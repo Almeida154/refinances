@@ -26,6 +26,7 @@ Routes.delete("/user/remove/:id", UserController.remove);
 Routes.delete("/user/remove", UserController.removeAll);
 
 Routes.post("/user/emailexists", UserController.emailExists);
+Routes.get("/user/avatar/:id", UserController.avatar);
 
 // Category
 Routes.post("/category/create", CategoryController.save);

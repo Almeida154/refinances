@@ -23,9 +23,6 @@ import PropsNavigationApp, {
 
 const { width } = Dimensions.get('screen');
 
-const ITEM_WIDTH = width * 0.9;
-const ITEM_HEIGHT = ITEM_WIDTH * 0.9;
-
 import { UseAuth } from '../../../contexts/AuthContext';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 
@@ -39,7 +36,7 @@ export type PropsHome = {
 };
 
 const Home = () => {
-  const { user, handleLogout } = UseAuth();
+  const { user, handleLogout, userAvatar } = UseAuth();
   const { navigation } = UseDadosTemp();
 
   const [stateReload, setStateReload] = useState(false);
@@ -50,6 +47,28 @@ const Home = () => {
   };
 
   const forceUpdate = useForceUpdate();
+
+  const [avatar, setAvatar] = useState<string | undefined | null>('');
+  const [mime, setMime] = useState<string | undefined | null>('');
+
+  useEffect(() => {
+    (async () => {
+      const base64 = await userAvatar();
+
+      // O avatar é a base64 da imagem
+      setAvatar(base64?.slice(base64.indexOf(',') + 1));
+
+      // O mime é o tipo da imagem, ele vai retornar image/jpeg, image/png, etc;
+      setMime(
+        base64
+          ?.substr(0, 40)
+          .slice(
+            base64?.substr(0, 40).indexOf(':') + 1,
+            base64?.substr(0, 40).indexOf('base64,'),
+          ),
+      );
+    })();
+  });
 
   useEffect(() => {
     if (!navigation || !navigation.addListener) return;
@@ -64,11 +83,12 @@ const Home = () => {
     });
   }, [navigation]);
 
-  console.log(
-    navigation && navigation.getState
-      ? navigation.getState()
-      : 'Não carregou o navigation',
-  );
+  // console.log(
+  //   navigation && navigation.getState
+  //     ? navigation.getState()
+  //     : 'Não carregou o navigation',
+  // );
+
   return (
     <ScrollView>
       {stateReload ? (
@@ -77,15 +97,17 @@ const Home = () => {
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <View style={styles.containerProfile}>
-              <Image
-                source={{
-                  uri: `data:image/jpg;base64,${Buffer.from(
-                    user.fotoPerfilUsuario,
-                    'base64',
-                  )}`,
-                }}
-                style={styles.iconProfile}
-              />
+              {user.fotoPerfilUsuario == null ? (
+                <Image
+                  source={require('../../../assets/images/avatarDefault.png')}
+                  style={styles.iconProfile}
+                />
+              ) : (
+                <Image
+                  source={{ uri: `data:${mime}base64,${avatar}` }}
+                  style={styles.iconProfile}
+                />
+              )}
 
               <View style={styles.textBoasVindas}>
                 <Text style={{ color: '#fff', fontSize: 20 }}>Boa tarde!</Text>

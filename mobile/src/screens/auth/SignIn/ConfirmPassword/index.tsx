@@ -35,12 +35,12 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
 
   const { user, updateUserProps } = UseAuth();
 
-  // useEffect(() => {
-  //   console.debug('Name | SetUser(): ', user);
-  //   BackHandler.addEventListener('hardwareBackPress', backAction);
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', backAction);
-  // }, []);
+  useEffect(() => {
+    console.debug('Name | SetUser(): ', user);
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
 
   const backAction = () => {
     navigation.goBack();
@@ -53,7 +53,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
       setErrorMessage('Preencha este campo!');
       return;
     }
-    if (confirmPassword != user.password) {
+    if (confirmPassword != user.senhaUsuario) {
       setError(true);
       setErrorMessage('As senhas não batem!');
       return;

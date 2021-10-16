@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { User } from "../entities/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { Buffer } from "buffer";
 
 import VerificaSeOEmailExiste from "../helpers/VerificaSeOEmailExiste";
 
@@ -74,7 +75,16 @@ class UserController {
     delete user.senhaUsuario;
 
     return response.send({
-      user,
+      user: {
+        id: user.id,
+        nomeUsuario: user.nomeUsuario,
+        emailUsuario: user.emailUsuario,
+        senhaUsuario: user.senhaUsuario,
+        fotoPerfilUsuario:
+          user.fotoPerfilUsuario != null
+            ? user.fotoPerfilUsuario.toString()
+            : null,
+      },
       token,
     });
   }
@@ -101,7 +111,7 @@ class UserController {
     const user = userRepository.create(request.body);
     await userRepository.save(user);
 
-    return response.send({ message: user });
+    return response.send({ user });
   }
 
   async edit(request: Request, response: Response, next: NextFunction) {
@@ -154,6 +164,21 @@ class UserController {
     const existing = await userRepository.find({ where: { emailUsuario } });
     if (existing.length > 0) return response.send({ exists: true });
     return response.send({ exists: false });
+  }
+
+  async avatar(request: Request, response: Response, next: NextFunction) {
+    const userRepository = getRepository(User);
+
+    const user = await userRepository.findOne({
+      where: { id: request.params.id },
+    });
+
+    return response.send({
+      avatar:
+        user.fotoPerfilUsuario != null
+          ? user.fotoPerfilUsuario.toString()
+          : null,
+    });
   }
 }
 

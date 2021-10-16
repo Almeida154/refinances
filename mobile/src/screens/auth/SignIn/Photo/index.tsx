@@ -5,8 +5,6 @@ import { BackHandler } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import { Modalize as Modal } from 'react-native-modalize';
-
 import { UseAuth } from '../../../../contexts/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -34,14 +32,9 @@ import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import Modalize from '../../../../components/Modalize';
-import {
-  CameraOptions,
-  ImageLibraryOptions,
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker';
 
-import { Buffer } from 'buffer';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Modalize as Modal } from 'react-native-modalize';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Photo'>;
@@ -51,16 +44,8 @@ export type PropsNavigation = {
 const Photo = ({ navigation }: PropsNavigation) => {
   const { user, updateUserProps, handleRegister } = UseAuth();
 
-  const [avatar, setAvatar] = useState({ uri: '' });
-  const [avatarBase64, setAvatarBase64] = useState('');
+  const [avatar, setAvatar] = useState({ base64: '' });
   const modalizeRef = useRef<Modal>(null);
-
-  // useEffect(() => {
-  //   console.debug('Name | SetUser(): ', user);
-  //   BackHandler.addEventListener('hardwareBackPress', backAction);
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', backAction);
-  // }, []);
 
   const backAction = () => {
     navigation.goBack();
@@ -68,12 +53,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
   };
 
   const openCamera = () => {
-    const options: CameraOptions = {
-      mediaType: 'photo',
-      includeBase64: true,
-    };
-
-    launchCamera(options, response => {
+    launchCamera({ mediaType: 'photo', includeBase64: true }, response => {
       if (response.didCancel) {
         console.debug('Operação cancelada!');
         return;
@@ -82,42 +62,40 @@ const Photo = ({ navigation }: PropsNavigation) => {
         console.debug('OpenCamera Error Code: ' + response.errorCode);
         return;
       }
-      const source = {
-        uri: `data:image/jpeg;base64,${response!.assets[0]!.base64}`,
-      };
-      setAvatar(source);
+      if (response.assets) {
+        let asset = response.assets[0];
+        setAvatar({ base64: `data:${asset.type};base64,${asset.base64}` });
+      }
     });
   };
 
   const openGallery = () => {
-    const options: ImageLibraryOptions = {
-      mediaType: 'photo',
-      includeBase64: true,
-    };
-
-    launchImageLibrary(options, response => {
-      if (response.didCancel) {
-        console.debug('Operação cancelada!');
-        return;
-      }
-      if (response.errorCode) {
-        console.debug('ImagePicker Error Code: ' + response.errorCode);
-        return;
-      }
-      let asset = response.assets[0];
-      setAvatar({ uri: `data:${asset.type};base64,${asset.base64}` });
-      setAvatarBase64(asset.base64);
-    });
+    launchImageLibrary(
+      { mediaType: 'photo', includeBase64: true },
+      response => {
+        if (response.didCancel) {
+          console.debug('Operação cancelada!');
+          return;
+        }
+        if (response.errorCode) {
+          console.debug('ImagePicker Error Code: ' + response.errorCode);
+          return;
+        }
+        if (response.assets) {
+          let asset = response.assets[0];
+          setAvatar({ base64: `data:${asset.type};base64,${asset.base64}` });
+        }
+      },
+    );
   };
 
   async function setImage() {
     const newUser = user;
-    newUser.avatar = avatarBase64;
+    newUser.fotoPerfilUsuario = avatar.base64 == '' ? null : avatar.base64;
     updateUserProps(newUser);
-    //console.debug('Photo | SetUser(): ', user);
 
     const response = await handleRegister();
-    //console.log(response);
+    console.debug('Photo | SetUser(): ', JSON.stringify(user).substr(0, 150));
     //navigation.navigate('FixedExpenses');
   }
 
@@ -138,10 +116,12 @@ const Photo = ({ navigation }: PropsNavigation) => {
       />
       <Content>
         <PhotoContainer>
-          {avatar.uri == '' ? (
-            <Pic source={require('./picdefault.png')} />
+          {avatar.base64 == '' ? (
+            <Pic
+              source={require('../../../../assets/images/avatarDefault.png')}
+            />
           ) : (
-            <Pic source={{ uri: avatar.uri }} />
+            <Pic source={{ uri: avatar.base64 }} />
           )}
           <CameraDetail
             onPress={() => openModalize()}
@@ -159,7 +139,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
 
       <BottomNavigation
         onPress={() => setImage()}
-        description={avatar.uri == null ? 'Pular' : 'Próximo'}
+        description={avatar.base64 == null ? 'Pular' : 'Próximo'}
       />
 
       <Modalize

@@ -27,7 +27,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
   const backAction = () => {
     navigation.goBack();
     const newUser = user;
-    newUser.email = '';
+    newUser.emailUsuario = '';
     updateUserProps(newUser);
     return true;
   };

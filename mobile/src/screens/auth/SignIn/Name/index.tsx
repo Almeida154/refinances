@@ -32,17 +32,17 @@ const Name = ({ navigation }: PropsNavigation) => {
 
   const { user, updateUserProps } = UseAuth();
 
-  // useEffect(() => {
-  //   console.debug('Name | SetUser(): ', user);
-  //   BackHandler.addEventListener('hardwareBackPress', backAction);
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', backAction);
-  // }, []);
+  useEffect(() => {
+    console.debug('Name | SetUser(): ', user);
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
 
   const backAction = () => {
     navigation.goBack();
     const newUser = user;
-    newUser.name = '';
+    newUser.nomeUsuario = '';
     updateUserProps(newUser);
     return true;
   };
@@ -53,7 +53,7 @@ const Name = ({ navigation }: PropsNavigation) => {
       return;
     }
     const newUser = user;
-    newUser.name = name;
+    newUser.nomeUsuario = name;
     updateUserProps(newUser);
     console.debug('Name | SetUser(): ', user);
     navigation.navigate('Email');

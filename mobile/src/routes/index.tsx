@@ -7,7 +7,10 @@ import { UseAuth, User } from '../contexts/AuthContext';
 
 const Routes: React.FC = () => {
   const { user = {} as User } = UseAuth();
-  //console.debug('Routes/index: ', user);
+  console.debug(
+    '[Routes/index] User logged: ',
+    JSON.stringify(user).substr(0, 150),
+  );
   return user.signed ? <AppRoutes /> : <AuthRoutes />;
 };
 
