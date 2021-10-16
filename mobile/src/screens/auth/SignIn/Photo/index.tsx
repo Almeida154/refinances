@@ -21,7 +21,7 @@ import {
   Pic,
   CameraDetail,
 } from './styles';
-import { colors, fonts, metrics } from '../../../../styles';
+import { colors } from '../../../../styles';
 
 // Icon
 import Feather from 'react-native-vector-icons/Feather';
@@ -82,8 +82,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
     newUser.fotoPerfilUsuario = avatar.base64 == '' ? null : avatar.base64;
     updateUserProps(newUser);
     console.debug('Photo | next(): ', JSON.stringify(user).substr(0, 200));
-    await handleRegister();
-    //navigation.navigate('FixedExpenses');
+    navigation.navigate('FixedExpenses');
   }
 
   const openModalize = () => {
