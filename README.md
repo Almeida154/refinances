@@ -71,7 +71,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - Modalize
 - Typescript
 
-### 👉 **_Frontend_**
+### 👉 **Web**
 
 - React
 - Typescript
@@ -107,7 +107,7 @@ O projeto é divido em três partes:
 
 - 🎲 Backend (Servidor)
 - 📱 Mobile (Aplicativo)
-- 💻 Frontend (Painel de administração)
+- 💻 Web (Site administrativo)
 
 ```bash
 # Clone o repositório
@@ -149,11 +149,11 @@ Rode o aplicativo:
   yarn android
 ```
 
-##### 👉 **_Frontend:_**
+##### 👉 **_Web:_**
 
 ```bash
 $ cd ..
-$ cd frontend
+$ cd web
 # Pode usar npm se quiser
 $ yarn install
 ```
@@ -173,25 +173,25 @@ Rode o site:
 <table border="0" align="center">
   <tr>
     <td align="center">
-      <img src="https://i.ibb.co/xF3gPdD/David.png" width="160px" alt="Foto do David Almeida"/><br>
+      <img src="https://i.ibb.co/ZXx7ZfD/David.png" width="160px" alt="Foto do David Almeida"/><br>
       <sub>
         <a href="https://www.github.com/Almeida154">@David Almeida</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/3SFG6sq/Wallace.png" width="160px" alt="Foto do Wallace"/><br>
+      <img src="https://i.ibb.co/h7DLky9/Wallace.png" width="160px" alt="Foto do Wallace"/><br>
       <sub>
         <a href="https://www.github.com/wallaceMMO">@Wallace Moura</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/wLG6ZSj/Samuel.png" width="160px" alt="Foto do Samuel"/><br>
+      <img src="https://i.ibb.co/JQJ8JZ2/Samuel.png" width="160px" alt="Foto do Samuel"/><br>
       <sub>
         <a href="https://www.github.com/SamG1002">@Samuel Guerra</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/L91XMk2/Phillip.png" width="160px" alt="Foto do Phillip"/><br>
+      <img src="https://i.ibb.co/7rf2DnF/Phillip.png" width="160px" alt="Foto do Phillip"/><br>
       <sub>
         <a href="https://www.github.com/Almeida154">@Phillip Anselmo</a>
       </sub>
@@ -202,19 +202,19 @@ Rode o site:
 <table align="center">
   <tr>    
     <td align="center">
-      <img src="https://i.ibb.co/cL9dFsy/Isa.png" width="160px" alt="Foto da Isabela"/><br>
+      <img src="https://i.ibb.co/8PZGs27/Isa.png" width="160px" alt="Foto da Isabela"/><br>
       <sub>
         <a href="https://www.github.com/IsabelaSaori">@Isabela Saori</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/xhhbtp5/Italo.png" width="160px" alt="Foto do Italo"/><br>
+      <img src="https://i.ibb.co/Fn4ztv6/Italo.png" width="160px" alt="Foto do Italo"/><br>
       <sub>
         <a href="https://www.github.com/ItaloCabral">@Italo Cabral</a>
       </sub>
     </td>
     <td align="center">
-      <img src="https://i.ibb.co/D5qwy8h/Mariana.png" width="160px" alt="Foto da Mariana"/><br>
+      <img src="https://i.ibb.co/ZLN3NNQ/Mariana.png" width="160px" alt="Foto da Mariana"/><br>
       <sub>
         <a href="https://github.com/mariana-santos">@Mariana Santos</a>
       </sub>
@@ -225,6 +225,6 @@ Rode o site:
 <br>
 
 <h2>🧾 Licença</h2>
-Esse repositório está licenciado pela **_MIT LICENSE_**. Para informações detalhadas, leia o arquivo <a href="https://github.com/Almeida154/refinances/blob/main/LICENSE">LICENSE</a> contido nesse repositório.
+Esse repositório está licenciado pela MIT LICENSE. Para informações detalhadas, leia o arquivo <a href="https://github.com/Almeida154/refinances/blob/main/LICENSE">LICENSE</a> contido nesse repositório.
 
 <br><br>
