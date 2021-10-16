@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import { BackHandler, View } from 'react-native';
+import { BackHandler } from 'react-native';
+
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  useDerivedValue,
+  interpolateColor,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,7 +18,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
-import { Container, Content, TagContainer, Tag } from './styles';
+import {
+  Container,
+  ScrollContainer,
+  ButtonContainer,
+  TagContainer,
+  Tag,
+} from './styles';
 import { colors } from '../../../../styles';
 
 // Components
@@ -29,7 +43,7 @@ export type PropsNavigation = {
 };
 
 const FixedExpenses = ({ navigation }: PropsNavigation) => {
-  const [tags, setTags] = useState(global.FIXED_EXPENSES_TAGS);
+  const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([
     'Luz',
     'Água',
@@ -46,7 +60,11 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   }, []);
 
   useEffect(() => {
-    console.log(tags, selectedTags);
+    let tags = global.FIXED_EXPENSES_TAGS as [];
+    // let add = [null];
+    // let fuckyou = [...tags, ...add];
+    // setTags(fuckyou as []);
+    setTags(tags);
   }, []);
 
   const backAction = () => {
@@ -55,31 +73,62 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   };
 
   async function next() {
+    console.log(selectedTags);
     //navigation.navigate('Password');
   }
 
   return (
     <Container>
-      <Header
-        onBackButton={() => backAction()}
-        title="Selecione os gastos fixos"
-        subtitle="Seus gastos mensais."
-      />
+      <ScrollContainer>
+        <Header
+          onBackButton={() => backAction()}
+          title="Selecione os gastos fixos"
+          subtitle="Seus gastos mensais."
+        />
 
-      <Content>
         <TagContainer>
-          <Tag></Tag>
-          <Tag></Tag>
-          <Tag></Tag>
+          {tags.map(tag => (
+            <Tag
+              onPress={() => {
+                if (!selectedTags.includes(tag)) {
+                  let newArr = [...selectedTags, tag];
+                  setSelectedTags(newArr);
+                  return;
+                }
+                let newArr = selectedTags.filter(
+                  tagTouched => tagTouched !== tag,
+                );
+                setSelectedTags(newArr);
+              }}
+              style={[
+                {
+                  shadowColor: 'rgba(0, 0, 0, .3)',
+                  shadowOffset: { width: 0, height: 0 },
+                  shadowOpacity: 0.08,
+                  shadowRadius: 20,
+                  elevation: 20,
+                },
+                selectedTags.includes(tag)
+                  ? {
+                      backgroundColor: colors.paradisePink,
+                      color: colors.white,
+                    }
+                  : {},
+              ]}>
+              {tag}
+            </Tag>
+          ))}
         </TagContainer>
 
-        <Button
-          onPress={() => {}}
-          title="Outro"
-          backgroundColor={colors.platinum}
-          color={colors.davysGrey}
-        />
-      </Content>
+        <ButtonContainer>
+          <Button
+            onPress={() => {}}
+            title="Outro"
+            backgroundColor={colors.platinum}
+            color={colors.davysGrey}
+          />
+        </ButtonContainer>
+      </ScrollContainer>
 
       <BottomNavigation onPress={() => next()} description={'Já selecionei!'} />
     </Container>

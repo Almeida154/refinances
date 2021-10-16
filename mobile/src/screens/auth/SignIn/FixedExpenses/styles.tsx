@@ -7,16 +7,27 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Content = styled.View`
-  padding: ${`${metrics.default.boundaries}px`};
-  flex: 1;
-  align-items: center;
+export const ScrollContainer = styled.ScrollView`
+  margin-bottom: 80px; // Altura do BottomNavigation
 `;
 
 export const TagContainer = styled.View`
-  background-color: red;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0 ${`${metrics.default.boundaries}px`};
 `;
 
-export const Tag = styled.View`
-  background-color: green;
+export const ButtonContainer = styled.View`
+  padding: 0 ${`${metrics.default.boundaries}px`};
+`;
+
+export const Tag = styled.Text`
+  background-color: ${colors.white};
+  color: ${colors.paradisePink};
+  font-size: ${`${fonts.size.medium}px`};
+  font-family: ${`${fonts.familyType.bold}`};
+  margin: 6px 12px 6px 0;
+  padding: 10px 20px;
+  border-radius: 10px;
 `;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { colors } from '../../styles';
 import { Container, Text } from './styles';
+import { TouchableOpacityProps } from 'react-native';
 
-interface IProps {
+interface IProps extends TouchableOpacityProps {
   onPress: () => void;
   title?: string;
   backgroundColor?: string;
@@ -16,6 +17,7 @@ const Button: React.FC<IProps> = ({
   backgroundColor,
   color,
   lastOne,
+  ...rest
 }) => {
   return (
     <Container
@@ -25,7 +27,8 @@ const Button: React.FC<IProps> = ({
           ? { backgroundColor: backgroundColor }
           : {},
         lastOne ? {} : { marginBottom: 10, marginTop: 10 },
-      ]}>
+      ]}
+      {...rest}>
       <Text style={color ? { color } : { color: colors.cultured }}>
         {title}
       </Text>
