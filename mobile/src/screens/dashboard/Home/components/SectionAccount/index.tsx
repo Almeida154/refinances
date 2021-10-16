@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 
 import {PropsHome} from '../../'
 
+import Button from '../../../../../components/Button'
+
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
@@ -17,8 +19,6 @@ import {
     LabelBalance,
     Separator,
     LabelDescriptionAccount,
-    ButtonManager,
-    LabelManager,
     SectionBalance,
     ContainerAccount,
 
@@ -67,7 +67,7 @@ const SectionAccount = () => {
     useEffect(() => {
         let aux = 0
 
-        contas && contas[0].id && contas.map(item => {
+        contas && contas.map(item => {
             aux += item.saldoConta
         })
 
@@ -79,7 +79,7 @@ const SectionAccount = () => {
         (async function(){
             handleReadByUserContas(await retornarIdDoUsuario())
         })()    
-        console.log('contas', contas[0])           
+        console.log('contas', contas == null ? "Foi nada " : contas)           
     }, [])
     return (
         <Container>
@@ -95,7 +95,8 @@ const SectionAccount = () => {
 
                 {
                     
-                    contas && contas[0].id && contas.map((item, index) => {
+                    contas && contas.map((item, index) => {
+                        console.log('item', item)
                         if(index > 1 )
                             return
 
@@ -105,7 +106,12 @@ const SectionAccount = () => {
                     })
                 }
 
-                <ButtonManager onPress={() => navigation.navigate('StackAccount', {screen: 'ManageAccount'})}><LabelManager>Gerenciar</LabelManager></ButtonManager>
+                <Button 
+                    onPress={() => navigation.navigate('StackAccount', {screen: 'ManageAccount'})}
+                    title="Gerenciar"
+                    color="#444"
+                    backgroundColor="#F5F2F3"
+                /> 
             </ContainerAccount>
         </Container>
     )

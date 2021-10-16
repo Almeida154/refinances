@@ -3,7 +3,6 @@ import { NextFunction, Request, Response } from "express";
 import { User } from "../entities/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { Buffer } from "buffer";
 
 import VerificaSeOEmailExiste from "../helpers/VerificaSeOEmailExiste";
 

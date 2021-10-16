@@ -10,26 +10,27 @@ import React, { useState, useEffect } from 'react';
 
  import {ScrollView,StyleSheet,Text,TouchableHighlight,View,TextInput} from 'react-native';
  import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
+ import fonts from '../../../../../styles/fonts'
  
  const CreateGoal = () => {
  
     const [meta, setMeta] = useState('');
     const [valorMeta, setValorMeta] = useState('');
     const [investidoMeta, setInvestido] = useState('');
-    const [previsao, setPrevisao] = useState(new Date().toLocaleDateString());
+    const [previsao, setPrevisao] = useState(new Date());
     const [realizado, setRealizado] = useState(false);
 
-/*     //erros
+     //erros
     const [descError, setdescError] = useState<any | null>(null);
     const [valorTError, setvalorTError] = useState<any | null>(null);
     const [investidoError, setinvestidoError] = useState<any | null>(null);
     const [dtPrevError, setdtPrevError] = useState<any | null>(null);
- */
+ 
     const {handleAdicionarMeta} = UseMetas()
     const {navigation} = UseDadosTemp()
 
-    const dataAtual = new Date().toLocaleDateString();
+    const dataAtual = new Date();
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -42,8 +43,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
     };
 
     const handleConfirm = (date: Date) => {
-      console.warn("Previsão data final meta: ", date.toLocaleDateString());
-      setPrevisao(date.toLocaleDateString())
+      
+      if(date >= dataAtual) {
+        setPrevisao(date);
+        console.warn("Previsão data final meta: ", date.toLocaleDateString());
+        setdtPrevError(null);
+      }else {
+        setPrevisao(dataAtual)
+      }
+  
       hideDatePicker();
     };
 
@@ -53,39 +61,28 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
           descMeta: meta,
           saldoFinalMeta: parseFloat(valorMeta),
           saldoAtualMeta: parseFloat(investidoMeta),
-          dataInicioMeta: dataAtual,
-          dataFimMeta: previsao,
+          dataInicioMeta: dataAtual.toLocaleDateString(),
+          dataFimMeta: previsao.toLocaleDateString(),
           realizacaoMeta: realizacao(),
           userMetaId: await retornarIdDoUsuario()
           
       } as Meta
-
+      handleAdicionarMeta(newGoal); 
       console.log(newGoal)
-
-      handleAdicionarMeta(newGoal)
-      /* const response = await handleAdicionarMeta(newGoal);
-
-      if (!response.ok) {
-        switch (response.error) {
-          case 'descMeta':
-            setdescError(response.message);
-            break;
-          case 'saldoFinal':
-            setvalorTError(response.message);
-            break;
-          case 'saldoAtual':
-            setinvestidoError(response.message);
-            break;
-          case 'dtPrev':
-            setdtPrevError(response.message);
-            break;
-          default:
-            return;
-        }
+      if (meta != '' 
+        && parseFloat(valorMeta) > 0 
+        && valorMeta != undefined 
+        && parseFloat(investidoMeta) >= 0 
+        && investidoMeta != undefined
+        && previsao >= dataAtual) {
+          
+      }else if (meta == ''){
+        setdescError('Descrição obrigatória!')
+      }if(parseFloat(valorMeta) <= 0 || valorMeta == ''){
+        setvalorTError('Insira um valor válido!')
+      }if(parseFloat(investidoMeta) < 0 || investidoMeta == ''){
+        setinvestidoError('Insira um valor válido!');
       }
-       */
-      
-      navigation.goBack()
     }
 
     const realizacao = () => {
@@ -100,64 +97,82 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
  
          <Text 
          style={{marginBottom: '2%', 
-         fontSize: 17,
+         fontSize: 20,
          color: '#292929',
-         fontWeight: '700',}}>Que bom que decidiu criar uma meta!</Text>
+         fontFamily: fonts.familyType.black
+         }}>Que bom que decidiu criar uma meta!</Text>
 
-        <Text style={{marginBottom: '15%', 
-         fontSize: 17,
+        <Text style={{marginBottom: '10%', 
+         fontSize: 15,
+         fontFamily: fonts.familyType.regular,
          color: '#292929'}}>Calcularemos seu investimento mensal e te notificaremos para não esquecer ;)</Text>
  
           <View>
             <InputText
-              onChangeText={setMeta}
               value={meta}
               label="Descrição"
               placeholder="Ex.: Carro novo"
-              //error={descError}
+              error={descError}
               showClearIcon={meta != ''}
-              onClear={() => {
-                  setMeta('')
-              }}></InputText>
+                onClear={() => {
+                  setdescError(null);
+                  setMeta('');
+                }}
+                onChangeText={txt => {
+                  setdescError(null);
+                  setMeta(txt);
+                }}/>
           </View>
 
           <View>
             <InputText
-              onChangeText={setValorMeta}
               value={valorMeta}
-              //error={valorTError}
-              label="Valor total da meta"
+              label="Valor"
               placeholder="Ex.: R$ 1.000,00"
+              error={valorTError}
               showClearIcon={valorMeta != ''}
-              onClear={() => {
-                  setValorMeta('')
-              }}></InputText>
+                onClear={() => {
+                  setvalorTError(null);
+                  setValorMeta('');
+                }}
+                onChangeText={txt => {
+                  setvalorTError(null);
+                  setValorMeta(txt);
+                }}
+                keyboardType="numeric"
+                />
           </View>
 
           <View>
             <InputText 
-              onChangeText={setInvestido}
               value={investidoMeta}
               label="Valor já investido"
               placeholder="Ex.: R$ 100,00"
-              //error={investidoError}
+              error={investidoError}
               showClearIcon={investidoMeta != ''}
-              onClear={() => {
-                  setInvestido('')
-              }}></InputText>
+                onClear={() => {
+                  setinvestidoError(null);
+                  setInvestido('');
+                }}
+                onChangeText={txt => {
+                  setinvestidoError(null);
+                  setInvestido(txt);
+                }}
+                keyboardType="numeric"
+                />
           </View>
 
           {/* DatePicker */}
             <InputText 
               label="Previsão conclusão"
-              value={previsao}
-              placeholder={previsao}
-              //error={dtPrevError}
+              value={previsao.toLocaleDateString()}
+              placeholder={previsao.toLocaleDateString()}
+              error={dtPrevError}
               showClearIcon={previsao != dataAtual}
               onPressIn={showDatePicker}
-              
               onClear={() => {
                   setPrevisao(dataAtual)
+                  setdtPrevError(null)
               }}></InputText>
 
             <DateTimePickerModal
@@ -190,4 +205,3 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
  });
  
  export default CreateGoal;
- 

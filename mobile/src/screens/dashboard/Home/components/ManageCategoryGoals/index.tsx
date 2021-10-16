@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react'
 
 import { ProgressBar, Colors } from 'react-native-paper';
 
+import Button from '../../../../../components/Button';
+
 import {
     Container,
     LabelDescription,
     Separator,
     LabelDescriptionGoals,
-    ButtonManager,
-    LabelManager,
     SectionTop,
     ContainerGoals,
     ContainerCard,
@@ -65,8 +65,12 @@ const SectionManage = () => {
 
                 <CardGoal />
 
-                <ButtonManager onPress={() => navigation.navigate('GoalsStack', {screen: 'GoalsList'})}>
-                    <LabelManager>Gerenciar</LabelManager></ButtonManager>
+                <Button
+                    onPress={() => navigation.navigate('GoalsStack', {screen: 'GoalsList'})}
+                    title="Gerenciar"
+                    color="#444"
+                    backgroundColor="#f5f2f3"
+                />
             </ContainerGoals>
         </Container>
     )

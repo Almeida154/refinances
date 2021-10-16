@@ -4,7 +4,7 @@ export const SectionIcon = styled.View`
     width: 50px;
     height: 50px;
     border-radius: 50px;
-    border-width: 6px;
+    border-width: 4px;
     border-color: #444;
 
     align-items: center;

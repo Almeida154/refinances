@@ -3,12 +3,18 @@ import {ScrollView} from 'react-native'
 
 import CardAccount from './CardAccount'
 
+import Button from '../../../../../components/Button'
+import ButtonAdd from '../../../../../components/ButtonAdd'
+
 import {HomeAccountStack} from '../../../../../@types/RootStackParamApp'
+
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {
     Container,
-    ButtonAdd,
-    TextButton
+    Title,
+    Subtitle
 } from './styles'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/core'
@@ -19,12 +25,13 @@ import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 import { Text } from '../../../../../components/Button/styles'
 
-const ManageAccount = () => {
-    const {contas, loading, handleReadByUserContas} = UseContas()
-    const [stateReload, setStateReload] = useState(false)
+type PropsManageAccount = {
+    navigation: StackNavigationProp<HomeAccountStack, "ManageAccount">
+}
 
-    const {navigation} = UseDadosTemp()
-    
+const ManageAccount = ({navigation}: PropsManageAccount) => {
+    const {contas, loading, handleReadByUserContas} = UseContas()
+    const [stateReload, setStateReload] = useState(false)    
 
     useEffect(() => {
         if(!navigation.addListener)
@@ -40,15 +47,16 @@ const ManageAccount = () => {
             
         })
 
-        console.log(stateReload)
+        
     }, [navigation])
     
-    if(stateReload)
-        setStateReload(false)
 
+    console.log("foi dew volta", stateReload)
+        console.log(navigation.isFocused())
+        
     useEffect(() => {
         // Caso nenhuma conta foi carregada, recarregar
-        if(!contas[0].id)
+        if(!contas)
             (async function(){
                 handleReadByUserContas(await retornarIdDoUsuario())
             }) ()
@@ -56,23 +64,37 @@ const ManageAccount = () => {
     }, [])
 
     
+
     return (
         <ScrollView>
+            
             {
                 stateReload ? <Text>Carregando</Text> :
                 <Container>
+                    <Title>Bem vindo às suas contas!</Title>
+                    <Subtitle>Aqui você as gerencia: editando, excluindo ou criando novas.</Subtitle>
                     {
-                        !loading && contas[0].id && contas.map((item, index) => {                    
+                       contas && contas.map((item, index) => {
+                           console.log("Item",)                    
                             return (
                                 <CardAccount item={item} key={index}/>
                             )
                         })   
                     }
 
-                    <ButtonAdd onPress={() => navigation.navigate('StackAccount', {screen: 'CreateAccount'})}>
-                        <TextButton>Adicionar</TextButton>
-                    </ButtonAdd>
+                    <Button 
+                        onPress={() => navigation.navigate('CreateAccount')}
+                        title="Criar"
+                        color="#444"
+                        backgroundColor="#ccc"
+                    />   
 
+                    {/*<ButtonAdd
+                        onPress={() => console.log('ok')}
+                        backgroundColor="#fff"
+                    />*/}
+
+                    
                     
                 </Container>
             }
