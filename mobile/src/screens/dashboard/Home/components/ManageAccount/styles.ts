@@ -1,12 +1,13 @@
 import styled from 'styled-components/native'
 
+import fonts from '../../../../../styles/fonts'
+
 export const Container = styled.View`
     display: flex;
     padding-top: 30px;
     align-items: center;
-
-    padding-left: 30px;
-    padding-right: 30px;
+    flex: 1;
+    padding: 10%;
 `
 
 export const ButtonAdd = styled.TouchableHighlight`
@@ -24,6 +25,19 @@ export const TextButton = styled.Text`
     color: #444;
     font-size: 20px;
 `
-export const LabelButton = styled.Text`
+export const Title = styled.Text`
+    color: #292929;
+    marginBottom: 2%;
+    margin-top: 5%
+    fontFamily: ${`${fonts.familyType.black}`};
+    font-size: ${`${fonts.size.big}px`};
 
+`
+
+export const Subtitle = styled.Text`
+    marginBottom: 2%;
+    color: #292929;
+    fontFamily: ${`${fonts.familyType.regular}`};
+    font-size: ${`${fonts.size.small}px`};
+    marginBottom: 10%;
 `

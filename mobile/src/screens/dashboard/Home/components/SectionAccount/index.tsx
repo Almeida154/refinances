@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 
 import {PropsHome} from '../../'
 
+import Button from '../../../../../components/Button'
+
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
@@ -17,8 +19,6 @@ import {
     LabelBalance,
     Separator,
     LabelDescriptionAccount,
-    ButtonManager,
-    LabelManager,
     SectionBalance,
     ContainerAccount,
 
@@ -106,7 +106,12 @@ const SectionAccount = () => {
                     })
                 }
 
-                <ButtonManager onPress={() => navigation.navigate('StackAccount', {screen: 'ManageAccount'})}><LabelManager>Gerenciar</LabelManager></ButtonManager>
+                <Button 
+                    onPress={() => navigation.navigate('StackAccount', {screen: 'ManageAccount'})}
+                    title="Gerenciar"
+                    color="#444"
+                    backgroundColor="#F5F2F3"
+                /> 
             </ContainerAccount>
         </Container>
     )

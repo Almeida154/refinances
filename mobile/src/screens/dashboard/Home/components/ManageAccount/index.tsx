@@ -3,12 +3,18 @@ import {ScrollView} from 'react-native'
 
 import CardAccount from './CardAccount'
 
+import Button from '../../../../../components/Button'
+import ButtonAdd from '../../../../../components/ButtonAdd'
+
 import {HomeAccountStack} from '../../../../../@types/RootStackParamApp'
+
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {
     Container,
-    ButtonAdd,
-    TextButton
+    Title,
+    Subtitle
 } from './styles'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/core'
@@ -61,9 +67,12 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
 
     return (
         <ScrollView>
+            
             {
                 stateReload ? <Text>Carregando</Text> :
                 <Container>
+                    <Title>Bem vindo às suas contas!</Title>
+                    <Subtitle>Aqui você as gerencia: editando, excluindo ou criando novas.</Subtitle>
                     {
                        contas && contas.map((item, index) => {
                            console.log("Item",)                    
@@ -73,10 +82,19 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                         })   
                     }
 
-                    <ButtonAdd onPress={() => navigation.navigate('CreateAccount')}>
-                        <TextButton>Adicionar</TextButton>
-                    </ButtonAdd>
+                    <Button 
+                        onPress={() => navigation.navigate('CreateAccount')}
+                        title="Criar"
+                        color="#444"
+                        backgroundColor="#ccc"
+                    />   
 
+                    {/*<ButtonAdd
+                        onPress={() => console.log('ok')}
+                        backgroundColor="#fff"
+                    />*/}
+
+                    
                     
                 </Container>
             }

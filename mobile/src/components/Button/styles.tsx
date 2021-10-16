@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { colors, fonts, metrics } from '../../styles';
 
-export const Container = styled.TouchableHighlight`
+export const Container = styled.TouchableOpacity`
   width: 100%;
   padding: 18px;
   font-family: ${fonts.familyType.bold};

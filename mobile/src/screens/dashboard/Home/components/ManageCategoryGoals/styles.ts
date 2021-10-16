@@ -34,20 +34,6 @@ export const LabelDescriptionGoals = styled.Text`
     color: #555;
     
 `
-export const ButtonManager = styled.TouchableOpacity`
-    margin-top: 15px;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    background-color: #F5F2F3;
-    height: 60px;
-    border-radius: 5px;
-`
-export const LabelManager = styled.Text`
-    font-weight: 600;
-    color: #444;
-    font-size: 20px;
-`
 
 export const ContainerCard = styled.View`
     display: flex;

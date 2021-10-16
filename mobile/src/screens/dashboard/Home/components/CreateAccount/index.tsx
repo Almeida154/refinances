@@ -17,6 +17,8 @@ import {
     
 } from './styles'
 
+import fonts from '../../../../../styles/fonts'
+
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 import { TouchableOpacity } from 'react-native'
@@ -60,6 +62,19 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
 
     return (
         <Container>
+
+        <Text 
+         style={{marginBottom: '2%', 
+         marginTop: '15%',
+         fontSize: 20,
+         color: '#292929',
+         fontFamily: fonts.familyType.black
+         }}>Bem vindo à criação de suas contas!</Text>
+
+        <Text style={{marginBottom: '10%', 
+         fontSize: 15,
+         fontFamily: fonts.familyType.regular,
+         color: '#292929'}}>Aqui você adiciona outras contas além da sua principal, como a de outros bancos por exemplo.</Text>
             
             <InputText 
                 onChangeText={setDescription}
@@ -91,6 +106,8 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
             <Button 
                 onPress={handleCreateAccount}
                 title="Criar"
+                color="#444"
+                backgroundColor="#ccc"
             />              
 
             <Modalize ref={modalizeRef}

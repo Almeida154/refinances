@@ -10,7 +10,8 @@ import React, { useState, useEffect } from 'react';
 
  import {ScrollView,StyleSheet,Text,TouchableHighlight,View,TextInput} from 'react-native';
  import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
+ import fonts from '../../../../../styles/fonts'
  
  const CreateGoal = () => {
  
@@ -98,11 +99,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
          style={{marginBottom: '2%', 
          fontSize: 20,
          color: '#292929',
-         fontWeight: '700',}}>Que bom que decidiu criar uma meta!</Text>
+         fontFamily: fonts.familyType.black
+         }}>Que bom que decidiu criar uma meta!</Text>
 
         <Text style={{marginBottom: '10%', 
          fontSize: 15,
-         fontFamily: 'Nunito-bold',
+         fontFamily: fonts.familyType.regular,
          color: '#292929'}}>Calcularemos seu investimento mensal e te notificaremos para não esquecer ;)</Text>
  
           <View>

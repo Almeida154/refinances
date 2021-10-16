@@ -20,9 +20,6 @@ const Button: React.FC<IProps> = ({
   return (
     <Container
       onPress={onPress}
-      underlayColor={
-        backgroundColor != undefined ? backgroundColor : colors.redCrayola
-      }
       style={[
         backgroundColor != undefined
           ? { backgroundColor: backgroundColor }
