@@ -33,7 +33,6 @@ const Name = ({ navigation }: PropsNavigation) => {
   const { user, updateUserProps } = UseAuth();
 
   useEffect(() => {
-    console.debug('Name | SetUser(): ', user);
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
@@ -47,7 +46,7 @@ const Name = ({ navigation }: PropsNavigation) => {
     return true;
   };
 
-  async function setUser() {
+  async function next() {
     if (name == '') {
       setError(true);
       return;
@@ -55,7 +54,7 @@ const Name = ({ navigation }: PropsNavigation) => {
     const newUser = user;
     newUser.nomeUsuario = name;
     updateUserProps(newUser);
-    console.debug('Name | SetUser(): ', user);
+    console.debug('Name | next(): ', user);
     navigation.navigate('Email');
   }
 
@@ -94,7 +93,7 @@ const Name = ({ navigation }: PropsNavigation) => {
         </Writting>
         {hasError && <Error>Preencha este campo!</Error>}
       </Content>
-      <BottomNavigation onPress={() => setUser()} description="Próximo" />
+      <BottomNavigation onPress={() => next()} description="Próximo" />
     </Container>
   );
 };

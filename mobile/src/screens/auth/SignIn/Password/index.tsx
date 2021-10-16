@@ -55,7 +55,6 @@ const Password = ({ navigation }: PropsNavigation) => {
   const { user, updateUserProps } = UseAuth();
 
   useEffect(() => {
-    console.debug('Name | SetUser(): ', user);
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
@@ -83,7 +82,7 @@ const Password = ({ navigation }: PropsNavigation) => {
     }
   };
 
-  async function setUser() {
+  async function next() {
     if (password == '') {
       setError(true);
       setErrorMessage('Preencha este campo!');
@@ -112,7 +111,7 @@ const Password = ({ navigation }: PropsNavigation) => {
     const newUser = user;
     newUser.senhaUsuario = password;
     updateUserProps(newUser);
-    console.debug('Password | SetUser(): ', user);
+    console.debug('Password | next(): ', user);
     navigation.navigate('ConfirmPassword');
   }
 
@@ -174,7 +173,7 @@ const Password = ({ navigation }: PropsNavigation) => {
           </Requisit>
         </RequisitContainer>
       </Content>
-      <BottomNavigation onPress={() => setUser()} description="Próximo" />
+      <BottomNavigation onPress={() => next()} description="Próximo" />
     </Container>
   );
 };

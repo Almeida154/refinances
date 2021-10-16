@@ -12,7 +12,7 @@ import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
 import { Container, Content, Input, Writting, Error } from './styles';
-import { colors, fonts, metrics } from '../../../../styles';
+import { colors } from '../../../../styles';
 
 // Icons
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -33,10 +33,9 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [securePassword, setSecurePassword] = useState(true);
 
-  const { user, updateUserProps } = UseAuth();
+  const { user } = UseAuth();
 
   useEffect(() => {
-    console.debug('Name | SetUser(): ', user);
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
@@ -47,7 +46,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
     return true;
   };
 
-  async function setUser() {
+  async function next() {
     if (confirmPassword == '') {
       setError(true);
       setErrorMessage('Preencha este campo!');
@@ -58,7 +57,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
       setErrorMessage('As senhas não batem!');
       return;
     }
-    console.debug('ConfirmPassword | SetUser(): ', user);
+    console.debug('ConfirmPassword | next(): ', user);
     navigation.navigate('Photo');
   }
 
@@ -111,7 +110,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
         </Writting>
         {hasError && <Error>{errorMessage}</Error>}
       </Content>
-      <BottomNavigation onPress={() => setUser()} description="Próximo" />
+      <BottomNavigation onPress={() => next()} description="Próximo" />
     </Container>
   );
 };

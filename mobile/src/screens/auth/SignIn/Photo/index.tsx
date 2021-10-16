@@ -6,7 +6,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -33,8 +32,10 @@ import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import Modalize from '../../../../components/Modalize';
 
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Modalize as Modal } from 'react-native-modalize';
+import ImagePicker from 'react-native-image-crop-picker';
+
+import global from '../../../../global';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Photo'>;
@@ -47,55 +48,41 @@ const Photo = ({ navigation }: PropsNavigation) => {
   const [avatar, setAvatar] = useState({ base64: '' });
   const modalizeRef = useRef<Modal>(null);
 
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
   const backAction = () => {
     navigation.goBack();
     return true;
   };
 
   const openCamera = () => {
-    launchCamera({ mediaType: 'photo', includeBase64: true }, response => {
-      if (response.didCancel) {
-        console.debug('Operação cancelada!');
-        return;
-      }
-      if (response.errorCode) {
-        console.debug('OpenCamera Error Code: ' + response.errorCode);
-        return;
-      }
-      if (response.assets) {
-        let asset = response.assets[0];
-        setAvatar({ base64: `data:${asset.type};base64,${asset.base64}` });
-      }
-    });
-  };
-
-  const openGallery = () => {
-    launchImageLibrary(
-      { mediaType: 'photo', includeBase64: true },
-      response => {
-        if (response.didCancel) {
-          console.debug('Operação cancelada!');
-          return;
-        }
-        if (response.errorCode) {
-          console.debug('ImagePicker Error Code: ' + response.errorCode);
-          return;
-        }
-        if (response.assets) {
-          let asset = response.assets[0];
-          setAvatar({ base64: `data:${asset.type};base64,${asset.base64}` });
-        }
+    ImagePicker.openCamera(global.IMAGE_CROP_PICKER_OPTIONS as {}).then(
+      image => {
+        console.log(image);
+        setAvatar({ base64: `data:${image?.mime};base64,${image?.data}` });
       },
     );
   };
 
-  async function setImage() {
+  const openGallery = () => {
+    ImagePicker.openPicker(global.IMAGE_CROP_PICKER_OPTIONS as {}).then(
+      image => {
+        console.log(image);
+        setAvatar({ base64: `data:${image.mime};base64,${image?.data}` });
+      },
+    );
+  };
+
+  async function next() {
     const newUser = user;
     newUser.fotoPerfilUsuario = avatar.base64 == '' ? null : avatar.base64;
     updateUserProps(newUser);
-
-    const response = await handleRegister();
-    console.debug('Photo | SetUser(): ', JSON.stringify(user).substr(0, 150));
+    console.debug('Photo | next(): ', JSON.stringify(user).substr(0, 200));
+    await handleRegister();
     //navigation.navigate('FixedExpenses');
   }
 
@@ -138,7 +125,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
       </Content>
 
       <BottomNavigation
-        onPress={() => setImage()}
+        onPress={() => next()}
         description={avatar.base64 == null ? 'Pular' : 'Próximo'}
       />
 
