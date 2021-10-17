@@ -14,7 +14,7 @@ export type CategoriaConta = {
 }
 
 interface CategoriaContaContextType {        
-    categoriasConta: CategoriaConta[],
+    categoriasConta: CategoriaConta[] | null,
     handleAdicionarCategoriaConta(categoriaProps: CategoriaConta): Promise<void>
     setupCategoriasConta(idUser: number): Promise<void>
     handleReadByUserCategoriesAccount(idUser: number): Promise<void>
@@ -25,7 +25,7 @@ const CategoriaContaContext = createContext<CategoriaContaContextType>({} as Cat
 export const UseCategoriasConta = () => useContext(CategoriaContaContext);
 
 export const CategoriasContaProvider: React.FC = ({ children }) => {
-    const [categoriasConta, setCategoriasConta] = useState<CategoriaConta[]>([{}] as CategoriaConta[]);
+    const [categoriasConta, setCategoriasConta] = useState<CategoriaConta[] | null>(null);
 
     async function setupCategoriasConta(idUser: number){        
         const nomesCategoriasContaPadroes = [["Carteira", "Entypo:wallet"], ["Poupança", "MaterialCommunityIcons:currency-usd-circle", ], ["Investimentos", "MaterialIcons:show-chart"]];
@@ -38,11 +38,19 @@ export const CategoriasContaProvider: React.FC = ({ children }) => {
                 userCategoryConta: idUser
             });
 
-            newCategoriasConta.push(response.data.message);
+            if(newCategoriasConta == null) {
+                const aux = []
+
+                aux.push(response.data.message)
+
+                setCategoriasConta(aux)
+            } else {
+                newCategoriasConta.push(response.data.message);
+                setCategoriasConta(newCategoriasConta)
+            }
         })
         
         console.log(newCategoriasConta);
-        setCategoriasConta(newCategoriasConta);
     }
 
     async function handleAdicionarCategoriaConta(categoriaConta: CategoriaConta) {
@@ -54,11 +62,19 @@ export const CategoriasContaProvider: React.FC = ({ children }) => {
                 userCategoryConta: categoriaConta.userCategoryConta
             });
 
-            console.log(response.data);
-            const newCategoriasConta: CategoriaConta[] = categoriasConta;
-            newCategoriasConta.push(response.data.message);
+            const newCategoriasConta = categoriasConta;
 
-            setCategoriasConta(newCategoriasConta);
+            if(newCategoriasConta == null) {
+                const aux = []
+
+                aux.push(response.data.message)
+                setCategoriasConta(aux);
+            } else {
+
+                newCategoriasConta.push(response.data.message);
+                setCategoriasConta(newCategoriasConta);
+            }
+
 
         } catch (error) {
             console.log("Deu um erro no handleAdicionarCategoriaConta: " + error);

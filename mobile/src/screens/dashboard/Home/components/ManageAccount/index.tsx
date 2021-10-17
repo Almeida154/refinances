@@ -51,9 +51,6 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
         
     }, [navigation])
     
-
-    console.log("foi dew volta", stateReload)
-        console.log(navigation.isFocused())
         
     useEffect(() => {
         // Caso nenhuma conta foi carregada, recarregar

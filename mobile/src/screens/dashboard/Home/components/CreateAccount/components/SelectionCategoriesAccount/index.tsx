@@ -80,9 +80,9 @@ const RenderFooter = ({navigation}: PropsRenderFooter) => {
 
 
 type PropsSelectionCategorias = {
-    setCategoriaConta: React.Dispatch<React.SetStateAction<string>>,
+    setCategoriaConta: React.Dispatch<React.SetStateAction<CategoriaConta | null>>,
     navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">,    
-    categoriaConta: string
+    categoriaConta: CategoriaConta | null
 }
 
 const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta, navigation}: PropsSelectionCategorias) => {        
@@ -102,13 +102,13 @@ const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta, navigati
     }, [])
 
     useEffect(() => {
-        setCategoriasAtual(categoriasConta)
+        setCategoriasAtual(categoriasConta == null ? [] : categoriasConta)
     }, [categoriasConta])
 
     useEffect(() => {
         if(search == '') {
-            setCategoriasAtual(categoriasConta)
-        } else {
+            setCategoriasAtual(categoriasConta == null ? [] : categoriasConta)
+        } else if(categoriasConta != null){
             const aux: CategoriaConta[] = []
 
             categoriasConta.map((item: CategoriaConta) => {
@@ -132,7 +132,7 @@ const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta, navigati
             <TouchableOpacity onPress={onOpen}>
                 <InputText 
                     label="Categoria"
-                    value={categoriaConta == '0' ? '' : categoriaConta}
+                    value={categoriaConta == null ? '' : categoriaConta.descricaoCategoryConta}
                     placeholder="Selecione uma categoria conta"
                     placeholderTextColor={"#bbb"}
                     editable={false}
@@ -142,22 +142,25 @@ const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta, navigati
 
             </TouchableOpacity>
 
-            <CustomPicker 
-                ref={PickerRef}
-                placeholder={"Selecione a categoria para esse lançamento" }
-                options={categoriasAtual}
-                getLabel={(item: CategoriaConta) => item.descricaoCategoryConta}
-                optionTemplate={RenderOption}
-                headerTemplate={() => <RenderHeader search={search} setSearch={setSearch} />}
-                footerTemplate={() => <RenderFooter navigation={navigation}/>}                
-                maxHeight={400}
-                modalStyle={{minHeight: 400}}
-                onValueChange={(value: CategoriaConta) => {
-                    setCategoriaConta(value.descricaoCategoryConta)
-                    
-                }}
-                style={{display: 'none'}}
-            />
+            {
+                categoriasConta &&   
+                <CustomPicker 
+                    ref={PickerRef}
+                    placeholder={"Selecione a categoria para esse lançamento" }
+                    options={categoriasAtual}
+                    getLabel={(item: CategoriaConta) => item.descricaoCategoryConta}
+                    optionTemplate={RenderOption}
+                    headerTemplate={() => <RenderHeader search={search} setSearch={setSearch} />}
+                    footerTemplate={() => <RenderFooter navigation={navigation}/>}                
+                    maxHeight={400}
+                    modalStyle={{minHeight: 400}}
+                    onValueChange={(value: CategoriaConta) => {
+                        setCategoriaConta(value)
+                        
+                    }}
+                    style={{display: 'none'}}
+                />
+            }
             
         </Container>
     )

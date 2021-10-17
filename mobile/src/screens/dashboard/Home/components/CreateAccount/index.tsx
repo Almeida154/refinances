@@ -20,6 +20,7 @@ import {
 import fonts from '../../../../../styles/fonts'
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+import {CategoriaConta} from '../../../../../contexts/CategoriesAccountContext'
 
 import { TouchableOpacity } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -36,7 +37,7 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
 
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')    
-    const [categoriaConta, setCategoriaConta] = useState('')
+    const [categoriaConta, setCategoriaConta] = useState<null | CategoriaConta>(null)
 
     const modalizeRef = useRef<Modalize>(null);
 
@@ -48,12 +49,10 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
     async function handleCreateAccount() {
         const newConta = {
             descricao: description,
-            categoryConta: categoriaConta,
+            categoryConta: categoriaConta?.descricaoCategoryConta,
             saldoConta: parseFloat(value),
             userConta: await retornarIdDoUsuario()
         } as Conta
-
-        console.log(newConta)
 
         handleAdicionarConta(newConta)
         
@@ -81,7 +80,7 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
                 value={description}
                 label="Descrição"
                 placeholder="Descrição de sua nova conta"
-                showClearIcon={description != ''}
+                showClearIcon={false}
                 onClear={() => {
                     setDescription('')
                 }}
@@ -94,7 +93,7 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
                 placeholder="Saldo de sua nova conta"
                 keyboardType='decimal-pad'
 
-                showClearIcon={value != ''}
+                showClearIcon={false}
                 onClear={() => {
                     setValue('')
                 }}
