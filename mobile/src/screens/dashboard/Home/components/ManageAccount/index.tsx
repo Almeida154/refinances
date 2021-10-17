@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import {ScrollView} from 'react-native'
+import {ScrollView, View} from 'react-native'
 
 import CardAccount from './CardAccount'
 
@@ -24,6 +24,7 @@ import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 import { Text } from '../../../../../components/Button/styles'
+import { ActivityIndicator } from 'react-native-paper'
 
 type PropsManageAccount = {
     navigation: StackNavigationProp<HomeAccountStack, "ManageAccount">
@@ -69,7 +70,17 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
         <ScrollView>
             
             {
-                stateReload ? <Text>Carregando</Text> :
+                stateReload ? (
+                    <View style={{alignSelf: 'center',
+                     height: '100%',
+                     justifyContent: 'center'}}>
+                         <ActivityIndicator size='large' color='#E8871E' />
+                         <Text style={{color: '#183153',
+                           fontSize: 22,
+                           fontFamily: 'Poppins-Bold',
+                           marginTop: 20}}>Loading</Text>
+                     </View>
+                 ) :
                 <Container>
                     <Title>Bem vindo às suas contas!</Title>
                     <Subtitle>Aqui você as gerencia: editando, excluindo ou criando novas.</Subtitle>

@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import {Modalize} from 'react-native-modalize'
 
-import {TouchableOpacity, Text, FlatList} from 'react-native'
+import {TouchableOpacity, Text, FlatList, Image} from 'react-native'
 
 import {UseCategoriasConta, CategoriaConta} from '../../../../../../../contexts/CategoriesAccountContext'
 
@@ -37,14 +37,24 @@ type PropsNavigation = {
 
 type PropsRenderItem = {
     item: string
-    setColorSelected: (item: string) => void
+    setSelected: (item: string) => void
 }
 
-const RenderItemColor = ({item, setColorSelected}: PropsRenderItem) => {
+const RenderItemColor = ({item, setSelected}: PropsRenderItem) => {
     return (
-        <ButtonPress onPress={() => setColorSelected(item)}>
+        <ButtonPress onPress={() => setSelected(item)}>
             <Circle style={{backgroundColor: item}}>
                 
+            </Circle>
+        </ButtonPress>
+    )
+}
+
+const RenderItemIcon = ({item, setSelected}: PropsRenderItem) => {
+    return (
+        <ButtonPress onPress={() => setSelected(item)}>
+            <Circle style={{backgroundColor: '#fff'}}>
+                <Image source={{uri: 'https://logodownload.org/wp-content/uploads/2014/02/caixa-logo.jpg', height: 50, width: 50}}/>                
             </Circle>
         </ButtonPress>
     )
@@ -61,7 +71,7 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
     const [icone, setIcone] = useState('')
 
     const onOpenModalizeColor = () => {
-        modalizeColor.current?.open('')
+        modalizeColor.current?.open()
     }
 
     const onOpenModalizeIcon = () => {
@@ -70,7 +80,7 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
 
     const dataColors = ['#DF5C5C', '#D5DF5C', '#5C89DF','#96DF5C' , '#525252', '#E3E3E3', '#DF5CD2', '#00c3ff', '#3d0320', '#c8f307', '#b34242', '#46df09']
 
-    const dataIcons = [['CategoryConta/banco-amazonia', 'CategoryConta/banco-brasil', 'CategoryConta/banco-brasilia'], ['CategoryConta/banco-nordeste', 'CategoryConta/banco-real', 'CategoryConta/bank-boston'], ['CategoryConta/banestes']]
+    const dataIcons = ['CategoryConta/banco-amazonia', 'CategoryConta/banco-brasil', 'CategoryConta/banco-brasilia', 'CategoryConta/banco-nordeste', 'CategoryConta/banco-real', 'CategoryConta/bank-boston', 'CategoryConta/banestes']
 
     async function handleSubmit() {
         
@@ -154,36 +164,27 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
                 <BodyModalize >
                     <FlatList 
                         data={dataColors}
-                        renderItem={({item}) => <RenderItemColor item={item} setColorSelected={setColorSelected}/>}
+                        renderItem={({item}) => <RenderItemColor item={item} setSelected={setColorSelected}/>}
                         keyExtractor={(item) => item}
                         numColumns={4}
                     />               
                 </BodyModalize>
             </Modalize>
 
-            <Modalize 
-            ref={modalizeIcon}
-            modalHeight={300}>
-                <BodyModalize>
-                {
-                    dataIcons.map((item, index) => {
-                        return (
-                            <RowColor>
-                                {
-                                    item.map((item2, index2) => {
-                                        console.log(item2)
-                                        return (
-                                            <ButtonPress onPress={() => setColorSelected(item2)} style={{margin: 10}}>
-                                            </ButtonPress>
-                                        )
-                                    })
-                                }
-                            </RowColor>
-                        )
-                    })
-                }
+            <Modalize                 
+                ref={modalizeIcon} 
+                modalHeight={300}
+                scrollViewProps={{contentContainerStyle: {height: '100%'}}}                
+            >
+                <BodyModalize >
+                    <FlatList 
+                        data={dataIcons}
+                        renderItem={({item}) => <RenderItemIcon item={item} setSelected={setIconSelected}/>}
+                        keyExtractor={(item) => item}
+                        numColumns={4}
+                    />               
                 </BodyModalize>
-            </Modalize>
+            </Modalize>                
         </Container>
     )
 }

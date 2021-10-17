@@ -38,11 +38,13 @@ type CardAccount = {
 }
 
 const CardAccount = ({item}: CardAccount) => {
+
+    console.log('item', typeof item.categoryConta != 'string' && item.categoryConta.iconeCategoryConta != "" )
     return(
         <ContainerCardAccount>
             <SectionDescription>
                 <SectionIcon>
-                    <Icon size={25} color='gray' stringIcon={typeof item.categoryConta == 'string' ? 'Ionics:wallet' : item.categoryConta.iconeCategoryConta}/>
+                    <Icon size={25} color='gray' stringIcon={typeof item.categoryConta != 'string' && item.categoryConta.iconeCategoryConta != "" ?  item.categoryConta.iconeCategoryConta : 'Ionicons:wallet'}/>
                 </SectionIcon>
                 <SectionName>
                     <LabelName>{item.descricao}</LabelName>
@@ -79,7 +81,6 @@ const SectionAccount = () => {
         (async function(){
             handleReadByUserContas(await retornarIdDoUsuario())
         })()    
-        console.log('contas', contas == null ? "Foi nada " : contas)           
     }, [])
     return (
         <Container>
@@ -96,7 +97,6 @@ const SectionAccount = () => {
                 {
                     
                     contas && contas.map((item, index) => {
-                        console.log('item', item)
                         if(index > 1 )
                             return
 
