@@ -49,9 +49,9 @@ const Entrar = ({ navigation }: PropsNavigation) => {
     const logUser = {} as User;
     logUser.emailUsuario = email;
     logUser.senhaUsuario = password;
-
+    console.debug("loginuser | handleLogin", handleLogin)
     const response = await handleLogin(logUser);
-    console.debug('Login | LoginUser(): ', response);
+    
 
     if (!response.ok) {
       switch (response.error) {

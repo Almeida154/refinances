@@ -43,8 +43,8 @@ export const ButtonPress = styled.TouchableOpacity`
 `
 
 export const Circle = styled.View`
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     margin: 10px;
 
     border-radius: 50px;
@@ -56,7 +56,8 @@ export const BodyModalize = styled.View`
     justify-content: center;
 
     flex-direction: column;
-    padding: 50px;
+    padding: 40px;
+    
 
 `
 

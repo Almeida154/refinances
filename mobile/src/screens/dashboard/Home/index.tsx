@@ -11,9 +11,11 @@ import {
   FlatList,
   TouchableHighlight,
   Image,
+  ActivityIndicator
 } from 'react-native';
 
 import { Buffer } from 'buffer';
+
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -40,13 +42,7 @@ const Home = () => {
   const { navigation } = UseDadosTemp();
 
   const [stateReload, setStateReload] = useState(false);
-
-  const useForceUpdate = () => {
-    const set = useState(0)[1];
-    return () => set(s => s + 1);
-  };
-
-  const forceUpdate = useForceUpdate();
+ 
 
   const [avatar, setAvatar] = useState<string | undefined | null>('');
   const [mime, setMime] = useState<string | undefined | null>('');
@@ -92,7 +88,15 @@ const Home = () => {
   return (
     <ScrollView>
       {stateReload ? (
-        <Text>Carregando</Text>
+         <View style={{alignSelf: 'center',
+          height: '100%',
+          justifyContent: 'center'}}>
+              <ActivityIndicator size='large' color='#E8871E' />
+              <Text style={{color: '#183153',
+                fontSize: 22,
+                fontFamily: 'Poppins-Bold',
+                marginTop: 20}}>Loading</Text>
+          </View>
       ) : (
         <View style={styles.container}>
           <View style={styles.headerContainer}>
