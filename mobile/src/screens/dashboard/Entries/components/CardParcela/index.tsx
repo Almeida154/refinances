@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
+import {toDate} from '../../../../../helpers/manipularDatas'
+
 import PickerContas from '../PickerContas'
 
 import {
@@ -16,7 +18,7 @@ import {
 export type CardParcela = {
     id: number;
     conta: Conta | null;
-    data: Date;
+    data: string;
     valor: number;
    
 }
@@ -44,7 +46,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
 
     const handleConfirm = (date: Date) => {
         const aux = item
-        aux.data = date
+        aux.data = date.toLocaleDateString()
         dataParcelas[aux.id] = aux
         setDataParcelas(dataParcelas)
         hideDatePicker();
@@ -68,7 +70,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
 
     return (
         <ContainerCardParcela>
-            <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data.toLocaleDateString()}</TituloCardParcela>
+            <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data}</TituloCardParcela>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"

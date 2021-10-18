@@ -56,13 +56,13 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             id: 0,
             conta: selectedConta,
             valor: 0,
-            data: dataPagamento
+            data: dataPagamento.toLocaleDateString()
         },
     ])
     
     const {handleAdicionarLancamento, handleLoadLancamentos} = UseLancamentos()    
     
-    const changeParcela = (text: string, date: Date, newDataParcelas: CardParcela[]) => {
+    const changeParcela = (text: string, date: string, newDataParcelas: CardParcela[]) => {
         setParcelas(text)
         
         if (text == '') return
@@ -75,16 +75,18 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
         if (num < newDataParcelas.length) {
             for (var i = 0; i < num; i++) {
                 newDataParcelas[i].valor = valorParcelaDividido
-                newDataParcelas[i].data = i == 0 ? date : addMonths(date, 1)
+                newDataParcelas[i].data = i == 0 ? date : addMonths(toDate(date), 1).toLocaleDateString()
 
                 aux.push(newDataParcelas[i])
             }
         } else if (num > newDataParcelas.length) {            
             for (var i = 0; i < num; i++) {
-                const adicaoDeUmMes = aux[i-1] == undefined ? date : addMonths(aux[i-1].data, 1)
+                const adicaoDeUmMes = i == 0 ? date : addMonths(toDate(aux[i-1].data), 1).toLocaleDateString()
                 if(i < newDataParcelas.length) {
                     newDataParcelas[i].valor = valorParcelaDividido
-                    newDataParcelas[i].data = adicaoDeUmMes,                    
+                    newDataParcelas[i].data = adicaoDeUmMes
+                    
+                    console.log("newDataParcelas[0]", newDataParcelas[i])
                     aux.push(newDataParcelas[i])
                 
                 } else {
@@ -100,6 +102,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             }
         }        
 
+        console.debug("aux[0]",aux[0])
         setDataParcelas(aux)
     }
 
@@ -112,7 +115,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                 id: -1,
                 lancamentoParcela: -1,
                 contaParcela: item.conta == null ? 0 : item.conta.id,
-                dateParcela: item.data,
+                dateParcela: toDate(item.data),
                 valorParcela: item.valor                    
             })
         })            
@@ -159,6 +162,8 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
     
     const handleConfirm = (date: Date) => {                
         setDataPagamento(date)
+         
+        changeDate(date.toLocaleDateString())
         console.log('date', date)
         hideDatePicker();
     };    
@@ -178,28 +183,28 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
         setDataParcelas(parcelas)
     }, [valor])
 
-    useEffect(() => {        
+    function changeDate(date: string){
         const parcelas: CardParcela[] = []        
 
-        let proximoMes = dataPagamento
+        let proximoMes = date
 
         // let auxDatas: string[] = []
         dataParcelas.map((item, index) => {
-            item.data = proximoMes     
+            item.data = proximoMes
             
             parcelas.push(item)
             
-            parcelas[index].data = proximoMes
-            proximoMes = addMonths(proximoMes, 1)
+            proximoMes = addMonths(toDate(proximoMes), 1).toLocaleDateString()
+            
             // if(index = dataParcelas.length-1) {
                 // console.debug("useEffect[dataPagamento] | parcelas", parcelas)
-                setDataParcelas(parcelas)
-            // }
+                // }
         })
 
 
-        
-    }, [dataPagamento])
+        setDataParcelas(parcelas)
+    }
+    
     
     return (
         <ContainerForm>
@@ -261,7 +266,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                             label="Quantidade de Parcelas"
                             colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
                             value={parcelas}
-                            onChangeText={(text) => changeParcela(text, dataPagamento, dataParcelas)}
+                            onChangeText={(text) => changeParcela(text, dataPagamento.toLocaleDateString(), dataParcelas)}
                             placeholder="1"
                             keyboardType="numeric"
                             />
