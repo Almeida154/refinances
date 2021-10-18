@@ -149,6 +149,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
           }}
           backgroundColor={colors.platinum}
           color={colors.silver}
+          lastOne
         />
       </Modalize>
     </Container>

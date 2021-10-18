@@ -1,14 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { BackHandler } from 'react-native';
-
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  useDerivedValue,
-  interpolateColor,
-  withTiming,
-} from 'react-native-reanimated';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -24,18 +16,24 @@ import {
   ButtonContainer,
   TagContainer,
   Tag,
+  CountContainer,
+  Count,
 } from './styles';
 import { colors } from '../../../../styles';
 
 // Components
+import { TextInput } from 'react-native';
+
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
+import InputText from '../../../../components/InputText';
 import Modalize from '../../../../components/Modalize';
 
 import { Modalize as Modal } from 'react-native-modalize';
 
 import global from '../../../../global';
+import { stringLiteral } from '@babel/types';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'FixedExpenses'>;
@@ -43,13 +41,18 @@ export type PropsNavigation = {
 };
 
 const FixedExpenses = ({ navigation }: PropsNavigation) => {
-  const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([
+  const [tags, setTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([
     'Luz',
     'Água',
     'Internet',
     'Despesa do mês',
   ]);
+  const [newExpense, setNewExpense] = useState<string>('');
+  const [newExpenseError, setNewExpenseError] = useState<any | null>(null);
+
+  const modalizeRef = useRef<Modal>(null);
+  const newExpenseRef = useRef<TextInput>(null);
 
   const { user, updateUserProps } = UseAuth();
 
@@ -77,6 +80,35 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
     //navigation.navigate('Password');
   }
 
+  const removeAccents = (str: string) =>
+    str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  const handleAddExpense = () => {
+    if (newExpense != '') {
+      let tagsToLowerCase = tags.map(tag => removeAccents(tag.toLowerCase()));
+
+      if (tagsToLowerCase.includes(removeAccents(newExpense.toLowerCase()))) {
+        setNewExpenseError('Esse gasto já existe!');
+        return;
+      }
+
+      let tagsUpdated = [...tags, newExpense];
+      let tagsSelectedUpdated = [...selectedTags, newExpense];
+      setTags(tagsUpdated);
+      setSelectedTags(tagsSelectedUpdated);
+      closeModalize();
+      setNewExpense('');
+    }
+  };
+
+  const openModalize = () => {
+    modalizeRef.current?.open();
+  };
+
+  const closeModalize = () => {
+    modalizeRef.current?.close();
+  };
+
   return (
     <Container>
       <ScrollContainer>
@@ -87,8 +119,9 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
         />
 
         <TagContainer>
-          {tags.map(tag => (
+          {tags.map((tag, index) => (
             <Tag
+              key={index}
               onPress={() => {
                 if (!selectedTags.includes(tag)) {
                   let newArr = [...selectedTags, tag];
@@ -120,9 +153,16 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
           ))}
         </TagContainer>
 
+        <CountContainer>
+          <Count counter>{selectedTags.length} </Count>
+          <Count>
+            {selectedTags.length > 1 ? 'selecionados' : 'selecionado'}
+          </Count>
+        </CountContainer>
+
         <ButtonContainer>
           <Button
-            onPress={() => {}}
+            onPress={() => openModalize()}
             title="Outro"
             backgroundColor={colors.platinum}
             color={colors.davysGrey}
@@ -131,6 +171,35 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
       </ScrollContainer>
 
       <BottomNavigation onPress={() => next()} description={'Já selecionei!'} />
+
+      <Modalize
+        ref={modalizeRef}
+        title="Novo gasto fixo 💸"
+        backgroundColor={colors.cultured}>
+        <InputText
+          label="Novo gasto"
+          placeholder="Faculdade, Academia..."
+          ref={newExpenseRef}
+          value={newExpense}
+          showClearIcon
+          lastOne
+          error={newExpenseError}
+          onClear={() => {
+            setNewExpenseError(null);
+            setNewExpense('');
+          }}
+          onChangeText={text => {
+            setNewExpenseError(null);
+            setNewExpense(text);
+          }}
+        />
+        <Button
+          title="Adicionar"
+          onPress={() => handleAddExpense()}
+          backgroundColor={colors.platinum}
+          color={colors.davysGrey}
+        />
+      </Modalize>
     </Container>
   );
 };

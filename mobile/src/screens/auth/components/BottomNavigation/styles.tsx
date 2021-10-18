@@ -11,7 +11,6 @@ export const Container = styled.TouchableHighlight`
   padding: 0 ${`${metrics.default.boundaries}px`};
   justify-content: center;
   align-items: center;
-  z-index: 10;
 `;
 
 export const Description = styled.Text`

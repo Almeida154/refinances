@@ -31,7 +31,7 @@ export class Meta {
   dataInicioMeta: string;
 
   @Column()
-  dataFimMetaMeta: string;
+  dataFimMeta: string;
 
   @Column()
   realizacaoMeta: boolean;

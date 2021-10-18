@@ -31,3 +31,19 @@ export const Tag = styled.Text`
   padding: 10px 20px;
   border-radius: 10px;
 `;
+
+export const CountContainer = styled.View`
+  flex-direction: row;
+  padding: 20px ${`${metrics.default.boundaries}px`};
+  opacity: 0.9;
+`;
+
+interface ICountProps {
+  counter?: boolean;
+}
+
+export const Count = styled.Text<ICountProps>`
+  color: ${props => (props.counter ? colors.redCrayola : colors.davysGrey)};
+  font-size: ${`${fonts.size.medium}px`};
+  font-family: ${`${fonts.familyType.bold}`};
+`;

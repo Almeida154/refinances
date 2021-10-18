@@ -21,7 +21,16 @@ const BottomNavigation: React.FC<IProps> = ({
   color,
 }) => {
   return (
-    <Container underlayColor={colors.white} onPress={onPress}>
+    <Container
+      // style={{
+      //   shadowColor: 'rgba(0, 0, 0, 1)',
+      //   shadowOffset: { width: 0, height: 0 },
+      //   shadowOpacity: 0.08,
+      //   shadowRadius: 20,
+      //   elevation: 20, // Com elevation, o Modalize fica sobreposto pelo BottomNavigation
+      // }}
+      underlayColor={colors.white}
+      onPress={onPress}>
       <>
         <Description
           style={[
