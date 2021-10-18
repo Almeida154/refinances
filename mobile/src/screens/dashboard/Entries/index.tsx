@@ -91,7 +91,7 @@ const FormLancamento = ({route, navigation}: PropsNavigation) => {
                         selected == 1 && <FormCadastro route={route} navigation={navigation} valor={valor} setValor={setValor}  tipoLancamento={"receita"}/>   
                     }
                     {
-                        selected == 2 && <FormTransferencia route={route} navigation={navigation} valor={valor} setValor={setValor}  tipoLancamento="Nenhum"/>   
+                        selected == 2 && <FormTransferencia route={route} navigation={navigation} valor={valor} setValor={setValor}  tipoLancamento="transferencia"/>   
                     }
 
                 </Container>

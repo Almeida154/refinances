@@ -15,7 +15,7 @@ export type Categoria = {
 }
 
 interface CategoriaContextType {        
-    categorias: Categoria[]
+    categorias: Categoria[] | null
     loading: boolean
 
     handleAdicionar(categoriaProps: Categoria): Promise<string>
@@ -28,7 +28,7 @@ const CategoriaContext = createContext<CategoriaContextType>({} as CategoriaCont
 export const UseCategories = () => useContext(CategoriaContext);
 
 export const CategoriasProvider: React.FC = ({ children }) => {
-    const [categorias, setCategorias] = useState<Categoria[]>([{}] as Categoria[]);    
+    const [categorias, setCategorias] = useState<Categoria[] | null>(null);    
     const [loading, setLoading] = useState(false)
 
     const { user } = UseAuth();
@@ -54,7 +54,11 @@ export const CategoriasProvider: React.FC = ({ children }) => {
                 userCategory: user.id
             });
 
-            newCategorias.push(response.data.message);
+            if(newCategorias == null) {
+                setCategorias([response.data.message])
+            } else {
+                newCategorias.push(response.data.message);
+            }
         })
 
         setCategorias(newCategorias);
@@ -78,9 +82,14 @@ export const CategoriasProvider: React.FC = ({ children }) => {
                 return response.data.error
             }
 
-            const newCategorias: Categoria[] = categorias
-            newCategorias.push(response.data.message);
-            setCategorias(newCategorias);
+            const newCategorias = categorias
+
+            if(newCategorias == null) {
+                setCategorias([response.data.message])
+            } else {
+                newCategorias.push(response.data.message);
+                setCategorias(newCategorias);
+            }
             setLoading(false)
 
             return ''

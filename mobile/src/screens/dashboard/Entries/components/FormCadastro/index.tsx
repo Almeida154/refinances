@@ -12,12 +12,8 @@ import {
     TextInput,
     SectionDetalhes,
     TextDetalhes,
-    ButtonDetalhes,
-    SectionCardsParcelas,
-    ContainerCardParcela,
-    TituloCardParcela,
-    LabelCardParcela,
-    InputCardParcela
+    ButtonDetalhes,  
+    SectionCardsParcelas
 } from './styles'
 
 import { Parcela } from '../../../../../contexts/InstallmentContext'
@@ -33,82 +29,13 @@ import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import {PropsNavigation} from '../..'
 import { Text } from 'react-native-paper'
 import { Conta } from '../../../../../contexts/AccountContext';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import {FAB} from 'react-native-paper'
 
-type CardParcela = {
-    id: number;
-    conta: Conta | number;
-    data: Date;
-    valor: number;
-    
-}
-
-type CardParcelaProps = {
-    item: CardParcela;
-    dataParcelas: CardParcela[];
-    setDataParcelas: React.Dispatch<React.SetStateAction<CardParcela[]>>;
-    tipoLancamento: string;
-}
-
-const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: CardParcelaProps) => {
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
-    const [selectedConta, setSelectedConta] = useState<Conta | number>(0)
-
-    const [valor, setValor] = useState(String(item.valor))    
-
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
-
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
-
-    const handleConfirm = (date: Date) => {
-        const aux = item
-        aux.data = date
-        dataParcelas[aux.id] = aux
-        setDataParcelas(dataParcelas)
-        hideDatePicker();
-    };
-
-    const onChangeValor = (text: string) => {
-        setValor(text)
-        const aux = item
-        aux.valor = parseInt(text)
-        dataParcelas[aux.id] = aux
-        setDataParcelas(dataParcelas)  
-    }
-
-    useEffect(() => {
-        const aux = item
-        aux.conta = selectedConta
-        dataParcelas[aux.id] = aux
-        // console.log(dataParcelas[aux.id])
-        setDataParcelas(dataParcelas)
-    }, [selectedConta])
-
-    return (
-        <ContainerCardParcela>
-            <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data.toLocaleDateString()}</TituloCardParcela>
-            <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-            />
-
-            <InputCardParcela 
-                keyboardType="numeric" 
-                placeholder="R$ 00,00" 
-                placeholderTextColor="gray"
-               value={valor}
-               onChangeText={onChangeValor}
-            />
-            <PickerContas conta={selectedConta} setConta={setSelectedConta} tipoLancamento={tipoLancamento}/>
-        </ContainerCardParcela>
-    )
-}
+import ItemCardParcela, {CardParcela, CardParcelaProps} from '../CardParcela'
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
+import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
 
 const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: PropsNavigation) => {
 
@@ -120,35 +47,20 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
     const [dataPagamento, setDataPagamento] =  useState((new Date(Date.now())))    
 
     const [selectedCategoria, setSelectedCategoria] = useState('0')
-    const [selectedConta, setSelectedConta] = useState<Conta | number>(0)
+    const [selectedConta, setSelectedConta] = useState<Conta | null>(null)
 
     const [parcelas, setParcelas] =  useState('1')    
     
     const [dataParcelas, setDataParcelas] = useState<CardParcela[]>([
         {
             id: 0,
-            conta: (typeof selectedConta == 'number' ? 0 : selectedConta.descricao),
+            conta: selectedConta,
             valor: 0,
             data: dataPagamento
         },
     ])
-    const [dataParcelaAlterado, setDataParcelaAlterado] = useState(false)
     
-    const {handleAdicionarLancamento, handleLoadLancamentos} = UseLancamentos()
-
-    function toDate(dateStr: string) {
-        var parts = dateStr.split("/");
-        return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
-    }
-
-    function addMonths(date: Date, months: number) {
-        var d = date.getDate();
-        date.setMonth(date.getMonth() + +months);
-        if (date.getDate() != d) {
-          date.setDate(0);
-        }
-        return date;
-    }
+    const {handleAdicionarLancamento, handleLoadLancamentos} = UseLancamentos()    
     
     const changeParcela = (text: string, date: Date, newDataParcelas: CardParcela[]) => {
         setParcelas(text)
@@ -160,7 +72,6 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
         
         let valorParcelaDividido =parseFloat((parseFloat(valor) / num).toFixed(2))
 
-        console.log(`num: ${num} e newDataParcelas.length: ${newDataParcelas.length}`)
         if (num < newDataParcelas.length) {
             for (var i = 0; i < num; i++) {
                 newDataParcelas[i].valor = valorParcelaDividido
@@ -170,13 +81,10 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             }
         } else if (num > newDataParcelas.length) {            
             for (var i = 0; i < num; i++) {
-                // console.log(`data atual = ${date.toLocaleString()} | anterior = ${aux[i-1] ? aux[i-1].data.toLocaleDateString() : "Não tem"}`)
                 const adicaoDeUmMes = aux[i-1] == undefined ? date : addMonths(aux[i-1].data, 1)
-                console.log("adicaodeumes, ", adicaoDeUmMes.toLocaleDateString())
                 if(i < newDataParcelas.length) {
                     newDataParcelas[i].valor = valorParcelaDividido
-                    newDataParcelas[i].data = adicaoDeUmMes,
-                    console.log(newDataParcelas[i])   
+                    newDataParcelas[i].data = adicaoDeUmMes,                    
                     aux.push(newDataParcelas[i])
                 
                 } else {
@@ -185,8 +93,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                         conta: selectedConta,
                         data: adicaoDeUmMes,
                         valor: valorParcelaDividido
-                    })          
-                    console.log(aux[i])             
+                    })                                       
                 } 
 
                 
@@ -194,13 +101,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
         }        
 
         setDataParcelas(aux)
-        setDataParcelaAlterado(true)
     }
-
-    // const useForceUpdate = () => {
-    //     const set = useState(0)[1];
-    //     return () => set((s) => s + 1);
-    // }
 
     async function handleSubmit() {                    
         const newParcelas: Parcela[] = []
@@ -210,7 +111,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             newParcelas.push({
                 id: -1,
                 lancamentoParcela: -1,
-                contaParcela: typeof item.conta == 'number' ? 0 : item.conta.id,
+                contaParcela: item.conta == null ? 0 : item.conta.id,
                 dateParcela: item.data,
                 valorParcela: item.valor                    
             })
@@ -227,8 +128,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                     
         console.log('newLancamento: ', newLancamento)
         
-        const getUser = await AsyncStorage.getItem('user')
-        const idUser = JSON.parse(getUser == null ? "{id: 0}" : getUser).id
+        const idUser = await retornarIdDoUsuario()
         
         const message = await handleAdicionarLancamento(newLancamento, idUser);            
         
@@ -237,7 +137,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             setDescricao('')
             setValor('')
             setSelectedCategoria('0')
-            setSelectedConta(0)
+            setSelectedConta(null)
             setParcelas('1')
         }
         else {
@@ -259,13 +159,10 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
     
     const handleConfirm = (date: Date) => {                
         setDataPagamento(date)
+        console.log('date', date)
         hideDatePicker();
-        changeParcela(parcelas, date, dataParcelas)
     };    
 
-    useEffect(() => {                            
-        setDataParcelaAlterado(false)
-    }, [dataParcelaAlterado])
 
     useEffect(() => {
         if(valor == '') return
@@ -279,9 +176,30 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
         })
 
         setDataParcelas(parcelas)
-        setDataParcelaAlterado(true)
     }, [valor])
 
+    useEffect(() => {        
+        const parcelas: CardParcela[] = []        
+
+        let proximoMes = dataPagamento
+
+        // let auxDatas: string[] = []
+        dataParcelas.map((item, index) => {
+            item.data = proximoMes     
+            
+            parcelas.push(item)
+            
+            parcelas[index].data = proximoMes
+            proximoMes = addMonths(proximoMes, 1)
+            // if(index = dataParcelas.length-1) {
+                // console.debug("useEffect[dataPagamento] | parcelas", parcelas)
+                setDataParcelas(parcelas)
+            // }
+        })
+
+
+        
+    }, [dataPagamento])
     
     return (
         <ContainerForm>
@@ -290,6 +208,8 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
 
             <InputControl>
                 <InputText
+                    onClear={() => {}}
+                    showClearIcon={false}
                     label="Descrição"
                     value={descricao}
                     onChangeText={setDescricao}
@@ -307,14 +227,22 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             </InputControl>
 
             <InputControl>
-                <Label>Data de Pagamento</Label>
-                <Text onPress={showDatePicker} >{dataPagamento.toLocaleDateString()}</Text>
+            <TouchableOpacity onPress={showDatePicker}>
+                <InputText 
+                    label={tipoLancamento == 'despesa' ? 'Data de Pagamento' : 'Data de Recebimento'}
+                    onClear={() => {}}
+                    showClearIcon={false}
+                    value={dataPagamento.toLocaleDateString()}
+                    placeholder={tipoLancamento == 'despesa' ? 'Data de Pagamento do lançamento' : 'Data de Recebimento do lançamento'}
+                    colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                />  
+            </TouchableOpacity>              
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
-                    mode="date"
+                    mode="date"                
                     onConfirm={handleConfirm}
                     onCancel={hideDatePicker}
-                    // date={toDate(dataPagamento)}
+                    date={dataPagamento}
                 />
             </InputControl>   
 
@@ -328,6 +256,8 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                 <>
                     <InputControl>
                         <InputText
+                            onClear={() => {}}
+                            showClearIcon={false}
                             label="Quantidade de Parcelas"
                             colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
                             value={parcelas}
@@ -340,20 +270,23 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                     </InputControl>
                     
                     <SectionCardsParcelas>
-                        {!dataParcelaAlterado && <FlatList 
+                        {<FlatList 
                             data={dataParcelas}
                             renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} tipoLancamento={tipoLancamento}/>}
                             horizontal
-                            keyExtractor={(item, index) => String(index)} />}
+                            keyExtractor={(item, index) => String(index)} 
+                            extraData={dataParcelas}/>}
                     </SectionCardsParcelas>
                 </>
             }
 
-            <TouchableHighlight
-                onPress={handleSubmit}
-                style={{ marginBottom: 100 }}>
-                <Text>Botao Provisorio</Text>
-            </TouchableHighlight>
+        <FAB 
+            icon="plus"
+            style={{
+                backgroundColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'
+            }}
+            onPress={handleSubmit}
+        />
         </ContainerForm>
     )
 }

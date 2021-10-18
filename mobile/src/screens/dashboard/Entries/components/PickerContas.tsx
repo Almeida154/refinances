@@ -2,6 +2,8 @@ import React, { useState, useRef, SetStateAction, useEffect } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import retornarIdDoUsuario from '../../../../helpers/retornarIdDoUsuario'
+
 import { Picker, PickerProps } from '@react-native-picker/picker';
 
 import { StyleSheet, View } from 'react-native';
@@ -12,8 +14,8 @@ import InputText from '../../../../components/InputText';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
 type PropsPickerContas = {
-  conta: Conta | number;
-  setConta: React.Dispatch<React.SetStateAction<Conta | number>>;
+  conta: Conta | null;
+  setConta: React.Dispatch<React.SetStateAction<Conta | null>>;
   tipoLancamento: string;
 };
 
@@ -31,17 +33,15 @@ const PickerContas = ({
   }
 
   const onChangePicker = (index: number) => {
-    if (index == 0) return;
+    
     setConta(contas[index]);
   };
 
   useEffect(() => {
     try {
       async function loadContas() {
-        const getItem = await AsyncStorage.getItem('user');
-        const id = getItem == null ? 0 : JSON.parse(getItem).id;
-        console.log(id);
-        handleReadByUserContas(id);
+        
+        handleReadByUserContas(await retornarIdDoUsuario());
       }
 
       loadContas();
@@ -55,8 +55,10 @@ const PickerContas = ({
     <View style={styles.containerPicker}>
       <TouchableOpacity onPress={open}>
         <InputText
+          onClear={() => {}}
+          showClearIcon={false}
           label="Conta"
-          value={typeof conta == 'number' ? '' : conta.descricao}
+          value={conta == null ? '' : conta.descricao}
           placeholder="Selecione uma conta"
           placeholderTextColor={'#bbb'}
           colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
@@ -67,7 +69,7 @@ const PickerContas = ({
         itemStyle={styles.pickerItem}
         style={styles.picker}
         ref={pickerRef}
-        selectedValue={typeof conta == 'number' ? 0 : conta.id}
+        selectedValue={conta == null ? undefined : conta.id}
         onValueChange={onChangePicker}>
         {loading ? (
           <Picker.Item
@@ -76,7 +78,7 @@ const PickerContas = ({
             value={0}
           />
         ) : (
-          contas.map((item, index) => {
+          contas && contas.map((item, index) => {
             return (
               <Picker.Item
                 key={index}

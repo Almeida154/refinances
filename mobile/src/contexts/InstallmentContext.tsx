@@ -7,7 +7,7 @@ export type Parcela = {
     id: number,
     dateParcela: Date,
     valorParcela: number,
-    contaParcela: number
+    contaParcela: number | null
     lancamentoParcela: number
 }
 

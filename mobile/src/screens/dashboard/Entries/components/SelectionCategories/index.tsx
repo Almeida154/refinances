@@ -112,12 +112,17 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria, navigation
     }, [])
 
     useEffect(() => {
-        setCategoriasAtual(categorias)
+        if(categorias == null) {
+            setCategoriasAtual([])
+        } else {
+            setCategoriasAtual(categorias)
+        }
+
     }, [categorias])
 
     useEffect(() => {
         console.debug('SelectionCategorias | categorias', categorias)
-        if(search == '') {
+        if(search == '' && categorias) {
             setCategoriasAtual(categorias)
         } else if(categorias) {
             const aux: Categoria[] = []
@@ -142,6 +147,8 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria, navigation
 
             <TouchableOpacity onPress={onOpen}>
                 <InputText 
+                    onClear={() => {}}
+                    showClearIcon={false}
                     label="Categoria"
                     value={categoria == '0' ? '' : categoria}
                     placeholder="Selecione uma categoria para seu lançamento"

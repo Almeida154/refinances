@@ -66,7 +66,6 @@ export const ContasProvider: React.FC = ({ children }) => {
     }
     
     async function handleReadByUserContas(idUser: number) {
-        console.log(idUser)
         setLoading(true)
         try {
             const response = await api.post(`/account/findbyuser/${idUser}`)
@@ -74,12 +73,10 @@ export const ContasProvider: React.FC = ({ children }) => {
             if(response.data.error) {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
             }
-            console.debug('handleReadByUserContas | response.data', response.data)
             setContas(response.data.contas)
             
             setLoading(false)
 
-            console.log('contas: ' + contas)
         } catch (error) {
             
         }

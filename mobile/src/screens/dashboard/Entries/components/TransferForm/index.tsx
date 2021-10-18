@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, ScrollView, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native'
 
 import {
     ContainerForm,
@@ -23,6 +23,7 @@ import { PropsNavigation } from '../..'
 import { Text, ToastAndroid } from 'react-native'
 import PickerContas from '../PickerContas'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { FAB } from 'react-native-paper';
 
 const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation) => {
     const [selectedContaOrigem, setSelectedContaOrigem] = useState(0)
@@ -62,8 +63,7 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
         const message = await handleAdicionarTransferencia(newTransferencia)
         
         if(message == '') {
-            await handleLoadTransferencias(idUser)
-            navigation.navigate('Extrato')            
+            await handleLoadTransferencias(idUser)            
         }
         else {
             ToastAndroid.show(message, ToastAndroid.SHORT)            
@@ -75,6 +75,8 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
             <ContainerForm>               
                 <InputControl>
                     <InputText
+                        onClear={() => {}}
+                        showClearIcon={false}
                         label="Descrição"
                         colorLabel="#333333"
                         value={descricao}
@@ -83,19 +85,26 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                         placeholder="Descrição de sua transferência"></InputText>
                 </InputControl>
 
-                <InputControl>
-                    <Label>De: </Label>           
+                <InputControl>                    
                     <PickerContas conta={selectedContaOrigem} setConta={setSelectedContaOrigem}/>
                 </InputControl>
 
-                <InputControl>
-                    <Label>Para: </Label>           
+                <InputControl>                    
                     <PickerContas conta={selectedContaDestino} setConta={setSelectedContaDestino}/>
                 </InputControl>
 
                 <InputControl style={{marginBottom: 50}}>
-                    <Label>Data de Transferencia</Label>
-                    <Text onPress={showDatePicker} >{dataPagamento.toLocaleDateString()}</Text>
+                <TouchableOpacity onPress={showDatePicker}>
+                <InputText 
+                    label="Data da transferência"
+                    onClear={() => {}}
+                    showClearIcon={false}
+                    value={dataPagamento.toLocaleDateString()}
+                    placeholder="Data da transferência"
+                    colorLabel='#333333'
+                />  
+            </TouchableOpacity>  
+
                     <DateTimePickerModal
                         isVisible={isDatePickerVisible}
                         mode="date"
@@ -105,7 +114,13 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                     />
                 </InputControl>   
 
-                <TouchableHighlight onPress={handleSubmit} style={{marginBottom: 100}}><Text>Botao Provisorio</Text></TouchableHighlight>
+                <FAB 
+                    icon="plus"
+                    style={{
+                        backgroundColor: '#333'
+                    }}
+                    onPress={handleSubmit}
+                />
             </ContainerForm>
         </ScrollView>
     )
