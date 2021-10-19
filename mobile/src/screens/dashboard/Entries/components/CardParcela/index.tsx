@@ -33,8 +33,6 @@ export type CardParcelaProps = {
 
 const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: CardParcelaProps) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
-    const [selectedConta, setSelectedConta] = useState<Conta | null>(dataParcelas[item.id].conta)
-
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -53,22 +51,24 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
     };
 
     const onChangeValor = (text: string) => {
-        const aux = item
-        aux.valor = parseInt(text)
-        dataParcelas[aux.id] = aux
-        setDataParcelas(dataParcelas)  
+        const aux = dataParcelas.slice()
+        aux[item.id].valor = parseFloat(text)
+        
+        console.log(aux)
+        setDataParcelas(aux)                
     }
 
     function changeAccount(conta: Conta | null){
-        const aux = item
-        aux.conta = conta
-        dataParcelas[aux.id] = aux
+        const aux = dataParcelas.slice()
+        aux[item.id].conta = conta        
         
-        setSelectedConta(conta)
-        setDataParcelas(dataParcelas)
+        console.log(aux)
+        setDataParcelas(aux)
     }
-
-    console.log("Reiniciou", dataParcelas)
+    
+    
+    console.log("Mudou Mudou", dataParcelas[item.id].conta?.descricao)
+    
     return (
         <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>
             <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data}</TituloCardParcela>
@@ -86,7 +86,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 value={String(dataParcelas[item.id].valor)}
                 onChangeText={onChangeValor}
             />
-            <PickerContas conta={selectedConta} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
+            <PickerContas conta={dataParcelas[item.id].conta} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
         </ContainerCardParcela>
 
     )
