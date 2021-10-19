@@ -1,90 +1,90 @@
 import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
   View,
 } from 'react-native';
 
+import {GoalsStack} from '../../../../../@types/RootStackParamApp'
+import { StackNavigationProp } from '@react-navigation/stack'
+
+import {UseMetas} from '../../../../../contexts/GoalsContext'
+
+import { ActivityIndicator } from 'react-native-paper'
+
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
+
 import goalsJson from './goals.json';
 
-import { Title, Goal, GoalDesc, DaysLeft, 
-  InvestedMoney, Percent, PercentText} from './styles'
+import { Title, Loading, TextLoading} from './styles'
 
 import { ProgressBar, Colors } from 'react-native-paper';
+import CardGoals from './CardGoals';
 
-const Goals = () => {
-  const [goals, setGoals] = useState(goalsJson);
-  const [accomplishedGoals, setAccomplishedGoals] = useState(
-    goals.filter(goal => !goal.isAccomplished),
-  );
+type PropsGoals = {
+  navigation: StackNavigationProp<GoalsStack, "GoalsList">
+}
+
+const Goals = ({navigation}: PropsGoals) => {
+
+  const {metas, handleReadByUserMetas} = UseMetas()
+  const [stateReload, setStateReload] = useState(false)
 
   useEffect(() => {
-    console.log(goals);
-  }, []);
+    if(!navigation.addListener)
+        return
 
-  const handleProgress = (currentAmount, totalAmount) => {
-    let percent = (currentAmount * 100) / totalAmount;
-    return Number.isInteger(percent) ? percent : percent.toFixed(1);
-  };
+    const focus = navigation.addListener('focus', () => {
+        setStateReload(false)
+        
+    })
+
+    const blur = navigation.addListener('blur', () => {
+        setStateReload(true)
+        
+    })
+
+    
+}, [navigation])
+
+  useEffect(() => {
+    // Caso nenhuma meta seja carregada, recarregar
+    if(!metas)
+        (async function(){
+            handleReadByUserMetas(await retornarIdDoUsuario())
+        }) ()
+          
+  }, [])
 
   return (
     <ScrollView style={{ backgroundColor: '#fff' }}>
-      <View style={styles.container}>
-        <Title>
-          Registre os depósitos para acompanhar o progresso de suas metas
-        </Title>
 
-        {accomplishedGoals.map(goal => (
-          <Goal
-            key={goal.id}>
-            <GoalDesc>{goal.desc}</GoalDesc>
+        {
+          stateReload ? (
 
-            <DaysLeft>
-              ! Faltam 14 dias
-            </DaysLeft>
+            <Loading>
+              <ActivityIndicator size='large' color='#E8871E' />
+              <TextLoading>Carregando...</TextLoading>
+            </Loading>
 
-            <ProgressBar
-              progress={
-                handleProgress(goal.currentAmount, goal.totalAmount) / 100
+          ) : 
+            <View style={{margin: '10%'}}>
+              <Title>
+                Registre os depósitos para acompanhar o progresso de suas metas
+              </Title>
+
+              {
+                metas && metas.map((item, index) => {
+                  console.log("Item: ", metas)                    
+                  return (
+                    <CardGoals item={item} key={index}/>
+                  )
+                })   
               }
-              color="#F81650"
-              style={{
-                height: 10,
-                marginVertical: 8,
-              }}
-            />
+            </View>
+          }
 
-            <InvestedMoney>
-              {`R$ ${goal.currentAmount} de R$ ${goal.totalAmount}`}
-            </InvestedMoney>
-
-            <Percent>
-              <PercentText>
-                {handleProgress(goal.currentAmount, goal.totalAmount)}%
-              </PercentText>
-            </Percent>
-          </Goal>
-        ))}
-        
-      </View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    margin: '10%',
-  },
-
-  progress: {
-    transform: [{ scaleX: 1.0 }, { scaleY: 2.0 }],
-    marginTop: '2%',
-    marginBottom: '2%',
-  },
-
-  
-});
 
 export default Goals;

@@ -4,7 +4,6 @@ import {ScrollView, View} from 'react-native'
 import CardAccount from './CardAccount'
 
 import Button from '../../../../../components/Button'
-import ButtonAdd from '../../../../../components/ButtonAdd'
 
 import {HomeAccountStack} from '../../../../../@types/RootStackParamApp'
 
@@ -15,6 +14,7 @@ import {
     Title,
     Subtitle
 } from './styles'
+
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/core'
 
@@ -74,7 +74,7 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                          <Text style={{color: '#183153',
                            fontSize: 22,
                            fontFamily: 'Poppins-Bold',
-                           marginTop: 20}}>Loading</Text>
+                           marginTop: 20}}>Carregando...</Text>
                      </View>
                  ) :
                 <Container>
@@ -82,7 +82,7 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                     <Subtitle>Aqui você as gerencia: editando, excluindo ou criando novas.</Subtitle>
                     {
                        contas && contas.map((item, index) => {
-                           console.log("Item",)                    
+                           console.log("Item: ", item)                    
                             return (
                                 <CardAccount item={item} key={index}/>
                             )
@@ -96,13 +96,6 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                         backgroundColor="#ccc"
                     />   
 
-                    {/*<ButtonAdd
-                        onPress={() => console.log('ok')}
-                        backgroundColor="#fff"
-                    />*/}
-
-                    
-                    
                 </Container>
             }
         </ScrollView>

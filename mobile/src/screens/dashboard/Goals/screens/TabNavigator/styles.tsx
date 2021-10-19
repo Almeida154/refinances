@@ -56,3 +56,16 @@ export const PercentText = styled.Text`
     color: #525252 
     fontFamily: ${`${fonts.familyType.regular}`};
 `
+
+export const Loading = styled.View`
+    alignSelf: center;
+    height: 100%;
+    justifyContent: center
+`;
+
+export const TextLoading = styled.Text`
+    color: #183153;
+    font-size: ${`${fonts.size.big}px`};
+    fontFamily: ${`${fonts.familyType.regular}`};
+    marginTop: 20
+`;
