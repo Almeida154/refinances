@@ -15,16 +15,17 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
 type PropsPickerContas = {
   conta: Conta | null;
-  setConta: React.Dispatch<React.SetStateAction<Conta | null>>;
+  changeAccount: (conta: Conta | null) => void
   tipoLancamento: string;
 };
 
 const PickerContas = ({
   conta,
-  setConta,
+  changeAccount,
   tipoLancamento,
 }: PropsPickerContas) => {
   const { contas, handleReadByUserContas, loading } = UseContas();
+  const [selectedItem, setSelectedItem] = useState<number | undefined>(0)
 
   const pickerRef = useRef();
 
@@ -33,8 +34,9 @@ const PickerContas = ({
   }
 
   const onChangePicker = (index: number) => {
-    
-    setConta(contas[index]);
+    console.log("index,",index)
+    setSelectedItem(index)
+    changeAccount(contas == null ? null : contas[index]);
   };
 
   useEffect(() => {
@@ -69,15 +71,10 @@ const PickerContas = ({
         itemStyle={styles.pickerItem}
         style={styles.picker}
         ref={pickerRef}
-        selectedValue={conta == null ? undefined : conta.id}
-        onValueChange={onChangePicker}>
-        {loading ? (
-          <Picker.Item
-            style={{ backgroundColor: 'orange' }}
-            label="Carregando"
-            value={0}
-          />
-        ) : (
+        selectedValue={selectedItem}
+        onValueChange={(item, index) => onChangePicker(index)}
+        >
+        {        
           contas && contas.map((item, index) => {
             return (
               <Picker.Item
@@ -88,7 +85,7 @@ const PickerContas = ({
               />
             );
           })
-        )}
+        }
       </Picker>
     </View>
   );

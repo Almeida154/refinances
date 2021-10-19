@@ -204,13 +204,23 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
 
         setDataParcelas(parcelas)
     }
+
+    function changeAccount(conta: Conta | null){
+        const parcelas: CardParcela[] = []        
+
+        dataParcelas.map((item, index) => {
+            item.conta = conta
+            
+            parcelas.push(item)        
+        })
+
+        setSelectedConta(conta)
+        setDataParcelas(parcelas)
+    }
     
     
     return (
-        <ContainerForm>
-            
-           
-
+        <ContainerForm>                
             <InputControl>
                 <InputText
                     onClear={() => {}}
@@ -228,7 +238,10 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             </InputControl>
 
             <InputControl>
-                <PickerContas conta={selectedConta} setConta={setSelectedConta} tipoLancamento={tipoLancamento}/>
+            {
+                console.log(selectedConta)
+            }
+                <PickerContas conta={selectedConta} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
             </InputControl>
 
             <InputControl>
