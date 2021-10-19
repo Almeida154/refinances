@@ -1,5 +1,6 @@
 import { Conta } from '@contexts/AccountContext';
 import React, { useEffect, useState } from 'react'
+import { Text } from 'react-native';
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
@@ -32,9 +33,8 @@ export type CardParcelaProps = {
 
 const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: CardParcelaProps) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
-    const [selectedConta, setSelectedConta] = useState<Conta | null>(null)
+    const [selectedConta, setSelectedConta] = useState<Conta | null>(dataParcelas[item.id].conta)
 
-    const [valor, setValor] = useState(String(item.valor))    
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -53,23 +53,24 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
     };
 
     const onChangeValor = (text: string) => {
-        setValor(text)
         const aux = item
         aux.valor = parseInt(text)
         dataParcelas[aux.id] = aux
         setDataParcelas(dataParcelas)  
     }
 
-    useEffect(() => {
+    function changeAccount(conta: Conta | null){
         const aux = item
-        aux.conta = selectedConta
+        aux.conta = conta
         dataParcelas[aux.id] = aux
-        // console.log(dataParcelas[aux.id])
+        
+        setSelectedConta(conta)
         setDataParcelas(dataParcelas)
-    }, [selectedConta])
+    }
 
+    console.log("Reiniciou", dataParcelas)
     return (
-        <ContainerCardParcela>
+        <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>
             <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data}</TituloCardParcela>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
@@ -82,11 +83,12 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 keyboardType="numeric" 
                 placeholder="R$ 00,00" 
                 placeholderTextColor="gray"
-                value={valor}
+                value={String(dataParcelas[item.id].valor)}
                 onChangeText={onChangeValor}
             />
-            <PickerContas conta={selectedConta} setConta={setSelectedConta} tipoLancamento={tipoLancamento}/>
+            <PickerContas conta={selectedConta} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
         </ContainerCardParcela>
+
     )
 }
 

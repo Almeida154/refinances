@@ -172,7 +172,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
     useEffect(() => {
         if(valor == '') return
         
-        const parcelas = dataParcelas
+        const parcelas = dataParcelas.slice()
 
         const valorParcela = (parseFloat(valor) / dataParcelas.length).toFixed(2)
 
