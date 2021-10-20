@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 
@@ -20,7 +19,7 @@ import {
 import {GoalsStack} from '../../../../../@types/RootStackParamApp'
 import { StackNavigationProp } from '@react-navigation/stack'
 
-import {ProgressBar} from 'react-native-paper'
+import {ProgressBar, FAB, Portal, Provider} from 'react-native-paper'
 import Button from '../../../../../components/Button';
 
 type PropsGoals = {
@@ -28,10 +27,13 @@ type PropsGoals = {
 }
 
 const GoalDetails = ({ navigation }: PropsGoals) => {
-  let [progress, setProgress] = useState(1);
+
+  const [state, setState] = React.useState({ open: false });
+  const onStateChange = ({ open }) => setState({ open });
+  const { open } = state;
 
   return (
-    <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+    <ScrollView style={{ backgroundColor: '#f6f6f6', height: '120%' }}>
       <View style={styles.container}>
         <Title>
           PS5
@@ -79,9 +81,43 @@ const GoalDetails = ({ navigation }: PropsGoals) => {
             navigation.navigate('InvestGoals');
           }}
           title="Depositar"
-          style={{bottom: 0, top: 20}}>
+          style={{bottom: 20, top: 20}}>
         </Button>
+
       </View>
+
+        <Provider>
+          <Portal>
+            <FAB.Group
+              style={{                             
+                position: 'absolute', top: 50, left: 0, padding: 30,}}
+                visible={true}
+                open={open}
+                icon={'tools'}
+                actions={[
+                {
+                  icon: 'pencil',
+                  label: 'Editar',
+                  onPress: () => console.log('Pressed star'),
+                  color: '#D5DF5C'
+                },
+                {
+                  icon: 'delete',
+                  label: 'Excluir',
+                  color: '#DF5C5C',
+                  onPress: () => console.log('Pressed email'),
+                },
+              ]}
+              onStateChange={onStateChange}
+              onPress={() => {
+                if (open) {
+                  // do something if the speed dial is open
+                }
+              }}
+            />
+          </Portal>
+        </Provider>
+      
     </ScrollView>
   );
 };
@@ -89,50 +125,7 @@ const GoalDetails = ({ navigation }: PropsGoals) => {
 const styles = StyleSheet.create({
   container: {
     margin: '10%',
-  },
 
-  txtgoals: {
-    fontSize: 17,
-    color: '#292929',
-    fontWeight: '700',
-  },
-
-  txtgoalsh: {
-    fontSize: 17,
-    color: '#292929',
-    fontWeight: '900',
-    width: '50%',
-  },
-
-  txtlighterh: {
-    fontSize: 17,
-    color: '#525252',
-    textAlign: 'right',
-    fontWeight: '900',
-    width: '50%',
-    opacity: 0.85,
-  },
-
-  goaldate: {
-    flexDirection: 'row',
-    width: '100%',
-    paddingBottom: '1%',
-  },
-
-  vwvalor: {
-    flexDirection: 'row',
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-  },
-
-  txtrs: {
-    textAlign: 'center',
-  },
-
-  txtvalor: {
-    fontSize: 40,
-    textAlign: 'center',
   },
 });
 
