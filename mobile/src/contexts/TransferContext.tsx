@@ -9,8 +9,8 @@ export type Transferencia = {
     id: number,
     descricaoTransferencia: string,
     valorTransferencia: number,
-    contaOrigem: number | Conta,
-    contaDestino: number | Conta,
+    contaOrigem: Conta | null,
+    contaDestino: Conta | null,
     dataTransferencia: Date,
 }
 
@@ -33,7 +33,13 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
     async function handleAdicionarTransferencia(TransferenciaProps: Transferencia) {       
         setLoadingTransferencia(true)
         try {
-            const response = await api.post('transfer/create', TransferenciaProps)
+            const response = await api.post('transfer/create', {
+                descricaoTransferencia: TransferenciaProps.descricaoTransferencia,
+                valorTransferencia: TransferenciaProps.valorTransferencia,
+                contaOrigem: TransferenciaProps.contaOrigem?.id,
+                contaDestino: TransferenciaProps.contaDestino?.id,
+                dataTransferencia: TransferenciaProps.dataTransferencia
+            })
             
             console.log('response.data: ', response.data)
             const newTransferencia: Transferencia = response.data.message

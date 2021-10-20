@@ -26,7 +26,7 @@ export const HomeAccountStackNavigation = () => {
         <HomeStack.Navigator screenOptions={{headerShown: false}}>                       
             <HomeStack.Screen name="ManageAccount" component={ManageAccount}/>
             <HomeStack.Screen name="CreateAccount" component={CreateAccount}/>
-            {/* <HomeStack.Screen name="AddCategoryAccount" component={AddCategoryAccount}/> */}
+            <HomeStack.Screen name="AddCategoryAccount" component={AddCategoryAccount}/>
         </HomeStack.Navigator>
     )
 }
