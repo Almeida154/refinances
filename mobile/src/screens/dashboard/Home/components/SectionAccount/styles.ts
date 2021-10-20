@@ -3,10 +3,10 @@ import styled from 'styled-components/native'
 export const Container = styled.View`
     display: flex;
     align-items: center;
-    
     background-color: white;
     width: 90%;
     border-radius: 15px;
+    margin-bottom: 20px;
 `
 export const SectionBalance = styled.View`
     border-left-width: 6px;

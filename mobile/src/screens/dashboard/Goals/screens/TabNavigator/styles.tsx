@@ -27,6 +27,8 @@ export const Goal = styled.View`
     borderRadius: 10px;
 `
 
+export const GoalTouchable = styled.TouchableOpacity ``
+
 export const GoalDesc = styled.Text`
     font-size: ${`${fonts.size.medium}px`};
     color: #525252;

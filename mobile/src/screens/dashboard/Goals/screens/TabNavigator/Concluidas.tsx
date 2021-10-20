@@ -112,17 +112,17 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
           }}/>
 
           <Title>
-            Você ainda não criou nenhuma meta!
+            Você ainda não concluiu nenhuma meta!
           </Title>
       
           <Subtitle>
-              Metas financeiras são muito importantes para realizar seus propósitos!
+              Mas não desanime, é importante investir mensalmente em suas metas para concluí-las!
           </Subtitle>
 
           <Button
-            title="Criar nova meta"
+            title="Investir em uma meta"
             backgroundColor="#ee4266"
-            onPress={() => {navigation.navigate('CreateGoals')}}>
+            onPress={() => {navigation.navigate('InvestGoals')}}>
           </Button>
         </View>
     </ScrollView>

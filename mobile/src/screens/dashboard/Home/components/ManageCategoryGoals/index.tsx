@@ -26,7 +26,8 @@ import {
     DaysLeft, 
     InvestedMoney, 
     Percent, 
-    PercentText} 
+    PercentText,
+    GoalTouchable} 
     from '../../../Goals/screens/TabNavigator/styles'
 
 const CardGoal = ({item}: {item: Meta}) => {
@@ -40,10 +41,15 @@ const CardGoal = ({item}: {item: Meta}) => {
 
     console.log(percentageBalance)
 
+    const {navigation} = UseDadosTemp()
+
     return(
         <ContainerCard>
             <Goal>
-                <GoalDesc>{item.descMeta}</GoalDesc>
+                <GoalTouchable
+                    onPress={()=> navigation.navigate('GoalsStack', {screen: 'GoalDetails'})}>
+                    <GoalDesc>{item.descMeta}</GoalDesc>
+                </GoalTouchable>
                 <DaysLeft>! Faltam {days} dias</DaysLeft>
 
                 <ProgressBar
