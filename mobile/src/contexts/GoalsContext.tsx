@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
 import { StackDescriptorMap } from '@react-navigation/stack/lib/typescript/src/types';
 
+import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario'
+
 export type Meta = {
   id: number;
   descMeta: string;
@@ -17,7 +19,7 @@ export type Meta = {
 };
 
 interface MetaContextType {
-  metas: Meta[];
+  metas: Meta[] | null;
   loading: boolean;
   handleAdicionarMeta(metaProps: Meta): Promise<void>;
   handleReadByUserMetas(idUser: number): Promise<void>;
@@ -28,7 +30,7 @@ const MetaContext = createContext<MetaContextType>({} as MetaContextType);
 export const UseMetas = () => useContext(MetaContext);
 
 export const MetasProvider: React.FC = ({ children }) => {
-  const [metas, setMetas] = useState<Meta[]>([{}] as Meta[]);
+  const [metas, setMetas] = useState<Meta[] | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleAdicionarMeta(meta: Meta) {
@@ -47,11 +49,17 @@ export const MetasProvider: React.FC = ({ children }) => {
 
       if (response.data.error) console.log(response.data.error);
 
-      console.log('response.data', response.data);
-      await AsyncStorage.setItem('idMeta', String(response.data.meta.id));
+      console.log('response.data', response.data);      
 
-      const newMetas = metas;
-      newMetas.push(response.data.meta);
+      const newMetas = metas == null ? null : metas.slice();
+
+      if(!newMetas) {
+          //Caso cadastrou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
+          handleReadByUserMetas(await retornarIdDoUsuario())
+      } else {
+          //Caso cadastrou e tinha outras metas carregadas, adicionar a criada no final do vetor
+          newMetas.push(response.data.meta)
+      }
 
       setMetas(newMetas);
     } catch (error) {
@@ -59,9 +67,7 @@ export const MetasProvider: React.FC = ({ children }) => {
     }
   }
 
-  async function handleReadByUserMetas(idUser: number) {
-    console.log(idUser);
-    setLoading(true);
+  async function handleReadByUserMetas(idUser: number) {    
     try {
       const response = await api.post(`/goal/findbyuser/${idUser}`);
 
@@ -70,8 +76,7 @@ export const MetasProvider: React.FC = ({ children }) => {
       }
       console.log(response.data.metas);
       setMetas(response.data.metas);
-
-      setLoading(false);
+      
 
       console.log('metas: ' + metas);
     } catch (error) {
