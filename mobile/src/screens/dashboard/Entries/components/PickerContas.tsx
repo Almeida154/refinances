@@ -13,17 +13,19 @@ import { Conta, UseContas } from '../../../../contexts/AccountContext';
 import InputText from '../../../../components/InputText';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
-type PropsPickerContas = {
+interface PropsPickerContas {
   conta: Conta | null;
-  changeAccount: (conta: Conta | null) => void
+  changeAccount: (conta: Conta | null) => void;
   tipoLancamento: string;
+  label?: string;
 };
 
-const PickerContas = ({
+const PickerContas: React.FC<PropsPickerContas> = ({
   conta,
   changeAccount,
   tipoLancamento,
-}: PropsPickerContas) => {
+  label
+}) => {
   const { contas, handleReadByUserContas, loading } = UseContas();
   const [selectedItem, setSelectedItem] = useState<number | undefined>(0)
 
@@ -59,7 +61,7 @@ const PickerContas = ({
         <InputText
           onClear={() => {}}
           showClearIcon={false}
-          label="Conta"
+          label={label ? label : 'Conta'}
           value={conta == null ? '' : conta.descricao}
           placeholder="Selecione uma conta"
           placeholderTextColor={'#bbb'}

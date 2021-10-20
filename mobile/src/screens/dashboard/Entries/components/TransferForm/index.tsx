@@ -24,10 +24,12 @@ import { Text, ToastAndroid } from 'react-native'
 import PickerContas from '../PickerContas'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FAB } from 'react-native-paper';
+import { Conta } from '@contexts/AccountContext';
 
 const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation) => {
-    const [selectedContaOrigem, setSelectedContaOrigem] = useState(0)
-    const [selectedContaDestino, setSelectedContaDestino] = useState(0)
+    const [selectedContaOrigem, setSelectedContaOrigem] = useState<Conta | null>(null)
+    const [selectedContaDestino, setSelectedContaDestino] = useState<Conta | null>(null)
+
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
     const [descricao, setDescricao] =  useState('')
     const [dataPagamento, setDataPagamento] =  useState(new Date(Date.now()))        
@@ -39,8 +41,8 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
     };
 
     const handleConfirm = (date: Date) => {       
-        hideDatePicker();
         setDataPagamento(date)
+        hideDatePicker();
     };
 
     const hideDatePicker = () => {
@@ -69,7 +71,7 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
             ToastAndroid.show(message, ToastAndroid.SHORT)            
         }
     }
-
+  
     return (
         <ScrollView style={{width: '100%'}}>
             <ContainerForm>               
@@ -86,11 +88,11 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                 </InputControl>
 
                 <InputControl>                    
-                    <PickerContas conta={selectedContaOrigem} setConta={setSelectedContaOrigem}/>
+                    <PickerContas conta={selectedContaOrigem} changeAccount={setSelectedContaOrigem} tipoLancamento='despesa' label="Conta Origem"/>
                 </InputControl>
 
                 <InputControl>                    
-                    <PickerContas conta={selectedContaDestino} setConta={setSelectedContaDestino}/>
+                    <PickerContas conta={selectedContaDestino} changeAccount={setSelectedContaDestino} tipoLancamento='receita' label="Conta Destino"/>
                 </InputControl>
 
                 <InputControl style={{marginBottom: 50}}>
@@ -102,20 +104,21 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                     value={dataPagamento.toLocaleDateString()}
                     placeholder="Data da transferência"
                     colorLabel='#333333'
+                    editable={false}
                 />  
             </TouchableOpacity>  
 
-                    <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        onConfirm={handleConfirm}
-                        onCancel={hideDatePicker}
-                        // date={toDate(dataPagamento)}
-                    />
+                <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"                
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                    date={dataPagamento}
+                />
                 </InputControl>   
 
                 <FAB 
-                    icon="plus"
+                    icon="check"
                     style={{
                         backgroundColor: '#333'
                     }}

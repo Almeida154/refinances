@@ -55,9 +55,9 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
         {
             id: 0,
             conta: selectedConta,
-            valor: 0,
+            valor: valor == '' ? 0 : parseFloat(valor),
             data: dataPagamento.toLocaleDateString(),
-            status: false
+            status: status
         },
     ])
     
@@ -145,6 +145,15 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             setSelectedCategoria('0')
             setSelectedConta(null)
             setParcelas('1')
+            setDataParcelas([
+                {
+                    id: 0,
+                    conta: selectedConta,
+                    valor: valor == '' ? 0 : parseFloat(valor),
+                    data: dataPagamento.toLocaleDateString(),
+                    status: status
+                },
+            ])
         }
         else {
             ToastAndroid.show(message, ToastAndroid.SHORT)
@@ -327,7 +336,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             }
 
         <FAB 
-            icon="plus"
+            icon="check"
             style={{
                 backgroundColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'
             }}
