@@ -18,7 +18,7 @@ export type Lancamento = {
 }
 
 interface LancamentoContextType {        
-    lancamentos: Lancamento[],
+    lancamentos: Lancamento[] | null,
     loading: boolean
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
 
@@ -31,10 +31,10 @@ const LancamentoContext = createContext<LancamentoContextType>({} as LancamentoC
 export const UseLancamentos = () => useContext(LancamentoContext);
 
 export const LancamentoProvider: React.FC = ({ children }) => {
-    const [lancamentos, setLancamentos] = useState<Lancamento[]>([{}] as Lancamento[]);
+    const [lancamentos, setLancamentos] = useState<Lancamento[] | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const { handleAdicionarParcela } = UseParcelas();    
+    const { handleAdicionarParcela, handleInstallmentGroupByDate } = UseParcelas();    
     
     async function handleLoadLancamentos(idUser: number) {
         try {
@@ -88,12 +88,9 @@ export const LancamentoProvider: React.FC = ({ children }) => {
             newLancamento.parcelasLancamento = lancamento.parcelasLancamento
 
 
-            const loadLancamentos: Lancamento[] = lancamentos
+            const loadLancamentos: any = lancamentos
 
-            
-
-            loadLancamentos.push(newLancamento);
-            setLancamentos(loadLancamentos);
+            handleInstallmentGroupByDate(idUser, lancamento.parcelasLancamento[0].dateParcela.toISOString())
                         
             return ''
 

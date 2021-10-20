@@ -25,6 +25,8 @@ export class Parcela {
     })
     valorParcela: number;
    
+    @Column()
+    statusParcela: boolean
     // Foreign Keys
     
     @ManyToOne(type => Conta, conta => conta.parcelasConta)

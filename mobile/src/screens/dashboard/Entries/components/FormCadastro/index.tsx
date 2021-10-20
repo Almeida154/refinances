@@ -13,7 +13,8 @@ import {
     SectionDetalhes,
     TextDetalhes,
     ButtonDetalhes,  
-    SectionCardsParcelas
+    SectionCardsParcelas,
+    InputControlCheckBox,    
 } from './styles'
 
 import { Parcela } from '../../../../../contexts/InstallmentContext'
@@ -27,11 +28,9 @@ import SelectionCategorias from '../SelectionCategories'
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 import {PropsNavigation} from '../..'
-import { Text } from 'react-native-paper'
+import { Text, Checkbox, FAB } from 'react-native-paper'
 import { Conta } from '../../../../../contexts/AccountContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
-import {FAB} from 'react-native-paper'
 
 import ItemCardParcela, {CardParcela, CardParcelaProps} from '../CardParcela'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
@@ -45,6 +44,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
     
     const [descricao, setDescricao] =  useState('')
     const [dataPagamento, setDataPagamento] =  useState((new Date(Date.now())))    
+    const [status, setStatus] = useState(false)
 
     const [selectedCategoria, setSelectedCategoria] = useState('0')
     const [selectedConta, setSelectedConta] = useState<Conta | null>(null)
@@ -56,7 +56,8 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             id: 0,
             conta: selectedConta,
             valor: 0,
-            data: dataPagamento.toLocaleDateString()
+            data: dataPagamento.toLocaleDateString(),
+            status: false
         },
     ])
     
@@ -94,7 +95,8 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                         id: i,
                         conta: selectedConta,
                         data: adicaoDeUmMes,
-                        valor: valorParcelaDividido
+                        valor: isNaN(valorParcelaDividido) ? 0 : valorParcelaDividido ,
+                        status: status
                     })                                       
                 } 
 
@@ -116,7 +118,8 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                 lancamentoParcela: -1,
                 contaParcela: item.conta == null ? 0 : item.conta.id,
                 dateParcela: toDate(item.data),
-                valorParcela: item.valor                    
+                valorParcela: item.valor,
+                statusParcela: status                    
             })
         })            
 
@@ -183,6 +186,22 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
         setDataParcelas(parcelas)
     }, [valor])
 
+    function changeStatus() {
+        const newStatus = status ? false : true
+        setStatus(newStatus)
+
+        const parcelas: CardParcela[] = []        
+
+        dataParcelas.map((item, index) => {
+            item.status = newStatus
+            
+            parcelas.push(item)            
+        })
+
+
+        setDataParcelas(parcelas)
+    }
+
     function changeDate(date: string){
         const parcelas: CardParcela[] = []        
 
@@ -220,7 +239,16 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
     
     
     return (
-        <ContainerForm>                
+        <ContainerForm>  
+            <InputControlCheckBox>        
+                <Checkbox 
+                    status={status ? 'checked' : 'unchecked'}
+                    onPress={changeStatus}                    
+                    color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                />
+                <Label style={{color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</Label>
+            </InputControlCheckBox>
+
             <InputControl>
                 <InputText
                     onClear={() => {}}

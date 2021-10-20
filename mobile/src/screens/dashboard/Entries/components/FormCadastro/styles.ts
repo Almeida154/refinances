@@ -14,6 +14,16 @@ export const InputControl = styled.View`
     margin-top: 10px;
 `
 
+export const InputControlCheckBox = styled.View`
+    display: flex;
+    width: 90%;
+    margin-top: 10px;
+
+    flex-direction: row;
+    align-items: center;
+`
+
+
 export const TextInput = styled.TextInput`
     border-bottom-width: 2px;
     width: 100%;

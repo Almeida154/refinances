@@ -8,11 +8,15 @@ import {toDate} from '../../../../../helpers/manipularDatas'
 
 import PickerContas from '../PickerContas'
 
+import {Checkbox} from 'react-native-paper'
+
 import {
     ContainerCardParcela,
     InputCardParcela,
     LabelCardParcela,
-    TituloCardParcela
+    TituloCardParcela,
+    InputControlStatus,
+    LabelStatus
 } from './styles'
 
 
@@ -21,7 +25,7 @@ export type CardParcela = {
     conta: Conta | null;
     data: string;
     valor: number;
-   
+    status: boolean
 }
 
 export type CardParcelaProps = {
@@ -33,7 +37,7 @@ export type CardParcelaProps = {
 
 const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: CardParcelaProps) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
-
+    
     const showDatePicker = () => {
         setDatePickerVisibility(true);
     };
@@ -58,6 +62,13 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
         setDataParcelas(aux)                
     }
 
+    function changeSituation() {
+        const aux = dataParcelas.slice()
+        aux[item.id].status = aux[item.id].status ? false : true
+
+        setDataParcelas(aux)
+    }
+
     function changeAccount(conta: Conta | null){
         const aux = dataParcelas.slice()
         aux[item.id].conta = conta        
@@ -65,10 +76,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
         console.log(aux)
         setDataParcelas(aux)
     }
-    
-    
-    console.log("Mudou Mudou", dataParcelas[item.id].conta?.descricao)
-    
+            
     return (
         <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>
             <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data}</TituloCardParcela>
@@ -86,6 +94,14 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 value={String(dataParcelas[item.id].valor)}
                 onChangeText={onChangeValor}
             />
+            <InputControlStatus>
+                <Checkbox 
+                    status={dataParcelas[item.id].status ? 'checked' : 'unchecked'}
+                    onPress={changeSituation}
+                    color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                />
+                <LabelStatus style={{color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</LabelStatus>
+            </InputControlStatus>
             <PickerContas conta={dataParcelas[item.id].conta} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
         </ContainerCardParcela>
 

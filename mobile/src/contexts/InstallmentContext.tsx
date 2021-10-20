@@ -8,7 +8,8 @@ export type Parcela = {
     dateParcela: Date,
     valorParcela: number,
     contaParcela: number | null
-    lancamentoParcela: number
+    lancamentoParcela: number,
+    statusParcela: boolean
 }
 
 interface ParcelaContextType {        
@@ -37,7 +38,8 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                     dataParcela: item.dateParcela,
                     valorParcela: item.valorParcela,
                     contaParcela: item.contaParcela,
-                    lancamentoParcela: item.lancamentoParcela
+                    lancamentoParcela: item.lancamentoParcela,
+                    statusParcela: item.statusParcela
                 });
 
                 if(response.data.error) {

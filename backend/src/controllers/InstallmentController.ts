@@ -32,20 +32,35 @@ class ParcelaController {
         const contaRepository = getRepository(Conta);
         const lancamentoRepository = getRepository(Lancamento);
 
-        const {dataParcela = '2013-10-21T13:28:06.419Z', valorParcela, contaParcela, lancamentoParcela} = request.body
+        const {dataParcela = '2013-10-21T13:28:06.419Z', valorParcela, statusParcela, contaParcela, lancamentoParcela} = request.body
 
         if (dataParcela == undefined) return response.send({ error: "data em branco!" });
         if (valorParcela == undefined) return response.send({ error: "valor não especificado" });
         if (contaParcela == undefined) return response.send({ error: "Conta não especificada!" });
         if (lancamentoParcela == undefined) return response.send({ error: "Sem lançamento!" });
+        if (statusParcela == undefined) return response.send({ error: "Status da Parcela não especificado" });
 
         const lancamentoExists = await lancamentoRepository.findOne({ where: { id: lancamentoParcela } });
+        
         const contaExists = await contaRepository.findOne({ 
             where: { id: contaParcela },
             join: {
                 alias: 'conta',
                 leftJoinAndSelect: {
-                    user: 'conta.userConta'
+                    parcelas: 'conta.parcelasConta',
+                    categoryConta: 'conta.categoryConta',
+                    user: 'conta.userConta',
+                    transferencia: 'conta.transferenciasEnviadas'
+                }
+            }
+        });
+
+        const contaExistsRecebidas = await contaRepository.findOne({ 
+            where: { id: contaParcela },
+            join: {
+                alias: 'conta',
+                leftJoinAndSelect: {
+                    transferencia: 'conta.transferenciasRecebidas'
                 }
             }
         });
@@ -57,14 +72,24 @@ class ParcelaController {
         if (!contaExists) return response.send({
             error: "Não existe uma conta com esse id"
         });
-        console.log(contaExists)
+
         const newParcela = request.body;
 
         newParcela.lancamentoParcela = lancamentoExists;
-        newParcela.contaParcela = contaExists;
-        newParcela.userParcela = contaExists.userConta;
+        
+        let updateConta
+        if(statusParcela) {
+            contaExists.saldoConta += lancamentoExists.tipoLancamento == 'despesa' ?  -valorParcela : valorParcela
+            contaExists.transferenciasRecebidas = contaExistsRecebidas.transferenciasRecebidas
 
-        console.log(newParcela.contaParcela);
+            updateConta = await contaRepository.save(contaExists)            
+        }
+
+        console.log(updateConta)
+
+        newParcela.userParcela = contaExists.userConta;
+        newParcela.contaParcela = updateConta ? updateConta : contaExists
+
         const parcela = parcelaRepository.create(newParcela);
         await parcelaRepository.save(parcela);
 
@@ -162,29 +187,43 @@ class ParcelaController {
         const contaRepository = getRepository(Conta);
         const lancamentoRepository = getRepository(Lancamento);
 
-        const {dataParcela, valorParcela, contaParcela, lancamentoParcela} = request.body
+        const {dataParcela, valorParcela, statusParcela, contaParcela, lancamentoParcela} = request.body
         const id = parseInt(request.params.id);
 
         if (dataParcela == undefined) return response.send({ error: "nome em branco!" });
         if (valorParcela == undefined) return response.send({ error: "Não existe esse tipo" });
         if (contaParcela == undefined) return response.send({ error: "Conta não especificada!" });
         if (lancamentoParcela == undefined) return response.send({ error: "Sem lançamento!" });
+        if (statusParcela == undefined) return response.send({ error: "Status da Parcela não especificado" });
 
-        const lancamentoExists = await lancamentoRepository.find({ where: { id: lancamentoParcela } });
-        const contaExists = await contaRepository.find({ where: { id: contaParcela } });
+        const lancamentoExists = await lancamentoRepository.findOne({ where: { id: lancamentoParcela } });
+        const contaExists = await contaRepository.findOne({ where: { id: contaParcela } });
 
-        if (lancamentoExists.length == 0) return response.send({
+        if (!lancamentoExists) return response.send({
             error: "Não existe um lançamento com esse id"
         });
 
-        if (contaExists.length == 0) return response.send({
+        if (!contaExists) return response.send({
             error: "Não existe uma conta com esse id"
         });
         
         const updateParcela = request.body;
-        updateParcela.lancamentoParcela = lancamentoExists[0];
-        updateParcela.contaParcela = contaExists[0];
-        updateParcela.dataParcela = new Date(updateParcela.dataParcela);
+
+        const valorParcelaAnterior = await (await parcelaRepository.findOne(id)).valorParcela
+        const diff = updateParcela.valorParcela - valorParcelaAnterior
+
+        updateParcela.lancamentoParcela = lancamentoExists;
+        
+        let updateConta
+        if(statusParcela) {
+            contaExists.saldoConta += lancamentoExists.tipoLancamento == 'despesa' ?  -diff : diff
+            updateConta = await contaRepository.update(contaExists.id, {...contaExists})            
+        }
+
+
+        updateParcela.userParcela = contaExists.userConta;
+        updateParcela.contaParcela = updateConta ? updateConta : contaExists
+        
                 
         await parcelaRepository.update(id, updateParcela);
 
