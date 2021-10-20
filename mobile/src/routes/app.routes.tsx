@@ -23,11 +23,10 @@ const MainStack = createStackNavigator<PropsMainRoutes>();
 const HomeStack = createStackNavigator<HomeAccountStack>()
 export const HomeAccountStackNavigation = () => {
     return (
-        <HomeStack.Navigator screenOptions={{headerShown: false}}>           
-            <HomeStack.Screen name="Home" component={Home}/> 
+        <HomeStack.Navigator screenOptions={{headerShown: false}}>                       
             <HomeStack.Screen name="ManageAccount" component={ManageAccount}/>
             <HomeStack.Screen name="CreateAccount" component={CreateAccount}/>
-            <HomeStack.Screen name="AddCategoryAccount" component={AddCategoryAccount}/>
+            {/* <HomeStack.Screen name="AddCategoryAccount" component={AddCategoryAccount}/> */}
         </HomeStack.Navigator>
     )
 }

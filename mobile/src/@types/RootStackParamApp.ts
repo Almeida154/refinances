@@ -1,8 +1,7 @@
 import react from 'react';
 import { NavigatorScreenParams } from '@react-navigation/native';
 
-export type HomeAccountStack = {
-  Home: undefined;
+export type HomeAccountStack = {  
   ManageAccount: undefined;
   CreateAccount: undefined;
   AddCategoryAccount: undefined;

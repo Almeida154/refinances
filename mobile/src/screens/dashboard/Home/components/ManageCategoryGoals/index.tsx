@@ -34,11 +34,10 @@ const CardGoal = ({item}: {item: Meta}) => {
 
     const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); // Subtrai uma data pela outra
     const days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
+        
+    const percentageBalance = item.saldoAtualMeta * 100 / item.saldoFinalMeta // Algum cálculo para calcular a porcentagem aqui
 
-    const totalTime = objDataFimMeta.getTime()
-    const percentageTime = objDataIniMeta.getTime() * 100 / totalTime // Algum cálculo para calcular a porcentagem aqui
-
-    console.log(item.descMeta, percentageTime / 100)
+    console.log(percentageBalance)
     return(
         <ContainerCard>
             <Goal>
@@ -46,7 +45,7 @@ const CardGoal = ({item}: {item: Meta}) => {
                 <GoalDaysLeft>! Faltam {days} dias</GoalDaysLeft>
 
                 <ProgressBar
-                    progress={percentageTime / 100}
+                    progress={percentageBalance / 10}
                     color="#F81650"
                     style={{
                         height: 10,
@@ -54,7 +53,7 @@ const CardGoal = ({item}: {item: Meta}) => {
                     }}
                 />
 
-                <VwPercent><GoalPercent>{percentageTime.toFixed(0)}%</GoalPercent>
+                <VwPercent><GoalPercent>{percentageBalance.toPrecision(1)}%</GoalPercent>
                 </VwPercent>
             </Goal>
         </ContainerCard>

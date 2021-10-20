@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-import { Modalize } from 'react-native-modalize';
 import {Text} from 'react-native'
 
 import InputText from '../../../../../components/InputText'
@@ -37,13 +36,7 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
 
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')    
-    const [categoriaConta, setCategoriaConta] = useState<null | CategoriaConta>(null)
-
-    const modalizeRef = useRef<Modalize>(null);
-
-    const onOpen = () => {
-        modalizeRef.current?.open();
-    };
+    const [categoriaConta, setCategoriaConta] = useState<null | CategoriaConta>(null)    
 
     
     async function handleCreateAccount() {
@@ -108,10 +101,6 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
                 color="#444"
                 backgroundColor="#ccc"
             />              
-
-            <Modalize ref={modalizeRef}
-                modalStyle={{elevation: 50}}
-            ><Text>...your content</Text></Modalize>  
         </Container>
     )
 }

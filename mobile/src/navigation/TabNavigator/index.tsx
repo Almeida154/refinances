@@ -97,7 +97,7 @@ const TabNavigator = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeAccountStackNavigation}
+        component={Home}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon3 name="md-home" color={color} size={24} />

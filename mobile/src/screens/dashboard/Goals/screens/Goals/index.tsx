@@ -17,6 +17,7 @@ import {
 
 //import {ProgressBar} from '@react-native-community/progress-bar-android';
 
+
 const Goals = ({ navigation }) => {
   let [progress, setProgress] = useState(1);
 
