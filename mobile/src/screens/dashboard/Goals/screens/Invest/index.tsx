@@ -15,58 +15,104 @@
    TouchableHighlight,
    View,
  } from 'react-native';
+
+ import {GoalsStack} from '../../../../../@types/RootStackParamApp'
+ import { StackNavigationProp } from '@react-navigation/stack'
+import Button from '../../../../../components/Button';
+
+import { 
+  AlinhaParaDireita, 
+  InputControlValue,
+  LabelCifrao, 
+  TextInputValue,
+  Header} from '../../../Entries/styles'
+import InputText from '../../../../../components/InputText';
+
+import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
+
+ type PropsGoals = {
+    navigation: StackNavigationProp<GoalsStack, "InvestGoals">
+ }
  
- const Invest = ({navigation}) => {
+ const Invest = ({navigation}: PropsGoals) => {
  
-    const [valorDeposito, setValor] = useState();
+    const [valorDeposito, setValor] = useState('');
+    const [errorValor, setErrorValor] = useState<any | null>(null);
+
+    const [idMeta, setMeta] = useState('');
+    const [errorMeta, setErrorMeta] = useState<any | null>(null);
  
    return (
      <ScrollView style={{backgroundColor: '#f6f6f6'}}>
- 
-        <View style={styles.header}>
 
-          <Text style={styles.rs}>R$</Text>
-
-          <TextInput style={styles.inputDeposit}
-          placeholder="0,00"
-          placeholderTextColor="#fff">
-            
-          </TextInput>
-
-        </View>
+      <Header style={{backgroundColor:'#ee4266'}}>
+        <AlinhaParaDireita>
+            <View></View>
+            <InputControlValue>
+                <LabelCifrao>R$</LabelCifrao>    
+                <TextInputValue
+                  keyboardType='numeric'
+                  placeholder="00,00"
+                  placeholderTextColor="#fff"
+                  value={valorDeposito}
+                  onChangeText={setValor}                                
+                    />
+            </InputControlValue>
+        </AlinhaParaDireita>
+      </Header>
 
       <View style={styles.container}>
 
           {/* Adicionar o picker de metas aqui, pré-selecionando a que o user clicou p depositar */}
-          <View style={styles.inputControl}>
-            <Text style={styles.label}>Em qual meta deseja investir?</Text>
-            <TextInput style={styles.textInput}
-              placeholder="Carro novo"
-              placeholderTextColor="#0000001d"></TextInput>
-          </View>
+          <InputText
+            value={idMeta}
+            label="Qual a meta?"
+            error={errorMeta}
+            showClearIcon={idMeta != ''}
+            keyboardType={'numeric'}
+            placeholder={'Id: 1'}
+            onClear={() => {
+              setErrorMeta(null);
+              setMeta('');
+            }}
+            onChangeText={txt => {
+              setErrorMeta(null);
+              setMeta(txt);
+            }}/>
 
-          {/* Adicionar o picker de contas aqui */}
-          <View style={styles.inputControl}>
-            <Text style={styles.label}>De onde investirá esse mês?</Text>
-            <TextInput style={styles.textInput}
-              placeholder="Escolha uma conta"
-              placeholderTextColor="#0000001d"
-              ></TextInput>
-          </View>
+          {/* Adicionar o picker de contas aqui 
+          <InputText
+            value={valorDeposito}
+            label="Escolha uma conta"
+            error={errorValor}
+            showClearIcon={valorDeposito != ''}
+            onClear={() => {
+              setErrorValor(null);
+              setValor('');
+            }}/>*/}
 
-          <View style={styles.inputControl}>
-            <Text style={styles.label}>Quanto será investido?</Text>
-            <TextInput style={styles.textInput}
-              placeholder="Insira o valor"
-              placeholderTextColor="#0000001d"
-              value={valorDeposito}
-              keyboardType="numeric"
-              onChangeText={(text) => setValor(text)}></TextInput>
-          </View>
+          {/*<InputText
+            value={valorDeposito}
+            label="Qual o valor?"
+            error={errorValor}
+            showClearIcon={valorDeposito != ''}
+            keyboardType={'numeric'}
+            placeholder={'R$ 10,00'}
+            onClear={() => {
+              setErrorValor(null);
+              setValor('');
+            }}
+            onChangeText={txt => {
+              setErrorValor(null);
+              setValor(txt);
+            }}/>*/}
 
-          <TouchableHighlight style={styles.btn}>
-            <Text style={styles.txtbtn}>Depositar</Text>
-          </TouchableHighlight>
+          <Button
+            title={'Investir'}
+            style={{marginTop: 30}}
+            onPress={() => console.log('ok')}>
+          </Button>
  
        </View>
      </ScrollView>
@@ -76,65 +122,8 @@
  const styles = StyleSheet.create({
  
    container: {
-     margin: '10%'
+     padding: '10%'
    },
- 
-   txtbtn: {
-     color: '#fff',
-     textAlign: 'center',
-     fontWeight: '900',
-     fontSize: 30,
-   },
- 
-   btn: {
-     borderRadius: 10,
-     backgroundColor: '#ee4266',
-     padding: '5%',
-     marginTop: '10%'
-   },
-
-   header: {
-    backgroundColor: '#ee4266',
-    paddingTop: '10%',
-    paddingBottom: '3%',
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'flex-end',
-    marginLeft: 'auto', right: 0
-   },
-
-   rs: {
-     width: '5%',
-     color: '#fff',
-     fontSize: 15
-   },
-
-   inputDeposit:{
-    width: '30%',
-    color: '#fff',
-    fontSize: 40,
-   },
-
-   label: {
-    fontFamily: 'Nunito-Black',
-    fontSize: 18,
-    opacity: .65
-  },
-  textInput: {
-    fontFamily: 'Nunito-Bold',
-    fontSize: 18,
-    borderBottomWidth: 2,
-    width: '100%',
-    color: '#858c87',
-    height: 40,
-    borderBottomColor: '#00000028'
-  },
-  inputControl: {
-    display: 'flex',
-    width: '100%',
-    marginTop: 25
-  },
-
 
  });
  
