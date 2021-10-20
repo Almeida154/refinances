@@ -15,9 +15,10 @@ export type Transferencia = {
 }
 
 interface TransferenciaContextType {        
-    transferencias: Transferencia[] ,
-    loadingTransferencia: boolean,
+    transferencias: Transferencia[] | null ,
+    readTransferencias: Transferencia[][] | null
 
+    loadingTransferencia: boolean,
     handleAdicionarTransferencia(transferencia: Transferencia): Promise<string>,
     handleLoadTransferencias(idUser: number): Promise<void>
     handleTransferGroupByDate(idUser: number, rawDate: string): Promise<void>
@@ -27,7 +28,9 @@ const TransferenciasContext = createContext<TransferenciaContextType>({} as Tran
 export const UseTransferencias = () => useContext(TransferenciasContext);
 
 export const TransferenciaProvider: React.FC = ({ children }) => {
-    const [transferencias, setTransferencias] = useState<Transferencia[]>([{}] as Transferencia[])
+    const [transferencias, setTransferencias] = useState<Transferencia[] | null>(null)
+    const [readTransferencias, setReadTransferencias] = useState<Transferencia[][] | null>(null)
+
     const [loadingTransferencia, setLoadingTransferencia] = useState(false)
 
     async function handleAdicionarTransferencia(TransferenciaProps: Transferencia) {       
@@ -68,7 +71,7 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
             }
 
-            setTransferencias(response.data.message)
+            setReadTransferencias(response.data.message)
 
             setLoadingTransferencia(false)
         } catch (error) {
@@ -90,7 +93,7 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
     }
     
     return (
-        <TransferenciasContext.Provider value={{ handleTransferGroupByDate, transferencias, loadingTransferencia, handleLoadTransferencias, handleAdicionarTransferencia }}>
+        <TransferenciasContext.Provider value={{ readTransferencias, handleTransferGroupByDate, transferencias, loadingTransferencia, handleLoadTransferencias, handleAdicionarTransferencia }}>
             {children}
         </TransferenciasContext.Provider>
     );

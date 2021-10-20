@@ -3,17 +3,20 @@ import { ToastAndroid } from 'react-native';
 
 import api from '../services/api'
 
+import {Lancamento} from './EntriesContext'
+
 export type Parcela = {
     id: number,
     dateParcela: Date,
     valorParcela: number,
     contaParcela: number | null
-    lancamentoParcela: number,
+    lancamentoParcela: number | Lancamento,
     statusParcela: boolean
 }
 
 interface ParcelaContextType {        
-    parcelas: Parcela[] ,
+    parcelas: Parcela[] | null,
+    readParcelas: Parcela[][] | null,
 
     loadingParcela: boolean,
     handleAdicionarParcela(parcelas: Parcela[]): Promise<void>,
@@ -24,7 +27,9 @@ const ParcelasContext = createContext<ParcelaContextType>({} as ParcelaContextTy
 export const UseParcelas = () => useContext(ParcelasContext);
 
 export const ParcelaProvider: React.FC = ({ children }) => {
-    const [parcelas, setParcelas] = useState<Parcela[]>([{}] as Parcela[])
+    const [parcelas, setParcelas] = useState<Parcela[] | null>(null)
+    const [readParcelas, setReadParcelas] = useState<Parcela[][] | null>(null)
+    
     const [loadingParcela, setLoadingParcela] = useState(false)
 
     async function handleAdicionarParcela(parcelasProps: Parcela[]) {
@@ -45,7 +50,7 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                 if(response.data.error) {
                     throw response.data.error
                 };
-                            
+                
                 arrayParcelas.push(response.data.message);                
             })
 
@@ -67,7 +72,9 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
             }
             
-            setParcelas(response.data.message)
+            console.debug('response.data.message | parcela', response.data.message)
+
+            setReadParcelas(response.data.message)
 
             setLoadingParcela(false)
         } catch (error) {
@@ -88,7 +95,7 @@ export const ParcelaProvider: React.FC = ({ children }) => {
     }*/
     
     return (
-        <ParcelasContext.Provider value={{ parcelas, handleAdicionarParcela, handleInstallmentGroupByDate, loadingParcela }}>
+        <ParcelasContext.Provider value={{ parcelas, readParcelas, handleAdicionarParcela, handleInstallmentGroupByDate, loadingParcela }}>
             {children}
         </ParcelasContext.Provider>
     );
