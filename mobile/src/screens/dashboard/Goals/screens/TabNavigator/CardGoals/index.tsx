@@ -5,14 +5,20 @@ import {Meta} from '../../../../../../contexts/GoalsContext'
 import { ProgressBar } from 'react-native-paper'
 
 import { Goal, GoalDesc, DaysLeft, 
-    InvestedMoney, Percent, PercentText, } from '../styles'
+    InvestedMoney, Percent, PercentText, GoalTouchable, } from '../styles'
 import { toDate } from '../../../../../../helpers/manipularDatas';
+import { NavigationContainer } from '@react-navigation/native';
+import { UseDadosTemp } from '../../../../../../contexts/TemporaryDataContext';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { GoalsStack } from '../../../../../../@types/RootStackParamApp';
 
 type PropsCardGoals = {
-    item: Meta
+    item: Meta,
 }
 
 const CardGoals = ({item}: PropsCardGoals) => {
+
+  const {navigation} = UseDadosTemp()
 
   const objDataFimMeta = toDate(item.dataFimMeta)
     const objDataIniMeta = toDate(item.dataInicioMeta)
@@ -26,8 +32,11 @@ const CardGoals = ({item}: PropsCardGoals) => {
     return (
         <Goal
             key={item.id}>
-            <GoalDesc>{item.descMeta}</GoalDesc>
-
+            <GoalTouchable
+              onPress={()=> navigation.navigate('GoalsStack', {screen: 'GoalDetails'})}>
+              <GoalDesc>{item.descMeta}</GoalDesc>
+            </GoalTouchable>
+            
           <DaysLeft>
             ! Faltam {days} dias
           </DaysLeft>

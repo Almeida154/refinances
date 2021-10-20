@@ -3,72 +3,84 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
   View,
 } from 'react-native';
 
-//import {ProgressBar} from '@react-native-community/progress-bar-android';
+import { Goal } from '../TabNavigator/styles'
 
-const GoalDetails = ({ navigation }) => {
+import { Dimensions } from 'react-native';
+
+import { 
+  GoalDate, TextGoals,
+  TextGoalsH, TextGoalsLighter,
+  TextProgress, TextRS,
+  TextValor, Title, 
+  Valor, DaysLeft } from './styles'
+
+import {GoalsStack} from '../../../../../@types/RootStackParamApp'
+import { StackNavigationProp } from '@react-navigation/stack'
+
+import {ProgressBar} from 'react-native-paper'
+import Button from '../../../../../components/Button';
+
+type PropsGoals = {
+  navigation: StackNavigationProp<GoalsStack, "GoalsList">
+}
+
+const GoalDetails = ({ navigation }: PropsGoals) => {
   let [progress, setProgress] = useState(1);
 
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
       <View style={styles.container}>
-        <Text
-          style={{
-            marginBottom: '2%',
-            fontSize: 30,
-            color: '#292929',
-            fontWeight: '700',
-            textAlign: 'center',
-          }}>
+        <Title>
           PS5
-        </Text>
+        </Title>
 
-        <View style={styles.vwvalor}>
-          <Text style={styles.txtrs}>R$</Text>
-          <Text style={styles.txtvalor}>2.480,00</Text>
-        </View>
+        <Valor>
+          <TextRS>R$</TextRS>
+          <TextValor>2.480,00</TextValor>
+        </Valor>
 
-        <View style={styles.progress}>
-          {/* <ProgressBar
-                 styleAttr="Horizontal"
-                 indeterminate={false}
-                 progress={0.5}
-                 color={'#ee4266'}
-               /> */}
-        </View>
+        <ProgressBar
+            progress={0.35}
+            color="#F81650"
+            style={{
+              height: 10,
+              marginVertical: 8,
+              borderRadius: 10
+            }}
+        />
 
-        <Text style={{ fontWeight: '400', textAlign: 'center', fontSize: 17 }}>
+        <TextProgress>
           Você já progrediu sua meta em
-          <Text style={styles.txtgoals}> 50% </Text>
-          de <Text style={styles.txtgoals}>R$ 4.960,00</Text>
-        </Text>
+          <TextGoals> 35% </TextGoals>
+          de <TextGoals>R$ 4.960,00</TextGoals>
+        </TextProgress>
 
-        <View style={styles.goal}>
-          <Text style={{ fontSize: 17, marginBottom: 10 }}>
-            Faltam: 5 meses
-          </Text>
+        <Goal>
+          <DaysLeft>
+            ! Faltam 124 dias
+          </DaysLeft>
 
-          <View style={styles.goaldate}>
-            <Text style={styles.txtgoalsh}>Início</Text>
-            <Text style={styles.txtlighterh}>08/03/2021</Text>
-          </View>
+          <GoalDate>
+            <TextGoalsH>Início</TextGoalsH>
+            <TextGoalsLighter>08/03/2021</TextGoalsLighter>
+          </GoalDate>
 
-          <View style={styles.goaldate}>
-            <Text style={styles.txtgoalsh}>Previsão</Text>
-            <Text style={styles.txtlighterh}>08/08/2021</Text>
-          </View>
-        </View>
+          <GoalDate>
+            <TextGoalsH>Previsão</TextGoalsH>
+            <TextGoalsLighter>08/03/2021</TextGoalsLighter>
+          </GoalDate>
+        </Goal>
 
-        <TouchableHighlight
-          style={styles.btn}
+        <Button
           onPress={() => {
-            navigation.navigate('CreateGoal');
-          }}>
-          <Text style={styles.txtbtn}>Criar</Text>
-        </TouchableHighlight>
+            navigation.navigate('InvestGoals');
+          }}
+          title="Depositar"
+          style={{bottom: 0, top: 20}}>
+        </Button>
       </View>
     </ScrollView>
   );
@@ -101,40 +113,10 @@ const styles = StyleSheet.create({
     opacity: 0.85,
   },
 
-  goal: {
-    backgroundColor: '#fff',
-    padding: '4%',
-    marginTop: '5%',
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#525252',
-  },
-
   goaldate: {
     flexDirection: 'row',
     width: '100%',
     paddingBottom: '1%',
-  },
-
-  progress: {
-    transform: [{ scaleX: 1.0 }, { scaleY: 2.0 }],
-    marginTop: '2%',
-    marginBottom: '2%',
-  },
-
-  txtbtn: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: '900',
-    fontSize: 30,
-  },
-
-  btn: {
-    borderRadius: 10,
-    backgroundColor: '#ee4266',
-    padding: '5%',
-    marginTop: '10%',
   },
 
   vwvalor: {
