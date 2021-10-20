@@ -3,12 +3,20 @@ import styled from "styled-components/native"
 import fonts from "../../../../../styles/fonts"
 
 export const Title = styled.Text `
+    fontSize: ${fonts.size.big};
+    color: #525252;
+    fontFamily: ${`${fonts.familyType.black}`};
+    textAlign: center;
+    margin-bottom: 20px
+`;
+
+export const Subtitle = styled.Text `
     fontSize: ${fonts.size.small};
     color: #525252;
     fontFamily: ${`${fonts.familyType.bold}`};
     textAlign: center;
     opacity: 0.7;
-    marginBottom: 40px;
+    marginBottom: 20px;
 `;
 
 export const Goal = styled.View`

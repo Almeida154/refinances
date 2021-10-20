@@ -1,136 +1,133 @@
 import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
-  StyleSheet,
-  Text,
   View,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import Icon from 'react-native-vector-icons/Entypo';
+import {GoalsStack} from '../../../../../@types/RootStackParamApp'
+import { StackNavigationProp } from '@react-navigation/stack'
+
+import {UseMetas} from '../../../../../contexts/GoalsContext'
+
+import { ActivityIndicator } from 'react-native-paper'
+
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
 import goalsJson from './goals.json';
 
-import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+import { Title, Subtitle, Loading, TextLoading} from './styles'
 
-//import { ProgressBar } from '@react-native-community/progress-bar-android';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const GoalsAccomplished = () => {
-  const [goals, setGoals] = useState(goalsJson);
-  const [accomplishedGoals, setAccomplishedGoals] = useState(
-    goals.filter(goal => !goal.isAccomplished),
-);
+import Button from '../../../../../components/Button';
 
-const {navigation} = UseDadosTemp()
+import CardGoals from './CardGoals';
 
-  return (
-    <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
-      <View style={styles.container}>
+type PropsGoals = {
+  navigation: StackNavigationProp<GoalsStack, "GoalsList">
+}
 
-        <Icon name="emoji-sad" size={50}
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: 30
-        }}/>
+const GoalsAccomplished = ({navigation}: PropsGoals) => {
+  const {metas, handleReadByUserMetas} = UseMetas()
+  const [stateReload, setStateReload] = useState(false)
 
-        <Text style={{ fontWeight: '400', textAlign: 'center', fontSize: 17 }}>
-          Você ainda não concluiu nenhuma meta! {'\n\n'}
+  useEffect(() => {
+    if(!navigation.addListener)
+        return
 
-          Mas não desanime, invista em suas metas mensalmente para concluí-las mais rápido!
-        </Text>
+    const focus = navigation.addListener('focus', () => {
+        setStateReload(false)
+        
+    })
 
+    const blur = navigation.addListener('blur', () => {
+        setStateReload(true)
+        
+    })
 
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => {navigation.navigate('GoalsStack', {screen: 'InvestGoals'}); }}>
-          <Text style={styles.txtbtn}>Investir</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    
+}, [navigation])
+
+  useEffect(() => {
+    // Caso nenhuma meta seja carregada, recarregar
+    if(!metas)
+        (async function(){
+            handleReadByUserMetas(await retornarIdDoUsuario())
+        }) ()
+          
+  }, [])
+
+  const [metasRealizadas, setMetasRealizadas] = useState(
+    metas.filter(metas => metas.realizacaoMeta),
   );
+
+  if(metasRealizadas.length > 0 ){
+    return (
+      <ScrollView style={{ backgroundColor: '#fff' }}>
+  
+          {
+            stateReload ? (
+  
+              <Loading>
+                <ActivityIndicator size='large' color='#E8871E' />
+                <TextLoading>Carregando...</TextLoading>
+              </Loading>
+  
+            ) : 
+  
+              <View style={{margin: '10%'}}>
+                <Title>
+                  Parabéns!! 
+                </Title>
+  
+                <Subtitle>
+                  Continue registrando suas metas financeiras para viver uma vida mais confortável
+                </Subtitle>
+                {
+                  metasRealizadas && metasRealizadas.map((item, index) => {
+                    console.log("Item: ", metasRealizadas)                    
+                    return (
+                      <CardGoals item={item} key={index}/>
+                    )
+                  })   
+                }
+              </View>
+            }
+  
+      </ScrollView>
+    );
+  }
+  else{
+    return (
+      <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+        <View style={{margin: '10%',
+          alignItems: 'center'}}>
+
+          <Icon name="emoticon-sad-outline" size={50}
+            color="#525252"
+            style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 30
+          }}/>
+
+          <Title>
+            Você ainda não criou nenhuma meta!
+          </Title>
+      
+          <Subtitle>
+              Metas financeiras são muito importantes para realizar seus propósitos!
+          </Subtitle>
+
+          <Button
+            title="Criar nova meta"
+            backgroundColor="#ee4266"
+            onPress={() => {navigation.navigate('CreateGoals')}}>
+          </Button>
+        </View>
+    </ScrollView>
+    );
+  }
 };
-
-const styles = StyleSheet.create({
-  container: {
-    margin: '10%',
-    flex: 1,
-    alignItems: 'center'
-  },
-
-  txtgoals: {
-    fontSize: 17,
-    color: '#292929',
-    fontWeight: '700',
-  },
-
-  txtgoalsh: {
-    fontSize: 17,
-    color: '#292929',
-    fontWeight: '900',
-    width: '50%',
-  },
-
-  txtlighterh: {
-    fontSize: 17,
-    color: '#525252',
-    textAlign: 'right',
-    fontWeight: '900',
-    width: '50%',
-    opacity: 0.85,
-  },
-
-  goal: {
-    backgroundColor: '#fff',
-    padding: '4%',
-    marginTop: '5%',
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#525252',
-  },
-
-  goaldate: {
-    flexDirection: 'row',
-    width: '100%',
-    paddingBottom: '1%',
-  },
-
-  progress: {
-    transform: [{ scaleX: 1.0 }, { scaleY: 2.0 }],
-    marginTop: '2%',
-    marginBottom: '2%',
-  },
-
-  txtbtn: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: '900',
-    fontSize: 30,
-  },
-
-  btn: {
-    borderRadius: 10,
-    backgroundColor: '#ee4266',
-    padding: '5%',
-    marginTop: '10%',
-    width: '100%'
-  },
-
-  vwvalor: {
-    flexDirection: 'row',
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-  },
-
-  txtrs: {
-    textAlign: 'center',
-  },
-
-  txtvalor: {
-    fontSize: 40,
-    textAlign: 'center',
-  },
-});
 
 export default GoalsAccomplished;

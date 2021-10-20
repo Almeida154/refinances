@@ -73,8 +73,7 @@ const CreateGoal = () => {
       realizacaoMeta: realizacao(),
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
-    handleAdicionarMeta(newGoal);
-    console.log(newGoal);
+    
     if (
       meta != '' &&
       parseFloat(valorMeta) > 0 &&
@@ -83,6 +82,14 @@ const CreateGoal = () => {
       investidoMeta != undefined &&
       previsao >= dataAtual
     ) {
+
+      parseFloat(investidoMeta) >= parseFloat(valorMeta)
+      ? setRealizado(true)
+      : setRealizado(false);
+      
+      handleAdicionarMeta(newGoal);
+      console.log(newGoal);
+
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
     }
@@ -98,6 +105,8 @@ const CreateGoal = () => {
     parseFloat(investidoMeta) >= parseFloat(valorMeta)
       ? setRealizado(true)
       : setRealizado(false);
+
+      console.log("realizado: ", realizado)
     return realizado;
   };
 

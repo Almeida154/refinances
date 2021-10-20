@@ -18,15 +18,16 @@ import {
     SectionTop,
     ContainerGoals,
     ContainerCard,
-
-    Goal,
-    GoalDesc,
-    GoalDaysLeft,
-    GoalPercent, 
-    VwPercent
+    Goal
 } from './styles'
 
-
+import {
+    GoalDesc, 
+    DaysLeft, 
+    InvestedMoney, 
+    Percent, 
+    PercentText} 
+    from '../../../Goals/screens/TabNavigator/styles'
 
 const CardGoal = ({item}: {item: Meta}) => {
     const objDataFimMeta = toDate(item.dataFimMeta)
@@ -38,23 +39,25 @@ const CardGoal = ({item}: {item: Meta}) => {
     const percentageBalance = item.saldoAtualMeta * 100 / item.saldoFinalMeta // Algum cálculo para calcular a porcentagem aqui
 
     console.log(percentageBalance)
+
     return(
         <ContainerCard>
             <Goal>
                 <GoalDesc>{item.descMeta}</GoalDesc>
-                <GoalDaysLeft>! Faltam {days} dias</GoalDaysLeft>
+                <DaysLeft>! Faltam {days} dias</DaysLeft>
 
                 <ProgressBar
-                    progress={percentageBalance / 10}
+                    progress={percentageBalance / 100}
                     color="#F81650"
                     style={{
                         height: 10,
                         marginVertical: 8,
+                        borderRadius: 10
                     }}
                 />
 
-                <VwPercent><GoalPercent>{percentageBalance.toPrecision(1)}%</GoalPercent>
-                </VwPercent>
+                <Percent><PercentText>{percentageBalance}%</PercentText>
+                </Percent>
             </Goal>
         </ContainerCard>
     )
@@ -66,7 +69,6 @@ import {Meta, UseMetas} from '../../../../../contexts/GoalsContext'
 const SectionManage = () => {
     const {navigation} = UseDadosTemp()
     const {handleReadByUserMetas, metas} = UseMetas()
-
 
     useEffect(() => {
         // Caso nenhuma meta seja carregada, recarregar

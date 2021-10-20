@@ -33,11 +33,12 @@ const CardGoals = ({item}: PropsCardGoals) => {
           </DaysLeft>
 
           <ProgressBar
-            progress={percentageBalance / 10}
+            progress={percentageBalance / 100}
             color="#F81650"
             style={{
               height: 10,
               marginVertical: 8,
+              borderRadius: 10
             }}
           />
 
