@@ -7,7 +7,7 @@ import {Lancamento} from './EntriesContext'
 
 export type Parcela = {
     id: number,
-    dateParcela: Date,
+    dataParcela: Date,
     valorParcela: number,
     contaParcela: number | null
     lancamentoParcela: number | Lancamento,
@@ -40,7 +40,7 @@ export const ParcelaProvider: React.FC = ({ children }) => {
             parcelasProps.map(async item => {
                 console.log("item=>", item)
                 const response = await api.post('/installment/create', {
-                    dataParcela: item.dateParcela,
+                    dataParcela: item.dataParcela,
                     valorParcela: item.valorParcela,
                     contaParcela: item.contaParcela,
                     lancamentoParcela: item.lancamentoParcela,
@@ -62,21 +62,21 @@ export const ParcelaProvider: React.FC = ({ children }) => {
     }
 
     async function handleInstallmentGroupByDate(idUser: number, rawDate: string) {
-        setLoadingParcela(true)
         try {
             const response = await api.post(`/installment/groupbydate/${idUser}`, {
                 rawDate
             })
 
+            console.debug('response.data.message | parcela', response.data.message)
+
+
             if(response.data.error) {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
             }
             
-            console.debug('response.data.message | parcela', response.data.message)
 
             setReadParcelas(response.data.message)
 
-            setLoadingParcela(false)
         } catch (error) {
             console.log("Deu um erro no handleLoadGroupByDate", error)
         }

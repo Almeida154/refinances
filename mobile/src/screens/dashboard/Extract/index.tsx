@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -32,23 +32,39 @@ import {
     ScrollBody
 } from './styles'
 
+const RenderSection = ({item}: {item: (Parcela[] | Transferencia[])[]}) => {
+    let readByParcelas: Parcela[] = ConvertToParcela(item[0])
+    let readByTransferencias: Transferencia[] = ConvertToTransferencia(item[1])        
+    
+    // console.debug("readByParcelas",readByParcelas)
+    // console.debug("readByTransferencias",readByTransferencias)
+
+    const date: Date = !readByParcelas[0] ? new Date(readByTransferencias[0].dataTransferencia) : new Date(readByParcelas[0].dataParcela)
+
+    return(
+        <SectionByDate date={date.toLocaleDateString()} parcelas={readByParcelas} transferencias={readByTransferencias}/>
+    )
+}
+
 const Extrato = () => {
-    const {readParcelas, loadingParcela, handleInstallmentGroupByDate} = UseParcelas()
-    const {readTransferencias, loadingTransferencia, handleTransferGroupByDate} = UseTransferencias()        
+    const {readParcelas, handleInstallmentGroupByDate} = UseParcelas()
+    const {readTransferencias, handleTransferGroupByDate} = UseTransferencias()        
 
     const [dateCurrent, setDateCurrent] = useState(new Date(Date.now()).toLocaleDateString())
     
-    const [allDatas, setAllDatas] = useState<(Parcela | Transferencia)[][][] | null>(null)
+    const [allDatas, setAllDatas] = useState<(Parcela[] | Transferencia[])[][] | null>(null)
 
     const [gasto, setGasto] = useState('00,00')
     const [ganho, setGanho] = useState('00,00')
     const [saldo, setSaldo] = useState('00,00')
 
-    function calcBalance(alldata: any[]) {
+    function calcBalance(alldata: (Parcela[] | Transferencia[])[][]) {
         let gastos = 0, ganhos = 0, balance = 0
 
         alldata.map((item, index) => {
-            item[0].map((parcela: Parcela) => {
+            const parcelas: Parcela[] = ConvertToParcela(item[0])
+
+            parcelas.map((parcela) => {
                 if(typeof parcela.lancamentoParcela != 'number' ? parcela.lancamentoParcela.tipoLancamento == 'despesa' : false) {
                     gastos += parcela.valorParcela
                 }
@@ -72,44 +88,33 @@ const Extrato = () => {
 
         let aux = []
         
-            while(i < readParcelas.length) {
-                // console.log(i)
+        while(i < readParcelas.length) {               
+            const dateOfInstallment = new Date(readParcelas[i][0].dataParcela).toLocaleDateString()
+            let dateOfTransfer
 
-                // console.log(transferencias[j])
+            if(readTransferencias[j])
+                dateOfTransfer = new Date(readTransferencias[j][0].dataTransferencia).toLocaleDateString()                
 
-                const dateOfInstallment = new Date(readParcelas[i][0].dateParcela).toLocaleDateString()
-                let dateOfTransfer
-
-                if(readTransferencias[j])
-                    dateOfTransfer = new Date(readTransferencias[j][0].dataTransferencia).toLocaleDateString()                
-
-
-                    // console.log(toDate(dateOfInstallment), toDate(dateOfTransfer))
-
-                    if(!dateOfTransfer || toDate(dateOfInstallment) < toDate(dateOfTransfer)) {
-                        aux.push([readParcelas[i], []])
-                        i++
-                    }
-                    else if(toDate(dateOfInstallment) > toDate(dateOfTransfer)) {
-                        aux.push([[], readTransferencias[j]])
-                        j++
-                    }
-                    else {
-                        aux.push([readParcelas[i], readTransferencias[j]])
-                        j++;
-                        i++
-                    }
-                
+                if(!dateOfTransfer || toDate(dateOfInstallment) < toDate(dateOfTransfer)) {
+                    aux.push([readParcelas[i], []])
+                    i++
                 }
-
+                else if(toDate(dateOfInstallment) > toDate(dateOfTransfer)) {
+                    aux.push([[], readTransferencias[j]])
+                    j++
+                }
+                else {
+                    aux.push([readParcelas[i], readTransferencias[j]])
+                    j++;
+                    i++
+                }
+            
+            }
             
             while(j < readTransferencias.length) {
                 aux.push([[], readTransferencias[j]])
                 j++
             }
-
-            //  console.log(j, transferencias.length)
-            //  console.log(aux)
 
             setAllDatas(aux)
             calcBalance(aux)
@@ -118,19 +123,23 @@ const Extrato = () => {
     function updateDate(action: number) {
         const newDate = addMonths(toDate(dateCurrent), action)
         setDateCurrent(newDate.toLocaleDateString())
+
+        loadParcelas(newDate)
+        loadTransferencias(newDate)
     }
 
-    async function loadTransferencias() {                        
-        handleTransferGroupByDate(await retornarIdDoUsuario(), toDate(dateCurrent).toISOString())
+    async function loadTransferencias(date: Date) {                        
+        handleTransferGroupByDate(await retornarIdDoUsuario(), date.toISOString())
     }
 
-    async function loadParcelas() {                                    
-        handleInstallmentGroupByDate(await retornarIdDoUsuario(), toDate(dateCurrent).toISOString())
+    async function loadParcelas(date: Date) {   
+        handleInstallmentGroupByDate(await retornarIdDoUsuario(), date.toISOString())
     }
 
-    useEffect(() => {            
-        loadParcelas()
-        loadTransferencias()
+    useEffect(() => {  
+        const getDate = toDate(dateCurrent)          
+        loadParcelas(getDate)
+        loadTransferencias(getDate)
         
     }, [])
     
@@ -138,12 +147,7 @@ const Extrato = () => {
     useEffect(() => {
             loadInAllDatas()        
     }, [readTransferencias, readParcelas])
-    
-
-    useEffect(() => {
-        loadParcelas()
-        loadTransferencias()
-    }, [dateCurrent])
+      
 
     function GetMonth(date: string) {
         const [dia, mes, ano] = dateCurrent.split('/')
@@ -166,29 +170,13 @@ const Extrato = () => {
                             <Icon size={24} name={"arrow-forward-ios"}/>
                         </PeriodoPosterior>
                     </Header>
-                    <Body>      
-
-                    {
-                        allDatas && allDatas.map(((item, index) => {
-                            
-                            console.debug("allDatas", allDatas)
-                            let readByParcelas: Parcela[] = []
-                            let readByTransferencias: Transferencia[] = []
-                            
-                            ConvertToParcela(item[0], readByParcelas)
-                            ConvertToTransferencia(item[1], readByTransferencias)
-                            
-                            console.debug("readByParcelas",readByParcelas)
-                            console.debug("readByTransferencias",readByTransferencias)
-
-                            const date: Date = !readByParcelas[0] ? new Date(readByTransferencias[0].dataTransferencia) : new Date(readByParcelas[0].dateParcela)
-
-                        return(
-                            <SectionByDate date={date.toLocaleDateString()} parcelas={readByParcelas} transferencias={readByTransferencias}/>
-                        )
-                        }))
-                    }
-
+                    <Body>                          
+                        <FlatList 
+                            data={allDatas}
+                            renderItem={RenderSection}
+                            keyExtractor={(item, index) => String(index)}
+                            extraData={allDatas}
+                        />                        
                     </Body>
                 </ScrollBody>
                 <Footer>

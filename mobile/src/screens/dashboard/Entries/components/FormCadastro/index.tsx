@@ -117,7 +117,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                 id: -1,
                 lancamentoParcela: -1,
                 contaParcela: item.conta == null ? 0 : item.conta.id,
-                dateParcela: toDate(item.data),
+                dataParcela: toDate(item.data),
                 valorParcela: item.valor,
                 statusParcela: status                    
             })
