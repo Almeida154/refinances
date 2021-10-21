@@ -41,6 +41,8 @@ export const TextProgress = styled.Text`
     textAlign: center; 
     fontSize: ${`${fonts.size.medium}px`}
     color: #525252;
+    margin-top: 10
+    margin-bottom: 10
 `
 
 export const TextGoals = styled.Text`

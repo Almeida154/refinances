@@ -9,6 +9,7 @@
  import React, { useState, useEffect } from 'react';
  import {
    ScrollView,
+   StatusBar,
    StyleSheet,
    Text,
    TextInput,
@@ -31,6 +32,10 @@ import InputText from '../../../../../components/InputText';
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
+import PickerContas from '../../../Entries/components/PickerCategoria'
+
+import PickerMetas from './PickerMetas'
+
  type PropsGoals = {
     navigation: StackNavigationProp<GoalsStack, "InvestGoals">
  }
@@ -42,10 +47,13 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
     const [idMeta, setMeta] = useState('');
     const [errorMeta, setErrorMeta] = useState<any | null>(null);
+
+    const [selectedConta, setSelectedConta] = useState(0)
  
    return (
      <ScrollView style={{backgroundColor: '#f6f6f6'}}>
 
+      <StatusBar backgroundColor={'#ee4266'}/>
       <Header style={{backgroundColor:'#ee4266'}}>
         <AlinhaParaDireita>
             <View></View>
@@ -64,7 +72,10 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
       <View style={styles.container}>
 
-          {/* Adicionar o picker de metas aqui, pré-selecionando a que o user clicou p depositar */}
+          {/* Adicionar o picker de metas aqui, pré-selecionando a que o user clicou p depositar 
+          
+          <PickerMetas changeGoal={meta}/>
+          */}
           <InputText
             value={idMeta}
             label="Qual a meta?"
@@ -90,32 +101,19 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
             onClear={() => {
               setErrorValor(null);
               setValor('');
-            }}/>*/}
+            }}/>
 
-          {/*<InputText
-            value={valorDeposito}
-            label="Qual o valor?"
-            error={errorValor}
-            showClearIcon={valorDeposito != ''}
-            keyboardType={'numeric'}
-            placeholder={'R$ 10,00'}
-            onClear={() => {
-              setErrorValor(null);
-              setValor('');
-            }}
-            onChangeText={txt => {
-              setErrorValor(null);
-              setValor(txt);
-            }}/>*/}
+          <PickerContas conta={selectedConta} setConta={setSelectedConta}/>*/}
 
           <Button
             title={'Investir'}
             style={{marginTop: 30}}
-            onPress={() => console.log('ok')}>
+            onPress={() => console.log('btn investir')}>
           </Button>
  
        </View>
      </ScrollView>
+     
    );
  };
  

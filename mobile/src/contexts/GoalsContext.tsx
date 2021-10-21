@@ -84,6 +84,40 @@ export const MetasProvider: React.FC = ({ children }) => {
     }
   }
 
+  async function handleAtualizarMeta(meta: Meta, idUser: number) {
+    try {
+      const response = await api.post(`/goal/edit/${idUser}`, {
+        descMeta: meta.descMeta,
+        saldoFinalMeta: meta.saldoFinalMeta,
+        saldoAtualMeta: meta.saldoAtualMeta,
+        dataInicioMeta: meta.dataInicioMeta,
+        dataFimMeta: meta.dataFimMeta,
+        realizacaoMeta: meta.realizacaoMeta,
+        userMetaId: meta.userMetaId,
+      });
+
+      console.log(response.data);
+
+      if (response.data.error) console.log(response.data.error);
+
+      console.log('response.data', response.data);      
+
+      const updateMetas = metas == null ? null : metas.slice();
+
+      if(!updateMetas) {
+          //Caso cadastrou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
+          handleReadByUserMetas(await retornarIdDoUsuario())
+      } else {
+          //Caso cadastrou e tinha outras metas carregadas, adicionar a criada no final do vetor
+          updateMetas.push(response.data.meta)
+      }
+      
+      setMetas(updateMetas);
+    } catch (error) {
+      console.log('Deu um erro no handleUpdateMeta: ' + error);
+    }
+  }
+
   return (
     <MetaContext.Provider
       value={{ metas, handleReadByUserMetas, loading, handleAdicionarMeta }}>
