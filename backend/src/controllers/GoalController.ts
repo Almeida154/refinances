@@ -84,14 +84,11 @@ class MetaController {
 
   async one(request: Request, response: Response, next: NextFunction) {
     const metaRepository = getRepository(Meta);
+    const goal = await metaRepository.findOne({
+      where: { id: request.params.id },
+    });
 
-    const categories = await metaRepository
-      .createQueryBuilder("meta")
-      .leftJoinAndSelect("meta.userMeta", "user")
-      .where("meta.id = :id", { id: request.params.id })
-      .getMany();
-
-    return response.send({ categories });
+    return response.send({ goal });
   }
 
   async edit(request: Request, response: Response, next: NextFunction) {

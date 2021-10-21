@@ -9,6 +9,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
+// Styles
+import { Container } from './styles';
+
+// Components
+import Header from '../../components/Header';
+import BottomNavigation from '../../components/BottomNavigation';
+
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'EachFixedExpense'>;
   route: RouteProp<RootStackParamAuth, 'EachFixedExpense'>;
@@ -16,28 +23,36 @@ export type PropsNavigation = {
 
 const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   const [fixedIncomes, setFixedIncomes] = useState('');
-  const { user, updateUserProps } = UseAuth();
+  const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
-  //   useEffect(() => {
-  //     BackHandler.addEventListener('hardwareBackPress', backAction);
-  //     return () =>
-  //       BackHandler.removeEventListener('hardwareBackPress', backAction);
-  //   }, []);
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
 
-  //   const backAction = () => {
-  //     navigation.goBack();
-  //     const newUser = user;
-  //     newUser.email = '';
-  //     updateUserProps(newUser);
-  //     return true;
-  //   };
+  const backAction = () => {
+    navigation.goBack();
+    return true;
+  };
 
-  //   async function setUser() {
-  //     if (email == '') return;
-  //     await AsyncStorage.setItem('@userEachFixedExpense', email);
-  //     navigation.navigate('Password');
-  //   }
-  return <View></View>;
+  async function next() {
+    console.log(setupUserData);
+    navigation.navigate('EachFixedExpense');
+  }
+  return (
+    <Container>
+      <Header
+        onBackButton={() => backAction()}
+        title={`Quanto gasta mensalmente com ${
+          setupUserData.expenseTags[setupUserData.expenseTagsCount]
+        }?`}
+        subtitle="Insira o valor mais aproximado da média"
+      />
+
+      <BottomNavigation onPress={() => next()} description={'Próximo!'} />
+    </Container>
+  );
 };
 
 export default EachFixedExpense;

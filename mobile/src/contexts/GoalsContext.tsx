@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
 import { StackDescriptorMap } from '@react-navigation/stack/lib/typescript/src/types';
 
-import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario'
+import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario';
 
 export type Meta = {
   id: number;
@@ -23,6 +23,7 @@ interface MetaContextType {
   loading: boolean;
   handleAdicionarMeta(metaProps: Meta): Promise<void>;
   handleReadByUserMetas(idUser: number): Promise<void>;
+  handleGetGoalById(id: number): Promise<void>;
 }
 
 const MetaContext = createContext<MetaContextType>({} as MetaContextType);
@@ -49,16 +50,16 @@ export const MetasProvider: React.FC = ({ children }) => {
 
       if (response.data.error) console.log(response.data.error);
 
-      console.log('response.data', response.data);      
+      console.log('response.data', response.data);
 
       const newMetas = metas == null ? null : metas.slice();
 
-      if(!newMetas) {
-          //Caso cadastrou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
-          handleReadByUserMetas(await retornarIdDoUsuario())
+      if (!newMetas) {
+        //Caso cadastrou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
+        handleReadByUserMetas(await retornarIdDoUsuario());
       } else {
-          //Caso cadastrou e tinha outras metas carregadas, adicionar a criada no final do vetor
-          newMetas.push(response.data.meta)
+        //Caso cadastrou e tinha outras metas carregadas, adicionar a criada no final do vetor
+        newMetas.push(response.data.meta);
       }
 
       setMetas(newMetas);
@@ -67,7 +68,7 @@ export const MetasProvider: React.FC = ({ children }) => {
     }
   }
 
-  async function handleReadByUserMetas(idUser: number) {    
+  async function handleReadByUserMetas(idUser: number) {
     try {
       const response = await api.post(`/goal/findbyuser/${idUser}`);
 
@@ -76,7 +77,6 @@ export const MetasProvider: React.FC = ({ children }) => {
       }
       console.log(response.data.metas);
       setMetas(response.data.metas);
-      
 
       console.log('metas: ' + metas);
     } catch (error) {
@@ -94,33 +94,50 @@ export const MetasProvider: React.FC = ({ children }) => {
         dataFimMeta: meta.dataFimMeta,
         realizacaoMeta: meta.realizacaoMeta,
         userMetaId: meta.userMetaId,
+
+        // eu troquei o método 'one' lá no GoalController, pq tava vindo junto com o usuário e a foto de perfil é absurdamente grande, agora só vem a meta mesmo, em vez desse userMetaId receber da meta, ele pode receber daquela função 'retornarIdDoUsuario';
       });
 
       console.log(response.data);
 
       if (response.data.error) console.log(response.data.error);
 
-      console.log('response.data', response.data);      
+      console.log('response.data', response.data);
 
       const updateMetas = metas == null ? null : metas.slice();
 
-      if(!updateMetas) {
-          //Caso cadastrou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
-          handleReadByUserMetas(await retornarIdDoUsuario())
+      if (!updateMetas) {
+        //Caso cadastrou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
+        handleReadByUserMetas(await retornarIdDoUsuario());
       } else {
-          //Caso cadastrou e tinha outras metas carregadas, adicionar a criada no final do vetor
-          updateMetas.push(response.data.meta)
+        //Caso cadastrou e tinha outras metas carregadas, adicionar a criada no final do vetor
+        updateMetas.push(response.data.meta);
       }
-      
+
       setMetas(updateMetas);
     } catch (error) {
       console.log('Deu um erro no handleUpdateMeta: ' + error);
     }
   }
 
+  async function handleGetGoalById(id: number) {
+    try {
+      const response = await api.get(`/goal/read/${id}`);
+      return response.data.goal;
+    } catch (error) {
+      console.debug('GoalsContext | handleGetGoalById: ' + error);
+    }
+  }
+
   return (
     <MetaContext.Provider
-      value={{ metas, handleReadByUserMetas, loading, handleAdicionarMeta }}>
+      value={{
+        metas,
+        loading,
+        handleReadByUserMetas,
+        handleAdicionarMeta,
+        handleGetGoalById,
+      }}>
       {children}
     </MetaContext.Provider>
   );

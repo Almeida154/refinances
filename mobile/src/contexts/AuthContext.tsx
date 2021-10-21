@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Buffer } from 'buffer';
+
+import { Categoria } from './CategoriesContext';
+import { Conta } from './AccountContext';
+import { Lancamento } from './EntriesContext';
 
 import api from '../services/api';
 
@@ -13,6 +16,19 @@ export type User = {
   signed: boolean;
 };
 
+export interface SetupUserData {
+  expenseTags: string[];
+  expenseTagsCount: number;
+  incomeTags: string[];
+  incomeTagsCount: number;
+
+  fixedExpenses: Lancamento[];
+  fixedExpenseCategories: Categoria[];
+  fixedIncomes: Lancamento[];
+  fixedIncomeCategories: Categoria[];
+  account: Conta[];
+}
+
 export interface error {
   error?: string;
   message?: string;
@@ -22,9 +38,11 @@ export interface error {
 interface AuthContextType {
   token: string;
   user: User;
+  setupUserData: SetupUserData;
   handleLogin(logUser: User): Promise<error>;
   handleRegister(): Promise<string>;
   updateUserProps(userProps: User): void;
+  updateSetupUserDataProps(setupUserDataProps: SetupUserData): void;
   handleLogout(): void;
   emailExists(email: string): Promise<boolean>;
   userAvatar(): Promise<string | undefined | null>;
@@ -36,6 +54,9 @@ export const UseAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User>({} as User);
+  const [setupUserData, setSetupUserData] = useState<SetupUserData>(
+    {} as SetupUserData,
+  );
 
   useEffect(() => {
     (async () => {
@@ -99,11 +120,14 @@ export const AuthProvider: React.FC = ({ children }) => {
         emailUsuario: user.emailUsuario,
         senhaUsuario: user.senhaUsuario,
       });
-      console.debug("handleLogin | response", response)
       if (response.data.error) {
         console.debug('AuthContext | handleLogin(): ', response.data.error);
         return response.data;
       }
+      console.debug(
+        'handleLogin | response',
+        JSON.stringify(response).substr(0, 200) + '...',
+      );
 
       const loggedUser: User = response.data.user;
 
@@ -129,15 +153,21 @@ export const AuthProvider: React.FC = ({ children }) => {
     setUser(userProps);
   }
 
+  function updateSetupUserDataProps(setupUserDataProps: SetupUserData) {
+    setSetupUserData(setupUserDataProps);
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
+        setupUserData,
         handleLogout,
         handleLogin,
         token: '',
         handleRegister,
         updateUserProps,
+        updateSetupUserDataProps,
         emailExists,
         userAvatar,
       }}>
