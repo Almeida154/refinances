@@ -22,7 +22,7 @@ export default {
     cropperToolbarWidgetColor: colors.redCrayola,
     cropperToolbarTitle: 'Sua foto de perfil',
   },
-  FIXED_EXPENSES_TAGS: [
+  FIXED_EXPENSE_TAGS: [
     'Luz',
     'Água',
     'Internet',
@@ -36,5 +36,89 @@ export default {
     'Doação à UIPA',
     'Ração',
     'PSN',
+  ],
+  DEFAULT_EXPENSE_CATEGORIES: [
+    { description: 'Moradia', icon: 'FontAwesome:home', color: '#f4a261' },
+    {
+      description: 'Contas Residenciais',
+      icon: 'Ionicons:documents',
+      color: '#2a9d8f',
+    },
+    {
+      description: 'Saúde',
+      icon: 'MaterialCommunityIcons:heart-pulse',
+      color: '#606c38',
+    },
+    {
+      description: 'Educação',
+      icon: 'Octicons:mortar-board',
+      color: '#457b9d',
+    },
+    { description: 'Transporte', icon: 'FontAwesome:home', color: '#ffff3f' },
+    { description: 'Mercado', icon: 'FontAwesome:home', color: '#1976d2' },
+    {
+      description: 'Cuidados Pessoais',
+      icon: 'MaterialIcons:self-improvement',
+      color: '#ef476f',
+    },
+    {
+      description: 'Assinaturas & Serviços',
+      icon: 'MaterialCommunityIcons:palette-swatch',
+      color: '#161a1d',
+    },
+    {
+      description: 'Lazer',
+      icon: 'MaterialCommunityIcons:emoticon-happy',
+      color: '#5a189a',
+    },
+    {
+      description: 'Comida',
+      icon: 'FontAwesome:dinner-dining',
+      color: '#e5383b',
+    },
+    {
+      description: 'Presentes & Doações',
+      icon: 'MaterialCommunityIcons:gift',
+      color: '#ffc4d6',
+    },
+    { description: 'Família', icon: 'Ionicons:ios-people', color: '#083d77' },
+    { description: 'Viagem', icon: 'Entypo:aircraft', color: '#ff8811' },
+    {
+      description: 'Outfit',
+      icon: 'MaterialCommunityIcons:hanger',
+      color: '#C5B400',
+    },
+    { description: 'Taxas', icon: 'MaterialIcons:payments', color: '#FF6233' },
+  ],
+  FIXED_INCOME_TAGS: [
+    'Salário',
+    'Bico',
+    'Mesada',
+    'Inquilino',
+    'Propriedade',
+    'Loja Virtual',
+    'Empreendimento',
+  ],
+  DEFAULT_INCOME_CATEGORIES: [
+    {
+      description: 'Investimento',
+      icon: 'Entypo:area-graph',
+      color: '#343a40',
+    },
+    {
+      description: 'Benefício',
+      icon: 'FontAwesome5:hands-helping',
+      color: '#40916c',
+    },
+    {
+      description: 'Salário',
+      icon: 'MaterialIcons:attach-money',
+      color: '#80b918',
+    },
+    {
+      description: 'Empréstimo',
+      icon: 'FontAwesome5:handshake',
+      color: '#98c1d9',
+    },
   ],
 };

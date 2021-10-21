@@ -33,7 +33,6 @@ import Modalize from '../../../../components/Modalize';
 import { Modalize as Modal } from 'react-native-modalize';
 
 import global from '../../../../global';
-import { stringLiteral } from '@babel/types';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'FixedExpenses'>;
@@ -63,7 +62,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   }, []);
 
   useEffect(() => {
-    let tags = global.FIXED_EXPENSES_TAGS as [];
+    let tags = global.FIXED_EXPENSE_TAGS as [];
     // let add = [null];
     // let fuckyou = [...tags, ...add];
     // setTags(fuckyou as []);
