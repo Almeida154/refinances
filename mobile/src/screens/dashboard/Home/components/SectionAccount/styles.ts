@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import fonts from '../../../../../styles/fonts'
 
 export const Container = styled.View`
     display: flex;
@@ -12,7 +13,6 @@ export const SectionBalance = styled.View`
     border-left-width: 6px;
     border-color: #EE4266;
     border-radius: 5px;
-
     width: 85%;
     margin-top: 15px;
     padding-left: 14px;
@@ -20,10 +20,12 @@ export const SectionBalance = styled.View`
 export const LabelDescriptionBalance = styled.Text`
     font-weight: 300;
     font-size: 18px;
+    fontFamily: ${`${fonts.familyType.regular}`};
+    opacity: 0.5
 `
 export const LabelBalance = styled.Text`
-    font-size: 25px;
-    font-weight: bold;
+    font-size: ${`${fonts.size.bigger}`};
+    fontFamily: ${`${fonts.familyType.bold}`};
 `
 export const Separator = styled.View`
     height: 2px;
@@ -33,18 +35,8 @@ export const Separator = styled.View`
 `
 export const LabelDescriptionAccount = styled.Text`
     font-size: 20px;
-    font-weight: bold;
+    fontFamily: ${`${fonts.familyType.black}`};
     color: #555;
-    
-`
-export const ButtonManager = styled.TouchableHighlight`
-    margin-top: 15px;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    background-color: #F5F2F3;
-    height: 60px;
-    border-radius: 5px;
 `
 export const LabelManager = styled.Text`
     font-weight: 600;

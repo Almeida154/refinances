@@ -33,6 +33,9 @@ import SectionAccount from './components/SectionAccount';
 import CreateCategoryGoals from './components/CreateCategoryGoals';
 import ManageCategoryGoals from './components/ManageCategoryGoals';
 
+import fonts from '../../../styles/fonts'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 export type PropsHome = {
   navigation: StackNavigationProp<PropsMainRoutes, 'Main'>;
 };
@@ -114,10 +117,15 @@ const Home = () => {
               )}
 
               <View style={styles.textBoasVindas}>
-                <Text style={{ color: '#fff', fontSize: 20 }}>Boa tarde!</Text>
+                <Text style={{ color: '#fff', 
+                fontSize: fonts.size.big,
+                fontFamily: fonts.familyType.bold}}>Olá, {user.nomeUsuario}</Text>
 
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                  {user.nomeUsuario}
+                <Text style={{
+                fontSize: fonts.size.medium,
+                fontFamily: fonts.familyType.bold,
+                color: '#fff', opacity: 0.4 }}>
+                  Bom dia
                 </Text>
               </View>
             </View>
@@ -130,9 +138,9 @@ const Home = () => {
                 style={{ marginRight: 20 }}
               />
 
-              <TouchableHighlight onPress={handleLogout}>
+              <TouchableOpacity onPress={handleLogout}>
                 <Icon name="logout" color="#9D3147" size={30} />
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           </View>
           {/* Scrollable Content */}
@@ -173,7 +181,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 50,
-    borderColor: 'black',
+    borderColor: '#9D3147',
     borderWidth: 4,
   },
   containerProfile: {

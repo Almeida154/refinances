@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import fonts from '../../../../../styles/fonts'
 
 export const Container = styled.View`
     display: flex;
@@ -18,8 +19,9 @@ export const SectionTop = styled.View`
     padding-left: 14px;
 `
 export const LabelDescription = styled.Text`
-    font-weight: 300;
+    opacity: 0.5;
     font-size: 18px;
+    fontFamily: ${`${fonts.familyType.semiBold}`};
 `
 
 export const Separator = styled.View`
@@ -30,9 +32,8 @@ export const Separator = styled.View`
 `
 export const LabelDescriptionGoals = styled.Text`
     font-size: 20px;
-    font-weight: bold;
     color: #555;
-    
+    fontFamily: ${`${fonts.familyType.black}`};
 `
 
 export const ContainerCard = styled.View`

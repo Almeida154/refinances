@@ -72,8 +72,7 @@ import PickerMetas from './PickerMetas'
 
       <View style={styles.container}>
 
-          {/* Adicionar o picker de metas aqui, pré-selecionando a que o user clicou p depositar 
-          
+          {/* Adicionar o picker de metas aqui, pré-selecionando a que o user clicou p depositar   
           <PickerMetas changeGoal={meta}/>
           */}
           <InputText

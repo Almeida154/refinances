@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import fonts from '../../../../../styles/fonts'
 
 
 export const Container = styled.View`
@@ -33,15 +34,10 @@ export const Plus = styled.Text`
     
 `
 export const LabelDescriptionCreate = styled.Text`
-    font-size: 20px;
-    font-weight: bold;
+    font-size: ${`${fonts.size.medium}`};
+    fontFamily: ${`${fonts.familyType.black}`};
     color: #555;
     
-`
-export const LabelManager = styled.Text`
-    font-weight: 600;
-    color: #444;
-    font-size: 20px;
 `
 
 export const ContainerCardCreate = styled.View`
@@ -67,12 +63,11 @@ export const ContainerCreate = styled.View`
 export const SectionName = styled.View`
     margin-left: 10px;
 `
-export const LabelName = styled.Text`
-    font-size: 20px;
-`
+
 export const LabelCategory = styled.Text`
-    color: #888;
+    opacity: 0.5
     font-size: 14px;
+    fontFamily: ${`${fonts.familyType.regular}`};
 `
 export const SectionCreate = styled.View`
     width: 100%;
