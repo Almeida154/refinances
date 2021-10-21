@@ -84,6 +84,9 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   const removeAccents = (str: string) =>
     str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
+  const capitalizeFirstLetter = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
+
   const handleAddExpense = () => {
     if (newExpense != '') {
       let tagsToLowerCase = tags.map(tag => removeAccents(tag.toLowerCase()));
@@ -93,8 +96,11 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
         return;
       }
 
-      let tagsUpdated = [...tags, newExpense];
-      let tagsSelectedUpdated = [...selectedTags, newExpense];
+      let tagsUpdated = [...tags, capitalizeFirstLetter(newExpense)];
+      let tagsSelectedUpdated = [
+        ...selectedTags,
+        capitalizeFirstLetter(newExpense),
+      ];
       setTags(tagsUpdated);
       setSelectedTags(tagsSelectedUpdated);
       closeModalize();
