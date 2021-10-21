@@ -156,8 +156,15 @@ class ParcelaController {
 
         })
 
+        
         if(aux.length != 0) {
             parcelas.push(aux)
+        }
+
+        for(var i = 0;i < parcelas.length;i++){
+            for(var j = 0;j < parcelas[i].length;j++) {
+                parcelas[i][j].totalParcelas = lancamento.get(data[i].lancamentoParcela.id)                
+            }
         }
 
         return response.send({message: parcelas})

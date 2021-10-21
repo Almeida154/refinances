@@ -1,13 +1,13 @@
 import {Transferencia} from '../../../contexts/TransferContext'
-import {Parcela} from '../../../contexts/InstallmentContext'
+import {ReadParcela} from '../../../contexts/InstallmentContext'
 
-export function ConvertToParcela(item: Parcela[] | Transferencia[] ) {
-    const readByParcelas = <Parcela[]>item    
+export function ConvertToParcela(item: ReadParcela[] | Transferencia[] ) {
+    const readByParcelas = <ReadParcela[]>item    
 
     return readByParcelas.slice()
 }
 
-export function ConvertToTransferencia(item: Parcela[] | Transferencia[]) {
+export function ConvertToTransferencia(item: ReadParcela[] | Transferencia[]) {
     const readByTransferencias = <Transferencia[]>item    
 
     return readByTransferencias.slice()

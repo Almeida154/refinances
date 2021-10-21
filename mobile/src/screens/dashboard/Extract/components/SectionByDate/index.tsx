@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect } from 'react'
 
-import {Parcela} from '../../../../../contexts/InstallmentContext'
+import {ReadParcela} from '../../../../../contexts/InstallmentContext'
 import {UseTransferencias, Transferencia} from '../../../../../contexts/TransferContext'
 
 import CardInstallment from '../CardInstallment'
@@ -18,26 +18,13 @@ import {
 
 type PropsSectionByDate = {
     date: string,
-    parcelas: Parcela[],
+    parcelas: ReadParcela[],
     transferencias: Transferencia[]
 }
 
 const SectionByDate = ({date, parcelas, transferencias}: PropsSectionByDate) => {    
         
-    let temTransferencias = true
-    let temParcelas = true
-
-    try {
-        transferencias.map(item => {})
-    } catch (error) {
-        temTransferencias = false
-    }
-        
-    try {
-        parcelas.map(item => {})
-    } catch (error) {
-        temParcelas = false
-    }
+  
     return (
         <Container>
             <HeaderDate>
@@ -45,13 +32,13 @@ const SectionByDate = ({date, parcelas, transferencias}: PropsSectionByDate) => 
             </HeaderDate>
             <BodyEntries>
                 {
-                    temParcelas && parcelas.map((item, index) =>
+                    parcelas.map((item, index) =>
                         <CardInstallment item={item} key={index}/>
                     )
 
                 }
                 {
-                    temTransferencias && transferencias.map((item, index) =>
+                    transferencias.map((item, index) =>
                         <CardTransfer item={item} key={-index}/>
                     )
                 }

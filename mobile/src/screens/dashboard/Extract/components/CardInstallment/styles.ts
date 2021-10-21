@@ -1,5 +1,7 @@
 import styled from 'styled-components/native'
 
+import {colors, fonts, metrics} from '../../../../../styles'
+
 export const ContainerItem = styled.View`
     display: flex;
 
@@ -30,25 +32,27 @@ export const SectionLancamento = styled.View`
 `
 
 export const LabelName = styled.Text`
-    font-size: 17px;
-    font-weight: 500;
+    font-size: 25px;    
+    font-family: ${fonts.familyType.semiBold};
 `
 
-export const SectionValues = styled.Text`
+export const SectionValues = styled.View`
     display: flex;
     flex-direction: column;
+    padding-right: 25%;
 
 `
 
 export const LabelAccount = styled.Text`
     font-size: 13px;
     font-weight: 300;
+    font-family: ${fonts.familyType.light};
     
 `
 export const LabelValue = styled.Text`
-    font-size: 36px;
+    font-size: 23px;
     font-weight: bold;
 `
 export const LabelIndex = styled.Text`
-    color: #D2D2D2
+    font-family: ${fonts.familyType.regular}
 `

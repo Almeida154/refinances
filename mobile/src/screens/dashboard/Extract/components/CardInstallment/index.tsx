@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Parcela} from '../../../../../contexts/InstallmentContext'
+import {ReadParcela} from '../../../../../contexts/InstallmentContext'
 
 import {View} from 'react-native'
 
@@ -19,22 +19,20 @@ import {
 } from './styles'
 
 type PropsCardInstallment = {
-    item: Parcela
+    item: ReadParcela
 }
 
 const CardInstallment = ({item}: PropsCardInstallment) => {
-    // let total = 0
-    // item.parcelasLancamento.map(item => {
-    //     total += item.valorParcela
-    // })
-    // console.log(item)
+    
+    const textParcela = item.totalParcelas != 1 ? item.indexOfLancamento + 'ª parcela de ' + item.totalParcelas : ''
+
     return (
         <ContainerItem>
-            <SectionLancamento>
+            <SectionLancamento>   
                 <SectionIcon style={{borderColor: 'yellow'   }}>
-                    <Icon size={24} color={'gray'} stringIcon={item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
+                    <Icon size={24} color={'gray'} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' ? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
                 </SectionIcon>
-                <SectionDescription>
+                <SectionDescription>             
                     <LabelName>{item.lancamentoParcela.descricaoLancamento}</LabelName>
                     <LabelAccount>{item.contaParcela.descricao}</LabelAccount>
                 </SectionDescription>
@@ -42,8 +40,8 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
 
             
             <SectionValues>
-                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{item.valorParcela}</LabelValue>                
-                <LabelIndex>{item.indexOfLancamento} parcela de</LabelIndex>                
+                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{item.valorParcela}</LabelValue>                                                    
+                <LabelIndex>{textParcela}</LabelIndex>                
             </SectionValues>
         </ContainerItem>
     )

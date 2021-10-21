@@ -9,8 +9,8 @@ export type Transferencia = {
     id: number,
     descricaoTransferencia: string,
     valorTransferencia: number,
-    contaOrigem: Conta | null,
-    contaDestino: Conta | null,
+    contaOrigem: Conta,
+    contaDestino: Conta,
     dataTransferencia: Date,
 }
 

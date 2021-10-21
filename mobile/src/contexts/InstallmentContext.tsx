@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { ToastAndroid } from 'react-native';
 
 import api from '../services/api'
+import { Conta } from './AccountContext';
 
 import {Lancamento} from './EntriesContext'
 
@@ -14,9 +15,20 @@ export type Parcela = {
     statusParcela: boolean
 }
 
+export type ReadParcela = {
+    id: number,
+    dataParcela: Date,
+    valorParcela: number,
+    contaParcela: Conta
+    lancamentoParcela: Lancamento,
+    statusParcela: boolean,
+    indexOfLancamento: number,
+    totalParcelas: number
+}
+
 interface ParcelaContextType {        
     parcelas: Parcela[] | null,
-    readParcelas: Parcela[][] | null,
+    readParcelas: ReadParcela[][] | null,
 
     loadingParcela: boolean,
     handleAdicionarParcela(parcelas: Parcela[]): Promise<void>,
@@ -28,7 +40,7 @@ export const UseParcelas = () => useContext(ParcelasContext);
 
 export const ParcelaProvider: React.FC = ({ children }) => {
     const [parcelas, setParcelas] = useState<Parcela[] | null>(null)
-    const [readParcelas, setReadParcelas] = useState<Parcela[][] | null>(null)
+    const [readParcelas, setReadParcelas] = useState<ReadParcela[][] | null>(null)
     
     const [loadingParcela, setLoadingParcela] = useState(false)
 
@@ -67,14 +79,11 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                 rawDate
             })
 
-            console.debug('response.data.message | parcela', response.data.message)
-
 
             if(response.data.error) {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
             }
             
-
             setReadParcelas(response.data.message)
 
         } catch (error) {

@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import {Transferencia, UseTransferencias} from '../../../contexts/TransferContext'
-import {Parcela, UseParcelas} from '../../../contexts/InstallmentContext'
+import {ReadParcela, UseParcelas} from '../../../contexts/InstallmentContext'
 
 import {ConvertToParcela, ConvertToTransferencia} from './typecast'
 
@@ -32,8 +32,8 @@ import {
     ScrollBody
 } from './styles'
 
-const RenderSection = ({item}: {item: (Parcela[] | Transferencia[])[]}) => {
-    let readByParcelas: Parcela[] = ConvertToParcela(item[0])
+const RenderSection = ({item}: {item: (ReadParcela[] | Transferencia[])[]}) => {
+    let readByParcelas: ReadParcela[] = ConvertToParcela(item[0])
     let readByTransferencias: Transferencia[] = ConvertToTransferencia(item[1])        
     
     // console.debug("readByParcelas",readByParcelas)
@@ -52,17 +52,17 @@ const Extrato = () => {
 
     const [dateCurrent, setDateCurrent] = useState(new Date(Date.now()).toLocaleDateString())
     
-    const [allDatas, setAllDatas] = useState<(Parcela[] | Transferencia[])[][] | null>(null)
+    const [allDatas, setAllDatas] = useState<(ReadParcela[] | Transferencia[])[][] | null>(null)
 
     const [gasto, setGasto] = useState('00,00')
     const [ganho, setGanho] = useState('00,00')
     const [saldo, setSaldo] = useState('00,00')
 
-    function calcBalance(alldata: (Parcela[] | Transferencia[])[][]) {
+    function calcBalance(alldata: (ReadParcela[] | Transferencia[])[][]) {
         let gastos = 0, ganhos = 0, balance = 0
 
         alldata.map((item, index) => {
-            const parcelas: Parcela[] = ConvertToParcela(item[0])
+            const parcelas: ReadParcela[] = ConvertToParcela(item[0])
 
             parcelas.map((parcela) => {
                 if(typeof parcela.lancamentoParcela != 'number' ? parcela.lancamentoParcela.tipoLancamento == 'despesa' : false) {
