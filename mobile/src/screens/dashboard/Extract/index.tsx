@@ -144,7 +144,7 @@ const Extrato = () => {
     }, [])
     
    
-    useEffect(() => {
+    useEffect(() => {        
             loadInAllDatas()        
     }, [readTransferencias, readParcelas])
       

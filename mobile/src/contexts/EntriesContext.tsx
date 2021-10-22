@@ -85,12 +85,9 @@ export const LancamentoProvider: React.FC = ({ children }) => {
             
             // console.log(lancamento.parcelasLancamento)
 
-            newLancamento.parcelasLancamento = lancamento.parcelasLancamento
+            newLancamento.parcelasLancamento = lancamento.parcelasLancamento            
 
-
-            const loadLancamentos: any = lancamentos
-
-            handleInstallmentGroupByDate(idUser, lancamento.parcelasLancamento[0].dateParcela.toISOString())
+            
                         
             return ''
 

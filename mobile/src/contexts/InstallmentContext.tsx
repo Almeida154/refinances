@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { ToastAndroid } from 'react-native';
 
+import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario'
+
+import {toDate} from '../helpers/manipularDatas'
+
 import api from '../services/api'
 import { Conta } from './AccountContext';
 
@@ -17,7 +21,7 @@ export type Parcela = {
 
 export type ReadParcela = {
     id: number,
-    dataParcela: Date,
+    dataParcela: string,
     valorParcela: number,
     contaParcela: Conta
     lancamentoParcela: Lancamento,
@@ -50,7 +54,6 @@ export const ParcelaProvider: React.FC = ({ children }) => {
             const arrayParcelas: Parcela[] = parcelasProps;
 
             parcelasProps.map(async item => {
-                console.log("item=>", item)
                 const response = await api.post('/installment/create', {
                     dataParcela: item.dataParcela,
                     valorParcela: item.valorParcela,
@@ -63,10 +66,20 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                     throw response.data.error
                 };
                 
-                arrayParcelas.push(response.data.message);                
+                const newParcela = response.data.message
+
+                arrayParcelas.push(newParcela);                
+
+                if(readParcelas) {
+                    const [dayRead, monthRead, yearRead] = new Date(readParcelas[0][0].dataParcela).toLocaleDateString().split('/')
+                    const [day, month, year] = new Date(newParcela.dataParcela).toLocaleDateString().split('/')
+                    
+                    if(month == month && year == yearRead) {
+                        await handleInstallmentGroupByDate(await retornarIdDoUsuario(), new Date(newParcela.dataParcela).toISOString())
+                    }
+                }
             })
 
-            setParcelas(arrayParcelas);
             
         } catch (error) {
             console.log("Deu um erro ao adicionar a parcela: ", error);
