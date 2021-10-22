@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { Alert, ToastAndroid } from 'react-native';
+import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario';
 
 import api from '../services/api'
 
@@ -34,7 +35,6 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
     const [loadingTransferencia, setLoadingTransferencia] = useState(false)
 
     async function handleAdicionarTransferencia(TransferenciaProps: Transferencia) {       
-        setLoadingTransferencia(true)
         try {
             const response = await api.post('transfer/create', {
                 descricaoTransferencia: TransferenciaProps.descricaoTransferencia,
@@ -44,13 +44,20 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
                 dataTransferencia: TransferenciaProps.dataTransferencia
             })
             
-            console.log('response.data: ', response.data)
             const newTransferencia: Transferencia = response.data.message
                         
-            setLoadingTransferencia(false)
 
             if(response.data.error) {                
                 return response.data.error
+            }
+
+            if(readTransferencias) {
+                const [dayRead, monthRead, yearRead] = new Date(readTransferencias[0][0].dataTransferencia).toLocaleDateString().split('/')
+                const [day, month, year] = new Date(newTransferencia.dataTransferencia).toLocaleDateString().split('/')
+                
+                if(month == month && year == yearRead) {
+                    await handleTransferGroupByDate(await retornarIdDoUsuario(), new Date(newTransferencia.dataTransferencia).toISOString())
+                }
             }
 
             return ''
@@ -70,7 +77,7 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
             if(response.data.error) {
                 ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
             }
-
+            
             setReadTransferencias(response.data.message)
 
             setLoadingTransferencia(false)

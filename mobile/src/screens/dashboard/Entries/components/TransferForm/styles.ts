@@ -1,5 +1,7 @@
 import styled from 'styled-components/native'
 
+import {colors, fonts, metrics} from '../../../../../styles'
+
 export const ContainerForm = styled.View`
     display: flex;
     align-items: center;
@@ -60,3 +62,26 @@ export const ButtonDetalhes = styled.TouchableHighlight`
 export const SectionCardsParcelas = styled.View`
     
 `
+
+export const LabelView = styled.Text`
+  font-family: ${fonts.familyType.bold};
+  font-size: ${`${fonts.size.big}px`};
+  color: ${colors.redCrayola};
+  line-height: 28px;
+`;
+
+export const InputView = styled.View`  
+  color: ${colors.davysGrey};
+  padding: 0;
+  margin-top: -4px;
+`;
+
+export const Container = styled.TouchableHighlight`
+  width: 100%;
+  background-color: ${colors.white};
+  border-radius: ${`${metrics.inputText.radius}px`};
+  padding: 8px 20px;
+  flex-direction: row;
+  border-width: 1px;
+  border-color: ${colors.white};
+`;

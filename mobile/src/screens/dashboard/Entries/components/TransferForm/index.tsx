@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
-import { Alert, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native'
+import { Alert, ScrollView} from 'react-native'
 
 import {
     ContainerForm,
     InputControl,
-    Label,
-    TextInputValor,
-    TextInput,
-    SectionDetalhes,
-    TextDetalhes,
-    ButtonDetalhes,
-    SectionCardsParcelas
+    InputView,    
+    LabelView,
+    Container
 } from './styles'
+
+import {colors} from '../../../../../styles'
 
 import { UseTransferencias, Transferencia } from '../../../../../contexts/TransferContext'
 
 import InputText from '../../../../../components/InputText'
+import InputTextView from '../InputTextView'
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
@@ -38,6 +37,7 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
+        console.log("Foi")
     };
 
     const handleConfirm = (date: Date) => {       
@@ -52,8 +52,8 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
     const handleSubmit = async () => {        
         const newTransferencia: Transferencia = {
             id: -1,
-            contaOrigem: selectedContaOrigem,
-            contaDestino: selectedContaDestino,
+            contaOrigem: selectedContaOrigem == null ? {} as Conta : selectedContaOrigem,
+            contaDestino: selectedContaDestino == null ? {} as Conta : selectedContaDestino,
             dataTransferencia: dataPagamento,
             descricaoTransferencia: descricao,
             valorTransferencia: parseFloat(valor)
@@ -65,7 +65,11 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
         const message = await handleAdicionarTransferencia(newTransferencia)
         
         if(message == '') {
-            await handleLoadTransferencias(idUser)            
+            ToastAndroid.show("Transferencia adicionada", ToastAndroid.SHORT)
+            setDescricao('')
+            setSelectedContaDestino(null)
+            setSelectedContaOrigem(null)
+            
         }
         else {
             ToastAndroid.show(message, ToastAndroid.SHORT)            
@@ -96,18 +100,12 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                 </InputControl>
 
                 <InputControl style={{marginBottom: 50}}>
-                <TouchableOpacity onPress={showDatePicker}>
-                <InputText 
-                    label="Data da transferência"
-                    onClear={() => {}}
-                    showClearIcon={false}
-                    value={dataPagamento.toLocaleDateString()}
-                    placeholder="Data da transferência"
-                    colorLabel='#333333'
-                    editable={false}
-                />  
-            </TouchableOpacity>  
-
+                    <InputTextView
+                        value={dataPagamento.toLocaleDateString()}
+                        label="Data de Efetuação"
+                        colorLabel="#333"
+                        onPress={showDatePicker}
+                    />
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="date"                
