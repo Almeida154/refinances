@@ -53,7 +53,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   const modalizeRef = useRef<Modal>(null);
   const newExpenseRef = useRef<TextInput>(null);
 
-  const { user, updateUserProps } = UseAuth();
+  const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -63,9 +63,6 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let tags = global.FIXED_EXPENSE_TAGS as [];
-    // let add = [null];
-    // let fuckyou = [...tags, ...add];
-    // setTags(fuckyou as []);
     setTags(tags);
   }, []);
 
@@ -75,12 +72,20 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   };
 
   async function next() {
-    console.log(selectedTags);
-    //navigation.navigate('Password');
+    const userData = setupUserData;
+    userData.expenseTags = selectedTags;
+    userData.expenseTagsCount = 0;
+    updateSetupUserDataProps(userData);
+
+    console.log(setupUserData);
+    navigation.navigate('EachFixedExpense');
   }
 
   const removeAccents = (str: string) =>
     str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  const capitalizeFirstLetter = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
 
   const handleAddExpense = () => {
     if (newExpense != '') {
@@ -91,8 +96,11 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
         return;
       }
 
-      let tagsUpdated = [...tags, newExpense];
-      let tagsSelectedUpdated = [...selectedTags, newExpense];
+      let tagsUpdated = [...tags, capitalizeFirstLetter(newExpense)];
+      let tagsSelectedUpdated = [
+        ...selectedTags,
+        capitalizeFirstLetter(newExpense),
+      ];
       setTags(tagsUpdated);
       setSelectedTags(tagsSelectedUpdated);
       closeModalize();

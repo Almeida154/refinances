@@ -1,7 +1,7 @@
 import react from 'react';
 import { NavigatorScreenParams } from '@react-navigation/native';
 
-export type HomeAccountStack = {  
+export type HomeAccountStack = {
   ManageAccount: undefined;
   CreateAccount: undefined;
   AddCategoryAccount: undefined;
@@ -11,7 +11,7 @@ export type GoalsStack = {
   GoalsList: undefined;
   CreateGoals: undefined;
   InvestGoals: undefined;
-  GoalDetails: undefined;
+  GoalDetails: { goalId: number };
   GoalsDashboard: undefined;
 };
 
