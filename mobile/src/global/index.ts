@@ -97,6 +97,7 @@ export default {
       color: '#C5B400',
     },
     { description: 'Taxas', icon: 'MaterialIcons:payments', color: '#FF6233' },
+    { description: 'Pets', icon: 'FontAwesome5:dog', color: '#6A381F' },
   ],
   FIXED_INCOME_TAGS: [
     'Salário',
