@@ -1,40 +1,60 @@
-export function converterNumeroParaData(mes: string) {
-    
+export function converterNumeroParaData(data: string, mostrarAno: boolean) {
+    const [dia, mes, ano] = data.split('/')
+
+    let texto = ''
     switch(mes) {
         case '01':
         case '1':
-            return "Janeiro"
+            texto += "Janeiro"
+            break;
         case "02":
         case "2":
-            return "Fevereiro"
+            texto += "Fevereiro"
+            break;
         case "03":
         case "3":
-            return "Março"
+            texto += "Março"
+            break;
         case "04":
         case "4":
-            return "Abril"
+            texto += "Abril"
+            break;
         case "05":
         case "5":
-            return "Maio"
+            texto += "Maio"
+            break;
         case "06":
         case "6":
-            return "Junho"
+            texto += "Junho"
+            break;
         case "07":
         case "7":
-            return "Julho"
+            texto += "Julho"
+            break;
         case "08":
         case "8":
-            return "Agosto"
+            texto += "Agosto"
+            break;
         case "09":
         case "9":
-            return "Setembro"
+            texto += "Setembro"
+            break;
         case "10":
-            return "Outubro"
+            texto += "Outubro"
+            break;
         case "11":
-            return "Novembro"
+            texto += "Novembro"
+            break;
         case "12":
-            return "Dezembro"
+            texto += "Dezembro"
+            break;
     }
+
+    if(mostrarAno) {
+        texto += ` ${ano}`
+    }
+
+    return texto
 }
 
 export default function converterDataParaManuscrito (data: string) {
@@ -42,5 +62,5 @@ export default function converterDataParaManuscrito (data: string) {
 
     let texto = dia + " de "
 
-    return texto + converterNumeroParaData(mes)
+    return texto + converterNumeroParaData(data, false)
 }

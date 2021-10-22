@@ -86,12 +86,9 @@ export const LancamentoProvider: React.FC = ({ children }) => {
           lancamento.parcelasLancamento[index].lancamentoParcela == -1
             ? response.data.message.id
             : lancamento.parcelasLancamento[index].lancamentoParcela;
-        console.log(`parcela ${index}: `, item);
       });
 
       await handleAdicionarParcela(lancamento.parcelasLancamento);
-
-      const newLancamento: Lancamento = response.data.message;
 
       return '';
     } catch (error) {

@@ -49,7 +49,8 @@ const RenderSection = ({item}: {item: (ReadParcela[] | Transferencia[])[]}) => {
 const Extrato = () => {
     const {readParcelas, handleInstallmentGroupByDate} = UseParcelas()
     const {readTransferencias, handleTransferGroupByDate} = UseTransferencias()        
-
+    const yearCurrent = String(new Date(Date.now()).getFullYear())
+    
     const [dateCurrent, setDateCurrent] = useState(new Date(Date.now()).toLocaleDateString())
     
     const [allDatas, setAllDatas] = useState<(ReadParcela[] | Transferencia[])[][] | null>(null)
@@ -148,12 +149,6 @@ const Extrato = () => {
             loadInAllDatas()        
     }, [readTransferencias, readParcelas])
       
-
-    function GetMonth(date: string) {
-        const [dia, mes, ano] = dateCurrent.split('/')
-        return mes
-    }
-
     return (
         <Container >
                 <ScrollBody>
@@ -163,7 +158,7 @@ const Extrato = () => {
                         </PeriodoAnterior>
                         
                         <PeriodoAtual>
-                            <LabelPeriodo>{converterNumeroParaData(GetMonth(dateCurrent))}</LabelPeriodo>
+                            <LabelPeriodo>{converterNumeroParaData(dateCurrent, !(yearCurrent == dateCurrent.split('/')[2]))}</LabelPeriodo>
                         </PeriodoAtual>
 
                         <PeriodoPosterior onPress={() => updateDate(1)}>
