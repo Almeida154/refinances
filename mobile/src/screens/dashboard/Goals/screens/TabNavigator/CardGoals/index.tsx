@@ -19,6 +19,8 @@ import { UseDadosTemp } from '../../../../../../contexts/TemporaryDataContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { GoalsStack } from '../../../../../../@types/RootStackParamApp';
 
+import Icon from 'react-native-vector-icons/EvilIcons'
+
 type PropsCardGoals = {
   item: Meta;
 };
@@ -29,10 +31,14 @@ const CardGoals = ({ item }: PropsCardGoals) => {
   const objDataFimMeta = toDate(item.dataFimMeta);
   const objDataIniMeta = toDate(item.dataInicioMeta);
 
-  const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); // Subtrai uma data pela outra
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
+  // Subtrai uma data pela outra
+  const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); 
 
-  const percentageBalance = (item.saldoAtualMeta * 100) / item.saldoFinalMeta; // Algum cálculo para calcular a porcentagem aqui
+  // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+  // Algum cálculo para calcular a porcentagem aqui
+  const percentageBalance = (item.saldoAtualMeta * 100) / item.saldoFinalMeta; 
 
   return (
     <Goal key={item.id}>
@@ -46,7 +52,8 @@ const CardGoals = ({ item }: PropsCardGoals) => {
         <GoalDesc>{item.descMeta}</GoalDesc>
       </GoalTouchable>
 
-      <DaysLeft>! Faltam {days} dias</DaysLeft>
+      <DaysLeft>
+        <Icon name="exclamation" color="#525252"/> Faltam {days} dias</DaysLeft>
 
       <ProgressBar
         progress={percentageBalance / 100}

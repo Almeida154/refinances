@@ -27,6 +27,10 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 
+import { toDate } from '../../../../../helpers/manipularDatas';
+
+import Icon from 'react-native-vector-icons/EvilIcons'
+
 type PropsGoals = {
   navigation: StackNavigationProp<GoalsStack, 'GoalDetails'>;
   route: RouteProp<GoalsStack, 'GoalDetails'>;
@@ -35,9 +39,6 @@ type PropsGoals = {
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
 const GoalDetails = ({ navigation, route }: Props) => {
-  const [state, setState] = React.useState({ open: false });
-  const onStateChange = ({ open }) => setState({ open });
-  const { open } = state;
 
   const [goal, setGoal] = useState({} as Meta);
 
@@ -52,19 +53,34 @@ const GoalDetails = ({ navigation, route }: Props) => {
     })();
   }, []);
 
+  /*const objDataFimMeta = toDate(goal.dataFimMeta);
+  const objDataIniMeta = toDate(goal.dataInicioMeta);
+
+  // Subtrai uma data pela outra
+  const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); 
+
+  // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));*/
+
+  // Algum cálculo para calcular a porcentagem aqui
+  const percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta; 
+
+  //const saldo = goal.saldoAtualMeta.toFixed(2)
+
   return (
-    <ScrollView style={{ backgroundColor: '#f6f6f6', height: '120%' }}>
+    <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
       {console.debug('ROUTE:::: ', route)}
       <View style={styles.container}>
         <Title>{goal.descMeta}</Title>
 
         <Valor>
           <TextRS>R$</TextRS>
-          <TextValor>2.480,00</TextValor>
+          <TextValor>{goal.saldoAtualMeta}</TextValor>
         </Valor>
 
+        {/* Ta dando merda aqui */ }
         <ProgressBar
-          progress={0.35}
+          progress={0.1}
           color="#F81650"
           style={{
             height: 10,
@@ -75,21 +91,22 @@ const GoalDetails = ({ navigation, route }: Props) => {
 
         <TextProgress>
           Você já progrediu sua meta em
-          <TextGoals> 35% </TextGoals>
-          de <TextGoals>R$ 4.960,00</TextGoals>
+          <TextGoals> {percentageBalance}% </TextGoals>
+          de <TextGoals>R$ {goal.saldoFinalMeta}</TextGoals>
         </TextProgress>
 
         <Goal>
-          <DaysLeft>! Faltam 124 dias</DaysLeft>
+          {/* Ta dando merda aqui tbm*/ }
+          <DaysLeft><Icon name="exclamation" color="#525252" size={22}/> Faltam 14 dias</DaysLeft>
 
           <GoalDate>
             <TextGoalsH>Início</TextGoalsH>
-            <TextGoalsLighter>08/03/2021</TextGoalsLighter>
+            <TextGoalsLighter>{goal.dataInicioMeta}</TextGoalsLighter>
           </GoalDate>
 
           <GoalDate>
             <TextGoalsH>Previsão</TextGoalsH>
-            <TextGoalsLighter>08/03/2021</TextGoalsLighter>
+            <TextGoalsLighter>{goal.dataFimMeta}</TextGoalsLighter>
           </GoalDate>
         </Goal>
 
@@ -98,44 +115,26 @@ const GoalDetails = ({ navigation, route }: Props) => {
             navigation.navigate('InvestGoals');
           }}
           title="Depositar"
-          style={{ bottom: 20, top: 20 }}></Button>
+          color="#6CB760"
+          style={{ marginBottom: 10, marginTop: 10, backgroundColor: "#f5f2f3"}}/>
+
+        <Button
+          onPress={() => {
+            navigation.navigate('InvestGoals');
+          }}
+          title="Excluir"
+          color="#ee4266"
+          style={{ marginBottom: 10, marginTop: 10, backgroundColor: "#f5f2f3"}}/>
+
+        <Button
+          onPress={() => {
+            navigation.navigate('InvestGoals');
+          }}
+          title="Editar"
+          color="#444"
+          style={{ marginBottom: 10, marginTop: 10, backgroundColor: "#f5f2f3"}}/>
       </View>
 
-      <Provider>
-        <Portal>
-          <FAB.Group
-            style={{
-              position: 'absolute',
-              top: 50,
-              left: 0,
-              padding: 30,
-            }}
-            visible={true}
-            open={open}
-            icon={'tools'}
-            actions={[
-              {
-                icon: 'pencil',
-                label: 'Editar',
-                onPress: () => console.log('Pressed star'),
-                color: '#D5DF5C',
-              },
-              {
-                icon: 'delete',
-                label: 'Excluir',
-                color: '#DF5C5C',
-                onPress: () => console.log('Pressed email'),
-              },
-            ]}
-            onStateChange={onStateChange}
-            onPress={() => {
-              if (open) {
-                // do something if the speed dial is open
-              }
-            }}
-          />
-        </Portal>
-      </Provider>
     </ScrollView>
   );
 };

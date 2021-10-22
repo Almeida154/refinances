@@ -82,11 +82,13 @@ const CreateGoal = () => {
       investidoMeta != undefined &&
       previsao >= dataAtual
     ) {
-
+      
       parseFloat(investidoMeta) >= parseFloat(valorMeta)
       ? setRealizado(true)
       : setRealizado(false);
-      
+
+      console.log("realizado: ", realizado)
+
       handleAdicionarMeta(newGoal);
       console.log(newGoal);
 

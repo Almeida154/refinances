@@ -17,64 +17,17 @@ import {
     LabelDescriptionGoals,
     SectionTop,
     ContainerGoals,
-    ContainerCard,
     Goal
 } from './styles'
 
-import {
-    GoalDesc, 
-    DaysLeft, 
-    InvestedMoney, 
-    Percent, 
-    PercentText,
-    GoalTouchable} 
-    from '../../../Goals/screens/TabNavigator/styles'
-
-const CardGoal = ({item}: {item: Meta}) => {
-    const objDataFimMeta = toDate(item.dataFimMeta)
-    const objDataIniMeta = toDate(item.dataInicioMeta)
-
-    const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); // Subtrai uma data pela outra
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
-        
-    const percentageBalance = item.saldoAtualMeta * 100 / item.saldoFinalMeta // Algum cálculo para calcular a porcentagem aqui
-
-    console.log(percentageBalance)
-
-    const {navigation} = UseDadosTemp()
-
-    return(
-        <ContainerCard>
-            <Goal>
-                <GoalTouchable
-                    onPress={()=> navigation.navigate('GoalsStack', {screen: 'GoalDetails'})}>
-                    <GoalDesc>{item.descMeta}</GoalDesc>
-                </GoalTouchable>
-                <DaysLeft>! Faltam {days} dias</DaysLeft>
-
-                <ProgressBar
-                    progress={percentageBalance / 100}
-                    color="#F81650"
-                    style={{
-                        height: 10,
-                        marginVertical: 8,
-                        borderRadius: 10
-                    }}
-                />
-
-                <Percent><PercentText>{percentageBalance}%</PercentText>
-                </Percent>
-            </Goal>
-        </ContainerCard>
-    )
-}
+import CardGoals from '../../../Goals/screens/TabNavigator/CardGoals'
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import {Meta, UseMetas} from '../../../../../contexts/GoalsContext'
 
 const SectionManage = () => {
     const {navigation} = UseDadosTemp()
-    const {handleReadByUserMetas, metas} = UseMetas()
+    const { metas, handleReadByUserMetas } = UseMetas();
 
     useEffect(() => {
         // Caso nenhuma meta seja carregada, recarregar
@@ -85,8 +38,9 @@ const SectionManage = () => {
               
       }, [])
 
-    return (
-        <Container>
+      if (metas?.length > 0) {
+        return (
+            <Container>
             <SectionTop>
                 <LabelDescription>Gerencie suas metas acompanhe seus avanços.</LabelDescription>
             </SectionTop>
@@ -100,7 +54,7 @@ const SectionManage = () => {
                     metas && metas.map((item, index) => {
                         
                         return (
-                            <CardGoal item={item}/>
+                            <CardGoals item={item} key={index}/>
                         )
                     })
                 }
@@ -113,7 +67,29 @@ const SectionManage = () => {
                 />
             </ContainerGoals>
         </Container>
-    )
+        );
+      } else {
+        return (
+            <Container>
+            <SectionTop>
+                <LabelDescription>Gerencie suas metas acompanhe seus avanços.</LabelDescription>
+            </SectionTop>
+
+            <Separator />
+
+            <ContainerGoals>
+                <LabelDescriptionGoals>Você ainda não possui metas.</LabelDescriptionGoals>
+
+                <Button
+                    onPress={() => navigation.navigate('GoalsStack', {screen: 'CreateGoals'})}
+                    title="Criar"
+                    color="#444"
+                    backgroundColor="#f5f2f3"
+                />
+            </ContainerGoals>
+        </Container>
+        );
+      }
 }
 
 export default SectionManage
