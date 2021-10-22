@@ -9,16 +9,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
+import { TextInputMask } from 'react-native-masked-text'; // Outra opção de mask
+import CurrencyInput from 'react-native-currency-input';
+
 // Styles
 import {
   Container,
   Content,
-  Input,
   PrefixReaisSymbol,
   Writting,
   Error,
 } from './styles';
-import { colors } from '../../../../styles';
+import { colors, fonts } from '../../../../styles';
 
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -26,6 +28,8 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
+import { Lancamento } from '@contexts/EntriesContext';
+import { Parcela } from '@contexts/InstallmentContext';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'EachFixedExpense'>;
@@ -33,7 +37,8 @@ export type PropsNavigation = {
 };
 
 const EachFixedExpense = ({ navigation }: PropsNavigation) => {
-  const [expenseAmount, setExpenseAmount] = useState('');
+  const [expenseAmount, setExpenseAmount] = useState<number | null>(0.0);
+  const [formattedExpenseAmount, setFormattedExpenseAmount] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -51,8 +56,33 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   };
 
   async function next() {
-    console.log(setupUserData);
-    navigation.navigate('EachFixedExpense');
+    const expenseAmount = Number(
+      formattedExpenseAmount.replace(/[.]+/g, '').replace(',', '.'),
+    );
+
+    const entry = {
+      descricaoLancamento:
+        setupUserData.expenseTags[setupUserData.expenseTagsCount],
+      lugarLancamento: 'extrato',
+      tipoLancamento: 'despesa',
+      parcelasLancamento: [
+        {
+          valorParcela: expenseAmount,
+        } as Parcela,
+      ],
+      essencial: true,
+    } as Lancamento;
+
+    const userData = setupUserData;
+
+    userData.fixedExpenses != undefined
+      ? userData.fixedExpenses.push(entry)
+      : (userData.fixedExpenses = [entry]);
+
+    updateSetupUserDataProps(userData);
+
+    console.debug('EachFixedExpense | next(): ', JSON.stringify(setupUserData));
+    //navigation.navigate('EachFixedExpense');
   }
   return (
     <Container>
@@ -71,26 +101,41 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       <Content>
         <Writting>
           <PrefixReaisSymbol>R$</PrefixReaisSymbol>
-          <Input
+          <CurrencyInput
+            style={{
+              flex: 1,
+              padding: 0,
+              color: colors.davysGrey,
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.super + 14,
+            }}
+            value={expenseAmount}
+            onChangeValue={txt => setExpenseAmount(txt)}
+            delimiter="."
+            separator=","
+            precision={2}
             placeholder="0,00"
+            maxValue={999999}
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
             selectionColor={colors.davysGrey}
-            keyboardType="numeric"
-            onChangeText={text => {
+            onChangeText={formattedValue => {
+              setFormattedExpenseAmount(formattedValue);
               setError(false);
+              if (expenseAmount == null) setExpenseAmount(0.0);
             }}
           />
-          {expenseAmount.length > 0 && (
+          {expenseAmount != null && (
             <IonIcons
               style={{
                 padding: 6,
-                marginLeft: 32,
+                marginLeft: 16,
               }}
               name="close"
               size={32}
               color={`rgba(82, 82, 82, .08)`}
               onPress={() => {
                 setError(false);
+                setExpenseAmount(0.0);
               }}
             />
           )}

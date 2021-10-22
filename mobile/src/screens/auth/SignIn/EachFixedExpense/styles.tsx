@@ -19,21 +19,13 @@ export const Writting = styled.View`
   align-items: center;
 `;
 
-export const Input = styled.TextInput`
-  font-size: ${`${fonts.size.super + 20}px`};
-  font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
-  flex: 1;
-  padding: 0;
-`;
-
 export const PrefixReaisSymbol = styled.Text`
   font-size: ${`${fonts.size.super}px`};
   font-family: ${fonts.familyType.bold};
   align-self: flex-start;
   color: ${colors.eerieBlack};
   opacity: 0.1;
-  margin-right: 4%;
+  margin-right: 2%;
 `;
 
 export const Error = styled.Text`

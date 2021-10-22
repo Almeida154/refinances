@@ -14,6 +14,7 @@ export type Lancamento = {
   lugarLancamento: string;
   categoryLancamento: Categoria | string;
   parcelasLancamento: Parcela[];
+  essencial: boolean;
 };
 
 interface LancamentoContextType {
@@ -92,9 +93,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
 
       const newLancamento: Lancamento = response.data.message;
 
-    
       return '';
-
     } catch (error) {
       console.log('Deu um erro no handleAdicionarLancamento: ' + error);
     }
