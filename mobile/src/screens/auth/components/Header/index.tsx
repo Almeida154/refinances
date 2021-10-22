@@ -11,7 +11,7 @@ import {
   LastWordAccent,
 } from './styles';
 
-import { colors, fonts, metrics } from '../../../../styles';
+import { colors } from '../../../../styles';
 
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -34,7 +34,19 @@ const Header: React.FC<IProps> = ({
   lastWordAccent,
 }) => {
   return (
-    <Container>
+    <Container
+      style={
+        hasShadow
+          ? {
+              backgroundColor: colors.white,
+              shadowColor: 'rgba(0, 0, 0, .3)',
+              shadowOffset: { width: 0, height: 0 },
+              shadowOpacity: 0.08,
+              shadowRadius: 20,
+              elevation: 40,
+            }
+          : {}
+      }>
       <Boundaries>
         <TopContainer>
           <IonIcons
@@ -49,7 +61,7 @@ const Header: React.FC<IProps> = ({
         {lastWordAccent ? (
           <Title>
             {title != undefined ? title : 'Sem título'}{' '}
-            <LastWordAccent> {lastWordAccent}?</LastWordAccent>
+            <LastWordAccent> {lastWordAccent}</LastWordAccent>
           </Title>
         ) : (
           <Title>{title != undefined ? title : 'Sem título'}</Title>

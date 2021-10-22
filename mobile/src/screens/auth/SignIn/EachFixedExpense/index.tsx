@@ -82,16 +82,17 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     updateSetupUserDataProps(userData);
 
     console.debug('EachFixedExpense | next(): ', JSON.stringify(setupUserData));
-    //navigation.navigate('EachFixedExpense');
+    navigation.navigate('EachFixedExpenseCategory');
   }
+
   return (
     <Container>
       <Header
         onBackButton={() => backAction()}
         title="Quanto gasta mensalmente com"
-        lastWordAccent={
+        lastWordAccent={`${
           setupUserData.expenseTags[setupUserData.expenseTagsCount]
-        }
+        }?`}
         subtitle="Insira o valor mais aproximado da média"
         step={`${setupUserData.expenseTagsCount + 1} de ${
           setupUserData.expenseTags.length
@@ -143,7 +144,10 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
         {hasError && <Error>{errorMessage}</Error>}
       </Content>
 
-      <BottomNavigation onPress={() => next()} description={'Próximo!'} />
+      <BottomNavigation
+        onPress={() => next()}
+        description={'Escolher categoria'}
+      />
     </Container>
   );
 };
