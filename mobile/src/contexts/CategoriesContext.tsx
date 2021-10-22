@@ -12,6 +12,8 @@ export type Categoria = {
   userCategoria: number;
   iconeCategoria: string;
   corCategoria: string;
+
+  isSelected: boolean;
 };
 
 interface CategoriaContextType {

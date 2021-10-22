@@ -28,39 +28,149 @@ const Icon = ({ stringIcon, color, size }: PropsIcon) => {
 
   switch (lib) {
     case 'AntDesign':
-      return <IconAntDesign color={color} size={size} name={icon} />;
+      return (
+        <IconAntDesign
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'Entypo':
-      return <IconEntypo color={color} size={size} name={icon} />;
+      return (
+        <IconEntypo
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'EvilIcons':
-      return <IconEvilIcons color={color} size={size} name={icon} />;
+      return (
+        <IconEvilIcons
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'Feather':
-      return <IconFeather color={color} size={size} name={icon} />;
+      return (
+        <IconFeather
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'FontAwesome':
-      return <IconFontAwesome color={color} size={size} name={icon} />;
+      return (
+        <IconFontAwesome
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'FontAwesome5':
-      return <IconFontAwesome5 color={color} size={size} name={icon} />;
+      return (
+        <IconFontAwesome5
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'FontAwesome5Pro':
-      return <IconFontAwesome5Pro color={color} size={size} name={icon} />;
+      return (
+        <IconFontAwesome5Pro
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'Ionicons':
-      return <IconIonicons color={color} size={size} name={icon} />;
+      return (
+        <IconIonicons
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'Foundation':
-      return <IconFoundation color={color} size={size} name={icon} />;
+      return (
+        <IconFoundation
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'Fontisto':
-      return <IconFontisto color={color} size={size} name={icon} />;
+      return (
+        <IconFontisto
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'MaterialCommunityIcons':
       return (
-        <IconMaterialCommunityIcons color={color} size={size} name={icon} />
+        <IconMaterialCommunityIcons
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
       );
     case 'MaterialIcons':
-      return <IconMaterialIcons color={color} size={size} name={icon} />;
+      return (
+        <IconMaterialIcons
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'Octicons':
-      return <IconOcticons color={color} size={size} name={icon} />;
+      return (
+        <IconOcticons
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'SimpleLineIcons':
-      return <IconSimpleLineIcons color={color} size={size} name={icon} />;
+      return (
+        <IconSimpleLineIcons
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     case 'Zocial':
-      return <IconZocial color={color} size={size} name={icon} />;
+      return (
+        <IconZocial
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name={icon}
+        />
+      );
     default:
-      return <IconMaterialIcons color={color} size={size} name="error" />;
+      return (
+        <IconMaterialIcons
+          style={{ opacity: 0.4 }}
+          color={color}
+          size={size}
+          name="error"
+        />
+      );
   }
 };
 

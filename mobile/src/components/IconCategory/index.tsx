@@ -13,7 +13,7 @@ type PropsIconCategory = {
 const IconCategory = ({ stringIcon, color }: PropsIconCategory) => {
   return (
     <SectionIcon color={color}>
-      <Icon size={26} stringIcon={stringIcon} color={colors.platinum} />
+      <Icon size={26} stringIcon={stringIcon} color={color} />
     </SectionIcon>
   );
 };

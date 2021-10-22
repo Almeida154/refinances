@@ -34,7 +34,7 @@ export type PropsNavigation = {
 };
 
 const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
-  const [category, setCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([{}] as Categoria[]);
   const [createdCategories, setCreatedCategories] = useState<
     null | Categoria[]
@@ -51,8 +51,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       cat.iconeCategoria = category.icon;
       cat.tetoDeGastos = null;
       cat.tipoCategoria = 'despesa';
-      // cat.id = 1;
-      // cat.userCategoria = 1;
+      cat.isSelected = false;
       return cat;
     });
 
@@ -76,6 +75,12 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     return true;
   };
 
+  const clearSelectedCategories = () =>
+    categories.map(category => {
+      category.isSelected = false;
+      return category;
+    });
+
   async function next() {}
 
   return (
@@ -91,11 +96,32 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
           setupUserData.expenseTags.length
         }`}
         hasShadow
+        subtitle="Clique para selecionar"
       />
 
       <Content>
         {categories.map((category, index) => (
-          <CategoryItem key={index} item={category} />
+          <CategoryItem
+            key={index}
+            item={category}
+            onPress={() => {
+              clearSelectedCategories();
+              if (category == selectedCategory) {
+                setSelectedCategory({} as Categoria);
+                console.log('já selecionada irmao');
+                return;
+              }
+
+              let newCategories = categories;
+              newCategories[index].isSelected = true;
+
+              console.log(category);
+
+              setCategories(newCategories as Categoria[]);
+              setSelectedCategory(newCategories[index]);
+            }}
+            isSelected={category.isSelected}
+          />
         ))}
 
         <ButtonContainer>
