@@ -54,7 +54,11 @@ export default {
       icon: 'Octicons:mortar-board',
       color: '#457b9d',
     },
-    { description: 'Transporte', icon: 'FontAwesome:home', color: '#ffff3f' },
+    {
+      description: 'Transporte',
+      icon: 'FontAwesome5:bus-alt',
+      color: '#e3e3e3',
+    },
     { description: 'Mercado', icon: 'FontAwesome:home', color: '#1976d2' },
     {
       description: 'Cuidados Pessoais',

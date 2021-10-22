@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { BackHandler, StatusBar } from 'react-native';
+import { BackHandler, StatusBar, Text } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,16 +10,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
-import { Container, Content } from './styles';
+import { Container, Content, ButtonContainer } from './styles';
 import { colors, fonts } from '../../../../styles';
 
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
+import CategoryItem from '../../components/CategoryItem';
 
 import { Lancamento } from '@contexts/EntriesContext';
 import { Parcela } from '@contexts/InstallmentContext';
+
+import global from '../../../../global';
+import { Categoria } from '@contexts/CategoriesContext';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<
@@ -30,15 +34,41 @@ export type PropsNavigation = {
 };
 
 const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
-  const [email, setEmail] = useState('');
-  const { user, updateUserProps } = UseAuth();
+  const [category, setCategory] = useState('');
+  const [categories, setCategories] = useState([{}] as Categoria[]);
+  const [createdCategories, setCreatedCategories] = useState<
+    null | Categoria[]
+  >(null);
 
+  const { user, updateUserProps } = UseAuth();
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
+  useEffect(() => {
+    var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
+      let cat = {} as Categoria;
+      cat.nomeCategoria = category.description;
+      cat.corCategoria = category.color;
+      cat.iconeCategoria = category.icon;
+      cat.tetoDeGastos = null;
+      cat.tipoCategoria = 'despesa';
+      // cat.id = 1;
+      // cat.userCategoria = 1;
+      return cat;
+    });
+
+    var categories =
+      createdCategories != null
+        ? [...defaultCategories, ...createdCategories]
+        : [...defaultCategories];
+    setCategories(categories as Categoria[]);
+
+    console.debug('AS CATEGORIAS ATÉ AGORA:::: ', categories);
   }, []);
 
   const backAction = () => {
@@ -64,12 +94,19 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       />
 
       <Content>
-        <Button
-          onPress={() => {}}
-          title="Nova"
-          backgroundColor={colors.platinum}
-          color={colors.davysGrey}
-        />
+        {categories.map((category, index) => (
+          <CategoryItem key={index} item={category} />
+        ))}
+
+        <ButtonContainer>
+          <Button
+            onPress={() => {}}
+            title="Nova"
+            backgroundColor={colors.platinum}
+            color={colors.davysGrey}
+            lastOne
+          />
+        </ButtonContainer>
       </Content>
 
       <BottomNavigation onPress={() => next()} description={'Próximo!'} />

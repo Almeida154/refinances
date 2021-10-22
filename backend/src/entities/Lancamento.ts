@@ -1,43 +1,49 @@
 import {
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-    PrimaryGeneratedColumn
-} from 'typeorm';
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
-import { Category } from './Category';
-import { ConectaNecessidade } from './ConectaNecessidade';
-import { Parcela } from './Parcela';
-import { User } from './User';
+import { Category } from "./Category";
+import { ConectaNecessidade } from "./ConectaNecessidade";
+import { Parcela } from "./Parcela";
+import { User } from "./User";
 
 @Entity()
 export class Lancamento {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    descricaoLancamento: string;
+  @Column()
+  descricaoLancamento: string;
 
-    @Column()
-    tipoLancamento: string;
+  @Column()
+  tipoLancamento: string;
 
-    @Column()
-    lugarLancamento: string;
-   
-    // Foreign Keys
-    
-    @ManyToOne(type => Category, category => category.lancamentosCategory)
-    categoryLancamento: Category
+  @Column()
+  lugarLancamento: string;
 
-    @ManyToOne(type => User, user => user.lancamentosUser)
-    userLancamento: User
+  @Column()
+  essencial: boolean;
 
-    @OneToMany(type => Parcela, parcela => parcela.lancamentoParcela)
-    parcelasLancamento: Parcela[]
+  // Foreign Keys
 
-    @OneToMany(type => ConectaNecessidade, conectaNecessidade => conectaNecessidade.lancamentoAssociado)
-    conectadosNecessidade: ConectaNecessidade[]
+  @ManyToOne((type) => Category, (category) => category.lancamentosCategory)
+  categoryLancamento: Category;
+
+  @ManyToOne((type) => User, (user) => user.lancamentosUser)
+  userLancamento: User;
+
+  @OneToMany((type) => Parcela, (parcela) => parcela.lancamentoParcela)
+  parcelasLancamento: Parcela[];
+
+  @OneToMany(
+    (type) => ConectaNecessidade,
+    (conectaNecessidade) => conectaNecessidade.lancamentoAssociado
+  )
+  conectadosNecessidade: ConectaNecessidade[];
 }
