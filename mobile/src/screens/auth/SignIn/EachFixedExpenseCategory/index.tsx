@@ -44,12 +44,6 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', backAction);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-  }, []);
-
-  useEffect(() => {
     var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
       let cat = {} as Categoria;
       cat.nomeCategoria = category.description;
@@ -69,6 +63,12 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     setCategories(categories as Categoria[]);
 
     console.debug('AS CATEGORIAS ATÉ AGORA:::: ', categories);
+  }, []);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
 
   const backAction = () => {

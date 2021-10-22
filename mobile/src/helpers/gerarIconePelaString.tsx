@@ -23,45 +23,42 @@ type PropsIcon = {
 };
 
 const Icon = ({ stringIcon, color, size }: PropsIcon) => {
-  const [biblioteca, nomeIcone] = stringIcon.split(':');
+  stringIcon = stringIcon != undefined ? stringIcon : 'MaterialIcons:error';
+  const [lib, icon] = stringIcon.split(':');
 
-  switch (biblioteca) {
+  switch (lib) {
     case 'AntDesign':
-      return <IconAntDesign color={color} size={size} name={nomeIcone} />;
+      return <IconAntDesign color={color} size={size} name={icon} />;
     case 'Entypo':
-      return <IconEntypo color={color} size={size} name={nomeIcone} />;
+      return <IconEntypo color={color} size={size} name={icon} />;
     case 'EvilIcons':
-      return <IconEvilIcons color={color} size={size} name={nomeIcone} />;
+      return <IconEvilIcons color={color} size={size} name={icon} />;
     case 'Feather':
-      return <IconFeather color={color} size={size} name={nomeIcone} />;
+      return <IconFeather color={color} size={size} name={icon} />;
     case 'FontAwesome':
-      return <IconFontAwesome color={color} size={size} name={nomeIcone} />;
+      return <IconFontAwesome color={color} size={size} name={icon} />;
     case 'FontAwesome5':
-      return <IconFontAwesome5 color={color} size={size} name={nomeIcone} />;
+      return <IconFontAwesome5 color={color} size={size} name={icon} />;
     case 'FontAwesome5Pro':
-      return <IconFontAwesome5Pro color={color} size={size} name={nomeIcone} />;
+      return <IconFontAwesome5Pro color={color} size={size} name={icon} />;
     case 'Ionicons':
-      return <IconIonicons color={color} size={size} name={nomeIcone} />;
+      return <IconIonicons color={color} size={size} name={icon} />;
     case 'Foundation':
-      return <IconFoundation color={color} size={size} name={nomeIcone} />;
+      return <IconFoundation color={color} size={size} name={icon} />;
     case 'Fontisto':
-      return <IconFontisto color={color} size={size} name={nomeIcone} />;
+      return <IconFontisto color={color} size={size} name={icon} />;
     case 'MaterialCommunityIcons':
       return (
-        <IconMaterialCommunityIcons
-          color={color}
-          size={size}
-          name={nomeIcone}
-        />
+        <IconMaterialCommunityIcons color={color} size={size} name={icon} />
       );
     case 'MaterialIcons':
-      return <IconMaterialIcons color={color} size={size} name={nomeIcone} />;
+      return <IconMaterialIcons color={color} size={size} name={icon} />;
     case 'Octicons':
-      return <IconOcticons color={color} size={size} name={nomeIcone} />;
+      return <IconOcticons color={color} size={size} name={icon} />;
     case 'SimpleLineIcons':
-      return <IconSimpleLineIcons color={color} size={size} name={nomeIcone} />;
+      return <IconSimpleLineIcons color={color} size={size} name={icon} />;
     case 'Zocial':
-      return <IconZocial color={color} size={size} name={nomeIcone} />;
+      return <IconZocial color={color} size={size} name={icon} />;
     default:
       return <IconMaterialIcons color={color} size={size} name="error" />;
   }

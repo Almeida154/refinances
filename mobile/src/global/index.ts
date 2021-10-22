@@ -59,7 +59,11 @@ export default {
       icon: 'FontAwesome5:bus-alt',
       color: '#e3e3e3',
     },
-    { description: 'Mercado', icon: 'FontAwesome:home', color: '#1976d2' },
+    {
+      description: 'Mercado',
+      icon: 'MaterialIcons:local-grocery-store',
+      color: '#1976d2',
+    },
     {
       description: 'Cuidados Pessoais',
       icon: 'MaterialIcons:self-improvement',
@@ -77,7 +81,7 @@ export default {
     },
     {
       description: 'Comida',
-      icon: 'FontAwesome:dinner-dining',
+      icon: 'MaterialIcons:dinner-dining',
       color: '#e5383b',
     },
     {
