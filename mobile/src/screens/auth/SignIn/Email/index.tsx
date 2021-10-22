@@ -12,7 +12,7 @@ import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
 import { Container, Content, Input, Writting, Error } from './styles';
-import { colors, fonts, metrics } from '../../../../styles';
+import { colors } from '../../../../styles';
 
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';

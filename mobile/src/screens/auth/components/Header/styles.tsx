@@ -13,7 +13,7 @@ export const Title = styled.Text`
   font-family: ${fonts.familyType.black};
   color: ${colors.davysGrey};
   margin-top: 12%;
-  line-height: 34px;
+  line-height: 38px;
   font-size: ${`${fonts.size.super}px`};
 `;
 
@@ -24,4 +24,21 @@ export const Subtitle = styled.Text`
   line-height: 18px;
   font-size: ${`${fonts.size.small}px`};
   opacity: 0.3;
+`;
+
+export const TopContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Step = styled.Text`
+  font-family: ${fonts.familyType.black};
+  color: ${colors.paradisePink};
+  font-size: ${`${fonts.size.medium}px`};
+  opacity: 0.7;
+`;
+
+export const LastWordAccent = styled.Text`
+  color: ${colors.paradisePink};
 `;
