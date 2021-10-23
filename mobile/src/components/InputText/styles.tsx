@@ -15,6 +15,10 @@ export const Writting = styled.View`
   flex: 1;
 `;
 
+export const RowAux = styled.View`
+  flex-direction: row;
+`;
+
 export const IconClean = styled.View`
   justify-content: center;
   align-items: center;
@@ -29,6 +33,7 @@ export const Label = styled.Text`
 `;
 
 export const Input = styled.TextInput`
+  flex: 1;
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.medium}px`};
   color: ${colors.davysGrey};

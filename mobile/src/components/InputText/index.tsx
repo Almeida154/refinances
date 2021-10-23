@@ -2,10 +2,26 @@ import React, { forwardRef } from 'react';
 
 import { TextInput, TextInputProps } from 'react-native';
 
-import { Container, Writting, IconClean, Input, Label, Error } from './styles';
+import {
+  Container,
+  Writting,
+  RowAux,
+  IconClean,
+  Input,
+  Label,
+  Error,
+} from './styles';
 import { colors } from '../../styles';
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import IconByString from '../../helpers/gerarIconePelaString';
+
+type IconProps = {
+  description?: string;
+  icon?: string;
+  name?: string;
+  hex?: string;
+};
 
 interface IProps extends TextInputProps {
   label?: string;
@@ -13,7 +29,9 @@ interface IProps extends TextInputProps {
   placeholder?: string;
   colorLabel?: string;
   error?: string | null;
-  showClearIcon: boolean;
+  showClearIcon?: boolean;
+  icon?: IconProps;
+  inputColor?: string;
   onClear?: () => void;
   onPress?: () => void;
 }
@@ -26,6 +44,8 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
     colorLabel,
     error,
     showClearIcon,
+    icon,
+    inputColor,
     onClear,
     onPress,
     ...rest
@@ -44,7 +64,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
               }
             : {},
           {
-            shadowColor: 'rgba(0, 0, 0, .4)',
+            shadowColor: 'rgba(0, 0, 0, .3)',
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.08,
             shadowRadius: 20,
@@ -58,15 +78,33 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
             <Label style={colorLabel != undefined ? { color: colorLabel } : {}}>
               {label != undefined ? label : 'Sem label'}
             </Label>
-            <Input
-              placeholder={
-                placeholder != undefined ? placeholder : 'Sem placeholder'
-              }
-              placeholderTextColor={colors.platinum}
-              ref={ref}
-              selectionColor={colors.davysGrey}
-              {...rest}
-            />
+            <RowAux>
+              {(icon?.hex != null || icon?.icon != null) && (
+                <IconByString
+                  color={icon.hex ?? colors.davysGrey}
+                  stringIcon={icon.icon ?? 'Fontisto:blood-drop'}
+                  size={20}
+                />
+              )}
+              <Input
+                placeholder={
+                  placeholder != undefined ? placeholder : 'Sem placeholder'
+                }
+                placeholderTextColor={colors.platinum}
+                ref={ref}
+                selectionColor={colors.davysGrey}
+                style={[
+                  icon?.hex != null || icon?.icon != null
+                    ? { marginLeft: 10 }
+                    : {},
+                  icon?.hex != null || icon?.icon != null
+                    ? { color: icon.hex, opacity: 0.7 }
+                    : {},
+                  inputColor ? { color: inputColor } : {},
+                ]}
+                {...rest}
+              />
+            </RowAux>
           </Writting>
           <IconClean>
             {showClearIcon && (

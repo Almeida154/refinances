@@ -18,16 +18,32 @@ export const ColorsContainer = styled.ScrollView`
 `;
 
 interface ColorProps {
-  bg: string;
-  mr: boolean;
+  bg?: string;
+  mr?: boolean;
 }
 
-export const Color = styled.View<ColorProps>`
+export const Color = styled.TouchableOpacity<ColorProps>`
   width: 60px;
   height: 60px;
   border-radius: 30px;
   border-width: 5px;
   border-color: ${props => hexToRGB(props.bg, 1)};
   background-color: ${props => hexToRGB(props.bg, 0.7)};
+  margin-right: ${props => (props.mr ? '10px' : 0)};
+`;
+
+interface IconProps {
+  mr?: boolean;
+}
+
+export const Icon = styled.TouchableOpacity<IconProps>`
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border-width: 5px;
+  border-color: ${colors.platinum};
+  background-color: ${colors.diffWhite};
   margin-right: ${props => (props.mr ? '10px' : 0)};
 `;
