@@ -116,7 +116,9 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria, navigation
             setCategoriasAtual([])
         } else {
             setCategoriasAtual(categorias)
+            setCategoria(categorias[0].nomeCategoria)
         }
+
 
     }, [categorias])
 

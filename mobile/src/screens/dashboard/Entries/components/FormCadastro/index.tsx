@@ -18,6 +18,7 @@ import {
 } from './styles'
 
 import { Parcela } from '../../../../../contexts/InstallmentContext'
+import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext'
 import { UseLancamentos, Lancamento } from '../../../../../contexts/EntriesContext'
 
 import PickerLugar from '../PickerLugar'
@@ -29,7 +30,7 @@ import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 import {PropsNavigation} from '../..'
 import { Text, Checkbox, FAB } from 'react-native-paper'
-import { Conta } from '../../../../../contexts/AccountContext';
+import { Conta, UseContas } from '../../../../../contexts/AccountContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import ItemCardParcela, {CardParcela, CardParcelaProps} from '../CardParcela'
@@ -37,6 +38,8 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
 
 const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: PropsNavigation) => {
+    const {categorias} = UseCategories()
+    const {contas} = UseContas()
 
     const [detalhes, setDetalhes] = useState(false)
     
@@ -142,8 +145,8 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             ToastAndroid.show("Lançamento adicionado", ToastAndroid.SHORT)
             setDescricao('')
             setValor('')
-            setSelectedCategoria('0')
-            setSelectedConta(null)
+            setSelectedCategoria(categorias[0].nomeCategoria)
+            setSelectedConta(contas[0])
             setParcelas('1')
             setDataParcelas([
                 {

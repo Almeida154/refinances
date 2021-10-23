@@ -14,7 +14,7 @@ import ModalizeStyled from '../../../../../../../components/Modalize'
 
 import Icon from '../../../../../../../helpers/gerarIconePelaString'
 
-import InputText from '../InputTextForCategory'
+import InputText, {IconProps} from '../../../../../../../components/InputText'
 
 import {
     Container,
@@ -159,7 +159,7 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
                         onChangeText={setIcone}                        
                         showClearIcon={false}
                         onPress={onOpenModalizeIcon}
-                        // editable={false}
+                        editable={false}
                     />       
                                             
                 <ButtonAdd onPress={handleSubmit}>
@@ -168,10 +168,8 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
 
             </Form>
 
-            <Modalize                 
-                ref={modalizeColor} 
-                modalHeight={300}
-                scrollViewProps={{contentContainerStyle: {height: '100%'}}}                
+            <ModalizeStyled                 
+                ref={modalizeColor}                 
             >
                 <BodyModalize >
                     <FlatList 
@@ -181,12 +179,10 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
                         numColumns={4}
                     />               
                 </BodyModalize>
-            </Modalize>
+            </ModalizeStyled>
 
-            <Modalize                 
+            <ModalizeStyled                 
                 ref={modalizeIcon} 
-                modalHeight={300}
-                scrollViewProps={{contentContainerStyle: {height: '100%'}}}                
             >
                 <BodyModalize >
                     <FlatList 
@@ -196,7 +192,7 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
                         numColumns={4}
                     />               
                 </BodyModalize>
-            </Modalize>                
+            </ModalizeStyled>                
         </Container>
     )
 }

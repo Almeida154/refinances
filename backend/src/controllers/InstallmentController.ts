@@ -119,18 +119,27 @@ class ParcelaController {
             .orderBy("parcela.dataParcela", "ASC")            
             .getMany()       
 
-        if(data.length == 0) {
+       
+
+        const dataByUser = []
+
+        data.map(item => {
+            if(item.userParcela.id == user.id) dataByUser.push(item)
+        })
+
+        if(dataByUser.length == 0) {
             return response.send({message: []})
         }
+
         const parcelas = []
 
-        let atual = data[0].dataParcela.toLocaleDateString()        
+        let atual = dataByUser[0].dataParcela.toLocaleDateString()        
 
         let aux = []
 
         let lancamento = new Map()
         
-        data.map((item: any, index) => {
+        dataByUser.map((item: any, index) => {
             const parcelaData = item.dataParcela.toLocaleDateString()
 
             const keyLancamento = lancamento.get(item.lancamentoParcela.id)
@@ -163,7 +172,7 @@ class ParcelaController {
 
         for(var i = 0;i < parcelas.length;i++){
             for(var j = 0;j < parcelas[i].length;j++) {
-                parcelas[i][j].totalParcelas = lancamento.get(data[i].lancamentoParcela.id)                
+                parcelas[i][j].totalParcelas = lancamento.get(dataByUser[i].lancamentoParcela.id)                
             }
         }
 

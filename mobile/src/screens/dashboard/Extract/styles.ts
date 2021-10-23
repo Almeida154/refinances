@@ -13,9 +13,8 @@ export const Header = styled.View`
     height: 80px;
     justify-content: space-between;
     align-items: center;
-
-    padding-left: 30%;
-    padding-right: 30%;
+    padding-left: 20%;
+    padding-right: 20%;
 `
 export const PeriodoAnterior = styled.TouchableHighlight`
 
@@ -89,4 +88,42 @@ export const LabelBalance = styled.Text`
 `
 export const LabelValueBalance = styled.Text`
 
+`
+
+
+
+export const TextPicker = styled.Text`
+
+`
+
+export const ContainerPicker = styled.View`
+    padding-top: 60;
+    padding-bottom: 30;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #F5FCFF;
+`
+
+export const WrapperHorizontal = styled.View`
+    height: 100;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    color: black;
+`
+
+export const OptionWrapper = styled.View`
+    justify-content: center;
+    align-items: center;
+    margin-top: 10;
+    margin-bottom: 10;
+    padding-top: 10;
+    padding-bottom: 10;
+    padding-left: 30;
+    padding-right: 30;
+    height: 50;
+    border-width: 3;
+    border-radius: 10;
 `

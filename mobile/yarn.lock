@@ -6238,6 +6238,11 @@
   dependencies:
     "warn-once" "^0.1.0"
 
+"react-native-smooth-picker@^1.1.5":
+  "integrity" "sha512-bjbaydabhmhRBVOIbXclzz26LFgN0vOZwj65KWImg5Jqhqzkty5h9cryPf52uJQ22uPLvkrDtSVsHxgUb5qWcA=="
+  "resolved" "https://registry.npmjs.org/react-native-smooth-picker/-/react-native-smooth-picker-1.1.5.tgz"
+  "version" "1.1.5"
+
 "react-native-svg-transformer@^0.14.3":
   "integrity" "sha512-agDGdMeeBAsWEgg/u7mjtR2Z3c8smGCLep/n3svwifut9dpswZCP+bSIrU8ekg6RNtxAJL+eGJbWjJ38vWxw6g=="
   "resolved" "https://registry.npmjs.org/react-native-svg-transformer/-/react-native-svg-transformer-0.14.3.tgz"

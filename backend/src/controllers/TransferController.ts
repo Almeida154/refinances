@@ -122,16 +122,28 @@ class TransferenciaController {
         .getMany()    
 
 
+        const dataByUser = []
+
+        data.map(item => {
+            if(item.userTransferencia.id == user.id) dataByUser.push(item)
+        })
+
+        if(dataByUser.length == 0) {
+            return response.send({message: []})
+        }
+
         const transferencias = []
 
+
+        
         if(data.length == 0) {
             return response.send({message: []})
         }
-        let atual = data[0].dataTransferencia.toLocaleDateString()        
+        let atual = dataByUser[0].dataTransferencia.toLocaleDateString()        
 
         let aux = []        
         
-        data.map((item, index) => {
+        dataByUser.map((item, index) => {
             const transferenciaData = item.dataTransferencia.toLocaleDateString()
 
             item.contaDestino = dataContaDestino[index].contaDestino
