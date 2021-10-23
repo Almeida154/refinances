@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 import { colors, fonts, metrics } from '../../../../../styles';
 
+import hexToRGB from '../../../../../helpers/hexToRgba';
+
 export const Container = styled.View`
   padding: ${`${metrics.default.boundaries}px`};
   flex: 1;
@@ -16,14 +18,16 @@ export const ColorsContainer = styled.ScrollView`
 `;
 
 interface ColorProps {
-  bg?: string;
-  mr?: boolean;
+  bg: string;
+  mr: boolean;
 }
 
 export const Color = styled.View<ColorProps>`
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  background-color: ${props => props.bg};
+  border-width: 5px;
+  border-color: ${props => hexToRGB(props.bg, 1)};
+  background-color: ${props => hexToRGB(props.bg, 0.7)};
   margin-right: ${props => (props.mr ? '10px' : 0)};
 `;
