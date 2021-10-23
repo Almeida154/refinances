@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { BackHandler, StatusBar, Text } from 'react-native';
+import { BackHandler, StatusBar } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -11,7 +11,7 @@ import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
 import { Container, Content, ButtonContainer } from './styles';
-import { colors, fonts } from '../../../../styles';
+import { colors } from '../../../../styles';
 
 // Components
 import Header from '../../components/Header';
@@ -35,15 +35,29 @@ export type PropsNavigation = {
 
 const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
-  const [categories, setCategories] = useState([{}] as Categoria[]);
+  const [categories, setCategories] = useState([] as Categoria[]);
   const [createdCategories, setCreatedCategories] = useState<
     null | Categoria[]
   >(null);
 
-  const { user, updateUserProps } = UseAuth();
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
+  const [load, setLoad] = useState(true);
+
   useEffect(() => {
+    navigation.addListener('focus', () => setLoad(!load));
+    populateCategories();
+  }, [load, navigation]);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
+  const populateCategories = async () => {
+    setCategories([] as Categoria[]);
+
     var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
       let cat = {} as Categoria;
       cat.nomeCategoria = category.description;
@@ -55,20 +69,21 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       return cat;
     });
 
-    var categories =
-      createdCategories != null
-        ? [...defaultCategories, ...createdCategories]
-        : [...defaultCategories];
-    setCategories(categories as Categoria[]);
+    var ctgrs =
+      setupUserData.createdCategories != undefined
+        ? ([
+            ...defaultCategories,
+            ...setupUserData.createdCategories,
+          ] as Categoria[])
+        : ([...defaultCategories] as Categoria[]);
 
+    if (setupUserData.createdCategories != undefined) {
+      console.debug('AS CRIADAS:::: ', setupUserData.createdCategories);
+    }
+
+    setCategories(ctgrs as Categoria[]);
     console.debug('AS CATEGORIAS ATÉ AGORA:::: ', categories);
-  }, []);
-
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', backAction);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-  }, []);
+  };
 
   const backAction = () => {
     navigation.goBack();
