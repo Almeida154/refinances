@@ -23,6 +23,8 @@ interface IProps {
   hasShadow?: boolean;
   step?: string;
   lastWordAccent?: string;
+  color?: string;
+  isShort?: boolean;
 }
 
 const Header: React.FC<IProps> = ({
@@ -32,6 +34,8 @@ const Header: React.FC<IProps> = ({
   hasShadow,
   step,
   lastWordAccent,
+  color,
+  isShort,
 }) => {
   return (
     <Container
@@ -59,14 +63,32 @@ const Header: React.FC<IProps> = ({
           {step && <Step>{step}</Step>}
         </TopContainer>
         {lastWordAccent ? (
-          <Title>
+          <Title
+            style={[
+              color ? { color } : {},
+              isShort ? { marginTop: '6%' } : {},
+            ]}>
             {title != undefined ? title : 'Sem título'}{' '}
             <LastWordAccent> {lastWordAccent}</LastWordAccent>
           </Title>
         ) : (
-          <Title>{title != undefined ? title : 'Sem título'}</Title>
+          <Title
+            style={[
+              color ? { color } : {},
+              isShort ? { marginTop: '6%' } : {},
+            ]}>
+            {title != undefined ? title : 'Sem título'}
+          </Title>
         )}
-        {subtitle && <Subtitle>{subtitle}</Subtitle>}
+        {subtitle && (
+          <Subtitle
+            style={[
+              color ? { color, opacity: 0.3 } : {},
+              isShort ? { marginTop: 0 } : {},
+            ]}>
+            {subtitle}
+          </Subtitle>
+        )}
       </Boundaries>
     </Container>
   );

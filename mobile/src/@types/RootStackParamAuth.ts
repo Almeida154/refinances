@@ -20,6 +20,10 @@ type PropsNavigationAuth = {
   EachIncomeExpenseCategory: undefined;
 
   StatsInitial: undefined;
+
+  NewCategory: undefined;
+  NewExpenseCategory: undefined;
+  NewIncomeCategory: undefined;
 };
 
 export default PropsNavigationAuth;

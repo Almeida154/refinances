@@ -10,6 +10,8 @@ import Password from '../screens/auth/SignIn/Password';
 import ConfirmPassword from '../screens/auth/SignIn/ConfirmPassword';
 import Photo from '../screens/auth/SignIn/Photo';
 
+import NewCategory from '../screens/auth/SignIn/newCategory/navigator';
+
 import FixedExpenses from '../screens/auth/SignIn/FixedExpenses';
 import EachFixedExpense from '../screens/auth/SignIn/EachFixedExpense';
 import EachFixedExpenseCategory from '../screens/auth/SignIn/EachFixedExpenseCategory';
@@ -35,6 +37,8 @@ const AuthRoutes: React.FC = () => {
       <AuthStack.Screen name="Password" component={Password} />
       <AuthStack.Screen name="ConfirmPassword" component={ConfirmPassword} />
       <AuthStack.Screen name="Photo" component={Photo} />
+
+      <AuthStack.Screen name="NewCategory" component={NewCategory} />
 
       <AuthStack.Screen name="FixedExpenses" component={FixedExpenses} />
       <AuthStack.Screen name="EachFixedExpense" component={EachFixedExpense} />

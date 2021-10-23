@@ -81,7 +81,9 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       return category;
     });
 
-  async function next() {}
+  async function next() {
+    return;
+  }
 
   return (
     <Container>
@@ -126,7 +128,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
         <ButtonContainer>
           <Button
-            onPress={() => {}}
+            onPress={() => navigation.navigate('NewCategory')}
             title="Nova"
             backgroundColor={colors.platinum}
             color={colors.davysGrey}
