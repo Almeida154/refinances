@@ -42,12 +42,23 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
-  const [load, setLoad] = useState(true);
+  const [stateReload, setStateReload] = useState(false);
 
   useEffect(() => {
-    navigation.addListener('focus', () => setLoad(!load));
-    populateCategories();
-  }, [load, navigation]);
+    if (!navigation || !navigation.addListener) return;
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      setStateReload(false);
+      populateCategories();
+    });
+
+    const blur = navigation.addListener('blur', () => {
+      setStateReload(true);
+      console.log(stateReload);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -55,7 +66,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
 
-  const populateCategories = async () => {
+  const populateCategories = () => {
     setCategories([] as Categoria[]);
 
     var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
@@ -71,18 +82,15 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
     var ctgrs =
       setupUserData.createdCategories != undefined
-        ? ([
-            ...defaultCategories,
-            ...setupUserData.createdCategories,
-          ] as Categoria[])
-        : ([...defaultCategories] as Categoria[]);
+        ? [...setupUserData.createdCategories, ...defaultCategories]
+        : [...defaultCategories];
 
     if (setupUserData.createdCategories != undefined) {
       console.debug('AS CRIADAS:::: ', setupUserData.createdCategories);
     }
 
-    setCategories(ctgrs as Categoria[]);
-    console.debug('AS CATEGORIAS ATÉ AGORA:::: ', categories);
+    setCategories(ctgrs);
+    console.debug('AS CATEGORIAS ATÉ AGORA:::: ', ctgrs);
   };
 
   const backAction = () => {
@@ -103,56 +111,70 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   return (
     <Container>
       <StatusBar backgroundColor={colors.white} />
-      <Header
-        onBackButton={() => backAction()}
-        title="Selecione ou crie uma categoria para"
-        lastWordAccent={
-          setupUserData.expenseTags[setupUserData.expenseTagsCount]
-        }
-        step={`${setupUserData.expenseTagsCount + 1} de ${
-          setupUserData.expenseTags.length
-        }`}
-        hasShadow
-        subtitle="Clique para selecionar"
-      />
-
-      <Content>
-        {categories.map((category, index) => (
-          <CategoryItem
-            key={index}
-            item={category}
-            onPress={() => {
-              clearSelectedCategories();
-              if (category == selectedCategory) {
-                setSelectedCategory({} as Categoria);
-                console.log('já selecionada irmao');
-                return;
-              }
-
-              let newCategories = categories;
-              newCategories[index].isSelected = true;
-
-              console.log(category);
-
-              setCategories(newCategories as Categoria[]);
-              setSelectedCategory(newCategories[index]);
-            }}
-            isSelected={category.isSelected}
+      {!stateReload ? (
+        <>
+          <Header
+            onBackButton={() => backAction()}
+            title="Selecione ou crie uma categoria para"
+            lastWordAccent={
+              setupUserData.expenseTags[setupUserData.expenseTagsCount]
+            }
+            step={`${setupUserData.expenseTagsCount + 1} de ${
+              setupUserData.expenseTags.length
+            }`}
+            hasShadow
+            subtitle="Clique para selecionar"
           />
-        ))}
 
-        <ButtonContainer>
+          <Content>
+            {categories.map((category, index) => (
+              <CategoryItem
+                key={index}
+                item={category}
+                onPress={() => {
+                  clearSelectedCategories();
+                  if (category == selectedCategory) {
+                    setSelectedCategory({} as Categoria);
+                    console.log('já selecionada irmao');
+                    return;
+                  }
+
+                  let newCategories = categories;
+                  newCategories[index].isSelected = true;
+
+                  console.log(category);
+
+                  setCategories(newCategories as Categoria[]);
+                  setSelectedCategory(newCategories[index]);
+                }}
+                isSelected={category.isSelected}
+              />
+            ))}
+
+            <ButtonContainer>
+              <Button
+                onPress={() => navigation.navigate('NewCategory')}
+                title="Nova"
+                backgroundColor={colors.platinum}
+                color={colors.davysGrey}
+                lastOne
+              />
+            </ButtonContainer>
+          </Content>
+
+          <BottomNavigation onPress={() => next()} description={'Próximo!'} />
+        </>
+      ) : (
+        <>
           <Button
             onPress={() => navigation.navigate('NewCategory')}
-            title="Nova"
+            title="OTA"
             backgroundColor={colors.platinum}
             color={colors.davysGrey}
             lastOne
           />
-        </ButtonContainer>
-      </Content>
-
-      <BottomNavigation onPress={() => next()} description={'Próximo!'} />
+        </>
+      )}
     </Container>
   );
 };

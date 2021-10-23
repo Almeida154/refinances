@@ -44,7 +44,7 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
   const { user, updateUserProps } = UseAuth();
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
-  const [name, setName] = useState<string>('Pf funciona');
+  const [name, setName] = useState<string>('Essa é nova');
   const [nameError, setNameError] = useState<null>();
   const nameRef = useRef<TextInput>(null);
 
@@ -80,6 +80,7 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
       nomeCategoria: name,
       tipoCategoria: 'despesa',
       isSelected: true,
+      tetoDeGastos: null,
     } as Categoria;
     const userData = setupUserData;
     userData.createdCategories != undefined
@@ -87,8 +88,8 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
       : (userData.createdCategories = [newCreatedCategory] as Categoria[]);
     updateSetupUserDataProps(userData);
 
-    console.debug('DENTRO DO CRIAR::::', setupUserData.createdCategories);
-    navigation.navigate('EachFixedExpenseCategory');
+    console.debug('DENTRO DO CRIAR:::: ', setupUserData.createdCategories);
+    navigation.goBack();
   };
 
   return (
