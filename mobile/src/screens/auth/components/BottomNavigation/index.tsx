@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Styles
-import { Container, Description } from './styles';
+import { Container, Content, Description } from './styles';
 import { colors } from '../../../../styles';
 
 // Icon
@@ -21,17 +21,15 @@ const BottomNavigation: React.FC<IProps> = ({
   color,
 }) => {
   return (
-    <Container
-      // style={{
-      //   shadowColor: 'rgba(0, 0, 0, 1)',
-      //   shadowOffset: { width: 0, height: 0 },
-      //   shadowOpacity: 0.08,
-      //   shadowRadius: 20,
-      //   elevation: 20, // Com elevation, o Modalize fica sobreposto pelo BottomNavigation
-      // }}
-      underlayColor={colors.white}
-      onPress={onPress}>
-      <>
+    <Container underlayColor={colors.white} onPress={onPress}>
+      <Content
+        style={{
+          shadowColor: 'rgba(0, 0, 0, 1)',
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.08,
+          shadowRadius: 20,
+          elevation: 20, // Com elevation, o Modalize fica sobreposto pelo BottomNavigation
+        }}>
         <Description
           style={[
             isCentered ? { textAlign: 'center' } : {},
@@ -46,7 +44,7 @@ const BottomNavigation: React.FC<IProps> = ({
             color={colors.redCrayola}
           />
         )}
-      </>
+      </Content>
     </Container>
   );
 };

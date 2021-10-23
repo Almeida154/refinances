@@ -131,7 +131,8 @@ const Photo = ({ navigation }: PropsNavigation) => {
       <Modalize
         ref={modalizeRef}
         title="Escolha uma opção"
-        backgroundColor={colors.cultured}>
+        backgroundColor={colors.cultured}
+        hasBodyBoundaries>
         <Button
           title="Abrir a câmera"
           onPress={() => {

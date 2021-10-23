@@ -14,7 +14,8 @@ interface IProps extends TextInputProps {
   colorLabel?: string;
   error?: string | null;
   showClearIcon: boolean;
-  onClear: () => void;
+  onClear?: () => void;
+  onPress?: () => void;
 }
 
 const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
@@ -26,6 +27,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
     error,
     showClearIcon,
     onClear,
+    onPress,
     ...rest
   },
   ref: any,
@@ -50,7 +52,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
           },
         ]}
         underlayColor={colors.white}
-        onPress={() => ref?.current.focus()}>
+        onPress={onPress != undefined ? onPress : () => ref?.current.focus()}>
         <>
           <Writting>
             <Label style={colorLabel != undefined ? { color: colorLabel } : {}}>

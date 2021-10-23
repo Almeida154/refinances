@@ -5,9 +5,13 @@ export const Container = styled.TouchableHighlight`
   position: absolute;
   bottom: 0;
   width: 100%;
+  elevation: 0;
+`;
+
+export const Content = styled.View`
   background-color: ${colors.white};
-  height: 80px;
   flex-direction: row;
+  height: 80px;
   padding: 0 ${`${metrics.default.boundaries}px`};
   justify-content: center;
   align-items: center;

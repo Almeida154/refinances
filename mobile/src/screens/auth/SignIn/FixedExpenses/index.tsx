@@ -181,6 +181,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
       <Modalize
         ref={modalizeRef}
+        hasBodyBoundaries
         title="Novo gasto fixo 💸"
         backgroundColor={colors.cultured}>
         <InputText

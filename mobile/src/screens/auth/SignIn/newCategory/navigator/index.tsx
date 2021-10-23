@@ -54,8 +54,9 @@ const TopBarNavigator = ({ route, navigation }: PropsNavigation) => {
                 : colors.slimyGreen,
           },
           tabBarLabelStyle: {
-            fontSize: fonts.size.small,
-            fontFamily: fonts.familyType.semiBold,
+            fontSize: fonts.size.medium,
+            fontFamily: fonts.familyType.bold,
+            textTransform: 'capitalize',
           },
           tabBarIndicatorStyle: {
             backgroundColor: colors.white,
