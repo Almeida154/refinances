@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BackHandler } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -43,7 +43,7 @@ const Email = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    navigation.goBack();
+    navigation.dispatch(StackActions.replace('Login'));
     const newUser = user;
     newUser.emailUsuario = '';
     updateUserProps(newUser);

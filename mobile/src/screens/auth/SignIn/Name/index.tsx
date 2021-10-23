@@ -10,6 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
+import { StackActions } from '@react-navigation/native';
+
 // Styles
 import { Container, Content, Input, Writting, Error } from './styles';
 import { colors } from '../../../../styles';
@@ -39,7 +41,7 @@ const Name = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    navigation.goBack();
+    navigation.dispatch(StackActions.replace('Login'));
     const newUser = user;
     newUser.nomeUsuario = '';
     updateUserProps(newUser);

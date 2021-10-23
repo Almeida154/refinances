@@ -4,10 +4,12 @@ import { BackHandler, StatusBar } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { CommonActions, RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
+
+import { StackActions } from '@react-navigation/native';
 
 // Styles
 import { Container, Content, ButtonContainer } from './styles';
@@ -86,11 +88,11 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
         : [...defaultCategories];
 
     if (setupUserData.createdCategories != undefined) {
-      console.debug('AS CRIADAS:::: ', setupUserData.createdCategories);
+      //console.debug('AS CRIADAS:::: ', setupUserData.createdCategories);
     }
 
     setCategories(ctgrs);
-    console.debug('AS CATEGORIAS ATÉ AGORA:::: ', ctgrs);
+    //console.debug('AS CATEGORIAS ATÉ AGORA:::: ', ctgrs);
   };
 
   const backAction = () => {
@@ -105,7 +107,32 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     });
 
   async function next() {
-    return;
+    const dataUser = setupUserData;
+    const entry = {
+      tipoLancamento: 'despesa',
+      categoryLancamento: selectedCategory,
+      descricaoLancamento: dataUser.expenseTags[dataUser.expenseTagsCount],
+      essencial: true,
+      lugarLancamento: 'extrato',
+    } as Lancamento;
+
+    dataUser.entries != undefined
+      ? dataUser.entries.push(entry)
+      : (dataUser.entries = [entry]);
+
+    dataUser.expenseTagsCount++;
+
+    updateSetupUserDataProps(dataUser);
+
+    console.debug(
+      `EachFixedExpenseCategory | next() | ${dataUser.expenseTagsCount}`,
+      JSON.stringify(setupUserData),
+    );
+
+    if (dataUser.expenseTagsCount != dataUser.expenseTags.length) {
+      return navigation.dispatch(StackActions.replace('EachFixedExpense'));
+    }
+    navigation.dispatch(StackActions.replace('FixedIncomes'));
   }
 
   return (
@@ -142,7 +169,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
                   let newCategories = categories;
                   newCategories[index].isSelected = true;
 
-                  console.log(category);
+                  //console.log(category);
 
                   setCategories(newCategories as Categoria[]);
                   setSelectedCategory(newCategories[index]);
