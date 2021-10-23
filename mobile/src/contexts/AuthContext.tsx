@@ -22,10 +22,9 @@ export interface SetupUserData {
   incomeTags: string[];
   incomeTagsCount: number;
 
-  fixedExpenses: Lancamento[];
-  fixedExpenseCategories: Categoria[];
-  fixedIncomes: Lancamento[];
-  fixedIncomeCategories: Categoria[];
+  createdCategories: Categoria[];
+  allCategories: Categoria[];
+  entries: Lancamento[];
   account: Conta[];
 }
 
