@@ -83,7 +83,14 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    navigation.goBack();
+    if (setupUserData.expenseTagsCount == 0) {
+      navigation.dispatch(StackActions.replace('FixedExpenses'));
+      return true;
+    }
+    navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
+    const newUserData = setupUserData;
+    newUserData.expenseTagsCount--;
+    updateSetupUserDataProps(newUserData);
     return true;
   };
 

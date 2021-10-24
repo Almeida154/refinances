@@ -4,7 +4,7 @@ import { BackHandler } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
@@ -67,7 +67,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    navigation.goBack();
+    navigation.dispatch(StackActions.replace('Photo'));
     return true;
   };
 

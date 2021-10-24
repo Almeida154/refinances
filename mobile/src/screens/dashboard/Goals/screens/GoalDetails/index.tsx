@@ -21,7 +21,6 @@ import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
 import { ProgressBar, FAB, Portal, Provider } from 'react-native-paper';
 import Button from '../../../../../components/Button';
-import { RouteProp } from '@react-navigation/core';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -30,12 +29,11 @@ import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import { toDate } from '../../../../../helpers/manipularDatas';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
-import Icon from 'react-native-vector-icons/EvilIcons'
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
 const GoalDetails = ({ route }: Props) => {
-
   const { navigation } = UseDadosTemp();
 
   const [goal, setGoal] = useState({} as Meta);
@@ -61,7 +59,7 @@ const GoalDetails = ({ route }: Props) => {
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));*/
 
   // Algum cálculo para calcular a porcentagem aqui
-  const percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta; 
+  const percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta;
 
   //const saldo = goal.saldoAtualMeta.toFixed(2)
 
@@ -76,7 +74,7 @@ const GoalDetails = ({ route }: Props) => {
           <TextValor>{goal.saldoAtualMeta}</TextValor>
         </Valor>
 
-        {/* Ta dando merda aqui */ }
+        {/* Ta dando merda aqui */}
         <ProgressBar
           progress={0.1}
           color="#F81650"
@@ -94,8 +92,10 @@ const GoalDetails = ({ route }: Props) => {
         </TextProgress>
 
         <Goal>
-          {/* Ta dando merda aqui tbm*/ }
-          <DaysLeft><Icon name="exclamation" color="#525252" size={22}/> Faltam 14 dias</DaysLeft>
+          {/* Ta dando merda aqui tbm*/}
+          <DaysLeft>
+            <Icon name="exclamation" color="#525252" size={22} /> Faltam 14 dias
+          </DaysLeft>
 
           <GoalDate>
             <TextGoalsH>Início</TextGoalsH>
@@ -117,7 +117,12 @@ const GoalDetails = ({ route }: Props) => {
           }}
           title="Depositar"
           color="#6CB760"
-          style={{ marginBottom: 10, marginTop: 10, backgroundColor: "#f5f2f3"}}/>
+          style={{
+            marginBottom: 10,
+            marginTop: 10,
+            backgroundColor: '#f5f2f3',
+          }}
+        />
 
         <Button
           onPress={() => {
@@ -128,7 +133,12 @@ const GoalDetails = ({ route }: Props) => {
           }}
           title="Excluir"
           color="#ee4266"
-          style={{ marginBottom: 10, marginTop: 10, backgroundColor: "#f5f2f3"}}/>
+          style={{
+            marginBottom: 10,
+            marginTop: 10,
+            backgroundColor: '#f5f2f3',
+          }}
+        />
 
         <Button
           onPress={() => {
@@ -139,9 +149,13 @@ const GoalDetails = ({ route }: Props) => {
           }}
           title="Editar"
           color="#444"
-          style={{ marginBottom: 10, marginTop: 10, backgroundColor: "#f5f2f3"}}/>
+          style={{
+            marginBottom: 10,
+            marginTop: 10,
+            backgroundColor: '#f5f2f3',
+          }}
+        />
       </View>
-
     </ScrollView>
   );
 };

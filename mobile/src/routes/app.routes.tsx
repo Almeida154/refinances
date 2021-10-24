@@ -17,7 +17,6 @@ import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
 import Home from '../screens/dashboard/Home';
 import AddCategoryAccount from '../screens/dashboard/Home/components/CreateAccount/components/AddCategoryAccount';
 
-import DashboardGoal from '../screens/dashboard/Goals/screens/Dashboard';
 import GoalsList from '../screens/dashboard/Goals/navigators/TopBarNavigator';
 import InvestGoals from '../screens/dashboard/Goals/screens/Invest';
 import GoalDetails from '../screens/dashboard/Goals/screens/GoalDetails';
@@ -47,7 +46,6 @@ const GoalsStackNavigation = () => {
       <GoalStack.Screen name="CreateGoals" component={CreateGoal} />
       <GoalStack.Screen name="InvestGoals" component={InvestGoals} />
       <GoalStack.Screen name="GoalDetails" component={GoalDetails} />
-      <GoalStack.Screen name="GoalsDashboard" component={DashboardGoal} />
     </GoalStack.Navigator>
   );
 };

@@ -43,7 +43,7 @@ const Email = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('Login'));
+    navigation.dispatch(StackActions.replace('Name'));
     const newUser = user;
     newUser.emailUsuario = '';
     updateUserProps(newUser);

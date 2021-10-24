@@ -96,7 +96,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   };
 
   const backAction = () => {
-    navigation.goBack();
+    navigation.dispatch(StackActions.replace('EachFixedExpense'));
     return true;
   };
 
@@ -108,17 +108,8 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   async function next() {
     const dataUser = setupUserData;
-    const entry = {
-      tipoLancamento: 'despesa',
-      categoryLancamento: selectedCategory,
-      descricaoLancamento: dataUser.expenseTags[dataUser.expenseTagsCount],
-      essencial: true,
-      lugarLancamento: 'extrato',
-    } as Lancamento;
-
-    dataUser.entries != undefined
-      ? dataUser.entries.push(entry)
-      : (dataUser.entries = [entry]);
+    dataUser.entries[dataUser.expenseTagsCount].categoryLancamento =
+      selectedCategory;
 
     dataUser.expenseTagsCount++;
 

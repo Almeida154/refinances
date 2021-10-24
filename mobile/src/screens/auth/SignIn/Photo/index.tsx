@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { BackHandler } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 
@@ -55,7 +55,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    navigation.goBack();
+    navigation.dispatch(StackActions.replace('ConfirmPassword'));
     return true;
   };
 
