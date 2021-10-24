@@ -71,8 +71,8 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
           ]
         : [...defaultCategories];
 
+    clearSelectedCategories();
     if (route.params?.createdCategoryName) {
-      clearSelectedCategories();
       const lastCreatedI = ctgrs.findIndex(
         category => category.nomeCategoria == route.params?.createdCategoryName,
       );
@@ -94,6 +94,10 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     });
 
   async function next() {
+    if (selectedCategory.nomeCategoria == null) {
+      return;
+    }
+
     const dataUser = setupUserData;
     dataUser.entries[dataUser.expenseTagsCount].categoryLancamento =
       selectedCategory;

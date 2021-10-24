@@ -72,8 +72,8 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
           ]
         : [...defaultCategories];
 
+    clearSelectedCategories();
     if (route.params?.createdCategoryName) {
-      clearSelectedCategories();
       const lastCreatedI = ctgrs.findIndex(
         category => category.nomeCategoria == route.params?.createdCategoryName,
       );
@@ -95,9 +95,13 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     });
 
   async function next() {
+    if (selectedCategory.nomeCategoria == null) {
+      return;
+    }
     const dataUser = setupUserData;
-    dataUser.entries[dataUser.incomeTagsCount].categoryLancamento =
-      selectedCategory;
+    dataUser.entries[
+      dataUser.incomeTagsCount + dataUser.expenseTags.length
+    ].categoryLancamento = selectedCategory;
 
     dataUser.incomeTagsCount++;
 
@@ -111,7 +115,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     if (dataUser.incomeTagsCount != dataUser.incomeTags.length) {
       return navigation.dispatch(StackActions.replace('EachFixedIncome'));
     }
-    navigation.dispatch(StackActions.replace('FixedIncomes'));
+    navigation.dispatch(StackActions.replace('StatsInitial'));
   }
 
   return (

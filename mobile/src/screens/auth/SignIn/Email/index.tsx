@@ -6,7 +6,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
