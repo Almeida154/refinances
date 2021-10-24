@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import {FormLancamentoStack} from '../../../../../@types/RootStackParamApp'
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 import {Modalize} from 'react-native-modalize'
 
 import {TouchableOpacity, Text, ToastAndroid} from 'react-native'
@@ -28,14 +27,12 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import InputText from '../../../../../components/InputText'
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
-type PropsNavigation = {
-    navigation: StackNavigationProp<FormLancamentoStack, "AddCategory">,    
-    route: RouteProp<FormLancamentoStack, "AddCategory">,    
-    
-}
 
-const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
+
+const AddCategoryAccount = ({route}: {route: any}) => {
+    const {navigation} = UseDadosTemp()
 
     const {tipoCategoria} = route.params
 
@@ -77,7 +74,7 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
         console.debug('handleSubmit() | response', response)
 
         if(response == '') {
-            navigation.goBack()
+            navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main'}))
         } else {
             ToastAndroid.show(response, ToastAndroid.SHORT)
         }

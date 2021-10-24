@@ -26,6 +26,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
     
     const textParcela = item.totalParcelas != 1 ? item.indexOfLancamento + 'ª parcela de ' + item.totalParcelas : ''
     
+    console.log(item)
     return (
         <ContainerItem>
             <SectionLancamento>   
@@ -34,7 +35,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
                 </SectionIcon>
                 <SectionDescription>             
                     <LabelName>{item.lancamentoParcela.descricaoLancamento}</LabelName>
-                    <LabelAccount>{item.contaParcela.descricao}</LabelAccount>
+                    <LabelAccount>{item.contaParcela == null ? "Conta não identificada" : item.contaParcela.descricao}</LabelAccount>
                 </SectionDescription>
             </SectionLancamento>
 

@@ -37,17 +37,17 @@ import ItemCardParcela, {CardParcela, CardParcelaProps} from '../CardParcela'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
 
-const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: PropsNavigation) => {
+const FormCadastro= ({valor, setValor, tipoLancamento}: PropsNavigation) => {
     const {categorias} = UseCategories()
     const {contas} = UseContas()
-
+    
     const [detalhes, setDetalhes] = useState(false)
     
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
     
     const [descricao, setDescricao] =  useState('')
     const [dataPagamento, setDataPagamento] =  useState((new Date(Date.now())))    
-    const [status, setStatus] = useState(false)
+    const [status, setStatus] = useState(true)
 
     const [selectedCategoria, setSelectedCategoria] = useState('0')
     const [selectedConta, setSelectedConta] = useState<Conta | null>(null)
@@ -107,7 +107,6 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             }
         }        
 
-        console.debug("aux[0]",aux[0])
         setDataParcelas(aux)
     }
 
@@ -122,7 +121,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
                 contaParcela: item.conta == null ? 0 : item.conta.id,
                 dataParcela: toDate(item.data),
                 valorParcela: item.valor,
-                statusParcela: status                    
+                statusParcela: item.status                    
             })
         })            
 
@@ -132,7 +131,8 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             lugarLancamento: 'extrato',
             tipoLancamento: tipoLancamento,
             categoryLancamento: selectedCategoria,
-            parcelasLancamento: newParcelas
+            parcelasLancamento: newParcelas,
+            essencial: false    
         }
                     
         console.log('newLancamento: ', newLancamento)
@@ -274,7 +274,7 @@ const FormCadastro= ({route, navigation, valor, setValor, tipoLancamento}: Props
             </InputControl>
 
             <InputControl>
-                <SelectionCategorias tipoCategoria={tipoLancamento} categoria={selectedCategoria} setCategoria={setSelectedCategoria} navigation={navigation}/>
+                <SelectionCategorias tipoCategoria={tipoLancamento} categoria={selectedCategoria} setCategoria={setSelectedCategoria} />
             </InputControl>
 
             <InputControl>

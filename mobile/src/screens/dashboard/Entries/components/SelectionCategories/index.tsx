@@ -30,14 +30,14 @@ import {
     FieldTemplateSettings,
     OptionTemplateSettings
 } from 'react-native-custom-picker'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
+import { StackActions } from '@react-navigation/native'
 
 
 type PropsSelectionCategorias = {
     tipoCategoria: string,    
-    setCategoria: React.Dispatch<React.SetStateAction<string>>,
-    navigation: StackNavigationProp<FormLancamentoStack, "Main">,    
+    setCategoria: React.Dispatch<React.SetStateAction<string>>,    
     categoria: string
 }
 
@@ -77,23 +77,21 @@ const RenderHeader = ({search, setSearch}: PropsRenderHeader) => {
 
 
 type PropsRenderFooter = {
-    navigation: StackNavigationProp<FormLancamentoStack, "Main">,    
     tipoCategoria: string
 }
 
-const RenderFooter = ({navigation, tipoCategoria}: PropsRenderFooter) => {    
+const RenderFooter = ({tipoCategoria}: PropsRenderFooter) => {  
+    const {navigation} = UseDadosTemp()
     return (
         <BotaoAdicionarCategoria>
-            <LabelAdicionarCategoria onPress={() => navigation.navigate('AddCategory', {
-                tipoCategoria
-            })}>Adicionar Categoria</LabelAdicionarCategoria>
+            <LabelAdicionarCategoria onPress={() => navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'AddCategory', params: {tipoCategoria}}))} >Adicionar Categoria</LabelAdicionarCategoria>
         </BotaoAdicionarCategoria>
     )
 }
 
 
 
-const SelectionCategorias = ({categoria, tipoCategoria, setCategoria, navigation}: PropsSelectionCategorias) => {        
+const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSelectionCategorias) => {        
     const {categorias, loading, handleReadByUserCategorias} = UseCategories()    
 
     const [search, setSearch] = useState('') 
@@ -168,7 +166,7 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria, navigation
                 getLabel={item => item.nomeCategoria}
                 optionTemplate={RenderOption}
                 headerTemplate={() => <RenderHeader search={search} setSearch={setSearch} />}
-                footerTemplate={() => <RenderFooter navigation={navigation} tipoCategoria={tipoCategoria}/>}                
+                footerTemplate={() => <RenderFooter tipoCategoria={tipoCategoria}/>}                
                 maxHeight={400}
                 modalStyle={{minHeight: 400}}
                 onValueChange={value => {

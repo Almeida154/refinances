@@ -32,7 +32,7 @@ class ParcelaController {
         const contaRepository = getRepository(Conta);
         const lancamentoRepository = getRepository(Lancamento);
 
-        const {dataParcela = '2013-10-21T13:28:06.419Z', valorParcela, statusParcela, contaParcela, lancamentoParcela} = request.body
+        const {dataParcela, valorParcela, statusParcela, contaParcela, lancamentoParcela} = request.body
 
         if (dataParcela == undefined) return response.send({ error: "data em branco!" });
         if (valorParcela == undefined) return response.send({ error: "valor não especificado" });
@@ -47,23 +47,10 @@ class ParcelaController {
             join: {
                 alias: 'conta',
                 leftJoinAndSelect: {
-                    parcelas: 'conta.parcelasConta',
-                    categoryConta: 'conta.categoryConta',
-                    user: 'conta.userConta',
-                    transferencia: 'conta.transferenciasEnviadas'
+                    user: 'conta.userConta',                   
                 }
             }
-        });
-
-        const contaExistsRecebidas = await contaRepository.findOne({ 
-            where: { id: contaParcela },
-            join: {
-                alias: 'conta',
-                leftJoinAndSelect: {
-                    transferencia: 'conta.transferenciasRecebidas'
-                }
-            }
-        });
+        });       
 
         if (!lancamentoExists) return response.send({
             error: "Não existe um lançamento com esse id"
@@ -80,9 +67,9 @@ class ParcelaController {
         let updateConta
         if(statusParcela) {
             contaExists.saldoConta += lancamentoExists.tipoLancamento == 'despesa' ?  -valorParcela : valorParcela
-            contaExists.transferenciasRecebidas = contaExistsRecebidas.transferenciasRecebidas
 
-            updateConta = await contaRepository.save(contaExists)            
+            await contaRepository.update(contaExists.id, {saldoConta: contaExists.saldoConta})            
+            updateConta = await contaRepository.findOne({where: {id: contaExists.id}})
         }
 
         console.log(updateConta)
@@ -140,8 +127,7 @@ class ParcelaController {
 
             }
         })
-
-        console.log(dataByUser)
+        
 
         if(dataByUser.length == 0) {
             return response.send({message: []})
