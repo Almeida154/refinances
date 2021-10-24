@@ -48,6 +48,8 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
   }, []);
 
   useEffect(() => {
+    console.debug('Json final:::: ', JSON.stringify(setupUserData));
+
     const income = calculateTotal('receita');
     const expense = calculateTotal('despesa');
 

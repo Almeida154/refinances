@@ -85,6 +85,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('EachFixedIncome'));
+    clearSelectedCategories();
     return true;
   };
 
@@ -98,23 +99,52 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     if (selectedCategory.nomeCategoria == null) {
       return;
     }
+
     const dataUser = setupUserData;
     dataUser.entries[
       dataUser.incomeTagsCount + dataUser.expenseTags.length
     ].categoryLancamento = selectedCategory;
 
-    dataUser.incomeTagsCount++;
-
-    updateSetupUserDataProps(dataUser);
-
-    console.debug(
-      `EachFixedIncomeCategory | next() | ${dataUser.incomeTagsCount}`,
-      JSON.stringify(setupUserData),
+    console.log(
+      `---EachFixedIncomeCategory | next() | ${dataUser.incomeTagsCount}---`,
     );
+    console.debug(
+      JSON.stringify(
+        setupUserData.entries[
+          dataUser.incomeTagsCount + dataUser.expenseTags.length
+        ].descricaoLancamento,
+      ),
+    );
+    console.debug(
+      JSON.stringify(
+        setupUserData.entries[
+          dataUser.incomeTagsCount + dataUser.expenseTags.length
+        ].tipoLancamento,
+      ),
+    );
+    console.debug(
+      JSON.stringify(
+        setupUserData.entries[
+          dataUser.incomeTagsCount + dataUser.expenseTags.length
+        ].parcelasLancamento[0],
+      ),
+    );
+    console.debug(
+      JSON.stringify(
+        setupUserData.entries[
+          dataUser.incomeTagsCount + dataUser.expenseTags.length
+        ].categoryLancamento,
+      ),
+    );
+
+    dataUser.incomeTagsCount++;
+    updateSetupUserDataProps(dataUser);
 
     if (dataUser.incomeTagsCount != dataUser.incomeTags.length) {
       return navigation.dispatch(StackActions.replace('EachFixedIncome'));
     }
+
+    clearSelectedCategories();
     navigation.dispatch(StackActions.replace('StatsInitial'));
   }
 

@@ -84,6 +84,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('EachFixedExpense'));
+    clearSelectedCategories();
     return true;
   };
 
@@ -98,22 +99,58 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       return;
     }
 
+    console.log(
+      setupUserData.expenseTagsCount,
+      selectedCategory,
+      setupUserData.entries,
+    );
+
     const dataUser = setupUserData;
-    dataUser.entries[dataUser.expenseTagsCount].categoryLancamento =
+    dataUser.entries[setupUserData.expenseTagsCount].categoryLancamento =
       selectedCategory;
 
     dataUser.expenseTagsCount++;
 
-    updateSetupUserDataProps(dataUser);
-
-    console.debug(
-      `EachFixedExpenseCategory | next() | ${dataUser.expenseTagsCount}`,
-      JSON.stringify(setupUserData),
+    console.log(
+      setupUserData.expenseTagsCount,
+      selectedCategory,
+      setupUserData.entries,
     );
 
-    if (dataUser.expenseTagsCount != dataUser.expenseTags.length) {
+    console.log(
+      `---EachFixedExpenseCategory | next() | ${setupUserData.expenseTagsCount}---`,
+    );
+    console.debug(
+      JSON.stringify(
+        setupUserData.entries[setupUserData.expenseTagsCount]
+          .descricaoLancamento,
+      ),
+    );
+    console.debug(
+      JSON.stringify(
+        setupUserData.entries[setupUserData.expenseTagsCount].tipoLancamento,
+      ),
+    );
+    console.debug(
+      JSON.stringify(
+        setupUserData.entries[setupUserData.expenseTagsCount]
+          .parcelasLancamento[0],
+      ),
+    );
+    console.debug(
+      JSON.stringify(
+        setupUserData.entries[setupUserData.expenseTagsCount]
+          .categoryLancamento,
+      ),
+    );
+
+    updateSetupUserDataProps(dataUser);
+
+    if (setupUserData.expenseTagsCount != setupUserData.expenseTags.length) {
       return navigation.dispatch(StackActions.replace('EachFixedExpense'));
     }
+
+    clearSelectedCategories();
     navigation.dispatch(StackActions.replace('FixedIncomes'));
   }
 
