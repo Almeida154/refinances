@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, StatusBar, View } from 'react-native';
+import { BackHandler, ScrollView, StatusBar, View } from 'react-native';
 
 import {FormLancamentoStack} from '../../../@types/RootStackParamApp'
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 
 import FormCadastro from './components/FormCadastro'
 import FormTransferencia from './components/TransferForm'
@@ -20,47 +20,40 @@ import {
     SectionButtons
 } from './styles'
 import { Text } from '../../../components/Button/styles';
+import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 
 
-export type PropsNavigation = {
-    navigation: StackNavigationProp<FormLancamentoStack, "Main">,    
-    route: RouteProp<FormLancamentoStack, "Main">,
+export type PropsNavigation = {        
     tipoLancamento: string,
     valor: string,
     setValor: React.Dispatch<React.SetStateAction<string>>
     
 }
 
-const FormLancamento = ({route, navigation}: PropsNavigation) => {
-    const [selected, setSelected] = useState(0)
+const FormLancamento = () => {
+    const [selected, setSelected] = useState(0)    
+    
+    const {navigation} = UseDadosTemp()
     navigation.setOptions({headerShown: false})
-
-    const [stateReload, setStateReload] = useState(false)
-
+    
     const [valor, setValor] = useState('')
-
+    
     useEffect(() => {
-        const focus = navigation.addListener('focus', () => {
-            console.log("Focus do FormCadastro ativado")
-            setStateReload(false)
-            return 
-        })
-
+        BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () =>
+          BackHandler.removeEventListener('hardwareBackPress', backAction);
+      }, []);
+    
+      const backAction = () => {
+        navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}));
         
-
-        const blur = navigation.addListener('blur', () => {
-            console.log("blur do FormCadastro ativado")
-            setStateReload(true)
-        })
-        
-        console.log("stateReload", stateReload)
-    }, [navigation])
+        return true;
+      };
 
     return (
         <ScrollView>
             <StatusBar backgroundColor={selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}/>
             {
-                stateReload ? <Text style={{fontSize: 50}}>Carregando</Text> :            
                 <Container>
                     <Header style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}>
                     <AlinhaParaDireita>
@@ -84,14 +77,14 @@ const FormLancamento = ({route, navigation}: PropsNavigation) => {
                     </Header>
 
                     {
-                        selected == 0 && <FormCadastro route={route} navigation={navigation} valor={valor} setValor={setValor} tipoLancamento={"despesa"}/>   
+                        selected == 0 && <FormCadastro valor={valor} setValor={setValor} tipoLancamento={"despesa"}/>   
                 
                     }
                     {
-                        selected == 1 && <FormCadastro route={route} navigation={navigation} valor={valor} setValor={setValor}  tipoLancamento={"receita"}/>   
+                        selected == 1 && <FormCadastro valor={valor} setValor={setValor}  tipoLancamento={"receita"}/>   
                     }
                     {
-                        selected == 2 && <FormTransferencia route={route} navigation={navigation} valor={valor} setValor={setValor}  tipoLancamento="transferencia"/>   
+                        selected == 2 && <FormTransferencia valor={valor} setValor={setValor}  tipoLancamento="transferencia"/>   
                     }
 
                 </Container>

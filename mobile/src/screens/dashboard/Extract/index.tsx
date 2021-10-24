@@ -19,7 +19,6 @@ import {addMonths, toDate} from '../../../helpers/manipularDatas'
 
 import SectionByDate from './components/SectionByDate'
 
-import SmoothPicker from "react-native-smooth-picker"
 
 import {
     Header,
@@ -38,59 +37,6 @@ import {
    OptionWrapper
     
 } from './styles'
-
-const opacities = [
-    1,
-    1,
-    0.6,
-    0.3,
-    0.1
-]
-const sizeText = [
-    20,
-    15,
-10,
-]
-
-type ItemProps = {
-    opacity: number,
-    selected: boolean,
-}
-
-const Item = React.memo(({opacity, selected, vertical, fontSize, name}: any) => {
-    return (
-      <OptionWrapper
-        style={{ borderColor: selected ? '#ABC9AF' : 'transparent', width: vertical ? 190 : 'auto'}}
-      >
-      <Text style={{fontSize: 20}}>
-        {name}
-      </Text>
-    </OptionWrapper>
-    );
-  });
-  
-type RenderPickerProps = {
-    item: number;
-    index: number
-}
-const ItemToRender = ({item, index}: RenderPickerProps, indexSelected: number, vertical: boolean) => {
-    const selected = index === indexSelected;
-    const gap = Math.abs(index - indexSelected);
-  
-    let opacity = opacities[gap];
-    if (gap > 3) {
-      opacity = opacities[4];
-    }
-    let fontSize = sizeText[gap];
-    if (gap > 1) {
-      fontSize = sizeText[2];
-    }
-  
-    return <Item opacity={opacity} selected={selected} vertical={vertical} fontSize={fontSize} name={item}/>;
-  };
-
-
-
 
 const RenderSection = ({item}: {item: (ReadParcela[] | Transferencia[])[]}) => {
     let readByParcelas: ReadParcela[] = ConvertToParcela(item[0])
@@ -111,9 +57,6 @@ const Extrato = () => {
             
     const yearCurrent = String(new Date(Date.now()).getFullYear())
 
-    const refPicker = useRef<FlatList>(null);
-
-    const [selectedMonth, setSelectedMonth] = useState(5)
     const [dateCurrent, setDateCurrent] = useState(new Date(Date.now()).toLocaleDateString())
     
     const [allDatas, setAllDatas] = useState<(ReadParcela[] | Transferencia[])[][] | null>(null)
@@ -184,20 +127,6 @@ const Extrato = () => {
             calcBalance(aux)
     }
 
-    // function updateDatePicker(index: number) {
-    //     const newDate = toDate(datesDefault[index])
-    //     refPicker.current?.scrollToIndex({
-    //         animated: false,
-    //         index: index,
-    //         viewOffset: -30,
-    //     });
-        
-    //     setSelectedMonth(index)
-    //     setDateCurrent(newDate.toLocaleDateString())
-
-    //     loadParcelas(newDate)
-    //     loadTransferencias(newDate)
-    // }
 
     async function loadTransferencias(date: Date) {                        
         handleTransferGroupByDate(await retornarIdDoUsuario(), date.toISOString())
@@ -212,14 +141,7 @@ const Extrato = () => {
         loadParcelas(getDate)
         loadTransferencias(getDate)
         
-    }, [])
-    
-    
-    const test = async () => {
-        console.log(await retornarIdDoUsuario())
-    }
-    
-    test()
+    }, [])   
    
     useEffect(() => {        
             loadInAllDatas()        
@@ -237,25 +159,7 @@ const Extrato = () => {
     return (
         <Container >
                 <ScrollBody>
-                    <Header>
-                        {/* <View style={{width: Dimensions.get('screen').width,
-                            height: 80,
-                            justifyContent: "center",
-                            alignItems: "center",                            
-                            
-                            }} >
-                                <SmoothPicker
-                                    initialScrollToIndex={selectedMonth}
-                                    keyExtractor={(_, index) => index.toString()}
-                                    horizontal={true}
-                                    refFlatList={refPicker}
-                                    scrollAnimation
-                                    showsHorizontalScrollIndicator={false}
-                                    data={datesDefault}
-                                    renderItem={option => ItemToRender(option, selectedMonth, false)}
-                                    onSelected={({ item, index }) => updateDatePicker(index)}
-                                    />
-                        </View> */}
+                    <Header>                        
                         <PeriodoAnterior onPress={() => updateDate(-1)}>
                             <Icon size={24} name={"arrow-back-ios"}/>
                         </PeriodoAnterior>

@@ -32,6 +32,7 @@ import {
   View,
   Text,
 } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
@@ -125,7 +126,7 @@ const TabNavigator = () => {
             return (
               <CustomTabBarButton
                 children={props.children}
-                onPress={() => navigation.navigate('Lancamentos', {screen: 'Main'})}
+                onPress={() => navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main'}))}
               />
             );
           },

@@ -39,7 +39,7 @@ export const SectionButtons = styled.View`
     justify-content: center;
 `
 
-export const Buttons = styled.TouchableHighlight`
+export const Buttons = styled.TouchableOpacity`
     width: 34%;
     padding: 10px;
     align-items: center;

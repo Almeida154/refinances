@@ -25,7 +25,7 @@ type PropsCardInstallment = {
 const CardInstallment = ({item}: PropsCardInstallment) => {
     
     const textParcela = item.totalParcelas != 1 ? item.indexOfLancamento + 'ª parcela de ' + item.totalParcelas : ''
-
+    
     return (
         <ContainerItem>
             <SectionLancamento>   

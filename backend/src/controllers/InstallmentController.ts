@@ -99,6 +99,8 @@ class ParcelaController {
     async GroupByDate(request: Request, response: Response, next: NextFunction) {
         const parcelaRepository = getRepository(Parcela);
         const userRepository = getRepository(User);
+        const lancamentoRepository = getRepository(Lancamento);
+        
         const rawDate = new Date(request.body.rawDate)
 
         const firstDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth(), 1)
@@ -109,6 +111,7 @@ class ParcelaController {
         if(!user) {
             return response.send({error: "Não existe um user com esse id"})
         }
+
         const data = await parcelaRepository.createQueryBuilder("parcela")
             .leftJoinAndSelect("parcela.contaParcela", "conta")
             .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
@@ -120,12 +123,25 @@ class ParcelaController {
             .getMany()       
 
        
-
+        const dataLancamentos = await lancamentoRepository.find({where: {userLancamento: {id: user.id}}, join: {
+            alias: 'lancamento',
+            leftJoinAndSelect: {
+                user: 'lancamento.userLancamento',
+                parcela: 'lancamento.parcelasLancamento'
+            }
+        }})
+        
         const dataByUser = []
 
         data.map(item => {
-            if(item.userParcela.id == user.id) dataByUser.push(item)
+            if(item.userParcela.id == user.id) {
+                item.userParcela = undefined
+                dataByUser.push(item)
+
+            }
         })
+
+        console.log(dataByUser)
 
         if(dataByUser.length == 0) {
             return response.send({message: []})
@@ -137,21 +153,34 @@ class ParcelaController {
 
         let aux = []
 
-        let lancamento = new Map()
         
+        dataLancamentos.map((item, index) => {
+            const auxParcela = item.parcelasLancamento.slice()
+
+            auxParcela.sort((a, b) => a.dataParcela < b.dataParcela ? -1 : a.dataParcela > b.dataParcela ? 1 : 0)
+
+            dataLancamentos[index].parcelasLancamento = auxParcela
+        })
+
         dataByUser.map((item: any, index) => {
             const parcelaData = item.dataParcela.toLocaleDateString()
 
-            const keyLancamento = lancamento.get(item.lancamentoParcela.id)
-            if(!keyLancamento) {
-                lancamento.set(item.lancamentoParcela.id, 1)
-
-                item.indexOfLancamento = 1
-            } else {
-                lancamento.set(item.lancamentoParcela.id, keyLancamento+1)
-
-                item.indexOfLancamento = keyLancamento+1
+            
+            for(var i = 0;i < dataLancamentos.length;i++) {                
+                if(dataLancamentos[i].id == item.lancamentoParcela.id) {                    
+                    console.log(dataLancamentos[i].parcelasLancamento)
+                    for(var j = 0;j < dataLancamentos[i].parcelasLancamento.length;j++) {
+                        if(dataLancamentos[i].parcelasLancamento[j].id == item.id) {
+                            item.indexOfLancamento = j+1
+                            item.totalParcelas = dataLancamentos[i].parcelasLancamento.length
+                            break
+                        }
+                    }
+                    break
+                }
             }
+        
+            console.log(item)
 
             if(parcelaData == atual) {
                 aux.push(item)
@@ -169,13 +198,7 @@ class ParcelaController {
         if(aux.length != 0) {
             parcelas.push(aux)
         }
-
-        for(var i = 0;i < parcelas.length;i++){
-            for(var j = 0;j < parcelas[i].length;j++) {
-                parcelas[i][j].totalParcelas = lancamento.get(dataByUser[i].lancamentoParcela.id)                
-            }
-        }
-
+      
         return response.send({message: parcelas})
     }
     async one(request: Request, response: Response, next: NextFunction) {
