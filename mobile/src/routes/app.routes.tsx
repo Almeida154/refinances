@@ -23,8 +23,8 @@ import GoalDetails from '../screens/dashboard/Goals/screens/GoalDetails';
 import CreateGoal from '../screens/dashboard/Goals/screens/CreateGoal';
 
 const MainStack = createStackNavigator<PropsMainRoutes>();
-
 const HomeStack = createStackNavigator<HomeAccountStack>();
+
 export const HomeAccountStackNavigation = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
