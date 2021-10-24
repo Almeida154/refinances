@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
-import { BackHandler, Text, View } from 'react-native';
+import { BackHandler } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
-import { Container, Content } from './styles';
+import {
+  Container,
+  Content,
+  PieContainer,
+  Title,
+  SubTitle,
+  Pic,
+  LabelContainer,
+  LabelIcon,
+  LabelSubtitle,
+} from './styles';
 import { colors } from '../../../../styles';
 
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
+
+import PieChart from 'react-native-pie-chart';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'StatsInitial'>;
@@ -23,11 +34,12 @@ export type PropsNavigation = {
 };
 
 const StatsInitial = ({ route, navigation }: PropsNavigation) => {
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalExpense, setTotalExpense] = useState(0);
-  const [balance, setBalance] = useState(0);
+  const [totalIncome, setTotalIncome] = useState(80);
+  const [totalExpense, setTotalExpense] = useState(20);
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const [expensePercentage, setExpensePercentage] = useState<number>(0);
+
+  const { setupUserData, updateSetupUserDataProps, user } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -36,10 +48,15 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
   }, []);
 
   useEffect(() => {
-    setTotalIncome(calculateTotal('receita'));
-    setTotalExpense(calculateTotal('despesa'));
-    setBalance(calculateTotal('receita') - calculateTotal('despesa'));
-  }, []);
+    const income = calculateTotal('receita');
+    const expense = calculateTotal('despesa');
+
+    setTotalIncome(income);
+    setTotalExpense(expense);
+
+    let percentage = ((totalExpense * 100) / totalIncome).toFixed(0);
+    setExpensePercentage(parseInt(percentage));
+  }, [expensePercentage, totalIncome, totalExpense]);
 
   const calculateTotal = (type: string) => {
     const totIn = setupUserData.entries.filter(
@@ -64,6 +81,10 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
     return true;
   };
 
+  const register = () => {
+    console.log('Pronto pra registrar');
+  };
+
   return (
     <Container>
       <Header
@@ -73,11 +94,46 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
         hasShadow
       />
       <Content>
-        <Text>Receita por mês: R$ {totalIncome}</Text>
-        <Text>Despesa por mês: R$ {totalExpense}</Text>
-        <Text>Saldo: R$ {balance}</Text>
+        <Title>Está indo muito bem, {user.nomeUsuario}!</Title>
+        <SubTitle>Você gasta {expensePercentage}% daquilo que recebe.</SubTitle>
+        <PieContainer>
+          {console.log(totalExpense, totalIncome)}
+          <PieChart
+            widthAndHeight={250}
+            series={[totalIncome, totalExpense]}
+            sliceColor={[colors.bigDipOruby, colors.paradisePink]}
+            doughnut
+            coverRadius={0.65}
+            coverFill={'#FFF'}
+          />
+          {user.fotoPerfilUsuario == null ? (
+            <Pic
+              source={require('../../../../assets/images/avatarDefault.png')}
+            />
+          ) : (
+            <Pic
+              style={{
+                borderWidth: 6,
+                borderColor: colors.silver,
+              }}
+              source={{ uri: user.fotoPerfilUsuario }}
+            />
+          )}
+        </PieContainer>
+
+        <LabelContainer>
+          <LabelIcon style={{ backgroundColor: colors.bigDipOruby }} />
+          <LabelSubtitle>O que você recebe (R$ {totalIncome})</LabelSubtitle>
+        </LabelContainer>
+
+        <LabelContainer>
+          <LabelIcon style={{ backgroundColor: colors.paradisePink }} />
+          <LabelSubtitle>Gastos fixos (R$ {totalExpense})</LabelSubtitle>
+        </LabelContainer>
       </Content>
+
       <BottomNavigation
+        onPress={() => register()}
         description="Quero começar"
         color={colors.white}
         backgroundColor={colors.paradisePink}
