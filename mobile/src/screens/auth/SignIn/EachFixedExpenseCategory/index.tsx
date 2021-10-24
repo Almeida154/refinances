@@ -4,12 +4,8 @@ import { BackHandler, StatusBar } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CommonActions, RouteProp } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { RouteProp, StackActions } from '@react-navigation/native';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
-
-import { StackActions } from '@react-navigation/native';
 
 // Styles
 import { Container, Content, ButtonContainer } from './styles';
@@ -20,9 +16,6 @@ import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import CategoryItem from '../../components/CategoryItem';
-
-import { Lancamento } from '@contexts/EntriesContext';
-import { Parcela } from '@contexts/InstallmentContext';
 
 import global from '../../../../global';
 import { Categoria } from '@contexts/CategoriesContext';
@@ -38,27 +31,13 @@ export type PropsNavigation = {
 const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([] as Categoria[]);
-  const [createdCategories, setCreatedCategories] = useState<
-    null | Categoria[]
-  >(null);
 
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
-  const [stateReload, setStateReload] = useState(false);
-
   useEffect(() => {
-    if (!navigation || !navigation.addListener) return;
-
     const unsubscribe = navigation.addListener('focus', () => {
-      setStateReload(false);
       populateCategories();
     });
-
-    const blur = navigation.addListener('blur', () => {
-      setStateReload(true);
-      console.log(stateReload);
-    });
-
     return unsubscribe;
   }, [navigation]);
 

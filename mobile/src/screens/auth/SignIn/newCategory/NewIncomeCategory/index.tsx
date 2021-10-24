@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../../contexts/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
 
@@ -39,7 +38,6 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
   return (
     <Container>
       <InputText
-        noShadow
         label="Nome"
         colorLabel={colors.slimyGreen}
         placeholder="Biblioteca"
@@ -63,7 +61,6 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
         onSubmitEditing={() => colorRef.current?.focus()}
       />
       <InputText
-        noShadow
         label="Cor"
         colorLabel={colors.slimyGreen}
         placeholder="Amarelo"
@@ -87,7 +84,6 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
         onSubmitEditing={() => iconRef.current?.focus()}
       />
       <InputText
-        noShadow
         label="Ícone"
         colorLabel={colors.slimyGreen}
         placeholder="Avião"

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import { BackHandler, View } from 'react-native';
+import { BackHandler } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -43,26 +42,6 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
-  const [load, setLoad] = useState(false);
-
-  const [ud, setUd] = useState(setupUserData);
-
-  useEffect(() => {
-    if (!navigation || !navigation.addListener) return;
-
-    const unsubscribe = navigation.addListener('focus', () => {
-      setLoad(!load);
-      setUd(setupUserData);
-    });
-
-    navigation.addListener('blur', () => {
-      setLoad(!load);
-      setUd(setupUserData);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -87,7 +66,8 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     );
 
     const entry = {
-      descricaoLancamento: ud?.expenseTags[ud?.expenseTagsCount],
+      descricaoLancamento:
+        setupUserData.expenseTags[setupUserData.expenseTagsCount],
       lugarLancamento: 'extrato',
       tipoLancamento: 'despesa',
       parcelasLancamento: [

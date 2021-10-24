@@ -5,7 +5,6 @@ import { BackHandler, StatusBar, View } from 'react-native';
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -30,15 +29,8 @@ export type PropsNavigation = {
 const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([] as Categoria[]);
-  const [createdCategories, setCreatedCategories] = useState<
-    null | Categoria[]
-  >(null);
 
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
-
-  const [load, setLoad] = useState(false);
-
-  const [ud, setUd] = useState(setupUserData);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -101,7 +93,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     updateSetupUserDataProps(dataUser);
 
     console.debug(
-      `EachIncomeExpenseCategory | next() | ${dataUser.incomeTagsCount}`,
+      `EachFixedIncomeCategory | next() | ${dataUser.incomeTagsCount}`,
       JSON.stringify(setupUserData),
     );
 

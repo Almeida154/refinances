@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import { BackHandler } from 'react-native';
 
-import { SetupUserData, UseAuth } from '../../../../contexts/AuthContext';
+import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -44,26 +43,6 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
 
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
-  const [load, setLoad] = useState(false);
-
-  const [ud, setUd] = useState(setupUserData);
-
-  useEffect(() => {
-    if (!navigation || !navigation.addListener) return;
-
-    const unsubscribe = navigation.addListener('focus', () => {
-      setLoad(!load);
-      setUd(setupUserData);
-    });
-
-    navigation.addListener('blur', () => {
-      setLoad(!load);
-      setUd(setupUserData);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -88,7 +67,8 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     );
 
     const entry = {
-      descricaoLancamento: ud?.expenseTags[ud?.expenseTagsCount],
+      descricaoLancamento:
+        setupUserData.expenseTags[setupUserData.expenseTagsCount],
       lugarLancamento: 'extrato',
       tipoLancamento: 'despesa',
       parcelasLancamento: [
@@ -114,7 +94,9 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       <Header
         onBackButton={() => backAction()}
         title="Quanto gasta mensalmente com"
-        lastWordAccent={`${ud?.expenseTags[ud.expenseTagsCount]}?`}
+        lastWordAccent={`${
+          setupUserData.expenseTags[setupUserData.expenseTagsCount]
+        }?`}
         subtitle="Insira o valor mais aproximado da média"
         step={`${setupUserData.expenseTagsCount + 1} de ${
           setupUserData.expenseTags.length
