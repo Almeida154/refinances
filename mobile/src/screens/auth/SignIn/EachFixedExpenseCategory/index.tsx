@@ -99,17 +99,9 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       return;
     }
 
-    console.log(
-      setupUserData.expenseTagsCount,
-      selectedCategory,
-      setupUserData.entries,
-    );
-
     const dataUser = setupUserData;
     dataUser.entries[setupUserData.expenseTagsCount].categoryLancamento =
       selectedCategory;
-
-    
 
     console.log(
       setupUserData.expenseTagsCount,
