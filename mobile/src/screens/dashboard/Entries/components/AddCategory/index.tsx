@@ -14,7 +14,6 @@ import Icon from '../../../../../helpers/gerarIconePelaString'
 import {
     Container,
     Form,
-    InputControl,
     LabelForm,
     TextInputAdd,
     ButtonAdd,
@@ -27,6 +26,8 @@ import {
 } from './styles'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import InputText from '../../../../../components/InputText'
 
 type PropsNavigation = {
     navigation: StackNavigationProp<FormLancamentoStack, "AddCategory">,    
@@ -61,15 +62,12 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
 
     const dataIcons = [['AntDesign:customerservice', 'AntDesign:creditcard', 'AntDesign:camera'], ['AntDesign:pushpin', 'Entypo:aircraft', 'Entypo:baidu'], ['Entypo:bell', 'Entypo:briefcase', 'Entypo:bug'], ['Entypo:cup', 'Entypo:drink', 'Entypo:flower'], ['Entypo:game-controller', 'Entypo:heart', 'Entypo:leaf'], ['Entypo:key', 'Entypo:music', 'Entypo:clapperboard']]
 
-    async function handleSubmit() {
-        
-
+    async function handleSubmit() {        
         const novaCategoria = {
            nomeCategoria: descricao,
            iconeCategoria: icone,
            tipoCategoria: tipoCategoria,
            userCategoria: await retornarIdDoUsuario(),           
-           essencial: false,
            tetoDeGastos: 0,
            id: -1
         } as Categoria        
@@ -100,43 +98,35 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
     return (
         <Container>            
             <Form>
-                <InputControl>
-                <LabelForm>Descrição</LabelForm>
-                    <TextInputAdd 
-                        placeholder="Descrição da categoria" 
-                        placeholderTextColor="#ddd"
-                        value={descricao}
-                        onChangeText={setDescricao}
-                        
-                    />                    
-                </InputControl>
+                <InputText 
+                    placeholder="Descrição da categoria" 
+                    label="Descrição"
+                    placeholderTextColor="#ddd"
+                    value={descricao}
+                    onChangeText={setDescricao}                        
+                />                    
 
-                <InputControl>
-                <LabelForm>Cor da categoria</LabelForm>
-                    <TouchableOpacity onPress={onOpenModalizeColor}>
-                        <TextInputAdd 
-                            placeholder="Selecione uma cor"
-                            placeholderTextColor="#ddd"
-                            value={cor}
-                            onChangeText={setCor}
-                            editable={false}
-                            style={cor == '' ? {color: '#000'} : {color: cor}}
-                        />              
-                    </TouchableOpacity>                      
-                </InputControl>
+            
+                <InputText 
+                    label="Cor"
+                    placeholder="Selecione uma cor"
+                    placeholderTextColor="#ddd"
+                    value={cor}
+                    onChangeText={setCor}
+                    editable={false}
+                    style={cor == '' ? {color: '#000'} : {color: cor}}
+                    onPress={onOpenModalizeColor}
+                />              
 
-                <InputControl>
-                    <TouchableOpacity onPress={onOpenModalizeIcon}>
-                        <LabelForm>Ícone</LabelForm>
-                            <TextInputAdd 
-                                placeholder="Selecione um ícone"
-                                placeholderTextColor="#ddd"
-                                value={icone}
-                                onChangeText={setIcone}
-                                editable={false}
-                            />       
-                    </TouchableOpacity>                                     
-                </InputControl>
+                <InputText 
+                    label="Ícone"
+                    placeholder="Selecione um ícone"
+                    placeholderTextColor="#ddd"
+                    value={icone}
+                    onChangeText={setIcone}
+                    editable={false}
+                    onPress={onOpenModalizeIcon}
+                />       
                 <ButtonAdd onPress={handleSubmit}>
                     <TextButton>Adicionar</TextButton>
                 </ButtonAdd>

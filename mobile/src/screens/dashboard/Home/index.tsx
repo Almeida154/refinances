@@ -11,11 +11,8 @@ import {
   FlatList,
   TouchableHighlight,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
-
-import { Buffer } from 'buffer';
-
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -35,7 +32,7 @@ import { StackActions } from '@react-navigation/native';
 import CreateCategoryGoals from './components/CreateCategoryGoals';
 import ManageCategoryGoals from './components/ManageCategoryGoals';
 
-import fonts from '../../../styles/fonts'
+import fonts from '../../../styles/fonts';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export type PropsHome = {
@@ -47,7 +44,6 @@ const Home = () => {
   const { navigation } = UseDadosTemp();
 
   const [stateReload, setStateReload] = useState(false);
- 
 
   const [avatar, setAvatar] = useState<string | undefined | null>('');
   const [mime, setMime] = useState<string | undefined | null>('');
@@ -93,15 +89,23 @@ const Home = () => {
   return (
     <ScrollView>
       {stateReload ? (
-         <View style={{alignSelf: 'center',
-          height: '100%',
-          justifyContent: 'center'}}>
-              <ActivityIndicator size='large' color='#E8871E' />
-              <Text style={{color: '#183153',
-                fontSize: 22,
-                fontFamily: 'Poppins-Bold',
-                marginTop: 20}}>Loading</Text>
-          </View>
+        <View
+          style={{
+            alignSelf: 'center',
+            height: '100%',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size="large" color="#E8871E" />
+          <Text
+            style={{
+              color: '#183153',
+              fontSize: 22,
+              fontFamily: 'Poppins-Bold',
+              marginTop: 20,
+            }}>
+            Loading
+          </Text>
+        </View>
       ) : (
         <View style={styles.container}>
           <View style={styles.headerContainer}>
@@ -119,14 +123,22 @@ const Home = () => {
               )}
 
               <View style={styles.textBoasVindas}>
-                <Text style={{ color: '#fff', 
-                fontSize: fonts.size.big,
-                fontFamily: fonts.familyType.bold}}>Olá, {user.nomeUsuario}</Text>
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: fonts.size.big,
+                    fontFamily: fonts.familyType.bold,
+                  }}>
+                  Olá, {user.nomeUsuario}
+                </Text>
 
-                <Text style={{
-                fontSize: fonts.size.medium,
-                fontFamily: fonts.familyType.bold,
-                color: '#fff', opacity: 0.4 }}>
+                <Text
+                  style={{
+                    fontSize: fonts.size.medium,
+                    fontFamily: fonts.familyType.bold,
+                    color: '#fff',
+                    opacity: 0.4,
+                  }}>
                   Bom dia
                 </Text>
               </View>

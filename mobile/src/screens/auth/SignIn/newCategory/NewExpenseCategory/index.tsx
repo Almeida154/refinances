@@ -23,13 +23,14 @@ import IconByString from '../../../../../helpers/gerarIconePelaString';
 import { Modalize as Modal } from 'react-native-modalize';
 import global from '../../../../../global';
 import hexToRGB from '../../../../../helpers/hexToRgba';
+import { Categoria } from '@contexts/CategoriesContext';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'NewExpenseCategory'>;
   route: RouteProp<RootStackParamAuth, 'NewExpenseCategory'>;
 };
 
-const NewExpenseCategory = ({ navigation }: PropsNavigation) => {
+const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
   type ColorProps = {
     name: string;
     hex: string;
@@ -40,7 +41,10 @@ const NewExpenseCategory = ({ navigation }: PropsNavigation) => {
     icon: string;
   };
 
-  const [name, setName] = useState<string>('');
+  const { user, updateUserProps } = UseAuth();
+  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+
+  const [name, setName] = useState<string>('Essa é nova');
   const [nameError, setNameError] = useState<null>();
   const nameRef = useRef<TextInput>(null);
 
@@ -70,7 +74,22 @@ const NewExpenseCategory = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const add = () => {
-    console.log(name, icon.icon, color.hex);
+    const newCreatedCategory = {
+      corCategoria: color.hex,
+      iconeCategoria: icon.icon,
+      nomeCategoria: name,
+      tipoCategoria: 'despesa',
+      isSelected: true,
+      tetoDeGastos: null,
+    } as Categoria;
+    const userData = setupUserData;
+    userData.createdCategories != undefined
+      ? userData.createdCategories.push(newCreatedCategory)
+      : (userData.createdCategories = [newCreatedCategory] as Categoria[]);
+    updateSetupUserDataProps(userData);
+
+    console.debug('DENTRO DO CRIAR:::: ', setupUserData.createdCategories);
+    navigation.goBack();
   };
 
   return (

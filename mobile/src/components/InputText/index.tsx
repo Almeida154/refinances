@@ -16,7 +16,7 @@ import { colors } from '../../styles';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import IconByString from '../../helpers/gerarIconePelaString';
 
-type IconProps = {
+export type IconProps = {
   description?: string;
   icon?: string;
   name?: string;
@@ -68,7 +68,6 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.08,
             shadowRadius: 20,
-            elevation: 20,
           },
         ]}
         underlayColor={colors.white}

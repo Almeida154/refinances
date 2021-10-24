@@ -27,7 +27,7 @@ const PickerContas: React.FC<PropsPickerContas> = ({
   label
 }) => {
   const { contas, handleReadByUserContas, loading } = UseContas();
-  const [selectedItem, setSelectedItem] = useState<number | undefined>(0)
+  const [selectedItem, setSelectedItem] = useState<number | undefined>(undefined)
 
   const pickerRef = useRef();
 
@@ -36,10 +36,15 @@ const PickerContas: React.FC<PropsPickerContas> = ({
   }
 
   const onChangePicker = (index: number) => {
+    
     console.log("index,",index)
     setSelectedItem(index)
     changeAccount(contas == null ? null : contas[index]);
   };
+
+  useEffect(() => {
+    changeAccount(contas == null ? null : contas[0]);
+  }, [contas])
 
   useEffect(() => {
     try {

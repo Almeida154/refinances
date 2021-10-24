@@ -45,6 +45,7 @@ class LancamentoController {
        
         
         const newLancamento = request.body;
+        newLancamento.essencial = true
         newLancamento.categoryLancamento = categoryExists;
         newLancamento.userLancamento = categoryExists.userCategory
         

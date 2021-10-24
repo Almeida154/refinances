@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 import { BackHandler } from 'react-native';
 
-import { UseAuth } from '../../../../contexts/AuthContext';
+import { SetupUserData, UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
+import { CommonActions } from '@react-navigation/native';
+
+//import { StackActions, NavigationActions } from 'react-navigation';
+
+import { StackActions } from '@react-navigation/native';
 
 import { TextInputMask } from 'react-native-masked-text'; // Outra opção de mask
 import CurrencyInput from 'react-native-currency-input';
@@ -36,13 +41,40 @@ export type PropsNavigation = {
   route: RouteProp<RootStackParamAuth, 'EachFixedExpense'>;
 };
 
+// const resetAction = StackActions.reset({
+//   index: 0,
+//   actions: [
+//     NavigationActions.navigate({ routeName: 'EachFixedExpenseCategory' }),
+//   ],
+// });
+
 const EachFixedExpense = ({ navigation }: PropsNavigation) => {
-  const [expenseAmount, setExpenseAmount] = useState<number | null>(0.0);
+  const [expenseAmount, setExpenseAmount] = useState<number | null>(200);
   const [formattedExpenseAmount, setFormattedExpenseAmount] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
+
+  const [load, setLoad] = useState(false);
+
+  const [ud, setUd] = useState(setupUserData);
+
+  useEffect(() => {
+    if (!navigation || !navigation.addListener) return;
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      setLoad(!load);
+      setUd(setupUserData);
+    });
+
+    navigation.addListener('blur', () => {
+      setLoad(!load);
+      setUd(setupUserData);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -61,8 +93,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     );
 
     const entry = {
-      descricaoLancamento:
-        setupUserData.expenseTags[setupUserData.expenseTagsCount],
+      descricaoLancamento: ud?.expenseTags[ud?.expenseTagsCount],
       lugarLancamento: 'extrato',
       tipoLancamento: 'despesa',
       parcelasLancamento: [
@@ -75,14 +106,24 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
 
     const userData = setupUserData;
 
-    userData.fixedExpenses != undefined
-      ? userData.fixedExpenses.push(entry)
-      : (userData.fixedExpenses = [entry]);
+    userData.entries != undefined
+      ? userData.entries.push(entry)
+      : (userData.entries = [entry]);
 
     updateSetupUserDataProps(userData);
 
-    console.debug('EachFixedExpense | next(): ', JSON.stringify(setupUserData));
-    navigation.navigate('EachFixedExpenseCategory');
+    // console.debug(
+    //   `EachFixedExpense | next() | ${userData.expenseTagsCount}`,
+    //   JSON.stringify(setupUserData),
+    // );
+
+    // navigation.dispatch(
+    //   CommonActions.reset({
+    //     routes: [{ name: 'EachFixedExpense' }],
+    //   }),
+    // );
+    // navigation.navigate('EachFixedExpenseCategory');
+    navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
   }
 
   return (
@@ -90,9 +131,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       <Header
         onBackButton={() => backAction()}
         title="Quanto gasta mensalmente com"
-        lastWordAccent={`${
-          setupUserData.expenseTags[setupUserData.expenseTagsCount]
-        }?`}
+        lastWordAccent={`${ud?.expenseTags[ud.expenseTagsCount]}?`}
         subtitle="Insira o valor mais aproximado da média"
         step={`${setupUserData.expenseTagsCount + 1} de ${
           setupUserData.expenseTags.length

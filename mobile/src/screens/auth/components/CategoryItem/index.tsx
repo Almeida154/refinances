@@ -26,11 +26,11 @@ const CategoryItem: React.FC<IProps> = ({
         style={[
           lastOne ? {} : { marginBottom: 10 },
           {
-            shadowColor: 'rgba(0, 0, 0, .4)',
+            shadowColor: 'rgba(0, 0, 0, .1)',
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.08,
             shadowRadius: 20,
-            elevation: 20,
+            elevation: 10,
           },
         ]}>
         <Data onPress={onPress}>
