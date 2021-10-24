@@ -88,6 +88,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
         corCategoria: categoria.corCategoria,
       });
 
+      console.log(response.data)
       if (response.data.error) {
         return response.data.error;
       }

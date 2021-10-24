@@ -56,7 +56,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
 
     const onChangeValor = (text: string) => {
         const aux = dataParcelas.slice()
-        aux[item.id].valor = parseFloat(text)
+        aux[item.id].valor = text == '' ? NaN : parseFloat(text)
         
         console.log(aux)
         setDataParcelas(aux)                
@@ -77,6 +77,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
         setDataParcelas(aux)
     }
             
+    console.log(dataParcelas[item.id].valor)
     return (
         <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>
             <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data}</TituloCardParcela>
@@ -91,7 +92,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 keyboardType="numeric" 
                 placeholder="R$ 00,00" 
                 placeholderTextColor="gray"
-                value={String(dataParcelas[item.id].valor)}
+                value={isNaN(dataParcelas[item.id].valor) ? '' : String(dataParcelas[item.id].valor)}
                 onChangeText={onChangeValor}
             />
             <InputControlStatus>

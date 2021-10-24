@@ -1,187 +1,221 @@
-import React, { useEffect, useState, useRef } from 'react'
-import {FormLancamentoStack} from '../../../../../@types/RootStackParamApp'
+import React, { useEffect, useState, useRef } from 'react';
+
+import { BackHandler, TextInput, ToastAndroid } from 'react-native';
+
+import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import {Modalize} from 'react-native-modalize'
 
-import {TouchableOpacity, Text, ToastAndroid} from 'react-native'
+import { UseAuth } from '../../../../../contexts/AuthContext';
 
-import {UseCategories, Categoria} from '../../../../../contexts/CategoriesContext'
+import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
 
-import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
-import Icon from '../../../../../helpers/gerarIconePelaString'
+// Styles
+import { Container, Form, ColorsContainer, Color, Icon } from './styles';
+import { colors } from '../../../../../styles';
 
-import {
-    Container,
-    Form,
-    LabelForm,
-    TextInputAdd,
-    ButtonAdd,
-    TextButton,
-    BodyModalize,
-    ButtonPress,
-    Circle,
-    RowColor
+// Components
+import InputText from '../../../../../components/InputText';
+import Button from '../../../../../components/Button';
+import Modalize from '../../../../../components/Modalize';
+import IconByString from '../../../../../helpers/gerarIconePelaString';
 
-} from './styles'
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import InputText from '../../../../../components/InputText'
+import { Modalize as Modal } from 'react-native-modalize';
+import global from '../../../../../global';
+import hexToRGB from '../../../../../helpers/hexToRgba';
+import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
-
-
-const AddCategoryAccount = ({route}: {route: any}) => {
+const NewExpenseCategory = ({route}: {route: any}) => {
     const {navigation} = UseDadosTemp()
+    const {handleAdicionar} = UseCategories()
 
     const {tipoCategoria} = route.params
 
-    navigation.setOptions({title: `Nova categoria de ${tipoCategoria}`})
+  type ColorProps = {
+    name: string;
+    hex: string;
+  };
 
-    const {handleAdicionar} = UseCategories()
+  type IconProps = {
+    description: string;
+    icon: string;
+  };
 
-    const modalizeColor = useRef<Modalize>(null);
-    const modalizeIcon = useRef<Modalize>(null);
+  const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
-    const [descricao, setDescricao] = useState('')
-    const [cor, setCor] = useState('')
-    const [icone, setIcone] = useState('')
+  const [name, setName] = useState<string>('Essa é nova');
+  const [nameError, setNameError] = useState<null | string>(null);
+  const nameRef = useRef<TextInput>(null);
 
-    const onOpenModalizeColor = () => {
-        modalizeColor.current?.open()
-    }
+  const [color, setColor] = useState({} as ColorProps);
+  const [colorError, setColorError] = useState<null | string>();
+  const colorRef = useRef<TextInput>(null);
 
-    const onOpenModalizeIcon = () => {
-        modalizeIcon.current?.open()
-    }
+  const [icon, setIcon] = useState({} as IconProps);
+  const [iconError, setIconError] = useState<null | string>();
+  const iconRef = useRef<TextInput>(null);
 
-    const dataColors = [['#DF5C5C', '#D5DF5C', '#5C89DF'], ['#96DF5C', '#525252', '#E3E3E3'], ['#DF5CD2']]
+  const [modalizeColors, setModalizeColors] = useState([{}] as ColorProps[]);
+  const colorModalizeRef = useRef<Modal>(null);
 
-    const dataIcons = [['AntDesign:customerservice', 'AntDesign:creditcard', 'AntDesign:camera'], ['AntDesign:pushpin', 'Entypo:aircraft', 'Entypo:baidu'], ['Entypo:bell', 'Entypo:briefcase', 'Entypo:bug'], ['Entypo:cup', 'Entypo:drink', 'Entypo:flower'], ['Entypo:game-controller', 'Entypo:heart', 'Entypo:leaf'], ['Entypo:key', 'Entypo:music', 'Entypo:clapperboard']]
+  const [modalizeIcons, setModalizeIcons] = useState([{}] as IconProps[]);
+  const iconModalizeRef = useRef<Modal>(null);
 
-    async function handleSubmit() {        
-        const novaCategoria = {
-           nomeCategoria: descricao,
-           iconeCategoria: icone,
-           tipoCategoria: tipoCategoria,
-           userCategoria: await retornarIdDoUsuario(),           
-           tetoDeGastos: 0,
-           id: -1
-        } as Categoria        
+  const closeColorModalize = () => colorModalizeRef.current?.close();
+  const openColorModalize = () => colorModalizeRef.current?.open();
 
-        const response = await handleAdicionar(novaCategoria)
+  const closeIconModalize = () => iconModalizeRef.current?.close();
+  const openIconModalize = () => iconModalizeRef.current?.open();
 
-        console.debug('handleSubmit() | response', response)
+  useEffect(() => {
+    setModalizeColors(global.DEFAULT_COLORS);
+    setModalizeIcons(global.DEFAULT_ICONS);
+  }, []);
 
+  const capitalizeFirstLetter = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
+
+  const add = async () => {    
+        const newCreatedCategory = {
+        corCategoria: color.hex,
+        iconeCategoria: icon.icon,
+        nomeCategoria: capitalizeFirstLetter(name),
+        tipoCategoria: tipoCategoria,
+        isSelected: false,
+        tetoDeGastos: 0,
+        userCategoria: await retornarIdDoUsuario()
+        } as Categoria;
+
+        
+        const response = await handleAdicionar(newCreatedCategory)       
+        
         if(response == '') {
-            navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main'}))
+            ToastAndroid.show("Categoria Cadastrada com sucesso", ToastAndroid.SHORT)
+
+            navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main'}))            
         } else {
             ToastAndroid.show(response, ToastAndroid.SHORT)
         }
+    
     }
 
-    function setColorSelected(item2: string) {        
-        setCor(item2)
+  return (
+    <Container>
+      <Form>
+        <InputText
+          label="Nome"
+          colorLabel={colors.davysGrey}
+          inputColor={hexToRGB(colors.davysGrey, 0.7)}
+          placeholder="Biblioteca"
+          value={name}
+          error={nameError}
+          autoCapitalize="none"
+          textContentType="emailAddress"
+          secureTextEntry={false}
+          returnKeyType="next"
+          blurOnSubmit={false}
+          ref={nameRef}
+          showClearIcon={name != ''}
+          onClear={() => {
+            setNameError(null);
+            setName('');
+          }}
+          onChangeText={txt => {
+            setNameError(null);
+            setName(txt);
+          }}
+          onSubmitEditing={() => colorRef.current?.focus()}
+        />
+        <InputText
+          label="Cor"
+          colorLabel={colors.davysGrey}
+          placeholder="Amarelo"
+          value={color.name}
+          error={colorError}
+          autoCapitalize="none"
+          textContentType="emailAddress"
+          secureTextEntry={false}
+          returnKeyType="next"
+          blurOnSubmit={false}
+          ref={colorRef}
+          onSubmitEditing={() => iconRef.current?.focus()}
+          editable={false}
+          onPress={() => {
+            openColorModalize();
+            setColorError(null);
+          }}
+          icon={color}
+        />
+        <InputText
+          label="Ícone"
+          colorLabel={colors.davysGrey}
+          placeholder="Avião"
+          value={icon.description}
+          error={iconError}
+          autoCapitalize="none"
+          textContentType="emailAddress"
+          secureTextEntry={false}
+          blurOnSubmit={false}
+          ref={iconRef}
+          editable={false}
+          onPress={() => {
+            openIconModalize();
+            setIconError(null);
+          }}
+          icon={icon}
+        />
+        <Button
+          onPress={() => add()}
+          title="Adicionar"
+          backgroundColor={colors.platinum}
+          color={colors.davysGrey}
+        />
+      </Form>
 
-        modalizeColor.current?.close()
-    }
+      <Modalize
+        ref={colorModalizeRef}
+        title="Escolha uma cor 🎨"
+        backgroundColor={colors.cultured}>
+        <ColorsContainer horizontal>
+          {modalizeColors.map((color, index) => (
+            <Color
+              key={index}
+              mr={index + 1 != modalizeColors.length}
+              bg={color.hex}
+              onPress={() => {
+                setColor(color);
+                closeColorModalize();
+              }}
+            />
+          ))}
+        </ColorsContainer>
+      </Modalize>
 
-    function setIconSelected(item2: string) {
-        setIcone(item2)
+      <Modalize
+        ref={iconModalizeRef}
+        title="Escolha um ícone ✨"
+        backgroundColor={colors.cultured}>
+        <ColorsContainer horizontal>
+          {modalizeIcons.map((icon, index) => (
+            <Icon
+              key={index}
+              mr={index + 1 != modalizeColors.length}
+              onPress={() => {
+                setIcon(icon);
+                closeIconModalize();
+              }}>
+              <IconByString
+                color={colors.jet}
+                size={24}
+                stringIcon={icon.icon}
+              />
+            </Icon>
+          ))}
+        </ColorsContainer>
+      </Modalize>
+    </Container>
+  );
+};
 
-        modalizeIcon.current?.close()
-    }
-
-    return (
-        <Container>            
-            <Form>
-                <InputText 
-                    placeholder="Descrição da categoria" 
-                    label="Descrição"
-                    placeholderTextColor="#ddd"
-                    value={descricao}
-                    onChangeText={setDescricao}                        
-                />                    
-
-            
-                <InputText 
-                    label="Cor"
-                    placeholder="Selecione uma cor"
-                    placeholderTextColor="#ddd"
-                    value={cor}
-                    onChangeText={setCor}
-                    editable={false}
-                    style={cor == '' ? {color: '#000'} : {color: cor}}
-                    onPress={onOpenModalizeColor}
-                />              
-
-                <InputText 
-                    label="Ícone"
-                    placeholder="Selecione um ícone"
-                    placeholderTextColor="#ddd"
-                    value={icone}
-                    onChangeText={setIcone}
-                    editable={false}
-                    onPress={onOpenModalizeIcon}
-                />       
-                <ButtonAdd onPress={handleSubmit}>
-                    <TextButton>Adicionar</TextButton>
-                </ButtonAdd>
-
-            </Form>
-
-            <Modalize 
-            ref={modalizeColor}
-            modalHeight={300}>
-                <BodyModalize>
-                {
-                    dataColors.map((item, index) => {
-                        return (
-                            <RowColor>
-                                {
-                                    item.map((item2, index2) => {
-                                        return (
-                                            <ButtonPress onPress={() => setColorSelected(item2)}>
-                                                <Circle style={{backgroundColor: item2}}>
-                                                    
-                                                </Circle>
-                                            </ButtonPress>
-                                        )
-                                    })
-                                }
-                            </RowColor>
-                        )
-                    })
-                }
-                </BodyModalize>
-            </Modalize>
-
-            <Modalize 
-            ref={modalizeIcon}
-            modalHeight={300}>
-                <BodyModalize>
-                {
-                    dataIcons.map((item, index) => {
-                        return (
-                            <RowColor>
-                                {
-                                    item.map((item2, index2) => {                                        
-                                        return (
-                                            <ButtonPress onPress={() => setIconSelected(item2)} style={{margin: 10}}>
-                                                
-                                                <Icon color="gray" size={60} stringIcon={item2} />
-                                            </ButtonPress>
-                                        )
-                                    })
-                                }
-                            </RowColor>
-                        )
-                    })
-                }
-                </BodyModalize>
-            </Modalize>
-        </Container>
-    )
-}
-
-export default AddCategoryAccount
+export default NewExpenseCategory;

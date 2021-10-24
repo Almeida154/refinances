@@ -25,15 +25,13 @@ class CategoryController {
     async save(request: Request, response: Response, next: NextFunction) {                        
         const categoryRepository = getRepository(Category);  
         const userRepository = getRepository(User);
-        const { nomeCategoria, tetoDeGastos, tipoCategoria, essencial, userCategory, iconeCategoria } = request.body;
+        const { nomeCategoria, tetoDeGastos, tipoCategoria, userCategory, iconeCategoria } = request.body;
 
         if (nomeCategoria == '') return response.send({ error: "nome em branco!" });
 
         if (tipoCategoria != 'receita' && tipoCategoria != 'despesa')
             return response.send({ error: "Não existe esse tipo" });
-
-        if (essencial == null)
-            return response.send({ error: "essencial em branco!" });
+        
         
         if (userCategory == null) return response.send({
             error: "Sem Usuário!"
