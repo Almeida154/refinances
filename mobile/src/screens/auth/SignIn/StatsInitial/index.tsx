@@ -39,7 +39,8 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
 
   const [expensePercentage, setExpensePercentage] = useState<number>(0);
 
-  const { setupUserData, updateSetupUserDataProps, user } = UseAuth();
+  const { setupUserData, updateSetupUserDataProps, user, handleRegister } =
+    UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -83,8 +84,8 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
     return true;
   };
 
-  const register = () => {
-    console.log('Pronto pra registrar');
+  const register = async () => {
+    await handleRegister();
   };
 
   return (
