@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, StatusBar, Text } from 'react-native';
+import { StatusBar, BackHandler, ToastAndroid } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 
 import NewExpenseCategory from '../NewExpenseCategory';
 import NewIncomeCategory from '../NewIncomeCategory';
@@ -22,36 +22,48 @@ export type PropsNavigation = {
   route: RouteProp<RootStackParamAuth, 'NewCategory'>;
 };
 
-const TopBarNavigator = ({ route, navigation }: PropsNavigation) => {
-  const [currentRoute, setCurrentRoute] = useState('Despesa');
+const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
+  const [routeName, setRouteName] = useState<string>();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backNavAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backNavAction);
+  }, [routeName]);
+
+  const backNavAction = () => {
+    if (routeName == 'Despesa') {
+      navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
+      return true;
+    }
+    navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
+    return true;
+  };
 
   return (
     <Container
       style={{
         backgroundColor:
-          currentRoute == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
+          routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
       }}>
       <StatusBar
         backgroundColor={
-          currentRoute == 'Despesa' ? colors.paradisePink : colors.slimyGreen
+          routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen
         }
       />
       <Header
-        onBackButton={() => {}}
+        onBackButton={() => backNavAction()}
         title="Nova categoria"
         color={colors.white}
         isShort
       />
       <Tab.Navigator
-        initialRouteName={currentRoute}
+        initialRouteName={routeName}
         screenOptions={{
+          swipeEnabled: false,
           tabBarStyle: {
             backgroundColor:
-              currentRoute == 'Despesa'
-                ? colors.paradisePink
-                : colors.slimyGreen,
+              routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
           },
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,
@@ -65,16 +77,17 @@ const TopBarNavigator = ({ route, navigation }: PropsNavigation) => {
         }}
         screenListeners={({ route }) => ({
           state: e => {
-            setCurrentRoute(route.name);
+            setRouteName(route.name);
           },
         })}>
         <Tab.Screen
           listeners={{
             tabPress: e => {
-              //console.log(e);
-            },
-            swipeStart: e => {
-              console.log('começou');
+              if (routeName == 'Receita') e.preventDefault();
+              ToastAndroid.show(
+                'Desculpe, você não pode fazer isso agora!',
+                ToastAndroid.SHORT,
+              );
             },
           }}
           name="Despesa"
@@ -83,8 +96,11 @@ const TopBarNavigator = ({ route, navigation }: PropsNavigation) => {
         <Tab.Screen
           listeners={{
             tabPress: e => {
-              //e.preventDefault();
-              //console.log(e);
+              if (routeName == 'Despesa') e.preventDefault();
+              ToastAndroid.show(
+                'Desculpe, você não pode fazer isso agora!',
+                ToastAndroid.SHORT,
+              );
             },
           }}
           name="Receita"

@@ -143,7 +143,9 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
         <ButtonContainer>
           <Button
-            onPress={() => navigation.navigate('NewCategory')}
+            onPress={() =>
+              navigation.navigate('NewCategory', { screen: 'Receita' })
+            }
             title="Nova"
             backgroundColor={colors.platinum}
             color={colors.davysGrey}

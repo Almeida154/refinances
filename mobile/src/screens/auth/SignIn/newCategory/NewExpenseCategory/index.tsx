@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { BackHandler, FlatList, Text, TextInput, View } from 'react-native';
+import { BackHandler, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -71,16 +71,17 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
     setModalizeIcons(global.DEFAULT_ICONS);
   }, []);
 
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', backAction);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-  }, []);
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', backExAction);
+  //   return () =>
+  //     BackHandler.removeEventListener('hardwareBackPress', backExAction);
+  // }, []);
 
-  const backAction = () => {
-    navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
-    return true;
-  };
+  // const backExAction = () => {
+  //   console.log('caiu expense');
+  //   navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
+  //   return true;
+  // };
 
   const add = () => {
     const newCreatedCategory = {
@@ -98,7 +99,7 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
     updateSetupUserDataProps(userData);
 
     console.debug('DENTRO DO CRIAR:::: ', setupUserData.createdCategories);
-    navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
+    //backExAction();
   };
 
   return (
