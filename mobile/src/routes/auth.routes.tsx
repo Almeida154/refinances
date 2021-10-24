@@ -48,7 +48,7 @@ const AuthRoutes: React.FC = () => {
       />
 
       <AuthStack.Screen name="FixedIncomes" component={FixedIncomes} />
-      <AuthStack.Screen name="EachIncomeExpense" component={EachFixedIncome} />
+      <AuthStack.Screen name="EachFixedIncome" component={EachFixedIncome} />
       <AuthStack.Screen
         name="EachFixedIncomeCategory"
         component={EachFixedIncomeCategory}

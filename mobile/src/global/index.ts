@@ -165,7 +165,6 @@ export default {
     'Inquilino',
     'Propriedade',
     'Loja Virtual',
-    'Empreendimento',
   ],
   DEFAULT_INCOME_CATEGORIES: [
     {

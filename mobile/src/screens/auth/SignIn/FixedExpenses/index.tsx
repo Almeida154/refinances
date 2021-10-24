@@ -77,7 +77,6 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
     userData.expenseTagsCount = 0;
     updateSetupUserDataProps(userData);
 
-    console.log(setupUserData);
     navigation.navigate('EachFixedExpense');
   }
 
@@ -108,13 +107,8 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
     }
   };
 
-  const openModalize = () => {
-    modalizeRef.current?.open();
-  };
-
-  const closeModalize = () => {
-    modalizeRef.current?.close();
-  };
+  const openModalize = () => modalizeRef.current?.open();
+  const closeModalize = () => modalizeRef.current?.close();
 
   return (
     <Container>

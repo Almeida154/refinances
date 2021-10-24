@@ -4,15 +4,10 @@ import { BackHandler } from 'react-native';
 
 import { SetupUserData, UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
-import { CommonActions } from '@react-navigation/native';
-
-//import { StackActions, NavigationActions } from 'react-navigation';
-
-import { StackActions } from '@react-navigation/native';
 
 import { TextInputMask } from 'react-native-masked-text'; // Outra opção de mask
 import CurrencyInput from 'react-native-currency-input';
@@ -40,13 +35,6 @@ export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'EachFixedExpense'>;
   route: RouteProp<RootStackParamAuth, 'EachFixedExpense'>;
 };
-
-// const resetAction = StackActions.reset({
-//   index: 0,
-//   actions: [
-//     NavigationActions.navigate({ routeName: 'EachFixedExpenseCategory' }),
-//   ],
-// });
 
 const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   const [expenseAmount, setExpenseAmount] = useState<number | null>(200);
@@ -118,18 +106,6 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       : (userData.entries = [entry]);
 
     updateSetupUserDataProps(userData);
-
-    // console.debug(
-    //   `EachFixedExpense | next() | ${userData.expenseTagsCount}`,
-    //   JSON.stringify(setupUserData),
-    // );
-
-    // navigation.dispatch(
-    //   CommonActions.reset({
-    //     routes: [{ name: 'EachFixedExpense' }],
-    //   }),
-    // );
-    // navigation.navigate('EachFixedExpenseCategory');
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
   }
 

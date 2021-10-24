@@ -12,6 +12,7 @@ interface IProps {
   isCentered?: boolean;
   description?: string;
   color?: string;
+  iconColor?: string;
 }
 
 const BottomNavigation: React.FC<IProps> = ({
@@ -19,6 +20,7 @@ const BottomNavigation: React.FC<IProps> = ({
   isCentered,
   description,
   color,
+  iconColor,
 }) => {
   return (
     <Container underlayColor={colors.white} onPress={onPress}>
@@ -41,7 +43,7 @@ const BottomNavigation: React.FC<IProps> = ({
           <IonIcons
             name="md-arrow-forward-sharp"
             size={30}
-            color={colors.redCrayola}
+            color={iconColor ? iconColor : colors.redCrayola}
           />
         )}
       </Content>

@@ -24,6 +24,7 @@ interface IProps {
   step?: string;
   lastWordAccent?: string;
   color?: string;
+  accent?: string;
   isShort?: boolean;
 }
 
@@ -36,6 +37,7 @@ const Header: React.FC<IProps> = ({
   lastWordAccent,
   color,
   isShort,
+  accent,
 }) => {
   return (
     <Container
@@ -60,7 +62,7 @@ const Header: React.FC<IProps> = ({
             color={colors.davysGrey}
             onPress={onBackButton}
           />
-          {step && <Step>{step}</Step>}
+          {step && <Step style={accent ? { color: accent } : {}}>{step}</Step>}
         </TopContainer>
         {lastWordAccent ? (
           <Title
@@ -69,7 +71,9 @@ const Header: React.FC<IProps> = ({
               isShort ? { marginTop: '6%' } : {},
             ]}>
             {title != undefined ? title : 'Sem título'}{' '}
-            <LastWordAccent> {lastWordAccent}</LastWordAccent>
+            <LastWordAccent style={accent ? { color: accent } : {}}>
+              {lastWordAccent}
+            </LastWordAccent>
           </Title>
         ) : (
           <Title
