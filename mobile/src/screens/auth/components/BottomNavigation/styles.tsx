@@ -17,10 +17,14 @@ export const Content = styled.View`
   align-items: center;
 `;
 
-export const Description = styled.Text`
+interface DescriptionProps {
+  lowOpacity?: boolean;
+}
+
+export const Description = styled.Text<DescriptionProps>`
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.big}px`};
   color: ${colors.davysGrey};
-  opacity: 0.25;
+  opacity: ${props => (props.lowOpacity ? 0.25 : 1)};
   flex: 1;
 `;

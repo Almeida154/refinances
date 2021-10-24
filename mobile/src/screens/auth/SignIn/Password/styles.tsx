@@ -10,6 +10,7 @@ export const Container = styled.View`
 export const Content = styled.View`
   padding: ${`${metrics.default.boundaries}px`};
   flex: 1;
+  margin-bottom: 80px; // Altura do Bottom Navigation
 `;
 
 export const Writting = styled.View`

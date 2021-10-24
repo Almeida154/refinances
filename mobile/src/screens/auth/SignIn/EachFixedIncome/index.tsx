@@ -67,9 +67,9 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
     const entry = {
       descricaoLancamento:
-        setupUserData.expenseTags[setupUserData.expenseTagsCount],
+        setupUserData.incomeTags[setupUserData.incomeTagsCount],
       lugarLancamento: 'extrato',
-      tipoLancamento: 'despesa',
+      tipoLancamento: 'receita',
       parcelasLancamento: [
         {
           valorParcela: expenseAmount,
@@ -93,7 +93,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
       <Header
         accent={colors.slimyGreen}
         onBackButton={() => backAction()}
-        title="Quanto gasta mensalmente com"
+        title="Quanto ganha mensalmente com"
         lastWordAccent={`${
           setupUserData.incomeTags[setupUserData.incomeTagsCount]
         }?`}
