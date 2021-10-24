@@ -49,18 +49,18 @@ const GoalDetails = ({ route }: Props) => {
     })();
   }, []);
 
-  /*const objDataFimMeta = toDate(goal.dataFimMeta);
+ /*  const objDataFimMeta = toDate(goal.dataFimMeta);
   const objDataIniMeta = toDate(goal.dataInicioMeta);
 
   // Subtrai uma data pela outra
   const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); 
 
   // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));*/
-
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+ */
   // Algum cálculo para calcular a porcentagem aqui
   const percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta;
-
+  const percBalance = percentageBalance / 100; 
   //const saldo = goal.saldoAtualMeta.toFixed(2)
 
   return (
@@ -76,6 +76,7 @@ const GoalDetails = ({ route }: Props) => {
 
         {/* Ta dando merda aqui */}
         <ProgressBar
+          //progress={percentageBalance / 100}
           progress={0.1}
           color="#F81650"
           style={{
@@ -123,7 +124,7 @@ const GoalDetails = ({ route }: Props) => {
             backgroundColor: '#f5f2f3',
           }}
         />
-
+{/* 
         <Button
           onPress={() => {
             navigation.navigate('GoalsStack', {
@@ -154,7 +155,7 @@ const GoalDetails = ({ route }: Props) => {
             marginTop: 10,
             backgroundColor: '#f5f2f3',
           }}
-        />
+        /> */}
       </View>
     </ScrollView>
   );
