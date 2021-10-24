@@ -88,7 +88,7 @@ const GoalDetails = ({ route }: Props) => {
 
         <TextProgress>
           Você já progrediu sua meta em
-          <TextGoals> {percBalance}% </TextGoals>
+          <TextGoals> {percentageBalance}% </TextGoals>
           de <TextGoals>R$ {goal.saldoFinalMeta}</TextGoals>
         </TextProgress>
 

@@ -23,6 +23,7 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import fonts from '../../../../../styles/fonts';
+import { StackActions } from 'react-navigation';
 
 const CreateGoal = () => {
   const [meta, setMeta] = useState('');
@@ -105,7 +106,7 @@ const CreateGoal = () => {
       setinvestidoError('Insira um valor válido!');
     }
   }
-
+  
   const realizacao = () => {
     parseFloat(investidoMeta) >= parseFloat(valorMeta)
       ? setRealizado(true)
@@ -113,6 +114,8 @@ const CreateGoal = () => {
 
       console.log("realizado: ", realizado)
     return realizado;
+
+    
   };
 
   return (
@@ -216,7 +219,7 @@ const CreateGoal = () => {
         />
 
         <Button
-          onPress={handleCreateGoal}
+          onPress={handleCreateGoal()}
           title="Criar"
           backgroundColor="#CCC"
           color="#444"
