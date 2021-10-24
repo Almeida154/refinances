@@ -61,7 +61,9 @@ const SectionManage = () => {
                 }
 
                 <Button
-                    onPress={() => navigation.dispatch(StackActions.replace('GoalsList'))}
+                    onPress={() =>  
+                        navigation.dispatch(StackActions.replace('GoalsStack', 
+                        { screen:'GoalList'}))}
                     title="Gerenciar"
                     color="#444"
                     backgroundColor="#f5f2f3"
@@ -82,7 +84,9 @@ const SectionManage = () => {
                 <LabelDescriptionGoals>Você ainda não possui metas.</LabelDescriptionGoals>
 
                 <Button
-                    onPress={() => navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))}
+                    onPress={() => 
+                        navigation.dispatch(StackActions.replace('GoalsStack', 
+                        {screen: 'CreateGoals'}))}
                     title="Criar"
                     color="#444"
                     backgroundColor="#f5f2f3"

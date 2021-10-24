@@ -52,12 +52,14 @@ const CreateGoal = () => {
   };
 
   const handleConfirm = (date: Date) => {
-    if (date >= dataAtual) {
+    if (dataAtual <= date ) {
       setPrevisao(date);
       console.warn('Previsão data final meta: ', date.toLocaleDateString());
       setdtPrevError(null);
     } else {
       setPrevisao(dataAtual);
+      console.warn('Previsão data final meta: ', dataAtual.toLocaleDateString());
+      setdtPrevError(null);
     }
 
     hideDatePicker();
@@ -70,7 +72,7 @@ const CreateGoal = () => {
       saldoAtualMeta: parseFloat(investidoMeta),
       dataInicioMeta: dataAtual.toLocaleDateString(),
       dataFimMeta: previsao.toLocaleDateString(),
-      realizacaoMeta: realizacao(),
+      realizacaoMeta: realizado,
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
     
