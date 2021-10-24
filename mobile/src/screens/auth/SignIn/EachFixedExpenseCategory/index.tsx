@@ -50,6 +50,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const populateCategories = () => {
     setCategories([] as Categoria[]);
 
+    
     var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
       let cat = {} as Categoria;
       cat.nomeCategoria = category.description;

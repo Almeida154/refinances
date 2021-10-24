@@ -4,6 +4,8 @@ import { BackHandler } from 'react-native';
 
 import api from '../../../../services/api'
 
+import global from '../../../../global'
+
 import { UseAuth } from '../../../../contexts/AuthContext';
 import retornarIdDoUsuario from '../../../../helpers/retornarIdDoUsuario';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,6 +33,7 @@ import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 
 import PieChart from 'react-native-pie-chart';
+import { Categoria } from '@contexts/CategoriesContext';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'StatsInitial'>;
@@ -99,8 +102,41 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
     
     const logUser = JSON.parse(await AsyncStorage.getItem('user'));
 
+    var defaultCategoriesIncome = global.DEFAULT_INCOME_CATEGORIES.map(category => {
+      let cat = {} as Categoria;
+      cat.nomeCategoria = category.description;
+      cat.corCategoria = category.color;
+      cat.iconeCategoria = category.icon;
+      cat.tetoDeGastos = null;
+      cat.tipoCategoria = 'receita';
+      cat.isSelected = false;
+      return cat;
+    });
+
+    var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
+      let cat = {} as Categoria;
+      cat.nomeCategoria = category.description;
+      cat.corCategoria = category.color;
+      cat.iconeCategoria = category.icon;
+      cat.tetoDeGastos = null;
+      cat.tipoCategoria = 'despesa';
+      cat.isSelected = false;
+      return cat;
+    });
+
+    var ctgrs =
+      setupUserData.createdCategories != undefined
+        ? [
+            ...setupUserData.createdCategories,
+            ...defaultCategories,
+            ...defaultCategoriesIncome
+          ]
+        : [...defaultCategories, ...defaultCategoriesIncome];
+
+
     api.post(`/user/setupuser/${idUser}`, {
-      entries: setupUserData.entries
+      entries: setupUserData.entries,
+      allCategories: ctgrs == undefined ? [] : ctgrs
     })
     
     logUser.signed = true    

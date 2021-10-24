@@ -27,7 +27,7 @@ class UserController {
     const user = await userRepository.findOne({where: {id: request.params.id}})
 
     const entries = request.body.entries
-
+    const allCategories = request.body.allCategories
 
     if(!user) {
       return response.send({error: "Usuario nao encontrado"})
@@ -65,8 +65,8 @@ class UserController {
     //Categorias
 
     const categoriasPadroes = []
-    for(var i = 0;i < entries.length;i++) {
-      const funcao = async ({categoryLancamento})   => {
+    for(var i = 0;i < allCategories.length;i++) {
+      const funcao = async (categoryLancamento)   => {
         const newCategoria = categoryRepository.create({
           iconeCategoria: categoryLancamento.iconeCategoria,
           tetoDeGastos: 0,
@@ -78,7 +78,7 @@ class UserController {
         categoriasPadroes.push(await categoryRepository.save(newCategoria))
       }
 
-      await funcao(entries[i])
+      await funcao(allCategories[i])
     }
     
     //Lancamento
@@ -89,7 +89,7 @@ class UserController {
       })
 
       console.log(categoriasPadroes[categoriaLancamento])
-      
+
       const newLancamento = await lancamentoRepository.save(lancamentoRepository.create({
         descricaoLancamento: item.descricaoLancamento,
         essencial: true,
