@@ -104,7 +104,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       const newUser: User = response.data.user;
       newUser.fotoPerfilUsuario =
         newUser.fotoPerfilUsuario != null ? 'base64' : null; // Definindo 'base64' porque a imagem é gigante
-      newUser.signed = true;
+      
       await AsyncStorage.setItem('user', JSON.stringify(newUser));
 
       return '';

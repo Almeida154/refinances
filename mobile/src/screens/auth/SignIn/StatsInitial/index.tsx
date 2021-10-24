@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { BackHandler } from 'react-native';
 
+import api from '../../../../services/api'
+
 import { UseAuth } from '../../../../contexts/AuthContext';
+import retornarIdDoUsuario from '../../../../helpers/retornarIdDoUsuario';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
@@ -39,7 +43,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
 
   const [expensePercentage, setExpensePercentage] = useState<number>(0);
 
-  const { setupUserData, updateSetupUserDataProps, user } = UseAuth();
+  const { setupUserData, updateSetupUserDataProps, user, handleRegister, updateUserProps } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -83,8 +87,24 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
     return true;
   };
 
-  const register = () => {
-    console.log('Pronto pra registrar');
+  const register = async () => {
+
+    const response = await handleRegister()
+
+    console.log("response", response)
+
+    const idUser = await retornarIdDoUsuario()
+
+    console.log(idUser)
+    
+    const logUser = JSON.parse(await AsyncStorage.getItem('user'));
+
+    api.post(`/user/setupuser/${idUser}`, {
+      entries: setupUserData.entries
+    })
+    
+    logUser.signed = true    
+    updateUserProps(logUser)
   };
 
   return (

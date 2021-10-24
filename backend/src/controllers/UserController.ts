@@ -5,10 +5,116 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import VerificaSeOEmailExiste from "../helpers/VerificaSeOEmailExiste";
+import { Lancamento } from "../entities/Lancamento";
+import { CategoryConta } from "../entities/CategoryConta";
+import { Category } from "../entities/Category";
+import { Conta } from "../entities/Conta";
+import { Parcela } from "../entities/Parcela";
 
 class UserController {
   async index(request: Request, response: Response, next: NextFunction) {
     return response.send({ userID: request.userId });
+  }
+
+  async setupUser(request: Request, response: Response, next: NextFunction) {
+    const userRepository = getRepository(User)
+    const lancamentoRepository = getRepository(Lancamento)
+    const categoryContaRepository = getRepository(CategoryConta)
+    const categoryRepository = getRepository(Category)
+    const contaRepository = getRepository(Conta)
+    const parcelaRepository = getRepository(Parcela)
+
+    const user = await userRepository.findOne({where: {id: request.params.id}})
+
+    const entries = request.body.entries
+
+
+    if(!user) {
+      return response.send({error: "Usuario nao encontrado"})
+    }
+
+    //Categoria Conta
+    const nomesCategoriasContaPadroes = [["Carteira", "Entypo:wallet"], ["Poupança", "MaterialCommunityIcons:currency-usd-circle", ], ["Investimentos", "MaterialIcons:show-chart"]];
+
+    const categoriasContasPadroes = [] as CategoryConta[]
+
+    for(var i = 0;i < nomesCategoriasContaPadroes.length;i++) {    
+      const funcao = async (item) => {     
+        const newCategoriaConta = categoryContaRepository.create({      
+          iconeCategoryConta: item[1],
+          descricaoCategoryConta: item[0],
+          userCategoryConta: user                               
+        })
+      
+        categoriasContasPadroes.push(await categoryContaRepository.save(newCategoriaConta))    
+      }
+
+      await funcao(nomesCategoriasContaPadroes[i])
+    }
+    //Contas
+
+    const newConta = contaRepository.create({
+      descricao: "Conta Principal",
+      categoryConta: categoriasContasPadroes[0],
+      saldoConta: 0,
+      userConta: user,      
+    })
+
+    const contaPrincipal = await contaRepository.save(newConta)
+
+    //Categorias
+
+    const categoriasPadroes = []
+    for(var i = 0;i < entries.length;i++) {
+      const funcao = async ({categoryLancamento})   => {
+        const newCategoria = categoryRepository.create({
+          iconeCategoria: categoryLancamento.iconeCategoria,
+          tetoDeGastos: 0,
+          nomeCategoria: categoryLancamento.nomeCategoria,
+          tipoCategoria: categoryLancamento.tipoCategoria,
+          userCategory: user,        
+        })
+  
+        categoriasPadroes.push(await categoryRepository.save(newCategoria))
+      }
+
+      await funcao(entries[i])
+    }
+    
+    //Lancamento
+
+    entries.map(async (item) => {
+      const categoriaLancamento = categoriasPadroes.findIndex((categoria) => {        
+        return categoria.nomeCategoria == item.categoryLancamento.nomeCategoria
+      })
+
+      console.log(categoriasPadroes[categoriaLancamento])
+      
+      const newLancamento = await lancamentoRepository.save(lancamentoRepository.create({
+        descricaoLancamento: item.descricaoLancamento,
+        essencial: true,
+        lugarLancamento: 'extrato',
+        tipoLancamento: item.tipoLancamento,
+        userLancamento: user,
+        categoryLancamento: categoriasPadroes[categoriaLancamento]
+      }))
+
+      item.parcelasLancamento.map(async (parcela) => {
+        const newParcela = parcelaRepository.create({
+          contaParcela: contaPrincipal,
+          lancamentoParcela: newLancamento,
+          userParcela: user,
+          statusParcela: true,
+          valorParcela: parcela.valorParcela,
+          dataParcela: new Date(Date.now())
+        })
+
+        await parcelaRepository.save(newParcela)
+      })
+    })
+
+    return response.send({message: entries})
+
   }
 
   async all(request: Request, response: Response, next: NextFunction) {

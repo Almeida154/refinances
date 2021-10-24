@@ -21,6 +21,7 @@ Routes.post("/user/auth", UserController.auth);
 Routes.get("/user/read", UserController.all);
 Routes.get("/user/read/:id", UserController.one);
 Routes.post("/user/create", UserController.save);
+Routes.post("/user/setupuser/:id", UserController.setupUser);
 Routes.put("/user/edit/:id", UserController.edit);
 Routes.delete("/user/remove/:id", UserController.remove);
 Routes.delete("/user/remove", UserController.removeAll);
