@@ -1,5 +1,6 @@
 import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -29,6 +30,8 @@ import SectionAccount from './components/SectionAccount';
 
 import { StackActions } from '@react-navigation/native';
 
+import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
+
 import CreateCategoryGoals from './components/CreateCategoryGoals';
 import ManageCategoryGoals from './components/ManageCategoryGoals';
 
@@ -47,7 +50,7 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
-
+      console.log(await retornarIdDoUsuario())
       // O avatar é a base64 da imagem
       setAvatar(base64?.slice(base64.indexOf(',') + 1));
 
