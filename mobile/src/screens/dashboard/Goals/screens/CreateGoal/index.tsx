@@ -18,6 +18,7 @@ import {
   TouchableHighlight,
   View,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -90,9 +91,9 @@ const CreateGoal = () => {
       : setRealizado(false);
 
       console.log("realizado: ", realizado)
-
       handleAdicionarMeta(newGoal);
       console.log(newGoal);
+      ToastAndroid.show("Meta cadastrada com sucesso", ToastAndroid.SHORT)
 
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
