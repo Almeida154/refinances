@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { BackHandler, FlatList, Text, TextInput, View } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../../contexts/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -41,7 +41,6 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
     icon: string;
   };
 
-  const { user, updateUserProps } = UseAuth();
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   const [name, setName] = useState<string>('Essa é nova');
@@ -73,6 +72,17 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
     setModalizeIcons(global.DEFAULT_ICONS);
   }, []);
 
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
+    return true;
+  };
+
   const add = () => {
     const newCreatedCategory = {
       corCategoria: color.hex,
@@ -89,7 +99,7 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
     updateSetupUserDataProps(userData);
 
     console.debug('DENTRO DO CRIAR:::: ', setupUserData.createdCategories);
-    navigation.goBack();
+    navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
   };
 
   return (
