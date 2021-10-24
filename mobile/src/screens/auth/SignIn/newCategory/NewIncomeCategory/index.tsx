@@ -43,15 +43,15 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   const [name, setName] = useState<string>('Essa é nova');
-  const [nameError, setNameError] = useState<null>();
+  const [nameError, setNameError] = useState<null | string>(null);
   const nameRef = useRef<TextInput>(null);
 
   const [color, setColor] = useState({} as ColorProps);
-  const [colorError, setColorError] = useState<null>();
+  const [colorError, setColorError] = useState<null | string>();
   const colorRef = useRef<TextInput>(null);
 
   const [icon, setIcon] = useState({} as IconProps);
-  const [iconError, setIconError] = useState<null>();
+  const [iconError, setIconError] = useState<null | string>();
   const iconRef = useRef<TextInput>(null);
 
   const [modalizeColors, setModalizeColors] = useState([{}] as ColorProps[]);
@@ -71,35 +71,58 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
     setModalizeIcons(global.DEFAULT_ICONS);
   }, []);
 
-  // useEffect(() => {
-  //   BackHandler.addEventListener('hardwareBackPress', backInAction);
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', backInAction);
-  // }, []);
-
-  // const backInAction = () => {
-  //   console.log('caiu income');
-  //   //navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
-  //   return true;
-  // };
+  const capitalizeFirstLetter = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
 
   const add = () => {
-    const newCreatedCategory = {
-      corCategoria: color.hex,
-      iconeCategoria: icon.icon,
-      nomeCategoria: name,
-      tipoCategoria: 'receita',
-      isSelected: true,
-      tetoDeGastos: null,
-    } as Categoria;
-    const userData = setupUserData;
-    userData.createdCategories != undefined
-      ? userData.createdCategories.push(newCreatedCategory)
-      : (userData.createdCategories = [newCreatedCategory] as Categoria[]);
-    updateSetupUserDataProps(userData);
+    var defaultCategories = global.DEFAULT_INCOME_CATEGORIES.map(category => {
+      let cat = {} as Categoria;
+      cat.nomeCategoria = category.description;
+      cat.corCategoria = category.color;
+      cat.iconeCategoria = category.icon;
+      cat.tetoDeGastos = null;
+      cat.tipoCategoria = 'despesa';
+      cat.isSelected = false;
+      return cat;
+    });
 
-    console.debug('DENTRO DO CRIAR:::: ', setupUserData.createdCategories);
-    //backInAction();
+    const namesCreated =
+      setupUserData.createdCategories != undefined
+        ? [
+            ...defaultCategories,
+            ...setupUserData.createdCategories.filter(
+              cc => cc.tipoCategoria == 'receita',
+            ),
+          ].filter(cc => cc.nomeCategoria == capitalizeFirstLetter(name))
+        : [...defaultCategories].filter(
+            cc => cc.nomeCategoria == capitalizeFirstLetter(name),
+          );
+
+    if (namesCreated.length > 0) setNameError('Essa categoria já existe');
+    if (color.hex == null) setColorError('Escolha uma cor');
+    if (icon.icon == null) setIconError('Escolha um ícone');
+
+    if (namesCreated.length == 0 && color.hex != null && icon.icon != null) {
+      const newCreatedCategory = {
+        corCategoria: color.hex,
+        iconeCategoria: icon.icon,
+        nomeCategoria: capitalizeFirstLetter(name),
+        tipoCategoria: 'receita',
+        isSelected: true,
+        tetoDeGastos: null,
+      } as Categoria;
+      const userData = setupUserData;
+      userData.createdCategories != undefined
+        ? userData.createdCategories.push(newCreatedCategory)
+        : (userData.createdCategories = [newCreatedCategory] as Categoria[]);
+      updateSetupUserDataProps(userData);
+
+      navigation.dispatch(
+        StackActions.replace('EachFixedIncomeCategory', {
+          createdCategoryName: capitalizeFirstLetter(name),
+        }),
+      );
+    }
   };
 
   return (

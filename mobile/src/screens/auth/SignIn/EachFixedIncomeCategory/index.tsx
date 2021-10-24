@@ -22,8 +22,11 @@ import global from '../../../../global';
 import { Categoria } from '@contexts/CategoriesContext';
 
 export type PropsNavigation = {
-  navigation: StackNavigationProp<RootStackParamAuth, 'Email'>;
-  route: RouteProp<RootStackParamAuth, 'Email'>;
+  navigation: StackNavigationProp<
+    RootStackParamAuth,
+    'EachFixedIncomeCategory'
+  >;
+  route: RouteProp<RootStackParamAuth, 'EachFixedIncomeCategory'>;
 };
 
 const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
@@ -61,15 +64,23 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
     var ctgrs =
       setupUserData.createdCategories != undefined
-        ? [...setupUserData.createdCategories, ...defaultCategories]
+        ? [
+            ...setupUserData.createdCategories.filter(
+              cc => cc.tipoCategoria == 'receita',
+            ),
+            ...defaultCategories,
+          ]
         : [...defaultCategories];
 
-    if (setupUserData.createdCategories != undefined) {
-      //console.debug('AS CRIADAS:::: ', setupUserData.createdCategories);
+    if (route.params?.createdCategoryName) {
+      clearSelectedCategories();
+      const lastCreatedI = ctgrs.findIndex(
+        category => category.nomeCategoria == route.params?.createdCategoryName,
+      );
+      ctgrs[lastCreatedI].isSelected = true;
+      setSelectedCategory(ctgrs[lastCreatedI]);
     }
-
     setCategories(ctgrs);
-    //console.debug('AS CATEGORIAS ATÉ AGORA:::: ', ctgrs);
   };
 
   const backAction = () => {

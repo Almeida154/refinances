@@ -63,15 +63,23 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
     var ctgrs =
       setupUserData.createdCategories != undefined
-        ? [...setupUserData.createdCategories, ...defaultCategories]
+        ? [
+            ...setupUserData.createdCategories.filter(
+              cc => cc.tipoCategoria == 'despesa',
+            ),
+            ...defaultCategories,
+          ]
         : [...defaultCategories];
 
-    if (setupUserData.createdCategories != undefined) {
-      //console.debug('AS CRIADAS:::: ', setupUserData.createdCategories);
+    if (route.params?.createdCategoryName) {
+      clearSelectedCategories();
+      const lastCreatedI = ctgrs.findIndex(
+        category => category.nomeCategoria == route.params?.createdCategoryName,
+      );
+      ctgrs[lastCreatedI].isSelected = true;
+      setSelectedCategory(ctgrs[lastCreatedI]);
     }
-
     setCategories(ctgrs);
-    //console.debug('AS CATEGORIAS ATÉ AGORA:::: ', ctgrs);
   };
 
   const backAction = () => {

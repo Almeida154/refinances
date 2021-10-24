@@ -43,15 +43,15 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   const [name, setName] = useState<string>('Essa é nova');
-  const [nameError, setNameError] = useState<null>();
+  const [nameError, setNameError] = useState<null | string>(null);
   const nameRef = useRef<TextInput>(null);
 
   const [color, setColor] = useState({} as ColorProps);
-  const [colorError, setColorError] = useState<null>();
+  const [colorError, setColorError] = useState<null | string>();
   const colorRef = useRef<TextInput>(null);
 
   const [icon, setIcon] = useState({} as IconProps);
-  const [iconError, setIconError] = useState<null>();
+  const [iconError, setIconError] = useState<null | string>();
   const iconRef = useRef<TextInput>(null);
 
   const [modalizeColors, setModalizeColors] = useState([{}] as ColorProps[]);
@@ -71,35 +71,58 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
     setModalizeIcons(global.DEFAULT_ICONS);
   }, []);
 
-  // useEffect(() => {
-  //   BackHandler.addEventListener('hardwareBackPress', backExAction);
-  //   return () =>
-  //     BackHandler.removeEventListener('hardwareBackPress', backExAction);
-  // }, []);
-
-  // const backExAction = () => {
-  //   console.log('caiu expense');
-  //   navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
-  //   return true;
-  // };
+  const capitalizeFirstLetter = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
 
   const add = () => {
-    const newCreatedCategory = {
-      corCategoria: color.hex,
-      iconeCategoria: icon.icon,
-      nomeCategoria: name,
-      tipoCategoria: 'despesa',
-      isSelected: true,
-      tetoDeGastos: null,
-    } as Categoria;
-    const userData = setupUserData;
-    userData.createdCategories != undefined
-      ? userData.createdCategories.push(newCreatedCategory)
-      : (userData.createdCategories = [newCreatedCategory] as Categoria[]);
-    updateSetupUserDataProps(userData);
+    var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
+      let cat = {} as Categoria;
+      cat.nomeCategoria = category.description;
+      cat.corCategoria = category.color;
+      cat.iconeCategoria = category.icon;
+      cat.tetoDeGastos = null;
+      cat.tipoCategoria = 'despesa';
+      cat.isSelected = false;
+      return cat;
+    });
 
-    console.debug('DENTRO DO CRIAR:::: ', setupUserData.createdCategories);
-    //backExAction();
+    const namesCreated =
+      setupUserData.createdCategories != undefined
+        ? [
+            ...defaultCategories,
+            ...setupUserData.createdCategories.filter(
+              cc => cc.tipoCategoria == 'despesa',
+            ),
+          ].filter(cc => cc.nomeCategoria == capitalizeFirstLetter(name))
+        : [...defaultCategories].filter(
+            cc => cc.nomeCategoria == capitalizeFirstLetter(name),
+          );
+
+    if (namesCreated.length > 0) setNameError('Essa categoria já existe');
+    if (color.hex == null) setColorError('Escolha uma cor');
+    if (icon.icon == null) setIconError('Escolha um ícone');
+
+    if (namesCreated.length == 0 && color.hex != null && icon.icon != null) {
+      const newCreatedCategory = {
+        corCategoria: color.hex,
+        iconeCategoria: icon.icon,
+        nomeCategoria: capitalizeFirstLetter(name),
+        tipoCategoria: 'despesa',
+        isSelected: false,
+        tetoDeGastos: null,
+      } as Categoria;
+      const userData = setupUserData;
+      userData.createdCategories != undefined
+        ? userData.createdCategories.push(newCreatedCategory)
+        : (userData.createdCategories = [newCreatedCategory] as Categoria[]);
+      updateSetupUserDataProps(userData);
+
+      navigation.dispatch(
+        StackActions.replace('EachFixedExpenseCategory', {
+          createdCategoryName: capitalizeFirstLetter(name),
+        }),
+      );
+    }
   };
 
   return (
@@ -143,7 +166,10 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
           ref={colorRef}
           onSubmitEditing={() => iconRef.current?.focus()}
           editable={false}
-          onPress={() => openColorModalize()}
+          onPress={() => {
+            openColorModalize();
+            setColorError(null);
+          }}
           icon={color}
         />
         <InputText
@@ -158,7 +184,10 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
           blurOnSubmit={false}
           ref={iconRef}
           editable={false}
-          onPress={() => openIconModalize()}
+          onPress={() => {
+            openIconModalize();
+            setIconError(null);
+          }}
           icon={icon}
         />
         <Button
