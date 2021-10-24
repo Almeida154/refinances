@@ -39,7 +39,8 @@ export const LabelName = styled.Text`
 export const SectionValues = styled.View`
     display: flex;
     flex-direction: column;
-    padding-right: 25%;
+
+    align-items: flex-end;
 
 `
 

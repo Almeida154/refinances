@@ -46,6 +46,6 @@ export const LabelAccounts = styled.Text`
     
 `
 export const LabelValue = styled.Text`
-    font-size: 36px;
+    font-size: 23px;
     font-weight: bold;
 `

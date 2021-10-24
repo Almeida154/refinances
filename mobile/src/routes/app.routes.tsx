@@ -14,6 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ManageAccount from '../screens/dashboard/Home/components/ManageAccount';
 import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
+// import newCategory from '../screens/dashboard/Home/components/newCategory';
 import Home from '../screens/dashboard/Home';
 import AddCategoryAccount from '../screens/dashboard/Home/components/CreateAccount/components/AddCategoryAccount';
 
@@ -73,6 +74,7 @@ const MainRoutes: React.FC = () => {
         component={LancamentosStackNavigation}
       />
       <MainStack.Screen name="GoalsStack" component={GoalsStackNavigation} />
+      {/* <MainStack.Screen name="CreateCategory" component={newCategory} /> */}
     </MainStack.Navigator>
   );
 };
