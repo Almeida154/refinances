@@ -104,6 +104,12 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       selectedCategory;
 
     console.log(
+      setupUserData.expenseTagsCount,
+      selectedCategory,
+      setupUserData.entries,
+    );
+
+    console.log(
       `---EachFixedExpenseCategory | next() | ${setupUserData.expenseTagsCount}---`,
     );
     console.debug(

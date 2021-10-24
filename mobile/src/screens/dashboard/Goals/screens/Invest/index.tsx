@@ -95,7 +95,7 @@ const Invest = ({ navigation, route }: Props) => {
       <View style={styles.container}>
         <Text>{goal.saldoAtualMeta}</Text>
 
-        <InputText
+        {/* <InputText
           value={idMeta}
           label="Qual a meta?"
           error={errorMeta}
@@ -111,7 +111,7 @@ const Invest = ({ navigation, route }: Props) => {
             setMeta(txt);
           }}
         />
-
+ */}
         {/* Adicionar o picker de contas aqui 
           <InputText
             value={valorDeposito}

@@ -18,6 +18,7 @@ import {
   TouchableHighlight,
   View,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -52,12 +53,14 @@ const CreateGoal = () => {
   };
 
   const handleConfirm = (date: Date) => {
-    if (date >= dataAtual) {
+    if (dataAtual <= date ) {
       setPrevisao(date);
       console.warn('Previsão data final meta: ', date.toLocaleDateString());
       setdtPrevError(null);
     } else {
       setPrevisao(dataAtual);
+      console.warn('Previsão data final meta: ', dataAtual.toLocaleDateString());
+      setdtPrevError(null);
     }
 
     hideDatePicker();
@@ -70,7 +73,7 @@ const CreateGoal = () => {
       saldoAtualMeta: parseFloat(investidoMeta),
       dataInicioMeta: dataAtual.toLocaleDateString(),
       dataFimMeta: previsao.toLocaleDateString(),
-      realizacaoMeta: realizacao(),
+      realizacaoMeta: realizado,
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
     
@@ -88,9 +91,9 @@ const CreateGoal = () => {
       : setRealizado(false);
 
       console.log("realizado: ", realizado)
-
       handleAdicionarMeta(newGoal);
       console.log(newGoal);
+      ToastAndroid.show("Meta cadastrada com sucesso", ToastAndroid.SHORT)
 
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
