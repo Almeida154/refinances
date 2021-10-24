@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import {HomeAccountStack} from '../../../../../../../@types/RootStackParamApp'
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 import {Modalize} from 'react-native-modalize'
 
-import {TouchableOpacity, Text, FlatList, Image} from 'react-native'
+import {TouchableOpacity, Text, FlatList, Image, BackHandler, ToastAndroid} from 'react-native'
 
 import {UseCategoriasConta, CategoriaConta} from '../../../../../../../contexts/CategoriesAccountContext'
 
@@ -31,13 +31,7 @@ import {
 
 } from './styles'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-type PropsNavigation = {
-    navigation: StackNavigationProp<HomeAccountStack, "AddCategoryAccount">,    
-    route: RouteProp<HomeAccountStack, "AddCategoryAccount">,    
-    
-}
+import { UseDadosTemp } from '../../../../../../../contexts/TemporaryDataContext';
 
 type PropsRenderItem = {
     item: string
@@ -64,8 +58,10 @@ const RenderItemIcon = ({item, setSelected}: PropsRenderItem) => {
     )
 }
 
-const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
+const AddCategoryAccount = () => {
     const {handleAdicionarCategoriaConta} = UseCategoriasConta()
+
+    const {navigation} = UseDadosTemp()
 
     const modalizeColor = useRef<Modalize>(null);
     const modalizeIcon = useRef<Modalize>(null);
@@ -73,6 +69,18 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
     const [descricao, setDescricao] = useState('')
     const [cor, setCor] = useState('')
     const [icone, setIcone] = useState('')
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () =>
+          BackHandler.removeEventListener('hardwareBackPress', backAction);
+      }, []);
+    
+      const backAction = () => {
+        navigation.dispatch(StackActions.replace('StackAccount', {screen: 'CreateAccount'}));
+        
+        return true;
+      };
 
     const onOpenModalizeColor = () => {
         modalizeColor.current?.open()
@@ -106,9 +114,14 @@ const AddCategoryAccount = ({route, navigation}: PropsNavigation) => {
            userCategoryConta: await retornarIdDoUsuario()
         } as CategoriaConta        
 
-        console.log(novaCategoria)
-        handleAdicionarCategoriaConta(novaCategoria)
-        navigation.goBack()
+        const response = await handleAdicionarCategoriaConta(novaCategoria)
+
+        if(response == '') {
+            ToastAndroid.show("Categoria da conta criada com sucesso", ToastAndroid.SHORT)
+            navigation.dispatch(StackActions.replace("StackAccount", {screen: 'CreateAccount'}))
+        } else {
+            ToastAndroid.show(response, ToastAndroid.SHORT)
+        }
     }
 
     function setColorSelected (item2: string){

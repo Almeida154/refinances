@@ -33,6 +33,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { StackActions } from '@react-navigation/native'
+import { UseDadosTemp } from '../../../../../../../contexts/TemporaryDataContext'
 
 
 
@@ -65,16 +66,11 @@ const RenderHeader = ({search, setSearch}: PropsRenderHeader) => {
     )
 }
 
-
-type PropsRenderFooter = {
-    navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">,    
-    
-}
-
-const RenderFooter = ({navigation}: PropsRenderFooter) => {    
+const RenderFooter = () => {    
+    const {navigation} = UseDadosTemp()
     return (
         <BotaoAdicionarCategoria>
-            <LabelAdicionarCategoria onPress={() => navigation.dispatch(StackActions.replace('AddCategoryAccount'))}>Adicionar Categoria</LabelAdicionarCategoria>
+            <LabelAdicionarCategoria onPress={() => navigation.dispatch(StackActions.replace("StackAccount", {screen: 'AddCategoryAccount'}))}>Adicionar Categoria</LabelAdicionarCategoria>
         </BotaoAdicionarCategoria>
     )
 }
@@ -82,11 +78,10 @@ const RenderFooter = ({navigation}: PropsRenderFooter) => {
 
 type PropsSelectionCategorias = {
     setCategoriaConta: React.Dispatch<React.SetStateAction<CategoriaConta | null>>,
-    navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">,    
     categoriaConta: CategoriaConta | null
 }
 
-const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta, navigation}: PropsSelectionCategorias) => {        
+const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta}: PropsSelectionCategorias) => {        
     const {categoriasConta, handleReadByUserCategoriesAccount} = UseCategoriasConta()    
 
     const [search, setSearch] = useState('') 
@@ -152,7 +147,7 @@ const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta, navigati
                     getLabel={(item: CategoriaConta) => item.descricaoCategoryConta}
                     optionTemplate={RenderOption}
                     headerTemplate={() => <RenderHeader search={search} setSearch={setSearch} />}
-                    footerTemplate={() => <RenderFooter navigation={navigation}/>}                
+                    footerTemplate={() => <RenderFooter />}                
                     maxHeight={400}
                     modalStyle={{minHeight: 400}}
                     onValueChange={(value: CategoriaConta) => {

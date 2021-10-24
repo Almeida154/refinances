@@ -15,7 +15,7 @@ export type CategoriaConta = {
 
 interface CategoriaContaContextType {        
     categoriasConta: CategoriaConta[] | null,
-    handleAdicionarCategoriaConta(categoriaProps: CategoriaConta): Promise<void>
+    handleAdicionarCategoriaConta(categoriaProps: CategoriaConta): Promise<string>
     setupCategoriasConta(idUser: number): Promise<void>
     handleReadByUserCategoriesAccount(idUser: number): Promise<void>
 }
@@ -54,7 +54,6 @@ export const CategoriasContaProvider: React.FC = ({ children }) => {
     }
 
     async function handleAdicionarCategoriaConta(categoriaConta: CategoriaConta) {
-        console.log(categoriaConta.iconeCategoryConta);
         try {                     
             const response = await api.post('/categoryAccount/create', {
                 descricaoCategoryConta: categoriaConta.descricaoCategoryConta,
@@ -62,20 +61,19 @@ export const CategoriasContaProvider: React.FC = ({ children }) => {
                 userCategoryConta: categoriaConta.userCategoryConta
             });
 
+            if(response.data.error) {
+                return response.data.error
+            }
             const newCategoriasConta = categoriasConta;
 
-            if(newCategoriasConta == null) {
+            if(newCategoriasConta != null) {
                 const aux = []
 
                 aux.push(response.data.message)
                 setCategoriasConta(aux);
-            } else {
-
-                newCategoriasConta.push(response.data.message);
-                setCategoriasConta(newCategoriasConta);
             }
 
-
+            return ''
         } catch (error) {
             console.log("Deu um erro no handleAdicionarCategoriaConta: " + error);
         }

@@ -2,7 +2,6 @@ import { RouteProp } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 
-import {PropsHome} from '../../'
 
 import Button from '../../../../../components/Button'
 
@@ -108,7 +107,7 @@ const SectionAccount = () => {
                 }
 
                 <Button 
-                    onPress={() => navigation.dispatch(StackActions.replace('ManageAccount'))}
+                    onPress={() => navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}))}
                     title="Gerenciar"
                     color="#444"
                     backgroundColor="#F5F2F3"

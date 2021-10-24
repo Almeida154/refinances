@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import {ScrollView, View} from 'react-native'
+import {BackHandler, ScrollView, View} from 'react-native'
 
 import CardAccount from './CardAccount'
 
@@ -35,24 +35,20 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
     const [stateReload, setStateReload] = useState(false)    
 
     useEffect(() => {
-        if(!navigation.addListener)
-            return
-
-        const focus = navigation.addListener('focus', () => {
-            setStateReload(false)
-            
-        })
-
-        const blur = navigation.addListener('blur', () => {
-            setStateReload(true)
-            
-        })
-
+        BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () =>
+          BackHandler.removeEventListener('hardwareBackPress', backAction);
+      }, []);
+    
+      const backAction = () => {
+        navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}));
         
-    }, [navigation])
+        return true;
+      };
     
         
     useEffect(() => {
+        console.log(contas)
         // Caso nenhuma conta foi carregada, recarregar
         if(!contas)
             (async function(){
@@ -91,7 +87,7 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                     }
 
                     <Button 
-                        onPress={() => navigation.dispatch(StackActions.replace('CreateAccount'))}
+                        onPress={() => navigation.dispatch(StackActions.replace('StackAccount', {screen: 'CreateAccount'}))}
                         title="Criar"
                         color="#444"
                         backgroundColor="#ccc"

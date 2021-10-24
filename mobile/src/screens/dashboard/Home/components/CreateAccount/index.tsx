@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-import {Text} from 'react-native'
+import {BackHandler, Text, ToastAndroid} from 'react-native'
 
+import {StackActions} from '@react-navigation/native'
 import InputText from '../../../../../components/InputText'
 
 import Button from '../../../../../components/Button'
@@ -26,18 +27,27 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/core';
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 
-type PropsCreateAccount = {
-    navigation: StackNavigationProp<HomeAccountStack, "CreateAccount">
-}
 
-const CreateAccount = ({navigation}: PropsCreateAccount) => {
+const CreateAccount = () => {
     const {handleAdicionarConta} = UseContas()
         
+    const {navigation} = UseDadosTemp()
 
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')    
     const [categoriaConta, setCategoriaConta] = useState<null | CategoriaConta>(null)    
 
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () =>
+          BackHandler.removeEventListener('hardwareBackPress', backAction);
+      }, []);
+    
+      const backAction = () => {
+        navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}));
+        
+        return true;
+      };
     
     async function handleCreateAccount() {
         const newConta = {
@@ -47,9 +57,16 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
             userConta: await retornarIdDoUsuario()
         } as Conta
 
-        handleAdicionarConta(newConta)
+       const response = await handleAdicionarConta(newConta)
+
+       
+       if(response == '') {
+            ToastAndroid.show("Conta criada com sucesso!", ToastAndroid.SHORT)
+            navigation.dispatch(StackActions.replace("StackAccount", {screen: 'ManageAccount'}))
+       } else {
+            ToastAndroid.show(response, ToastAndroid.SHORT)
+       }
         
-        navigation.goBack()
     }
 
     return (
@@ -93,7 +110,7 @@ const CreateAccount = ({navigation}: PropsCreateAccount) => {
             />
 
 
-            <SelectionCategoriesAccount navigation={navigation} categoriaConta={categoriaConta} setCategoriaConta={setCategoriaConta}/>
+            <SelectionCategoriesAccount categoriaConta={categoriaConta} setCategoriaConta={setCategoriaConta}/>
 
             <Button 
                 onPress={handleCreateAccount}

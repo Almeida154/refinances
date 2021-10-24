@@ -91,7 +91,7 @@ const CreateCategoryGoals = () => {
                 <CreateGoal />
                 
                 <SectionButton onPress={() => {
-                                    navigation.dispatch(StackActions.replace('CreateGoals'))
+                                    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))
                                 }}>
                     <Plus>+</Plus>                    
                 </SectionButton>

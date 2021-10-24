@@ -35,10 +35,6 @@ import ManageCategoryGoals from './components/ManageCategoryGoals';
 import fonts from '../../../styles/fonts';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export type PropsHome = {
-  navigation: StackNavigationProp<PropsMainRoutes, 'Main'>;
-};
-
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
   const { navigation } = UseDadosTemp();
@@ -67,18 +63,7 @@ const Home = () => {
     })();
   });
 
-  useEffect(() => {
-    if (!navigation || !navigation.addListener) return;
-    const focus = navigation.addListener('focus', () => {
-      setStateReload(false);
-      console.log('Foi');
-    });
-
-    const blur = navigation.addListener('blur', () => {
-      setStateReload(true);
-      console.log(stateReload);
-    });
-  }, [navigation]);
+  
 
   // console.log(
   //   navigation && navigation.getState

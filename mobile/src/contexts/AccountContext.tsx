@@ -16,7 +16,7 @@ export type Conta = {
 interface ContaContextType {        
     contas: Conta[] | null
     loading: boolean
-    handleAdicionarConta(contaProps: Conta): Promise<void>    
+    handleAdicionarConta(contaProps: Conta): Promise<string>    
     handleReadByUserContas(idUser: number): Promise<void>
 }
 
@@ -29,7 +29,6 @@ export const ContasProvider: React.FC = ({ children }) => {
     const [loading, setLoading] = useState(false)
 
     async function handleAdicionarConta(conta: Conta) {
-        setLoading(true)
         try {                    
             const responseCategoryConta = await api.post(`/categoryAccount/findbyname/${conta.userConta}`, {
                 descricaoCategoriaConta: conta.categoryConta
@@ -43,23 +42,17 @@ export const ContasProvider: React.FC = ({ children }) => {
             });
 
             if(response.data.error) 
-                return ToastAndroid.show(response.data.error, ToastAndroid.SHORT)
+                return response.data.error
 
             await AsyncStorage.setItem('idConta', String(response.data.message.id));
 
             if(contas != null) {
-                const newContas = contas;
-    
-                
+                const newContas = contas;                    
                 newContas.push(response.data.message);
                 setContas(newContas);
-            } else {
-                const newContas = []
-                newContas.push(response.data.message)
-                setContas(newContas)
             }
             
-            setLoading(false)
+            return ''
         } catch (error) {
             console.log("Deu um erro no handleAdicionarConta: " + error);
         }
