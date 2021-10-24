@@ -29,7 +29,6 @@ class MetaController {
   }
 
   async save(request: Request, response: Response, next: NextFunction) {
-    console.log("Salve");
     const metaRepository = getRepository(Meta);
     const userRepository = getRepository(User);
 
@@ -109,16 +108,16 @@ class MetaController {
     if (descMeta == "") return response.send({ error: "nome em branco!" });
     if (saldoFinalMeta == undefined)
       return response.send({ error: "Saldo final da meta não inserido" });
-    if (SaldoAtualMeta == undefined)
-      return response.send({ error: "saldo atual da meta não inserido!" });
+    //if (SaldoAtualMeta == undefined)
+      //return response.send({ error: "saldo atual da meta não inserido!" });
     if (dataInicioMeta == undefined)
       return response.send({ error: "data inicial da meta não inserido!" });
     if (dataFimMeta == undefined)
       return response.send({ error: "data final da meta não inserido!" });
     if (realizacaoMeta == undefined)
       return response.send({ error: "realização da meta não inserido!" });
-    if (userMeta == undefined)
-      return response.send({ error: "user da meta não inserido!" });
+    //if (userMeta == undefined)
+      //return response.send({ error: "user da meta não inserido!" });
 
     const userExists = await userRepository.findOne({
       where: { id: userMeta },
@@ -126,7 +125,7 @@ class MetaController {
 
     if (!userExists)
       return response.send({
-        error: "Não existe esse user aí",
+        //error: "Não existe esse user aí",
       });
 
     const updateMeta = request.body;
@@ -135,7 +134,7 @@ class MetaController {
     await metaRepository.update(id, updateMeta);
     const meta = await metaRepository.findOne({ where: { id } });
 
-    return response.send({ message: meta });
+    return response.send({ message: "atualizou a meta " + meta });
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {

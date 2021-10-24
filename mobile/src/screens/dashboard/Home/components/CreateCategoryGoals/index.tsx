@@ -70,6 +70,7 @@ const CreateGoal = () => {
 }
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+import { StackActions } from '@react-navigation/native'
 
 const CreateCategoryGoals = () => {
 
@@ -90,7 +91,7 @@ const CreateCategoryGoals = () => {
                 <CreateGoal />
                 
                 <SectionButton onPress={() => {
-                                    navigation.navigate('GoalsStack', {screen: 'CreateGoals'});
+                                    navigation.dispatch(StackActions.replace('CreateGoals'))
                                 }}>
                     <Plus>+</Plus>                    
                 </SectionButton>

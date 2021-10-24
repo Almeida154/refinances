@@ -32,6 +32,7 @@ import {
 } from 'react-native-custom-picker'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StackActions } from '@react-navigation/native'
 
 
 
@@ -73,7 +74,7 @@ type PropsRenderFooter = {
 const RenderFooter = ({navigation}: PropsRenderFooter) => {    
     return (
         <BotaoAdicionarCategoria>
-            <LabelAdicionarCategoria onPress={() => navigation.navigate('AddCategoryAccount')}>Adicionar Categoria</LabelAdicionarCategoria>
+            <LabelAdicionarCategoria onPress={() => navigation.dispatch(StackActions.replace('AddCategoryAccount'))}>Adicionar Categoria</LabelAdicionarCategoria>
         </BotaoAdicionarCategoria>
     )
 }

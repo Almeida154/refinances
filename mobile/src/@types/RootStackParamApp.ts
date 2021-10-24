@@ -10,7 +10,7 @@ export type HomeAccountStack = {
 export type GoalsStack = {
   GoalsList: undefined;
   CreateGoals: undefined;
-  InvestGoals: undefined;
+  InvestGoals: { goalId: number };
   GoalDetails: { goalId: number };
   GoalsDashboard: undefined;
 };

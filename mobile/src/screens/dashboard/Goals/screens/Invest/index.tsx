@@ -12,14 +12,16 @@
    StatusBar,
    StyleSheet,
    Text,
-   TextInput,
-   TouchableHighlight,
    View,
  } from 'react-native';
 
  import {GoalsStack} from '../../../../../@types/RootStackParamApp'
  import { StackNavigationProp } from '@react-navigation/stack'
-import Button from '../../../../../components/Button';
+ import Button from '../../../../../components/Button';
+ import { RouteProp } from '@react-navigation/core';
+
+ import { NativeStackScreenProps } from '@react-navigation/native-stack';
+ import { StackActions } from '@react-navigation/native';
 
 import { 
   AlinhaParaDireita, 
@@ -34,13 +36,9 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import PickerContas from '../../../Entries/components/PickerCategoria'
 
-import PickerMetas from './PickerMetas'
-
- type PropsGoals = {
-    navigation: StackNavigationProp<GoalsStack, "InvestGoals">
- }
+type Props = NativeStackScreenProps<GoalsStack, 'InvestGoals'>;
  
- const Invest = ({navigation}: PropsGoals) => {
+ const Invest = ({navigation, route}: Props) => {
  
     const [valorDeposito, setValor] = useState('');
     const [errorValor, setErrorValor] = useState<any | null>(null);
@@ -48,7 +46,41 @@ import PickerMetas from './PickerMetas'
     const [idMeta, setMeta] = useState('');
     const [errorMeta, setErrorMeta] = useState<any | null>(null);
 
+
     const [selectedConta, setSelectedConta] = useState(0)
+
+    const [goal, setGoal] = useState({} as Meta);
+
+    const { handleGetGoalById } = UseMetas();
+    const { handleAtualizarMeta } = UseMetas();
+  
+    useEffect(() => {
+      (async () => {
+        const goal = await handleGetGoalById(route.params?.goalId);
+        setGoal(goal);
+  
+        console.debug('O GOAL AQUI Ó:::: ', goal);
+      })();
+    }, []);
+
+    async function handleUpdateGoal() {
+      const newGoal = {
+        descMeta: goal.descMeta,
+        saldoFinalMeta: goal.saldoFinalMeta,
+        saldoAtualMeta: novoSaldo(),
+        dataInicioMeta: goal.dataInicioMeta,
+        dataFimMeta: goal.dataFimMeta,
+        realizacaoMeta: goal.realizacaoMeta,
+        userMetaId: await retornarIdDoUsuario(),
+      } as Meta;
+
+      handleAtualizarMeta(newGoal, goal.id);
+
+    }
+
+    const novoSaldo = () =>{
+      return goal.saldoAtualMeta + parseFloat(valorDeposito);
+    } 
  
    return (
      <ScrollView style={{backgroundColor: '#f6f6f6'}}>
@@ -64,7 +96,7 @@ import PickerMetas from './PickerMetas'
                   placeholder="00,00"
                   placeholderTextColor="#fff"
                   value={valorDeposito}
-                  onChangeText={setValor}                                
+                  onChangeText={setValor}
                     />
             </InputControlValue>
         </AlinhaParaDireita>
@@ -72,9 +104,8 @@ import PickerMetas from './PickerMetas'
 
       <View style={styles.container}>
 
-          {/* Adicionar o picker de metas aqui, pré-selecionando a que o user clicou p depositar   
-          <PickerMetas changeGoal={meta}/>
-          */}
+          <Text>{goal.saldoAtualMeta}</Text>
+
           <InputText
             value={idMeta}
             label="Qual a meta?"
@@ -107,7 +138,7 @@ import PickerMetas from './PickerMetas'
           <Button
             title={'Investir'}
             style={{marginTop: 30}}
-            onPress={() => console.log('btn investir')}>
+            onPress={handleUpdateGoal}>
           </Button>
  
        </View>

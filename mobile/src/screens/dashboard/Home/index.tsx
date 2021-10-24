@@ -30,6 +30,8 @@ import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 
 import SectionAccount from './components/SectionAccount';
 
+import { StackActions } from '@react-navigation/native';
+
 import CreateCategoryGoals from './components/CreateCategoryGoals';
 import ManageCategoryGoals from './components/ManageCategoryGoals';
 

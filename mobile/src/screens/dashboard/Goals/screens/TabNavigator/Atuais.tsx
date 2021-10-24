@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../../../../../components/Button';
 
 import CardGoals from './CardGoals';
+import { StackActions } from '@react-navigation/native';
 
 type PropsGoals = {
   navigation: StackNavigationProp<GoalsStack, 'GoalsList'>;
@@ -101,7 +102,7 @@ const Goals = ({ navigation }: PropsGoals) => {
             title="Criar nova meta"
             backgroundColor="#ee4266"
             onPress={() => {
-              navigation.navigate('CreateGoals');
+              navigation.dispatch(StackActions.replace('CreateGoals'))
             }}></Button>
         </View>
       </ScrollView>

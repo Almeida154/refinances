@@ -24,6 +24,7 @@ import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 import { Text } from '../../../../../components/Button/styles'
 import { ActivityIndicator } from 'react-native-paper'
+import { StackActions } from '@react-navigation/native'
 
 type PropsManageAccount = {
     navigation: StackNavigationProp<HomeAccountStack, "ManageAccount">
@@ -90,7 +91,7 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                     }
 
                     <Button 
-                        onPress={() => navigation.navigate('CreateAccount')}
+                        onPress={() => navigation.dispatch(StackActions.replace('CreateAccount'))}
                         title="Criar"
                         color="#444"
                         backgroundColor="#ccc"

@@ -24,6 +24,7 @@ import CardGoals from '../../../Goals/screens/TabNavigator/CardGoals'
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import {Meta, UseMetas} from '../../../../../contexts/GoalsContext'
+import { StackActions } from '@react-navigation/native';
 
 const SectionManage = () => {
     const {navigation} = UseDadosTemp()
@@ -60,7 +61,7 @@ const SectionManage = () => {
                 }
 
                 <Button
-                    onPress={() => navigation.navigate('GoalsStack', {screen: 'GoalsList'})}
+                    onPress={() => navigation.dispatch(StackActions.replace('GoalsList'))}
                     title="Gerenciar"
                     color="#444"
                     backgroundColor="#f5f2f3"
@@ -81,7 +82,7 @@ const SectionManage = () => {
                 <LabelDescriptionGoals>Você ainda não possui metas.</LabelDescriptionGoals>
 
                 <Button
-                    onPress={() => navigation.navigate('GoalsStack', {screen: 'CreateGoals'})}
+                    onPress={() => navigation.dispatch(StackActions.replace('CreateGoals'))}
                     title="Criar"
                     color="#444"
                     backgroundColor="#f5f2f3"

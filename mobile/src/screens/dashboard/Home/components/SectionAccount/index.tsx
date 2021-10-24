@@ -31,6 +31,7 @@ import {
     LabelBalanceAccount,
     SectionIcon
 } from './styles'
+import { StackActions } from '@react-navigation/native'
 
 
 type CardAccount = {
@@ -107,7 +108,7 @@ const SectionAccount = () => {
                 }
 
                 <Button 
-                    onPress={() => navigation.navigate('StackAccount', {screen: 'ManageAccount'})}
+                    onPress={() => navigation.dispatch(StackActions.replace('ManageAccount'))}
                     title="Gerenciar"
                     color="#444"
                     backgroundColor="#F5F2F3"

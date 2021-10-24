@@ -28,17 +28,15 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 
 import { toDate } from '../../../../../helpers/manipularDatas';
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
 import Icon from 'react-native-vector-icons/EvilIcons'
 
-type PropsGoals = {
-  navigation: StackNavigationProp<GoalsStack, 'GoalDetails'>;
-  route: RouteProp<GoalsStack, 'GoalDetails'>;
-};
-
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
-const GoalDetails = ({ navigation, route }: Props) => {
+const GoalDetails = ({ route }: Props) => {
+
+  const { navigation } = UseDadosTemp();
 
   const [goal, setGoal] = useState({} as Meta);
 
@@ -112,7 +110,10 @@ const GoalDetails = ({ navigation, route }: Props) => {
 
         <Button
           onPress={() => {
-            navigation.navigate('InvestGoals');
+            navigation.navigate('GoalsStack', {
+              screen: 'InvestGoals',
+              params: { goalId: goal.id },
+            });
           }}
           title="Depositar"
           color="#6CB760"
@@ -120,7 +121,10 @@ const GoalDetails = ({ navigation, route }: Props) => {
 
         <Button
           onPress={() => {
-            navigation.navigate('InvestGoals');
+            navigation.navigate('GoalsStack', {
+              screen: 'InvestGoals',
+              params: { goalId: goal.id },
+            });
           }}
           title="Excluir"
           color="#ee4266"
@@ -128,7 +132,10 @@ const GoalDetails = ({ navigation, route }: Props) => {
 
         <Button
           onPress={() => {
-            navigation.navigate('InvestGoals');
+            navigation.navigate('GoalsStack', {
+              screen: 'InvestGoals',
+              params: { goalId: goal.id },
+            });
           }}
           title="Editar"
           color="#444"
