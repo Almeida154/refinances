@@ -19,11 +19,11 @@ type PropsNavigationAuth = {
   EachFixedIncome: undefined;
   EachFixedIncomeCategory: { createdCategoryName: string };
 
-  StatsInitial: undefined;
-
   NewCategory: undefined;
   NewExpenseCategory: undefined;
   NewIncomeCategory: undefined;
+
+  StatsInitial: undefined;
 };
 
 export default PropsNavigationAuth;

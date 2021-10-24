@@ -11,3 +11,55 @@ export const Content = styled.View`
   padding: ${`${metrics.default.boundaries}px`};
   flex: 1;
 `;
+
+export const PieContainer = styled.View`
+  margin-bottom: 30px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Title = styled.Text`
+  color: ${colors.paradisePink};
+  text-align: center;
+  font-family: ${fonts.familyType.black};
+  font-size: ${`${fonts.size.big}px`};
+  line-height: 36px;
+  margin-top: 30px;
+`;
+
+export const SubTitle = styled.Text`
+  color: ${colors.davysGrey};
+  text-align: center;
+  font-family: ${fonts.familyType.black};
+  font-size: ${`${fonts.size.small}px`};
+  opacity: 0.7;
+  margin-bottom: 30px;
+`;
+
+export const Pic = styled.Image`
+  position: absolute;
+  width: 135px;
+  height: 135px;
+  border-radius: 70px;
+`;
+
+export const LabelContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const LabelIcon = styled.View`
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background-color: black;
+`;
+
+export const LabelSubtitle = styled.Text`
+  margin-left: 10px;
+  font-family: ${fonts.familyType.black};
+  font-size: ${`${fonts.size.small}px`};
+  color: ${colors.davysGrey};
+  opacity: 0.7;
+`;
