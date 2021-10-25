@@ -2,6 +2,7 @@ import * as React from 'react';
 import Main from '../screens/main';
 import FormLancamento from '../screens/dashboard/Entries';
 import AddCategory from '../screens/dashboard/Entries/components/AddCategory';
+import RecognizeVoice from '../screens/dashboard/Entries/components/RecognizeVoice';
 
 import RootStackParamApp, {
   HomeAccountStack,
@@ -23,8 +24,8 @@ import InvestGoals from '../screens/dashboard/Goals/screens/Invest';
 import GoalDetails from '../screens/dashboard/Goals/screens/GoalDetails';
 import CreateGoal from '../screens/dashboard/Goals/screens/CreateGoal';
 
-const MainStack = createStackNavigator<PropsMainRoutes>();
-const HomeStack = createStackNavigator<HomeAccountStack>();
+const MainStack = createStackNavigator();
+const HomeStack = createStackNavigator();
 
 export const HomeAccountStackNavigation = () => {
   return (
@@ -51,12 +52,13 @@ const GoalsStackNavigation = () => {
   );
 };
 
-const LancamentosStack = createStackNavigator<FormLancamentoStack>();
+const LancamentosStack = createStackNavigator();
 export const LancamentosStackNavigation = () => {
   return (
     <LancamentosStack.Navigator>
       <LancamentosStack.Screen name="Main" component={FormLancamento} />
       <LancamentosStack.Screen name="AddCategory" component={AddCategory} />
+      <LancamentosStack.Screen name="RecognizeVoice" component={RecognizeVoice} />
     </LancamentosStack.Navigator>
   );
 };

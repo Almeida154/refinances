@@ -3,6 +3,7 @@ import { TouchableHighlight, FlatList, View, ToastAndroid } from 'react-native'
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {StackActions} from '@react-navigation/native'
 
 import InputText from '../../../../../components/InputText'
 import {
@@ -40,7 +41,8 @@ import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
 const FormCadastro= ({valor, setValor, tipoLancamento}: PropsNavigation) => {
     const {categorias} = UseCategories()
     const {contas} = UseContas()
-    
+    const {navigation} = UseDadosTemp()
+
     const [detalhes, setDetalhes] = useState(false)
     
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
@@ -277,10 +279,7 @@ const FormCadastro= ({valor, setValor, tipoLancamento}: PropsNavigation) => {
                 <SelectionCategorias tipoCategoria={tipoLancamento} categoria={selectedCategoria} setCategoria={setSelectedCategoria} />
             </InputControl>
 
-            <InputControl>
-            {
-                console.log(selectedConta)
-            }
+            <InputControl>            
                 <PickerContas conta={selectedConta} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
             </InputControl>
 
@@ -310,33 +309,33 @@ const FormCadastro= ({valor, setValor, tipoLancamento}: PropsNavigation) => {
                 </ButtonDetalhes>
             </SectionDetalhes>
 
-            {detalhes &&
-                <>
-                    <InputControl>
-                        <InputText
-                            onClear={() => {}}
-                            showClearIcon={false}
-                            label="Quantidade de Parcelas"
-                            colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
-                            value={parcelas}
-                            onChangeText={(text) => changeParcela(text, dataPagamento.toLocaleDateString(), dataParcelas)}
-                            placeholder="1"
-                            keyboardType="numeric"
-                            />
-                                
-                        
-                    </InputControl>
+            
+            <View style={{display: detalhes ? 'flex' : 'none'}}>
+                <InputControl>
+                    <InputText
+                        onClear={() => {}}
+                        showClearIcon={false}
+                        label="Quantidade de Parcelas"
+                        colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                        value={parcelas}
+                        onChangeText={(text) => changeParcela(text, dataPagamento.toLocaleDateString(), dataParcelas)}
+                        placeholder="1"
+                        keyboardType="numeric"
+                        />
+                            
                     
-                    <SectionCardsParcelas>
-                        {<FlatList 
-                            data={dataParcelas}
-                            renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} tipoLancamento={tipoLancamento}/>}
-                            horizontal
-                            keyExtractor={(item, index) => String(index)} 
-                            extraData={dataParcelas}/>}
-                    </SectionCardsParcelas>
-                </>
-            }
+                </InputControl>
+                
+                <SectionCardsParcelas>
+                    {<FlatList 
+                        data={dataParcelas}
+                        renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} tipoLancamento={tipoLancamento}/>}
+                        horizontal
+                        keyExtractor={(item, index) => String(index)} 
+                        extraData={dataParcelas}/>}
+                </SectionCardsParcelas>
+            </View>
+        
 
         <FAB 
             icon="check"
@@ -345,7 +344,16 @@ const FormCadastro= ({valor, setValor, tipoLancamento}: PropsNavigation) => {
             }}
             onPress={handleSubmit}
         />
+
+        <FAB 
+            icon="keyboard-voice"
+            style={{
+                backgroundColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'
+            }}
+            onPress={() => navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'RecognizeVoice'}))}
+        />
         </ContainerForm>
+
     )
 }
 
