@@ -36,7 +36,7 @@ export type PropsNavigation = {
 
 const Entrar = ({ navigation }: PropsNavigation) => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('ttt555');
+  const [password, setPassword] = useState('');
 
   const { handleLogin } = UseAuth();
 

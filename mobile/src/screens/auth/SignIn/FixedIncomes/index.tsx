@@ -115,7 +115,7 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
       <ScrollContainer>
         <Header
           onBackButton={() => backAction()}
-          title="Selecione os gastos fixos"
+          title="Selecione os ganhos fixos"
           subtitle="Seus gastos mensais."
         />
 

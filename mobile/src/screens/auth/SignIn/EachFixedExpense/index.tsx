@@ -36,7 +36,7 @@ export type PropsNavigation = {
 };
 
 const EachFixedExpense = ({ navigation }: PropsNavigation) => {
-  const [expenseAmount, setExpenseAmount] = useState<number | null>(200);
+  const [expenseAmount, setExpenseAmount] = useState<number | null>(0);
   const [formattedExpenseAmount, setFormattedExpenseAmount] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');

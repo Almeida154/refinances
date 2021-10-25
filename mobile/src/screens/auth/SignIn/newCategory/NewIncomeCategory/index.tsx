@@ -42,7 +42,7 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
 
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
-  const [name, setName] = useState<string>('Essa é nova');
+  const [name, setName] = useState<string>('');
   const [nameError, setNameError] = useState<null | string>(null);
   const nameRef = useRef<TextInput>(null);
 

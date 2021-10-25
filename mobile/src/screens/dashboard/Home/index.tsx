@@ -50,7 +50,7 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
-      console.log(await retornarIdDoUsuario())
+      console.log(await retornarIdDoUsuario());
       // O avatar é a base64 da imagem
       setAvatar(base64?.slice(base64.indexOf(',') + 1));
 
@@ -65,14 +65,6 @@ const Home = () => {
       );
     })();
   });
-
-  
-
-  // console.log(
-  //   navigation && navigation.getState
-  //     ? navigation.getState()
-  //     : 'Não carregou o navigation',
-  // );
 
   return (
     <ScrollView>
@@ -194,6 +186,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textBoasVindas: {
+    marginLeft: 10,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
