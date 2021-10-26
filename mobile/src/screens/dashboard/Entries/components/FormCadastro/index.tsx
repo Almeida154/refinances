@@ -29,7 +29,7 @@ import SelectionCategorias from '../SelectionCategories'
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
-import {PropsNavigation} from '../..'
+import {PropsNavigation, ReceiveVoice} from '../..'
 import { Text, Checkbox, FAB } from 'react-native-paper'
 import { Conta, UseContas } from '../../../../../contexts/AccountContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -38,21 +38,24 @@ import ItemCardParcela, {CardParcela, CardParcelaProps} from '../CardParcela'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
 
-const FormCadastro= ({valor, setValor, tipoLancamento}: PropsNavigation) => {
+const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor, tipoLancamento}) => {
     const {categorias} = UseCategories()
     const {contas} = UseContas()
     const {navigation} = UseDadosTemp()
+        
+    
 
     const [detalhes, setDetalhes] = useState(false)
     
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
     
-    const [descricao, setDescricao] =  useState('')
-    const [dataPagamento, setDataPagamento] =  useState((new Date(Date.now())))    
+    const [descricao, setDescricao] =  useState(receiveVoice?.item ? receiveVoice?.item : '')
+    const [dataPagamento, setDataPagamento] =  useState(receiveVoice?.data ? toDate(receiveVoice?.data) : (new Date(Date.now())) )    
     const [status, setStatus] = useState(true)
 
-    const [selectedCategoria, setSelectedCategoria] = useState('0')
-    const [selectedConta, setSelectedConta] = useState<Conta | null>(null)
+    const [selectedCategoria, setSelectedCategoria] = useState<Categoria | null>(receiveVoice?.categoria ? receiveVoice?.categoria : null)
+    console.log(selectedCategoria)
+    const [selectedConta, setSelectedConta] = useState<Conta | null>(receiveVoice?.conta ? receiveVoice?.conta : null)
 
     const [parcelas, setParcelas] =  useState('1')    
     
@@ -127,12 +130,15 @@ const FormCadastro= ({valor, setValor, tipoLancamento}: PropsNavigation) => {
             })
         })            
 
+        if(!selectedCategoria) 
+            return ToastAndroid.show("Categoria não encontrada", ToastAndroid.SHORT)
+
         const newLancamento: Lancamento = {
             id: -1,
             descricaoLancamento: descricao,
             lugarLancamento: 'extrato',
             tipoLancamento: tipoLancamento,
-            categoryLancamento: selectedCategoria,
+            categoryLancamento: selectedCategoria?.nomeCategoria,
             parcelasLancamento: newParcelas,
             essencial: false    
         }
@@ -147,8 +153,8 @@ const FormCadastro= ({valor, setValor, tipoLancamento}: PropsNavigation) => {
             ToastAndroid.show("Lançamento adicionado", ToastAndroid.SHORT)
             setDescricao('')
             setValor('')
-            setSelectedCategoria(categorias[0].nomeCategoria)
-            setSelectedConta(contas[0])
+            setSelectedCategoria(categorias ? categorias[0] : null) 
+            setSelectedConta(contas ? contas[0] : null)
             setParcelas('1')
             setDataParcelas([
                 {

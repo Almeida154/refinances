@@ -5,6 +5,7 @@ import {FormLancamentoStack} from '../../../@types/RootStackParamApp'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
+
 import FormCadastro from './components/FormCadastro'
 import FormTransferencia from './components/TransferForm'
 
@@ -21,22 +22,36 @@ import {
 } from './styles'
 import { Text } from '../../../components/Button/styles';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
+import { Conta } from '../../../contexts/AccountContext';
+import { Categoria } from '../../../contexts/CategoriesContext';
 
-
-export type PropsNavigation = {        
+export type ReceiveVoice = {
+    categoria: Categoria;
+    conta: Conta;
+    data: string;
+    fluxo: string;
+    item: string;
+    valor: string;
+    moeda: string;
+}
+export interface PropsNavigation {     
     tipoLancamento: string,
     valor: string,
     setValor: React.Dispatch<React.SetStateAction<string>>
-    
+    receiveVoice?: ReceiveVoice
 }
 
-const FormLancamento = () => {
-    const [selected, setSelected] = useState(0)    
+const FormLancamento = ({route}: any) => {
+    const receiveVoice = route.params?.receiveVoice
+    
+    console.log('route.params', receiveVoice?.fluxo)
+    
+    const [selected, setSelected] = useState(receiveVoice ? receiveVoice.fluxo == 'despesa' ? 0 : 1 : 0)    
     
     const {navigation} = UseDadosTemp()
     navigation.setOptions({headerShown: false})
     
-    const [valor, setValor] = useState('')
+    const [valor, setValor] = useState(receiveVoice?.valor ? receiveVoice.valor : '')
     
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -75,13 +90,13 @@ const FormLancamento = () => {
                             <Buttons onPress={() => setSelected(2)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>transferência</TextButton></Buttons>
                         </SectionButtons>
                     </Header>
-
+                    
                     {
-                        selected == 0 && <FormCadastro valor={valor} setValor={setValor} tipoLancamento={"despesa"}/>   
+                        selected == 0 && <FormCadastro receiveVoice={receiveVoice} valor={valor} setValor={setValor} tipoLancamento={"despesa"}/>   
                 
                     }
                     {
-                        selected == 1 && <FormCadastro valor={valor} setValor={setValor}  tipoLancamento={"receita"}/>   
+                        selected == 1 && <FormCadastro receiveVoice={receiveVoice} valor={valor} setValor={setValor}  tipoLancamento={"receita"}/>   
                     }
                     {
                         selected == 2 && <FormTransferencia valor={valor} setValor={setValor}  tipoLancamento="transferencia"/>   

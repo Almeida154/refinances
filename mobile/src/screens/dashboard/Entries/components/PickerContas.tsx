@@ -43,7 +43,7 @@ const PickerContas: React.FC<PropsPickerContas> = ({
   };
 
   useEffect(() => {
-    changeAccount(contas == null ? null : contas[0]);
+    changeAccount(contas == null ? null : conta ? conta : contas[0]);
   }, [contas])
 
   useEffect(() => {

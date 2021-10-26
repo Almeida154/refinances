@@ -16,9 +16,10 @@ export type GoalsStack = {
 };
 
 export type FormLancamentoStack = {
-  Main: undefined;
+  Main: undefined | any;
 
   AddCategory: { tipoCategoria: string };
+  RecognizeVoice: undefined;
 };
 
 type PropsNavigationApp = {

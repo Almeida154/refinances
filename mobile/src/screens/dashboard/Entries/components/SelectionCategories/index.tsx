@@ -36,9 +36,9 @@ import { StackActions } from '@react-navigation/native'
 
 
 type PropsSelectionCategorias = {
-    tipoCategoria: string,    
-    setCategoria: React.Dispatch<React.SetStateAction<string>>,    
-    categoria: string
+    tipoCategoria: string
+    setCategoria: React.Dispatch<React.SetStateAction<null | Categoria>>,    
+    categoria: null | Categoria,    
 }
 
 const RenderOption = (settings: OptionTemplateSettings) => {
@@ -112,9 +112,9 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
     useEffect(() => {
         if(categorias == null) {
             setCategoriasAtual([])
-        } else {
+        } else if(categoria == null || categoria.tipoCategoria != categorias[0].tipoCategoria){
             setCategoriasAtual(categorias)
-            setCategoria(categorias[0].nomeCategoria)
+            setCategoria(categorias[0])
         }
 
 
@@ -150,7 +150,7 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
                     onClear={() => {}}
                     showClearIcon={false}
                     label="Categoria"
-                    value={categoria == '0' ? '' : categoria}
+                    value={categoria ? categoria.nomeCategoria : ''}
                     placeholder="Selecione uma categoria para seu lançamento"
                     placeholderTextColor={"#bbb"}
                     colorLabel={tipoCategoria == 'despesa' ? '#EE4266' : '#6CB760'} 
@@ -170,7 +170,7 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
                 maxHeight={400}
                 modalStyle={{minHeight: 400}}
                 onValueChange={value => {
-                    setCategoria(value.nomeCategoria)
+                    setCategoria(value)
                 }}
                 style={{display: 'none'}}
             />

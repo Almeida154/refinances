@@ -3,6 +3,8 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import {StackActions} from '@react-navigation/native'
+
 import {UseCategories, Categoria} from '../../../../../contexts/CategoriesContext'
 import {UseContas, Conta} from '../../../../../contexts/AccountContext'
 import {toDate} from '../../../../../helpers/manipularDatas'
@@ -18,15 +20,22 @@ import {
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
+import {FormLancamentoStack} from '../../../../../@types/RootStackParamApp'
+
+import {ReceiveVoice} from '../../'
+
 import Voice, {
   SpeechRecognizedEvent,
   SpeechResultsEvent,
   SpeechErrorEvent,
 } from '@react-native-voice/voice';
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 type Props = {
     categorias: Categoria[],
     contas: Conta[]
+    navigation: any
 };
 
 type State = {
@@ -37,7 +46,7 @@ type State = {
   started: string;
   results: string[];
   partialResults: string[];
-  isRecording: boolean;
+  isRecording: boolean;  
 };
 
 class VoiceTest extends Component<Props, State> {
@@ -89,7 +98,7 @@ class VoiceTest extends Component<Props, State> {
     this.setState({
       end: '√',
     });
-  };
+  }
 
   onSpeechError = (e: SpeechErrorEvent) => {
     console.log('onSpeechError: ', e);
@@ -107,7 +116,11 @@ class VoiceTest extends Component<Props, State> {
     this.setState({
       results: e.value,
     });
-  };
+
+          
+      this.generatePrincipal(this.tratoNoTexto(e.value[0]))      
+    
+  };  
 
   onSpeechPartialResults = (e: SpeechResultsEvent) => {
     if(!e.value ) {
@@ -121,10 +134,7 @@ class VoiceTest extends Component<Props, State> {
   };
 
   onSpeechVolumeChanged = (e: any) => {
-    console.log('onSpeechVolumeChanged: ', e);
-    this.setState({
-      pitch: e.value,
-    });
+   
   };
 
   _startRecognizing = async () => {
@@ -148,8 +158,7 @@ class VoiceTest extends Component<Props, State> {
     }
   };
 
-  _stopRecognizing = async () => {
-      this.generatePrincipal(this.tratoNoTexto('Eu comprei um rifle por r$ 50 da categoria moradia na conta principal em 3 do 4 de 2020'))
+  _stopRecognizing = async () => {      
     try {
       await Voice.stop();
     } catch (e) {
@@ -219,15 +228,18 @@ class VoiceTest extends Component<Props, State> {
     // item
     let i = indexFim_acaoFluxo
 
+    
     for (; texto.substr(i, 3) != 'por' && i < texto.length; i++) {
 
       comandos.item += texto[i]
     }
 
     comandos.item = comandos.item.trim()
-
+    
     if (comandos.item == '')
       return 'nao foi:O nome do lançamento não foi encontrado'
+    if(i == texto.length)
+      return 'nao foi:Não foi encontrado a relação do lançamento com o preço (Pode ter faltado a palavra \'por\')'
 
     // dinheiro
     let [moeda, valor] = texto.substr(i + 3).trim().split(' ')
@@ -237,7 +249,6 @@ class VoiceTest extends Component<Props, State> {
 
     i += valor.length + moeda.length + 2
 
-    
     if (comandos.valor == undefined || comandos.moeda == undefined)
     return 'nao foi:O valor ou a moeda não foram encontrados'
     //categoria
@@ -246,20 +257,24 @@ class VoiceTest extends Component<Props, State> {
 
     const aux = texto.substr(i + 4)
 
+    
+
     this.props.categorias.map(item => {
       if (aux.indexOf(item.nomeCategoria.toLocaleLowerCase()) != -1) {
-        comandos.categoria = item.nomeCategoria
+        comandos.categoria = item
       }
     })
     
     //conta
     this.props.contas.map(item => {
         if (aux.indexOf(item.descricao.toLocaleLowerCase()) != -1) {
-          comandos.conta = item.descricao
+          comandos.conta = item
         }
       })
 
     const cacarDatas = aux.split(' ')
+
+    
 
     for(var index = 0;index < cacarDatas.length-4;index++) {        
         
@@ -282,7 +297,7 @@ class VoiceTest extends Component<Props, State> {
   }
 
   generatePrincipal(texto: string) {
-    let text = "eu comprei uma coca por R$ 10"
+    let text: string
     
     if ((text = this.primeiroComando(texto)) && text.indexOf('nao foi')) {
       console.log('caiu no primeiroComando')
@@ -297,9 +312,9 @@ class VoiceTest extends Component<Props, State> {
         valor: comandosJson.valor,
         data: comandosJson.data,
         conta: comandosJson.conta,
-      }
+      }      
 
-      console.log(itensNovo)
+      this.props.navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveVoice: itensNovo}}))
     } else {
       // alert('Nenhum foi encontrado')
       console.log('deu em nada',text)
@@ -404,10 +419,12 @@ export default () => {
     const {categorias, handleReadByUserCategorias} = UseCategories()
     const {contas, handleReadByUserContas} = UseContas()
 
+    const {navigation} = UseDadosTemp()
+
     useEffect(() => {
         (async function () {
             if(!categorias) {
-                handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa')
+                handleReadByUserCategorias(await retornarIdDoUsuario(), 'todos')
             }
             if(!contas) {
                 handleReadByUserContas(await retornarIdDoUsuario())
@@ -418,6 +435,6 @@ export default () => {
 
 
     return (
-        <VoiceTest categorias={categorias ? categorias : []} contas={contas ? contas : []}/>
+        <VoiceTest navigation={navigation} categorias={categorias ? categorias : []} contas={contas ? contas : []}/>
     )
 };

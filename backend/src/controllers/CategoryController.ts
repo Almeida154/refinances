@@ -102,12 +102,26 @@ class CategoryController {
             return response.send({error: "usuário não encontrado"})
         }
 
-        const categories = (await categoryRepository.find({
-            where: { tipoCategoria: request.body.tipoCategoria, 
-                    userCategory: user 
-                   }
-        }));        
+        
+        let categories 
 
+        if(request.body.tipoCategoria == 'todos') {
+            categories = (await categoryRepository.find({
+                where: {
+                        userCategory: user 
+                       }
+                }));        
+                
+        } else {
+            categories = (await categoryRepository.find({
+                where: {
+                        tipoCategoria: request.body.tipoCategoria,
+                        userCategory: user 
+                       }
+                }));  
+        }
+         
+        
         return response.send({ categories });
     }   
 
