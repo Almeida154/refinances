@@ -28,7 +28,7 @@ class LancamentoController {
         const lancamentoRepository = getRepository(Lancamento);  
         const categoryRepository = getRepository(Category);
 
-        const { descricaoLancamento, tipoLancamento, lugarLancamento, categoryLancamento } = request.body;
+        const { descricaoLancamento, tipoLancamento, lugarLancamento, parcelaBaseada = -1, categoryLancamento } = request.body;
 
         if (descricaoLancamento == '') return response.send({ error: "nome em branco!" });
         if (tipoLancamento != 'receita' && tipoLancamento != 'despesa') return response.send({ error: "Não existe esse tipo" });
@@ -47,6 +47,8 @@ class LancamentoController {
         const newLancamento = request.body;
         newLancamento.essencial = true
         newLancamento.categoryLancamento = categoryExists;
+        newLancamento.parcelaBaseada = parcelaBaseada;
+
         newLancamento.userLancamento = categoryExists.userCategory
         
         const lancamento = lancamentoRepository.create(newLancamento);

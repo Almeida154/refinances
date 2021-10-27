@@ -82,26 +82,34 @@ class UserController {
     }
     
     //Lancamento
-
+    
     entries.map(async (item) => {
+      
+
       const categoriaLancamento = categoriasPadroes.findIndex((categoria) => {        
         return categoria.nomeCategoria == item.categoryLancamento.nomeCategoria
       })
-
-      console.log(categoriasPadroes[categoriaLancamento])
 
       const newLancamento = await lancamentoRepository.save(lancamentoRepository.create({
         descricaoLancamento: item.descricaoLancamento,
         essencial: true,
         lugarLancamento: 'extrato',
+        parcelaBaseada: 0,
         tipoLancamento: item.tipoLancamento,
         userLancamento: user,
         categoryLancamento: categoriasPadroes[categoriaLancamento]
       }))
 
-      item.parcelasLancamento.map(async (parcela) => {
+      //parcela
+      item.parcelasLancamento.map(async (parcela) => {       
+        contaPrincipal.saldoConta += newLancamento.tipoLancamento == 'despesa' ?  -parcela.valorParcela : parcela.valorParcela
+
+        await contaRepository.update(contaPrincipal.id, {saldoConta: contaPrincipal.saldoConta})            
+        let updateConta = await contaRepository.findOne({where: {id: contaPrincipal.id}})
+      
+
         const newParcela = parcelaRepository.create({
-          contaParcela: contaPrincipal,
+          contaParcela: updateConta,
           lancamentoParcela: newLancamento,
           userParcela: user,
           statusParcela: true,

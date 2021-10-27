@@ -30,6 +30,9 @@ export class Lancamento {
   @Column()
   essencial: boolean;
 
+  @Column()
+  parcelaBaseada: number; //Se o gasto não é mensal , então o valor é -1, se é mensal, o número será o indice da parcela que servira de base para as futuras
+
   // Foreign Keys
 
   @ManyToOne((type) => Category, (category) => category.lancamentosCategory)

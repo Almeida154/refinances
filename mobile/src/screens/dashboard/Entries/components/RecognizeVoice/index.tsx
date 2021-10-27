@@ -118,7 +118,7 @@ class VoiceTest extends Component<Props, State> {
     });
 
           
-      this.generatePrincipal(this.tratoNoTexto(e.value[0]))      
+      
     
   };  
 
@@ -161,6 +161,7 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
+      this.generatePrincipal(this.tratoNoTexto("Eu comprei um fuzil por r$ 20"))      
     } catch (e) {
       console.error(e);
     }

@@ -138,6 +138,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
             descricaoLancamento: descricao,
             lugarLancamento: 'extrato',
             tipoLancamento: tipoLancamento,
+            parcelaBaseada: -1,
             categoryLancamento: selectedCategoria?.nomeCategoria,
             parcelasLancamento: newParcelas,
             essencial: false    

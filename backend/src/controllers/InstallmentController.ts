@@ -70,9 +70,7 @@ class ParcelaController {
 
             await contaRepository.update(contaExists.id, {saldoConta: contaExists.saldoConta})            
             updateConta = await contaRepository.findOne({where: {id: contaExists.id}})
-        }
-
-        console.log(updateConta)
+        }        
 
         newParcela.userParcela = contaExists.userConta;
         newParcela.contaParcela = updateConta ? updateConta : contaExists
@@ -104,8 +102,7 @@ class ParcelaController {
             .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
             .leftJoinAndSelect("parcela.userParcela", "user")
             .leftJoinAndSelect("lancamento.categoryLancamento", "category")
-            .where("user.id = :id", {id: user.id})
-            .where("parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth", {firstDayOfMonth, lastDayOfMonth})
+            .where("(parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth OR lancamento.parcelaBaseada != -1) AND user.id = :id", {firstDayOfMonth, lastDayOfMonth, id: user.id})
             .orderBy("parcela.dataParcela", "ASC")            
             .getMany()       
 
@@ -118,15 +115,11 @@ class ParcelaController {
             }
         }})
         
-        const dataByUser = []
+        const dataByUser = data
 
-        data.map(item => {
-            if(item.userParcela.id == user.id) {
-                item.userParcela = undefined
-                dataByUser.push(item)
+        console.log(dataByUser)
 
-            }
-        })
+        
         
 
         if(dataByUser.length == 0) {
@@ -135,7 +128,10 @@ class ParcelaController {
 
         const parcelas = []
 
-        let atual = dataByUser[0].dataParcela.toLocaleDateString()        
+        const [dia, mes, ano] = dataByUser[0].dataParcela.toLocaleDateString().split('/')
+
+        let atual = new Date(parseInt(ano), firstDayOfMonth.getMonth(), parseInt(dia)).toLocaleDateString()
+
 
         let aux = []
 
@@ -149,24 +145,26 @@ class ParcelaController {
         })
 
         dataByUser.map((item: any, index) => {
-            const parcelaData = item.dataParcela.toLocaleDateString()
+            const [dia, mes, ano] = item.dataParcela.toLocaleDateString().split('/')
 
-            
+            const parcelaData = new Date(parseInt(ano), firstDayOfMonth.getMonth(), parseInt(dia)).toLocaleDateString()
+
+            console.log('parcelaData',parcelaData)
+
             for(var i = 0;i < dataLancamentos.length;i++) {                
                 if(dataLancamentos[i].id == item.lancamentoParcela.id) {                    
-                    console.log(dataLancamentos[i].parcelasLancamento)
                     for(var j = 0;j < dataLancamentos[i].parcelasLancamento.length;j++) {
                         if(dataLancamentos[i].parcelasLancamento[j].id == item.id) {
                             item.indexOfLancamento = j+1
                             item.totalParcelas = dataLancamentos[i].parcelasLancamento.length
+                            item.dataParcela = new Date(parseInt(ano), firstDayOfMonth.getMonth(), parseInt(dia))
                             break
                         }
                     }
                     break
                 }
             }
-        
-            console.log(item)
+                    
 
             if(parcelaData == atual) {
                 aux.push(item)

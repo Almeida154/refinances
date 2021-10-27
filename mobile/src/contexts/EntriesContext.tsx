@@ -12,6 +12,7 @@ export type Lancamento = {
   descricaoLancamento: string;
   tipoLancamento: string;
   lugarLancamento: string;
+  parcelaBaseada: number;
   categoryLancamento: Categoria | string;
   parcelasLancamento: Parcela[];
   essencial: boolean;
