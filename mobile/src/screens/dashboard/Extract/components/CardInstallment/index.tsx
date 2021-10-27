@@ -26,11 +26,12 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
     
     const textParcela = item.totalParcelas != 1 ? item.indexOfLancamento + 'ª parcela de ' + item.totalParcelas : ''
     
+    console.log(item.lancamentoParcela.categoryLancamento)
     return (
         <ContainerItem>
             <SectionLancamento>   
-                <SectionIcon style={{borderColor: 'yellow'   }}>
-                    <Icon size={24} color={'gray'} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' ? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
+                <SectionIcon style={{borderColor: typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento ? 'yellow' : item.lancamentoParcela.categoryLancamento.corCategoria   }}>
+                    <Icon size={24} color={'gray'} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
                 </SectionIcon>
                 <SectionDescription>             
                     <LabelName>{item.lancamentoParcela.descricaoLancamento}</LabelName>

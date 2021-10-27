@@ -73,6 +73,7 @@ class UserController {
           nomeCategoria: categoryLancamento.nomeCategoria,
           tipoCategoria: categoryLancamento.tipoCategoria,
           userCategory: user,        
+          corCategoria: categoryLancamento.corCategoria
         })
   
         categoriasPadroes.push(await categoryRepository.save(newCategoria))

@@ -28,6 +28,9 @@ export class Category {
   @Column()
   tipoCategoria: string;
 
+  @Column()
+  corCategoria: string;
+
   // Foreign Keys
 
   @ManyToOne((type) => User, (user) => user.categoriesUser)

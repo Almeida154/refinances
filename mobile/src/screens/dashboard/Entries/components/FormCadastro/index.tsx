@@ -351,14 +351,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
             }}
             onPress={handleSubmit}
         />
-
-        <FAB 
-            icon="keyboard-voice"
-            style={{
-                backgroundColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'
-            }}
-            onPress={() => navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'RecognizeVoice'}))}
-        />
+      
         </ContainerForm>
 
     )
