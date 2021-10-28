@@ -14,7 +14,7 @@ export type Parcela = {
     id: number,
     dataParcela: Date,
     valorParcela: number,
-    contaParcela: number | null
+    contaParcela: Conta | null
     lancamentoParcela: number | Lancamento,
     statusParcela: boolean
 }
@@ -57,7 +57,7 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                 const response = await api.post('/installment/create', {
                     dataParcela: item.dataParcela,
                     valorParcela: item.valorParcela,
-                    contaParcela: item.contaParcela,
+                    contaParcela: item.contaParcela?.id,
                     lancamentoParcela: item.lancamentoParcela,
                     statusParcela: item.statusParcela
                 });

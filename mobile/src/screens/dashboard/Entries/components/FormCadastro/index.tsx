@@ -123,7 +123,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
             newParcelas.push({
                 id: -1,
                 lancamentoParcela: -1,
-                contaParcela: item.conta == null ? 0 : item.conta.id,
+                contaParcela: item.conta == null ? 0 : item.conta,
                 dataParcela: toDate(item.data),
                 valorParcela: item.valor,
                 statusParcela: item.status                    

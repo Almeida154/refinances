@@ -15,7 +15,9 @@ import {
     Container,
     Instructions,
     Stat,
-    Welcome
+    Welcome,
+    Header,
+    ButtonRecord
 } from './styles'
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
@@ -30,7 +32,12 @@ import Voice, {
   SpeechErrorEvent,
 } from '@react-native-voice/voice';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+import { Lancamento } from '../../../../../contexts/EntriesContext';
+import { Parcela } from '../../../../../contexts/InstallmentContext';
+
 import { StackNavigationProp } from '@react-navigation/stack';
+import CardInstallment from '../../../Extract/components/CardInstallment'
+
 
 type Props = {
     categorias: Categoria[],
@@ -47,6 +54,7 @@ type State = {
   results: string[];
   partialResults: string[];
   isRecording: boolean;  
+  itemNovo: any | null;
 };
 
 class VoiceTest extends Component<Props, State> {
@@ -60,7 +68,8 @@ class VoiceTest extends Component<Props, State> {
     results: [],
     partialResults: [],
     isRecording: false, 
-    categorias: []   
+    categorias: [],
+    itemNovo: null
   };
   
   constructor(props: Props) {
@@ -148,7 +157,8 @@ class VoiceTest extends Component<Props, State> {
       results: [],
       partialResults: [],
       end: '',      
-      isRecording: true
+      isRecording: true,
+      itemNovo: null
     });
 
     try {
@@ -161,7 +171,7 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
-      this.generatePrincipal(this.tratoNoTexto("Eu comprei um fuzil por r$ 20"))      
+       this.generatePrincipal(this.tratoNoTexto("Eu comprei uma picareta por r$ 20 da categoria cuidados pessoais da conta principal"))      
     } catch (e) {
       console.error(e);
     }
@@ -195,8 +205,18 @@ class VoiceTest extends Component<Props, State> {
 
 
   primeiroComando(texto: string) {
-    const comandos = { item: '', valor: '', moeda: '', fluxo: '', categoria: '', conta: '', data: '' }
-
+    const captureLancamento = {
+      id: -1,
+      descricaoLancamento: '',
+      tipoLancamento: '',
+      parcelaBaseada: -1,
+      lugarLancamento: 'extrato',      
+      parcelasLancamento: [],      
+      essencial: false,
+      categoryLancamento: {} as Categoria
+    } as Lancamento
+    const captureParcela = {} as Parcela
+    
     const acaoFluxoReceita = ['vendi', 'vendi um', 'vendi uma', 'recebi uma', 'recebi', 'vendido', 'recebido']
     const acaoFluxoDespesa = ['comprei ', 'comprei um', , 'comprei uma', 'comprado', 'torrei']
 
@@ -206,24 +226,24 @@ class VoiceTest extends Component<Props, State> {
     let indexFim_acaoFluxo: any
     acaoFluxoReceita.map((item, index) => {
       if (texto.indexOf(item) != -1) {
-        comandos.fluxo = 'receita'
+        captureLancamento.tipoLancamento = 'receita'
 
         indexFim_acaoFluxo = texto.indexOf(item) + item.length
       }
     })
 
-    if (comandos.fluxo == '')
+    if (captureLancamento.tipoLancamento == '')
       acaoFluxoDespesa.map((item, index) => {
           if(!item) return
 
         if (texto.indexOf(item) != -1) {
-          comandos.fluxo = 'despesa'
+          captureLancamento.tipoLancamento = 'despesa'
 
           indexFim_acaoFluxo = texto.indexOf(item) + item.length
         }
       })
 
-    if (comandos.fluxo == '')
+    if (captureLancamento.tipoLancamento == '')
       return 'nao foi:fluxo de se é receita ou despesa não encontrado'
 
     // item
@@ -232,12 +252,12 @@ class VoiceTest extends Component<Props, State> {
     
     for (; texto.substr(i, 3) != 'por' && i < texto.length; i++) {
 
-      comandos.item += texto[i]
+      captureLancamento.descricaoLancamento += texto[i]
     }
 
-    comandos.item = comandos.item.trim()
+    captureLancamento.descricaoLancamento = captureLancamento.descricaoLancamento.trim()
     
-    if (comandos.item == '')
+    if (captureLancamento.descricaoLancamento == '')
       return 'nao foi:O nome do lançamento não foi encontrado'
     if(i == texto.length)
       return 'nao foi:Não foi encontrado a relação do lançamento com o preço (Pode ter faltado a palavra \'por\')'
@@ -245,12 +265,11 @@ class VoiceTest extends Component<Props, State> {
     // dinheiro
     let [moeda, valor] = texto.substr(i + 3).trim().split(' ')
 
-    comandos.valor = valor
-    comandos.moeda = moeda == 'r$' ? 'reais' : 'dolares'
+    captureParcela.valorParcela = parseFloat(valor)
 
     i += valor.length + moeda.length + 2
 
-    if (comandos.valor == undefined || comandos.moeda == undefined)
+    if (captureParcela.valorParcela == undefined)
     return 'nao foi:O valor ou a moeda não foram encontrados'
     //categoria
     
@@ -262,14 +281,14 @@ class VoiceTest extends Component<Props, State> {
 
     this.props.categorias.map(item => {
       if (aux.indexOf(item.nomeCategoria.toLocaleLowerCase()) != -1) {
-        comandos.categoria = item
+        captureLancamento.categoryLancamento = item
       }
     })
     
     //conta
     this.props.contas.map(item => {
         if (aux.indexOf(item.descricao.toLocaleLowerCase()) != -1) {
-          comandos.conta = item
+          captureParcela.contaParcela = item
         }
       })
 
@@ -288,13 +307,13 @@ class VoiceTest extends Component<Props, State> {
            ) {
             const dataLocalAux = cacarDatas[index] + '/' + cacarDatas[index+2] + '/' + cacarDatas[index+4]
             
-            comandos.data = toDate(dataLocalAux).toLocaleDateString()
+            captureParcela.dataParcela = toDate(dataLocalAux)
            }
     }
 
-    console.log(comandos)
+    captureParcela.lancamentoParcela = captureLancamento
 
-    return JSON.stringify(comandos)
+    return JSON.stringify(captureParcela)
   }
 
   generatePrincipal(texto: string) {
@@ -302,26 +321,25 @@ class VoiceTest extends Component<Props, State> {
     
     if ((text = this.primeiroComando(texto)) && text.indexOf('nao foi')) {
       console.log('caiu no primeiroComando')
-      const comandosJson = JSON.parse(text)
-      let itensNovo = {}
+      const comandosJson = JSON.parse(text)    
 
-      itensNovo = {       
-        item: comandosJson.item,
-        fluxo: comandosJson.fluxo,
-        categoria: comandosJson.categoria,
-        moeda: comandosJson.moeda,
-        valor: comandosJson.valor,
-        data: comandosJson.data,
-        conta: comandosJson.conta,
-      }      
+      this.setState({itemNovo: comandosJson})
 
-      this.props.navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveVoice: itensNovo}}))
+      // this.props.navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveVoice: itensNovo}}))
     } else {
       // alert('Nenhum foi encontrado')
       console.log('deu em nada',text)
     }
   }
   
+  ItemHandled = (item: any) => {        
+
+    if(!item) return
+    
+    return (
+      <CardInstallment item={item}/>
+    )
+  }
 
   tratoNoTexto(texto: string) {
     let aux = texto.split(' ')
@@ -372,16 +390,18 @@ class VoiceTest extends Component<Props, State> {
   render() {
     return (
       <Container>
-        <Welcome>Welcome to React Native Voice!</Welcome>
-        <Instructions>
-          Press the button and start speaking.
+       
+       <Header>
+          <ButtonRecord onPress={this._startRecognizing}>
+            <Button style={{width: 100, height: 100}} source={require('./button.png')} />
+          </ButtonRecord>          
+       </Header>
+
+
+        <Instructions style={{textAlign: 'justify'}}>
+          Clique no botão e adicione por comandos de voz: Ex: “Eu comprei um sapato por 5 reais”, “Eu comprei arroz por 15 reais da categoria mercado no dia 10 do 10 de 2021”
         </Instructions>
-        <Stat>{`Started: ${this.state.started}`}</Stat>
-        <Stat>{`Recognized: ${
-          this.state.recognized
-        }`}</Stat>
-        <Stat>{`Pitch: ${this.state.pitch}`}</Stat>
-        <Stat>{`Error: ${this.state.error}`}</Stat>
+        
         <Stat>Results</Stat>
         {this.state.results.map((result, index) => {
           return (
@@ -398,19 +418,14 @@ class VoiceTest extends Component<Props, State> {
             </Stat>
           );
         })}
-        <Stat>{`End: ${this.state.end}`}</Stat>
-        <TouchableHighlight onPress={this._startRecognizing}>
-          <Button source={require('./button.png')} />
-        </TouchableHighlight>
+        
         <TouchableHighlight onPress={this._stopRecognizing}>
           <Action>Stop Recognizing</Action>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this._cancelRecognizing}>
-          <Action>Cancel</Action>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this._destroyRecognizer}>
-          <Action>Destroy</Action>
-        </TouchableHighlight>
+        </TouchableHighlight>   
+
+        {
+          this.ItemHandled(this.state.itemNovo)     
+        }
       </Container>
     );
   }
