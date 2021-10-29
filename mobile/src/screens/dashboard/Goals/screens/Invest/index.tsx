@@ -12,9 +12,11 @@ import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Button from '../../../../../components/Button';
+import { Goal } from '../TabNavigator/styles';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackActions } from '@react-navigation/native';
+
 
 import {
   AlinhaParaDireita,
@@ -23,6 +25,12 @@ import {
   TextInputValue,
   Header,
 } from '../../../Entries/styles';
+
+import {
+  TextGoals,
+  TextProgress
+} from './styles';
+
 import InputText from '../../../../../components/InputText';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
@@ -67,6 +75,7 @@ const Invest = ({ navigation, route }: Props) => {
     } as Meta;
 
     handleAtualizarMeta(newGoal, goal.id);
+    navigation.dispatch(StackActions.replace('Main'))
   }
 
   const novoSaldo = () => {
@@ -93,25 +102,12 @@ const Invest = ({ navigation, route }: Props) => {
       </Header>
 
       <View style={styles.container}>
-        <Text>{goal.saldoAtualMeta}</Text>
+      <TextProgress>
+          Você já depositou em sua meta
+        </TextProgress>
+        <TextGoals style={{left: '40%'}}>R$ {goal.saldoFinalMeta}</TextGoals>
 
-        {/* <InputText
-          value={idMeta}
-          label="Qual a meta?"
-          error={errorMeta}
-          showClearIcon={idMeta != ''}
-          keyboardType={'numeric'}
-          placeholder={'Id: 1'}
-          onClear={() => {
-            setErrorMeta(null);
-            setMeta('');
-          }}
-          onChangeText={txt => {
-            setErrorMeta(null);
-            setMeta(txt);
-          }}
-        />
- */}
+
         {/* Adicionar o picker de contas aqui 
           <InputText
             value={valorDeposito}

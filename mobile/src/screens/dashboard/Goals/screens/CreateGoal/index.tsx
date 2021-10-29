@@ -94,6 +94,7 @@ const CreateGoal = () => {
       console.log("realizado: ", realizado)
       handleAdicionarMeta(newGoal);
       console.log(newGoal);
+      
       ToastAndroid.show("Meta cadastrada com sucesso", ToastAndroid.SHORT)
 
     } else if (meta == '') {
@@ -105,6 +106,7 @@ const CreateGoal = () => {
     if (parseFloat(investidoMeta) < 0 || investidoMeta == '') {
       setinvestidoError('Insira um valor válido!');
     }
+    
   }
   
   const realizacao = () => {
@@ -115,7 +117,6 @@ const CreateGoal = () => {
       console.log("realizado: ", realizado)
     return realizado;
 
-    
   };
 
   return (
@@ -219,7 +220,7 @@ const CreateGoal = () => {
         />
 
         <Button
-          onPress={handleCreateGoal()}
+          onPress={handleCreateGoal}
           title="Criar"
           backgroundColor="#CCC"
           color="#444"

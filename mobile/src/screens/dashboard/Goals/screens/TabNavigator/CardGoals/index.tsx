@@ -70,7 +70,7 @@ const CardGoals = ({ item }: PropsCardGoals) => {
       </InvestedMoney>
 
       <Percent>
-        <PercentText>{percentageBalance}%</PercentText>
+        <PercentText>{percentageBalance.toFixed(1)}%</PercentText>
       </Percent>
     </Goal>
   );
