@@ -7,14 +7,16 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, ToastAndroid, View } from 'react-native';
 
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Button from '../../../../../components/Button';
+import { Goal } from '../TabNavigator/styles';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackActions } from '@react-navigation/native';
+
 
 import {
   AlinhaParaDireita,
@@ -23,21 +25,24 @@ import {
   TextInputValue,
   Header,
 } from '../../../Entries/styles';
+
+import {
+  TextGoals,
+  TextProgress
+} from './styles';
+
 import InputText from '../../../../../components/InputText';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
-import PickerContas from '../../../Entries/components/PickerCategoria';
+import PickerContas from '../../../Entries/components/PickerContas';
 
 type Props = NativeStackScreenProps<GoalsStack, 'InvestGoals'>;
 
 const Invest = ({ navigation, route }: Props) => {
   const [valorDeposito, setValor] = useState('');
   const [errorValor, setErrorValor] = useState<any | null>(null);
-
-  const [idMeta, setMeta] = useState('');
-  const [errorMeta, setErrorMeta] = useState<any | null>(null);
 
   const [selectedConta, setSelectedConta] = useState(0);
 
@@ -52,6 +57,8 @@ const Invest = ({ navigation, route }: Props) => {
       setGoal(goal);
 
       console.debug('O GOAL AQUI Ó:::: ', goal);
+
+      console.log("conta: "+selectedConta);
     })();
   }, []);
 
@@ -66,7 +73,14 @@ const Invest = ({ navigation, route }: Props) => {
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
 
-    handleAtualizarMeta(newGoal, goal.id);
+    if(parseFloat(valorDeposito) <= 0 || valorDeposito == ''){
+      ToastAndroid.show("Insira um valor válido!", ToastAndroid.SHORT)
+    } 
+    else{
+      handleAtualizarMeta(newGoal, goal.id);
+      ToastAndroid.show("Depósito realizado com sucesso!", ToastAndroid.SHORT)
+      navigation.dispatch(StackActions.replace('Main'))
+    }
   }
 
   const novoSaldo = () => {
@@ -93,25 +107,14 @@ const Invest = ({ navigation, route }: Props) => {
       </Header>
 
       <View style={styles.container}>
-        <Text>{goal.saldoAtualMeta}</Text>
+      <TextProgress>
+          Você já depositou 
+          <TextGoals style={{left: '40%'}}> R$ {(goal.saldoFinalMeta)} </TextGoals>
+          em sua meta
+      </TextProgress>
+        
 
-        {/* <InputText
-          value={idMeta}
-          label="Qual a meta?"
-          error={errorMeta}
-          showClearIcon={idMeta != ''}
-          keyboardType={'numeric'}
-          placeholder={'Id: 1'}
-          onClear={() => {
-            setErrorMeta(null);
-            setMeta('');
-          }}
-          onChangeText={txt => {
-            setErrorMeta(null);
-            setMeta(txt);
-          }}
-        />
- */}
+
         {/* Adicionar o picker de contas aqui 
           <InputText
             value={valorDeposito}
@@ -123,7 +126,8 @@ const Invest = ({ navigation, route }: Props) => {
               setValor('');
             }}/>
 
-          <PickerContas conta={selectedConta} setConta={setSelectedConta}/>*/}
+
+        <PickerContas conta={selectedConta} setConta={setSelectedConta}/>*/}
 
         <Button
           title={'Investir'}

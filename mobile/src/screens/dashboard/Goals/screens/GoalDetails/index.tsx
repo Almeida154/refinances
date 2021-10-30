@@ -30,6 +30,7 @@ import { toDate } from '../../../../../helpers/manipularDatas';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
 import Icon from 'react-native-vector-icons/EvilIcons';
+import { StackActions } from 'react-navigation';
 
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
@@ -44,7 +45,6 @@ const GoalDetails = ({ route }: Props) => {
     (async () => {
       const goal = await handleGetGoalById(route.params?.goalId);
       setGoal(goal);
-
       console.debug('O GOAL AQUI Ó:::: ', goal);
     })();
   }, []);
@@ -61,7 +61,7 @@ const GoalDetails = ({ route }: Props) => {
   // Algum cálculo para calcular a porcentagem aqui
   const percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta;
   const percBalance = percentageBalance / 100; 
-  //const saldo = goal.saldoAtualMeta.toFixed(2)
+  const saldo = (goal.saldoAtualMeta);
 
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
@@ -76,19 +76,19 @@ const GoalDetails = ({ route }: Props) => {
 
         {/* Ta dando merda aqui */}
         <ProgressBar
-          //progress={percentageBalance / 100}
-          progress={0.1}
-          color="#F81650"
-          style={{
-            height: 10,
-            marginVertical: 8,
-            borderRadius: 10,
-          }}
-        />
+        //progress={percBalance}
+        progress={0.1}
+        color="#F81650"
+        style={{
+          height: 10,
+          marginVertical: 8,
+          borderRadius: 10,
+        }}
+      />
 
         <TextProgress>
           Você já progrediu sua meta em
-          <TextGoals> {percentageBalance}% </TextGoals>
+          <TextGoals> {percentageBalance.toFixed(1)}% </TextGoals>
           de <TextGoals>R$ {goal.saldoFinalMeta}</TextGoals>
         </TextProgress>
 
