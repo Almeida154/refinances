@@ -36,7 +36,7 @@ export const Separator = styled.View`
 export const LabelDescriptionAccount = styled.Text`
     font-size: 20px;
     fontFamily: ${`${fonts.familyType.black}`};
-    color: #555;
+    color: #444;
 `
 export const LabelManager = styled.Text`
     font-weight: 600;

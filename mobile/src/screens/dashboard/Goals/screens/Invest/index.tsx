@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, ToastAndroid, View } from 'react-native';
 
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -36,16 +36,13 @@ import InputText from '../../../../../components/InputText';
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
-import PickerContas from '../../../Entries/components/PickerCategoria';
+import PickerContas from '../../../Entries/components/PickerContas';
 
 type Props = NativeStackScreenProps<GoalsStack, 'InvestGoals'>;
 
 const Invest = ({ navigation, route }: Props) => {
   const [valorDeposito, setValor] = useState('');
   const [errorValor, setErrorValor] = useState<any | null>(null);
-
-  const [idMeta, setMeta] = useState('');
-  const [errorMeta, setErrorMeta] = useState<any | null>(null);
 
   const [selectedConta, setSelectedConta] = useState(0);
 
@@ -60,6 +57,8 @@ const Invest = ({ navigation, route }: Props) => {
       setGoal(goal);
 
       console.debug('O GOAL AQUI Ó:::: ', goal);
+
+      console.log("conta: "+selectedConta);
     })();
   }, []);
 
@@ -74,8 +73,14 @@ const Invest = ({ navigation, route }: Props) => {
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
 
-    handleAtualizarMeta(newGoal, goal.id);
-    navigation.dispatch(StackActions.replace('Main'))
+    if(parseFloat(valorDeposito) <= 0 || valorDeposito == ''){
+      ToastAndroid.show("Insira um valor válido!", ToastAndroid.SHORT)
+    } 
+    else{
+      handleAtualizarMeta(newGoal, goal.id);
+      ToastAndroid.show("Depósito realizado com sucesso!", ToastAndroid.SHORT)
+      navigation.dispatch(StackActions.replace('Main'))
+    }
   }
 
   const novoSaldo = () => {
@@ -103,9 +108,11 @@ const Invest = ({ navigation, route }: Props) => {
 
       <View style={styles.container}>
       <TextProgress>
-          Você já depositou em sua meta
-        </TextProgress>
-        <TextGoals style={{left: '40%'}}>R$ {goal.saldoFinalMeta}</TextGoals>
+          Você já depositou 
+          <TextGoals style={{left: '40%'}}> R$ {(goal.saldoFinalMeta)} </TextGoals>
+          em sua meta
+      </TextProgress>
+        
 
 
         {/* Adicionar o picker de contas aqui 
@@ -119,7 +126,8 @@ const Invest = ({ navigation, route }: Props) => {
               setValor('');
             }}/>
 
-          <PickerContas conta={selectedConta} setConta={setSelectedConta}/>*/}
+
+        <PickerContas conta={selectedConta} setConta={setSelectedConta}/>*/}
 
         <Button
           title={'Investir'}

@@ -61,7 +61,7 @@ const GoalDetails = ({ route }: Props) => {
   // Algum cálculo para calcular a porcentagem aqui
   const percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta;
   const percBalance = percentageBalance / 100; 
-  //const saldo = goal.saldoAtualMeta.toFixed(2)
+  const saldo = (goal.saldoAtualMeta);
 
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>

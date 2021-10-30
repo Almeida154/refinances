@@ -83,12 +83,12 @@ const CreateGoal = () => {
       parseFloat(valorMeta) > 0 &&
       valorMeta != undefined &&
       parseFloat(investidoMeta) >= 0 &&
-      investidoMeta != undefined &&
-      previsao >= dataAtual
+      investidoMeta != undefined
+
     ) {
       
       parseFloat(investidoMeta) >= parseFloat(valorMeta)
-      ? setRealizado(true)
+      ? console.log('deu true')
       : setRealizado(false);
 
       console.log("realizado: ", realizado)
