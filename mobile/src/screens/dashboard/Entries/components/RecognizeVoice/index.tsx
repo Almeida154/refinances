@@ -1,5 +1,6 @@
 import React, { Component, useEffect } from 'react';
 import {  
+  ToastAndroid,
   TouchableHighlight,
 } from 'react-native';
 
@@ -32,17 +33,19 @@ import Voice, {
   SpeechErrorEvent,
 } from '@react-native-voice/voice';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
-import { Lancamento } from '../../../../../contexts/EntriesContext';
+import { Lancamento, UseLancamentos } from '../../../../../contexts/EntriesContext';
 import { Parcela } from '../../../../../contexts/InstallmentContext';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import CardInstallment from '../../../Extract/components/CardInstallment'
+import { FAB } from 'react-native-paper';
 
 
 type Props = {
     categorias: Categoria[],
     contas: Conta[]
     navigation: any
+    handleAdicionarLancamento: (lancamentoProps: Lancamento, idUser: number) => Promise<string>
 };
 
 type State = {
@@ -54,7 +57,7 @@ type State = {
   results: string[];
   partialResults: string[];
   isRecording: boolean;  
-  itemNovo: any | null;
+  itemNovo: any | null;  
 };
 
 class VoiceTest extends Component<Props, State> {
@@ -69,7 +72,7 @@ class VoiceTest extends Component<Props, State> {
     partialResults: [],
     isRecording: false, 
     categorias: [],
-    itemNovo: null
+    itemNovo: null,
   };
   
   constructor(props: Props) {
@@ -380,10 +383,31 @@ class VoiceTest extends Component<Props, State> {
     if (this.state.isRecording) {
       this._stopRecognizing()      
       this 
-      this.setState({ ...this.state, isRecording: false })
     } else {
       
-      this.setState({ ...this.state, isRecording: true })
+    }
+  }
+
+  async handleItemCapture(itemNovo: Parcela) {
+
+
+    if(typeof itemNovo.lancamentoParcela == 'number')
+      return
+
+    if(itemNovo == null) {
+      return ToastAndroid.show("Nenhum item adicionado", ToastAndroid.SHORT)
+    }
+
+    itemNovo.lancamentoParcela.parcelasLancamento = [itemNovo]
+    
+    itemNovo.lancamentoParcela.categoryLancamento = itemNovo.lancamentoParcela.categoryLancamento.nomeCategoria
+    
+    const response = await this.props.handleAdicionarLancamento(itemNovo.lancamentoParcela, await retornarIdDoUsuario())
+
+    if(response == '') {
+      this.props.navigation.dispatch(StackActions.replace('Extrato'))
+    } else {
+      ToastAndroid.show(response, ToastAndroid.SHORT)
     }
   }
 
@@ -426,6 +450,11 @@ class VoiceTest extends Component<Props, State> {
         {
           this.ItemHandled(this.state.itemNovo)     
         }
+
+        <FAB 
+          icon="check"
+          onPress={() => this.handleItemCapture(this.state.itemNovo)}
+        />
       </Container>
     );
   }
@@ -434,6 +463,7 @@ class VoiceTest extends Component<Props, State> {
 export default () => {
     const {categorias, handleReadByUserCategorias} = UseCategories()
     const {contas, handleReadByUserContas} = UseContas()
+    const {handleAdicionarLancamento} = UseLancamentos()
 
     const {navigation} = UseDadosTemp()
 
@@ -451,6 +481,6 @@ export default () => {
 
 
     return (
-        <VoiceTest navigation={navigation} categorias={categorias ? categorias : []} contas={contas ? contas : []}/>
+        <VoiceTest navigation={navigation} handleAdicionarLancamento={handleAdicionarLancamento} categorias={categorias ? categorias : []} contas={contas ? contas : []}/>
     )
 };
