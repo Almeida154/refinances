@@ -23,6 +23,7 @@ import GoalsList from '../screens/dashboard/Goals/navigators/TopBarNavigator';
 import InvestGoals from '../screens/dashboard/Goals/screens/Invest';
 import GoalDetails from '../screens/dashboard/Goals/screens/GoalDetails';
 import CreateGoal from '../screens/dashboard/Goals/screens/CreateGoal';
+import GoalsDashboard from '../screens/dashboard/Goals/screens/DashboardGoals';
 
 const MainStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -48,6 +49,7 @@ const GoalsStackNavigation = () => {
       <GoalStack.Screen name="CreateGoals" component={CreateGoal} />
       <GoalStack.Screen name="InvestGoals" component={InvestGoals} />
       <GoalStack.Screen name="GoalDetails" component={GoalDetails} />
+      <GoalStack.Screen name="GoalsDashboard" component={GoalsDashboard}/>
     </GoalStack.Navigator>
   );
 };

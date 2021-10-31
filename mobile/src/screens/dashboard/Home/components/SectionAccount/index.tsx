@@ -52,7 +52,7 @@ const CardAccount = ({item}: CardAccount) => {
                 </SectionName>
             </SectionDescription>
             <SectionBalanceAccount>
-                <LabelBalanceAccount>{item.saldoConta}</LabelBalanceAccount>                    
+                <LabelBalanceAccount>{item.saldoConta.toFixed(2)}</LabelBalanceAccount>                    
             </SectionBalanceAccount>            
         </ContainerCardAccount>
     )

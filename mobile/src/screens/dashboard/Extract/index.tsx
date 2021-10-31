@@ -161,7 +161,7 @@ const Extrato = () => {
                 <ScrollBody>
                     <Header>                        
                         <PeriodoAnterior onPress={() => updateDate(-1)}>
-                            <Icon size={24} name={"arrow-back-ios"}/>
+                            <Icon size={24} name={"arrow-back-ios"} color="#444"/>
                         </PeriodoAnterior>
                         
                         <PeriodoAtual>
@@ -169,7 +169,7 @@ const Extrato = () => {
                         </PeriodoAtual>
 
                         <PeriodoPosterior onPress={() => updateDate(1)}>
-                            <Icon size={24} name={"arrow-forward-ios"}/>
+                            <Icon size={24} name={"arrow-forward-ios"} color="#444"/>
                         </PeriodoPosterior>
                     </Header>
                     <Body>                          
@@ -183,17 +183,17 @@ const Extrato = () => {
                 </ScrollBody>
                 <Footer>
                     <CardBalance>
-                        <LabelBalance >Ganhos</LabelBalance>
+                        <LabelBalance> Ganhos </LabelBalance>
                         <LabelValueBalance style={{color: '#6CB760'}}>{ganho}</LabelValueBalance>
                     </CardBalance>
 
                     <CardBalance>
-                        <LabelBalance >Gastos</LabelBalance>
+                        <LabelBalance> Gastos </LabelBalance>
                         <LabelValueBalance style={{color: '#EE4266'}}>{gasto}</LabelValueBalance>
                     </CardBalance>
 
                     <CardBalance>
-                        <LabelBalance >Saldo Atual</LabelBalance>
+                        <LabelBalance> Saldo Atual </LabelBalance>
                         <LabelValueBalance style={{color: '#999'}}>{saldo}</LabelValueBalance>
                     </CardBalance>
                 </Footer>

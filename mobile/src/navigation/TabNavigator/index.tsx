@@ -28,6 +28,7 @@ import Extrato from '../../screens/dashboard/Extract';
 import FormLancamentos from '../../screens/dashboard/Entries';
 import AddCategory from '../../screens/dashboard/Entries/components/AddCategory';
 import ManageAccount from '../../screens/dashboard/Home/components/ManageAccount';
+import DashboardGoals from '../../screens/dashboard/Goals/screens/DashboardGoals'
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -62,7 +63,7 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
   return (
     <TouchableOpacity
       style={{
-        top: -30,
+        top: -15,
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -182,8 +183,8 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="Otimizar"
-          component={Variados}
+          name="Metas"
+          component={DashboardGoals}
           options={{
             tabBarIcon: ({ color }) => (
               <Icon3 name="rocket" color={color} size={24} />

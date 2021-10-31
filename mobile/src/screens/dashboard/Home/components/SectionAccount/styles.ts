@@ -68,17 +68,22 @@ export const SectionName = styled.View`
     margin-left: 10px;
 `
 export const LabelName = styled.Text`
-    font-size: 20px;
+    fontSize: ${`${fonts.size.medium}px`};
+    fontFamily: ${`${fonts.familyType.bold}`};
+    color: #444
 `
 export const LabelCategory = styled.Text`
-    color: #888;
-    font-size: 15px;
+    fontSize: ${`${fonts.size.small}px`};
+    fontFamily: ${`${fonts.familyType.semiBold}`};
+    color: #888
 `
 export const SectionBalanceAccount = styled.View`
 
 `
 export const LabelBalanceAccount = styled.Text`
-    font-size: 18px;
+    fontSize: ${`${fonts.size.medium}px`};
+    fontFamily: ${`${fonts.familyType.bold}`};
+    color: #444
 `
 export const SectionIcon = styled.View`
     width: 45px;

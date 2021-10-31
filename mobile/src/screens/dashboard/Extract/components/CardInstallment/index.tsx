@@ -42,7 +42,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
 
             
             <SectionValues >
-                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{item.valorParcela}</LabelValue>                                                    
+                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{(item.valorParcela).toFixed(2)}</LabelValue>                                                    
                 <LabelIndex>{textParcela}</LabelIndex>                
             </SectionValues>
         </ContainerItem>
