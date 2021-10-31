@@ -1,6 +1,7 @@
 import styled from 'styled-components/native'
 
 import {Dimensions} from 'react-native'
+import { fonts } from '../../../styles'
 
 export const Container = styled.View`
 
@@ -8,7 +9,6 @@ export const Container = styled.View`
 
 export const Header = styled.View`
     display: flex;
-
     flex-direction: row;
     height: 80px;
     justify-content: space-between;
@@ -16,34 +16,31 @@ export const Header = styled.View`
     padding-left: 20%;
     padding-right: 20%;
 `
-export const PeriodoAnterior = styled.TouchableHighlight`
+export const PeriodoAnterior = styled.TouchableOpacity`
 
 `
 export const PeriodoAtual = styled.View`
 
 `
 
-export const PeriodoPosterior = styled.TouchableHighlight`
+export const PeriodoPosterior = styled.TouchableOpacity`
 
 `
 export const LabelPeriodo = styled.Text`
-    font-size: 20px;
-    font-weight: 500;
+    fontFamily: ${`${fonts.familyType.semiBold}`};
+    fontSize: ${`${fonts.size.big}px`};
+    color: #444
 `
 export const Body = styled.View`
     background-color: #fff;
-    
-    align-items: center;    
-
-    padding-left: 20px;
-    padding-right: 20px;
-
-    
-
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
 `
 
 export const ScrollBody = styled.ScrollView`
     height: ${`${Dimensions.get('window').height * 0.65}px`};
+    width: 100%;
 `
 
 export const CardItem = styled.View`
@@ -51,7 +48,6 @@ export const CardItem = styled.View`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     background-color: gray;
     margin-bottom: 40px;
 `
@@ -63,35 +59,30 @@ export const Section = styled.View`
 
 export const Footer = styled.View`
     display: flex;
-    
     background-color: #fff;
-
     flex-direction: row;
-
     justify-content: space-between;
-
     padding: 20px;
+    top: 30;
 `
 export const CardBalance = styled.View`
 
-    width: 100px;
-    height: 100px;
-
+    width: 30%;
+    height: 100%;
     align-items: center;
     padding: 10px;
-
     background-color: #F6F6F6;
     border-radius: 10px;
 `
 export const LabelBalance = styled.Text`
-    font-weight: bold;
+    fontFamily: ${`${fonts.familyType.bold}`};
+    fontSize: ${`${fonts.size.small}px`};
+    color: #444;
 `
 export const LabelValueBalance = styled.Text`
-
+    fontFamily: ${`${fonts.familyType.semiBold}`};
+    fontSize: ${`${fonts.size.small}px`};
 `
-
-
-
 export const TextPicker = styled.Text`
 
 `
