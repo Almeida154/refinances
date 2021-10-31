@@ -313,10 +313,16 @@ class VoiceTest extends Component<Props, State> {
             captureParcela.dataParcela = toDate(dataLocalAux)
            }
     }
+    
+    if(!captureParcela.dataParcela)
+      captureParcela.dataParcela = new Date(Date.now())
 
-    captureParcela.lancamentoParcela = captureLancamento
+    captureLancamento.parcelasLancamento = [captureParcela]    
 
-    return JSON.stringify(captureParcela)
+    captureLancamento.categoryLancamento = captureLancamento.categoryLancamento.nomeCategoria
+
+    console.log(captureLancamento)
+    this.handleItemCapture(captureLancamento)
   }
 
   generatePrincipal(texto: string) {
@@ -356,7 +362,6 @@ class VoiceTest extends Component<Props, State> {
         (aux[index + 1] == 'e' || aux[index + 1] == 'vírgula') &&
         aux[index + 2] == 'r$'
       ) {
-        console.log('foies')
         auxDoAux[index] = 'r$'
         auxDoAux[index + 1] = item + '.' + aux[index + 3]
         auxDoAux[index + 2] = ''
@@ -382,30 +387,22 @@ class VoiceTest extends Component<Props, State> {
     console.log(this.state)
     if (this.state.isRecording) {
       this._stopRecognizing()      
-      this 
     } else {
       
     }
   }
 
-  async handleItemCapture(itemNovo: Parcela) {
-
-
-    if(typeof itemNovo.lancamentoParcela == 'number')
-      return
-
-    if(itemNovo == null) {
+  async handleItemCapture(itemNovo: Lancamento | null) {   
+    if(!itemNovo) {
       return ToastAndroid.show("Nenhum item adicionado", ToastAndroid.SHORT)
-    }
-
-    itemNovo.lancamentoParcela.parcelasLancamento = [itemNovo]
+    }          
     
-    itemNovo.lancamentoParcela.categoryLancamento = itemNovo.lancamentoParcela.categoryLancamento.nomeCategoria
-    
-    const response = await this.props.handleAdicionarLancamento(itemNovo.lancamentoParcela, await retornarIdDoUsuario())
 
+    const response = await this.props.handleAdicionarLancamento(itemNovo, await retornarIdDoUsuario())
+  
+    console.log("resultado", response == "" ? "cadastrou" : response)
     if(response == '') {
-      this.props.navigation.dispatch(StackActions.replace('Extrato'))
+      
     } else {
       ToastAndroid.show(response, ToastAndroid.SHORT)
     }
