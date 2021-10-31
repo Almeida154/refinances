@@ -33,7 +33,8 @@ import { StackActions } from '@react-navigation/native';
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
 
 import CreateCategoryGoals from './components/CreateCategoryGoals';
-import ManageCategoryGoals from './components/ManageCategoryGoals';
+import ManageGoals from './components/ManageGoals';
+import ManageCategory from './components/ManageCategory';
 
 import fonts from '../../../styles/fonts';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -141,11 +142,14 @@ const Home = () => {
 
           <ScrollView style={styles.scroll}>
             <View style={styles.containerBody}>
+              
               <SectionAccount />
 
               <CreateCategoryGoals />
 
-              <ManageCategoryGoals />
+              <ManageCategory />
+              
+              <ManageGoals />
             </View>
           </ScrollView>
         </View>

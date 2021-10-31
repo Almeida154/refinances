@@ -46,16 +46,13 @@ export const LabelManager = styled.Text`
 
 export const ContainerCardAccount = styled.View`
     display: flex;
-
     justify-content: space-between;
     flex-direction: row;
-
     align-items: center;
     margin-top: 15px;
 `
 export const SectionDescription = styled.View`
     display: flex;
-
     flex-direction: row;
 `
 export const ContainerAccount = styled.View`
