@@ -12,7 +12,6 @@ export type GoalsStack = {
   CreateGoals: undefined;
   InvestGoals: { goalId: number };
   GoalDetails: { goalId: number };
-  GoalsDashboard: undefined;
 };
 
 export type FormLancamentoStack = {
@@ -27,7 +26,7 @@ type PropsNavigationApp = {
   Lancamentos: NavigatorScreenParams<FormLancamentoStack>;
   Extrato: undefined;
   Gráficos: undefined;
-  Otimizar: undefined;
+  Metas: undefined;
 };
 
 export type PropsMainRoutes = {
