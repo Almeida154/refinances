@@ -80,15 +80,15 @@ export const LancamentoProvider: React.FC = ({ children }) => {
         categoryLancamento: responseCategory.data.idCategory,
       });
 
+      console.log('response', response.data.message.id)
+
       if (response.data.error) return response.data.error;
 
       lancamento.parcelasLancamento.map((item, index) => {
-        lancamento.parcelasLancamento[index].lancamentoParcela =
-          lancamento.parcelasLancamento[index].lancamentoParcela == -1
-            ? response.data.message.id
-            : lancamento.parcelasLancamento[index].lancamentoParcela;
+        lancamento.parcelasLancamento[index].lancamentoParcela = response.data.message.id          
       });
 
+      console.log("Parcelas handlelizadas", lancamento.parcelasLancamento)
       await handleAdicionarParcela(lancamento.parcelasLancamento);
 
       return '';

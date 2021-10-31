@@ -55,3 +55,8 @@ export const ButtonRecord = styled.TouchableOpacity`
     margin: 30px auto;
     
 `
+
+export const ContainerResults = styled.View`
+    margin: 30px auto;
+    
+`

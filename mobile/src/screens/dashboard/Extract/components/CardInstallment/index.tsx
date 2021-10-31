@@ -23,11 +23,9 @@ type PropsCardInstallment = {
 }
 
 const CardInstallment = ({item}: PropsCardInstallment) => {
-    
-    console.log("no CardInstallment", item)
+        
     const textParcela = item.totalParcelas != 1 && item.totalParcelas ? item.indexOfLancamento + 'ª parcela de ' + item.totalParcelas : ''
     
-    console.log(textParcela)
     return (
         <ContainerItem>
             <SectionLancamento>   

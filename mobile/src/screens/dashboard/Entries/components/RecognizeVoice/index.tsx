@@ -18,7 +18,8 @@ import {
     Stat,
     Welcome,
     Header,
-    ButtonRecord
+    ButtonRecord,
+    ContainerResults
 } from './styles'
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
@@ -27,6 +28,8 @@ import {FormLancamentoStack} from '../../../../../@types/RootStackParamApp'
 
 import {ReceiveVoice} from '../../'
 
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
 import Voice, {
   SpeechRecognizedEvent,
   SpeechResultsEvent,
@@ -34,7 +37,7 @@ import Voice, {
 } from '@react-native-voice/voice';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 import { Lancamento, UseLancamentos } from '../../../../../contexts/EntriesContext';
-import { Parcela } from '../../../../../contexts/InstallmentContext';
+import { Parcela, ReadParcela } from '../../../../../contexts/InstallmentContext';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import CardInstallment from '../../../Extract/components/CardInstallment'
@@ -174,7 +177,11 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
-       this.generatePrincipal(this.tratoNoTexto("Eu comprei uma picareta por r$ 20 da categoria cuidados pessoais da conta principal"))      
+       this.generatePrincipal(this.tratoNoTexto("Eu comprei uma picareta por r$ 20 da categoria cuidados pessoais da conta principal no dia 30 do 10 de 2021"))      
+       this.setState({
+         isRecording: false
+       })
+
     } catch (e) {
       console.error(e);
     }
@@ -214,11 +221,13 @@ class VoiceTest extends Component<Props, State> {
       tipoLancamento: '',
       parcelaBaseada: -1,
       lugarLancamento: 'extrato',      
-      parcelasLancamento: [],      
+      parcelasLancamento: [{
+        id: -1,
+        statusParcela: true
+      }] as Parcela[],      
       essencial: false,
       categoryLancamento: {} as Categoria
-    } as Lancamento
-    const captureParcela = {} as Parcela
+    } as Lancamento    
     
     const acaoFluxoReceita = ['vendi', 'vendi um', 'vendi uma', 'recebi uma', 'recebi', 'vendido', 'recebido']
     const acaoFluxoDespesa = ['comprei ', 'comprei um', , 'comprei uma', 'comprado', 'torrei']
@@ -268,11 +277,11 @@ class VoiceTest extends Component<Props, State> {
     // dinheiro
     let [moeda, valor] = texto.substr(i + 3).trim().split(' ')
 
-    captureParcela.valorParcela = parseFloat(valor)
+    captureLancamento.parcelasLancamento[0].valorParcela = parseFloat(valor)
 
     i += valor.length + moeda.length + 2
 
-    if (captureParcela.valorParcela == undefined)
+    if (captureLancamento.parcelasLancamento[0].valorParcela == undefined)
     return 'nao foi:O valor ou a moeda não foram encontrados'
     //categoria
     
@@ -291,7 +300,7 @@ class VoiceTest extends Component<Props, State> {
     //conta
     this.props.contas.map(item => {
         if (aux.indexOf(item.descricao.toLocaleLowerCase()) != -1) {
-          captureParcela.contaParcela = item
+          captureLancamento.parcelasLancamento[0].contaParcela = item
         }
       })
 
@@ -310,19 +319,19 @@ class VoiceTest extends Component<Props, State> {
            ) {
             const dataLocalAux = cacarDatas[index] + '/' + cacarDatas[index+2] + '/' + cacarDatas[index+4]
             
-            captureParcela.dataParcela = toDate(dataLocalAux)
+            captureLancamento.parcelasLancamento[0].dataParcela = toDate(dataLocalAux)
            }
     }
     
-    if(!captureParcela.dataParcela)
-      captureParcela.dataParcela = new Date(Date.now())
+    if(!captureLancamento.parcelasLancamento[0].dataParcela)
+      captureLancamento.parcelasLancamento[0].dataParcela = new Date(Date.now())
+    
 
-    captureLancamento.parcelasLancamento = [captureParcela]    
+    this.setState({
+      itemNovo: captureLancamento
+    })
 
-    captureLancamento.categoryLancamento = captureLancamento.categoryLancamento.nomeCategoria
-
-    console.log(captureLancamento)
-    this.handleItemCapture(captureLancamento)
+    return ''    
   }
 
   generatePrincipal(texto: string) {
@@ -341,12 +350,24 @@ class VoiceTest extends Component<Props, State> {
     }
   }
   
-  ItemHandled = (item: any) => {        
+  ItemHandled = (item: Lancamento | null) => {        
 
+    
     if(!item) return
     
+    const readParcela: ReadParcela = {
+      id: -1,
+      contaParcela: !item.parcelasLancamento[0].contaParcela ? {} as Conta : item.parcelasLancamento[0].contaParcela,
+      dataParcela: item.parcelasLancamento[0].dataParcela.toLocaleDateString(),
+      lancamentoParcela: item,
+      valorParcela: item.parcelasLancamento[0].valorParcela,
+      totalParcelas: 1,
+      indexOfLancamento: 1,      
+      statusParcela: item.parcelasLancamento[0].statusParcela
+    }
+        
     return (
-      <CardInstallment item={item}/>
+      <CardInstallment item={readParcela}/>
     )
   }
 
@@ -383,8 +404,7 @@ class VoiceTest extends Component<Props, State> {
   }
 
   executaBotao() {
-    
-    console.log(this.state)
+        
     if (this.state.isRecording) {
       this._stopRecognizing()      
     } else {
@@ -397,8 +417,13 @@ class VoiceTest extends Component<Props, State> {
       return ToastAndroid.show("Nenhum item adicionado", ToastAndroid.SHORT)
     }          
     
+    const readItemNovo = {
+      ...itemNovo
+    }
 
-    const response = await this.props.handleAdicionarLancamento(itemNovo, await retornarIdDoUsuario())
+    readItemNovo.categoryLancamento = readItemNovo.categoryLancamento.nomeCategoria
+        
+    const response = await this.props.handleAdicionarLancamento(readItemNovo, await retornarIdDoUsuario())
   
     console.log("resultado", response == "" ? "cadastrou" : response)
     if(response == '') {
@@ -413,8 +438,15 @@ class VoiceTest extends Component<Props, State> {
       <Container>
        
        <Header>
-          <ButtonRecord onPress={this._startRecognizing}>
-            <Button style={{width: 100, height: 100}} source={require('./button.png')} />
+          <ButtonRecord 
+          style={{backgroundColor: this.state.isRecording ? '#fff' : '#EE5976', borderRadius: 50}}
+          onPress={this.state.isRecording ? this._stopRecognizing : this._startRecognizing}>
+            <Icon 
+              style={{width: 100, height: 100}} 
+              name="keyboard-voice"
+              color={this.state.isRecording ? '#EE5976' : '#fff'}
+              size={100}
+            />
           </ButtonRecord>          
        </Header>
 
@@ -423,26 +455,18 @@ class VoiceTest extends Component<Props, State> {
           Clique no botão e adicione por comandos de voz: Ex: “Eu comprei um sapato por 5 reais”, “Eu comprei arroz por 15 reais da categoria mercado no dia 10 do 10 de 2021”
         </Instructions>
         
-        <Stat>Results</Stat>
-        {this.state.results.map((result, index) => {
-          return (
-            <Stat key={`result-${index}`}>
-              {result}
-            </Stat>
-          );
-        })}
-        <Stat>Partial Results</Stat>
-        {this.state.partialResults.map((result, index) => {
-          return (
-            <Stat key={`partial-result-${index}`}>
-              {result}
-            </Stat>
-          );
-        })}
-        
-        <TouchableHighlight onPress={this._stopRecognizing}>
-          <Action>Stop Recognizing</Action>
-        </TouchableHighlight>   
+        <ContainerResults>
+          <Stat>
+            {this.state.results.map((result, index) => {
+              return (
+                <Stat key={`result-${index}`}>
+                  {result}
+                </Stat>
+              );
+            })}
+          </Stat>
+        </ContainerResults>        
+                 
 
         {
           this.ItemHandled(this.state.itemNovo)     
@@ -451,6 +475,7 @@ class VoiceTest extends Component<Props, State> {
         <FAB 
           icon="check"
           onPress={() => this.handleItemCapture(this.state.itemNovo)}
+          style={{backgroundColor: '#ee4266'}}
         />
       </Container>
     );

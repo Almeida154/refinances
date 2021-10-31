@@ -35,7 +35,7 @@ interface ParcelaContextType {
     readParcelas: ReadParcela[][] | null,
 
     loadingParcela: boolean,
-    handleAdicionarParcela(parcelas: Parcela[]): Promise<void>,
+    handleAdicionarParcela(parcelas: Parcela[]): Promise<string>,
     handleInstallmentGroupByDate(idUser: number, rawDate: string): Promise<void>,
 }
 
@@ -63,12 +63,11 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                 });
 
                 if(response.data.error) {
-                    throw response.data.error
+                    return response.data.error
                 };
                 
-                const newParcela = response.data.message
-
-                arrayParcelas.push(newParcela);                
+                const newParcela = response.data.message                
+                console.log("response.data.message | parcelasy", response.data.message)                
 
                 if(readParcelas) {
                     const [dayRead, monthRead, yearRead] = new Date(readParcelas[0][0].dataParcela).toLocaleDateString().split('/')
@@ -80,10 +79,10 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                 }
             })
 
-            
         } catch (error) {
             console.log("Deu um erro ao adicionar a parcela: ", error);
         }
+        return ''
     }
 
     async function handleInstallmentGroupByDate(idUser: number, rawDate: string) {
