@@ -29,7 +29,7 @@ import { StackActions } from '@react-navigation/native';
 
 
 const SectionManage = () => {
-    const {navigation} = UseDadosTemp()
+    const { navigation } = UseDadosTemp()
     const { categorias, handleReadByUserCategorias } = UseCategories();
 
     useEffect(() => {
@@ -67,8 +67,8 @@ const SectionManage = () => {
 
                 <Button
                     onPress={() =>  
-                        navigation.dispatch(StackActions.replace('GoalsStack', 
-                        { screen:'GoalList'}))}
+                        navigation.dispatch(StackActions.replace('StackAccount', 
+                        { screen:'ManageCategory'}))}
                     title="Gerenciar"
                     color="#444"
                     backgroundColor="#f5f2f3"

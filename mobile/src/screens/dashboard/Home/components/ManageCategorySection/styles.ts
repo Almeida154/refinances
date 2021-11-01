@@ -4,7 +4,8 @@ import fonts from '../../../../../styles/fonts'
 export const Container = styled.View`
     display: flex;
     align-items: center;
-    margin-top: 15px
+    margin-top: 15px;
+    margin-bottom: 15px
     background-color: white;
     width: 90%;
     border-radius: 15px;
@@ -13,7 +14,6 @@ export const SectionTop = styled.View`
     border-left-width: 6px;
     border-color: #EE4266;
     border-radius: 5px;
-
     width: 85%;
     margin-top: 15px;
     padding-left: 14px;
@@ -30,7 +30,7 @@ export const Separator = styled.View`
     margin-top: 18px;
     width: 85%;
 `
-export const LabelDescriptionGoals = styled.Text`
+export const LabelDescriptionCategory = styled.Text`
     font-size: 20px;
     color: #555;
     fontFamily: ${`${fonts.familyType.black}`};
@@ -92,7 +92,7 @@ export const SectionDescription = styled.View`
 
     flex-direction: row;
 `
-export const ContainerGoals = styled.View`
+export const ContainerCategory = styled.View`
     margin-top: 15px;
     margin-bottom: 15px;
     width: 85%;

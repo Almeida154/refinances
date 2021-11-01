@@ -5,6 +5,7 @@ export type HomeAccountStack = {
   ManageAccount: undefined;
   CreateAccount: undefined;
   AddCategoryAccount: undefined;
+  ManageCategory: undefined;
 };
 
 export type GoalsStack = {
@@ -16,7 +17,6 @@ export type GoalsStack = {
 
 export type FormLancamentoStack = {
   Main: undefined | any;
-
   AddCategory: { tipoCategoria: string };
   RecognizeVoice: undefined;
 };

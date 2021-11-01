@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import {Dimensions} from 'react-native'
+import { Dimensions } from 'react-native'
 import { fonts } from '../../../styles'
 
 export const Container = styled.View`
@@ -17,6 +17,7 @@ export const Header = styled.View`
     padding-right: 20%;
     margin-top: 10%;
 `
+
 export const PeriodoAnterior = styled.TouchableOpacity`
 
 `

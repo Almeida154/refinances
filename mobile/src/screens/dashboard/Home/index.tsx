@@ -34,7 +34,7 @@ import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
 
 import CreateCategoryGoals from './components/CreateCategoryGoals';
 import ManageGoals from './components/ManageGoals';
-import ManageCategory from './components/ManageCategory';
+import ManageCategory from './components/ManageCategorySection';
 
 import fonts from '../../../styles/fonts';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -150,6 +150,7 @@ const Home = () => {
               <ManageCategory />
               
               <ManageGoals />
+              
             </View>
           </ScrollView>
         </View>

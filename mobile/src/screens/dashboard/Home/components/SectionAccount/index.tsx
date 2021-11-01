@@ -64,7 +64,7 @@ const SectionAccount = () => {
     const {contas, handleReadByUserContas} = UseContas()
     const [saldo, setSaldo] = useState('0')
 
-    const {navigation}  = UseDadosTemp()
+    const { navigation }  = UseDadosTemp()
 
     useEffect(() => {
         let aux = 0
