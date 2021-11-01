@@ -8,6 +8,7 @@ import GoalsIcon from '../../../../../assets/images/svg/goalsIcon.svg';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { StackActions } from '@react-navigation/native'
+import Header from '../components/Header';
 
 import {
   TextGoals,
@@ -17,13 +18,20 @@ import {
 
 type Props = NativeStackScreenProps<PropsNavigationApp, 'Metas'>;
 
+
+
 const Goals = () => {
 
   const { navigation } = UseDadosTemp()
-
+  
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}));
+    return true;
+  };
   return (
     <Container>
       <StatusBar backgroundColor={'transparent'} />
+      <Header onBackButton={() => backAction()} title="Insira uma senha" />
       <GoalsIcon height={'20%'} />
       <Title>
           Bem-vindo(a) às suas 
