@@ -1,5 +1,6 @@
 import React, { Component, useEffect } from 'react';
 import {  
+  BackHandler,
   ToastAndroid,
   TouchableHighlight,
 } from 'react-native';
@@ -433,6 +434,8 @@ class VoiceTest extends Component<Props, State> {
     }
   }
 
+ 
+
   render() {
     return (
       <Container>
@@ -500,6 +503,18 @@ export default () => {
         }())
       
     }, [])
+
+    useEffect(() => {
+      BackHandler.addEventListener('hardwareBackPress', backAction);
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', backAction);
+    }, []);
+
+    const backAction = () => {
+      navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}));
+      
+      return true;
+    };
 
 
     return (
