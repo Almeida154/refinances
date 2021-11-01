@@ -193,7 +193,7 @@ const Extrato = () => {
                     </CardBalance>
 
                     <CardBalance>
-                        <LabelBalance> Saldo Atual </LabelBalance>
+                        <LabelBalance> Saldo atual </LabelBalance>
                         <LabelValueBalance style={{color: '#999'}}>{saldo}</LabelValueBalance>
                     </CardBalance>
                 </Footer>

@@ -5,7 +5,7 @@ import TabNavigator from '../TabNavigator';
 
 const RootNavigator = () => {
     return (
-        <NavigationContainer independent={true}  >
+        <NavigationContainer independent={true} >
             <TabNavigator />
         </NavigationContainer>
     );

@@ -133,6 +133,7 @@ const TabNavigator = () => {
             padding: 5,
             height: '8%',
           },
+          headerShown: false,
           tabBarActiveTintColor: '#EE4266',
           tabBarInactiveTintColor: '#bbb',
         }}>
@@ -140,6 +141,7 @@ const TabNavigator = () => {
           name="Home"
           component={Home}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color }) => (
               <Icon3 name="md-home" color={color} size={24} />
             ),
@@ -149,6 +151,7 @@ const TabNavigator = () => {
           name="Extrato"
           component={Extrato}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color }) => (
               <Icon2 name="file-text" color={color} size={24} />
             ),
@@ -177,6 +180,7 @@ const TabNavigator = () => {
           name="Gráficos"
           component={Charts}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color }) => (
               <Icon3 name="stats-chart" color={color} size={24} />
             ),
@@ -186,6 +190,7 @@ const TabNavigator = () => {
           name="Metas"
           component={DashboardGoals}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color }) => (
               <Icon3 name="rocket" color={color} size={24} />
             ),

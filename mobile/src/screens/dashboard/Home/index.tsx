@@ -84,7 +84,7 @@ const Home = () => {
               fontFamily: 'Poppins-Bold',
               marginTop: 20,
             }}>
-            Loading
+            Carregando...
           </Text>
         </View>
       ) : (
@@ -169,8 +169,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingBottom: 20,
+    paddingTop: 20,
     backgroundColor: '#EE4266',
-    height: 140,
+    height: 200,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',

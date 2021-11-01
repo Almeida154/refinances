@@ -15,6 +15,7 @@ export const Header = styled.View`
     align-items: center;
     padding-left: 20%;
     padding-right: 20%;
+    margin-top: 10%;
 `
 export const PeriodoAnterior = styled.TouchableOpacity`
 
@@ -63,12 +64,11 @@ export const Footer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     padding: 20px;
-    top: 30;
+    top: 80;
+    height: 20%;
 `
 export const CardBalance = styled.View`
-
     width: 30%;
-    height: 100%;
     align-items: center;
     padding: 10px;
     background-color: #F6F6F6;
@@ -76,7 +76,7 @@ export const CardBalance = styled.View`
 `
 export const LabelBalance = styled.Text`
     fontFamily: ${`${fonts.familyType.bold}`};
-    fontSize: ${`${fonts.size.small}px`};
+    fontSize: ${`${fonts.size.smaller}px`};
     color: #444;
 `
 export const LabelValueBalance = styled.Text`
