@@ -1,5 +1,7 @@
 import styled from 'styled-components/native'
 
+import {colors, fonts, metrics} from '../../../../../styles'
+
 export const ContainerForm = styled.View`
     display: flex;
     align-items: center;
@@ -71,3 +73,18 @@ export const SectionCardsParcelas = styled.View`
     margin-top: 20px;
     height: 500px;
 `
+
+export const ContainerDetalhes = styled.View`
+    align-items: flex-start;
+
+    width: 90%;
+
+`
+
+export const DetalhesMensal = styled.Text`   
+    font-family: ${fonts.familyType.regular};
+
+    margin-left: 10px;
+    margin-right: 10px;
+`
+

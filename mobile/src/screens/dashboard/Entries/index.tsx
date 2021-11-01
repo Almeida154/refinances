@@ -66,7 +66,8 @@ const FormLancamento = ({route}: any) => {
       };
 
     return (
-        <ScrollView>
+        <ScrollView
+            style={{height: '100%'}}>
             <StatusBar backgroundColor={selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}/>
             {
                 <Container>

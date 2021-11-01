@@ -102,8 +102,7 @@ class ParcelaController {
             .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
             .leftJoinAndSelect("parcela.userParcela", "user")
             .leftJoinAndSelect("lancamento.categoryLancamento", "category")
-            .where("(parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth OR lancamento.parcelaBaseada != -1) AND user.id = :id", {firstDayOfMonth, lastDayOfMonth, id: user.id})
-            .orderBy("parcela.dataParcela", "ASC")            
+            .where("(parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth OR lancamento.parcelaBaseada != -1) AND user.id = :id", {firstDayOfMonth, lastDayOfMonth, id: user.id})            
             .getMany()       
 
        
@@ -115,27 +114,20 @@ class ParcelaController {
             }
         }})
         
-        const dataByUser = data
-
-        console.log(dataByUser)
-
-        
-        
+        const dataByUser = data                        
 
         if(dataByUser.length == 0) {
             return response.send({message: []})
         }
 
-        const parcelas = []
-
-        const [dia, mes, ano] = dataByUser[0].dataParcela.toLocaleDateString().split('/')
-
-        let atual = new Date(parseInt(ano), firstDayOfMonth.getMonth(), parseInt(dia)).toLocaleDateString()
-
-
-        let aux = []
-
         
+        dataByUser.sort((a, b) => {
+            a.dataParcela.setMonth(firstDayOfMonth.getMonth())
+            b.dataParcela.setMonth(firstDayOfMonth.getMonth())
+            
+            return a.dataParcela < b.dataParcela ? -1 : a.dataParcela > b.dataParcela ? 1 : 0
+        })
+
         dataLancamentos.map((item, index) => {
             const auxParcela = item.parcelasLancamento.slice()
 
@@ -144,36 +136,39 @@ class ParcelaController {
             dataLancamentos[index].parcelasLancamento = auxParcela
         })
 
-        dataByUser.map((item: any, index) => {
+        const parcelas = []
+
+
+        const [dia, mes, ano] = dataByUser[0].dataParcela.toLocaleDateString().split('/')
+
+        let atual = new Date(parseInt(ano), lastDayOfMonth.getMonth(), parseInt(dia)).toLocaleDateString()
+
+        let aux = []
+
+        dataByUser.map((item: Parcela, index) => {
             const [dia, mes, ano] = item.dataParcela.toLocaleDateString().split('/')
 
             const parcelaData = new Date(parseInt(ano), firstDayOfMonth.getMonth(), parseInt(dia)).toLocaleDateString()
+            
+            let readParcela
 
-            console.log('parcelaData',parcelaData)
+            const indexId = dataLancamentos.findIndex(itemLancamento => itemLancamento.id == item.lancamentoParcela.id)
 
-            for(var i = 0;i < dataLancamentos.length;i++) {                
-                if(dataLancamentos[i].id == item.lancamentoParcela.id) {                    
-                    for(var j = 0;j < dataLancamentos[i].parcelasLancamento.length;j++) {
-                        if(dataLancamentos[i].parcelasLancamento[j].id == item.id) {
-                            item.indexOfLancamento = j+1
-                            item.totalParcelas = dataLancamentos[i].parcelasLancamento.length
-                            item.dataParcela = new Date(parseInt(ano), firstDayOfMonth.getMonth(), parseInt(dia))
-                            break
-                        }
-                    }
-                    break
-                }
-            }
-                    
+            const indexParcela = dataLancamentos[indexId].parcelasLancamento.findIndex(itemParcela => itemParcela.id == item.id)
+    
+            readParcela = item
+
+            readParcela.indexOfLancamento = indexParcela+1
+            readParcela.totalParcelas = dataLancamentos[indexId].parcelasLancamento.length                                            
 
             if(parcelaData == atual) {
-                aux.push(item)
+                aux.push(readParcela)
             } else {
                 parcelas.push(aux)
                 aux = []
 
                 atual = parcelaData
-                aux.push(item)
+                aux.push(readParcela)
             }
 
         })

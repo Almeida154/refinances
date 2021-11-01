@@ -76,6 +76,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
       const response = await api.post('/entry/create', {
         descricaoLancamento: lancamento.descricaoLancamento,
         tipoLancamento: lancamento.tipoLancamento,
+        parcelaBaseada: lancamento.parcelaBaseada,
         lugarLancamento: lancamento.lugarLancamento,
         categoryLancamento: responseCategory.data.idCategory,
       });

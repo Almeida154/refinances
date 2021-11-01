@@ -16,6 +16,8 @@ import {
     ButtonDetalhes,  
     SectionCardsParcelas,
     InputControlCheckBox,    
+    ContainerDetalhes,
+    DetalhesMensal
 } from './styles'
 
 import { Parcela } from '../../../../../contexts/InstallmentContext'
@@ -41,9 +43,7 @@ import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
 const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor, tipoLancamento}) => {
     const {categorias} = UseCategories()
     const {contas} = UseContas()
-    const {navigation} = UseDadosTemp()
-        
-    
+    const {navigation} = UseDadosTemp()            
 
     const [detalhes, setDetalhes] = useState(false)
     
@@ -52,9 +52,10 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
     const [descricao, setDescricao] =  useState(receiveVoice?.item ? receiveVoice?.item : '')
     const [dataPagamento, setDataPagamento] =  useState(receiveVoice?.data ? toDate(receiveVoice?.data) : (new Date(Date.now())) )    
     const [status, setStatus] = useState(true)
+    const [mensal, setMensal] = useState(false)
 
     const [selectedCategoria, setSelectedCategoria] = useState<Categoria | null>(receiveVoice?.categoria ? receiveVoice?.categoria : null)
-    console.log(selectedCategoria)
+    
     const [selectedConta, setSelectedConta] = useState<Conta | null>(receiveVoice?.conta ? receiveVoice?.conta : null)
 
     const [parcelas, setParcelas] =  useState('1')    
@@ -119,31 +120,55 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
         const newParcelas: Parcela[] = []
         
         console.log("dataParcelas, ", dataParcelas)
-        dataParcelas.map(item => {
-            newParcelas.push({
-                id: -1,
-                lancamentoParcela: -1,
-                contaParcela: item.conta == null ? 0 : item.conta,
-                dataParcela: toDate(item.data),
-                valorParcela: item.valor,
-                statusParcela: item.status                    
-            })
-        })            
+                  
 
         if(!selectedCategoria) 
             return ToastAndroid.show("Categoria não encontrada", ToastAndroid.SHORT)
 
-        const newLancamento: Lancamento = {
-            id: -1,
-            descricaoLancamento: descricao,
-            lugarLancamento: 'extrato',
-            tipoLancamento: tipoLancamento,
-            parcelaBaseada: -1,
-            categoryLancamento: selectedCategoria?.nomeCategoria,
-            parcelasLancamento: newParcelas,
-            essencial: false    
+        let newLancamento = {} as Lancamento
+
+        if(mensal) {
+            newLancamento = {
+                id: -1,
+                descricaoLancamento: descricao,
+                lugarLancamento: 'extrato',            
+                tipoLancamento: tipoLancamento,
+                parcelaBaseada: 0,
+                categoryLancamento: selectedCategoria?.nomeCategoria,
+                parcelasLancamento: [{
+                    id: -1,
+                    lancamentoParcela: -1,
+                    contaParcela: selectedConta == null ? 0 : selectedConta,
+                    dataParcela: dataPagamento,
+                    valorParcela: parseFloat(valor),
+                    statusParcela: status                    
+                } as Parcela],
+                essencial: false    
+            }
+        } else {
+            dataParcelas.map(item => {
+                newParcelas.push({
+                    id: -1,
+                    lancamentoParcela: -1,
+                    contaParcela: item.conta == null ? 0 : item.conta,
+                    dataParcela: toDate(item.data),
+                    valorParcela: item.valor,
+                    statusParcela: item.status                    
+                })
+            })  
+
+            newLancamento = {
+                id: -1,
+                descricaoLancamento: descricao,
+                lugarLancamento: 'extrato',            
+                tipoLancamento: tipoLancamento,
+                parcelaBaseada: -1,
+                categoryLancamento: selectedCategoria?.nomeCategoria,
+                parcelasLancamento: newParcelas,
+                essencial: false    
+            }
         }
-                    
+                            
         console.log('newLancamento: ', newLancamento)
         
         const idUser = await retornarIdDoUsuario()
@@ -221,6 +246,13 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
 
 
         setDataParcelas(parcelas)
+    }
+
+    function changeMensal() {
+        const newMensal = mensal ? false : true
+        setMensal(newMensal)
+        
+        
     }
 
     function changeDate(date: string){
@@ -317,8 +349,22 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
             </SectionDetalhes>
 
             
-            <View style={{display: detalhes ? 'flex' : 'none'}}>
-                <InputControl>
+            <ContainerDetalhes style={{display: detalhes ? 'flex' : 'none'}}>
+                <InputControlCheckBox>        
+                    <Checkbox 
+                        status={mensal ? 'checked' : 'unchecked'}
+                        onPress={changeMensal}                    
+                        color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                    />
+                    <Label style={{color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>{tipoLancamento == 'despesa' ? 'Gasto Mensal' : 'Receita Mensal'}</Label>
+                </InputControlCheckBox>
+                <DetalhesMensal
+                    style={{display: mensal ? 'flex' : 'none' }}>
+                    Você {tipoLancamento == 'despesa' ? 'pagará' : 'receberá' } {valor == '' ? 'R$ 0,00' : parseFloat(valor).toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'})} mensalmente a partir de {dataPagamento.toLocaleDateString()}, os valores poderão ser trocados no futuro
+                </DetalhesMensal>
+
+                <InputControl
+                    style={{display: mensal ? 'none' : 'flex' }}>
                     <InputText
                         onClear={() => {}}
                         showClearIcon={false}
@@ -333,7 +379,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
                     
                 </InputControl>
                 
-                <SectionCardsParcelas>
+                <SectionCardsParcelas
+                    style={{display: mensal ? 'none' : 'flex' }}>
                     {<FlatList 
                         data={dataParcelas}
                         renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} tipoLancamento={tipoLancamento}/>}
@@ -341,7 +388,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
                         keyExtractor={(item, index) => String(index)} 
                         extraData={dataParcelas}/>}
                 </SectionCardsParcelas>
-            </View>
+            </ContainerDetalhes>
         
 
         <FAB 

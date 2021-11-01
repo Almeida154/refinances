@@ -19,6 +19,7 @@ class LancamentoController {
 
         const lancamentos = await lancamentoRepository.createQueryBuilder("lancamento")
             .leftJoinAndSelect("lancamento.categoryLancamento", "category")
+            .leftJoinAndSelect("lancamento.parcelasLancamento", "parcela")
             .getMany();
 
         return response.send({ message: lancamentos });
