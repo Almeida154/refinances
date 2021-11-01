@@ -56,7 +56,7 @@ const Header: React.FC<IProps> = ({
       <Boundaries>
         <TopContainer>
           <IonIcons
-            style={{ marginLeft: -6, opacity: 0.3 }}
+            style={{opacity: 0.3 }}
             name="md-arrow-back-sharp"
             size={40}
             color={colors.davysGrey}
@@ -68,7 +68,7 @@ const Header: React.FC<IProps> = ({
           <Title
             style={[
               color ? { color } : {},
-              isShort ? { marginTop: '6%' } : {},
+              isShort ? { marginTop: '0%' } : {},
             ]}>
             {title != undefined ? title : 'Sem título'}{' '}
             <LastWordAccent style={accent ? { color: accent } : {}}>
@@ -79,7 +79,7 @@ const Header: React.FC<IProps> = ({
           <Title
             style={[
               color ? { color } : {},
-              isShort ? { marginTop: '6%' } : {},
+              isShort ? { marginTop: '0%' } : {},
             ]}>
             {title != undefined ? title : 'Sem título'}
           </Title>

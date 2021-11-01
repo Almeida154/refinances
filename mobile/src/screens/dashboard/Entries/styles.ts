@@ -25,9 +25,7 @@ export const TextButton = styled.Text`
 export const Header = styled.View`
     display: flex;
     width: 100%;    
-    padding-top: 120px;
-     
-    
+    padding-top: 250px;
 `
 
 

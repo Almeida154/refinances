@@ -31,6 +31,7 @@ import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { StackActions } from 'react-navigation';
+import Header from '../components/Header';
 
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
@@ -63,8 +64,15 @@ const GoalDetails = ({ route }: Props) => {
   const percBalance = percentageBalance / 100; 
   const saldo = (goal.saldoAtualMeta);
 
+  const backAction = () => {
+    //muda aq mary pra main
+    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}));
+    return true;
+  };
+
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+      <Header onBackButton={() => backAction()} title="" />
       {console.debug('ROUTE:::: ', route)}
       <View style={styles.container}>
         <Title>{goal.descMeta}</Title>

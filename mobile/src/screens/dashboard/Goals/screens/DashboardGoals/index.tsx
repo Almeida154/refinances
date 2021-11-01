@@ -25,13 +25,15 @@ const Goals = () => {
   const { navigation } = UseDadosTemp()
   
   const backAction = () => {
+    //muda aq mary pra main
     navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}));
     return true;
   };
+
   return (
     <Container>
       <StatusBar backgroundColor={'transparent'} />
-      <Header onBackButton={() => backAction()} title="Insira uma senha" />
+
       <GoalsIcon height={'20%'} />
       <Title>
           Bem-vindo(a) às suas 

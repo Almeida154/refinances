@@ -24,6 +24,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import fonts from '../../../../../styles/fonts';
 import { StackActions } from 'react-navigation';
+import Header from '../components/Header';
 
 const CreateGoal = () => {
   const [meta, setMeta] = useState('');
@@ -119,8 +120,14 @@ const CreateGoal = () => {
 
   };
 
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('Main'));
+    return true;
+  };
+
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+      <Header onBackButton={() => backAction()} title="" />
       <View style={styles.container}>
         <Text
           style={{
@@ -233,7 +240,9 @@ const CreateGoal = () => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: '10%',
+    marginTop: '0%',
+    marginLeft: '10%',
+    marginRight: '10%',
   },
 });
 

@@ -31,6 +31,7 @@ import {
   TextProgress
 } from './styles';
 
+import HeaderTop from '../components/Header';
 import InputText from '../../../../../components/InputText';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
@@ -87,10 +88,17 @@ const Invest = ({ navigation, route }: Props) => {
     return goal.saldoAtualMeta + parseFloat(valorDeposito);
   };
 
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('Main'))
+    return true;
+  };
+
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'transparent'} />
       <Header style={{ backgroundColor: '#ee4266' }}>
+      <HeaderTop onBackButton={() => backAction()} title=""/>
+        
         <AlinhaParaDireita>
           <View></View>
           <InputControlValue>

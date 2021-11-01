@@ -2,17 +2,19 @@ import styled from 'styled-components/native';
 import { colors, fonts, metrics } from '../../../../../../styles';
 
 export const Container = styled.View`
+  position: absolute;
   font-family: ${fonts.familyType.regular};
 `;
 
 export const Boundaries = styled.View`
+
   padding: ${`${metrics.default.boundaries}px`};
 `;
 
 export const Title = styled.Text`
   font-family: ${fonts.familyType.black};
   color: ${colors.davysGrey};
-  margin-top: 12%;
+  margin-top: -15%;
   line-height: 38px;
   font-size: ${`${fonts.size.super}px`};
 `;
@@ -20,7 +22,6 @@ export const Title = styled.Text`
 export const Subtitle = styled.Text`
   font-family: ${fonts.familyType.bold};
   color: ${colors.davysGrey};
-  margin-top: 2%;
   line-height: 18px;
   font-size: ${`${fonts.size.small}px`};
   opacity: 0.3;
