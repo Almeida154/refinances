@@ -17,6 +17,8 @@ export const TextGoals = styled.Text`
     fontFamily: ${`${fonts.familyType.bold}`};
 `
 
-export const SectionImage = styled.View`
-
+export const Container = styled.View`
+    padding: 10%;
+    backgroundColor: #fff;
+    height: 100%;
 `

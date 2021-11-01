@@ -14,7 +14,6 @@ import {
     ContainerCardCreate,
     SectionDescription,
     SectionName,
-    LabelName,
     LabelCategory,
     SectionButton,
     Plus,
@@ -69,12 +68,12 @@ const CreateGoal = () => {
     )
 }
 
-import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { StackActions } from '@react-navigation/native'
 
 const CreateCategoryGoals = () => {
 
-    const {navigation} = UseDadosTemp()
+    const { navigation } = UseDadosTemp()
 
     return (
         <SectionCreate>

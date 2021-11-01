@@ -1,29 +1,28 @@
-
 import React from 'react';
-import { Image, StatusBar, StyleSheet, View,  } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import  PropsNavigationApp from '../../../../../@types/RootStackParamApp';
-import { StackNavigationProp } from '@react-navigation/stack';
 import Button from '../../../../../components/Button';
 import GoalsIcon from '../../../../../assets/images/svg/goalsIcon.svg';
 
-
-import { Goal } from '../TabNavigator/styles';
-
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
+import { StackActions } from '@react-navigation/native'
 
 import {
   TextGoals,
   Title,
-  SectionImage
+  Container
 } from './styles';
 
 type Props = NativeStackScreenProps<PropsNavigationApp, 'Metas'>;
 
-const Goals = ({ navigation }: Props) => {
+const Goals = () => {
+
+  const { navigation } = UseDadosTemp()
 
   return (
-    <View style={styles.container}>
+    <Container>
       <StatusBar backgroundColor={'transparent'} />
       <GoalsIcon height={'20%'} />
       <Title>
@@ -37,13 +36,13 @@ const Goals = ({ navigation }: Props) => {
           style={{ marginTop: 20,
             backgroundColor: "#F5F2F3"}}
           color="#ee4266"
-          onPress={() => {}}/>
+          onPress={() => {navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'GoalsList'}))}}/>
 
         <Button
           title={'Metas concluídas'}
           style={{ marginTop: 20,
              backgroundColor: "#F5F2F3"}}
-          onPress={() => {}}
+          onPress={() => {navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'GoalsList'}))}}
           color="#6CB760"
           />
 
@@ -52,18 +51,10 @@ const Goals = ({ navigation }: Props) => {
           style={{ marginTop: 20,
             backgroundColor: "#F5F2F3"}}
           color="#888"
-          onPress={() => {}}/>
+          onPress={() => {navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))}}/>
 
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: '10%',
-    backgroundColor: '#fff',
-    height: '100%'
-  },
-});
 
 export default Goals;
