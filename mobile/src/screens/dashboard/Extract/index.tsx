@@ -7,7 +7,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import {Transferencia, UseTransferencias} from '../../../contexts/TransferContext'
 import {ReadParcela, UseParcelas} from '../../../contexts/InstallmentContext'
-import {UseDadosTemp} from '../../../contexts/TemporaryDataContext'
+
+import {Modalize as Modal} from 'react-native-modalize'
 
 import {ConvertToParcela, ConvertToTransferencia} from './typecast'
 
@@ -15,10 +16,15 @@ import {converterNumeroParaData} from '../../../helpers/converterDataParaManuscr
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario'
 import generateDates from '../../../helpers/generateDates'
 
+import DetailEntry from './components/DetailEntry'
+
+import Modalize from '../../../components/Modalize'
+
 import {addMonths, toDate} from '../../../helpers/manipularDatas'
 
 import SectionByDate from './components/SectionByDate'
 
+import {UseDadosTemp} from '../../../contexts/TemporaryDataContext'
 
 import {
     Header,
@@ -33,16 +39,17 @@ import {
     LabelBalance,
     LabelValueBalance,
     ScrollBody,
-
-   OptionWrapper
+    ButtonAccessDetail   
     
 } from './styles'
+import { colors } from '../../../styles';
 
-const RenderSection = ({item}: {item: (ReadParcela[] | Transferencia[])[]}) => {
+interface PropsRenderSection {
+    item: (ReadParcela[] | Transferencia[])[];
+}
+const RenderSection: React.FC<PropsRenderSection> = ({item}) => {
     let readByParcelas: ReadParcela[] = ConvertToParcela(item[0])
-    let readByTransferencias: Transferencia[] = ConvertToTransferencia(item[1])                
-    // console.debug("readByParcelas",readByParcelas)
-    // console.debug("readByTransferencias",readByTransferencias)
+    let readByTransferencias: Transferencia[] = ConvertToTransferencia(item[1])                    
 
     const date: Date = !readByParcelas[0] ? new Date(readByTransferencias[0].dataTransferencia) : new Date(readByParcelas[0].dataParcela)
 
@@ -53,8 +60,9 @@ const RenderSection = ({item}: {item: (ReadParcela[] | Transferencia[])[]}) => {
 
 const Extrato = () => {
     const {readParcelas, handleInstallmentGroupByDate} = UseParcelas()
-    const {readTransferencias, handleTransferGroupByDate} = UseTransferencias()        
-            
+    const {readTransferencias, handleTransferGroupByDate} = UseTransferencias()                        
+    const {modalizeRefDetailEntry} = UseDadosTemp()
+
     const yearCurrent = String(new Date(Date.now()).getFullYear())
 
     const [dateCurrent, setDateCurrent] = useState(new Date(Date.now()).toLocaleDateString())
@@ -155,7 +163,7 @@ const Extrato = () => {
         loadParcelas(newDate)
         loadTransferencias(newDate)
     }
-
+    
     return (
         <Container >
                 <ScrollBody>
@@ -175,7 +183,7 @@ const Extrato = () => {
                     <Body>                          
                         <FlatList 
                             data={allDatas}
-                            renderItem={RenderSection}
+                            renderItem={({item}) => <RenderSection item={item}/>}
                             keyExtractor={(item, index) => String(index)}
                             extraData={allDatas}
                         />                        
@@ -197,6 +205,15 @@ const Extrato = () => {
                         <LabelValueBalance style={{color: '#999'}}>{saldo}</LabelValueBalance>
                     </CardBalance>
                 </Footer>
+
+            <Modalize
+                ref={modalizeRefDetailEntry}
+                title=""
+                backgroundColor={colors.cultured}
+                >
+            <DetailEntry />
+                    
+            </Modalize>
             </Container>
     );
 };

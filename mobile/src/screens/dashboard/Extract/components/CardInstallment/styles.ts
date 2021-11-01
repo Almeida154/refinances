@@ -2,7 +2,7 @@ import styled from 'styled-components/native'
 
 import {colors, fonts, metrics} from '../../../../../styles'
 
-export const ContainerItem = styled.View`
+export const ContainerItem = styled.TouchableOpacity`
     display: flex;
     flex-direction: row;
     justify-content: space-between;

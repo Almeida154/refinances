@@ -29,8 +29,8 @@ export const PeriodoPosterior = styled.TouchableOpacity`
 
 `
 export const LabelPeriodo = styled.Text`
-    fontFamily: ${`${fonts.familyType.semiBold}`};
-    fontSize: ${`${fonts.size.big}px`};
+    font-family: ${`${fonts.familyType.semiBold}`};
+    font-size: ${`${fonts.size.big}px`};
     color: #444
 `
 export const Body = styled.View`
@@ -76,13 +76,13 @@ export const CardBalance = styled.View`
     border-radius: 10px;
 `
 export const LabelBalance = styled.Text`
-    fontFamily: ${`${fonts.familyType.bold}`};
-    fontSize: ${`${fonts.size.smaller}px`};
+    font-family: ${`${fonts.familyType.bold}`};
+    font-size: ${`${fonts.size.smaller}px`};
     color: #444;
 `
 export const LabelValueBalance = styled.Text`
-    fontFamily: ${`${fonts.familyType.semiBold}`};
-    fontSize: ${`${fonts.size.small}px`};
+    font-family: ${`${fonts.familyType.semiBold}`};
+    font-size: ${`${fonts.size.small}px`};
 `
 export const TextPicker = styled.Text`
 
@@ -106,7 +106,7 @@ export const WrapperHorizontal = styled.View`
     color: black;
 `
 
-export const OptionWrapper = styled.View`
+export const ButtonAccessDetail = styled.TouchableHighlight`
     justify-content: center;
     align-items: center;
     margin-top: 10;

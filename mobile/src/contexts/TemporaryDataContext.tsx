@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import api from '../services/api';
 
@@ -9,6 +9,8 @@ import { Categoria } from './CategoriesContext';
 import { Conta } from './AccountContext';
 import { PropsMainRoutes } from '../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { IHandles } from 'react-native-modalize/lib/options';
+import { Modalize } from 'react-native-modalize';
 
 interface DadosTempContextType {
   categoriasTemp: Categoria[];
@@ -16,6 +18,7 @@ interface DadosTempContextType {
   contaTemp: Conta;
   configuracoesDeConta: boolean[];
   navigation: StackNavigationProp<PropsMainRoutes, 'Main'>;
+  modalizeRefDetailEntry: React.RefObject<IHandles>;
 
   setNavigation: React.Dispatch<
     React.SetStateAction<StackNavigationProp<PropsMainRoutes, 'Main'>>
@@ -46,6 +49,8 @@ export const DadosTempProvider: React.FC = ({ children }) => {
   const [navigation, setNavigation] = useState(
     {} as StackNavigationProp<PropsMainRoutes, 'Main'>,
   );
+
+  const modalizeRefDetailEntry = useRef<Modalize>(null)
 
   const { user } = UseAuth();
 
@@ -110,6 +115,7 @@ export const DadosTempProvider: React.FC = ({ children }) => {
   return (
     <DadosTempContext.Provider
       value={{
+        modalizeRefDetailEntry,
         setNavigation,
         navigation,
         contaTemp,
