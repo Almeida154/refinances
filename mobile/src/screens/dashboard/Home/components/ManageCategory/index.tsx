@@ -57,10 +57,11 @@ const SectionManage = () => {
 
                 {
                     categorias && categorias.map((item, index) => {
-                        
+                        if(index < 3){
                         return (
                             <CardCategory item={item} key={index}/>
                         )
+                        }
                     })
                 }
 

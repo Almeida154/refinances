@@ -91,11 +91,11 @@ const CreateGoal = () => {
       ? console.log('deu true')
       : setRealizado(false);
 
-      console.log("realizado: ", realizado)
+      console.log("realizado: ", realizado);
       handleAdicionarMeta(newGoal);
       console.log(newGoal);
       
-      ToastAndroid.show("Meta cadastrada com sucesso", ToastAndroid.SHORT)
+      ToastAndroid.show("Meta cadastrada com sucesso", ToastAndroid.SHORT);
 
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
