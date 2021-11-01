@@ -53,7 +53,7 @@ const SectionManage = () => {
 
                 {
                     metas && metas.map((item, index) => {
-                        if(index < 3){
+                        if(index < 1){
                             return (
                                 <CardGoals item={item} key={index}/>
                             )
