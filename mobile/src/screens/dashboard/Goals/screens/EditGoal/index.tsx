@@ -26,7 +26,7 @@ import fonts from '../../../../../styles/fonts';
 import { StackActions } from 'react-navigation';
 import Header from '../components/Header';
 
-const CreateGoal = () => {
+const EditGoal = () => {
   const [meta, setMeta] = useState('');
   const [valorMeta, setValorMeta] = useState('');
   const [investidoMeta, setInvestido] = useState('');
@@ -126,7 +126,7 @@ const CreateGoal = () => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+    <ScrollView style={{ paddingTop: '8%', backgroundColor: '#f6f6f6' }}>
       <Header onBackButton={() => backAction()} title="" />
       <View style={styles.container}>
         <Text
@@ -247,4 +247,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateGoal;
+export default EditGoal;

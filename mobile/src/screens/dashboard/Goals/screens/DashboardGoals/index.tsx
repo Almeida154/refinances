@@ -32,7 +32,7 @@ const Goals = () => {
 
   return (
     <Container>
-      <StatusBar backgroundColor={'transparent'} />
+      <StatusBar backgroundColor={'#ccc'} />
 
       <GoalsIcon height={'20%'} />
       <Title>
@@ -63,7 +63,7 @@ const Goals = () => {
           color="#888"
           onPress={() => {navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))}}/>
 
-    </Container>
+    </Container>    
   );
 };
 

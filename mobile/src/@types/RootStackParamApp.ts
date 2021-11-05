@@ -12,6 +12,7 @@ export type GoalsStack = {
   GoalsList: undefined;
   CreateGoals: undefined;
   InvestGoals: { goalId: number };
+  EditGoals: { goalId: number };
   GoalDetails: { goalId: number };
 };
 

@@ -96,7 +96,7 @@ const Invest = ({ navigation, route }: Props) => {
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'transparent'} />
-      <Header style={{ backgroundColor: '#ee4266' }}>
+      <Header style={{ padding: '5%',backgroundColor: '#ee4266' }}>
       <HeaderTop onBackButton={() => backAction()} title=""/>
         
         <AlinhaParaDireita>

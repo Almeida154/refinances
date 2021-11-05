@@ -71,7 +71,7 @@ const GoalDetails = ({ route }: Props) => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+    <ScrollView style={{ paddingTop: '5%', backgroundColor: '#f6f6f6' }}>
       <Header onBackButton={() => backAction()} title="" />
       {console.debug('ROUTE:::: ', route)}
       <View style={styles.container}>
@@ -132,7 +132,7 @@ const GoalDetails = ({ route }: Props) => {
             backgroundColor: '#f5f2f3',
           }}
         />
-{/* 
+
         <Button
           onPress={() => {
             navigation.navigate('GoalsStack', {
@@ -152,7 +152,7 @@ const GoalDetails = ({ route }: Props) => {
         <Button
           onPress={() => {
             navigation.navigate('GoalsStack', {
-              screen: 'InvestGoals',
+              screen: 'EditGoals',
               params: { goalId: goal.id },
             });
           }}
@@ -163,7 +163,7 @@ const GoalDetails = ({ route }: Props) => {
             marginTop: 10,
             backgroundColor: '#f5f2f3',
           }}
-        /> */}
+        />
       </View>
     </ScrollView>
   );

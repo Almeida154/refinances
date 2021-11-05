@@ -22,6 +22,7 @@ import ManageCategory from '../screens/dashboard/Home/components/ManageCategory/
 
 import GoalsList from '../screens/dashboard/Goals/navigators/TopBarNavigator';
 import InvestGoals from '../screens/dashboard/Goals/screens/Invest';
+import EditGoal from '../screens/dashboard/Goals/screens/EditGoal';
 import GoalDetails from '../screens/dashboard/Goals/screens/GoalDetails';
 import CreateGoal from '../screens/dashboard/Goals/screens/CreateGoal';
 import GoalsDashboard from '../screens/dashboard/Goals/screens/DashboardGoals';
@@ -79,6 +80,10 @@ const GoalsStackNavigation = () => {
       <GoalStack.Screen 
       name="GoalDetails" 
       component={GoalDetails} />
+
+      <GoalStack.Screen 
+      name="EditGoals" 
+      component={EditGoal} />
 
     </GoalStack.Navigator>
   );
