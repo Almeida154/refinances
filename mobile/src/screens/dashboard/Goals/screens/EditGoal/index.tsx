@@ -52,6 +52,8 @@ const EditGoal = ({ route }: Props) => {
     })();
   }, []);
   const [meta, setMeta] = useState('');
+  const { handleAtualizarMeta } = UseMetas();
+  
   const [valorMeta, setValorMeta] = useState('');
   const [investidoMeta, setInvestido] = useState('');
   const [previsao, setPrevisao] = useState(new Date());
@@ -92,35 +94,32 @@ const EditGoal = ({ route }: Props) => {
     hideDatePicker();
   };
 
-  async function handleCreateGoal() {
+  async function handleUpdateGoal() {
     const newGoal = {
-      descMeta: meta,
-      saldoFinalMeta: parseFloat(valorMeta),
-      saldoAtualMeta: parseFloat(investidoMeta),
-      dataInicioMeta: dataAtual.toLocaleDateString(),
-      dataFimMeta: previsao.toLocaleDateString(),
-      realizacaoMeta: realizado,
+      descMeta: novoDesc(),
+      saldoFinalMeta: novoSaldoFinal(),
+      saldoAtualMeta: goal.saldoAtualMeta,
+      dataInicioMeta: goal.dataInicioMeta,
+      dataFimMeta: novoFimMeta(),
+      realizacaoMeta: goal.realizacaoMeta,
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
     
     if (
       meta != '' &&
       parseFloat(valorMeta) > 0 &&
-      valorMeta != undefined &&
-      parseFloat(investidoMeta) >= 0 &&
-      investidoMeta != undefined
-
+      valorMeta != undefined 
     ) {
-      
-      parseFloat(investidoMeta) >= parseFloat(valorMeta)
+      goal.saldoAtualMeta >= parseFloat(valorMeta)
       ? console.log('deu true')
       : setRealizado(false);
 
       console.log("realizado: ", realizado);
-      handleAdicionarMeta(newGoal);
+      handleAtualizarMeta(newGoal, goal.id);
       console.log(newGoal);
       
-      ToastAndroid.show("Meta cadastrada com sucesso", ToastAndroid.SHORT);
+      ToastAndroid.show("Meta Atualizada com sucesso", ToastAndroid.SHORT);
+      navigation.dispatch(StackActions.replace('Main'))
 
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
@@ -140,10 +139,20 @@ const EditGoal = ({ route }: Props) => {
       : setRealizado(false);
 
       console.log("realizado: ", realizado)
-    return realizado;
-
+      return realizado;
   };
-    const valorFim = '' +goal.saldoFinalMeta;
+
+  const novoDesc = () => {
+    return meta;
+  };
+  
+  const novoSaldoFinal = () => {
+    return valorMeta;
+  };
+  const novoFimMeta = () => {
+    return valorMeta;
+  };
+  const valorFim = '' +goal.saldoFinalMeta;
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Main'));
@@ -202,8 +211,8 @@ const EditGoal = ({ route }: Props) => {
         {/* DatePicker */}
         <InputText
           label="Previsão conclusão"
-          value={goal.dataFimMeta}
-          placeholder={previsao.toLocaleDateString()}
+          value={previsao.toLocaleDateString()}
+          placeholder={goal.dataFimMeta}
           error={dtPrevError}
           showClearIcon={previsao != dataAtual}
           onPressIn={showDatePicker}
@@ -220,8 +229,8 @@ const EditGoal = ({ route }: Props) => {
         />
 
         <Button
-          onPress={handleCreateGoal}
-          title="Criar"
+          onPress={handleUpdateGoal}
+          title="Editar"
           backgroundColor="#CCC"
           color="#444"
           lastOne={true}

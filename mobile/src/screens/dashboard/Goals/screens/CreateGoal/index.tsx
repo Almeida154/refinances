@@ -97,6 +97,7 @@ const CreateGoal = () => {
       console.log(newGoal);
       
       ToastAndroid.show("Meta cadastrada com sucesso", ToastAndroid.SHORT);
+      navigation.dispatch(StackActions.replace('Main'));
 
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
