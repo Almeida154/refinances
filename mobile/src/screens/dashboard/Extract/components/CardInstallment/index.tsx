@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {ReadParcela} from '../../../../../contexts/InstallmentContext'
+import {ReadParcela, Parcela} from '../../../../../contexts/InstallmentContext'
 
 import {View, TouchableOpacity} from 'react-native'
 
@@ -25,11 +25,16 @@ type PropsCardInstallment = {
 }
 
 const CardInstallment = ({item}: PropsCardInstallment) => {
-    const {modalizeRefDetailEntry} = UseDadosTemp()
+    const {modalizeRefDetailEntry, setSelectedItemExtract} = UseDadosTemp()
     const textParcela = item.totalParcelas != 1 && item.totalParcelas ? item.indexOfLancamento + 'ª parcela de ' + item.totalParcelas : ''
     
+    function openModalize(){
+        setSelectedItemExtract(item)
+        modalizeRefDetailEntry.current?.open()
+
+    }
     return (
-        <ContainerItem onPress={() => modalizeRefDetailEntry.current?.open()}>
+        <ContainerItem onPress={openModalize}>
             <SectionLancamento>   
                 <SectionIcon style={{borderColor: typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento ? 'yellow' : item.lancamentoParcela.categoryLancamento.corCategoria   }}>
                     <Icon size={24} color={'gray'} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>

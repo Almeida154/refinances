@@ -61,7 +61,7 @@ const RenderSection: React.FC<PropsRenderSection> = ({item}) => {
 const Extrato = () => {
     const {readParcelas, handleInstallmentGroupByDate} = UseParcelas()
     const {readTransferencias, handleTransferGroupByDate} = UseTransferencias()                        
-    const {modalizeRefDetailEntry} = UseDadosTemp()
+    const {modalizeRefDetailEntry, selectedItemExtract} = UseDadosTemp()
 
     const yearCurrent = String(new Date(Date.now()).getFullYear())
 
@@ -209,9 +209,9 @@ const Extrato = () => {
             <Modalize
                 ref={modalizeRefDetailEntry}
                 title=""
-                backgroundColor={colors.cultured}
+                backgroundColor={'#F6F6F6'}
                 >
-            <DetailEntry />
+            <DetailEntry item={selectedItemExtract}/>
                     
             </Modalize>
             </Container>

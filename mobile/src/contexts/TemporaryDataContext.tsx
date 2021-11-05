@@ -11,6 +11,8 @@ import { PropsMainRoutes } from '../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IHandles } from 'react-native-modalize/lib/options';
 import { Modalize } from 'react-native-modalize';
+import { Transferencia } from './TransferContext';
+import { ReadParcela } from './InstallmentContext';
 
 interface DadosTempContextType {
   categoriasTemp: Categoria[];
@@ -29,6 +31,9 @@ interface DadosTempContextType {
   setCategoriasTemp: React.Dispatch<React.SetStateAction<Categoria[]>>;
   setupConfiguracaoConta(quantidade: number): void;
   mudarConfiguracaoConta(configuracaoContaProps: boolean[]): void;
+
+  selectedItemExtract: ReadParcela | Transferencia | null;
+  setSelectedItemExtract: React.Dispatch<React.SetStateAction<ReadParcela | Transferencia | null>>
 }
 
 const DadosTempContext = createContext<DadosTempContextType>(
@@ -49,6 +54,8 @@ export const DadosTempProvider: React.FC = ({ children }) => {
   const [navigation, setNavigation] = useState(
     {} as StackNavigationProp<PropsMainRoutes, 'Main'>,
   );
+
+  const [selectedItemExtract, setSelectedItemExtract] = useState<ReadParcela | Transferencia | null>(null)
 
   const modalizeRefDetailEntry = useRef<Modalize>(null)
 
@@ -115,6 +122,8 @@ export const DadosTempProvider: React.FC = ({ children }) => {
   return (
     <DadosTempContext.Provider
       value={{
+        selectedItemExtract,
+        setSelectedItemExtract,
         modalizeRefDetailEntry,
         setNavigation,
         navigation,
