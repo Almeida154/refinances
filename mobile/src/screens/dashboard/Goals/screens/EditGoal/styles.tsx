@@ -4,6 +4,7 @@ import fonts from "../../../../../styles/fonts"
 
 export const Title = styled.Text `
     marginBottom: 2%;
+    marginTop: 15%;
     fontSize: ${`${fonts.size.super}px`};
     color: #525252;
     fontFamily: ${`${fonts.familyType.black}`};

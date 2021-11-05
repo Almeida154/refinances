@@ -22,11 +22,35 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
+import {
+  GoalDate,
+  TextGoals,
+  TextGoalsH,
+  TextGoalsLighter,
+  TextProgress,
+  TextRS,
+  TextValor,
+  Title,
+  Valor,
+  DaysLeft,
+} from './styles';
+
 import fonts from '../../../../../styles/fonts';
 import { StackActions } from 'react-navigation';
 import Header from '../components/Header';
 
-const EditGoal = () => {
+const EditGoal = ({ route }: Props) => {
+  const [goal, setGoal] = useState({} as Meta);
+
+  const { handleGetGoalById } = UseMetas();
+
+  useEffect(() => {
+    (async () => {
+      const goal = await handleGetGoalById(route.params?.goalId);
+      setGoal(goal);
+      console.debug('O GOAL AQUI Ó:::: ', goal);
+    })();
+  }, []);
   const [meta, setMeta] = useState('');
   const [valorMeta, setValorMeta] = useState('');
   const [investidoMeta, setInvestido] = useState('');
@@ -119,6 +143,7 @@ const EditGoal = () => {
     return realizado;
 
   };
+    const valorFim = '' +goal.saldoFinalMeta;
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Main'));
@@ -129,33 +154,19 @@ const EditGoal = () => {
     <ScrollView style={{ paddingTop: '8%', backgroundColor: '#f6f6f6' }}>
       <Header onBackButton={() => backAction()} title="" />
       <View style={styles.container}>
-        <Text
-          style={{
-            marginTop: '25%',
-            marginBottom: '2%',
-            fontSize: 20,
-            color: '#292929',
-            fontFamily: fonts.familyType.black,
-          }}>
-          Que bom que decidiu criar uma meta!
-        </Text>
+      <View style={{marginTop:'15%'}}>
+        <Title>{goal.descMeta}</Title>
 
-        <Text
-          style={{
-            marginBottom: '10%',
-            fontSize: 15,
-            fontFamily: fonts.familyType.regular,
-            color: '#292929',
-          }}>
-          Calcularemos seu investimento mensal e te notificaremos para não
-          esquecer ;)
-        </Text>
+        <Valor>
+          <TextRS>R$</TextRS>
+          <TextValor>{goal.saldoAtualMeta}</TextValor>
+        </Valor>
 
-        <View>
+        <View style={{marginTop: '7%'}}>
           <InputText
             value={meta}
             label="Descrição"
-            placeholder="Ex.: Carro novo"
+            placeholder={goal.descMeta}
             error={descError}
             showClearIcon={meta != ''}
             onClear={() => {
@@ -172,8 +183,8 @@ const EditGoal = () => {
         <View>
           <InputText
             value={valorMeta}
-            label="Valor"
-            placeholder="Ex.: R$ 1.000,00"
+            label="Valor final"
+            placeholder={valorFim.toString()}
             error={valorTError}
             showClearIcon={valorMeta != ''}
             onClear={() => {
@@ -188,29 +199,10 @@ const EditGoal = () => {
           />
         </View>
 
-        <View>
-          <InputText
-            value={investidoMeta}
-            label="Valor já investido"
-            placeholder="Ex.: R$ 100,00"
-            error={investidoError}
-            showClearIcon={investidoMeta != ''}
-            onClear={() => {
-              setinvestidoError(null);
-              setInvestido('');
-            }}
-            onChangeText={txt => {
-              setinvestidoError(null);
-              setInvestido(txt);
-            }}
-            keyboardType="numeric"
-          />
-        </View>
-
         {/* DatePicker */}
         <InputText
           label="Previsão conclusão"
-          value={previsao.toLocaleDateString()}
+          value={goal.dataFimMeta}
           placeholder={previsao.toLocaleDateString()}
           error={dtPrevError}
           showClearIcon={previsao != dataAtual}
@@ -234,6 +226,7 @@ const EditGoal = () => {
           color="#444"
           lastOne={true}
         />
+      </View>
       </View>
     </ScrollView>
   );
