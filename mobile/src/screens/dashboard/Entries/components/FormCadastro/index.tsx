@@ -31,7 +31,7 @@ import SelectionCategorias from '../SelectionCategories'
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
-import {PropsNavigation, ReceiveVoice} from '../..'
+import {PropsNavigation} from '../..'
 import { Text, Checkbox, FAB } from 'react-native-paper'
 import { Conta, UseContas } from '../../../../../contexts/AccountContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -40,23 +40,31 @@ import ItemCardParcela, {CardParcela, CardParcelaProps} from '../CardParcela'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
 
-const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor, tipoLancamento}) => {
+const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor, tipoLancamento}) => {
     const {categorias} = UseCategories()
     const {contas} = UseContas()
     const {navigation} = UseDadosTemp()            
+    const {handleAdicionarLancamento, handleLoadLancamentos, handleEditLancamento} = UseLancamentos()    
 
     const [detalhes, setDetalhes] = useState(false)
     
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
     
-    const [descricao, setDescricao] =  useState(receiveVoice?.item ? receiveVoice?.item : '')
-    const [dataPagamento, setDataPagamento] =  useState(receiveVoice?.data ? toDate(receiveVoice?.data) : (new Date(Date.now())) )    
+    const [descricao, setDescricao] =  useState(receiveEntry?.lancamentoParcela.descricaoLancamento ? receiveEntry?.lancamentoParcela.descricaoLancamento : '')
+    const [dataPagamento, setDataPagamento] =  useState(receiveEntry?.dataParcela ? new Date(receiveEntry.dataParcela) : (new Date(Date.now())) )    
     const [status, setStatus] = useState(true)
     const [mensal, setMensal] = useState(false)
-
-    const [selectedCategoria, setSelectedCategoria] = useState<Categoria | null>(receiveVoice?.categoria ? receiveVoice?.categoria : null)
     
-    const [selectedConta, setSelectedConta] = useState<Conta | null>(receiveVoice?.conta ? receiveVoice?.conta : null)
+    const [selectedCategoria, setSelectedCategoria] = useState<Categoria | null>(null)    
+        
+    useEffect(() => {
+        if(receiveEntry?.lancamentoParcela.categoryLancamento && typeof receiveEntry?.lancamentoParcela.categoryLancamento != 'string') {
+            setSelectedCategoria(receiveEntry?.lancamentoParcela.categoryLancamento)        
+            console.log(receiveEntry?.lancamentoParcela.categoryLancamento)                
+            }
+    }, [])
+
+    const [selectedConta, setSelectedConta] = useState<Conta | null>(receiveEntry?.contaParcela ? receiveEntry?.contaParcela : null)    
 
     const [parcelas, setParcelas] =  useState('1')    
     
@@ -70,7 +78,6 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
         },
     ])
     
-    const {handleAdicionarLancamento, handleLoadLancamentos} = UseLancamentos()    
     
     const changeParcela = (text: string, date: string, newDataParcelas: CardParcela[]) => {
         setParcelas(text)
@@ -125,6 +132,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
         if(!selectedCategoria) 
             return ToastAndroid.show("Categoria não encontrada", ToastAndroid.SHORT)
 
+        
         let newLancamento = {} as Lancamento
 
         if(mensal) {
@@ -146,11 +154,11 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
                 essencial: false    
             }
         } else {
-            dataParcelas.map(item => {
+            dataParcelas.map((item, index) => {
                 newParcelas.push({
-                    id: -1,
+                    id: -1 ,
                     lancamentoParcela: -1,
-                    contaParcela: item.conta == null ? 0 : item.conta,
+                    contaParcela: item.conta,
                     dataParcela: toDate(item.data),
                     valorParcela: item.valor,
                     statusParcela: item.status                    
@@ -158,7 +166,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
             })  
 
             newLancamento = {
-                id: -1,
+                id: receiveEntry ? receiveEntry.id : -1,
                 descricaoLancamento: descricao,
                 lugarLancamento: 'extrato',            
                 tipoLancamento: tipoLancamento,
@@ -169,32 +177,37 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveVoice, valor, setValor,
             }
         }
                             
-        console.log('newLancamento: ', newLancamento)
-        
         const idUser = await retornarIdDoUsuario()
-        
-        const message = await handleAdicionarLancamento(newLancamento, idUser);            
-        
-        if(message == '') {
-            ToastAndroid.show("Lançamento adicionado", ToastAndroid.SHORT)
-            setDescricao('')
-            setValor('')
-            setSelectedCategoria(categorias ? categorias[0] : null) 
-            setSelectedConta(contas ? contas[0] : null)
-            setParcelas('1')
-            setDataParcelas([
-                {
-                    id: 0,
-                    conta: selectedConta,
-                    valor: valor == '' ? 0 : parseFloat(valor),
-                    data: dataPagamento.toLocaleDateString(),
-                    status: status
-                },
-            ])
+
+        if(receiveEntry) {
+            return await handleEditLancamento(newLancamento, idUser)            
+        } else {
+
+            const message = await handleAdicionarLancamento(newLancamento, idUser);            
+            
+            if(message == '') {
+                ToastAndroid.show("Lançamento adicionado", ToastAndroid.SHORT)
+                setDescricao('')
+                setValor('')
+                setSelectedCategoria(categorias ? categorias[0] : null) 
+                setSelectedConta(contas ? contas[0] : null)
+                setParcelas('1')
+                setDataParcelas([
+                    {
+                        id: 0,
+                        conta: selectedConta,
+                        valor: valor == '' ? 0 : parseFloat(valor),
+                        data: dataPagamento.toLocaleDateString(),
+                        status: status
+                    },
+                ])
+            }
+            else {
+                ToastAndroid.show(message, ToastAndroid.SHORT)
+            }
         }
-        else {
-            ToastAndroid.show(message, ToastAndroid.SHORT)
-        }
+        
+        
     }
 
     function DefinirDetalhes() {        

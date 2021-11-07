@@ -2,6 +2,9 @@ import React from 'react'
 import { ToastAndroid } from 'react-native'
 
 import { ReadParcela } from '../../../../../contexts/InstallmentContext'
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
+import { StackActions } from '@react-navigation/native';
+
 import Icon from '../../../../../helpers/gerarIconePelaString'
 
 import {
@@ -24,6 +27,7 @@ interface PropsDetail {
 }
 
 const DetailEntry: React.FC<PropsDetail> = ({item}) => {
+    const {navigation} = UseDadosTemp()
 
     if(!item) {
         return <></>
@@ -42,6 +46,10 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
         return <></>
     }
 
+    function navigateEdit() {
+        navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveEntry: item}}))
+    }
+
     return (
         <Container>
             <SepareRow style={{justifyContent: 'space-between', marginBottom: 50}}>
@@ -50,7 +58,7 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
                     <LabelQuantity>{item.valorParcela}</LabelQuantity>
                 </SepareColumn>
                 <SepareRow>
-                    <CircleIcon>
+                    <CircleIcon onPress={navigateEdit}>
                         <Icon stringIcon="MaterialCommunityIcons:pencil" size={25} color="#000"/>
                         
                     </CircleIcon>
@@ -58,7 +66,7 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
                         <Icon stringIcon="Ionicons:trash-bin-sharp" size={25} color="#000"/>
                     </CircleIcon>
                 </SepareRow>
-            </SepareRow>
+            </SepareRow> 
             <SectionDescription>
                 <Row>
                     <GroupLabel>

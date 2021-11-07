@@ -24,34 +24,24 @@ import { Text } from '../../../components/Button/styles';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import { Conta } from '../../../contexts/AccountContext';
 import { Categoria } from '../../../contexts/CategoriesContext';
+import { ReadParcela } from '../../../contexts/InstallmentContext';
 
-export type ReceiveVoice = {
-    categoria: Categoria;
-    conta: Conta;
-    data: string;
-    fluxo: string;
-    item: string;
-    valor: string;
-    moeda: string;
-}
 export interface PropsNavigation {     
     tipoLancamento: string,
     valor: string,
     setValor: React.Dispatch<React.SetStateAction<string>>
-    receiveVoice?: ReceiveVoice
+    receiveEntry?: ReadParcela
 }
 
 const FormLancamento = ({route}: any) => {
-    const receiveVoice = route.params?.receiveVoice
-    
-    console.log('route.params', receiveVoice?.fluxo)
-    
-    const [selected, setSelected] = useState(receiveVoice ? receiveVoice.fluxo == 'despesa' ? 0 : 1 : 0)    
+    const receiveEntry: ReadParcela = route.params?.receiveEntry        
+    console.debug('receiveEntry', receiveEntry)
+    const [selected, setSelected] = useState(receiveEntry ? receiveEntry.lancamentoParcela.tipoLancamento == 'despesa' ? 0 : 1 : 0)    
     
     const {navigation} = UseDadosTemp()
     navigation.setOptions({headerShown: false})
     
-    const [valor, setValor] = useState(receiveVoice?.valor ? receiveVoice.valor : '')
+    const [valor, setValor] = useState(receiveEntry?.valorParcela ? String(receiveEntry.valorParcela) : '')
     
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -93,11 +83,11 @@ const FormLancamento = ({route}: any) => {
                     </Header>
                     
                     {
-                        selected == 0 && <FormCadastro receiveVoice={receiveVoice} valor={valor} setValor={setValor} tipoLancamento={"despesa"}/>   
+                        selected == 0 && <FormCadastro receiveEntry={receiveEntry} valor={valor} setValor={setValor} tipoLancamento={"despesa"}/>   
                 
                     }
                     {
-                        selected == 1 && <FormCadastro receiveVoice={receiveVoice} valor={valor} setValor={setValor}  tipoLancamento={"receita"}/>   
+                        selected == 1 && <FormCadastro receiveEntry={receiveEntry} valor={valor} setValor={setValor}  tipoLancamento={"receita"}/>   
                     }
                     {
                         selected == 2 && <FormTransferencia valor={valor} setValor={setValor}  tipoLancamento="transferencia"/>   

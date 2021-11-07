@@ -48,7 +48,7 @@ export const SepareColumn  = styled.View`
     flex-direction: column;
 `
 
-export const CircleIcon = styled.View`
+export const CircleIcon = styled.TouchableOpacity`
     background-color: #c4c4c4;
     width: 40px;
     height: 40px;

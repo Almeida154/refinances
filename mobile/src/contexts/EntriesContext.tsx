@@ -28,6 +28,10 @@ interface LancamentoContextType {
     lancamentoProps: Lancamento,
     idUser: number,
   ): Promise<string>;
+  handleEditLancamento(
+    lancamentoProps: Lancamento,
+    idUser: number,
+  ): Promise<string>;
 }
 
 const LancamentoContext = createContext<LancamentoContextType>(
@@ -98,9 +102,40 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     }
   }
 
+  async function handleEditLancamento(
+    lancamento: Lancamento,
+    idUser: number,
+  ) {
+    try {      
+      console.log('editLancamento',lancamento)
+      // const response = await api.post('/entry/create', {
+      //   descricaoLancamento: lancamento.descricaoLancamento,
+      //   tipoLancamento: lancamento.tipoLancamento,
+      //   parcelaBaseada: lancamento.parcelaBaseada,
+      //   lugarLancamento: lancamento.lugarLancamento,
+      //   categoryLancamento: lancamento.lugarLancamento,
+      // });
+      
+
+      // if (response.data.error) return response.data.error;
+
+      // lancamento.parcelasLancamento.map((item, index) => {
+      //   lancamento.parcelasLancamento[index].lancamentoParcela = response.data.message.id          
+      // });
+
+      
+      // await handleAdicionarParcela(lancamento.parcelasLancamento);
+
+      // return '';
+    } catch (error) {
+      console.log('Deu um erro no handleAdicionarLancamento: ' + error);
+    }
+  }
+
   return (
     <LancamentoContext.Provider
       value={{
+        handleEditLancamento,
         setLoading,
         loading,
         handleLoadLancamentos,

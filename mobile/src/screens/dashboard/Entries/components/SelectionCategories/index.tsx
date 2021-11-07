@@ -33,6 +33,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { StackActions } from '@react-navigation/native'
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
 
 type PropsSelectionCategorias = {
@@ -100,10 +101,8 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
     const PickerRef = useRef<CustomPicker>(null)
 
     useEffect(() => {
-        async function loadCategorias() {
-            const getUser = await AsyncStorage.getItem('user')
-            const idUser = JSON.parse(getUser == null ? '{}' : getUser).id
-            handleReadByUserCategorias(idUser, tipoCategoria)
+        async function loadCategorias() {            
+            handleReadByUserCategorias(await retornarIdDoUsuario(), tipoCategoria)
         }
 
         loadCategorias()
