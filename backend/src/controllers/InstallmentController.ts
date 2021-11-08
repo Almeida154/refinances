@@ -226,7 +226,7 @@ class ParcelaController {
         });
         
         const updateParcela = request.body;
-
+        
         const valorParcelaAnterior = await (await parcelaRepository.findOne(id)).valorParcela
         const diff = updateParcela.valorParcela - valorParcelaAnterior
 

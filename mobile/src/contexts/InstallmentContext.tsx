@@ -36,6 +36,7 @@ interface ParcelaContextType {
 
     loadingParcela: boolean,
     handleAdicionarParcela(parcelas: Parcela[]): Promise<string>,
+    handleEditParcela(parcelas: Parcela[]): Promise<string>,
     handleInstallmentGroupByDate(idUser: number, rawDate: string): Promise<void>,
 }
 
@@ -85,6 +86,43 @@ export const ParcelaProvider: React.FC = ({ children }) => {
         return ''
     }
 
+    async function handleEditParcela(parcelasProps: Parcela[]) {
+        
+        try {
+            const arrayParcelas: Parcela[] = parcelasProps;
+
+            const idUser = await retornarIdDoUsuario()
+            parcelasProps.map(async item => {
+                const response = await api.put(`/installment/edit/${item.id}`, {
+                    dataParcela: item.dataParcela,
+                    valorParcela: item.valorParcela,
+                    contaParcela: item.contaParcela?.id,
+                    lancamentoParcela: item.lancamentoParcela,
+                    statusParcela: item.statusParcela
+                });
+
+                if(response.data.error) {
+                    return response.data.error
+                };
+                
+                const newParcela = response.data.message                                
+
+                if(readParcelas) {
+                    const [dayRead, monthRead, yearRead] = new Date(readParcelas[0][0].dataParcela).toLocaleDateString().split('/')
+                    const [day, month, year] = new Date(newParcela.dataParcela).toLocaleDateString().split('/')
+                    
+                    if(month == month && year == yearRead) {
+                        await handleInstallmentGroupByDate(idUser, new Date(newParcela.dataParcela).toISOString())
+                    }
+                }
+            })
+
+        } catch (error) {
+            console.log("Deu um erro ao adicionar a parcela: ", error);
+        }
+        return ''
+    }
+
     async function handleInstallmentGroupByDate(idUser: number, rawDate: string) {
         try {
             const response = await api.post(`/installment/groupbydate/${idUser}`, {
@@ -116,7 +154,14 @@ export const ParcelaProvider: React.FC = ({ children }) => {
     }*/
     
     return (
-        <ParcelasContext.Provider value={{ parcelas, readParcelas, handleAdicionarParcela, handleInstallmentGroupByDate, loadingParcela }}>
+        <ParcelasContext.Provider value={{ 
+                parcelas, 
+                readParcelas, 
+                handleEditParcela,
+                handleAdicionarParcela, 
+                handleInstallmentGroupByDate, 
+                loadingParcela
+            }}>
             {children}
         </ParcelasContext.Provider>
     );

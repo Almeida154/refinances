@@ -129,10 +129,12 @@ class LancamentoController {
         updateLancamento.userLancamento = categoryExists.userCategory
 
         await lancamentoRepository.update(id, updateLancamento);
-
+        
         const lancamento = await lancamentoRepository.findOne({
             where: { id }
         });
+
+        console.log("Lancamento editado", lancamento)
 
         return response.send({ message: lancamento });
     }

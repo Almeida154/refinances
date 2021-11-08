@@ -53,7 +53,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     const [descricao, setDescricao] =  useState(receiveEntry?.lancamentoParcela.descricaoLancamento ? receiveEntry?.lancamentoParcela.descricaoLancamento : '')
     const [dataPagamento, setDataPagamento] =  useState(receiveEntry?.dataParcela ? new Date(receiveEntry.dataParcela) : (new Date(Date.now())) )    
     const [status, setStatus] = useState(true)
-    const [mensal, setMensal] = useState(false)
+    const [mensal, setMensal] = useState(receiveEntry?.lancamentoParcela.parcelaBaseada == -1 ? false : true)
     
     const [selectedCategoria, setSelectedCategoria] = useState<Categoria | null>(null)    
         
@@ -126,8 +126,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     async function handleSubmit() {                    
         const newParcelas: Parcela[] = []
         
-        console.log("dataParcelas, ", dataParcelas)
-                  
+        console.log("dataParcelas, ", dataParcelas)                          
 
         if(!selectedCategoria) 
             return ToastAndroid.show("Categoria não encontrada", ToastAndroid.SHORT)
@@ -137,14 +136,14 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
 
         if(mensal) {
             newLancamento = {
-                id: -1,
+                id: receiveEntry ? receiveEntry.id : -1 ,
                 descricaoLancamento: descricao,
                 lugarLancamento: 'extrato',            
                 tipoLancamento: tipoLancamento,
                 parcelaBaseada: 0,
                 categoryLancamento: selectedCategoria?.nomeCategoria,
                 parcelasLancamento: [{
-                    id: -1,
+                    id: receiveEntry ? receiveEntry.id : -1 ,
                     lancamentoParcela: -1,
                     contaParcela: selectedConta == null ? 0 : selectedConta,
                     dataParcela: dataPagamento,
@@ -156,7 +155,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         } else {
             dataParcelas.map((item, index) => {
                 newParcelas.push({
-                    id: -1 ,
+                    id: receiveEntry ? receiveEntry.id : -1 ,
                     lancamentoParcela: -1,
                     contaParcela: item.conta,
                     dataParcela: toDate(item.data),
@@ -180,7 +179,17 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         const idUser = await retornarIdDoUsuario()
 
         if(receiveEntry) {
-            return await handleEditLancamento(newLancamento, idUser)            
+            newLancamento.categoryLancamento = selectedCategoria
+            const message = await handleEditLancamento(newLancamento, idUser)            
+
+
+            if(message == '') {
+                ToastAndroid.show("Lançamento editado", ToastAndroid.SHORT)
+                navigation.dispatch(StackActions.replace("Main", {screen: 'Extrato'}))
+            }
+            else {
+                ToastAndroid.show(message, ToastAndroid.SHORT)
+            }
         } else {
 
             const message = await handleAdicionarLancamento(newLancamento, idUser);            

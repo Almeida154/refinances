@@ -6,6 +6,7 @@ import { UseAuth } from './AuthContext';
 
 import { Parcela, UseParcelas } from './InstallmentContext';
 import { Categoria } from './CategoriesContext';
+import { ToastAndroid } from 'react-native';
 
 export type Lancamento = {
   id: number;
@@ -44,7 +45,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
   const [lancamentos, setLancamentos] = useState<Lancamento[] | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const { handleAdicionarParcela, handleInstallmentGroupByDate } =
+  const { handleAdicionarParcela, handleInstallmentGroupByDate, handleEditParcela } =
     UseParcelas();
 
   async function handleLoadLancamentos(idUser: number) {
@@ -67,7 +68,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
   async function handleAdicionarLancamento(
     lancamento: Lancamento,
     idUser: number,
-  ) {
+  ) {    
     try {
       setLoading(true);
       const responseCategory = await api.post(
@@ -76,6 +77,8 @@ export const LancamentoProvider: React.FC = ({ children }) => {
           nomeCategoria: lancamento.categoryLancamento,
         },
       );
+
+      
 
       const response = await api.post('/entry/create', {
         descricaoLancamento: lancamento.descricaoLancamento,
@@ -88,6 +91,8 @@ export const LancamentoProvider: React.FC = ({ children }) => {
       console.log('response', response.data.message.id)
 
       if (response.data.error) return response.data.error;
+
+      
 
       lancamento.parcelasLancamento.map((item, index) => {
         lancamento.parcelasLancamento[index].lancamentoParcela = response.data.message.id          
@@ -107,28 +112,34 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     idUser: number,
   ) {
     try {      
-      console.log('editLancamento',lancamento)
-      // const response = await api.post('/entry/create', {
-      //   descricaoLancamento: lancamento.descricaoLancamento,
-      //   tipoLancamento: lancamento.tipoLancamento,
-      //   parcelaBaseada: lancamento.parcelaBaseada,
-      //   lugarLancamento: lancamento.lugarLancamento,
-      //   categoryLancamento: lancamento.lugarLancamento,
-      // });
+      if(typeof lancamento.categoryLancamento == 'string') {
+        return ToastAndroid.show("Coloque a categoria como Categoria ao invés de string", ToastAndroid.SHORT)
+      }
+      
+      const response = await api.put(`/entry/edit/${lancamento.id}`, {
+        descricaoLancamento: lancamento.descricaoLancamento,
+        tipoLancamento: lancamento.tipoLancamento,
+        parcelaBaseada: lancamento.parcelaBaseada,
+        lugarLancamento: lancamento.lugarLancamento,
+        categoryLancamento: lancamento.categoryLancamento.id,
+        essencial: lancamento.essencial,        
+      });
       
 
-      // if (response.data.error) return response.data.error;
+      if (response.data.error) return response.data.error;
 
-      // lancamento.parcelasLancamento.map((item, index) => {
-      //   lancamento.parcelasLancamento[index].lancamentoParcela = response.data.message.id          
-      // });
+      console.debug('response.data.message.id ', response.data)
+
+      lancamento.parcelasLancamento.map((item, index) => {
+        lancamento.parcelasLancamento[index].lancamentoParcela = response.data.message.id          
+      });
 
       
-      // await handleAdicionarParcela(lancamento.parcelasLancamento);
+      await handleEditParcela(lancamento.parcelasLancamento);
 
-      // return '';
+      return '';
     } catch (error) {
-      console.log('Deu um erro no handleAdicionarLancamento: ' + error);
+      console.log('Deu um erro no handleEditLancamento: ' + error);
     }
   }
 
