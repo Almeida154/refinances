@@ -10,6 +10,7 @@ import {
 
 import { Category } from "./Category";
 import { ConectaNecessidade } from "./ConectaNecessidade";
+import { Meta } from "./Meta";
 import { Parcela } from "./Parcela";
 import { User } from "./User";
 
@@ -43,6 +44,9 @@ export class Lancamento {
 
   @OneToMany((type) => Parcela, (parcela) => parcela.lancamentoParcela)
   parcelasLancamento: Parcela[];
+
+  @OneToOne((type) => Meta, (meta) => meta.lancamentoMeta)
+  metaLancamento: Meta;
 
   @OneToMany(
     (type) => ConectaNecessidade,

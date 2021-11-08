@@ -6,6 +6,7 @@ import { ToastAndroid } from 'react-native';
 import { StackDescriptorMap } from '@react-navigation/stack/lib/typescript/src/types';
 
 import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario';
+import { Lancamento, UseLancamentos } from './EntriesContext';
 
 export type Meta = {
   id: number;
@@ -16,6 +17,7 @@ export type Meta = {
   dataFimMeta: string;
   realizacaoMeta: boolean;
   userMetaId: number;
+  lancamentoMeta: Lancamento;
 };
 
 interface MetaContextType {
@@ -32,10 +34,11 @@ const MetaContext = createContext<MetaContextType>({} as MetaContextType);
 export const UseMetas = () => useContext(MetaContext);
 
 export const MetasProvider: React.FC = ({ children }) => {
+  const {handleAdicionarLancamento} = UseLancamentos()
   const [metas, setMetas] = useState<Meta[] | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleAdicionarMeta(meta: Meta) {
+  async function handleAdicionarMeta(meta: Meta) {    
     try {
       const response = await api.post('/goal/create', {
         descMeta: meta.descMeta,
@@ -45,6 +48,7 @@ export const MetasProvider: React.FC = ({ children }) => {
         dataFimMeta: meta.dataFimMeta,
         realizacaoMeta: meta.realizacaoMeta,
         userMetaId: meta.userMetaId,
+        lancamentoMeta: meta.lancamentoMeta
       });
 
       console.log(response.data);

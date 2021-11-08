@@ -64,7 +64,15 @@ class UserController {
 
     //Categorias
 
-    const categoriasPadroes = []
+    const categoriasPadroes = [{
+      iconeCategoria: 'Ionicons:rocket-outline',
+      tetoDeGastos: 0,
+      nomeCategoria: 'Meta',
+      tipoCategoria: 'despesa',
+      userCategory: user,        
+      corCategoria: '#434235'
+    }]
+    
     for(var i = 0;i < allCategories.length;i++) {
       const funcao = async (categoryLancamento)   => {
         const newCategoria = categoryRepository.create({

@@ -11,6 +11,8 @@ import {
   UseDadosTemp,
 } from '../../../../../contexts/TemporaryDataContext';
 
+import {Lancamento, UseLancamentos} from '../../../../../contexts/EntriesContext';
+
 import {
   ScrollView,
   StyleSheet,
@@ -27,6 +29,7 @@ import { StackActions } from 'react-navigation';
 import Header from '../components/Header';
 
 const CreateGoal = () => {
+  const {handleAdicionarLancamento} = UseLancamentos()
   const [meta, setMeta] = useState('');
   const [valorMeta, setValorMeta] = useState('');
   const [investidoMeta, setInvestido] = useState('');
@@ -70,6 +73,7 @@ const CreateGoal = () => {
 
   async function handleCreateGoal() {
     const newGoal = {
+      id: -1,
       descMeta: meta,
       saldoFinalMeta: parseFloat(valorMeta),
       saldoAtualMeta: parseFloat(investidoMeta),
@@ -77,8 +81,18 @@ const CreateGoal = () => {
       dataFimMeta: previsao.toLocaleDateString(),
       realizacaoMeta: realizado,
       userMetaId: await retornarIdDoUsuario(),
-    } as Meta;
-    
+      lancamentoMeta: {
+        id: -1,
+        categoryLancamento: "Meta",
+        descricaoLancamento: meta,
+        essencial: false,
+        lugarLancamento: 'extrato',
+        parcelaBaseada: -1,
+        parcelasLancamento: [],
+        tipoLancamento: 'despesa'
+      }
+    } as Meta;        
+
     if (
       meta != '' &&
       parseFloat(valorMeta) > 0 &&

@@ -38,6 +38,8 @@ import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import PickerContas from '../../../Entries/components/PickerContas';
+import { Conta } from '../../../../../contexts/AccountContext';
+import { Parcela } from '../../../../../contexts/InstallmentContext';
 
 type Props = NativeStackScreenProps<GoalsStack, 'InvestGoals'>;
 
@@ -45,7 +47,7 @@ const Invest = ({ navigation, route }: Props) => {
   const [valorDeposito, setValor] = useState('');
   const [errorValor, setErrorValor] = useState<any | null>(null);
 
-  const [selectedConta, setSelectedConta] = useState(0);
+  const [selectedConta, setSelectedConta] = useState<Conta | null>(null);
 
   const [goal, setGoal] = useState({} as Meta);
 
@@ -72,7 +74,16 @@ const Invest = ({ navigation, route }: Props) => {
       dataFimMeta: goal.dataFimMeta,
       realizacaoMeta: goal.realizacaoMeta,
       userMetaId: await retornarIdDoUsuario(),
+      lancamentoMeta: goal.lancamentoMeta
     } as Meta;
+
+    const newParcela = {
+      contaParcela: selectedConta,
+      dataParcela: new Date(Date.now()),
+      lancamentoParcela: goal.lancamentoMeta,
+      statusParcela: true,
+      valorParcela: parseFloat(valorDeposito),      
+    } as Parcela
 
     if(parseFloat(valorDeposito) <= 0 || valorDeposito == ''){
       ToastAndroid.show("Insira um valor válido!", ToastAndroid.SHORT)
@@ -84,7 +95,7 @@ const Invest = ({ navigation, route }: Props) => {
     }
   }
 
-  const novoSaldo = () => {
+  const novoSaldo = () => {        
     return goal.saldoAtualMeta + parseFloat(valorDeposito);
   };
 
@@ -92,6 +103,10 @@ const Invest = ({ navigation, route }: Props) => {
     navigation.dispatch(StackActions.replace('Main'))
     return true;
   };
+
+  function changeAccount(conta: Conta | null) {
+    setSelectedConta(conta)
+  }
 
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
@@ -123,19 +138,8 @@ const Invest = ({ navigation, route }: Props) => {
         
 
 
-        {/* Adicionar o picker de contas aqui 
-          <InputText
-            value={valorDeposito}
-            label="Escolha uma conta"
-            error={errorValor}
-            showClearIcon={valorDeposito != ''}
-            onClear={() => {
-              setErrorValor(null);
-              setValor('');
-            }}/>
 
-
-        <PickerContas conta={selectedConta} setConta={setSelectedConta}/>*/}
+        <PickerContas conta={selectedConta} changeAccount={changeAccount} tipoLancamento="despesa"/>
 
         <Button
           title={'Investir'}

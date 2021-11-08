@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import { Category } from "../entities/Category";
 import { User } from "../entities/User";
 import { Meta } from "../entities/Meta";
+import { Lancamento } from "../entities/Lancamento";
 
 class MetaController {
   async all(request: Request, response: Response, next: NextFunction) {
@@ -31,6 +32,7 @@ class MetaController {
   async save(request: Request, response: Response, next: NextFunction) {
     const metaRepository = getRepository(Meta);
     const userRepository = getRepository(User);
+    const lancamentoRepository = getRepository(Lancamento);
 
     const {
       descMeta,
@@ -40,8 +42,23 @@ class MetaController {
       dataFimMeta,
       realizacaoMeta,
       userMetaId,
+      lancamentoMeta
     } = request.body;
 
+    const lancamentoExists = await lancamentoRepository.create({
+      descricaoLancamento: lancamentoMeta.descricaoLancamento,
+      categoryLancamento: lancamentoMeta.descricaoLancamento,
+      tipoLancamento: lancamentoMeta.descricaoLancamento,
+      essencial: lancamentoMeta.descricaoLancamento,
+      lugarLancamento: lancamentoMeta.lugarLancamento,
+      parcelaBaseada:  lancamentoMeta.lugarLancamento,      
+      
+    })
+
+    if(!lancamentoExists) {
+      return response.send({error: "Esse Lançamento não existe"})
+    }
+    
     const user = await userRepository.findOne({
       where: { id: userMetaId },
     });
@@ -53,6 +70,7 @@ class MetaController {
 
     const newMeta = request.body;
     newMeta.userMeta = user;
+    newMeta.lancamentoMeta = lancamentoExists;
 
     const meta = metaRepository.create(newMeta);
     await metaRepository.save(meta);

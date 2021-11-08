@@ -6,6 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Lancamento } from "./Lancamento";
 
 import { User } from "./User";
 
@@ -40,4 +41,7 @@ export class Meta {
 
   @ManyToOne((type) => User, (user) => user.metasUser)
   userMeta: User;
+
+  @OneToOne((type) => Lancamento, (lancamento) => lancamento.metaLancamento)
+  lancamentoMeta: Lancamento;
 }

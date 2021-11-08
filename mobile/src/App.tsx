@@ -20,20 +20,20 @@ const App = () => {
     <NavigationContainer>
       <AuthProvider>        
         <DadosTempProvider>          
-          <ContasProvider>
-            <MetasProvider>
+          <ContasProvider>            
               <ParcelaProvider>
                 <LancamentoProvider>
-                  <TransferenciaProvider>
-                    <CategoriasProvider>          
-                      <CategoriasContaProvider>
-                          <Routes />
-                      </CategoriasContaProvider>
-                    </CategoriasProvider>
-                  </TransferenciaProvider>
+                  <MetasProvider>
+                    <TransferenciaProvider>
+                      <CategoriasProvider>          
+                        <CategoriasContaProvider>
+                            <Routes />
+                        </CategoriasContaProvider>
+                      </CategoriasProvider>
+                    </TransferenciaProvider>
+                  </MetasProvider>
                 </LancamentoProvider>
               </ParcelaProvider>
-            </MetasProvider>
           </ContasProvider>
         </DadosTempProvider>
       </AuthProvider>            
