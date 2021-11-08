@@ -35,7 +35,7 @@ class LancamentoController {
         if (tipoLancamento != 'receita' && tipoLancamento != 'despesa') return response.send({ error: "Não existe esse tipo" });
         if (lugarLancamento != 'otimizar' && lugarLancamento != 'extrato') return response.send({ error: "Não existe esse lugar" });
                 
-        console.log('categoryExists')
+        
         const categoryExists = await categoryRepository.createQueryBuilder("category")
             .leftJoinAndSelect("category.userCategory", "user")
             .where("category.id = :id", {id: categoryLancamento})

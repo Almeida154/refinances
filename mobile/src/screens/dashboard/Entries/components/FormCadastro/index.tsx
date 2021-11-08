@@ -45,6 +45,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     const {contas} = UseContas()
     const {navigation} = UseDadosTemp()            
     const {handleAdicionarLancamento, handleLoadLancamentos, handleEditLancamento} = UseLancamentos()    
+    
 
     const [detalhes, setDetalhes] = useState(false)
     

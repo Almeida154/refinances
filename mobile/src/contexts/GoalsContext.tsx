@@ -99,7 +99,7 @@ export const MetasProvider: React.FC = ({ children }) => {
         dataFimMeta: meta.dataFimMeta,
         realizacaoMeta: meta.realizacaoMeta,
         userMeta: meta.userMetaId,
-
+        lancamentoMeta: meta.lancamentoMeta,
         // eu troquei o método 'one' lá no GoalController, pq tava vindo junto com o usuário e a foto de perfil é absurdamente grande, agora só vem a meta mesmo, em vez desse userMetaId receber da meta, ele pode receber daquela função 'retornarIdDoUsuario';
       });
 

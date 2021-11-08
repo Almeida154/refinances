@@ -42,6 +42,7 @@ export class Meta {
   @ManyToOne((type) => User, (user) => user.metasUser)
   userMeta: User;
 
-  @OneToOne((type) => Lancamento, (lancamento) => lancamento.metaLancamento)
+  @OneToOne((type) => Lancamento)
+  @JoinColumn()
   lancamentoMeta: Lancamento;
 }

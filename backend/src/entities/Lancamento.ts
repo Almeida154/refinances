@@ -43,10 +43,7 @@ export class Lancamento {
   userLancamento: User;
 
   @OneToMany((type) => Parcela, (parcela) => parcela.lancamentoParcela)
-  parcelasLancamento: Parcela[];
-
-  @OneToOne((type) => Meta, (meta) => meta.lancamentoMeta)
-  metaLancamento: Meta;
+  parcelasLancamento: Parcela[]; 
 
   @OneToMany(
     (type) => ConectaNecessidade,

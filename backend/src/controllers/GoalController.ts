@@ -23,7 +23,8 @@ class MetaController {
 
     const metas = await metaRepository
       .createQueryBuilder("meta")
-      .leftJoinAndSelect("meta.userMeta", "user")
+      // .leftJoinAndSelect("meta.userMeta", "user")
+      .leftJoinAndSelect("meta.lancamentoMeta", "lancamento")
       .getMany();
 
     return response.send({ metas });
@@ -33,6 +34,7 @@ class MetaController {
     const metaRepository = getRepository(Meta);
     const userRepository = getRepository(User);
     const lancamentoRepository = getRepository(Lancamento);
+    const categoryRepository = getRepository(Category);
 
     const {
       descMeta,
@@ -45,33 +47,36 @@ class MetaController {
       lancamentoMeta
     } = request.body;
 
-    const lancamentoExists = await lancamentoRepository.create({
-      descricaoLancamento: lancamentoMeta.descricaoLancamento,
-      categoryLancamento: lancamentoMeta.descricaoLancamento,
-      tipoLancamento: lancamentoMeta.descricaoLancamento,
-      essencial: lancamentoMeta.descricaoLancamento,
-      lugarLancamento: lancamentoMeta.lugarLancamento,
-      parcelaBaseada:  lancamentoMeta.lugarLancamento,      
-      
-    })
-
-    if(!lancamentoExists) {
-      return response.send({error: "Esse Lançamento não existe"})
-    }
-    
+    console.log('asas')
     const user = await userRepository.findOne({
       where: { id: userMetaId },
     });
 
+    console.log("Foi")
     if (!user)
       return response.send({
         error: "Não existe esse id de user",
       });
+      
+    const categoryExists = await categoryRepository.findOne({where: {userLancamento: userMetaId, nomeCategoria: lancamentoMeta.categoryLancamento}, relations: ['user']})
 
+    const lancamentoCreate = await lancamentoRepository.create({
+      descricaoLancamento: lancamentoMeta.descricaoLancamento,
+      categoryLancamento: categoryExists,
+      tipoLancamento: lancamentoMeta.tipoLancamento,
+      essencial: lancamentoMeta.essencial,
+      lugarLancamento: lancamentoMeta.lugarLancamento,
+      parcelaBaseada:  lancamentoMeta.parcelaBaseada,      
+      userLancamento: user      
+    } as any)    
+
+    await lancamentoRepository.save(lancamentoCreate)
+       
     const newMeta = request.body;
     newMeta.userMeta = user;
-    newMeta.lancamentoMeta = lancamentoExists;
+    newMeta.lancamentoMeta = lancamentoCreate;
 
+    
     const meta = metaRepository.create(newMeta);
     await metaRepository.save(meta);
 
