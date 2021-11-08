@@ -47,18 +47,24 @@ class MetaController {
       lancamentoMeta
     } = request.body;
 
-    console.log('asas')
+    
     const user = await userRepository.findOne({
       where: { id: userMetaId },
     });
 
-    console.log("Foi")
     if (!user)
       return response.send({
         error: "Não existe esse id de user",
-      });
+      });      
       
-    const categoryExists = await categoryRepository.findOne({where: {userLancamento: userMetaId, nomeCategoria: lancamentoMeta.categoryLancamento}, relations: ['user']})
+    const categoryExists = await categoryRepository.findOne({where: {userCategory: userMetaId, nomeCategoria: lancamentoMeta.categoryLancamento}, 
+      join: {
+        alias: 'category',
+        leftJoinAndSelect: {
+          user: "category.userCategory"
+        }
+      }})
+
 
     const lancamentoCreate = await lancamentoRepository.create({
       descricaoLancamento: lancamentoMeta.descricaoLancamento,
@@ -68,7 +74,7 @@ class MetaController {
       lugarLancamento: lancamentoMeta.lugarLancamento,
       parcelaBaseada:  lancamentoMeta.parcelaBaseada,      
       userLancamento: user      
-    } as any)    
+    })    
 
     await lancamentoRepository.save(lancamentoCreate)
        
@@ -97,9 +103,14 @@ class MetaController {
       return response.send({ error: "usuário não encontrado" });
     }
 
-    const metas = await metaRepository.find({
-      where: { userMeta: user },
-    });
+    const metas = await metaRepository.createQueryBuilder("meta")
+      .select(["meta", "user.id"])
+      .leftJoin("meta.userMeta", "user")
+      .leftJoinAndSelect("meta.lancamentoMeta", "lancamento")
+      .where("user.id = :id", {id: user.id})
+      .getMany()
+
+    console.log(metas)
 
     return response.send({ metas });
   }

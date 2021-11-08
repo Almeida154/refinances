@@ -39,7 +39,7 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import PickerContas from '../../../Entries/components/PickerContas';
 import { Conta } from '../../../../../contexts/AccountContext';
-import { Parcela } from '../../../../../contexts/InstallmentContext';
+import { Parcela, UseParcelas } from '../../../../../contexts/InstallmentContext';
 
 type Props = NativeStackScreenProps<GoalsStack, 'InvestGoals'>;
 
@@ -53,6 +53,7 @@ const Invest = ({ navigation, route }: Props) => {
 
   const { handleGetGoalById } = UseMetas();
   const { handleAtualizarMeta } = UseMetas();
+  const { handleAdicionarParcela } = UseParcelas();
 
   useEffect(() => {
     (async () => {
@@ -66,6 +67,8 @@ const Invest = ({ navigation, route }: Props) => {
   }, []);
 
   async function handleUpdateGoal() {
+    console.log(goal.lancamentoMeta)
+    
     const newGoal = {
       descMeta: goal.descMeta,
       saldoFinalMeta: goal.saldoFinalMeta,
@@ -76,11 +79,12 @@ const Invest = ({ navigation, route }: Props) => {
       userMetaId: await retornarIdDoUsuario(),
       lancamentoMeta: goal.lancamentoMeta
     } as Meta;
+    
 
     const newParcela = {
       contaParcela: selectedConta,
       dataParcela: new Date(Date.now()),
-      lancamentoParcela: goal.lancamentoMeta,
+      lancamentoParcela: goal.lancamentoMeta.id,
       statusParcela: true,
       valorParcela: parseFloat(valorDeposito),      
     } as Parcela
@@ -89,9 +93,17 @@ const Invest = ({ navigation, route }: Props) => {
       ToastAndroid.show("Insira um valor válido!", ToastAndroid.SHORT)
     } 
     else{
-      handleAtualizarMeta(newGoal, goal.id);
-      ToastAndroid.show("Depósito realizado com sucesso!", ToastAndroid.SHORT)
-      navigation.dispatch(StackActions.replace('Main'))
+      const responseMeta = await handleAtualizarMeta(newGoal, goal.id);
+      console.log("Parou ai")
+      const responseParcela = await handleAdicionarParcela([newParcela])
+
+      if(responseParcela == '') {
+        ToastAndroid.show("Depósito realizado com sucesso!", ToastAndroid.SHORT)
+        navigation.dispatch(StackActions.replace('Main'))
+
+      } else {
+        ToastAndroid.show(responseParcela, ToastAndroid.SHORT)
+      }
     }
   }
 

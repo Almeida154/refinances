@@ -83,6 +83,7 @@ export const MetasProvider: React.FC = ({ children }) => {
       console.log(response.data.metas);
       setMetas(response.data.metas);
 
+      console.log(response.data.metas[0])
       console.log('metas: ' + metas);
     } catch (error) {
       console.log('Erro na leitura das metas: ' + error);
