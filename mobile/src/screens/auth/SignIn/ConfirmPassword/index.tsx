@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler } from 'react-native';
+import { BackHandler, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -35,6 +35,8 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
 
   const { user } = UseAuth();
 
+  const inputRef = useRef<TextInput>(null);
+
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -64,7 +66,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
   return (
     <Container>
       <Header onBackButton={() => backAction()} title="Confirme sua senha" />
-      <Content>
+      <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>
           <Input
             placeholder="Confirme aqui"
@@ -78,6 +80,8 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
               setConfirmPassword(text);
               setError(false);
             }}
+            ref={inputRef}
+            autoFocus
           />
           {confirmPassword.length > 0 && (
             <>

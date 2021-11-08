@@ -7,7 +7,7 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Content = styled.View`
+export const Content = styled.TouchableOpacity`
   flex: 1;
   padding: ${`${metrics.default.boundaries}px`};
 `;

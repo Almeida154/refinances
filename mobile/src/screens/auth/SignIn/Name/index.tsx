@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { BackHandler } from 'react-native';
+import { BackHandler, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -34,6 +34,8 @@ const Name = ({ navigation }: PropsNavigation) => {
 
   const { user, updateUserProps } = UseAuth();
 
+  const inputRef = useRef<TextInput>(null);
+
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -66,7 +68,7 @@ const Name = ({ navigation }: PropsNavigation) => {
         onBackButton={() => backAction()}
         title="Como quer ser chamado?"
       />
-      <Content>
+      <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>
           <Input
             placeholder="Seu nome"
@@ -79,6 +81,8 @@ const Name = ({ navigation }: PropsNavigation) => {
               setName(text);
               setError(false);
             }}
+            ref={inputRef}
+            autoFocus
           />
           {name.length > 0 && (
             <IonIcons
