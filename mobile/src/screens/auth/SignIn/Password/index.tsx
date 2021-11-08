@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler } from 'react-native';
+import { BackHandler, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -60,6 +60,8 @@ const Password = ({ navigation }: PropsNavigation) => {
       BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
 
+  const inputRef = useRef<TextInput>(null);
+
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Email'));
     const newUser = user;
@@ -118,7 +120,7 @@ const Password = ({ navigation }: PropsNavigation) => {
   return (
     <Container>
       <Header onBackButton={() => backAction()} title="Insira uma senha" />
-      <Content>
+      <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>
           <Input
             placeholder="Defina aqui"
@@ -133,6 +135,8 @@ const Password = ({ navigation }: PropsNavigation) => {
               setError(false);
               verifyPassword(text);
             }}
+            ref={inputRef}
+            autoFocus
           />
           {password.length > 0 && (
             <>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler } from 'react-native';
+import { BackHandler, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -34,6 +34,8 @@ const Email = ({ navigation }: PropsNavigation) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const { user, updateUserProps, emailExists } = UseAuth();
+
+  const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -76,7 +78,7 @@ const Email = ({ navigation }: PropsNavigation) => {
   return (
     <Container>
       <Header onBackButton={() => backAction()} title="Qual seu e-mail?" />
-      <Content>
+      <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>
           <Input
             placeholder="Email@exemplo.com"
@@ -89,6 +91,8 @@ const Email = ({ navigation }: PropsNavigation) => {
               setEmail(text);
               setError(false);
             }}
+            ref={inputRef}
+            autoFocus
           />
           {email.length > 0 && (
             <IonIcons

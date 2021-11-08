@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler } from 'react-native';
+import { BackHandler, TextInput } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -41,6 +41,8 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
+
+  const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -103,7 +105,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
         }`}
       />
 
-      <Content>
+      <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>
           <PrefixReaisSymbol>R$</PrefixReaisSymbol>
           <CurrencyInput
@@ -128,6 +130,8 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
               setError(false);
               if (expenseAmount == null) setExpenseAmount(0.0);
             }}
+            ref={inputRef}
+            autoFocus
           />
           {expenseAmount != null && (
             <IonIcons
