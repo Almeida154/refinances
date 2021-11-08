@@ -29,7 +29,7 @@ export type PropsNavigation = {
 };
 
 const Email = ({ navigation }: PropsNavigation) => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('rexonakkk@gmail.com');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 

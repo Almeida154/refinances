@@ -49,8 +49,8 @@ const CategoryItem: React.FC<IProps> = ({
               ? { backgroundColor: item.corCategoria, opacity: 0.7 }
               : {},
             {
-              shadowColor: 'rgba(0, 0, 0, .7)',
-              shadowOffset: { width: 0, height: 0 },
+              shadowColor: 'rgba(0, 0, 0, .6)',
+              shadowOffset: { width: 0, height: -10 },
               shadowOpacity: 0.08,
               shadowRadius: 20,
               elevation: 20,

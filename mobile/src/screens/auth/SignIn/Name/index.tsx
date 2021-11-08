@@ -29,7 +29,7 @@ export type PropsNavigation = {
 };
 
 const Name = ({ navigation }: PropsNavigation) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('Kaue rexona');
   const [hasError, setError] = useState(false);
 
   const { user, updateUserProps } = UseAuth();

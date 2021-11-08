@@ -8,6 +8,8 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
+import Toast from 'react-native-toast-message';
+
 // Styles
 import {
   Container,
@@ -55,6 +57,14 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   useEffect(() => {
+    if (setupUserData.expenseTags) {
+      let iterator = setupUserData.expenseTagsCount;
+      console.debug(`Contador: ${iterator}`);
+      console.debug(`Current: ${setupUserData.expenseTags[iterator]}`);
+    }
+
+    console.debug('NULL pae');
+
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
@@ -71,6 +81,15 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   };
 
   async function next() {
+    if (selectedTags.length < 1) {
+      Toast.show({
+        type: 'error',
+        text1: 'Oops!',
+        text2: 'Selecione ao menos 1 ganho fixo 💸🤑',
+      });
+
+      return;
+    }
     const userData = setupUserData;
     userData.expenseTags = selectedTags;
     userData.expenseTagsCount = 0;
@@ -201,6 +220,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
           color={colors.davysGrey}
         />
       </Modalize>
+      <Toast config={global.TOAST_CONFIG} />
     </Container>
   );
 };

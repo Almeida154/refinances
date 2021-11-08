@@ -46,6 +46,10 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
+    let iterator = setupUserData.expenseTagsCount;
+    console.debug(`Contador: ${iterator}`);
+    console.debug(`Current: ${setupUserData.expenseTags[iterator]}`);
+
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);

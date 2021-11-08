@@ -45,6 +45,10 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
+    let iterator = setupUserData.incomeTagsCount;
+    console.debug(`Contador: ${iterator}`);
+    console.debug(`Current: ${setupUserData.incomeTags[iterator]}`);
+
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);

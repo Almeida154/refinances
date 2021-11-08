@@ -53,6 +53,14 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   useEffect(() => {
+    if (setupUserData.incomeTags) {
+      let iterator = setupUserData.incomeTagsCount;
+      console.debug(`Contador: ${iterator}`);
+      console.debug(`Current: ${setupUserData.incomeTags[iterator]}`);
+    }
+
+    console.debug('NULL pae');
+
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);

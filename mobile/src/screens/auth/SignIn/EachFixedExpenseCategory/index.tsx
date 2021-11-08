@@ -35,6 +35,10 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   useEffect(() => {
+    let iterator = setupUserData.expenseTagsCount;
+    console.debug(`Contador: ${iterator}`);
+    console.debug(`Current: ${setupUserData.expenseTags[iterator]}`);
+
     const unsubscribe = navigation.addListener('focus', () => {
       populateCategories();
     });
@@ -50,7 +54,6 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const populateCategories = () => {
     setCategories([] as Categoria[]);
 
-    
     var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
       let cat = {} as Categoria;
       cat.nomeCategoria = category.description;
@@ -103,40 +106,6 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     const dataUser = setupUserData;
     dataUser.entries[setupUserData.expenseTagsCount].categoryLancamento =
       selectedCategory;
-
-    console.log(
-      setupUserData.expenseTagsCount,
-      selectedCategory,
-      setupUserData.entries,
-    );
-
-    console.log(
-      `---EachFixedExpenseCategory | next() | ${setupUserData.expenseTagsCount}---`,
-    );
-    console.debug(
-      JSON.stringify(
-        setupUserData.entries[setupUserData.expenseTagsCount]
-          .descricaoLancamento,
-      ),
-    );
-    console.debug(
-      JSON.stringify(
-        setupUserData.entries[setupUserData.expenseTagsCount].tipoLancamento,
-      ),
-    );
-    console.debug(
-      JSON.stringify(
-        setupUserData.entries[setupUserData.expenseTagsCount]
-          .parcelasLancamento[0],
-      ),
-    );
-    console.debug(
-      JSON.stringify(
-        setupUserData.entries[setupUserData.expenseTagsCount]
-          .categoryLancamento,
-      ),
-    );
-
     dataUser.expenseTagsCount++;
     updateSetupUserDataProps(dataUser);
 

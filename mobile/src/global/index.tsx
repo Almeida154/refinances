@@ -1,4 +1,10 @@
-import { colors } from '../styles';
+import React from 'react';
+import {
+  BaseToast,
+  ErrorToast,
+  BaseToastProps,
+} from 'react-native-toast-message';
+import { colors, fonts } from '../styles';
 
 export default {
   IMAGE_CROP_PICKER_OPTIONS: {
@@ -21,6 +27,35 @@ export default {
     cropperToolbarColor: colors.redCrayola,
     cropperToolbarWidgetColor: colors.redCrayola,
     cropperToolbarTitle: 'Sua foto de perfil',
+  },
+  TOAST_CONFIG: {
+    success: (props: BaseToastProps) => (
+      <BaseToast
+        {...props}
+        style={{ borderLeftColor: 'pink' }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        text1Style={{
+          fontSize: 15,
+          fontWeight: '400',
+        }}
+      />
+    ),
+    error: (props: BaseToastProps) => (
+      <BaseToast
+        {...props}
+        style={{ borderLeftColor: colors.redCrayola, borderLeftWidth: 6 }}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        text1Style={{
+          fontSize: fonts.size.medium,
+          fontFamily: fonts.familyType.italic,
+        }}
+        text2Style={{
+          fontSize: fonts.size.small,
+          fontFamily: fonts.familyType.semiBold,
+          opacity: 0.7,
+        }}
+      />
+    ),
   },
   DEFAULT_ICONS: [
     { description: 'Home', icon: 'FontAwesome:home' },

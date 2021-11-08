@@ -36,6 +36,10 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
   const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   useEffect(() => {
+    let iterator = setupUserData.incomeTagsCount;
+    console.debug(`Contador: ${iterator}`);
+    console.debug(`Current: ${setupUserData.incomeTags[iterator]}`);
+
     const unsubscribe = navigation.addListener('focus', () => {
       populateCategories();
     });
@@ -104,38 +108,6 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     dataUser.entries[
       dataUser.incomeTagsCount + dataUser.expenseTags.length
     ].categoryLancamento = selectedCategory;
-
-    console.log(
-      `---EachFixedIncomeCategory | next() | ${dataUser.incomeTagsCount}---`,
-    );
-    console.debug(
-      JSON.stringify(
-        setupUserData.entries[
-          dataUser.incomeTagsCount + dataUser.expenseTags.length
-        ].descricaoLancamento,
-      ),
-    );
-    console.debug(
-      JSON.stringify(
-        setupUserData.entries[
-          dataUser.incomeTagsCount + dataUser.expenseTags.length
-        ].tipoLancamento,
-      ),
-    );
-    console.debug(
-      JSON.stringify(
-        setupUserData.entries[
-          dataUser.incomeTagsCount + dataUser.expenseTags.length
-        ].parcelasLancamento[0],
-      ),
-    );
-    console.debug(
-      JSON.stringify(
-        setupUserData.entries[
-          dataUser.incomeTagsCount + dataUser.expenseTags.length
-        ].categoryLancamento,
-      ),
-    );
 
     dataUser.incomeTagsCount++;
     updateSetupUserDataProps(dataUser);
