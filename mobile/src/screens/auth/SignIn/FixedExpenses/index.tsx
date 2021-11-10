@@ -81,6 +81,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
     return true;
   };
 
+  
   async function next() {
     if (selectedTags.length < 1) {
       Toast.show({

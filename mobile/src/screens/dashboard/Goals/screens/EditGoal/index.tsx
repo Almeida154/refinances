@@ -29,6 +29,10 @@ import {
   Valor,
 } from './styles';
 
+import global from '../../../../../global';
+import Toast from 'react-native-toast-message';
+import NiceToast from '../../../../../components/NiceToast';
+
 import fonts from '../../../../../styles/fonts';
 import { StackActions } from 'react-navigation';
 import Header from '../components/Header';
@@ -114,7 +118,14 @@ const EditGoal = ({ route }: Props) => {
       handleAtualizarMeta(newGoal, goal.id);
       console.log(newGoal);
       
-      ToastAndroid.show("Meta Atualizada com sucesso", ToastAndroid.SHORT);
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'success',
+          title: 'Foi!',
+          message: 'Meta atualizada com sucesso!',
+        },
+      });
       navigation.dispatch(StackActions.replace('Main'))
 
     } else if (meta == '') {
@@ -227,6 +238,8 @@ const EditGoal = ({ route }: Props) => {
         />
       </View>
       </View>
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>
   );
 };

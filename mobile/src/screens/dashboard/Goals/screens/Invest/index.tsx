@@ -14,6 +14,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Button from '../../../../../components/Button';
 import { Goal } from '../TabNavigator/styles';
 
+
+import global from '../../../../../global';
+import Toast from 'react-native-toast-message';
+import NiceToast from '../../../../../components/NiceToast';
+
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackActions } from '@react-navigation/native';
 
@@ -98,7 +103,14 @@ const Invest = ({ navigation, route }: Props) => {
       const responseParcela = await handleAdicionarParcela([newParcela])
 
       if(responseParcela == '') {
-        ToastAndroid.show("Depósito realizado com sucesso!", ToastAndroid.SHORT)
+        Toast.show({
+          type: 'niceToast',
+          props: {
+            type: 'success',
+            title: 'Foi!',
+            message: 'Depósito realizado com sucesso!',
+          },
+        });
         navigation.dispatch(StackActions.replace('Main'))
 
       } else {
@@ -158,6 +170,8 @@ const Invest = ({ navigation, route }: Props) => {
           style={{ marginTop: 30 }}
           onPress={handleUpdateGoal}></Button>
       </View>
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>
   );
 };
