@@ -17,39 +17,47 @@ class UserController {
   }
 
   async setupUser(request: Request, response: Response, next: NextFunction) {
-    const userRepository = getRepository(User)
-    const lancamentoRepository = getRepository(Lancamento)
-    const categoryContaRepository = getRepository(CategoryConta)
-    const categoryRepository = getRepository(Category)
-    const contaRepository = getRepository(Conta)
-    const parcelaRepository = getRepository(Parcela)
+    const userRepository = getRepository(User);
+    const lancamentoRepository = getRepository(Lancamento);
+    const categoryContaRepository = getRepository(CategoryConta);
+    const categoryRepository = getRepository(Category);
+    const contaRepository = getRepository(Conta);
+    const parcelaRepository = getRepository(Parcela);
 
-    const user = await userRepository.findOne({where: {id: request.params.id}})
+    const user = await userRepository.findOne({
+      where: { id: request.params.id },
+    });
 
-    const entries = request.body.entries
-    const allCategories = request.body.allCategories
+    const entries = request.body.entries;
+    const allCategories = request.body.allCategories;
 
-    if(!user) {
-      return response.send({error: "Usuario nao encontrado"})
+    if (!user) {
+      return response.send({ error: "Usuario nao encontrado" });
     }
 
     //Categoria Conta
-    const nomesCategoriasContaPadroes = [["Carteira", "Entypo:wallet"], ["Poupança", "MaterialCommunityIcons:currency-usd-circle", ], ["Investimentos", "MaterialIcons:show-chart"]];
+    const nomesCategoriasContaPadroes = [
+      ["Carteira", "Entypo:wallet"],
+      ["Poupança", "MaterialCommunityIcons:currency-usd-circle"],
+      ["Investimentos", "MaterialIcons:show-chart"],
+    ];
 
-    const categoriasContasPadroes = [] as CategoryConta[]
+    const categoriasContasPadroes = [] as CategoryConta[];
 
-    for(var i = 0;i < nomesCategoriasContaPadroes.length;i++) {    
-      const funcao = async (item) => {     
-        const newCategoriaConta = categoryContaRepository.create({      
+    for (var i = 0; i < nomesCategoriasContaPadroes.length; i++) {
+      const funcao = async (item) => {
+        const newCategoriaConta = categoryContaRepository.create({
           iconeCategoryConta: item[1],
           descricaoCategoryConta: item[0],
-          userCategoryConta: user                               
-        })
-      
-        categoriasContasPadroes.push(await categoryContaRepository.save(newCategoriaConta))    
-      }
+          userCategoryConta: user,
+        });
 
-      await funcao(nomesCategoriasContaPadroes[i])
+        categoriasContasPadroes.push(
+          await categoryContaRepository.save(newCategoriaConta)
+        );
+      };
+
+      await funcao(nomesCategoriasContaPadroes[i]);
     }
     //Contas
 
@@ -57,65 +65,73 @@ class UserController {
       descricao: "Conta Principal",
       categoryConta: categoriasContasPadroes[0],
       saldoConta: 0,
-      userConta: user,      
-    })
+      userConta: user,
+    });
 
-    const contaPrincipal = await contaRepository.save(newConta)
+    const contaPrincipal = await contaRepository.save(newConta);
 
     //Categorias
 
-    const categoriasPadroes = [{
-      iconeCategoria: 'Ionicons:rocket-outline',
-      tetoDeGastos: 0,
-      nomeCategoria: 'Meta',
-      tipoCategoria: 'despesa',
-      userCategory: user,        
-      corCategoria: '#434235'
-    }]
-    
-    for(var i = 0;i < allCategories.length;i++) {
-      const funcao = async (categoryLancamento)   => {
+    const categoriasPadroes = [
+      {
+        iconeCategoria: "Ionicons:rocket-outline",
+        tetoDeGastos: 0,
+        nomeCategoria: "Meta",
+        tipoCategoria: "despesa",
+        userCategory: user,
+        corCategoria: "#434235",
+      },
+    ];
+
+    for (var i = 0; i < allCategories.length; i++) {
+      const funcao = async (categoryLancamento) => {
         const newCategoria = categoryRepository.create({
           iconeCategoria: categoryLancamento.iconeCategoria,
           tetoDeGastos: 0,
           nomeCategoria: categoryLancamento.nomeCategoria,
           tipoCategoria: categoryLancamento.tipoCategoria,
-          userCategory: user,        
-          corCategoria: categoryLancamento.corCategoria
-        })
-  
-        categoriasPadroes.push(await categoryRepository.save(newCategoria))
-      }
+          userCategory: user,
+          corCategoria: categoryLancamento.corCategoria,
+        });
 
-      await funcao(allCategories[i])
+        categoriasPadroes.push(await categoryRepository.save(newCategoria));
+      };
+
+      await funcao(allCategories[i]);
     }
-    
+
     //Lancamento
-    
+
     entries.map(async (item) => {
-      
+      const categoriaLancamento = categoriasPadroes.findIndex((categoria) => {
+        return categoria.nomeCategoria == item.categoryLancamento.nomeCategoria;
+      });
 
-      const categoriaLancamento = categoriasPadroes.findIndex((categoria) => {        
-        return categoria.nomeCategoria == item.categoryLancamento.nomeCategoria
-      })
-
-      const newLancamento = await lancamentoRepository.save(lancamentoRepository.create({
-        descricaoLancamento: item.descricaoLancamento,
-        essencial: true,
-        lugarLancamento: 'extrato',
-        parcelaBaseada: 0,
-        tipoLancamento: item.tipoLancamento,
-        userLancamento: user,
-        categoryLancamento: categoriasPadroes[categoriaLancamento]
-      }))
+      const newLancamento = await lancamentoRepository.save(
+        lancamentoRepository.create({
+          descricaoLancamento: item.descricaoLancamento,
+          essencial: true,
+          lugarLancamento: "extrato",
+          parcelaBaseada: 0,
+          tipoLancamento: item.tipoLancamento,
+          userLancamento: user,
+          categoryLancamento: categoriasPadroes[categoriaLancamento],
+        })
+      );
 
       //parcela
-      item.parcelasLancamento.map(async (parcela) => {       
-        contaPrincipal.saldoConta += newLancamento.tipoLancamento == 'despesa' ?  -parcela.valorParcela : parcela.valorParcela
+      item.parcelasLancamento.map(async (parcela) => {
+        contaPrincipal.saldoConta +=
+          newLancamento.tipoLancamento == "despesa"
+            ? -parcela.valorParcela
+            : parcela.valorParcela;
 
-        await contaRepository.update(contaPrincipal.id, {saldoConta: contaPrincipal.saldoConta})            
-        let updateConta = await contaRepository.findOne({where: {id: contaPrincipal.id}})
-      
+        await contaRepository.update(contaPrincipal.id, {
+          saldoConta: contaPrincipal.saldoConta,
+        });
+        let updateConta = await contaRepository.findOne({
+          where: { id: contaPrincipal.id },
+        });
 
         const newParcela = parcelaRepository.create({
           contaParcela: updateConta,
@@ -123,15 +139,14 @@ class UserController {
           userParcela: user,
           statusParcela: true,
           valorParcela: parcela.valorParcela,
-          dataParcela: new Date(Date.now())
-        })
+          dataParcela: new Date(Date.now()),
+        });
 
-        await parcelaRepository.save(newParcela)
-      })
-    })
+        await parcelaRepository.save(newParcela);
+      });
+    });
 
-    return response.send({message: entries})
-
+    return response.send({ message: entries });
   }
 
   async all(request: Request, response: Response, next: NextFunction) {

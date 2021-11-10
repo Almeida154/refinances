@@ -33,12 +33,12 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([] as Categoria[]);
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const { setupUser, updateSetupUserProps } = UseAuth();
 
   useEffect(() => {
-    let iterator = setupUserData.incomeTagsCount;
+    let iterator = setupUser.incomeTagsCount;
     console.debug(`Contador: ${iterator}`);
-    console.debug(`Current: ${setupUserData.incomeTags[iterator]}`);
+    console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
 
     const unsubscribe = navigation.addListener('focus', () => {
       populateCategories();
@@ -67,9 +67,9 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     });
 
     var ctgrs =
-      setupUserData.createdCategories != undefined
+      setupUser.createdCategories != undefined
         ? [
-            ...setupUserData.createdCategories.filter(
+            ...setupUser.createdCategories.filter(
               cc => cc.tipoCategoria == 'receita',
             ),
             ...defaultCategories,
@@ -104,15 +104,15 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
       return;
     }
 
-    const dataUser = setupUserData;
-    dataUser.entries[
-      dataUser.incomeTagsCount + dataUser.expenseTags.length
+    const newSetupProps = setupUser;
+    newSetupProps.entries[
+      newSetupProps.incomeTagsCount + newSetupProps.expenseTags.length
     ].categoryLancamento = selectedCategory;
 
-    dataUser.incomeTagsCount++;
-    updateSetupUserDataProps(dataUser);
+    newSetupProps.incomeTagsCount++;
+    updateSetupUserProps(newSetupProps);
 
-    if (dataUser.incomeTagsCount != dataUser.incomeTags.length) {
+    if (newSetupProps.incomeTagsCount != newSetupProps.incomeTags.length) {
       return navigation.dispatch(StackActions.replace('EachFixedIncome'));
     }
 
@@ -126,9 +126,9 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
       <Header
         onBackButton={() => backAction()}
         title="Selecione ou crie uma categoria para"
-        lastWordAccent={setupUserData.incomeTags[setupUserData.incomeTagsCount]}
-        step={`${setupUserData.incomeTagsCount + 1} de ${
-          setupUserData.incomeTags.length
+        lastWordAccent={setupUser.incomeTags[setupUser.incomeTagsCount]}
+        step={`${setupUser.incomeTagsCount + 1} de ${
+          setupUser.incomeTags.length
         }`}
         accent={colors.slimyGreen}
         hasShadow

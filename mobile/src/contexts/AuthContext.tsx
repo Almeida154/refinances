@@ -16,7 +16,7 @@ export type User = {
   signed: boolean;
 };
 
-export interface SetupUserData {
+export interface SetupUser {
   expenseTags: string[];
   expenseTagsCount: number;
   incomeTags: string[];
@@ -37,11 +37,11 @@ export interface error {
 interface AuthContextType {
   token: string;
   user: User;
-  setupUserData: SetupUserData;
+  setupUser: SetupUser;
   handleLogin(logUser: User): Promise<error>;
   handleRegister(): Promise<string>;
   updateUserProps(userProps: User): void;
-  updateSetupUserDataProps(setupUserDataProps: SetupUserData): void;
+  updateSetupUserProps(setupUserProps: SetupUser): void;
   handleLogout(): void;
   emailExists(email: string): Promise<boolean>;
   userAvatar(): Promise<string | undefined | null>;
@@ -53,8 +53,8 @@ export const UseAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User>({} as User);
-  const [setupUserData, setSetupUserData] = useState<SetupUserData>(
-    {} as SetupUserData,
+  const [setupUserData, setSetupUserData] = useState<SetupUser>(
+    {} as SetupUser,
   );
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       const newUser: User = response.data.user;
       newUser.fotoPerfilUsuario =
         newUser.fotoPerfilUsuario != null ? 'base64' : null; // Definindo 'base64' porque a imagem é gigante
-      
+
       await AsyncStorage.setItem('user', JSON.stringify(newUser));
 
       return '';
@@ -152,7 +152,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     setUser(userProps);
   }
 
-  function updateSetupUserDataProps(setupUserDataProps: SetupUserData) {
+  function updateSetupUserDataProps(setupUserDataProps: SetupUser) {
     setSetupUserData(setupUserDataProps);
   }
 
@@ -160,13 +160,13 @@ export const AuthProvider: React.FC = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        setupUserData,
+        setupUser: setupUserData,
         handleLogout,
         handleLogin,
         token: '',
         handleRegister,
         updateUserProps,
-        updateSetupUserDataProps,
+        updateSetupUserProps: updateSetupUserDataProps,
         emailExists,
         userAvatar,
       }}>

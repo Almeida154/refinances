@@ -40,7 +40,7 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
     icon: string;
   };
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const { setupUser, updateSetupUserProps } = UseAuth();
 
   const [name, setName] = useState<string>('');
   const [nameError, setNameError] = useState<null | string>(null);
@@ -87,10 +87,10 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
     });
 
     const namesCreated =
-      setupUserData.createdCategories != undefined
+      setupUser.createdCategories != undefined
         ? [
             ...defaultCategories,
-            ...setupUserData.createdCategories.filter(
+            ...setupUser.createdCategories.filter(
               cc => cc.tipoCategoria == 'despesa',
             ),
           ].filter(cc => cc.nomeCategoria == capitalizeFirstLetter(name))
@@ -111,11 +111,13 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
         isSelected: false,
         tetoDeGastos: null,
       } as Categoria;
-      const userData = setupUserData;
-      userData.createdCategories != undefined
-        ? userData.createdCategories.push(newCreatedCategory)
-        : (userData.createdCategories = [newCreatedCategory] as Categoria[]);
-      updateSetupUserDataProps(userData);
+      const newSetupProps = setupUser;
+      newSetupProps.createdCategories != undefined
+        ? newSetupProps.createdCategories.push(newCreatedCategory)
+        : (newSetupProps.createdCategories = [
+            newCreatedCategory,
+          ] as Categoria[]);
+      updateSetupUserProps(newSetupProps);
 
       navigation.dispatch(
         StackActions.replace('EachFixedExpenseCategory', {

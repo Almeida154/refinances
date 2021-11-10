@@ -40,7 +40,7 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
     icon: string;
   };
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const { setupUser, updateSetupUserProps } = UseAuth();
 
   const [name, setName] = useState<string>('');
   const [nameError, setNameError] = useState<null | string>(null);
@@ -87,10 +87,10 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
     });
 
     const namesCreated =
-      setupUserData.createdCategories != undefined
+      setupUser.createdCategories != undefined
         ? [
             ...defaultCategories,
-            ...setupUserData.createdCategories.filter(
+            ...setupUser.createdCategories.filter(
               cc => cc.tipoCategoria == 'receita',
             ),
           ].filter(cc => cc.nomeCategoria == capitalizeFirstLetter(name))
@@ -111,11 +111,13 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
         isSelected: true,
         tetoDeGastos: null,
       } as Categoria;
-      const userData = setupUserData;
-      userData.createdCategories != undefined
-        ? userData.createdCategories.push(newCreatedCategory)
-        : (userData.createdCategories = [newCreatedCategory] as Categoria[]);
-      updateSetupUserDataProps(userData);
+      const newSetupProps = setupUser;
+      newSetupProps.createdCategories != undefined
+        ? newSetupProps.createdCategories.push(newCreatedCategory)
+        : (newSetupProps.createdCategories = [
+            newCreatedCategory,
+          ] as Categoria[]);
+      updateSetupUserProps(newSetupProps);
 
       navigation.dispatch(
         StackActions.replace('EachFixedIncomeCategory', {

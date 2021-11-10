@@ -41,14 +41,14 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const { setupUser, updateSetupUserProps } = UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
-    let iterator = setupUserData.expenseTagsCount;
+    let iterator = setupUser.expenseTagsCount;
     console.debug(`Contador: ${iterator}`);
-    console.debug(`Current: ${setupUserData.expenseTags[iterator]}`);
+    console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -56,14 +56,14 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    if (setupUserData.expenseTagsCount == 0) {
+    if (setupUser.expenseTagsCount == 0) {
       navigation.dispatch(StackActions.replace('FixedExpenses'));
       return true;
     }
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
-    const newUserData = setupUserData;
-    newUserData.expenseTagsCount--;
-    updateSetupUserDataProps(newUserData);
+    const newSetupProps = setupUser;
+    newSetupProps.expenseTagsCount--;
+    updateSetupUserProps(newSetupProps);
     return true;
   };
 
@@ -73,8 +73,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     );
 
     const entry = {
-      descricaoLancamento:
-        setupUserData.expenseTags[setupUserData.expenseTagsCount],
+      descricaoLancamento: setupUser.expenseTags[setupUser.expenseTagsCount],
       lugarLancamento: 'extrato',
       tipoLancamento: 'despesa',
       parcelasLancamento: [
@@ -85,13 +84,13 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       essencial: true,
     } as Lancamento;
 
-    const userData = setupUserData;
+    const newSetupProps = setupUser;
 
-    userData.entries != undefined
-      ? userData.entries.push(entry)
-      : (userData.entries = [entry]);
+    newSetupProps.entries != undefined
+      ? newSetupProps.entries.push(entry)
+      : (newSetupProps.entries = [entry]);
 
-    updateSetupUserDataProps(userData);
+    updateSetupUserProps(newSetupProps);
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
   }
 
@@ -100,12 +99,10 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       <Header
         onBackButton={() => backAction()}
         title="Quanto gasta mensalmente com"
-        lastWordAccent={`${
-          setupUserData.expenseTags[setupUserData.expenseTagsCount]
-        }?`}
+        lastWordAccent={`${setupUser.expenseTags[setupUser.expenseTagsCount]}?`}
         subtitle="Insira o valor mais aproximado da média"
-        step={`${setupUserData.expenseTagsCount + 1} de ${
-          setupUserData.expenseTags.length
+        step={`${setupUser.expenseTagsCount + 1} de ${
+          setupUser.expenseTags.length
         }`}
       />
 
