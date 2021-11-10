@@ -59,10 +59,10 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
   }, [])
 
   const [metasRealizadas, setMetasRealizadas] = useState(
-    metas.filter(metas => metas.realizacaoMeta),
+    !metas ? null : metas.filter(metas => metas.realizacaoMeta),
   );
 
-  if(metasRealizadas.length > 0 ){
+  if(metasRealizadas && metasRealizadas.length > 0 ){
     return (
       <ScrollView style={{ backgroundColor: '#fff' }}>
   

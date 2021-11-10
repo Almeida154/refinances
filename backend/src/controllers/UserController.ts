@@ -30,7 +30,15 @@ class UserController {
 
     const entries = request.body.entries;
     const allCategories = request.body.allCategories;
-
+    allCategories.push({
+      iconeCategoria: "Ionicons:rocket-outline",
+      tetoDeGastos: 0,
+      nomeCategoria: "Meta",
+      tipoCategoria: "despesa",
+      userCategory: user,
+      corCategoria: "#434235",
+    })
+    
     if (!user) {
       return response.send({ error: "Usuario nao encontrado" });
     }
@@ -72,16 +80,7 @@ class UserController {
 
     //Categorias
 
-    const categoriasPadroes = [
-      {
-        iconeCategoria: "Ionicons:rocket-outline",
-        tetoDeGastos: 0,
-        nomeCategoria: "Meta",
-        tipoCategoria: "despesa",
-        userCategory: user,
-        corCategoria: "#434235",
-      },
-    ];
+    const categoriasPadroes = [];
 
     for (var i = 0; i < allCategories.length; i++) {
       const funcao = async (categoryLancamento) => {

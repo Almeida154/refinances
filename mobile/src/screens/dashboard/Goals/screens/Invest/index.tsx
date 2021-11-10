@@ -103,6 +103,7 @@ const Invest = ({ navigation, route }: Props) => {
       const responseParcela = await handleAdicionarParcela([newParcela])
 
       if(responseParcela == '') {
+<<<<<<< HEAD
         Toast.show({
           type: 'niceToast',
           props: {
@@ -112,6 +113,10 @@ const Invest = ({ navigation, route }: Props) => {
           },
         });
         navigation.dispatch(StackActions.replace('Main'))
+=======
+        ToastAndroid.show("Depósito realizado com sucesso!", ToastAndroid.SHORT)
+        navigation.dispatch(StackActions.replace('Main', {screen: "Home"}))
+>>>>>>> 25821a17de80818db7fa96ac7b5957e717b082b7
 
       } else {
         ToastAndroid.show(responseParcela, ToastAndroid.SHORT)
@@ -124,7 +129,7 @@ const Invest = ({ navigation, route }: Props) => {
   };
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('Main'))
+    navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}))
     return true;
   };
 

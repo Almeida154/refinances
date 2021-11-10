@@ -98,14 +98,15 @@ class ParcelaController {
         }
 
         const data = await parcelaRepository.createQueryBuilder("parcela")
+            .select(["user.id", "parcela"])
             .leftJoinAndSelect("parcela.contaParcela", "conta")
             .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
-            .leftJoinAndSelect("parcela.userParcela", "user")
+            .leftJoin("parcela.userParcela", "user")
             .leftJoinAndSelect("lancamento.categoryLancamento", "category")
             .where("(parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth OR lancamento.parcelaBaseada != -1) AND user.id = :id", {firstDayOfMonth, lastDayOfMonth, id: user.id})            
             .getMany()       
 
-       
+       console.log("data", data)
         const dataLancamentos = await lancamentoRepository.find({where: {userLancamento: {id: user.id}}, join: {
             alias: 'lancamento',
             leftJoinAndSelect: {
@@ -185,17 +186,11 @@ class ParcelaController {
 
         const parcelas = await parcelaRepository.createQueryBuilder("parcela")
             .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
-            .where("parcela.id = :id", { id: request.params.id })
-            .getMany();
-
-        const parcelasConta = await parcelaRepository.createQueryBuilder("parcela")
             .leftJoinAndSelect("parcela.contaParcela", "conta")
-            .where("parcela.id = :id", { id: request.params.id })
-            .getMany();
-
-        parcelas.map((item, index) => {
-            parcelas[index].contaParcela = parcelasConta[index].contaParcela
-        });
+            .leftJoinAndSelect("parcela.userParcela", "user")
+            .where("parcela.id = :id", { id: request.params.id })          
+            .getMany();        
+        
 
         return response.send({ parcelas });
     }   
@@ -215,7 +210,12 @@ class ParcelaController {
         if (statusParcela == undefined) return response.send({ error: "Status da Parcela não especificado" });
 
         const lancamentoExists = await lancamentoRepository.findOne({ where: { id: lancamentoParcela } });
-        const contaExists = await contaRepository.findOne({ where: { id: contaParcela } });
+        const contaExists = await contaRepository.findOne({ where: { id: contaParcela }, join: {
+            alias: 'conta',
+            leftJoinAndSelect: {
+                user: 'conta.userConta'
+            }
+        } });
 
         if (!lancamentoExists) return response.send({
             error: "Não existe um lançamento com esse id"
@@ -235,7 +235,8 @@ class ParcelaController {
         let updateConta
         if(statusParcela) {
             contaExists.saldoConta += lancamentoExists.tipoLancamento == 'despesa' ?  -diff : diff
-            updateConta = await contaRepository.update(contaExists.id, {...contaExists})            
+            await contaRepository.update(contaExists.id, {...contaExists})            
+            updateConta = await contaRepository.findOne({where: {id: contaExists.id}})
         }
 
 
@@ -246,8 +247,17 @@ class ParcelaController {
         await parcelaRepository.update(id, updateParcela);
 
         const parcela = await parcelaRepository.findOne({
-            where: { id }
+            where: { id },
+            join: {
+                alias: "parcela",
+                leftJoinAndSelect: {
+                    user: "parcela.userParcela",
+                    conta: "parcela.contaParcela",
+                    lancamento: "parcela.lancamentoParcela"
+                }
+            }
         })
+            console.log("updateParcela", parcela)
 
         return response.send({ message: parcela });
     }

@@ -88,6 +88,8 @@ export const ParcelaProvider: React.FC = ({ children }) => {
 
     async function handleEditParcela(parcelasProps: Parcela[]) {
         
+        console.log("parcelasProps", parcelasProps)
+        
         try {
             const arrayParcelas: Parcela[] = parcelasProps;
 
