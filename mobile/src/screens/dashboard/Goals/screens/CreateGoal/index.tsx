@@ -83,8 +83,8 @@ const CreateGoal = () => {
       userMetaId: await retornarIdDoUsuario(),
       lancamentoMeta: {
         id: -1,
-        categoryLancamento: "Mercado",
-        descricaoLancamento: meta,
+        categoryLancamento: "Meta",
+        descricaoLancamento: "Depósito para " + meta,
         essencial: false,
         lugarLancamento: 'extrato',
         parcelaBaseada: -1,
