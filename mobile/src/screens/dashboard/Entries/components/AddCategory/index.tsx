@@ -22,15 +22,18 @@ import IconByString from '../../../../../helpers/gerarIconePelaString';
 import { Modalize as Modal } from 'react-native-modalize';
 import global from '../../../../../global';
 import hexToRGB from '../../../../../helpers/hexToRgba';
-import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext';
+import {
+  Categoria,
+  UseCategories,
+} from '../../../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
-const NewExpenseCategory = ({route}: {route: any}) => {
-    const {navigation} = UseDadosTemp()
-    const {handleAdicionar} = UseCategories()
+const NewExpenseCategory = ({ route }: { route: any }) => {
+  const { navigation } = UseDadosTemp();
+  const { handleAdicionar } = UseCategories();
 
-    const {tipoCategoria} = route.params
+  const { tipoCategoria } = route.params;
 
   type ColorProps = {
     name: string;
@@ -41,8 +44,6 @@ const NewExpenseCategory = ({route}: {route: any}) => {
     description: string;
     icon: string;
   };
-
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
 
   const [name, setName] = useState<string>('Essa é nova');
   const [nameError, setNameError] = useState<null | string>(null);
@@ -76,29 +77,29 @@ const NewExpenseCategory = ({route}: {route: any}) => {
   const capitalizeFirstLetter = (str: string) =>
     str.charAt(0).toUpperCase() + str.slice(1);
 
-  const add = async () => {    
-        const newCreatedCategory = {
-        corCategoria: color.hex,
-        iconeCategoria: icon.icon,
-        nomeCategoria: capitalizeFirstLetter(name),
-        tipoCategoria: tipoCategoria,
-        isSelected: false,
-        tetoDeGastos: 0,
-        userCategoria: await retornarIdDoUsuario()
-        } as Categoria;
+  const add = async () => {
+    const newCreatedCategory = {
+      corCategoria: color.hex,
+      iconeCategoria: icon.icon,
+      nomeCategoria: capitalizeFirstLetter(name),
+      tipoCategoria: tipoCategoria,
+      isSelected: false,
+      tetoDeGastos: 0,
+      userCategoria: await retornarIdDoUsuario(),
+    } as Categoria;
 
-        
-        const response = await handleAdicionar(newCreatedCategory)       
-        
-        if(response == '') {
-            ToastAndroid.show("Categoria Cadastrada com sucesso", ToastAndroid.SHORT)
+    const response = await handleAdicionar(newCreatedCategory);
 
-            navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main'}))            
-        } else {
-            ToastAndroid.show(response, ToastAndroid.SHORT)
-        }
-    
+    if (response == '') {
+      ToastAndroid.show('Categoria Cadastrada com sucesso', ToastAndroid.SHORT);
+
+      navigation.dispatch(
+        StackActions.replace('Lancamentos', { screen: 'Main' }),
+      );
+    } else {
+      ToastAndroid.show(response, ToastAndroid.SHORT);
     }
+  };
 
   return (
     <Container>

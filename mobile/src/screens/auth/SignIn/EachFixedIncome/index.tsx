@@ -40,14 +40,14 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const { setupUser, updateSetupUserProps } = UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
-    let iterator = setupUserData.incomeTagsCount;
+    let iterator = setupUser.incomeTagsCount;
     console.debug(`Contador: ${iterator}`);
-    console.debug(`Current: ${setupUserData.incomeTags[iterator]}`);
+    console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -55,14 +55,14 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    if (setupUserData.incomeTagsCount == 0) {
+    if (setupUser.incomeTagsCount == 0) {
       navigation.dispatch(StackActions.replace('FixedIncomes'));
       return true;
     }
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
-    const newUserData = setupUserData;
-    newUserData.incomeTagsCount--;
-    updateSetupUserDataProps(newUserData);
+    const newSetupProps = setupUser;
+    newSetupProps.incomeTagsCount--;
+    updateSetupUserProps(newSetupProps);
     return true;
   };
 
@@ -72,8 +72,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     );
 
     const entry = {
-      descricaoLancamento:
-        setupUserData.incomeTags[setupUserData.incomeTagsCount],
+      descricaoLancamento: setupUser.incomeTags[setupUser.incomeTagsCount],
       lugarLancamento: 'extrato',
       tipoLancamento: 'receita',
       parcelasLancamento: [
@@ -84,13 +83,13 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
       essencial: true,
     } as Lancamento;
 
-    const userData = setupUserData;
+    const newSetupProps = setupUser;
 
-    userData.entries != undefined
-      ? userData.entries.push(entry)
-      : (userData.entries = [entry]);
+    newSetupProps.entries != undefined
+      ? newSetupProps.entries.push(entry)
+      : (newSetupProps.entries = [entry]);
 
-    updateSetupUserDataProps(userData);
+    updateSetupUserProps(newSetupProps);
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
   }
 
@@ -100,12 +99,10 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
         accent={colors.slimyGreen}
         onBackButton={() => backAction()}
         title="Quanto ganha mensalmente com"
-        lastWordAccent={`${
-          setupUserData.incomeTags[setupUserData.incomeTagsCount]
-        }?`}
+        lastWordAccent={`${setupUser.incomeTags[setupUser.incomeTagsCount]}?`}
         subtitle="Insira o valor mais aproximado da média"
-        step={`${setupUserData.incomeTagsCount + 1} de ${
-          setupUserData.incomeTags.length
+        step={`${setupUser.incomeTagsCount + 1} de ${
+          setupUser.incomeTags.length
         }`}
       />
 

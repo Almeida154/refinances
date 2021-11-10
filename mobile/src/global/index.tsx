@@ -1,8 +1,11 @@
 import React from 'react';
+import { Text, View } from 'react-native';
+import NiceToast from '../components/NiceToast';
 import {
   BaseToast,
   ErrorToast,
   BaseToastProps,
+  ToastShowParams,
 } from 'react-native-toast-message';
 import { colors, fonts } from '../styles';
 
@@ -54,6 +57,13 @@ export default {
           fontFamily: fonts.familyType.semiBold,
           opacity: 0.7,
         }}
+      />
+    ),
+    niceToast: ({ props }: ToastShowParams) => (
+      <NiceToast
+        type={props.type}
+        title={props.title}
+        message={props.message}
       />
     ),
   },

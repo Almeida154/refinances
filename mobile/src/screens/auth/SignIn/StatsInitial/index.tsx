@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import { BackHandler } from 'react-native';
 
-import api from '../../../../services/api'
+import api from '../../../../services/api';
 
-import global from '../../../../global'
+import global from '../../../../global';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import retornarIdDoUsuario from '../../../../helpers/retornarIdDoUsuario';
@@ -46,7 +46,13 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
 
   const [expensePercentage, setExpensePercentage] = useState<number>(0);
 
-  const { setupUserData, updateSetupUserDataProps, user, handleRegister, updateUserProps } = UseAuth();
+  const {
+    setupUser,
+    updateSetupUserProps,
+    user,
+    handleRegister,
+    updateUserProps,
+  } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -55,7 +61,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
   }, []);
 
   useEffect(() => {
-    console.debug('Json final:::: ', JSON.stringify(setupUserData));
+    console.debug('Json final:::: ', JSON.stringify(setupUser));
 
     const income = calculateTotal('receita');
     const expense = calculateTotal('despesa');
@@ -68,7 +74,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
   }, [expensePercentage, totalIncome, totalExpense]);
 
   const calculateTotal = (type: string) => {
-    const totIn = setupUserData.entries.filter(
+    const totIn = setupUser.entries.filter(
       entry => entry.tipoLancamento == type,
     );
     const inAmount = totIn.map(
@@ -84,34 +90,35 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
-    const userData = setupUserData;
-    userData.incomeTagsCount--;
-    updateSetupUserDataProps(userData);
+    const newSetupProps = setupUser;
+    newSetupProps.incomeTagsCount--;
+    updateSetupUserProps(newSetupProps);
     return true;
   };
 
   const register = async () => {
+    const response = await handleRegister();
 
-    const response = await handleRegister()
+    console.log('response', response);
 
-    console.log("response", response)
+    const idUser = await retornarIdDoUsuario();
 
-    const idUser = await retornarIdDoUsuario()
+    console.log(idUser);
 
-    console.log(idUser)
-    
     const logUser = JSON.parse(await AsyncStorage.getItem('user'));
 
-    var defaultCategoriesIncome = global.DEFAULT_INCOME_CATEGORIES.map(category => {
-      let cat = {} as Categoria;
-      cat.nomeCategoria = category.description;
-      cat.corCategoria = category.color;
-      cat.iconeCategoria = category.icon;
-      cat.tetoDeGastos = null;
-      cat.tipoCategoria = 'receita';
-      cat.isSelected = false;
-      return cat;
-    });
+    var defaultCategoriesIncome = global.DEFAULT_INCOME_CATEGORIES.map(
+      category => {
+        let cat = {} as Categoria;
+        cat.nomeCategoria = category.description;
+        cat.corCategoria = category.color;
+        cat.iconeCategoria = category.icon;
+        cat.tetoDeGastos = null;
+        cat.tipoCategoria = 'receita';
+        cat.isSelected = false;
+        return cat;
+      },
+    );
 
     var defaultCategories = global.DEFAULT_EXPENSE_CATEGORIES.map(category => {
       let cat = {} as Categoria;
@@ -125,22 +132,21 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
     });
 
     var ctgrs =
-      setupUserData.createdCategories != undefined
+      setupUser.createdCategories != undefined
         ? [
-            ...setupUserData.createdCategories,
+            ...setupUser.createdCategories,
             ...defaultCategories,
-            ...defaultCategoriesIncome
+            ...defaultCategoriesIncome,
           ]
         : [...defaultCategories, ...defaultCategoriesIncome];
 
-
     api.post(`/user/setupuser/${idUser}`, {
-      entries: setupUserData.entries,
-      allCategories: ctgrs == undefined ? [] : ctgrs
-    })
-    
-    logUser.signed = true    
-    updateUserProps(logUser)
+      entries: setupUser.entries,
+      allCategories: ctgrs == undefined ? [] : ctgrs,
+    });
+
+    logUser.signed = true;
+    updateUserProps(logUser);
   };
 
   return (

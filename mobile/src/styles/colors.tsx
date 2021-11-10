@@ -15,4 +15,6 @@ export default {
 
   slimyGreen: '#489e39',
   lincolnGreen: '#16550c',
+
+  deepSafron: '#FB9637',
 };

@@ -34,6 +34,7 @@ import Modalize from '../../../../components/Modalize';
 import { Modalize as Modal } from 'react-native-modalize';
 
 import global from '../../../../global';
+import NiceToast from '../../../../components/NiceToast';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'FixedExpenses'>;
@@ -54,13 +55,13 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   const modalizeRef = useRef<Modal>(null);
   const newExpenseRef = useRef<TextInput>(null);
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const { setupUser, updateSetupUserProps } = UseAuth();
 
   useEffect(() => {
-    if (setupUserData.expenseTags) {
-      let iterator = setupUserData.expenseTagsCount;
+    if (setupUser.expenseTags) {
+      let iterator = setupUser.expenseTagsCount;
       console.debug(`Contador: ${iterator}`);
-      console.debug(`Current: ${setupUserData.expenseTags[iterator]}`);
+      console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
     }
 
     console.debug('NULL pae');
@@ -83,17 +84,19 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   async function next() {
     if (selectedTags.length < 1) {
       Toast.show({
-        type: 'error',
-        text1: 'Oops!',
-        text2: 'Selecione ao menos 1 ganho fixo 💸🤑',
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Oops!',
+          message: 'Selecione ao menos 1 gasto fixo!',
+        },
       });
-
       return;
     }
-    const userData = setupUserData;
-    userData.expenseTags = selectedTags;
-    userData.expenseTagsCount = 0;
-    updateSetupUserDataProps(userData);
+    const newSetupProps = setupUser;
+    newSetupProps.expenseTags = selectedTags;
+    newSetupProps.expenseTagsCount = 0;
+    updateSetupUserProps(newSetupProps);
 
     navigation.navigate('EachFixedExpense');
   }
@@ -220,7 +223,9 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
           color={colors.davysGrey}
         />
       </Modalize>
-      <Toast config={global.TOAST_CONFIG} />
+
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

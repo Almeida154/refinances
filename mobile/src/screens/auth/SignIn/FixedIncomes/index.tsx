@@ -50,13 +50,13 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
   const modalizeRef = useRef<Modal>(null);
   const newIncomeRef = useRef<TextInput>(null);
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const { setupUser, updateSetupUserProps } = UseAuth();
 
   useEffect(() => {
-    if (setupUserData.incomeTags) {
-      let iterator = setupUserData.incomeTagsCount;
+    if (setupUser.incomeTags) {
+      let iterator = setupUser.incomeTagsCount;
       console.debug(`Contador: ${iterator}`);
-      console.debug(`Current: ${setupUserData.incomeTags[iterator]}`);
+      console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
     }
 
     console.debug('NULL pae');
@@ -73,17 +73,17 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
-    const newUserData = setupUserData;
-    newUserData.expenseTagsCount--;
-    updateSetupUserDataProps(newUserData);
+    const newSetupProps = setupUser;
+    newSetupProps.expenseTagsCount--;
+    updateSetupUserProps(newSetupProps);
     return true;
   };
 
   async function next() {
-    const userData = setupUserData;
-    userData.incomeTags = selectedTags;
-    userData.incomeTagsCount = 0;
-    updateSetupUserDataProps(userData);
+    const newSetupProps = setupUser;
+    newSetupProps.incomeTags = selectedTags;
+    newSetupProps.incomeTagsCount = 0;
+    updateSetupUserProps(newSetupProps);
 
     navigation.navigate('EachFixedIncome');
   }

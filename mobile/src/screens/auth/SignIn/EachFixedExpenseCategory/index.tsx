@@ -32,12 +32,12 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([] as Categoria[]);
 
-  const { setupUserData, updateSetupUserDataProps } = UseAuth();
+  const { setupUser, updateSetupUserProps } = UseAuth();
 
   useEffect(() => {
-    let iterator = setupUserData.expenseTagsCount;
+    let iterator = setupUser.expenseTagsCount;
     console.debug(`Contador: ${iterator}`);
-    console.debug(`Current: ${setupUserData.expenseTags[iterator]}`);
+    console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
 
     const unsubscribe = navigation.addListener('focus', () => {
       populateCategories();
@@ -66,9 +66,9 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     });
 
     var ctgrs =
-      setupUserData.createdCategories != undefined
+      setupUser.createdCategories != undefined
         ? [
-            ...setupUserData.createdCategories.filter(
+            ...setupUser.createdCategories.filter(
               cc => cc.tipoCategoria == 'despesa',
             ),
             ...defaultCategories,
@@ -103,13 +103,13 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       return;
     }
 
-    const dataUser = setupUserData;
-    dataUser.entries[setupUserData.expenseTagsCount].categoryLancamento =
+    const newSetupProps = setupUser;
+    newSetupProps.entries[setupUser.expenseTagsCount].categoryLancamento =
       selectedCategory;
-    dataUser.expenseTagsCount++;
-    updateSetupUserDataProps(dataUser);
+    newSetupProps.expenseTagsCount++;
+    updateSetupUserProps(newSetupProps);
 
-    if (setupUserData.expenseTagsCount != setupUserData.expenseTags.length) {
+    if (setupUser.expenseTagsCount != setupUser.expenseTags.length) {
       return navigation.dispatch(StackActions.replace('EachFixedExpense'));
     }
 
@@ -123,11 +123,9 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       <Header
         onBackButton={() => backAction()}
         title="Selecione ou crie uma categoria para"
-        lastWordAccent={
-          setupUserData.expenseTags[setupUserData.expenseTagsCount]
-        }
-        step={`${setupUserData.expenseTagsCount + 1} de ${
-          setupUserData.expenseTags.length
+        lastWordAccent={setupUser.expenseTags[setupUser.expenseTagsCount]}
+        step={`${setupUser.expenseTagsCount + 1} de ${
+          setupUser.expenseTags.length
         }`}
         hasShadow
         subtitle="Clique para selecionar"
