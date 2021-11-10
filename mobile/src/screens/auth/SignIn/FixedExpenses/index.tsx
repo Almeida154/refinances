@@ -79,6 +79,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
     return true;
   };
 
+  
   async function next() {
     if (selectedTags.length < 1) {
       niceToast('error', 'Oops!', 'Selecione ao menos 1 gasto fixo!');

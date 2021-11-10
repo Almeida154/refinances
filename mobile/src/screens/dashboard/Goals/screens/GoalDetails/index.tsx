@@ -36,6 +36,7 @@ import Header from '../components/Header';
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
 const GoalDetails = ({ route }: Props) => {
+
   const { navigation } = UseDadosTemp();
 
   const [goal, setGoal] = useState({} as Meta);
@@ -64,15 +65,16 @@ const GoalDetails = ({ route }: Props) => {
   const percBalance = percentageBalance / 100; 
   const saldo = (goal.saldoAtualMeta);
 
-  const backAction = () => {
-    //muda aq mary pra main
-    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}));
-    return true;
-  };
+  /*const backAction = () => {
+    navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}))
+  };*/
 
   return (
     <ScrollView style={{ paddingTop: '5%', backgroundColor: '#f6f6f6' }}>
-      <Header onBackButton={() => backAction()} title="" />
+      <Header 
+      onBackButton={() => 
+      {navigation.dispatch(StackActions.replace('GoalsList'))}} title="" />
+
       {console.debug('ROUTE:::: ', route)}
       <View style={styles.container}>
         <Title>{goal.descMeta}</Title>

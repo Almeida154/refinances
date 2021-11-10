@@ -181,6 +181,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
 
         if(receiveEntry) {
             newLancamento.categoryLancamento = selectedCategoria
+            
             const message = await handleEditLancamento(newLancamento, idUser)            
 
 

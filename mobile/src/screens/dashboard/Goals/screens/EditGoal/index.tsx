@@ -23,21 +23,23 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import {
-  GoalDate,
-  TextGoals,
-  TextGoalsH,
-  TextGoalsLighter,
-  TextProgress,
   TextRS,
   TextValor,
   Title,
   Valor,
-  DaysLeft,
 } from './styles';
+
+import global from '../../../../../global';
+import Toast from 'react-native-toast-message';
+import NiceToast from '../../../../../components/NiceToast';
 
 import fonts from '../../../../../styles/fonts';
 import { StackActions } from 'react-navigation';
 import Header from '../components/Header';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { GoalsStack } from '../../../../../@types/RootStackParamApp';
+
+type Props = NativeStackScreenProps<GoalsStack, 'EditGoals'>;
 
 const EditGoal = ({ route }: Props) => {
   const [goal, setGoal] = useState({} as Meta);
@@ -55,14 +57,12 @@ const EditGoal = ({ route }: Props) => {
   const { handleAtualizarMeta } = UseMetas();
   
   const [valorMeta, setValorMeta] = useState('');
-  const [investidoMeta, setInvestido] = useState('');
   const [previsao, setPrevisao] = useState(new Date());
   const [realizado, setRealizado] = useState(false);
 
   //erros
   const [descError, setdescError] = useState<any | null>(null);
   const [valorTError, setvalorTError] = useState<any | null>(null);
-  const [investidoError, setinvestidoError] = useState<any | null>(null);
   const [dtPrevError, setdtPrevError] = useState<any | null>(null);
 
   const { handleAdicionarMeta } = UseMetas();
@@ -100,8 +100,8 @@ const EditGoal = ({ route }: Props) => {
       saldoFinalMeta: novoSaldoFinal(),
       saldoAtualMeta: goal.saldoAtualMeta,
       dataInicioMeta: goal.dataInicioMeta,
-      dataFimMeta: novoFimMeta(),
-      realizacaoMeta: goal.realizacaoMeta,
+      dataFimMeta: previsao.toLocaleDateString(),
+      realizacaoMeta: realizacao(),
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
     
@@ -118,7 +118,14 @@ const EditGoal = ({ route }: Props) => {
       handleAtualizarMeta(newGoal, goal.id);
       console.log(newGoal);
       
-      ToastAndroid.show("Meta Atualizada com sucesso", ToastAndroid.SHORT);
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'success',
+          title: 'Foi!',
+          message: 'Meta atualizada com sucesso!',
+        },
+      });
       navigation.dispatch(StackActions.replace('Main'))
 
     } else if (meta == '') {
@@ -127,14 +134,11 @@ const EditGoal = ({ route }: Props) => {
     if (parseFloat(valorMeta) <= 0 || valorMeta == '') {
       setvalorTError('Insira um valor válido!');
     }
-    if (parseFloat(investidoMeta) < 0 || investidoMeta == '') {
-      setinvestidoError('Insira um valor válido!');
-    }
     
   }
   
   const realizacao = () => {
-    parseFloat(investidoMeta) >= parseFloat(valorMeta)
+    goal.saldoAtualMeta >= parseFloat(valorMeta)
       ? setRealizado(true)
       : setRealizado(false);
 
@@ -147,10 +151,7 @@ const EditGoal = ({ route }: Props) => {
   };
   
   const novoSaldoFinal = () => {
-    return valorMeta;
-  };
-  const novoFimMeta = () => {
-    return valorMeta;
+    return parseFloat(valorMeta);
   };
   const valorFim = '' +goal.saldoFinalMeta;
 
@@ -237,6 +238,8 @@ const EditGoal = ({ route }: Props) => {
         />
       </View>
       </View>
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>
   );
 };

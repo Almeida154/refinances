@@ -24,6 +24,10 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
+import global from '../../../../../global';
+import Toast from 'react-native-toast-message';
+import NiceToast from '../../../../../components/NiceToast';
+
 import fonts from '../../../../../styles/fonts';
 import { StackActions } from 'react-navigation';
 import Header from '../components/Header';
@@ -83,8 +87,8 @@ const CreateGoal = () => {
       userMetaId: await retornarIdDoUsuario(),
       lancamentoMeta: {
         id: -1,
-        categoryLancamento: "Mercado",
-        descricaoLancamento: meta,
+        categoryLancamento: "Meta",
+        descricaoLancamento: "Depósito para " + meta,
         essencial: false,
         lugarLancamento: 'extrato',
         parcelaBaseada: -1,
@@ -110,7 +114,14 @@ const CreateGoal = () => {
       handleAdicionarMeta(newGoal);
       console.log(newGoal);
       
-      ToastAndroid.show("Meta cadastrada com sucesso", ToastAndroid.SHORT);
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'success',
+          title: 'Foi!',
+          message: 'Meta cadastrada com sucesso!',
+        },
+      });
       navigation.dispatch(StackActions.replace('Main'));
 
     } else if (meta == '') {
@@ -250,6 +261,8 @@ const CreateGoal = () => {
           lastOne={true}
         />
       </View>
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>
   );
 };
