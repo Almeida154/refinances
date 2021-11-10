@@ -94,7 +94,7 @@ const Invest = ({ navigation, route }: Props) => {
     } 
     else{
       const responseMeta = await handleAtualizarMeta(newGoal, goal.id);
-      console.log("Parou ai")
+      
       const responseParcela = await handleAdicionarParcela([newParcela])
 
       if(responseParcela == '') {
