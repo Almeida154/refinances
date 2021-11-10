@@ -8,8 +8,6 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
-import Toast from 'react-native-toast-message';
-
 // Styles
 import {
   Container,
@@ -30,11 +28,11 @@ import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import InputText from '../../../../components/InputText';
 import Modalize from '../../../../components/Modalize';
+import Toast from 'react-native-toast-message';
 
 import { Modalize as Modal } from 'react-native-modalize';
 
 import global from '../../../../global';
-import NiceToast from '../../../../components/NiceToast';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'FixedExpenses'>;
@@ -55,16 +53,16 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   const modalizeRef = useRef<Modal>(null);
   const newExpenseRef = useRef<TextInput>(null);
 
-  const { setupUser, updateSetupUserProps } = UseAuth();
+  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
 
   useEffect(() => {
     if (setupUser.expenseTags) {
       let iterator = setupUser.expenseTagsCount;
-      console.debug(`Contador: ${iterator}`);
+      console.debug(`Iterator: ${iterator}`);
       console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
     }
-
     console.debug('NULL pae');
+    niceToast('fake', null, null, 500);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -83,14 +81,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
   async function next() {
     if (selectedTags.length < 1) {
-      Toast.show({
-        type: 'niceToast',
-        props: {
-          type: 'error',
-          title: 'Oops!',
-          message: 'Selecione ao menos 1 gasto fixo!',
-        },
-      });
+      niceToast('error', 'Oops!', 'Selecione ao menos 1 gasto fixo!');
       return;
     }
     const newSetupProps = setupUser;
@@ -98,7 +89,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
     newSetupProps.expenseTagsCount = 0;
     updateSetupUserProps(newSetupProps);
 
-    navigation.navigate('EachFixedExpense');
+    navigation.dispatch(StackActions.replace('EachFixedExpense'));
   }
 
   const removeAccents = (str: string) =>
@@ -136,7 +127,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
       <ScrollContainer>
         <Header
           onBackButton={() => backAction()}
-          title="Selecione os ganhos fixos"
+          title="Selecione os gastos fixos"
           subtitle="Seus gastos mensais."
         />
 
@@ -184,10 +175,11 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
         <ButtonContainer>
           <Button
+            style={{ backgroundColor: colors.platinum, marginBottom: 60 }}
+            color={colors.davysGrey}
             onPress={() => openModalize()}
             title="Outro"
-            backgroundColor={colors.platinum}
-            color={colors.davysGrey}
+            lastOne
           />
         </ButtonContainer>
       </ScrollContainer>

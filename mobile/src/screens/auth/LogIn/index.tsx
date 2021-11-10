@@ -29,6 +29,7 @@ import InputText from '../../../components/InputText';
 // Icons
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import LoginIcon from '../../../assets/images/svg/login-icon.svg';
+import { StackActions } from '@react-navigation/routers';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Login'>;
@@ -38,7 +39,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { handleLogin } = UseAuth();
+  const { handleLogin, niceToast } = UseAuth();
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -72,7 +73,6 @@ const Entrar = ({ navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <StatusBar translucent={true} backgroundColor="transparent" />
       <LinearGradient
         style={{ flex: 1, paddingTop: metrics.default.statusBarHeight }}
         start={{ x: 0.1, y: 0.1 }}
@@ -170,7 +170,10 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 Esqueci minha senha
               </TextForgotPassword>
 
-              <TextNoAccount onPress={() => navigation.navigate('Name')}>
+              <TextNoAccount
+                onPress={() =>
+                  navigation.dispatch(StackActions.replace('Name'))
+                }>
                 Ainda não tenho conta
               </TextNoAccount>
             </Boundaries>

@@ -1,19 +1,22 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import {colors, fonts, metrics} from '../../styles'
+import { colors, fonts, metrics } from '../../styles';
 
 import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
 
-import Modalize from '../../components/Modalize'
-import Button from '../../components/Button'
+import Modalize from '../../components/Modalize';
+import Button from '../../components/Button';
 
 import { Modalize as Modal } from 'react-native-modalize';
 
-import {HomeAccountStackNavigation, LancamentosStackNavigation} from '../../routes/app.routes'
+import {
+  HomeAccountStackNavigation,
+  LancamentosStackNavigation,
+} from '../../routes/app.routes';
 
 import RootStackParamApp, {
   FormLancamentoStack,
@@ -28,7 +31,7 @@ import Extrato from '../../screens/dashboard/Extract';
 import FormLancamentos from '../../screens/dashboard/Entries';
 import AddCategory from '../../screens/dashboard/Entries/components/AddCategory';
 import ManageAccount from '../../screens/dashboard/Home/components/ManageAccount';
-import DashboardGoals from '../../screens/dashboard/Goals/screens/DashboardGoals'
+import DashboardGoals from '../../screens/dashboard/Goals/screens/DashboardGoals';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -45,8 +48,6 @@ import {
 import { StackActions } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
-
-
 
 type PropsCustomBar = {
   children: React.ReactNode;
@@ -91,7 +92,7 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
 };
 
 const TabNavigator = () => {
-  const {navigation} = UseDadosTemp()
+  const { navigation } = UseDadosTemp();
 
   const modalizeRef = useRef<Modal>(null);
 
@@ -105,25 +106,32 @@ const TabNavigator = () => {
 
   return (
     <>
-    <Modalize
-      ref={modalizeRef}
-      title="Escolha uma opção para adicionar o lançamento"
-      hasBodyBoundaries
-    >
-      <Button 
-        title="Adição por formulário"
-        onPress={() => navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main'}))}
-        backgroundColor={colors.platinum}
-        color={colors.silver}
-      />
-      <Button 
-        title="Adição por voz"
-        onPress={() => navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'RecognizeVoice'}))}
-        backgroundColor={colors.platinum}
-        color={colors.silver}
-      />
-    </Modalize>
-    
+      <Modalize
+        ref={modalizeRef}
+        title="Escolha uma opção para adicionar o lançamento"
+        hasBodyBoundaries>
+        <Button
+          title="Adição por formulário"
+          onPress={() =>
+            navigation.dispatch(
+              StackActions.replace('Lancamentos', { screen: 'Main' }),
+            )
+          }
+          backgroundColor={colors.platinum}
+          color={colors.silver}
+        />
+        <Button
+          title="Adição por voz"
+          onPress={() =>
+            navigation.dispatch(
+              StackActions.replace('Lancamentos', { screen: 'RecognizeVoice' }),
+            )
+          }
+          backgroundColor={colors.platinum}
+          color={colors.silver}
+        />
+      </Modalize>
+
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {

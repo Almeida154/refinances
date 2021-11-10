@@ -5,7 +5,7 @@ import { StatusBar } from 'react-native';
 import RootNavigator from '../navigation/RootNavigator';
 
 import { PropsMainRoutes } from '../@types/RootStackParamApp';
-import { RouteProp } from '@react-navigation/core';
+import { RouteProp } from '@react-navigation/native';
 import { UseDadosTemp } from '../contexts/TemporaryDataContext';
 
 export type PropsMain = {
@@ -13,13 +13,13 @@ export type PropsMain = {
   route: RouteProp<PropsMainRoutes, 'Main'>;
 };
 
-const Main = ({ route, navigation }: PropsMain) => {
+const Main = ({ navigation }: PropsMain) => {
   const { setNavigation } = UseDadosTemp();
-
   setNavigation(navigation);
+
   return (
     <>
-      <StatusBar translucent={true} backgroundColor="transparent" />
+      <StatusBar translucent backgroundColor="transparent" />
       <RootNavigator />
     </>
   );

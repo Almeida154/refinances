@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import { BackHandler, StatusBar } from 'react-native';
+import { BackHandler, StatusBar, ToastAndroid, View } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp, StackActions } from '@react-navigation/native';
+import {
+  CommonActions,
+  RouteProp,
+  StackActions,
+} from '@react-navigation/native';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -16,6 +20,7 @@ import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import CategoryItem from '../../components/CategoryItem';
+import Toast from 'react-native-toast-message';
 
 import global from '../../../../global';
 import { Categoria } from '@contexts/CategoriesContext';
@@ -39,11 +44,8 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     console.debug(`Contador: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
 
-    const unsubscribe = navigation.addListener('focus', () => {
-      populateCategories();
-    });
-    return unsubscribe;
-  }, [navigation]);
+    populateCategories();
+  }, []);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -100,6 +102,16 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   async function next() {
     if (selectedCategory.nomeCategoria == null) {
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Calma aí...',
+          message: `E a categoria da ${
+            setupUser.expenseTags[setupUser.expenseTagsCount]
+          }?`,
+        },
+      });
       return;
     }
 
@@ -119,18 +131,20 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <StatusBar backgroundColor={colors.white} />
-      <Header
-        onBackButton={() => backAction()}
-        title="Selecione ou crie uma categoria para"
-        lastWordAccent={setupUser.expenseTags[setupUser.expenseTagsCount]}
-        step={`${setupUser.expenseTagsCount + 1} de ${
-          setupUser.expenseTags.length
-        }`}
-        hasShadow
-        subtitle="Clique para selecionar"
-      />
-
+      <StatusBar translucent backgroundColor="transparent" />
+      {/* Uma view aqui com elevation 0 pra ficar abaixo do Toast */}
+      <View style={{ elevation: 0 }}>
+        <Header
+          onBackButton={() => backAction()}
+          title="Selecione ou crie uma categoria para"
+          lastWordAccent={setupUser.expenseTags[setupUser.expenseTagsCount]}
+          step={`${setupUser.expenseTagsCount + 1} de ${
+            setupUser.expenseTags.length
+          }`}
+          hasShadow
+          subtitle="Clique para selecionar"
+        />
+      </View>
       <Content>
         {categories.map((category, index) => (
           <CategoryItem
@@ -147,8 +161,6 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
               let newCategories = categories;
               newCategories[index].isSelected = true;
 
-              //console.log(category);
-
               setCategories(newCategories as Categoria[]);
               setSelectedCategory(newCategories[index]);
             }}
@@ -158,11 +170,11 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
         <ButtonContainer>
           <Button
+            style={{ backgroundColor: colors.platinum }}
             onPress={() =>
               navigation.navigate('NewCategory', { screen: 'Despesa' })
             }
             title="Nova"
-            backgroundColor={colors.platinum}
             color={colors.davysGrey}
             lastOne
           />
@@ -170,6 +182,11 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       </Content>
 
       <BottomNavigation onPress={() => next()} description={'Próximo!'} />
+
+      <>
+        {/* @ts-ignore */}
+        <Toast topOffset={0} config={global.TOAST_CONFIG} />
+      </>
     </Container>
   );
 };

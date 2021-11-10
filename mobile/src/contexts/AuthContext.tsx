@@ -5,7 +5,11 @@ import { Categoria } from './CategoriesContext';
 import { Conta } from './AccountContext';
 import { Lancamento } from './EntriesContext';
 
+import Toast from 'react-native-toast-message';
+import global from '../global';
+
 import api from '../services/api';
+import { StatusBar } from 'react-native';
 
 export type User = {
   id: number;
@@ -45,6 +49,13 @@ interface AuthContextType {
   handleLogout(): void;
   emailExists(email: string): Promise<boolean>;
   userAvatar(): Promise<string | undefined | null>;
+
+  niceToast(
+    type: string,
+    title: string | null,
+    message?: string | null,
+    time?: number,
+  ): any;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -53,9 +64,7 @@ export const UseAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User>({} as User);
-  const [setupUserData, setSetupUserData] = useState<SetupUser>(
-    {} as SetupUser,
-  );
+  const [setupUser, setSetupUserData] = useState<SetupUser>({} as SetupUser);
 
   useEffect(() => {
     (async () => {
@@ -152,25 +161,45 @@ export const AuthProvider: React.FC = ({ children }) => {
     setUser(userProps);
   }
 
-  function updateSetupUserDataProps(setupUserDataProps: SetupUser) {
+  function updateSetupUserProps(setupUserDataProps: SetupUser) {
     setSetupUserData(setupUserDataProps);
+  }
+
+  function niceToast(
+    type: string,
+    title: string | null,
+    message?: string | null,
+    time?: 3000,
+  ) {
+    Toast.show({
+      type: 'niceToast',
+      visibilityTime: time,
+      props: {
+        type,
+        title,
+        message,
+      },
+    });
   }
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        setupUser: setupUserData,
+        setupUser,
         handleLogout,
         handleLogin,
         token: '',
         handleRegister,
         updateUserProps,
-        updateSetupUserProps: updateSetupUserDataProps,
+        updateSetupUserProps,
         emailExists,
         userAvatar,
+        niceToast,
       }}>
+      <StatusBar backgroundColor="transparent" translucent />
       {children}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </AuthContext.Provider>
   );
 };

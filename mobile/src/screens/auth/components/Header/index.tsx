@@ -45,11 +45,11 @@ const Header: React.FC<IProps> = ({
         hasShadow
           ? {
               backgroundColor: colors.white,
-              shadowColor: 'rgba(0, 0, 0, .3)',
+              shadowColor: 'rgba(0, 0, 0, .2)',
               shadowOffset: { width: 0, height: 0 },
               shadowOpacity: 0.08,
               shadowRadius: 20,
-              elevation: 40,
+              elevation: 10,
             }
           : {}
       }>

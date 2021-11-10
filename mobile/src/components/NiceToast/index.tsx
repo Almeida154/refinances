@@ -1,7 +1,7 @@
 // Toast dos cria
 
 import React from 'react';
-import { StatusBar, View } from 'react-native';
+import { View } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -33,6 +33,10 @@ const NiceToast: React.FC<IProps> = ({ type, title, message }) => {
       backgroundColor = colors.deepSafron;
       icon = <Ionicons name="warning-outline" size={26} color="#fff" />;
       break;
+    case 'fake':
+      backgroundColor = 'transparent';
+      icon = <Ionicons name="questioncircleo" size={26} color="transparent" />;
+      break;
     default:
       backgroundColor = colors.eerieBlack;
       icon = <AntDesign name="questioncircleo" size={24} color="#fff" />;
@@ -41,7 +45,15 @@ const NiceToast: React.FC<IProps> = ({ type, title, message }) => {
 
   return (
     <View
-      style={{ opacity: 0.9, backgroundColor, marginTop: -10, paddingTop: 10 }}>
+      style={[
+        {
+          opacity: type == 'fake' ? 0 : 0.9,
+          elevation: type == 'fake' ? 0 : 80,
+          backgroundColor,
+          marginTop: -10,
+          paddingTop: 10,
+        },
+      ]}>
       <Container activeOpacity={1}>
         {icon}
         <View>

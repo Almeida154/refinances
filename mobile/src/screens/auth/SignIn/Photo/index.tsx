@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { BackHandler } from 'react-native';
+import { BackHandler, StatusBar } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -36,6 +36,7 @@ import { Modalize as Modal } from 'react-native-modalize';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import global from '../../../../global';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Photo'>;
@@ -59,10 +60,19 @@ const Photo = ({ navigation }: PropsNavigation) => {
     return true;
   };
 
+  async function next() {
+    const newUser = user;
+    newUser.fotoPerfilUsuario = avatar.base64 == '' ? null : avatar.base64;
+    updateUserProps(newUser);
+    console.debug('Photo | next(): ', JSON.stringify(user).substr(0, 200));
+    navigation.dispatch(StackActions.replace('FixedExpenses'));
+  }
+
   const openCamera = () => {
     ImagePicker.openCamera(global.IMAGE_CROP_PICKER_OPTIONS as {}).then(
       image => {
         console.log(image);
+        // @ts-ignore
         setAvatar({ base64: `data:${image?.mime};base64,${image?.data}` });
       },
     );
@@ -72,18 +82,11 @@ const Photo = ({ navigation }: PropsNavigation) => {
     ImagePicker.openPicker(global.IMAGE_CROP_PICKER_OPTIONS as {}).then(
       image => {
         console.log(image);
+        // @ts-ignore
         setAvatar({ base64: `data:${image.mime};base64,${image?.data}` });
       },
     );
   };
-
-  async function next() {
-    const newUser = user;
-    newUser.fotoPerfilUsuario = avatar.base64 == '' ? null : avatar.base64;
-    updateUserProps(newUser);
-    console.debug('Photo | next(): ', JSON.stringify(user).substr(0, 200));
-    navigation.navigate('FixedExpenses');
-  }
 
   const openModalize = () => {
     modalizeRef.current?.open();
@@ -95,33 +98,37 @@ const Photo = ({ navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <Header
-        onBackButton={() => backAction()}
-        title="Foto de perfil"
-        subtitle="Ela é opcional, você pode trocar mais tarde se quiser."
-      />
-      <Content>
-        <PhotoContainer>
-          {avatar.base64 == '' ? (
-            <Pic
-              source={require('../../../../assets/images/avatarDefault.png')}
-            />
-          ) : (
-            <Pic source={{ uri: avatar.base64 }} />
-          )}
-          <CameraDetail
-            onPress={() => openModalize()}
-            underlayColor={colors.paradisePink}>
-            <Feather name="camera" size={20} color={colors.white} />
-          </CameraDetail>
-        </PhotoContainer>
-        <Button
-          backgroundColor={colors.platinum}
-          color={colors.silver}
-          title="Escolher"
-          onPress={() => openModalize()}
+      <StatusBar translucent backgroundColor="transparent" />
+      <ScrollView>
+        <Header
+          onBackButton={() => backAction()}
+          title="Foto de perfil"
+          subtitle="Ela é opcional, você pode trocar mais tarde se quiser."
         />
-      </Content>
+
+        <Content>
+          <PhotoContainer>
+            {avatar.base64 == '' ? (
+              <Pic
+                source={require('../../../../assets/images/avatarDefault.png')}
+              />
+            ) : (
+              <Pic source={{ uri: avatar.base64 }} />
+            )}
+            <CameraDetail
+              onPress={() => openModalize()}
+              underlayColor={colors.paradisePink}>
+              <Feather name="camera" size={20} color={colors.white} />
+            </CameraDetail>
+          </PhotoContainer>
+          <Button
+            style={{ marginBottom: 80, backgroundColor: colors.platinum }}
+            color={colors.silver}
+            title="Escolher"
+            onPress={() => openModalize()}
+          />
+        </Content>
+      </ScrollView>
 
       <BottomNavigation
         onPress={() => next()}
@@ -134,21 +141,21 @@ const Photo = ({ navigation }: PropsNavigation) => {
         backgroundColor={colors.cultured}
         hasBodyBoundaries>
         <Button
+          style={{ backgroundColor: colors.platinum }}
           title="Abrir a câmera"
           onPress={() => {
             openCamera();
             closeModalize();
           }}
-          backgroundColor={colors.platinum}
           color={colors.silver}
         />
         <Button
+          style={{ backgroundColor: colors.platinum }}
           title="Abrir a galeria"
           onPress={() => {
             openGallery();
             closeModalize();
           }}
-          backgroundColor={colors.platinum}
           color={colors.silver}
           lastOne
         />

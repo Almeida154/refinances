@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { BackHandler, TextInput } from 'react-native';
+import { BackHandler, StatusBar, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -29,7 +29,7 @@ export type PropsNavigation = {
 };
 
 const Name = ({ navigation }: PropsNavigation) => {
-  const [name, setName] = useState('Kaue rexona');
+  const [name, setName] = useState('Roberto Pesticida');
   const [hasError, setError] = useState(false);
 
   const { user, updateUserProps } = UseAuth();
@@ -59,11 +59,12 @@ const Name = ({ navigation }: PropsNavigation) => {
     newUser.nomeUsuario = name;
     updateUserProps(newUser);
     console.debug('Name | next(): ', user);
-    navigation.navigate('Email');
+    navigation.dispatch(StackActions.replace('Email'));
   }
 
   return (
     <Container>
+      {/* <StatusBar translucent backgroundColor="transparent" /> */}
       <Header
         onBackButton={() => backAction()}
         title="Como quer ser chamado?"

@@ -13,13 +13,13 @@ type PropsNavigationAuth = {
 
   FixedExpenses: undefined;
   EachFixedExpense: undefined;
-  EachFixedExpenseCategory: { createdCategoryName: string };
+  EachFixedExpenseCategory: { createdCategoryName?: string };
 
   FixedIncomes: undefined;
   EachFixedIncome: undefined;
-  EachFixedIncomeCategory: { createdCategoryName: string };
+  EachFixedIncomeCategory: { createdCategoryName?: string };
 
-  NewCategory: { screen: string };
+  NewCategory: { screen?: string };
   NewExpenseCategory: undefined;
   NewIncomeCategory: undefined;
 

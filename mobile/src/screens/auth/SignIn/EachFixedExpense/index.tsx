@@ -4,7 +4,11 @@ import { BackHandler, TextInput } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp, StackActions } from '@react-navigation/native';
+import {
+  CommonActions,
+  RouteProp,
+  StackActions,
+} from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -27,6 +31,9 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
+import Toast from 'react-native-toast-message';
+
+import global from '../../../../global';
 import { Lancamento } from '@contexts/EntriesContext';
 import { Parcela } from '@contexts/InstallmentContext';
 
@@ -41,14 +48,15 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { setupUser, updateSetupUserProps } = UseAuth();
+  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
     let iterator = setupUser.expenseTagsCount;
-    console.debug(`Contador: ${iterator}`);
+    console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
+    niceToast('fake', 'Oops!', null, 500);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -71,6 +79,13 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     const expenseAmount = Number(
       formattedExpenseAmount.replace(/[.]+/g, '').replace(',', '.'),
     );
+
+    if (expenseAmount < 1) {
+      console.log('caiu no erro');
+
+      niceToast('error', 'Impossível!', 'Insira um valor maior que R$ 0,99');
+      return;
+    }
 
     const entry = {
       descricaoLancamento: setupUser.expenseTags[setupUser.expenseTagsCount],
@@ -157,6 +172,8 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
         onPress={() => next()}
         description={'Escolher categoria'}
       />
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

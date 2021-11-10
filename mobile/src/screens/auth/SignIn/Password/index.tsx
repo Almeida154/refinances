@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler, TextInput } from 'react-native';
+import { BackHandler, StatusBar, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -114,11 +113,12 @@ const Password = ({ navigation }: PropsNavigation) => {
     newUser.senhaUsuario = password;
     updateUserProps(newUser);
     console.debug('Password | next(): ', user);
-    navigation.navigate('ConfirmPassword');
+    navigation.dispatch(StackActions.replace('ConfirmPassword'));
   }
 
   return (
     <Container>
+      <StatusBar translucent backgroundColor="transparent" />
       <Header onBackButton={() => backAction()} title="Insira uma senha" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler, TextInput } from 'react-native';
+import { BackHandler, StatusBar, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -60,11 +60,12 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
       return;
     }
     console.debug('ConfirmPassword | next(): ', user);
-    navigation.navigate('Photo');
+    navigation.dispatch(StackActions.replace('Photo'));
   }
 
   return (
     <Container>
+      <StatusBar translucent backgroundColor="transparent" />
       <Header onBackButton={() => backAction()} title="Confirme sua senha" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler, TextInput } from 'react-native';
+import { BackHandler, StatusBar, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -29,11 +29,11 @@ export type PropsNavigation = {
 };
 
 const Email = ({ navigation }: PropsNavigation) => {
-  const [email, setEmail] = useState('rexonakkk@gmail.com');
+  const [email, setEmail] = useState('pesticida@gmail.com');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { user, updateUserProps, emailExists } = UseAuth();
+  const { user, updateUserProps, emailExists, niceToast } = UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
@@ -72,11 +72,12 @@ const Email = ({ navigation }: PropsNavigation) => {
     newUser.emailUsuario = email;
     updateUserProps(newUser);
     console.debug('Email | next(): ', user);
-    navigation.navigate('Password');
+    navigation.dispatch(StackActions.replace('Password'));
   }
 
   return (
     <Container>
+      <StatusBar translucent backgroundColor="transparent" />
       <Header onBackButton={() => backAction()} title="Qual seu e-mail?" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>

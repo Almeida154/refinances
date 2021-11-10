@@ -23,6 +23,7 @@ import EachFixedIncomeCategory from '../screens/auth/SignIn/EachFixedIncomeCateg
 import StatsInitial from '../screens/auth/SignIn/StatsInitial';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar } from 'react-native';
 
 const AuthStack = createStackNavigator();
 
