@@ -60,7 +60,7 @@ const Header: React.FC<IProps> = ({
             name="md-arrow-back-sharp"
             size={40}
             color={colors.davysGrey}
-            onPress={onBackButton}
+            onPress={() => onBackButton}
           />
           {step && <Step style={accent ? { color: accent } : {}}>{step}</Step>}
         </TopContainer>
