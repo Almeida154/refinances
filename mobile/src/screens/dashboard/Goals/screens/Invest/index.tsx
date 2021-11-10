@@ -99,7 +99,7 @@ const Invest = ({ navigation, route }: Props) => {
 
       if(responseParcela == '') {
         ToastAndroid.show("Depósito realizado com sucesso!", ToastAndroid.SHORT)
-        navigation.dispatch(StackActions.replace('Main'))
+        navigation.dispatch(StackActions.replace('Main', {screen: "Home"}))
 
       } else {
         ToastAndroid.show(responseParcela, ToastAndroid.SHORT)
@@ -112,7 +112,7 @@ const Invest = ({ navigation, route }: Props) => {
   };
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('Main'))
+    navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}))
     return true;
   };
 
