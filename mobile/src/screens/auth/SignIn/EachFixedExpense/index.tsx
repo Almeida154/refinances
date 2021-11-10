@@ -81,8 +81,6 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     );
 
     if (expenseAmount < 1) {
-      console.log('caiu no erro');
-
       niceToast('error', 'Impossível!', 'Insira um valor maior que R$ 0,99');
       return;
     }

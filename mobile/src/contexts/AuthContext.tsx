@@ -174,6 +174,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     Toast.show({
       type: 'niceToast',
       visibilityTime: time,
+      position: 'top',
       props: {
         type,
         title,

@@ -28,6 +28,7 @@ import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import InputText from '../../../../components/InputText';
 import Modalize from '../../../../components/Modalize';
+import Toast from 'react-native-toast-message';
 
 import { Modalize as Modal } from 'react-native-modalize';
 
@@ -50,7 +51,7 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
   const modalizeRef = useRef<Modal>(null);
   const newIncomeRef = useRef<TextInput>(null);
 
-  const { setupUser, updateSetupUserProps } = UseAuth();
+  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
 
   useEffect(() => {
     if (setupUser.incomeTags) {
@@ -58,8 +59,8 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
       console.debug(`Contador: ${iterator}`);
       console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
     }
-
     console.debug('NULL pae');
+    niceToast('fake', null, null, 500);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -80,12 +81,17 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
   };
 
   async function next() {
+    if (selectedTags.length < 1) {
+      niceToast('error', 'Oops!', 'Selecione ao menos 1 ganho fixo!');
+      return;
+    }
+
     const newSetupProps = setupUser;
     newSetupProps.incomeTags = selectedTags;
     newSetupProps.incomeTagsCount = 0;
     updateSetupUserProps(newSetupProps);
 
-    navigation.navigate('EachFixedIncome');
+    navigation.dispatch(StackActions.replace('EachFixedIncome'));
   }
 
   const removeAccents = (str: string) =>
@@ -171,9 +177,11 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
 
         <ButtonContainer>
           <Button
+            style={{
+              backgroundColor: colors.platinum,
+            }}
             onPress={() => openModalize()}
             title="Outro"
-            backgroundColor={colors.platinum}
             color={colors.davysGrey}
           />
         </ButtonContainer>
@@ -209,12 +217,16 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
           }}
         />
         <Button
+          style={{
+            backgroundColor: colors.platinum,
+          }}
           title="Adicionar"
           onPress={() => handleAddIncome()}
-          backgroundColor={colors.platinum}
           color={colors.davysGrey}
         />
       </Modalize>
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

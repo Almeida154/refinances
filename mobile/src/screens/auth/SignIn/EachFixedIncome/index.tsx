@@ -24,6 +24,9 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
+import Toast from 'react-native-toast-message';
+
+import global from '../../../../global';
 import { Lancamento } from '@contexts/EntriesContext';
 import { Parcela } from '@contexts/InstallmentContext';
 
@@ -40,7 +43,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { setupUser, updateSetupUserProps } = UseAuth();
+  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
@@ -48,6 +51,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     let iterator = setupUser.incomeTagsCount;
     console.debug(`Contador: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
+    niceToast('fake', 'Oops!', null, 500);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -70,6 +74,11 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     const expenseAmount = Number(
       formattedExpenseAmount.replace(/[.]+/g, '').replace(',', '.'),
     );
+
+    if (expenseAmount < 1) {
+      niceToast('error', 'Impossível!', 'Insira um valor maior que R$ 0,99');
+      return;
+    }
 
     const entry = {
       descricaoLancamento: setupUser.incomeTags[setupUser.incomeTagsCount],
@@ -158,6 +167,8 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
         description={'Escolher categoria'}
         iconColor={colors.slimyGreen}
       />
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

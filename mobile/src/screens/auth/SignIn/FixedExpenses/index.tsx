@@ -79,12 +79,12 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
     return true;
   };
 
-  
   async function next() {
     if (selectedTags.length < 1) {
       niceToast('error', 'Oops!', 'Selecione ao menos 1 gasto fixo!');
       return;
     }
+
     const newSetupProps = setupUser;
     newSetupProps.expenseTags = selectedTags;
     newSetupProps.expenseTagsCount = 0;
@@ -210,9 +210,11 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
           }}
         />
         <Button
+          style={{
+            backgroundColor: colors.platinum,
+          }}
           title="Adicionar"
           onPress={() => handleAddExpense()}
-          backgroundColor={colors.platinum}
           color={colors.davysGrey}
         />
       </Modalize>

@@ -98,6 +98,7 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
             cc => cc.nomeCategoria == capitalizeFirstLetter(name),
           );
 
+    if (name.length < 1) setNameError('Escolha um nome');
     if (namesCreated.length > 0) setNameError('Essa categoria já existe');
     if (color.hex == null) setColorError('Escolha uma cor');
     if (icon.icon == null) setIconError('Escolha um ícone');
@@ -187,9 +188,11 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
           icon={icon}
         />
         <Button
+          style={{
+            backgroundColor: colors.platinum,
+          }}
           onPress={() => add()}
           title="Adicionar"
-          backgroundColor={colors.platinum}
           color={colors.davysGrey}
         />
       </Form>

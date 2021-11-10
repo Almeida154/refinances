@@ -14,6 +14,9 @@ import NewIncomeCategory from '../NewIncomeCategory';
 import { Container } from './styles';
 import { colors, fonts } from '../../../../../styles';
 import Header from '../../../components/Header';
+import { UseAuth } from '../../../../../contexts/AuthContext';
+import Toast from 'react-native-toast-message';
+import global from '../../../../../global';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -24,6 +27,8 @@ export type PropsNavigation = {
 
 const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
   const [routeName, setRouteName] = useState<string>();
+
+  const { niceToast } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backNavAction);
@@ -46,11 +51,7 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
         backgroundColor:
           routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
       }}>
-      <StatusBar
-        backgroundColor={
-          routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen
-        }
-      />
+      <StatusBar backgroundColor="transparent" translucent />
       <Header
         onBackButton={() => backNavAction()}
         title="Nova categoria"
@@ -83,11 +84,24 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
         <Tab.Screen
           listeners={{
             tabPress: e => {
-              if (routeName == 'Receita') e.preventDefault();
-              ToastAndroid.show(
-                'Desculpe, você não pode fazer isso agora!',
-                ToastAndroid.SHORT,
+              e.preventDefault();
+              var clickedRoute = e.target?.toString();
+              clickedRoute = clickedRoute?.substring(
+                0,
+                clickedRoute.indexOf('-'),
               );
+
+              if (routeName != clickedRoute) {
+                Toast.show({
+                  type: 'niceToast',
+                  position: 'top',
+                  props: {
+                    type: 'warning',
+                    title: 'Ei',
+                    message: 'Já fez isso!',
+                  },
+                });
+              }
             },
           }}
           name="Despesa"
@@ -96,17 +110,31 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
         <Tab.Screen
           listeners={{
             tabPress: e => {
-              if (routeName == 'Despesa') e.preventDefault();
-              ToastAndroid.show(
-                'Desculpe, você não pode fazer isso agora!',
-                ToastAndroid.SHORT,
+              e.preventDefault();
+              var clickedRoute = e.target?.toString();
+              clickedRoute = clickedRoute?.substring(
+                0,
+                clickedRoute.indexOf('-'),
               );
+
+              if (routeName != clickedRoute) {
+                Toast.show({
+                  type: 'niceToast',
+                  position: 'top',
+                  props: {
+                    type: 'warning',
+                    title: 'Ei!',
+                    message: 'Não pode fazer isso ainda!',
+                  },
+                });
+              }
             },
           }}
           name="Receita"
           component={NewIncomeCategory}
         />
       </Tab.Navigator>
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };
