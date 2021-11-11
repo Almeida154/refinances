@@ -20,7 +20,7 @@ import Toast from 'react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackActions } from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 
 
 import {
@@ -46,9 +46,12 @@ import PickerContas from '../../../Entries/components/PickerContas';
 import { Conta } from '../../../../../contexts/AccountContext';
 import { Parcela, UseParcelas } from '../../../../../contexts/InstallmentContext';
 
-type Props = NativeStackScreenProps<GoalsStack, 'InvestGoals'>;
+export type PropsNavigation = {
+  navigation: StackNavigationProp<GoalsStack, 'InvestGoals'>;
+  route: RouteProp<GoalsStack, 'InvestGoals'>;
+};
 
-const Invest = ({ navigation, route }: Props) => {
+const Invest = ({ navigation, route }: PropsNavigation) => {
   const [valorDeposito, setValor] = useState('');
   const [errorValor, setErrorValor] = useState<any | null>(null);
 
@@ -125,7 +128,7 @@ const Invest = ({ navigation, route }: Props) => {
   };
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}))
+    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'GoalsList'}))
     return true;
   };
 
@@ -136,8 +139,8 @@ const Invest = ({ navigation, route }: Props) => {
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'transparent'} />
-      <Header style={{ padding: '5%',backgroundColor: '#ee4266' }}>
-      <HeaderTop onBackButton={() => backAction()} title=""/>
+      <Header style={{ backgroundColor: '#ee4266' }}>
+      <HeaderTop onBackButton={backAction} title=""/>
         
         <AlinhaParaDireita>
           <View></View>
@@ -161,9 +164,6 @@ const Invest = ({ navigation, route }: Props) => {
           em sua meta
       </TextProgress>
         
-
-
-
         <PickerContas conta={selectedConta} changeAccount={changeAccount} tipoLancamento="despesa"/>
 
         <Button

@@ -107,7 +107,10 @@ const SectionAccount = () => {
                 }
 
                 <Button 
-                    onPress={() => navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}))}
+                    onPress={() => navigation.dispatch(
+                        StackActions.replace('StackAccount', 
+                        {screen: 'ManageAccount'})
+                        )}
                     title="Gerenciar"
                     color="#444"
                     backgroundColor="#F5F2F3"

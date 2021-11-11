@@ -84,14 +84,6 @@ const SectionManage = () => {
             <ContainerGoals>
                 <LabelDescriptionGoals>Você ainda não possui metas.</LabelDescriptionGoals>
 
-                <Button
-                    onPress={() => 
-                        navigation.dispatch(StackActions.replace('GoalsStack', 
-                        {screen: 'CreateGoals'}))}
-                    title="Criar"
-                    color="#444"
-                    backgroundColor="#f5f2f3"
-                />
             </ContainerGoals>
         </Container>
         );

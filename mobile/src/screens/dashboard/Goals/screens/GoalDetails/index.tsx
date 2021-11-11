@@ -19,7 +19,7 @@ import {
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
-import { ProgressBar, FAB, Portal, Provider } from 'react-native-paper';
+import { ProgressBar } from 'react-native-paper';
 import Button from '../../../../../components/Button';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -27,17 +27,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 
 import { toDate } from '../../../../../helpers/manipularDatas';
-import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
 import Icon from 'react-native-vector-icons/EvilIcons';
-import { StackActions } from 'react-navigation';
+import { StackActions } from '@react-navigation/native';
 import Header from '../components/Header';
 
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
-const GoalDetails = ({ route }: Props) => {
-
-  const { navigation } = UseDadosTemp();
+const GoalDetails = ({ route, navigation }: Props) => {
 
   const [goal, setGoal] = useState({} as Meta);
 
@@ -72,8 +69,10 @@ const GoalDetails = ({ route }: Props) => {
   return (
     <ScrollView style={{ paddingTop: '5%', backgroundColor: '#f6f6f6' }}>
       <Header 
-      onBackButton={() => 
-      {navigation.dispatch(StackActions.replace('GoalsList'))}} title="" />
+        onBackButton={() => navigation.dispatch(
+          StackActions.replace('GoalsStack', 
+          {screen: 'GoalsList'})
+      )} title="" />
 
       {console.debug('ROUTE:::: ', route)}
       <View style={styles.container}>
@@ -118,13 +117,14 @@ const GoalDetails = ({ route }: Props) => {
             <TextGoalsLighter>{goal.dataFimMeta}</TextGoalsLighter>
           </GoalDate>
         </Goal>
-
+        
         <Button
           onPress={() => {
-            navigation.navigate('GoalsStack', {
-              screen: 'InvestGoals',
-              params: { goalId: goal.id },
-            });
+            navigation.dispatch(
+              StackActions.replace('GoalsStack', {
+              screen: 'EditGoal',
+              params: { goalId: goal.id }
+            }));
           }}
           title="Depositar"
           color="#6CB760"
@@ -137,10 +137,11 @@ const GoalDetails = ({ route }: Props) => {
 
         <Button
           onPress={() => {
-            navigation.navigate('GoalsStack', {
-              screen: 'InvestGoals',
-              params: { goalId: goal.id },
-            });
+            navigation.dispatch(
+              StackActions.replace('GoalsStack', {
+              screen: 'EditGoal',
+              params: { goalId: goal.id }
+            }));
           }}
           title="Excluir"
           color="#ee4266"
@@ -153,10 +154,11 @@ const GoalDetails = ({ route }: Props) => {
 
         <Button
           onPress={() => {
-            navigation.navigate('GoalsStack', {
-              screen: 'EditGoals',
-              params: { goalId: goal.id },
-            });
+            navigation.dispatch(
+              StackActions.replace('GoalsStack', {
+              screen: 'InvestGoals',
+              params: { goalId: goal.id }
+            }));
           }}
           title="Editar"
           color="#444"
@@ -173,7 +175,7 @@ const GoalDetails = ({ route }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: '10%',
+    padding: '10%',
   },
 });
 

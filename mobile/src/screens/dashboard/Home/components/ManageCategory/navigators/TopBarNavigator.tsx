@@ -2,42 +2,46 @@ import * as React from 'react';
 
 import { View, StatusBar, Text } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import Despesas from '../screens/Despesas';
 import Receitas from '../screens/Receitas';
 
+import Header from '../../../../components/Header';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function TopBarNavigator() {
+import { UseDadosTemp } from '../../../../../../contexts/TemporaryDataContext';
+import { StackActions } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import PropsMainRoutes, {HomeAccountStack} from '../../../../../../@types/RootStackParamApp';
+
+export type PropsNavigation = {
+  navigation: StackNavigationProp<HomeAccountStack, 'ManageCategory'>;
+  route: RouteProp<HomeAccountStack, 'ManageCategory'>;
+};
+
+export default function TopBarNavigator({ navigation }: PropsNavigation) {
+
   const insets = useSafeAreaInsets();
+
   return (
     <View
       style={{
-        paddingTop: 10,
+        paddingTop: 0,
         backgroundColor: '#fff',
         flex: 1,
       }}>
       <StatusBar backgroundColor="transparent" />
 
-      <View
-        style={{
-          height: '10%',
-          justifyContent: 'center',
-          padding: 32,
-        }}>
-        <Text
-          style={{
-            color: '#525252',
-            opacity: 0.6,
-            fontSize: 30,
-          }}>
-          
-        </Text>
-      </View>
+      <Header 
+        onBackButton={() => navigation.dispatch(
+          StackActions.replace('Main', 
+          {screen: 'Home'})
+      )} title="Categorias" />
 
       <Tab.Navigator
         initialRouteName="Despesas"

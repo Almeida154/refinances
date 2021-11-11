@@ -14,11 +14,7 @@ import {
 import {
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableHighlight,
   View,
-  TextInput,
-  ToastAndroid,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -34,14 +30,18 @@ import Toast from 'react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
 import fonts from '../../../../../styles/fonts';
-import { StackActions } from 'react-navigation';
+import { RouteProp, StackActions } from '@react-navigation/native';
 import Header from '../components/Header';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-type Props = NativeStackScreenProps<GoalsStack, 'EditGoals'>;
+type PropsEditGoals = {
+  navigation: StackNavigationProp<GoalsStack, "EditGoals">
+  route: RouteProp<GoalsStack, "EditGoals">
+}
 
-const EditGoal = ({ route }: Props) => {
+const EditGoal = ({ navigation }: PropsEditGoals) => {
   const [goal, setGoal] = useState({} as Meta);
 
   const { handleGetGoalById } = UseMetas();
@@ -64,9 +64,6 @@ const EditGoal = ({ route }: Props) => {
   const [descError, setdescError] = useState<any | null>(null);
   const [valorTError, setvalorTError] = useState<any | null>(null);
   const [dtPrevError, setdtPrevError] = useState<any | null>(null);
-
-  const { handleAdicionarMeta } = UseMetas();
-  const { navigation } = UseDadosTemp();
 
   const dataAtual = new Date();
 
@@ -156,13 +153,18 @@ const EditGoal = ({ route }: Props) => {
   const valorFim = '' +goal.saldoFinalMeta;
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('Main'));
+    navigation.dispatch(
+      StackActions.replace('GoalsStack', 
+      {screen: 'GoalsList'}));
     return true;
   };
 
   return (
     <ScrollView style={{ paddingTop: '8%', backgroundColor: '#f6f6f6' }}>
-      <Header onBackButton={() => backAction()} title="" />
+
+      <Header 
+        onBackButton={backAction} title="" />
+
       <View style={styles.container}>
       <View style={{marginTop:'15%'}}>
         <Title>{goal.descMeta}</Title>
@@ -216,7 +218,8 @@ const EditGoal = ({ route }: Props) => {
           placeholder={goal.dataFimMeta}
           error={dtPrevError}
           showClearIcon={previsao != dataAtual}
-          onPressIn={showDatePicker}
+          editable={false}
+          onPress={showDatePicker}
           onClear={() => {
             setPrevisao(dataAtual);
             setdtPrevError(null);

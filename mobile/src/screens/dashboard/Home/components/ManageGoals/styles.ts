@@ -34,6 +34,7 @@ export const LabelDescriptionGoals = styled.Text`
     font-size: 20px;
     color: #555;
     fontFamily: ${`${fonts.familyType.black}`};
+    margin-bottom: 10px
 `
 
 export const ContainerCard = styled.View`
