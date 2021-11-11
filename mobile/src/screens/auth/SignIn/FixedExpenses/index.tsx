@@ -72,6 +72,8 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   useEffect(() => {
     let tags = global.FIXED_EXPENSE_TAGS as [];
     setTags(tags);
+
+    setupUser.expenseTags && setSelectedTags(setupUser.expenseTags);
   }, []);
 
   const backAction = () => {

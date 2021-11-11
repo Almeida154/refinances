@@ -58,6 +58,19 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
     niceToast('fake', 'Oops!', null, 500);
 
+    if (setupUser.entries != undefined) {
+      if (setupUser.entries[setupUser.expenseTagsCount] != undefined) {
+        setExpenseAmount(
+          setupUser.entries[setupUser.expenseTagsCount].parcelasLancamento[0]
+            .valorParcela,
+        );
+        console.log(
+          setupUser.entries[setupUser.expenseTagsCount].parcelasLancamento[0]
+            .valorParcela,
+        );
+      }
+    }
+
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);

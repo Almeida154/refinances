@@ -38,8 +38,8 @@ export type PropsNavigation = {
 };
 
 const EachFixedIncome = ({ navigation }: PropsNavigation) => {
-  const [expenseAmount, setExpenseAmount] = useState<number | null>(0);
-  const [formattedExpenseAmount, setFormattedExpenseAmount] = useState('');
+  const [incomeAmount, setIncomeAmount] = useState<number | null>(0);
+  const [formattedIncomeAmount, setFormattedIncomeAmount] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -52,6 +52,15 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     console.debug(`Contador: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
     niceToast('fake', 'Oops!', null, 500);
+
+    if (setupUser.entries != undefined) {
+      if (setupUser.entries[setupUser.incomeTagsCount] != undefined) {
+        setIncomeAmount(
+          setupUser.entries[setupUser.incomeTagsCount].parcelasLancamento[0]
+            .valorParcela,
+        );
+      }
+    }
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -72,7 +81,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
   async function next() {
     const expenseAmount = Number(
-      formattedExpenseAmount.replace(/[.]+/g, '').replace(',', '.'),
+      formattedIncomeAmount.replace(/[.]+/g, '').replace(',', '.'),
     );
 
     if (expenseAmount < 1) {
@@ -126,8 +135,8 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
               fontFamily: fonts.familyType.bold,
               fontSize: fonts.size.super + 14,
             }}
-            value={expenseAmount}
-            onChangeValue={txt => setExpenseAmount(txt)}
+            value={incomeAmount}
+            onChangeValue={txt => setIncomeAmount(txt)}
             delimiter="."
             separator=","
             precision={2}
@@ -136,14 +145,14 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
             selectionColor={colors.davysGrey}
             onChangeText={formattedValue => {
-              setFormattedExpenseAmount(formattedValue);
+              setFormattedIncomeAmount(formattedValue);
               setError(false);
-              if (expenseAmount == null) setExpenseAmount(0.0);
+              if (incomeAmount == null) setIncomeAmount(0.0);
             }}
             ref={inputRef}
             autoFocus
           />
-          {expenseAmount != null && (
+          {incomeAmount != null && (
             <IonIcons
               style={{
                 padding: 6,
@@ -154,7 +163,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
               color={`rgba(82, 82, 82, .08)`}
               onPress={() => {
                 setError(false);
-                setExpenseAmount(0.0);
+                setIncomeAmount(0.0);
               }}
             />
           )}

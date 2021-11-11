@@ -80,6 +80,23 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       ctgrs[lastCreatedI].isSelected = true;
       setSelectedCategory(ctgrs[lastCreatedI]);
     }
+
+    if (setupUser.entries != undefined) {
+      if (
+        setupUser.entries[setupUser.expenseTagsCount].categoryLancamento !=
+        undefined
+      ) {
+        const selectedI = ctgrs.findIndex(
+          category =>
+            category.nomeCategoria ==
+            setupUser.entries[setupUser.expenseTagsCount].categoryLancamento
+              .nomeCategoria,
+        );
+        ctgrs[selectedI].isSelected = true;
+        setSelectedCategory(ctgrs[selectedI]);
+      }
+    }
+
     setCategories(ctgrs);
   };
 

@@ -70,6 +70,8 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
   useEffect(() => {
     let tags = global.FIXED_INCOME_TAGS as [];
     setTags(tags);
+
+    setupUser.incomeTags && setSelectedTags(setupUser.incomeTags);
   }, []);
 
   const backAction = () => {
