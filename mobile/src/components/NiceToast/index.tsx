@@ -35,7 +35,7 @@ const NiceToast: React.FC<IProps> = ({ type, title, message }) => {
       break;
     case 'fake':
       backgroundColor = 'transparent';
-      icon = <Ionicons name="questioncircleo" size={26} color="transparent" />;
+      icon = <AntDesign name="questioncircleo" size={26} color="transparent" />;
       break;
     default:
       backgroundColor = colors.eerieBlack;

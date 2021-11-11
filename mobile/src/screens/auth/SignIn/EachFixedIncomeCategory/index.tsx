@@ -17,6 +17,7 @@ import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import CategoryItem from '../../components/CategoryItem';
+import Toast from 'react-native-toast-message';
 
 import global from '../../../../global';
 import { Categoria } from '@contexts/CategoriesContext';
@@ -33,20 +34,15 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([] as Categoria[]);
 
-  const { setupUser, updateSetupUserProps } = UseAuth();
+  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
 
   useEffect(() => {
     let iterator = setupUser.incomeTagsCount;
     console.debug(`Contador: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
+    niceToast('fake', 'Oops!', null, 500);
+    populateCategories();
 
-    const unsubscribe = navigation.addListener('focus', () => {
-      populateCategories();
-    });
-    return unsubscribe;
-  }, [navigation]);
-
-  useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
@@ -93,14 +89,13 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     return true;
   };
 
-  const clearSelectedCategories = () =>
-    categories.map(category => {
-      category.isSelected = false;
-      return category;
-    });
-
   async function next() {
     if (selectedCategory.nomeCategoria == null) {
+      niceToast(
+        'error',
+        'Calma aí...',
+        `E a categoria da ${setupUser.incomeTags[setupUser.incomeTagsCount]}?`,
+      );
       return;
     }
 
@@ -119,6 +114,23 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     clearSelectedCategories();
     navigation.dispatch(StackActions.replace('StatsInitial'));
   }
+
+  const clearSelectedCategories = () => {
+    categories.map(category => {
+      category.isSelected = false;
+      return category;
+    });
+
+    if (setupUser.createdCategories != undefined) {
+      const newSetupProps = setupUser;
+      newSetupProps.createdCategories.map(category => {
+        category.isSelected = false;
+        return category;
+      });
+
+      updateSetupUserProps(newSetupProps);
+    }
+  };
 
   return (
     <Container>
@@ -160,11 +172,13 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
         <ButtonContainer>
           <Button
+            style={{
+              backgroundColor: colors.platinum,
+            }}
             onPress={() =>
               navigation.navigate('NewCategory', { screen: 'Receita' })
             }
             title="Nova"
-            backgroundColor={colors.platinum}
             color={colors.davysGrey}
             lastOne
           />
@@ -172,6 +186,8 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
       </Content>
 
       <BottomNavigation onPress={() => next()} description={'Próximo!'} />
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

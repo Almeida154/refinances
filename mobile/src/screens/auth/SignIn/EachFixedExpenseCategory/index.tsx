@@ -4,11 +4,7 @@ import { BackHandler, StatusBar, ToastAndroid, View } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
-import {
-  CommonActions,
-  RouteProp,
-  StackActions,
-} from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -37,17 +33,15 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([] as Categoria[]);
 
-  const { setupUser, updateSetupUserProps } = UseAuth();
+  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
 
   useEffect(() => {
     let iterator = setupUser.expenseTagsCount;
-    console.debug(`Contador: ${iterator}`);
+    console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
-
+    niceToast('fake', 'Oops!', null, 500);
     populateCategories();
-  }, []);
 
-  useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
@@ -78,6 +72,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
         : [...defaultCategories];
 
     clearSelectedCategories();
+
     if (route.params?.createdCategoryName) {
       const lastCreatedI = ctgrs.findIndex(
         category => category.nomeCategoria == route.params?.createdCategoryName,
@@ -85,6 +80,23 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       ctgrs[lastCreatedI].isSelected = true;
       setSelectedCategory(ctgrs[lastCreatedI]);
     }
+
+    if (setupUser.entries != undefined) {
+      if (
+        setupUser.entries[setupUser.expenseTagsCount].categoryLancamento !=
+        undefined
+      ) {
+        const selectedI = ctgrs.findIndex(
+          category =>
+            category.nomeCategoria ==
+            setupUser.entries[setupUser.expenseTagsCount].categoryLancamento
+              .nomeCategoria,
+        );
+        ctgrs[selectedI].isSelected = true;
+        setSelectedCategory(ctgrs[selectedI]);
+      }
+    }
+
     setCategories(ctgrs);
   };
 
@@ -94,24 +106,15 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     return true;
   };
 
-  const clearSelectedCategories = () =>
-    categories.map(category => {
-      category.isSelected = false;
-      return category;
-    });
-
   async function next() {
     if (selectedCategory.nomeCategoria == null) {
-      Toast.show({
-        type: 'niceToast',
-        props: {
-          type: 'error',
-          title: 'Calma aí...',
-          message: `E a categoria da ${
-            setupUser.expenseTags[setupUser.expenseTagsCount]
-          }?`,
-        },
-      });
+      niceToast(
+        'error',
+        'Calma aí...',
+        `E a categoria da ${
+          setupUser.expenseTags[setupUser.expenseTagsCount]
+        }?`,
+      );
       return;
     }
 
@@ -128,6 +131,23 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     clearSelectedCategories();
     navigation.dispatch(StackActions.replace('FixedIncomes'));
   }
+
+  const clearSelectedCategories = () => {
+    categories.map(category => {
+      category.isSelected = false;
+      return category;
+    });
+
+    if (setupUser.createdCategories != undefined) {
+      const newSetupProps = setupUser;
+      newSetupProps.createdCategories.map(category => {
+        category.isSelected = false;
+        return category;
+      });
+
+      updateSetupUserProps(newSetupProps);
+    }
+  };
 
   return (
     <Container>
@@ -182,11 +202,8 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       </Content>
 
       <BottomNavigation onPress={() => next()} description={'Próximo!'} />
-
-      <>
-        {/* @ts-ignore */}
-        <Toast topOffset={0} config={global.TOAST_CONFIG} />
-      </>
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

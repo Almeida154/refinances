@@ -14,7 +14,7 @@ export type Lancamento = {
   tipoLancamento: string;
   lugarLancamento: string;
   parcelaBaseada: number;
-  categoryLancamento: Categoria | string;
+  categoryLancamento: Categoria;
   parcelasLancamento: Parcela[];
   essencial: boolean;
 };
@@ -45,8 +45,11 @@ export const LancamentoProvider: React.FC = ({ children }) => {
   const [lancamentos, setLancamentos] = useState<Lancamento[] | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const { handleAdicionarParcela, handleInstallmentGroupByDate, handleEditParcela } =
-    UseParcelas();
+  const {
+    handleAdicionarParcela,
+    handleInstallmentGroupByDate,
+    handleEditParcela,
+  } = UseParcelas();
 
   async function handleLoadLancamentos(idUser: number) {
     try {
@@ -68,7 +71,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
   async function handleAdicionarLancamento(
     lancamento: Lancamento,
     idUser: number,
-  ) {    
+  ) {
     try {
       setLoading(true);
       const responseCategory = await api.post(
@@ -78,8 +81,6 @@ export const LancamentoProvider: React.FC = ({ children }) => {
         },
       );
 
-      
-
       const response = await api.post('/entry/create', {
         descricaoLancamento: lancamento.descricaoLancamento,
         tipoLancamento: lancamento.tipoLancamento,
@@ -88,17 +89,16 @@ export const LancamentoProvider: React.FC = ({ children }) => {
         categoryLancamento: responseCategory.data.idCategory,
       });
 
-      console.log('response', response.data.message.id)
+      console.log('response', response.data.message.id);
 
       if (response.data.error) return response.data.error;
 
-      
-
       lancamento.parcelasLancamento.map((item, index) => {
-        lancamento.parcelasLancamento[index].lancamentoParcela = response.data.message.id          
+        lancamento.parcelasLancamento[index].lancamentoParcela =
+          response.data.message.id;
       });
 
-      console.log("Parcelas handlelizadas", lancamento.parcelasLancamento)
+      console.log('Parcelas handlelizadas', lancamento.parcelasLancamento);
       await handleAdicionarParcela(lancamento.parcelasLancamento);
 
       return '';
@@ -107,34 +107,33 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     }
   }
 
-  async function handleEditLancamento(
-    lancamento: Lancamento,
-    idUser: number,
-  ) {
-    try {      
-      if(typeof lancamento.categoryLancamento == 'string') {
-        return ToastAndroid.show("Coloque a categoria como Categoria ao invés de string", ToastAndroid.SHORT)
+  async function handleEditLancamento(lancamento: Lancamento, idUser: number) {
+    try {
+      if (typeof lancamento.categoryLancamento == 'string') {
+        return ToastAndroid.show(
+          'Coloque a categoria como Categoria ao invés de string',
+          ToastAndroid.SHORT,
+        );
       }
-      
+
       const response = await api.put(`/entry/edit/${lancamento.id}`, {
         descricaoLancamento: lancamento.descricaoLancamento,
         tipoLancamento: lancamento.tipoLancamento,
         parcelaBaseada: lancamento.parcelaBaseada,
         lugarLancamento: lancamento.lugarLancamento,
         categoryLancamento: lancamento.categoryLancamento.id,
-        essencial: lancamento.essencial,        
+        essencial: lancamento.essencial,
       });
-      
 
       if (response.data.error) return response.data.error;
 
-      console.debug('response.data.message.id ', response.data)
+      console.debug('response.data.message.id ', response.data);
 
       lancamento.parcelasLancamento.map((item, index) => {
-        lancamento.parcelasLancamento[index].lancamentoParcela = response.data.message.id          
+        lancamento.parcelasLancamento[index].lancamentoParcela =
+          response.data.message.id;
       });
 
-      
       await handleEditParcela(lancamento.parcelasLancamento);
 
       return '';
