@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { fontPixel } from '../../../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../../../styles';
 
 export const Container = styled.View`
@@ -12,9 +13,9 @@ export const Boundaries = styled.View`
 export const Title = styled.Text`
   font-family: ${fonts.familyType.black};
   color: ${colors.davysGrey};
-  margin-top: 12%;
-  line-height: 38px;
-  font-size: ${`${fonts.size.super}px`};
+  margin-top: 10%;
+  line-height: ${`${fontPixel(78)}px`};
+  font-size: ${`${fontPixel(72)}px`};
 `;
 
 export const Subtitle = styled.Text`

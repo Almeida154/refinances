@@ -15,6 +15,7 @@ import { colors } from '../../../../styles';
 
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import { widthPixel } from '../../../../helpers/responsiveness';
 
 interface IProps {
   onBackButton: () => void;
@@ -58,7 +59,7 @@ const Header: React.FC<IProps> = ({
           <IonIcons
             style={{ marginLeft: -6, opacity: 0.3 }}
             name="md-arrow-back-sharp"
-            size={40}
+            size={widthPixel(120)}
             color={colors.davysGrey}
             onPress={onBackButton}
           />
