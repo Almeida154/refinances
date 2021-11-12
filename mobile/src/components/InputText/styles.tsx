@@ -43,7 +43,8 @@ export const Input = styled.TextInput`
 `;
 
 export const Error = styled.Text`
-  margin-bottom: ${`${heightPixel(30)}px`};
+  margin-top: ${`${heightPixel(16)}px`};
+  margin-bottom: ${`${heightPixel(32)}px`};
   font-family: ${fonts.familyType.bold};
   color: ${colors.redCrayola};
   padding: 0 ${`${widthPixel(48)}px`};

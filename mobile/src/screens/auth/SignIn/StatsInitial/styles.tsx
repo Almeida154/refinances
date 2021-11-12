@@ -8,46 +8,62 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Content = styled.View`
-  padding: ${`${metrics.default.boundaries}px`};
+export const Content = styled.ScrollView`
+  padding: ${`${metrics.default.boundaries}px`} 0;
+  margin-bottom: 80px;
   flex: 1;
 `;
 
-export const PieContainer = styled.View`
-  margin-bottom: ${`${heightPixel(60)}px`};
-  align-items: center;
-  justify-content: center;
-`;
-
 export const Title = styled.Text`
-  color: ${colors.paradisePink};
+  color: ${colors.eerieBlack};
   text-align: center;
   font-family: ${fonts.familyType.black};
-  font-size: ${`${fonts.size.big}px`};
-  line-height: ${`${fonts.size.big + widthPixel(8)}px`};
-  margin-top: ${`${heightPixel(60)}px`};
+  font-size: ${`${fonts.size.medium}px`};
+  line-height: ${`${fonts.size.bigger + widthPixel(8)}px`};
+  margin-top: ${`${heightPixel(40)}px`};
+  opacity: 0.5;
+  padding: 0 ${`${metrics.default.boundaries}px`};
 `;
 
 export const SubTitle = styled.Text`
   color: ${colors.davysGrey};
   text-align: center;
-  font-family: ${fonts.familyType.black};
+  font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.small}px`};
-  opacity: 0.7;
-  margin-bottom: ${`${heightPixel(60)}px`};
+  line-height: ${`${fonts.size.small + heightPixel(8)}px`};
+  opacity: 0.3;
+  margin: 0 ${`${metrics.default.boundaries}px`};
+  margin-top: ${`${heightPixel(60)}px`};
+`;
+
+export const PieContainer = styled.View`
+  height: ${`${heightPixel(660)}px`};
+  margin-top: ${`${heightPixel(60)}px`};
+  margin-bottom: ${`${heightPixel(-120)}px`};
+  padding: 0 ${`${metrics.default.boundaries}px`};
 `;
 
 export const Pic = styled.Image`
-  position: absolute;
-  width: ${`${widthPixel(260)}px`};
-  height: ${`${heightPixel(260)}px`};
-  border-radius: ${`${widthPixel(260 / 2)}px`};
+  background-color: ${colors.white};
+  width: ${`${widthPixel(210)}px`};
+  height: ${`${widthPixel(210)}px`};
+  border-radius: ${`${widthPixel(210 / 2)}px`};
+`;
+
+export const LegendContainer = styled.View`
+  border-radius: ${`${widthPixel(20)}px`};
+  background-color: ${colors.white};
+  margin: 0 ${`${metrics.default.boundaries}px`};
+
+  padding-top: ${`${metrics.default.boundaries / 2}px`};
+  padding-bottom: ${`${metrics.default.boundaries / 2}px`};
+  padding-left: ${`${metrics.default.boundaries / 1.5}px`};
+  padding-right: ${`${metrics.default.boundaries / 1.5}px`};
 `;
 
 export const LabelContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: center;
 `;
 
 export const LabelIcon = styled.View`

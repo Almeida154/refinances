@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../../../styles';
 
 export const Container = styled.View`
@@ -27,8 +28,9 @@ export const Tag = styled.Text`
   color: ${colors.slimyGreen};
   font-size: ${`${fonts.size.medium}px`};
   font-family: ${`${fonts.familyType.bold}`};
-  margin: 6px 12px 6px 0;
-  padding: 10px 20px;
+  margin: ${`${heightPixel(14)}px`} ${`${widthPixel(28)}px`}
+    ${`${heightPixel(14)}px`} 0;
+  padding: ${`${heightPixel(20)}px`} ${`${widthPixel(36)}px`};
   border-radius: 10px;
 `;
 

@@ -210,6 +210,7 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
           ref={newIncomeRef}
           value={newIncome}
           showClearIcon
+          showErrorMessage
           lastOne
           error={newIncomeError}
           onClear={() => {

@@ -16,7 +16,6 @@ import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import CategoryItem from '../../components/CategoryItem';
-import Toast from 'react-native-toast-message';
 
 import global from '../../../../global';
 import { Categoria } from '@contexts/CategoriesContext';

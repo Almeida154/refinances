@@ -37,6 +37,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import global from '../../../../global';
 import { ScrollView } from 'react-native-gesture-handler';
+import { widthPixel } from '../../../../helpers/responsiveness';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Photo'>;
@@ -110,10 +111,20 @@ const Photo = ({ navigation }: PropsNavigation) => {
           <PhotoContainer>
             {avatar.base64 == '' ? (
               <Pic
+                style={{
+                  borderWidth: widthPixel(14),
+                  borderColor: colors.silver,
+                }}
                 source={require('../../../../assets/images/avatarDefault.png')}
               />
             ) : (
-              <Pic source={{ uri: avatar.base64 }} />
+              <Pic
+                style={{
+                  borderWidth: widthPixel(14),
+                  borderColor: colors.silver,
+                }}
+                source={{ uri: avatar.base64 }}
+              />
             )}
             <CameraDetail
               onPress={() => openModalize()}

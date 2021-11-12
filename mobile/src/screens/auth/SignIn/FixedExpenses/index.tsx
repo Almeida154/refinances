@@ -203,6 +203,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
           value={newExpense}
           showClearIcon
           lastOne
+          showErrorMessage
           error={newExpenseError}
           onClear={() => {
             setNewExpenseError(null);

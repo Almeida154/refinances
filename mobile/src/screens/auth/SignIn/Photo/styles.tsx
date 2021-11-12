@@ -16,18 +16,18 @@ export const Content = styled.View`
 
 export const PhotoContainer = styled.View`
   margin-bottom: ${`${metrics.default.boundaries}px`};
-  border: ${`${heightPixel(16)}px`} solid ${colors.silver};
-  width: ${`${widthPixel(300)}px`};
-  height: ${`${heightPixel(300)}px`};
+  width: ${`${widthPixel(280)}px`};
+  height: ${`${widthPixel(280)}px`};
   border-radius: ${`${widthPixel(80)}px`};
   align-items: center;
   justify-content: center;
 `;
 
 export const Pic = styled.Image`
-  width: 100%;
-  height: 100%;
-  border-radius: ${`${widthPixel(60)}px`};
+  background-color: ${colors.diffWhite};
+  width: ${`${widthPixel(280)}px`};
+  height: ${`${widthPixel(280)}px`};
+  border-radius: ${`${widthPixel(80 - 18)}px`};
 `;
 
 export const CameraDetail = styled.TouchableHighlight`

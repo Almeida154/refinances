@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Icon from '../../helpers/gerarIconePelaString';
+import { widthPixel } from '../../helpers/responsiveness';
 import { colors } from '../../styles';
 
 import { SectionIcon } from './styles';
@@ -13,7 +14,7 @@ type PropsIconCategory = {
 const IconCategory = ({ stringIcon, color }: PropsIconCategory) => {
   return (
     <SectionIcon color={color}>
-      <Icon size={26} stringIcon={stringIcon} color={color} />
+      <Icon size={widthPixel(50)} stringIcon={stringIcon} color={color} />
     </SectionIcon>
   );
 };
