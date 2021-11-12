@@ -5,7 +5,8 @@ import { Categoria } from './CategoriesContext';
 import { Conta } from './AccountContext';
 import { Lancamento } from './EntriesContext';
 
-import Toast from 'react-native-toast-message';
+//import Toast from 'react-native-toast-message';
+import Toast from '@zellosoft.com/react-native-toast-message';
 import global from '../global';
 
 import api from '../services/api';
@@ -50,12 +51,15 @@ interface AuthContextType {
   emailExists(email: string): Promise<boolean>;
   userAvatar(): Promise<string | undefined | null>;
 
-  niceToast(
+  showNiceToast(
     type: string,
-    title: string | null,
+    title?: string | null,
     message?: string | null,
-    time?: number,
+    time?: number | null,
+    detailed?: boolean,
   ): any;
+
+  hideNiceToast(): any;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -165,22 +169,30 @@ export const AuthProvider: React.FC = ({ children }) => {
     setSetupUserData(setupUserDataProps);
   }
 
-  function niceToast(
+  function showNiceToast(
     type: string,
-    title: string | null,
+    title?: string | null,
     message?: string | null,
-    time?: 3000,
+    time?: 2500 | null,
+    detailed?: boolean | null,
   ) {
     Toast.show({
       type: 'niceToast',
-      visibilityTime: time,
+      visibilityTime: time || 2500,
       position: 'top',
+      // onShow: () => console.log('mostrou'),
+      // onPress: () => console.log('tocado'),
       props: {
         type,
         title,
         message,
+        detailed,
       },
     });
+  }
+
+  function hideNiceToast() {
+    Toast.hide();
   }
 
   return (
@@ -196,11 +208,16 @@ export const AuthProvider: React.FC = ({ children }) => {
         updateSetupUserProps,
         emailExists,
         userAvatar,
-        niceToast,
+        showNiceToast,
+        hideNiceToast,
       }}>
       <StatusBar backgroundColor="transparent" translucent />
       {children}
-      <Toast topOffset={0} config={global.TOAST_CONFIG} />
+      <Toast
+        ref={ref => Toast.setRef(ref)}
+        topOffset={0}
+        config={global.TOAST_CONFIG}
+      />
     </AuthContext.Provider>
   );
 };

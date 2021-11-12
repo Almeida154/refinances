@@ -64,6 +64,7 @@ export default {
         type={props.type}
         title={props.title}
         message={props.message}
+        detailed={props.detailed}
       />
     ),
   },

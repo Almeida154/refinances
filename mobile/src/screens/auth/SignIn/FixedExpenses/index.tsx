@@ -53,7 +53,8 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   const modalizeRef = useRef<Modal>(null);
   const newExpenseRef = useRef<TextInput>(null);
 
-  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
+  const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
+    UseAuth();
 
   useEffect(() => {
     if (setupUser.expenseTags) {
@@ -62,7 +63,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
       console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
     }
     console.debug('NULL pae');
-    niceToast('fake', null, null, 500);
+    showNiceToast('fake', null, null, 500);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -83,10 +84,11 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
   async function next() {
     if (selectedTags.length < 1) {
-      niceToast('error', 'Oops!', 'Selecione ao menos 1 gasto fixo!');
+      showNiceToast('error', 'Oops!', 'Selecione ao menos 1 gasto fixo!');
       return;
     }
 
+    hideNiceToast();
     const newSetupProps = setupUser;
     newSetupProps.expenseTags = selectedTags;
     newSetupProps.expenseTagsCount = 0;
@@ -220,9 +222,6 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
           color={colors.davysGrey}
         />
       </Modalize>
-
-      {/* @ts-ignore */}
-      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

@@ -59,7 +59,7 @@ const Header: React.FC<IProps> = ({
           <IonIcons
             style={{ marginLeft: -6, opacity: 0.3 }}
             name="md-arrow-back-sharp"
-            size={widthPixel(120)}
+            size={widthPixel(100)}
             color={colors.davysGrey}
             onPress={onBackButton}
           />

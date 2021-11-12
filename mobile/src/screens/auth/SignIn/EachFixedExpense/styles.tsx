@@ -27,10 +27,3 @@ export const PrefixReaisSymbol = styled.Text`
   opacity: 0.1;
   margin-right: 2%;
 `;
-
-export const Error = styled.Text`
-  font-size: ${`${fonts.size.small}px`};
-  color: ${colors.redCrayola};
-  padding: 5px;
-  opacity: 0.3;
-`;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { BackHandler, StatusBar, ToastAndroid, View } from 'react-native';
+import { BackHandler, View } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -33,13 +33,14 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([] as Categoria[]);
 
-  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
+  const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
+    UseAuth();
 
   useEffect(() => {
     let iterator = setupUser.expenseTagsCount;
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
-    niceToast('fake', 'Oops!', null, 500);
+    showNiceToast('fake', 'Oops!', null, 500);
     populateCategories();
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -108,7 +109,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   async function next() {
     if (selectedCategory.nomeCategoria == null) {
-      niceToast(
+      showNiceToast(
         'error',
         'Calma aí...',
         `E a categoria da ${
@@ -117,6 +118,8 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       );
       return;
     }
+
+    hideNiceToast();
 
     const newSetupProps = setupUser;
     newSetupProps.entries[setupUser.expenseTagsCount].categoryLancamento =
@@ -151,8 +154,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <StatusBar translucent backgroundColor="transparent" />
-      {/* Uma view aqui com elevation 0 pra ficar abaixo do Toast */}
+      {/* Uma view com elevation 0 pra ficar abaixo do Toast */}
       <View style={{ elevation: 0 }}>
         <Header
           onBackButton={() => backAction()}
@@ -202,8 +204,6 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       </Content>
 
       <BottomNavigation onPress={() => next()} description={'Próximo!'} />
-      {/* @ts-ignore */}
-      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

@@ -33,7 +33,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [securePassword, setSecurePassword] = useState(true);
 
-  const { user } = UseAuth();
+  const { user, showNiceToast, hideNiceToast } = UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
@@ -50,15 +50,18 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
 
   async function next() {
     if (confirmPassword == '') {
-      setError(true);
-      setErrorMessage('Preencha este campo!');
+      // setError(true);
+      // setErrorMessage('Preencha este campo!');
+      showNiceToast('error', 'Confirme a senha primeiro!');
       return;
     }
     if (confirmPassword != user.senhaUsuario) {
-      setError(true);
-      setErrorMessage('As senhas não batem!');
+      // setError(true);
+      // setErrorMessage('As senhas não batem!');
+      showNiceToast('error', 'As senhas não batem!');
       return;
     }
+    hideNiceToast();
     console.debug('ConfirmPassword | next(): ', user);
     navigation.dispatch(StackActions.replace('Photo'));
   }

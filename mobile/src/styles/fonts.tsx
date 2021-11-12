@@ -1,11 +1,13 @@
+import { fontPixel } from '../helpers/responsiveness';
+
 export default {
   size: {
-    smaller: 12,
-    small: 14,
-    medium: 18,
-    big: 22,
-    bigger: 26,
-    super: 32,
+    smaller: fontPixel(22),
+    small: fontPixel(36),
+    medium: fontPixel(48),
+    big: fontPixel(56),
+    bigger: fontPixel(64),
+    super: fontPixel(78),
   },
   familyType: {
     italic: 'Nunito-Italic',

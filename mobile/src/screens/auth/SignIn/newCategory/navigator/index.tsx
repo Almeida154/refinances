@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { StatusBar, BackHandler, ToastAndroid } from 'react-native';
+import { StatusBar, BackHandler, ToastAndroid, View } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
@@ -15,7 +15,7 @@ import { Container } from './styles';
 import { colors, fonts } from '../../../../../styles';
 import Header from '../../../components/Header';
 import { UseAuth } from '../../../../../contexts/AuthContext';
-import Toast from 'react-native-toast-message';
+import Toast from '@zellosoft.com/react-native-toast-message';
 import global from '../../../../../global';
 
 const Tab = createMaterialTopTabNavigator();
@@ -28,7 +28,7 @@ export type PropsNavigation = {
 const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
   const [routeName, setRouteName] = useState<string>();
 
-  const { niceToast } = UseAuth();
+  const { showNiceToast } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backNavAction);
@@ -52,12 +52,14 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
           routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
       }}>
       <StatusBar backgroundColor="transparent" translucent />
-      <Header
-        onBackButton={() => backNavAction()}
-        title="Nova categoria"
-        color={colors.white}
-        isShort
-      />
+      <View style={{ elevation: 0 }}>
+        <Header
+          onBackButton={() => backNavAction()}
+          title="Nova categoria"
+          color={colors.white}
+          isShort
+        />
+      </View>
       <Tab.Navigator
         initialRouteName={routeName}
         screenOptions={{
@@ -77,9 +79,7 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
           tabBarActiveTintColor: colors.white,
         }}
         screenListeners={({ route }) => ({
-          state: e => {
-            setRouteName(route.name);
-          },
+          state: e => setRouteName(route.name),
         })}>
         <Tab.Screen
           listeners={{
@@ -134,7 +134,12 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
           component={NewIncomeCategory}
         />
       </Tab.Navigator>
-      <Toast topOffset={0} config={global.TOAST_CONFIG} />
+
+      <Toast
+        ref={ref => Toast.setRef(ref)}
+        topOffset={0}
+        config={global.TOAST_CONFIG}
+      />
     </Container>
   );
 };

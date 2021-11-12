@@ -1,13 +1,14 @@
 import styled from 'styled-components/native';
+import { heightPixel, widthPixel } from '../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../styles';
 
 export const Container = styled.TouchableHighlight`
   width: 100%;
   background-color: ${colors.white};
   border-radius: ${`${metrics.inputText.radius}px`};
-  padding: 8px 20px;
+  padding: ${`${heightPixel(20)}px`} ${`${widthPixel(48)}px`};
   flex-direction: row;
-  border-width: 1px;
+  border-width: ${`${widthPixel(4)}px`};
   border-color: ${colors.white};
 `;
 
@@ -22,7 +23,7 @@ export const RowAux = styled.View`
 export const IconClean = styled.View`
   justify-content: center;
   align-items: center;
-  margin-left: 20px;
+  margin-left: ${`${widthPixel(40)}px`};
 `;
 
 export const Label = styled.Text`
@@ -38,13 +39,13 @@ export const Input = styled.TextInput`
   font-size: ${`${fonts.size.medium}px`};
   color: ${colors.davysGrey};
   padding: 0;
-  margin-top: -4px;
+  margin-top: ${`${heightPixel(-14)}px`};
 `;
 
 export const Error = styled.Text`
-  margin-bottom: 10px;
+  margin-bottom: ${`${heightPixel(30)}px`};
   font-family: ${fonts.familyType.bold};
   color: ${colors.redCrayola};
-  padding: 0 20px;
+  padding: 0 ${`${widthPixel(48)}px`};
   opacity: 0.3;
 `;

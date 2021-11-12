@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { StackActions } from '@react-navigation/routers';
 
-// React components
-import { StatusBar, Text, TextInput } from 'react-native';
-
-// Navigation | Auth
 import { UseAuth, User } from '../../../contexts/AuthContext';
 import RootStackParamAuth from '../../../@types/RootStackParamAuth';
 
@@ -13,7 +10,6 @@ import { colors, metrics } from '../../../styles';
 import {
   Container,
   Header,
-  Boundaries,
   Content,
   Form,
   Title,
@@ -25,11 +21,11 @@ import LinearGradient from 'react-native-linear-gradient';
 // Components
 import Button from '../../../components/Button';
 import InputText from '../../../components/InputText';
+import { TextInput } from 'react-native';
 
 // Icons
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import LoginIcon from '../../../assets/images/svg/login-icon.svg';
-import { StackActions } from '@react-navigation/routers';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Login'>;
@@ -39,7 +35,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { handleLogin, niceToast } = UseAuth();
+  const { handleLogin, showNiceToast, hideNiceToast } = UseAuth();
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -56,13 +52,16 @@ const Entrar = ({ navigation }: PropsNavigation) => {
     if (!response.ok) {
       switch (response.error) {
         case 'both':
+          showNiceToast('error', response.message || '');
           setPasswordError(response.message);
           setEmailError(response.message);
           break;
         case 'senha':
+          showNiceToast('error', response.message || '');
           setPasswordError(response.message);
           break;
         case 'email':
+          showNiceToast('error', response.message || '');
           setEmailError(response.message);
           break;
         default:
@@ -87,12 +86,12 @@ const Entrar = ({ navigation }: PropsNavigation) => {
             color={colors.bigDipOruby}
             onPress={() => console.log('back')}
           />
-          <LoginIcon style={{ left: 1, top: '10%' }} height={'20%'} />
+          <LoginIcon style={{ top: '10%' }} height={'20%'} />
         </Header>
 
         <Content
           style={{
-            shadowColor: 'rgba(0, 0, 0, .4)',
+            shadowColor: 'rgba(0, 0, 0, 1)',
             shadowOffset: { width: 5, height: 8 },
             shadowOpacity: 0.08,
             shadowRadius: 20,
@@ -101,82 +100,84 @@ const Entrar = ({ navigation }: PropsNavigation) => {
           <Title>Entre em sua conta</Title>
           <Form
             style={{
-              shadowColor: 'rgba(0, 0, 0, .4)',
+              shadowColor: 'rgba(0, 0, 0, .6)',
               shadowOffset: { width: 5, height: 8 },
               shadowOpacity: 0.08,
               shadowRadius: 20,
               elevation: 30,
             }}>
-            <Boundaries>
-              <InputText
-                label="Email"
-                placeholder="Exemplo@gmail.com"
-                value={email}
-                error={emailError}
-                autoCapitalize="none"
-                textContentType="emailAddress"
-                secureTextEntry={false}
-                returnKeyType="next"
-                blurOnSubmit={false}
-                ref={emailInputRef}
-                showClearIcon={email != ''}
-                onClear={() => {
-                  setEmailError(null);
-                  setEmail('');
+            <InputText
+              label="Email"
+              placeholder="Exemplo@gmail.com"
+              value={email}
+              error={emailError}
+              autoCapitalize="none"
+              textContentType="emailAddress"
+              secureTextEntry={false}
+              returnKeyType="next"
+              blurOnSubmit={false}
+              ref={emailInputRef}
+              showClearIcon={email != ''}
+              onClear={() => {
+                setEmailError(null);
+                setEmail('');
+              }}
+              onChangeText={txt => {
+                setEmailError(null);
+                setEmail(txt);
+              }}
+              onSubmitEditing={() => passwordInputRef.current?.focus()}
+            />
+
+            <InputText
+              label="Senha"
+              placeholder="Sua senha"
+              value={password}
+              error={passwordError}
+              autoCapitalize="none"
+              textContentType="password"
+              secureTextEntry
+              ref={passwordInputRef}
+              showClearIcon={password != ''}
+              onClear={() => {
+                setPasswordError(null);
+                setPassword('');
+              }}
+              onChangeText={txt => {
+                setPasswordError(null);
+                setPassword(txt);
+              }}
+            />
+
+            <LinearGradient
+              style={{ borderRadius: metrics.inputText.radius }}
+              start={{ x: 0, y: 2 }}
+              end={{ x: 1, y: 3 }}
+              locations={[0, 1]}
+              colors={[colors.paradisePink, colors.bigDipOruby]}>
+              <Button
+                style={{
+                  backgroundColor: 'transparent',
                 }}
-                onChangeText={txt => {
-                  setEmailError(null);
-                  setEmail(txt);
-                }}
-                onSubmitEditing={() => passwordInputRef.current?.focus()}
+                onPress={LoginUser}
+                title="Entrar"
+                lastOne
               />
-
-              <InputText
-                label="Senha"
-                placeholder="Sua senha"
-                value={password}
-                error={passwordError}
-                autoCapitalize="none"
-                textContentType="password"
-                secureTextEntry
-                ref={passwordInputRef}
-                showClearIcon={password != ''}
-                onClear={() => {
-                  setPasswordError(null);
-                  setPassword('');
-                }}
-                onChangeText={txt => {
-                  setPasswordError(null);
-                  setPassword(txt);
-                }}
-              />
-
-              <LinearGradient
-                style={{ borderRadius: metrics.inputText.radius }}
-                start={{ x: 0, y: 2 }}
-                end={{ x: 1, y: 3 }}
-                locations={[0, 1]}
-                colors={[colors.paradisePink, colors.bigDipOruby]}>
-                <Button
-                  backgroundColor={'transparent'}
-                  onPress={LoginUser}
-                  title="Entrar"
-                  lastOne
-                />
-              </LinearGradient>
-
-              <TextForgotPassword
-                onPress={() => navigation.navigate('PasswordRecovery')}>
-                Esqueci minha senha
-              </TextForgotPassword>
-
-              <TextNoAccount
-                onPress={() =>
-                  navigation.dispatch(StackActions.replace('Name'))
-                }>
-                Ainda não tenho conta
-              </TextNoAccount>
-            </Boundaries>
+            </LinearGradient>
+            <TextForgotPassword
+              onPress={() => {
+                navigation.navigate('PasswordRecovery');
+                hideNiceToast();
+              }}>
+              Esqueci minha senha
+            </TextForgotPassword>
+            <TextNoAccount
+              onPress={() => {
+                navigation.dispatch(StackActions.replace('Name'));
+                hideNiceToast();
+              }}>
+              Ainda não tenho conta
+            </TextNoAccount>
           </Form>
         </Content>
       </LinearGradient>

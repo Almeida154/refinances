@@ -29,11 +29,12 @@ export type PropsNavigation = {
 };
 
 const Email = ({ navigation }: PropsNavigation) => {
-  const [email, setEmail] = useState('pesticida@gmail.com');
+  const [email, setEmail] = useState('pesticidakkj@gmail.com');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { user, updateUserProps, emailExists, niceToast } = UseAuth();
+  const { user, updateUserProps, emailExists, showNiceToast, hideNiceToast } =
+    UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
@@ -53,21 +54,25 @@ const Email = ({ navigation }: PropsNavigation) => {
 
   async function next() {
     if (email == '') {
-      setError(true);
-      setErrorMessage('Preencha este campo!');
+      // setError(true);
+      // setErrorMessage('Preencha este campo!');
+      showNiceToast('error', 'Não esqueça seu email!');
       return;
     }
     if (!isValid(email)) {
-      setError(true);
-      setErrorMessage('E-mail inválido, tente novamente!');
+      // setError(true);
+      // setErrorMessage('E-mail inválido, tente novamente!');
+      showNiceToast('error', 'Email inválido!');
       return;
     }
     if (await emailExists(email)) {
-      setError(true);
-      setErrorMessage('E-mail já cadastrado!');
+      // setError(true);
+      // setErrorMessage('E-mail já cadastrado!');
+      showNiceToast('error', 'Email já cadastrado!');
       return;
     }
 
+    hideNiceToast();
     const newUser = user;
     newUser.emailUsuario = email;
     updateUserProps(newUser);

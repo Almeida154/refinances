@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../../../styles';
 
 export const Container = styled.View`
@@ -15,10 +16,10 @@ export const Content = styled.View`
 
 export const PhotoContainer = styled.View`
   margin-bottom: ${`${metrics.default.boundaries}px`};
-  border-radius: 160px;
-  width: 160px;
-  height: 160px;
-  border: 10px solid ${colors.silver};
+  border: ${`${heightPixel(16)}px`} solid ${colors.silver};
+  width: ${`${widthPixel(300)}px`};
+  height: ${`${heightPixel(300)}px`};
+  border-radius: ${`${widthPixel(80)}px`};
   align-items: center;
   justify-content: center;
 `;
@@ -26,17 +27,17 @@ export const PhotoContainer = styled.View`
 export const Pic = styled.Image`
   width: 100%;
   height: 100%;
-  border-radius: 140px;
+  border-radius: ${`${widthPixel(60)}px`};
 `;
 
 export const CameraDetail = styled.TouchableHighlight`
   background-color: ${colors.paradisePink};
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
   position: absolute;
-  bottom: -5px;
-  right: -5px;
+  border-radius: ${`${widthPixel(120 / 3)}px`};
+  width: ${`${widthPixel(120)}px`};
+  height: ${`${heightPixel(120)}px`};
+  bottom: ${`${-widthPixel(120 / 5)}px`};
+  right: ${`${-widthPixel(120 / 4)}px`};
   align-items: center;
   justify-content: center;
 `;

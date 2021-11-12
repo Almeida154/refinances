@@ -51,7 +51,8 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
   const modalizeRef = useRef<Modal>(null);
   const newIncomeRef = useRef<TextInput>(null);
 
-  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
+  const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
+    UseAuth();
 
   useEffect(() => {
     if (setupUser.incomeTags) {
@@ -60,7 +61,7 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
       console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
     }
     console.debug('NULL pae');
-    niceToast('fake', null, null, 500);
+    showNiceToast('fake', null, null, 500);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -84,9 +85,11 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
 
   async function next() {
     if (selectedTags.length < 1) {
-      niceToast('error', 'Oops!', 'Selecione ao menos 1 ganho fixo!');
+      showNiceToast('error', 'Oops!', 'Selecione ao menos 1 ganho fixo!');
       return;
     }
+
+    hideNiceToast();
 
     const newSetupProps = setupUser;
     newSetupProps.incomeTags = selectedTags;
@@ -227,8 +230,6 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
           color={colors.davysGrey}
         />
       </Modalize>
-      {/* @ts-ignore */}
-      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

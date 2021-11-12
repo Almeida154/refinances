@@ -1,14 +1,10 @@
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
+import { heightPixel } from '../../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../../styles';
 
-export const Container = styled.View`
-  font-family: ${fonts.familyType.regular};
+export const Container = styled.SafeAreaView`
   flex: 1;
-`;
-
-export const Boundaries = styled.View`
-  padding: ${`${metrics.default.boundaries}px`};
-  height: 100%;
 `;
 
 export const Header = styled.View`
@@ -22,15 +18,16 @@ export const Content = styled.View`
   width: 100%;
   min-height: ${`${metrics.screen.height * 0.6}px`};
   background-color: ${colors.cultured};
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 `;
 
 export const Form = styled.View`
-  justify-content: center;
-  background-color: ${colors.white};
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+  background-color: ${colors.diffWhite};
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: ${`${metrics.default.boundaries}px`};
+  height: 100%;
 `;
 
 export const Title = styled.Text`
@@ -39,16 +36,15 @@ export const Title = styled.Text`
   font-size: ${`${fonts.size.bigger}px`};
   color: ${colors.davysGrey};
   opacity: 0.7;
-  line-height: 40px;
-  padding: 14px;
+  padding: ${`${heightPixel(38)}px`};
 `;
 
 export const TextForgotPassword = styled.Text`
   text-align: center;
   font-family: ${fonts.familyType.bold};
-  font-size: ${`${fonts.size.small}px`};
+  font-size: ${`${fonts.size.medium}px`};
   color: ${colors.platinum};
-  margin-top: 10px;
+  margin-top: ${`${heightPixel(120)}px`};
 `;
 
 export const TextNoAccount = styled.Text`
@@ -56,6 +52,6 @@ export const TextNoAccount = styled.Text`
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.medium}px`};
   color: ${colors.davysGrey};
+  margin-top: ${`${heightPixel(20)}px`};
   opacity: 0.3;
-  margin-top: 20%;
 `;

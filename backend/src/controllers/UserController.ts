@@ -37,8 +37,8 @@ class UserController {
       tipoCategoria: "despesa",
       userCategory: user,
       corCategoria: "#434235",
-    })
-    
+    });
+
     if (!user) {
       return response.send({ error: "Usuario nao encontrado" });
     }
@@ -169,19 +169,19 @@ class UserController {
 
     if (emailUsuario == "" && senhaUsuario == "")
       return response.send({
-        message: "Preencha este campo!",
+        message: "Preencha todos os campos!",
         error: "both",
       });
 
     if (emailUsuario == "")
       return response.send({
-        message: "Preencha este campo!",
+        message: "Email em branco!",
         error: "email",
       });
 
     if (senhaUsuario == "")
       return response.send({
-        message: "Preencha este campo!",
+        message: "Senha em branco!",
         error: "senha",
       });
 

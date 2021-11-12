@@ -32,7 +32,7 @@ import { colors } from '../../../../styles';
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 
-import PieChart from 'react-native-pie-chart';
+import { LineChart } from 'react-native-charts-wrapper';
 import { Categoria } from '@contexts/CategoriesContext';
 
 export type PropsNavigation = {
@@ -105,6 +105,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
 
     console.log(idUser);
 
+    // @ts-ignore
     const logUser = JSON.parse(await AsyncStorage.getItem('user'));
 
     var defaultCategoriesIncome = global.DEFAULT_INCOME_CATEGORIES.map(
@@ -158,42 +159,14 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
         hasShadow
       />
       <Content>
-        <Title>Está indo muito bem, {user.nomeUsuario}!</Title>
-        <SubTitle>Você gasta {expensePercentage}% daquilo que recebe.</SubTitle>
-        <PieContainer>
-          {console.log(totalExpense, totalIncome)}
-          <PieChart
-            widthAndHeight={250}
-            series={[totalIncome, totalExpense]}
-            sliceColor={[colors.bigDipOruby, colors.paradisePink]}
-            doughnut
-            coverRadius={0.65}
-            coverFill={'#FFF'}
-          />
-          {user.fotoPerfilUsuario == null ? (
-            <Pic
-              source={require('../../../../assets/images/avatarDefault.png')}
-            />
-          ) : (
-            <Pic
-              style={{
-                borderWidth: 6,
-                borderColor: colors.silver,
-              }}
-              source={{ uri: user.fotoPerfilUsuario }}
-            />
-          )}
-        </PieContainer>
-
-        <LabelContainer>
-          <LabelIcon style={{ backgroundColor: colors.bigDipOruby }} />
-          <LabelSubtitle>O que você recebe (R$ {totalIncome})</LabelSubtitle>
-        </LabelContainer>
-
-        <LabelContainer>
-          <LabelIcon style={{ backgroundColor: colors.paradisePink }} />
-          <LabelSubtitle>Gastos fixos (R$ {totalExpense})</LabelSubtitle>
-        </LabelContainer>
+        <LineChart
+          style={{ flex: 1 }}
+          data={{
+            dataSets: [
+              { label: 'demo', values: [{ y: 1 }, { y: 2 }, { y: 1 }] },
+            ],
+          }}
+        />
       </Content>
 
       <BottomNavigation

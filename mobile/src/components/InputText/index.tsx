@@ -15,6 +15,7 @@ import { colors } from '../../styles';
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import IconByString from '../../helpers/gerarIconePelaString';
+import { heightPixel, widthPixel } from '../../helpers/responsiveness';
 
 export type IconProps = {
   description?: string;
@@ -29,6 +30,7 @@ interface IProps extends TextInputProps {
   placeholder?: string;
   colorLabel?: string;
   error?: string | null;
+  showErrorMessage?: boolean;
   showClearIcon?: boolean;
   icon?: IconProps;
   inputColor?: string;
@@ -43,6 +45,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
     placeholder,
     colorLabel,
     error,
+    showErrorMessage,
     showClearIcon,
     icon,
     inputColor,
@@ -56,18 +59,14 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
     <>
       <Container
         style={[
-          lastOne ? {} : { marginBottom: 10 },
-          error
-            ? {
-                marginBottom: 4,
-                borderColor: 'rgba(248, 22, 80, .3)',
-              }
-            : {},
+          lastOne ? {} : { marginBottom: heightPixel(22) },
+          error ? { borderColor: '#f816504c' } : {},
           {
             shadowColor: 'rgba(0, 0, 0, .3)',
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.08,
             shadowRadius: 20,
+            elevation: 20,
           },
         ]}
         underlayColor={colors.white}
@@ -94,7 +93,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
                 selectionColor={colors.davysGrey}
                 style={[
                   icon?.hex != null || icon?.icon != null
-                    ? { marginLeft: 10 }
+                    ? { marginLeft: widthPixel(30) }
                     : {},
                   icon?.hex != null || icon?.icon != null
                     ? { color: icon.hex, opacity: 0.7 }
@@ -117,7 +116,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
           </IconClean>
         </>
       </Container>
-      {error && <Error>{error}</Error>}
+      {error && showErrorMessage && <Error>{error}</Error>}
     </>
   );
 };

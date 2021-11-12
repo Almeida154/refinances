@@ -10,7 +10,7 @@ export const Container = styled.View`
 export const Content = styled.ScrollView`
   flex: 1;
   padding-top: ${`${metrics.default.boundaries}px`};
-  margin-bottom: 80px;
+  margin-bottom: 80px; // BottomNavigation height
 `;
 
 export const ButtonContainer = styled.View`

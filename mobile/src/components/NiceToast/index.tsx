@@ -8,15 +8,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import { colors } from '../../styles';
-import { Container, Title, Message } from './styles';
+import { Container, StatusBarDetail, Title, Message } from './styles';
 
 interface IProps {
   type: string;
   title: string;
   message?: string;
+  detailed?: boolean;
 }
 
-const NiceToast: React.FC<IProps> = ({ type, title, message }) => {
+const NiceToast: React.FC<IProps> = ({ type, title, message, detailed }) => {
   var backgroundColor;
   var icon;
 
@@ -54,10 +55,13 @@ const NiceToast: React.FC<IProps> = ({ type, title, message }) => {
           paddingTop: 10,
         },
       ]}>
+      <StatusBarDetail
+        style={{ backgroundColor: detailed ? backgroundColor : 'transparent' }}
+      />
       <Container activeOpacity={1}>
         {icon}
         <View>
-          <Title>{title}</Title>
+          {title && <Title>{title}</Title>}
           {message && <Message>{message}</Message>}
         </View>
       </Container>

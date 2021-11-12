@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { BackHandler, StatusBar, TextInput } from 'react-native';
+import { BackHandler, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -32,7 +31,7 @@ const Name = ({ navigation }: PropsNavigation) => {
   const [name, setName] = useState('Roberto Pesticida');
   const [hasError, setError] = useState(false);
 
-  const { user, updateUserProps } = UseAuth();
+  const { user, updateUserProps, showNiceToast, hideNiceToast } = UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
@@ -52,9 +51,12 @@ const Name = ({ navigation }: PropsNavigation) => {
 
   async function next() {
     if (name == '') {
-      setError(true);
+      showNiceToast('error', 'Não esqueça seu nome!');
+      //showNiceToast('error', 'Não esqueça seu nome', null, null, true); // Este tem um detalhe na statusBar
+      //setError(true);
       return;
     }
+    hideNiceToast();
     const newUser = user;
     newUser.nomeUsuario = name;
     updateUserProps(newUser);
@@ -64,7 +66,6 @@ const Name = ({ navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      {/* <StatusBar translucent backgroundColor="transparent" /> */}
       <Header
         onBackButton={() => backAction()}
         title="Como quer ser chamado?"

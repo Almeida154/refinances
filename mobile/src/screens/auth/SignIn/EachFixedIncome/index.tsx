@@ -43,7 +43,8 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
+  const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
+    UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
@@ -51,7 +52,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     let iterator = setupUser.incomeTagsCount;
     console.debug(`Contador: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
-    niceToast('fake', 'Oops!', null, 500);
+    showNiceToast('fake', 'Oops!', null, 500);
 
     if (setupUser.entries != undefined) {
       if (setupUser.entries[setupUser.incomeTagsCount] != undefined) {
@@ -85,9 +86,15 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     );
 
     if (expenseAmount < 1) {
-      niceToast('error', 'Impossível!', 'Insira um valor maior que R$ 0,99');
+      showNiceToast(
+        'error',
+        'Impossível!',
+        'Insira um valor maior que R$ 0,99',
+      );
       return;
     }
+
+    hideNiceToast();
 
     const entry = {
       descricaoLancamento: setupUser.incomeTags[setupUser.incomeTagsCount],

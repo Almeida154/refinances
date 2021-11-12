@@ -4,11 +4,7 @@ import { BackHandler, TextInput } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
-import {
-  CommonActions,
-  RouteProp,
-  StackActions,
-} from '@react-navigation/native';
+import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -16,13 +12,7 @@ import { TextInputMask } from 'react-native-masked-text'; // Outra opção de ma
 import CurrencyInput from 'react-native-currency-input';
 
 // Styles
-import {
-  Container,
-  Content,
-  PrefixReaisSymbol,
-  Writting,
-  Error,
-} from './styles';
+import { Container, Content, PrefixReaisSymbol, Writting } from './styles';
 import { colors, fonts } from '../../../../styles';
 
 // Icon
@@ -45,10 +35,9 @@ export type PropsNavigation = {
 const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   const [expenseAmount, setExpenseAmount] = useState<number | null>(0);
   const [formattedExpenseAmount, setFormattedExpenseAmount] = useState('');
-  const [hasError, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
-  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
+  const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
+    UseAuth();
 
   const inputRef = useRef<TextInput>(null);
 
@@ -56,7 +45,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     let iterator = setupUser.expenseTagsCount;
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
-    niceToast('fake', 'Oops!', null, 500);
+    showNiceToast('fake', 'Oops!', null, 500);
 
     if (setupUser.entries != undefined) {
       if (setupUser.entries[setupUser.expenseTagsCount] != undefined) {
@@ -94,9 +83,15 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     );
 
     if (expenseAmount < 1) {
-      niceToast('error', 'Impossível!', 'Insira um valor maior que R$ 0,99');
+      showNiceToast(
+        'error',
+        'Impossível!',
+        'Insira um valor maior que R$ 0,99',
+      );
       return;
     }
+
+    hideNiceToast();
 
     const entry = {
       descricaoLancamento: setupUser.expenseTags[setupUser.expenseTagsCount],
@@ -154,7 +149,6 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
             selectionColor={colors.davysGrey}
             onChangeText={formattedValue => {
               setFormattedExpenseAmount(formattedValue);
-              setError(false);
               if (expenseAmount == null) setExpenseAmount(0.0);
             }}
             ref={inputRef}
@@ -170,21 +164,17 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
               size={32}
               color={`rgba(82, 82, 82, .08)`}
               onPress={() => {
-                setError(false);
                 setExpenseAmount(0.0);
               }}
             />
           )}
         </Writting>
-        {hasError && <Error>{errorMessage}</Error>}
       </Content>
 
       <BottomNavigation
         onPress={() => next()}
         description={'Escolher categoria'}
       />
-      {/* @ts-ignore */}
-      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

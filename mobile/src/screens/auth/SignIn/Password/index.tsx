@@ -19,7 +19,7 @@ import {
   RequisitContainer,
   Requisit,
 } from './styles';
-import { colors, fonts, metrics } from '../../../../styles';
+import { colors } from '../../../../styles';
 
 // Icons
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -51,7 +51,7 @@ const Password = ({ navigation }: PropsNavigation) => {
     useState(false);
   const [securePassword, setSecurePassword] = useState(true);
 
-  const { user, updateUserProps } = UseAuth();
+  const { user, updateUserProps, showNiceToast, hideNiceToast } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -85,30 +85,36 @@ const Password = ({ navigation }: PropsNavigation) => {
 
   async function next() {
     if (password == '') {
-      setError(true);
-      setErrorMessage('Preencha este campo!');
+      // setError(true);
+      // setErrorMessage('Preencha este campo!');
+      showNiceToast('error', 'Não esqueça a senha! 😠');
       return;
     }
     if (!hasMinimum(password)) {
-      setError(true);
-      setErrorMessage('Insira pelo menos 6 caracteres!');
+      // setError(true);
+      // setErrorMessage('Insira pelo menos 6 caracteres!');
+      showNiceToast('error', 'Deve ter pelo menos 6 caracteres!');
       return;
     }
     if (!hasAtLeastOneNumber(password)) {
-      setError(true);
-      setErrorMessage('Deve conter pelo menos um número!');
+      // setError(true);
+      // setErrorMessage('Deve conter pelo menos um número!');
+      showNiceToast('error', 'Deve conter pelo menos um número!');
       return;
     }
     if (!hasAtLeastOneLetter(password)) {
-      setError(true);
-      setErrorMessage('Deve conter pelo menos uma letra!');
+      // setError(true);
+      // setErrorMessage('Deve conter pelo menos uma letra!');
+      showNiceToast('error', 'Deve conter pelo menos uma letra!');
       return;
     }
     if (!isValid(password)) {
-      setError(true);
-      setErrorMessage('Caracter inválido!');
+      // setError(true);
+      // setErrorMessage('Caracter inválido!');
+      showNiceToast('error', 'Caracter inválido!');
       return;
     }
+    hideNiceToast();
     const newUser = user;
     newUser.senhaUsuario = password;
     updateUserProps(newUser);

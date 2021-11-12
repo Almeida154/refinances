@@ -34,13 +34,14 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
   const [selectedCategory, setSelectedCategory] = useState({} as Categoria);
   const [categories, setCategories] = useState([] as Categoria[]);
 
-  const { setupUser, updateSetupUserProps, niceToast } = UseAuth();
+  const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
+    UseAuth();
 
   useEffect(() => {
     let iterator = setupUser.incomeTagsCount;
     console.debug(`Contador: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
-    niceToast('fake', 'Oops!', null, 500);
+    showNiceToast('fake', 'Oops!', null, 500);
     populateCategories();
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -91,13 +92,15 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
   async function next() {
     if (selectedCategory.nomeCategoria == null) {
-      niceToast(
+      showNiceToast(
         'error',
         'Calma aí...',
         `E a categoria da ${setupUser.incomeTags[setupUser.incomeTagsCount]}?`,
       );
       return;
     }
+
+    hideNiceToast();
 
     const newSetupProps = setupUser;
     newSetupProps.entries[
