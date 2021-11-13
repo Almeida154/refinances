@@ -8,6 +8,8 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
+import { Lancamento } from '../../../../contexts/EntriesContext';
+
 // Styles
 import {
   Container,
@@ -28,7 +30,6 @@ import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import InputText from '../../../../components/InputText';
 import Modalize from '../../../../components/Modalize';
-import Toast from 'react-native-toast-message';
 
 import { Modalize as Modal } from 'react-native-modalize';
 
@@ -87,6 +88,24 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
     if (selectedTags.length < 1) {
       showNiceToast('error', 'Oops!', 'Selecione ao menos 1 ganho fixo!');
       return;
+    }
+
+    if (
+      setupUser.entries[setupUser.expenseTags.length + 1] != undefined &&
+      setupUser.incomeTags != undefined
+    ) {
+      if (setupUser.incomeTags.length != selectedTags.length) {
+        const newSetupProps = setupUser;
+
+        for (
+          let i = setupUser.expenseTagsCount + 1;
+          i < setupUser.entries.length;
+          i++
+        )
+          newSetupProps.entries[i] = {} as Lancamento;
+
+        updateSetupUserProps(newSetupProps);
+      }
     }
 
     hideNiceToast();

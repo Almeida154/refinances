@@ -6,6 +6,8 @@ import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
+import { Lancamento } from '@contexts/EntriesContext';
+
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -88,7 +90,17 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
       return;
     }
 
+    if (
+      setupUser.entries != undefined &&
+      selectedTags.length != setupUser.expenseTags.length
+    ) {
+      const newSetupProps = setupUser;
+      newSetupProps.entries = [] as Lancamento[];
+      updateSetupUserProps(newSetupProps);
+    }
+
     hideNiceToast();
+
     const newSetupProps = setupUser;
     newSetupProps.expenseTags = selectedTags;
     newSetupProps.expenseTagsCount = 0;

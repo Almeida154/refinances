@@ -43,6 +43,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.expenseTagsCount;
+    console.log('----------------');
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
     showNiceToast('fake', 'Oops!', null, 500);
@@ -50,10 +51,6 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     if (setupUser.entries != undefined) {
       if (setupUser.entries[setupUser.expenseTagsCount] != undefined) {
         setExpenseAmount(
-          setupUser.entries[setupUser.expenseTagsCount].parcelasLancamento[0]
-            .valorParcela,
-        );
-        console.log(
           setupUser.entries[setupUser.expenseTagsCount].parcelasLancamento[0]
             .valorParcela,
         );
@@ -108,10 +105,13 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     const newSetupProps = setupUser;
 
     newSetupProps.entries != undefined
-      ? newSetupProps.entries.push(entry)
+      ? (newSetupProps.entries[setupUser.expenseTagsCount] = entry)
       : (newSetupProps.entries = [entry]);
 
     updateSetupUserProps(newSetupProps);
+
+    console.debug(`Size: ${setupUser.entries.length}`);
+
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
   }
 

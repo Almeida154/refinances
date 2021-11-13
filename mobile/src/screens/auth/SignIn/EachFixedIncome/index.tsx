@@ -50,15 +50,22 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.incomeTagsCount;
-    console.debug(`Contador: ${iterator}`);
+    console.log('----------------');
+    console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
     showNiceToast('fake', 'Oops!', null, 500);
 
-    if (setupUser.entries != undefined) {
-      if (setupUser.entries[setupUser.incomeTagsCount] != undefined) {
+    var entry =
+      setupUser.entries[
+        setupUser.incomeTagsCount + setupUser.expenseTags.length
+      ];
+
+    if (entry != undefined) {
+      if (Object.keys(entry).length === 0) {
         setIncomeAmount(
-          setupUser.entries[setupUser.incomeTagsCount].parcelasLancamento[0]
-            .valorParcela,
+          setupUser.entries[
+            setupUser.incomeTagsCount + setupUser.expenseTags.length
+          ].parcelasLancamento[0].valorParcela,
         );
       }
     }
@@ -111,10 +118,15 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     const newSetupProps = setupUser;
 
     newSetupProps.entries != undefined
-      ? newSetupProps.entries.push(entry)
+      ? (newSetupProps.entries[
+          setupUser.incomeTagsCount + setupUser.expenseTags.length
+        ] = entry)
       : (newSetupProps.entries = [entry]);
 
     updateSetupUserProps(newSetupProps);
+
+    console.debug(`Size: ${setupUser.entries.length}`);
+
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
   }
 
