@@ -38,8 +38,11 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.expenseTagsCount;
+    console.log('--------- CATEGORY ---------');
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
+    console.debug(`Entries: ${JSON.stringify(setupUser.entries)}`);
+    console.debug(`Size: ${setupUser.entries.length}`);
 
     showNiceToast('fake', 'Oops!', null, 500);
     populateCategories();
@@ -75,26 +78,31 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
     clearSelectedCategories();
 
+    // Caso já tenha passado pela tela, recupera a categoria aqui
+    var entryIndex = setupUser.entries.findIndex(
+      entry =>
+        entry.descricaoLancamento ==
+        setupUser.expenseTags[setupUser.expenseTagsCount],
+    );
+    if (entryIndex != -1) {
+      var entry = setupUser.entries[entryIndex];
+      if (entry.categoryLancamento != undefined) {
+        console.log('a entry da eachcategory: ', entry);
+        const selectedI = ctgrs.findIndex(
+          category =>
+            category.nomeCategoria == entry?.categoryLancamento?.nomeCategoria,
+        );
+        ctgrs[selectedI].isSelected = true;
+        setSelectedCategory(ctgrs[selectedI]);
+      }
+    }
+
     if (route.params?.createdCategoryName) {
       const lastCreatedI = ctgrs.findIndex(
         category => category.nomeCategoria == route.params?.createdCategoryName,
       );
       ctgrs[lastCreatedI].isSelected = true;
       setSelectedCategory(ctgrs[lastCreatedI]);
-    }
-
-    if (
-      setupUser.entries[setupUser.expenseTagsCount].categoryLancamento !=
-      undefined
-    ) {
-      const selectedI = ctgrs.findIndex(
-        category =>
-          category.nomeCategoria ==
-          setupUser.entries[setupUser.expenseTagsCount].categoryLancamento
-            .nomeCategoria,
-      );
-      ctgrs[selectedI].isSelected = true;
-      setSelectedCategory(ctgrs[selectedI]);
     }
 
     setTimeout(() => setCategories(ctgrs), 400); // Efeito melhor

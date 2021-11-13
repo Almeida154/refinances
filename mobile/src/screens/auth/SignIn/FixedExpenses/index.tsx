@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { BackHandler } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
+import { Lancamento } from '../../../../contexts/EntriesContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
@@ -92,6 +93,44 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
     hideNiceToast();
 
     const newSetupProps = setupUser;
+
+    // Reorganizando a entries com a possível nova ordem
+    if (setupUser.entries) {
+      if (selectedTags.length != setupUser.expenseTags.length) {
+        var oldExpenseEntries = setupUser.entries.filter(
+          (entry, index) => index <= setupUser.expenseTags.length,
+        );
+
+        console.log('ATUAL:');
+        setupUser.entries.map(entry => console.log(entry.descricaoLancamento));
+
+        console.log('OLDASSO EXPENSE:');
+        setupUser.entries.map(entry => console.log(entry.descricaoLancamento));
+
+        var oldIncomeEntries = setupUser.entries.filter(
+          (entry, index) => index > setupUser.expenseTags.length,
+        );
+
+        var newEntries = [] as Lancamento[];
+
+        for (let i = 0; i < selectedTags.length; i++) {
+          for (let j = 0; j < oldExpenseEntries.length; j++) {
+            if (selectedTags[i] == oldExpenseEntries[j].descricaoLancamento)
+              newEntries[i] = oldExpenseEntries[j];
+          }
+        }
+
+        // console.log('-----NOVO VETOR DOS CRIA-----');
+        // for (let i = 0; i < newEntries.length; i++)
+        //   if (newEntries[i] != undefined)
+        //     console.log(i + ' - ' + newEntries[i].descricaoLancamento);
+        //   else console.log(i + ' - undefined');
+
+        setupUser.entries = newEntries;
+        updateSetupUserProps(newSetupProps);
+      }
+    }
+
     newSetupProps.expenseTags = selectedTags;
     newSetupProps.expenseTagsCount = 0;
     updateSetupUserProps(newSetupProps);

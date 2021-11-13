@@ -21,8 +21,8 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 
-import { Lancamento } from '@contexts/EntriesContext';
-import { Parcela } from '@contexts/InstallmentContext';
+import { Lancamento } from '../../../../contexts/EntriesContext';
+import { Parcela } from '../../../../contexts/InstallmentContext';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'EachFixedExpense'>;
@@ -40,20 +40,29 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.expenseTagsCount;
-    console.log('----------------');
+    console.log('--------- EXPENSE ---------');
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
+    if (setupUser.entries) {
+      console.debug(`Entries: ${JSON.stringify(setupUser.entries)}`);
+      console.debug(`Size: ${setupUser.entries.length}`);
+    }
+
     showNiceToast('fake', 'Oops!', null, 500);
 
+    // Caso já tenha passado pela tela, recupera o expense aqui
     if (setupUser.entries != undefined) {
-      var entry = [0];
-      entry = setupUser.entries.map(entry =>
-        entry.descricaoLancamento ===
-        setupUser.expenseTags[setupUser.expenseTagsCount]
-          ? entry.parcelasLancamento[0].valorParcela
-          : 0,
-      );
-      setExpenseAmount(entry[0]);
+      if (setupUser.entries[setupUser.expenseTagsCount] != undefined) {
+        var entryIndex = setupUser.entries.findIndex(
+          entry =>
+            entry.descricaoLancamento ==
+            setupUser.expenseTags[setupUser.expenseTagsCount],
+        );
+        if (entryIndex != -1) {
+          var entry = setupUser.entries[entryIndex];
+          setExpenseAmount(entry.parcelasLancamento[0].valorParcela);
+        }
+      }
     }
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -114,9 +123,6 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       : (newSetupProps.entries = [entry]);
 
     updateSetupUserProps(newSetupProps);
-
-    console.debug(`Size: ${setupUser.entries.length}`);
-
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
   }
 
