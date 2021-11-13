@@ -83,7 +83,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
       setSelectedCategory(ctgrs[lastCreatedI]);
     }
 
-    let i = setupUser.expenseTags.length + setupUser.incomeTagsCount;
+    let i = setupUser.incomeTagsCount + setupUser.expenseTags.length;
 
     if (setupUser.entries[i] != undefined) {
       if (setupUser.entries[i].categoryLancamento != undefined) {

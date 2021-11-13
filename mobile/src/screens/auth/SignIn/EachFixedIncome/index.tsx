@@ -24,9 +24,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
-import Toast from 'react-native-toast-message';
 
-import global from '../../../../global';
 import { Lancamento } from '@contexts/EntriesContext';
 import { Parcela } from '@contexts/InstallmentContext';
 
@@ -55,20 +53,14 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
     showNiceToast('fake', 'Oops!', null, 500);
 
-    var entry =
-      setupUser.entries[
-        setupUser.incomeTagsCount + setupUser.expenseTags.length
-      ];
-
-    if (entry != undefined) {
-      if (Object.keys(entry).length === 0) {
-        setIncomeAmount(
-          setupUser.entries[
-            setupUser.incomeTagsCount + setupUser.expenseTags.length
-          ].parcelasLancamento[0].valorParcela,
-        );
-      }
-    }
+    var entry = [0];
+    entry = setupUser.entries.map(entry =>
+      entry.descricaoLancamento ===
+      setupUser.incomeTags[setupUser.incomeTagsCount]
+        ? entry.parcelasLancamento[0].valorParcela
+        : 0,
+    );
+    setIncomeAmount(entry[0]);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -104,7 +96,10 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     hideNiceToast();
 
     const entry = {
-      descricaoLancamento: setupUser.incomeTags[setupUser.incomeTagsCount],
+      descricaoLancamento:
+        setupUser.incomeTags[
+          setupUser.incomeTagsCount + setupUser.expenseTags.length
+        ],
       lugarLancamento: 'extrato',
       tipoLancamento: 'receita',
       parcelasLancamento: [
@@ -195,8 +190,6 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
         description={'Escolher categoria'}
         iconColor={colors.slimyGreen}
       />
-      {/* @ts-ignore */}
-      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

@@ -5,7 +5,6 @@ import { Categoria } from './CategoriesContext';
 import { Conta } from './AccountContext';
 import { Lancamento } from './EntriesContext';
 
-//import Toast from 'react-native-toast-message';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import global from '../global';
 
@@ -26,6 +25,7 @@ export interface SetupUser {
   expenseTagsCount: number;
   incomeTags: string[];
   incomeTagsCount: number;
+  //tagsIterator: number;
 
   createdCategories: Categoria[];
   allCategories: Categoria[];

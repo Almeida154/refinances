@@ -1,12 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import NiceToast from '../components/NiceToast';
-import {
-  BaseToast,
-  ErrorToast,
-  BaseToastProps,
-  ToastShowParams,
-} from 'react-native-toast-message';
+import { ToastProps } from '@zellosoft.com/react-native-toast-message';
 import { colors, fonts } from '../styles';
 
 export default {
@@ -32,34 +27,7 @@ export default {
     cropperToolbarTitle: 'Sua foto de perfil',
   },
   TOAST_CONFIG: {
-    success: (props: BaseToastProps) => (
-      <BaseToast
-        {...props}
-        style={{ borderLeftColor: 'pink' }}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
-        text1Style={{
-          fontSize: 15,
-          fontWeight: '400',
-        }}
-      />
-    ),
-    error: (props: BaseToastProps) => (
-      <BaseToast
-        {...props}
-        style={{ borderLeftColor: colors.redCrayola, borderLeftWidth: 6 }}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
-        text1Style={{
-          fontSize: fonts.size.medium,
-          fontFamily: fonts.familyType.italic,
-        }}
-        text2Style={{
-          fontSize: fonts.size.small,
-          fontFamily: fonts.familyType.semiBold,
-          opacity: 0.7,
-        }}
-      />
-    ),
-    niceToast: ({ props }: ToastShowParams) => (
+    niceToast: ({ props }: any) => (
       <NiceToast
         type={props.type}
         title={props.title}

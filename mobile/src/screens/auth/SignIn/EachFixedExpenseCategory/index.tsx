@@ -40,6 +40,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     let iterator = setupUser.expenseTagsCount;
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
+
     showNiceToast('fake', 'Oops!', null, 500);
     populateCategories();
 
@@ -82,20 +83,18 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       setSelectedCategory(ctgrs[lastCreatedI]);
     }
 
-    if (setupUser.entries != undefined) {
-      if (
-        setupUser.entries[setupUser.expenseTagsCount].categoryLancamento !=
-        undefined
-      ) {
-        const selectedI = ctgrs.findIndex(
-          category =>
-            category.nomeCategoria ==
-            setupUser.entries[setupUser.expenseTagsCount].categoryLancamento
-              .nomeCategoria,
-        );
-        ctgrs[selectedI].isSelected = true;
-        setSelectedCategory(ctgrs[selectedI]);
-      }
+    if (
+      setupUser.entries[setupUser.expenseTagsCount].categoryLancamento !=
+      undefined
+    ) {
+      const selectedI = ctgrs.findIndex(
+        category =>
+          category.nomeCategoria ==
+          setupUser.entries[setupUser.expenseTagsCount].categoryLancamento
+            .nomeCategoria,
+      );
+      ctgrs[selectedI].isSelected = true;
+      setSelectedCategory(ctgrs[selectedI]);
     }
 
     setTimeout(() => setCategories(ctgrs), 400); // Efeito melhor
@@ -127,9 +126,8 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     newSetupProps.expenseTagsCount++;
     updateSetupUserProps(newSetupProps);
 
-    if (setupUser.expenseTagsCount != setupUser.expenseTags.length) {
+    if (setupUser.expenseTagsCount != setupUser.expenseTags.length)
       return navigation.dispatch(StackActions.replace('EachFixedExpense'));
-    }
 
     clearSelectedCategories();
     navigation.dispatch(StackActions.replace('FixedIncomes'));

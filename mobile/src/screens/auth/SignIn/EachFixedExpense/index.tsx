@@ -8,7 +8,6 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
-import { TextInputMask } from 'react-native-masked-text'; // Outra opção de mask
 import CurrencyInput from 'react-native-currency-input';
 
 // Styles
@@ -21,9 +20,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
-import Toast from 'react-native-toast-message';
 
-import global from '../../../../global';
 import { Lancamento } from '@contexts/EntriesContext';
 import { Parcela } from '@contexts/InstallmentContext';
 
@@ -49,12 +46,14 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     showNiceToast('fake', 'Oops!', null, 500);
 
     if (setupUser.entries != undefined) {
-      if (setupUser.entries[setupUser.expenseTagsCount] != undefined) {
-        setExpenseAmount(
-          setupUser.entries[setupUser.expenseTagsCount].parcelasLancamento[0]
-            .valorParcela,
-        );
-      }
+      var entry = [0];
+      entry = setupUser.entries.map(entry =>
+        entry.descricaoLancamento ===
+        setupUser.expenseTags[setupUser.expenseTagsCount]
+          ? entry.parcelasLancamento[0].valorParcela
+          : 0,
+      );
+      setExpenseAmount(entry[0]);
     }
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -100,6 +99,12 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
         } as Parcela,
       ],
       essencial: true,
+      categoryLancamento:
+        setupUser.entries != undefined
+          ? setupUser.entries[setupUser.expenseTagsCount] != undefined
+            ? setupUser.entries[setupUser.expenseTagsCount].categoryLancamento
+            : undefined
+          : undefined,
     } as Lancamento;
 
     const newSetupProps = setupUser;

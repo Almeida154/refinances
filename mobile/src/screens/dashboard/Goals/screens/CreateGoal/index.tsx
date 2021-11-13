@@ -11,7 +11,10 @@ import {
   UseDadosTemp,
 } from '../../../../../contexts/TemporaryDataContext';
 
-import {Lancamento, UseLancamentos} from '../../../../../contexts/EntriesContext';
+import {
+  Lancamento,
+  UseLancamentos,
+} from '../../../../../contexts/EntriesContext';
 
 import {
   ScrollView,
@@ -25,7 +28,7 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import global from '../../../../../global';
-import Toast from 'react-native-toast-message';
+import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
 import fonts from '../../../../../styles/fonts';
@@ -33,7 +36,7 @@ import { StackActions } from 'react-navigation';
 import Header from '../components/Header';
 
 const CreateGoal = () => {
-  const {handleAdicionarLancamento} = UseLancamentos()
+  const { handleAdicionarLancamento } = UseLancamentos();
   const [meta, setMeta] = useState('');
   const [valorMeta, setValorMeta] = useState('');
   const [investidoMeta, setInvestido] = useState('');
@@ -62,13 +65,16 @@ const CreateGoal = () => {
   };
 
   const handleConfirm = (date: Date) => {
-    if (dataAtual <= date ) {
+    if (dataAtual <= date) {
       setPrevisao(date);
       console.warn('Previsão data final meta: ', date.toLocaleDateString());
       setdtPrevError(null);
     } else {
       setPrevisao(dataAtual);
-      console.warn('Previsão data final meta: ', dataAtual.toLocaleDateString());
+      console.warn(
+        'Previsão data final meta: ',
+        dataAtual.toLocaleDateString(),
+      );
       setdtPrevError(null);
     }
 
@@ -87,15 +93,15 @@ const CreateGoal = () => {
       userMetaId: await retornarIdDoUsuario(),
       lancamentoMeta: {
         id: -1,
-        categoryLancamento: "Meta",
-        descricaoLancamento: "Depósito para " + meta,
+        categoryLancamento: 'Meta',
+        descricaoLancamento: 'Depósito para ' + meta,
         essencial: false,
         lugarLancamento: 'extrato',
         parcelaBaseada: -1,
         parcelasLancamento: [],
-        tipoLancamento: 'despesa'
-      }
-    } as Meta;        
+        tipoLancamento: 'despesa',
+      },
+    } as Meta;
 
     if (
       meta != '' &&
@@ -103,17 +109,15 @@ const CreateGoal = () => {
       valorMeta != undefined &&
       parseFloat(investidoMeta) >= 0 &&
       investidoMeta != undefined
-
     ) {
-      
       parseFloat(investidoMeta) >= parseFloat(valorMeta)
-      ? console.log('deu true')
-      : setRealizado(false);
+        ? console.log('deu true')
+        : setRealizado(false);
 
-      console.log("realizado: ", realizado);
+      console.log('realizado: ', realizado);
       handleAdicionarMeta(newGoal);
       console.log(newGoal);
-      
+
       Toast.show({
         type: 'niceToast',
         props: {
@@ -123,7 +127,6 @@ const CreateGoal = () => {
         },
       });
       navigation.dispatch(StackActions.replace('Main'));
-
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
     }
@@ -133,17 +136,15 @@ const CreateGoal = () => {
     if (parseFloat(investidoMeta) < 0 || investidoMeta == '') {
       setinvestidoError('Insira um valor válido!');
     }
-    
   }
-  
+
   const realizacao = () => {
     parseFloat(investidoMeta) >= parseFloat(valorMeta)
       ? setRealizado(true)
       : setRealizado(false);
 
-      console.log("realizado: ", realizado)
+    console.log('realizado: ', realizado);
     return realizado;
-
   };
 
   const backAction = () => {

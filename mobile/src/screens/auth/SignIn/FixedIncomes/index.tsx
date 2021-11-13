@@ -8,8 +8,6 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
-import { Lancamento } from '../../../../contexts/EntriesContext';
-
 // Styles
 import {
   Container,
@@ -34,6 +32,8 @@ import Modalize from '../../../../components/Modalize';
 import { Modalize as Modal } from 'react-native-modalize';
 
 import global from '../../../../global';
+import removeAccents from '../../../../helpers/removeAccents';
+import capitalizeFirstLetter from '../../../../helpers/capitalizeFirstLetter';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'FixedIncomes'>;
@@ -60,8 +60,8 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
       let iterator = setupUser.incomeTagsCount;
       console.debug(`Contador: ${iterator}`);
       console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
-    }
-    console.debug('NULL pae');
+    } else console.debug('NULL pae');
+
     showNiceToast('fake', null, null, 500);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -80,33 +80,18 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
     const newSetupProps = setupUser;
     newSetupProps.expenseTagsCount--;
+    newSetupProps.incomeTagsCount = 0;
     updateSetupUserProps(newSetupProps);
     return true;
   };
 
   async function next() {
-    if (selectedTags.length < 1) {
-      showNiceToast('error', 'Oops!', 'Selecione ao menos 1 ganho fixo!');
-      return;
-    }
-
-    if (
-      setupUser.entries[setupUser.expenseTags.length + 1] != undefined &&
-      setupUser.incomeTags != undefined
-    ) {
-      if (setupUser.incomeTags.length != selectedTags.length) {
-        const newSetupProps = setupUser;
-
-        for (
-          let i = setupUser.expenseTagsCount + 1;
-          i < setupUser.entries.length;
-          i++
-        )
-          newSetupProps.entries[i] = {} as Lancamento;
-
-        updateSetupUserProps(newSetupProps);
-      }
-    }
+    if (selectedTags.length < 1)
+      return showNiceToast(
+        'error',
+        'Oops!',
+        'Selecione ao menos 1 ganho fixo!',
+      );
 
     hideNiceToast();
 
@@ -117,12 +102,6 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
 
     navigation.dispatch(StackActions.replace('EachFixedIncome'));
   }
-
-  const removeAccents = (str: string) =>
-    str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-  const capitalizeFirstLetter = (str: string) =>
-    str.charAt(0).toUpperCase() + str.slice(1);
 
   const handleAddIncome = () => {
     if (newIncome != '') {

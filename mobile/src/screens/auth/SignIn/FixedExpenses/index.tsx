@@ -6,8 +6,6 @@ import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
-import { Lancamento } from '@contexts/EntriesContext';
-
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -30,11 +28,12 @@ import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import InputText from '../../../../components/InputText';
 import Modalize from '../../../../components/Modalize';
-import Toast from 'react-native-toast-message';
 
 import { Modalize as Modal } from 'react-native-modalize';
 
 import global from '../../../../global';
+import removeAccents from '../../../../helpers/removeAccents';
+import capitalizeFirstLetter from '../../../../helpers/capitalizeFirstLetter';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'FixedExpenses'>;
@@ -63,8 +62,8 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
       let iterator = setupUser.expenseTagsCount;
       console.debug(`Iterator: ${iterator}`);
       console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
-    }
-    console.debug('NULL pae');
+    } else console.debug('tá nulo');
+
     showNiceToast('fake', null, null, 500);
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -90,15 +89,6 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
       return;
     }
 
-    if (
-      setupUser.entries != undefined &&
-      selectedTags.length != setupUser.expenseTags.length
-    ) {
-      const newSetupProps = setupUser;
-      newSetupProps.entries = [] as Lancamento[];
-      updateSetupUserProps(newSetupProps);
-    }
-
     hideNiceToast();
 
     const newSetupProps = setupUser;
@@ -108,12 +98,6 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
     navigation.dispatch(StackActions.replace('EachFixedExpense'));
   }
-
-  const removeAccents = (str: string) =>
-    str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-  const capitalizeFirstLetter = (str: string) =>
-    str.charAt(0).toUpperCase() + str.slice(1);
 
   const handleAddExpense = () => {
     if (newExpense != '') {

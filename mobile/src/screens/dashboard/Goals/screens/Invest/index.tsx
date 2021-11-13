@@ -7,21 +7,26 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StatusBar, StyleSheet, Text, ToastAndroid, View } from 'react-native';
+import {
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from 'react-native';
 
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Button from '../../../../../components/Button';
 import { Goal } from '../TabNavigator/styles';
 
-
 import global from '../../../../../global';
-import Toast from 'react-native-toast-message';
+import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-
 
 import {
   AlinhaParaDireita,
@@ -31,10 +36,7 @@ import {
   Header,
 } from '../../../Entries/styles';
 
-import {
-  TextGoals,
-  TextProgress
-} from './styles';
+import { TextGoals, TextProgress } from './styles';
 
 import HeaderTop from '../components/Header';
 import InputText from '../../../../../components/InputText';
@@ -44,7 +46,10 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import PickerContas from '../../../Entries/components/PickerContas';
 import { Conta } from '../../../../../contexts/AccountContext';
-import { Parcela, UseParcelas } from '../../../../../contexts/InstallmentContext';
+import {
+  Parcela,
+  UseParcelas,
+} from '../../../../../contexts/InstallmentContext';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<GoalsStack, 'InvestGoals'>;
@@ -70,13 +75,13 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
       console.debug('O GOAL AQUI Ó:::: ', goal);
 
-      console.log("conta: "+selectedConta);
+      console.log('conta: ' + selectedConta);
     })();
   }, []);
 
   async function handleUpdateGoal() {
-    console.log(goal.lancamentoMeta)
-    
+    console.log(goal.lancamentoMeta);
+
     const newGoal = {
       descMeta: goal.descMeta,
       saldoFinalMeta: goal.saldoFinalMeta,
@@ -85,28 +90,25 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       dataFimMeta: goal.dataFimMeta,
       realizacaoMeta: goal.realizacaoMeta,
       userMetaId: await retornarIdDoUsuario(),
-      lancamentoMeta: goal.lancamentoMeta
+      lancamentoMeta: goal.lancamentoMeta,
     } as Meta;
-    
 
     const newParcela = {
       contaParcela: selectedConta,
       dataParcela: new Date(Date.now()),
       lancamentoParcela: goal.lancamentoMeta.id,
       statusParcela: true,
-      valorParcela: parseFloat(valorDeposito),      
-    } as Parcela
+      valorParcela: parseFloat(valorDeposito),
+    } as Parcela;
 
-    if(parseFloat(valorDeposito) <= 0 || valorDeposito == ''){
-      ToastAndroid.show("Insira um valor válido!", ToastAndroid.SHORT)
-    } 
-    else{
+    if (parseFloat(valorDeposito) <= 0 || valorDeposito == '') {
+      ToastAndroid.show('Insira um valor válido!', ToastAndroid.SHORT);
+    } else {
       const responseMeta = await handleAtualizarMeta(newGoal, goal.id);
-      
-      const responseParcela = await handleAdicionarParcela([newParcela])
 
-      if(responseParcela == '') {
-        
+      const responseParcela = await handleAdicionarParcela([newParcela]);
+
+      if (responseParcela == '') {
         Toast.show({
           type: 'niceToast',
           props: {
@@ -115,33 +117,34 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
             message: 'Depósito realizado com sucesso!',
           },
         });
-        navigation.dispatch(StackActions.replace('Main'))
-
+        navigation.dispatch(StackActions.replace('Main'));
       } else {
-        ToastAndroid.show(responseParcela, ToastAndroid.SHORT)
+        ToastAndroid.show(responseParcela, ToastAndroid.SHORT);
       }
     }
   }
 
-  const novoSaldo = () => {        
+  const novoSaldo = () => {
     return goal.saldoAtualMeta + parseFloat(valorDeposito);
   };
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'GoalsList'}))
+    navigation.dispatch(
+      StackActions.replace('GoalsStack', { screen: 'GoalsList' }),
+    );
     return true;
   };
 
   function changeAccount(conta: Conta | null) {
-    setSelectedConta(conta)
+    setSelectedConta(conta);
   }
 
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'transparent'} />
       <Header style={{ backgroundColor: '#ee4266' }}>
-      <HeaderTop onBackButton={backAction} title=""/>
-        
+        <HeaderTop onBackButton={backAction} title="" />
+
         <AlinhaParaDireita>
           <View></View>
           <InputControlValue>
@@ -158,13 +161,20 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       </Header>
 
       <View style={styles.container}>
-      <TextProgress>
-          Você já depositou 
-          <TextGoals style={{left: '40%'}}> R$ {(goal.saldoFinalMeta)} </TextGoals>
+        <TextProgress>
+          Você já depositou
+          <TextGoals style={{ left: '40%' }}>
+            {' '}
+            R$ {goal.saldoFinalMeta}{' '}
+          </TextGoals>
           em sua meta
-      </TextProgress>
-        
-        <PickerContas conta={selectedConta} changeAccount={changeAccount} tipoLancamento="despesa"/>
+        </TextProgress>
+
+        <PickerContas
+          conta={selectedConta}
+          changeAccount={changeAccount}
+          tipoLancamento="despesa"
+        />
 
         <Button
           title={'Investir'}
