@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { colors, fonts, metrics } from '../../../../styles';
+import { colors, metrics } from '../../../../styles';
 
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};

@@ -10,14 +10,14 @@ import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
 import { Container, Content, ButtonContainer } from './styles';
-import { colors } from '../../../../styles';
+import { colors, metrics } from '../../../../styles';
 
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import CategoryItem from '../../components/CategoryItem';
-import Toast from 'react-native-toast-message';
+import Placeholder from '../../components/Placeholder';
 
 import global from '../../../../global';
 import { Categoria } from '@contexts/CategoriesContext';
@@ -39,7 +39,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.incomeTagsCount;
-    console.debug(`Contador: ${iterator}`);
+    console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
     showNiceToast('fake', 'Oops!', null, 500);
     populateCategories();
@@ -74,6 +74,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
         : [...defaultCategories];
 
     clearSelectedCategories();
+
     if (route.params?.createdCategoryName) {
       const lastCreatedI = ctgrs.findIndex(
         category => category.nomeCategoria == route.params?.createdCategoryName,
@@ -81,7 +82,22 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
       ctgrs[lastCreatedI].isSelected = true;
       setSelectedCategory(ctgrs[lastCreatedI]);
     }
-    setCategories(ctgrs);
+
+    let i = setupUser.expenseTags.length + setupUser.incomeTagsCount;
+
+    if (setupUser.entries[i] != undefined) {
+      if (setupUser.entries[i].categoryLancamento != undefined) {
+        const selectedI = ctgrs.findIndex(
+          category =>
+            category.nomeCategoria ==
+            setupUser.entries[i].categoryLancamento.nomeCategoria,
+        );
+        ctgrs[selectedI].isSelected = true;
+        setSelectedCategory(ctgrs[selectedI]);
+      }
+    }
+
+    setTimeout(() => setCategories(ctgrs), 400); // Efeito melhor
   };
 
   const backAction = () => {
@@ -151,27 +167,39 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
       />
 
       <Content>
-        {categories.map((category, index) => (
-          <CategoryItem
-            key={index}
-            item={category}
-            onPress={() => {
-              clearSelectedCategories();
-              if (category == selectedCategory) {
-                setSelectedCategory({} as Categoria);
-                console.log('já selecionada irmao');
-                return;
-              }
+        {categories.length > 0 ? (
+          <>
+            {categories.map((category, index) => (
+              <CategoryItem
+                key={index}
+                item={category}
+                onPress={() => {
+                  clearSelectedCategories();
+                  if (category == selectedCategory) {
+                    setSelectedCategory({} as Categoria);
+                    console.log('já selecionada irmao');
+                    return;
+                  }
 
-              let newCategories = categories;
-              newCategories[index].isSelected = true;
+                  let newCategories = categories;
+                  newCategories[index].isSelected = true;
 
-              setCategories(newCategories as Categoria[]);
-              setSelectedCategory(newCategories[index]);
-            }}
-            isSelected={category.isSelected}
-          />
-        ))}
+                  setCategories(newCategories as Categoria[]);
+                  setSelectedCategory(newCategories[index]);
+                }}
+                isSelected={category.isSelected}
+              />
+            ))}
+          </>
+        ) : (
+          <View style={{ padding: metrics.default.boundaries }}>
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+          </View>
+        )}
 
         <ButtonContainer>
           <Button
@@ -189,8 +217,6 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
       </Content>
 
       <BottomNavigation onPress={() => next()} description={'Próximo!'} />
-      {/* @ts-ignore */}
-      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

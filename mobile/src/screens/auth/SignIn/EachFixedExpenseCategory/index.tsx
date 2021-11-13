@@ -9,13 +9,14 @@ import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
 import { Container, Content, ButtonContainer } from './styles';
-import { colors } from '../../../../styles';
+import { colors, metrics } from '../../../../styles';
 
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import CategoryItem from '../../components/CategoryItem';
+import Placeholder from '../../components/Placeholder';
 
 import global from '../../../../global';
 import { Categoria } from '@contexts/CategoriesContext';
@@ -97,7 +98,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       }
     }
 
-    setCategories(ctgrs);
+    setTimeout(() => setCategories(ctgrs), 400); // Efeito melhor
   };
 
   const backAction = () => {
@@ -167,39 +168,51 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
         />
       </View>
       <Content>
-        {categories.map((category, index) => (
-          <CategoryItem
-            key={index}
-            item={category}
-            onPress={() => {
-              clearSelectedCategories();
-              if (category == selectedCategory) {
-                setSelectedCategory({} as Categoria);
-                console.log('já selecionada irmao');
-                return;
-              }
+        {categories.length > 0 ? (
+          <>
+            {categories.map((category, index) => (
+              <CategoryItem
+                key={index}
+                item={category}
+                onPress={() => {
+                  clearSelectedCategories();
+                  if (category == selectedCategory) {
+                    setSelectedCategory({} as Categoria);
+                    console.log('já selecionada irmao');
+                    return;
+                  }
 
-              let newCategories = categories;
-              newCategories[index].isSelected = true;
+                  let newCategories = categories;
+                  newCategories[index].isSelected = true;
 
-              setCategories(newCategories as Categoria[]);
-              setSelectedCategory(newCategories[index]);
-            }}
-            isSelected={category.isSelected}
-          />
-        ))}
+                  setCategories(newCategories as Categoria[]);
+                  setSelectedCategory(newCategories[index]);
+                }}
+                isSelected={category.isSelected}
+              />
+            ))}
 
-        <ButtonContainer>
-          <Button
-            style={{ backgroundColor: colors.platinum }}
-            onPress={() =>
-              navigation.navigate('NewCategory', { screen: 'Despesa' })
-            }
-            title="Nova"
-            color={colors.davysGrey}
-            lastOne
-          />
-        </ButtonContainer>
+            <ButtonContainer>
+              <Button
+                style={{ backgroundColor: colors.platinum }}
+                onPress={() =>
+                  navigation.navigate('NewCategory', { screen: 'Despesa' })
+                }
+                title="Nova"
+                color={colors.davysGrey}
+                lastOne
+              />
+            </ButtonContainer>
+          </>
+        ) : (
+          <View style={{ padding: metrics.default.boundaries }}>
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+          </View>
+        )}
       </Content>
 
       <BottomNavigation onPress={() => next()} description={'Próximo!'} />
