@@ -81,7 +81,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         },
     ])
     
-    console.log("dataParcelas", dataParcelas)
+    useEffect(() => {
+        console.debug("Data parcelas mudou")
+    }, [dataParcelas])
     
     const changeParcela = (text: string, date: string, newDataParcelas: Parcela[]) => {
         setParcelas(text)
@@ -250,6 +252,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     useEffect(() => {
         if(valor == '') return
         
+        console.log("Vei no no useEffect[valor]")
         const parcelas = dataParcelas.slice()
 
         const valorParcela = (parseFloat(valor) / dataParcelas.length).toFixed(2)
@@ -262,6 +265,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     }, [valor])
 
     function changeStatus() {
+        console.log("Vei no no useEffect[status]")
+
         const newStatus = status ? false : true
         setStatus(newStatus)
 
@@ -279,12 +284,12 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
 
     function changeMensal() {
         const newMensal = mensal ? false : true
-        setMensal(newMensal)
-        
-        
+        setMensal(newMensal)                
     }
 
     function changeDate(date: string){
+        console.log("Vei no no useEffect[date]")
+
         const parcelas: Parcela[] = []        
 
         let proximoMes = date
@@ -307,6 +312,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     }
 
     function changeAccount(conta: Conta | null){
+        console.log("Vei no no useEffect[account]")
+
         const parcelas: Parcela[] = []        
 
         dataParcelas.map((item, index) => {

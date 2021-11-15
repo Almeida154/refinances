@@ -65,8 +65,7 @@ export const LabelCifrao = styled.Text`
 export const TextInputValue = styled.TextInput`
     height: 80px;
     opacity: 0.7;
-    fontSize: ${`${fonts.size.ultra}px`}
+    font-size: 50px;
     font-family: ${fonts.familyType.semiBold};
     color: #fff;
-    margin: 0px
 `

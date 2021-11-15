@@ -41,6 +41,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
     };
 
     const handleConfirm = (date: Date) => {
+        console.debug("Veio no handleConfirm")
         const aux = item
         aux.dataParcela = date
         dataParcelas[aux.id] = aux
@@ -49,6 +50,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
     };
 
     const onChangeValor = (text: string) => {
+        console.debug("Veio no onChangeValor")
         const aux = dataParcelas.slice()
         aux[item.id].valorParcela = text == '' ? NaN : parseFloat(text)
         
@@ -57,18 +59,22 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
     }
 
     function changeSituation() {
+        console.debug("Veio no onChangeValor")        
+
         const aux = dataParcelas.slice()
         aux[item.id].statusParcela = aux[item.id].statusParcela ? false : true
 
         setDataParcelas(aux)
     }
 
-    function changeAccount(conta: Conta | null){
-        const aux = dataParcelas.slice()
-        aux[item.id].contaParcela = conta        
-        
-        console.log(aux)
-        setDataParcelas(aux)
+    function changeAccount(conta: Conta | null){        
+        if(item.contaParcela?.descricao != conta?.descricao) {
+            const aux = dataParcelas.slice()
+            aux[item.id].contaParcela = conta        
+            
+            console.log(aux)
+            setDataParcelas(aux)
+        }
     }
                 
     return (
