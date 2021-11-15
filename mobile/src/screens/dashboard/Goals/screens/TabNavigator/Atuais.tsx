@@ -100,7 +100,7 @@ const Goals = ({ navigation }: PropsGoals) => {
 
           <Button
             title="Criar nova meta"
-            backgroundColor="#ee4266"
+            backgroundColor="#ccc"
             onPress={() => {
               navigation.dispatch(StackActions.replace('CreateGoals'))
             }}></Button>

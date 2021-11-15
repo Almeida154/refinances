@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { colors, fonts, metrics } from '../../../../../../styles';
+import { colors, fonts, metrics } from '../../styles';
 
 export const Container = styled.View`
   position: absolute;
@@ -42,4 +42,7 @@ export const Step = styled.Text`
 
 export const LastWordAccent = styled.Text`
   color: ${colors.paradisePink};
+`;
+
+export const TouchableOpacity = styled.TouchableOpacity`
 `;

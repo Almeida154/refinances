@@ -38,7 +38,7 @@ import {
 
 import { TextGoals, TextProgress } from './styles';
 
-import HeaderTop from '../components/Header';
+import HeaderTop from '../../../../../components/Header';
 import InputText from '../../../../../components/InputText';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';

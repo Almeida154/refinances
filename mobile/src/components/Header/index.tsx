@@ -9,15 +9,16 @@ import {
   TopContainer,
   Step,
   LastWordAccent,
+  TouchableOpacity
 } from './styles';
 
-import { colors } from '../../../../../../styles';
+import { colors } from '../../styles';
 
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
 
 interface IProps {
-  onBackButton: () => void;
+  backButton: () => void;
   title?: string;
   subtitle?: string;
   hasShadow?: boolean;
@@ -29,7 +30,7 @@ interface IProps {
 }
 
 const Header: React.FC<IProps> = ({
-  onBackButton,
+  backButton,
   title,
   subtitle,
   hasShadow,
@@ -55,14 +56,15 @@ const Header: React.FC<IProps> = ({
       }>
       <Boundaries>
         <TopContainer>
-          <IonIcons
-            style={{opacity: 0.3 }}
-            name="md-arrow-back-sharp"
-            size={40}
-            color={colors.davysGrey}
-            onPress={() => onBackButton}
-          />
-          {step && <Step style={accent ? { color: accent } : {}}>{step}</Step>}
+          <TouchableOpacity onPress={backButton}>
+            <IonIcons
+              style={{opacity: 0.3 }}
+              name="md-arrow-back-sharp"
+              size={40}
+              color={colors.davysGrey}
+            />
+          </TouchableOpacity>
+            {step && <Step style={accent ? { color: accent } : {}}>{step}</Step>}
         </TopContainer>
         {lastWordAccent ? (
           <Title

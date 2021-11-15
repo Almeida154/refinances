@@ -7061,6 +7061,11 @@
   "resolved" "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz"
   "version" "1.0.5"
 
+"skeleton-placeholder@^1.0.0":
+  "integrity" "sha1-B16EPL8WKNq7jXK/6B4OP/yhxfs="
+  "resolved" "https://registry.npmjs.org/skeleton-placeholder/-/skeleton-placeholder-1.0.0.tgz"
+  "version" "1.0.0"
+
 "slash@^3.0.0":
   "integrity" "sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q=="
   "resolved" "https://registry.npmjs.org/slash/-/slash-3.0.0.tgz"

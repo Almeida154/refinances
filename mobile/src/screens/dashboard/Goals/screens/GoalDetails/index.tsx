@@ -30,7 +30,7 @@ import { toDate } from '../../../../../helpers/manipularDatas';
 
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { StackActions } from '@react-navigation/native';
-import Header from '../components/Header';
+import Header from '../../../../../components/Header';
 
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 

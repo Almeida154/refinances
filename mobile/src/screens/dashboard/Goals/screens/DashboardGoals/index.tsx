@@ -8,7 +8,7 @@ import GoalsIcon from '../../../../../assets/images/svg/goalsIcon.svg';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { StackActions } from '@react-navigation/native'
-import Header from '../components/Header';
+import Header from '../../../../../components/Header';
 
 import {
   TextGoals,

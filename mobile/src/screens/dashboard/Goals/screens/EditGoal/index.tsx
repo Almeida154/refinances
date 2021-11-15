@@ -22,7 +22,7 @@ import NiceToast from '../../../../../components/NiceToast';
 
 import fonts from '../../../../../styles/fonts';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import Header from '../components/Header';
+import Header from '../../../../../components/Header';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';

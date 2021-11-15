@@ -32,10 +32,16 @@ import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
 import fonts from '../../../../../styles/fonts';
-import { StackActions } from 'react-navigation';
-import Header from '../components/Header';
+import { StackActions } from '@react-navigation/native';
+import Header from '../../../../../components/Header';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 
-const CreateGoal = () => {
+type PropsGoals = {
+  navigation: StackNavigationProp<GoalsStack, "CreateGoals">
+}
+
+const CreateGoal = ({navigation}: PropsGoals) => {
   const { handleAdicionarLancamento } = UseLancamentos();
   const [meta, setMeta] = useState('');
   const [valorMeta, setValorMeta] = useState('');
@@ -50,7 +56,6 @@ const CreateGoal = () => {
   const [dtPrevError, setdtPrevError] = useState<any | null>(null);
 
   const { handleAdicionarMeta } = UseMetas();
-  const { navigation } = UseDadosTemp();
 
   const dataAtual = new Date();
 
@@ -123,15 +128,17 @@ const CreateGoal = () => {
         props: {
           type: 'success',
           title: 'Foi!',
-          message: 'Meta cadastrada com sucesso!',
+          message: 'Meta cadastrada com sucesso',
         },
       });
       //navigation.dispatch(StackActions.replace('Main'));
 
+      //limpando os campos
       setMeta('');
       setValorMeta('');
       setInvestido('');
       setPrevisao(dataAtual);
+
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
     }
@@ -153,20 +160,21 @@ const CreateGoal = () => {
   };
 
   const backAction = () => {
+    console.debug('veio aqui')
     navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
 
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
-      <Header onBackButton={() => backAction()} title="" />
+      <Header backButton={backAction} title="" />
       <View style={styles.container}>
         <Text
           style={{
-            marginTop: '25%',
+            marginTop: '35%',
             marginBottom: '2%',
             fontSize: 20,
-            color: '#292929',
+            color: '#444',
             fontFamily: fonts.familyType.black,
           }}>
           Que bom que decidiu criar uma meta!
