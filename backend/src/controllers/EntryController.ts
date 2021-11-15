@@ -60,14 +60,28 @@ class LancamentoController {
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        const lancamentoRepository = getRepository(Category);
+        const lancamentoRepository = getRepository(Lancamento);
         
-        const lancamentos = await lancamentoRepository.createQueryBuilder("lancamento")
+        const lancamento: any = await lancamentoRepository.createQueryBuilder("lancamento")
             .leftJoinAndSelect("lancamento.categoryLancamento", "category")
+            .leftJoinAndSelect("lancamento.parcelasLancamento", "parcela")
+            .leftJoinAndSelect("parcela.contaParcela", "conta")
             .where("lancamento.id = :id", { id: request.params.id })
-            .getMany();
+            .orderBy("parcela.dataParcela", "ASC")
+            .getOne();
         
-        return response.send({ lancamentos });
+            let totalParcelas = 0
+
+            lancamento.parcelasLancamento.map((item, index) => {
+                totalParcelas += item.valorParcela
+                lancamento.parcelasLancamento[index].id = index
+            })
+
+            if(lancamento.parcelaBaseada == -1) {
+                lancamento.totalParcelas = totalParcelas                 
+            }
+
+        return response.send({ message: lancamento });
     }       
 
     async FindByUser(request: Request, response: Response, next: NextFunction) {

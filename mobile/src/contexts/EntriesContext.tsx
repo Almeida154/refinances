@@ -14,7 +14,7 @@ export type Lancamento = {
   tipoLancamento: string;
   lugarLancamento: string;
   parcelaBaseada: number;
-  categoryLancamento: Categoria;
+  categoryLancamento: Categoria | string;
   parcelasLancamento: Parcela[];
   essencial: boolean;
 };
@@ -33,6 +33,7 @@ interface LancamentoContextType {
     lancamentoProps: Lancamento,
     idUser: number,
   ): Promise<string>;
+  handleLoadOneLancamentos(idEntry: number): Promise<Lancamento | string>
 }
 
 const LancamentoContext = createContext<LancamentoContextType>(
@@ -68,28 +69,48 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     }
   }
 
+  async function handleLoadOneLancamentos(idEntry: number) {
+    try {     
+      const response = await api.get(`/entry/read/${idEntry}`);      
+      
+      if(response.data.error) {
+        return response.data.error
+      }
+
+      const readEntry: Lancamento = response.data.message    
+
+        readEntry.parcelasLancamento.map((item, index) => {        
+          readEntry.parcelasLancamento[index].dataParcela = new Date(item.dataParcela)
+        })
+
+      return readEntry
+
+    } catch (error) {
+      console.log('Deu um erro no handleLoadLancamentos: ', error);
+    }
+  }
+
   async function handleAdicionarLancamento(
     lancamento: Lancamento,
     idUser: number,
   ) {
     try {
-      setLoading(true);
+      
       const responseCategory = await api.post(
         `/category/findbyname/${idUser}`,
         {
           nomeCategoria: lancamento.categoryLancamento,
         },
-      );
-
+        );
+        
+        
       const response = await api.post('/entry/create', {
         descricaoLancamento: lancamento.descricaoLancamento,
         tipoLancamento: lancamento.tipoLancamento,
         parcelaBaseada: lancamento.parcelaBaseada,
         lugarLancamento: lancamento.lugarLancamento,
         categoryLancamento: responseCategory.data.idCategory,
-      });
-
-      console.log('response', response.data.message.id);
+      });      
 
       if (response.data.error) return response.data.error;
 
@@ -145,6 +166,7 @@ export const LancamentoProvider: React.FC = ({ children }) => {
   return (
     <LancamentoContext.Provider
       value={{
+        handleLoadOneLancamentos,
         handleEditLancamento,
         setLoading,
         loading,

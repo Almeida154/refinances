@@ -25,7 +25,6 @@ import { Parcela } from '../../../../../contexts/InstallmentContext'
 import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext'
 import { UseLancamentos, Lancamento } from '../../../../../contexts/EntriesContext'
 
-import PickerLugar from '../PickerLugar'
 import PickerCategoria from '../PickerCategoria'
 import PickerContas from '../PickerContas'
 import SelectionCategorias from '../SelectionCategories'
@@ -37,7 +36,7 @@ import { Text, Checkbox, FAB } from 'react-native-paper'
 import { Conta, UseContas } from '../../../../../contexts/AccountContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import ItemCardParcela, {CardParcela, CardParcelaProps} from '../CardParcela'
+import ItemParcela from '../CardParcela'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
 
@@ -45,65 +44,68 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     const {categorias} = UseCategories()
     const {contas} = UseContas()
     const {navigation} = UseDadosTemp()            
-    const {handleAdicionarLancamento, handleLoadLancamentos, handleEditLancamento} = UseLancamentos()    
+    const {handleAdicionarLancamento, handleEditLancamento} = UseLancamentos()    
     
+    console.debug('receiveEntry', receiveEntry)
 
     const [detalhes, setDetalhes] = useState(false)
     
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        
     
-    const [descricao, setDescricao] =  useState(receiveEntry?.lancamentoParcela.descricaoLancamento ? receiveEntry?.lancamentoParcela.descricaoLancamento : '')
-    const [dataPagamento, setDataPagamento] =  useState(receiveEntry?.dataParcela ? new Date(receiveEntry.dataParcela) : (new Date(Date.now())) )    
+    const [descricao, setDescricao] =  useState(receiveEntry?.descricaoLancamento ? receiveEntry?.descricaoLancamento : '')
+    const [dataPagamento, setDataPagamento] =  useState(receiveEntry?.parcelasLancamento[0].dataParcela ? new Date(receiveEntry.parcelasLancamento[0].dataParcela) : (new Date(Date.now())) )    
     const [status, setStatus] = useState(true)
-    const [mensal, setMensal] = useState(receiveEntry?.lancamentoParcela.parcelaBaseada == -1 ? false : true)
+    const [mensal, setMensal] = useState(!receiveEntry ? false : receiveEntry?.parcelaBaseada == -1 ? false : true)
     
     const [selectedCategoria, setSelectedCategoria] = useState<Categoria | null>(null)    
         
     useEffect(() => {
-        if(receiveEntry?.lancamentoParcela.categoryLancamento && typeof receiveEntry?.lancamentoParcela.categoryLancamento != 'string') {
-            setSelectedCategoria(receiveEntry?.lancamentoParcela.categoryLancamento)        
-            console.log(receiveEntry?.lancamentoParcela.categoryLancamento)                
+        if(receiveEntry?.categoryLancamento && typeof receiveEntry?.categoryLancamento != 'string') {
+            setSelectedCategoria(receiveEntry?.categoryLancamento)        
+            console.log(receiveEntry?.categoryLancamento)                
             }
     }, [])
 
-    const [selectedConta, setSelectedConta] = useState<Conta | null>(receiveEntry?.contaParcela ? receiveEntry?.contaParcela : null)    
+    const [selectedConta, setSelectedConta] = useState<Conta | null>(receiveEntry?.parcelasLancamento[0].contaParcela ? receiveEntry?.parcelasLancamento[0].contaParcela : null)    
 
-    const [parcelas, setParcelas] =  useState('1')    
+    const [parcelas, setParcelas] =  useState(receiveEntry?.parcelasLancamento ? String(receiveEntry.parcelasLancamento.length) : '1')    
     
-    const [dataParcelas, setDataParcelas] = useState<CardParcela[]>([
+    const [dataParcelas, setDataParcelas] = useState<Parcela[]>(receiveEntry?.parcelasLancamento ? receiveEntry.parcelasLancamento : [
         {
             id: 0,
-            conta: selectedConta,
-            valor: valor == '' ? 0 : parseFloat(valor),
-            data: dataPagamento.toLocaleDateString(),
-            status: status
+            contaParcela: selectedConta,
+            valorParcela: valor == '' ? 0 : parseFloat(valor),
+            dataParcela: dataPagamento,
+            statusParcela: status,
+            lancamentoParcela: -1
         },
     ])
     
+    console.log("dataParcelas", dataParcelas)
     
-    const changeParcela = (text: string, date: string, newDataParcelas: CardParcela[]) => {
+    const changeParcela = (text: string, date: string, newDataParcelas: Parcela[]) => {
         setParcelas(text)
         
         if (text == '') return
     
-        let aux: CardParcela[] = []
+        let aux: Parcela[] = []
         const num = parseInt(text)            
         
         let valorParcelaDividido =parseFloat((parseFloat(valor) / num).toFixed(2))
 
         if (num < newDataParcelas.length) {
             for (var i = 0; i < num; i++) {
-                newDataParcelas[i].valor = valorParcelaDividido
-                newDataParcelas[i].data = i == 0 ? date : addMonths(toDate(date), 1).toLocaleDateString()
+                newDataParcelas[i].valorParcela = valorParcelaDividido
+                newDataParcelas[i].dataParcela = i == 0 ? toDate(date) : addMonths(toDate(date), 1)
 
                 aux.push(newDataParcelas[i])
             }
         } else if (num > newDataParcelas.length) {            
             for (var i = 0; i < num; i++) {
-                const adicaoDeUmMes = i == 0 ? date : addMonths(toDate(aux[i-1].data), 1).toLocaleDateString()
+                const adicaoDeUmMes = i == 0 ? toDate(date) : addMonths(aux[i-1].dataParcela, 1)
                 if(i < newDataParcelas.length) {
-                    newDataParcelas[i].valor = valorParcelaDividido
-                    newDataParcelas[i].data = adicaoDeUmMes
+                    newDataParcelas[i].valorParcela = valorParcelaDividido
+                    newDataParcelas[i].dataParcela = adicaoDeUmMes
                     
                     console.log("newDataParcelas[0]", newDataParcelas[i])
                     aux.push(newDataParcelas[i])
@@ -111,10 +113,11 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                 } else {
                     aux.push({
                         id: i,
-                        conta: selectedConta,
-                        data: adicaoDeUmMes,
-                        valor: isNaN(valorParcelaDividido) ? 0 : valorParcelaDividido ,
-                        status: status
+                        contaParcela: selectedConta,
+                        dataParcela: adicaoDeUmMes,
+                        valorParcela: isNaN(valorParcelaDividido) ? 0 : valorParcelaDividido ,
+                        statusParcela: status,
+                        lancamentoParcela: -1
                     })                                       
                 } 
 
@@ -157,12 +160,12 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         } else {
             dataParcelas.map((item, index) => {
                 newParcelas.push({
-                    id: receiveEntry ? receiveEntry.id : -1 ,
+                    id: -1 ,
                     lancamentoParcela: -1,
-                    contaParcela: item.conta,
-                    dataParcela: toDate(item.data),
-                    valorParcela: item.valor,
-                    statusParcela: item.status                    
+                    contaParcela: item.contaParcela,
+                    dataParcela:item.dataParcela,
+                    valorParcela: item.valorParcela,
+                    statusParcela: item.statusParcela                    
                 })
             })  
 
@@ -207,10 +210,11 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                 setDataParcelas([
                     {
                         id: 0,
-                        conta: selectedConta,
-                        valor: valor == '' ? 0 : parseFloat(valor),
-                        data: dataPagamento.toLocaleDateString(),
-                        status: status
+                        contaParcela: selectedConta,
+                        valorParcela: valor == '' ? 0 : parseFloat(valor),
+                        dataParcela: new Date(dataPagamento),
+                        statusParcela: status,
+                        lancamentoParcela: -1
                     },
                 ])
             }
@@ -251,7 +255,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         const valorParcela = (parseFloat(valor) / dataParcelas.length).toFixed(2)
 
         parcelas.map((item, index) => {
-            parcelas[index].valor = parseFloat(valorParcela)
+            parcelas[index].valorParcela = parseFloat(valorParcela)
         })
 
         setDataParcelas(parcelas)
@@ -261,10 +265,10 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         const newStatus = status ? false : true
         setStatus(newStatus)
 
-        const parcelas: CardParcela[] = []        
+        const parcelas: Parcela[] = []        
 
         dataParcelas.map((item, index) => {
-            item.status = newStatus
+            item.statusParcela = newStatus
             
             parcelas.push(item)            
         })
@@ -281,13 +285,13 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     }
 
     function changeDate(date: string){
-        const parcelas: CardParcela[] = []        
+        const parcelas: Parcela[] = []        
 
         let proximoMes = date
 
         // let auxDatas: string[] = []
         dataParcelas.map((item, index) => {
-            item.data = proximoMes
+            item.dataParcela = toDate(proximoMes)
             
             parcelas.push(item)
             
@@ -303,10 +307,10 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     }
 
     function changeAccount(conta: Conta | null){
-        const parcelas: CardParcela[] = []        
+        const parcelas: Parcela[] = []        
 
         dataParcelas.map((item, index) => {
-            item.conta = conta
+            item.contaParcela = conta
             
             parcelas.push(item)        
         })
@@ -414,7 +418,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                     style={{display: mensal ? 'none' : 'flex' }}>
                     {<FlatList 
                         data={dataParcelas}
-                        renderItem={({item}) => <ItemCardParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} tipoLancamento={tipoLancamento}/>}
+                        renderItem={({item}) => <ItemParcela item={item} dataParcelas={dataParcelas} setDataParcelas={setDataParcelas} tipoLancamento={tipoLancamento}/>}
                         horizontal
                         keyExtractor={(item, index) => String(index)} 
                         extraData={dataParcelas}/>}
