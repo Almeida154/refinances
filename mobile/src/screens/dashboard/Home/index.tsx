@@ -8,9 +8,6 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
-  StatusBar,
-  FlatList,
-  TouchableHighlight,
   Image,
   ActivityIndicator,
 } from 'react-native';
@@ -176,6 +173,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderBottomEndRadius: 15,
+    borderBottomStartRadius: 15
   },
   iconProfile: {
     width: 70,

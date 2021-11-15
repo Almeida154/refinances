@@ -62,10 +62,10 @@ const PickerContas: React.FC<PropsPickerContas> = ({
 
   return (
     <View style={styles.containerPicker}>
-      <TouchableOpacity onPress={open}>
         <InputText
           onClear={() => {}}
           showClearIcon={false}
+          onPress={open}
           label={label ? label : 'Conta'}
           value={conta == null ? '' : conta.descricao}
           placeholder="Selecione uma conta"
@@ -73,7 +73,6 @@ const PickerContas: React.FC<PropsPickerContas> = ({
           colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
           editable={false}
         />
-      </TouchableOpacity>
       <Picker
         itemStyle={styles.pickerItem}
         style={styles.picker}

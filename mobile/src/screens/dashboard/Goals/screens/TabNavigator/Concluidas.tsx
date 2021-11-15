@@ -4,7 +4,7 @@ import {
   View,
 } from 'react-native';
 
-import {GoalsStack} from '../../../../../@types/RootStackParamApp'
+import { GoalsStack } from '../../../../../@types/RootStackParamApp'
 import { StackNavigationProp } from '@react-navigation/stack'
 
 import {UseMetas} from '../../../../../contexts/GoalsContext'
@@ -122,7 +122,7 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
 
           <Button
             title="Criar nova meta"
-            backgroundColor="#ee4266"
+            backgroundColor="#ccc"
             onPress={() => {navigation.dispatch(StackActions.replace('CreateGoals'))}}>
           </Button>
         </View>

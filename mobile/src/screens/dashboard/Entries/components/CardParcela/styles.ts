@@ -1,38 +1,36 @@
 import styled from 'styled-components/native'
 
-
+import {colors, fonts, metrics} from '../../../../../styles'
 
 export const ContainerCardParcela = styled.SafeAreaView`
     width: 200px;
-    height: 195px;
+    height: 200px;
     border-radius: 20px;
-    padding: 10px;    
-
-    border-width: 2px;
+    padding: 15px;    
+    border-width: 1px;
     margin-right: 20px;    
 `
 export const TituloCardParcela = styled.Text`
-    font-family: "Nunito";
-    font-weight: bold;
+    font-size: 17px;
+    font-family: ${fonts.familyType.bold};
+    color: ${colors.jet};
 `
 export const LabelCardParcela = styled.Text`
 
 `
 
 export const InputCardParcela = styled.TextInput`
-    font-size: 20px;
-    color: black;
+    font-size: 17px;
+    color: ${colors.jet};
 `
 
 export const InputControlStatus = styled.View`
     display: flex;
-    
     flex-direction: row;
-
     align-items: center;
 `
 
 export const LabelStatus = styled.Text`
     font-size: 17px;
-    font-weight: bold;
+    font-family: ${fonts.familyType.bold};
 `

@@ -40,7 +40,7 @@ export const SectionValues = styled.View`
 `
 
 export const LabelAccount = styled.Text`
-    fontSize: ${`${fonts.size.smaller}px`};
+    fontSize: ${`${fonts.size.small}px`};
     font-family: ${fonts.familyType.regular};
     color: #999
     

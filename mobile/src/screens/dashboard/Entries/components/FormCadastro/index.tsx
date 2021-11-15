@@ -3,7 +3,9 @@ import { TouchableHighlight, FlatList, View, ToastAndroid } from 'react-native'
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {StackActions} from '@react-navigation/native'
+import { StackActions } from '@react-navigation/native'
+
+import Icon from 'react-native-vector-icons/AntDesign';
 
 import InputText from '../../../../../components/InputText'
 import {
@@ -13,7 +15,6 @@ import {
     TextInput,
     SectionDetalhes,
     TextDetalhes,
-    ButtonDetalhes,  
     SectionCardsParcelas,
     InputControlCheckBox,    
     ContainerDetalhes,
@@ -333,7 +334,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                     label="Descrição"
                     value={descricao}
                     onChangeText={setDescricao}
-                    placeholder="Mercadinho"
+                    placeholder={tipoLancamento == 'despesa' ? 'Mercadinho' : 'Recebimento empréstimo'}
                     placeholderTextColor={"#bbb"}
                     colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}></InputText>
             </InputControl>
@@ -347,16 +348,16 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
             </InputControl>
 
             <InputControl>
-            <TouchableOpacity onPress={showDatePicker}>
                 <InputText 
                     label={tipoLancamento == 'despesa' ? 'Data de Pagamento' : 'Data de Recebimento'}
                     onClear={() => {}}
                     showClearIcon={false}
+                    editable={false}
+                    onPress={showDatePicker}
                     value={dataPagamento.toLocaleDateString()}
                     placeholder={tipoLancamento == 'despesa' ? 'Data de Pagamento do lançamento' : 'Data de Recebimento do lançamento'}
                     colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
-                />  
-            </TouchableOpacity>              
+                />               
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="date"                
@@ -367,9 +368,15 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
             </InputControl>   
 
             <SectionDetalhes>
-                <ButtonDetalhes onPress={DefinirDetalhes}>
-                    <TextDetalhes>{detalhes ? 'Menos' : 'Mais'} detalhes</TextDetalhes>
-                </ButtonDetalhes>
+                    
+                <Icon name={detalhes ? 'caretup' : 'caretdown'} 
+                    size={25}
+                    color="#525252"
+                    onPress={DefinirDetalhes}
+                    style={{
+                }}/>
+
+                <TextDetalhes>{detalhes ? 'Menos' : 'Mais'} detalhes</TextDetalhes>
             </SectionDetalhes>
 
             

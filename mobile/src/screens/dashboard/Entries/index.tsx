@@ -68,7 +68,7 @@ const FormLancamento = ({route}: any) => {
                             <LabelCifrao>R$</LabelCifrao>    
                                 <TextInputValue
                                     keyboardType='numeric'
-                                    placeholder="00,00"
+                                    placeholder="0,00"
                                     placeholderTextColor="#fff"
                                     value={valor}
                                     onChangeText={setValor}                                

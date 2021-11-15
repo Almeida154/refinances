@@ -126,7 +126,12 @@ const CreateGoal = () => {
           message: 'Meta cadastrada com sucesso!',
         },
       });
-      navigation.dispatch(StackActions.replace('Main'));
+      //navigation.dispatch(StackActions.replace('Main'));
+
+      setMeta('');
+      setValorMeta('');
+      setInvestido('');
+      setPrevisao(dataAtual);
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
     }
@@ -241,7 +246,8 @@ const CreateGoal = () => {
           placeholder={previsao.toLocaleDateString()}
           error={dtPrevError}
           showClearIcon={previsao != dataAtual}
-          onPressIn={showDatePicker}
+          editable={false}
+          onPress={showDatePicker}
           onClear={() => {
             setPrevisao(dataAtual);
             setdtPrevError(null);
@@ -259,7 +265,7 @@ const CreateGoal = () => {
           title="Criar"
           backgroundColor="#CCC"
           color="#444"
-          lastOne={true}
+          style={{marginTop: '20%'}}
         />
       </View>
       {/* @ts-ignore */}

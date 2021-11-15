@@ -22,7 +22,7 @@ export const Subtitle = styled.Text `
 export const Goal = styled.View`
     position: relative;
     backgroundColor: #fafafa;
-    marginBottom: 30px;
+    marginBottom: 10px;
     padding: 20px;
     borderRadius: 10px;
 `

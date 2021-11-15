@@ -4,7 +4,6 @@ import fonts from '../../../../../styles/fonts'
 export const Container = styled.View`
     display: flex;
     align-items: center;
-    margin-top: 15px
     background-color: white;
     width: 90%;
     border-radius: 15px;

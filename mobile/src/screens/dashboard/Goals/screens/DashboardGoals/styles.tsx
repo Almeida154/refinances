@@ -19,6 +19,7 @@ export const TextGoals = styled.Text`
 
 export const Container = styled.View`
     padding: 10%;
+    padding-top: 15%;
     backgroundColor: #fff;
     height: 100%;
 `

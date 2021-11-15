@@ -144,19 +144,17 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
     return (
         <Container>
 
-            <TouchableOpacity onPress={onOpen}>
                 <InputText 
                     onClear={() => {}}
                     showClearIcon={false}
                     label="Categoria"
+                    onPress={onOpen}
                     value={categoria ? categoria.nomeCategoria : ''}
-                    placeholder="Selecione uma categoria para seu lançamento"
+                    placeholder="Selecione uma categoria"
                     placeholderTextColor={"#bbb"}
                     colorLabel={tipoCategoria == 'despesa' ? '#EE4266' : '#6CB760'} 
                     editable={false}
                 />
-
-            </TouchableOpacity>
 
             <CustomPicker 
                 ref={PickerRef}

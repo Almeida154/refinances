@@ -1,5 +1,6 @@
 import { StatusBar } from 'react-native';
 import styled from 'styled-components/native';
+import {colors, fonts, metrics} from '../../../styles'
 
 export const Container = styled.View`
     display: flex;
@@ -14,18 +15,18 @@ export const Title = styled.Text`
     font-size: 40px;
     color: #fff;
     padding: 20px;
-    font-weight: bold;    
+    font-family: ${fonts.familyType.semiBold};
 `
 
 export const TextButton = styled.Text`
     color: #fff;
-    font-weight: bold;    
+    font-weight: bold;
 `
 
 export const Header = styled.View`
     display: flex;
     width: 100%;    
-    padding-top: 250px;
+    padding-top: 150px;
 `
 
 
@@ -46,29 +47,26 @@ export const Buttons = styled.TouchableOpacity`
 
 export const InputControlValue = styled.View`
     display: flex;
-    
     flex-direction: row;
-      
-
-    
 `
 
 export const AlinhaParaDireita = styled.View`
     justify-content: space-between; 
     flex-direction: row;
-
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 10px;
 `
 
 export const LabelCifrao = styled.Text`
     font-size: 20px;
     color: #fff;
+    font-family: ${fonts.familyType.semiBold};
 `
 export const TextInputValue = styled.TextInput`
-    
-    height: 80px;    
+    height: 80px;
     opacity: 0.7;
-    font-size: 50px; 
+    fontSize: ${`${fonts.size.ultra}px`}
+    font-family: ${fonts.familyType.semiBold};
     color: #fff;
+    margin: 0px
 `

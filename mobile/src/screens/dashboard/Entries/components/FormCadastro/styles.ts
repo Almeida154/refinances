@@ -49,41 +49,38 @@ export const TextInputValor = styled.TextInput`
 
 export const Label = styled.Text`
     font-size: 17px;
-    font-weight: bold;
+    font-family: ${fonts.familyType.semiBold};
 `
 
 export const SectionDetalhes = styled.View`
-    margin-top: 20px;
-    margin-bottom: 20px;
     width: 90%;
-
     align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex: 1;
+    margin: 20px;
 `
 
 export const TextDetalhes = styled.Text`
-
-`
-
-
-export const ButtonDetalhes = styled.TouchableHighlight`
-
+    margin-left: 10px;
+    font-size: 17px;
+    font-family: ${fonts.familyType.semiBold};
 `
 
 export const SectionCardsParcelas = styled.View`
     margin-top: 20px;
-    height: 500px;
+    height: 250px;
 `
 
 export const ContainerDetalhes = styled.View`
     align-items: flex-start;
-
     width: 90%;
 
 `
 
 export const DetalhesMensal = styled.Text`   
     font-family: ${fonts.familyType.regular};
-
     margin-left: 10px;
     margin-right: 10px;
 `
