@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { StatusBar, BackHandler, ToastAndroid, View } from 'react-native';
+import { StatusBar, BackHandler, View } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
@@ -14,7 +14,6 @@ import NewIncomeCategory from '../NewIncomeCategory';
 import { Container } from './styles';
 import { colors, fonts } from '../../../../../styles';
 import Header from '../../../components/Header';
-import { UseAuth } from '../../../../../contexts/AuthContext';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import global from '../../../../../global';
 
@@ -27,8 +26,6 @@ export type PropsNavigation = {
 
 const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
   const [routeName, setRouteName] = useState<string>();
-
-  const { showNiceToast } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backNavAction);
@@ -92,15 +89,15 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
               );
 
               if (routeName != clickedRoute) {
-                Toast.show({
-                  type: 'niceToast',
-                  position: 'top',
-                  props: {
-                    type: 'warning',
-                    title: 'Ei',
-                    message: 'Já fez isso!',
-                  },
-                });
+                // Toast.show({
+                //   type: 'niceToast',
+                //   position: 'top',
+                //   props: {
+                //     type: 'warning',
+                //     title: 'Ei!',
+                //     message: 'Já fez isso antes!',
+                //   },
+                // });
               }
             },
           }}
@@ -118,15 +115,15 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
               );
 
               if (routeName != clickedRoute) {
-                Toast.show({
-                  type: 'niceToast',
-                  position: 'top',
-                  props: {
-                    type: 'warning',
-                    title: 'Ei!',
-                    message: 'Não pode fazer isso ainda!',
-                  },
-                });
+                // Toast.show({
+                //   type: 'niceToast',
+                //   position: 'top',
+                //   props: {
+                //     type: 'warning',
+                //     title: 'Ei!',
+                //     message: 'Não pode fazer isso ainda!',
+                //   },
+                // });
               }
             },
           }}
@@ -135,11 +132,11 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
         />
       </Tab.Navigator>
 
-      <Toast
+      {/* <Toast
         ref={ref => Toast.setRef(ref)}
         topOffset={0}
         config={global.TOAST_CONFIG}
-      />
+      /> */}
     </Container>
   );
 };

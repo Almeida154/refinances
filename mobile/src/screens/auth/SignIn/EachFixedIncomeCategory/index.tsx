@@ -39,8 +39,11 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.incomeTagsCount;
+    console.log('--------- CATEGORY ---------');
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
+    console.debug(`Size: ${setupUser.entries.length}`);
+
     showNiceToast('fake', 'Oops!', null, 500);
     populateCategories();
 
@@ -75,26 +78,37 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
     clearSelectedCategories();
 
+    // Caso já tenha passado pela tela, recupera a categoria aqui
+    var entryIndex = setupUser.entries.findIndex(
+      entry =>
+        entry.descricaoLancamento ==
+        setupUser.incomeTags[setupUser.incomeTagsCount],
+    );
+    if (entryIndex != -1) {
+      var entry = setupUser.entries[entryIndex];
+      if (entry.categoryLancamento != undefined) {
+        console.log('a entry da eachcategory: ', entry);
+        const selectedI = ctgrs.findIndex(
+          category =>
+            //@ts-ignore
+            category.nomeCategoria == entry?.categoryLancamento?.nomeCategoria,
+        );
+        ctgrs[selectedI].isSelected = true;
+        setSelectedCategory(ctgrs[selectedI]);
+      }
+    }
+
     if (route.params?.createdCategoryName) {
+      ctgrs.map(category => {
+        category.isSelected = false;
+        return category;
+      });
+
       const lastCreatedI = ctgrs.findIndex(
         category => category.nomeCategoria == route.params?.createdCategoryName,
       );
       ctgrs[lastCreatedI].isSelected = true;
       setSelectedCategory(ctgrs[lastCreatedI]);
-    }
-
-    let i = setupUser.incomeTagsCount + setupUser.expenseTags.length;
-
-    if (setupUser.entries[i] != undefined) {
-      if (setupUser.entries[i].categoryLancamento != undefined) {
-        const selectedI = ctgrs.findIndex(
-          category =>
-            category.nomeCategoria ==
-            setupUser.entries[i].categoryLancamento.nomeCategoria,
-        );
-        ctgrs[selectedI].isSelected = true;
-        setSelectedCategory(ctgrs[selectedI]);
-      }
     }
 
     setTimeout(() => setCategories(ctgrs), 400); // Efeito melhor

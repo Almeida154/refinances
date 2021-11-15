@@ -6,7 +6,7 @@ import { UseAuth, User } from '../../../contexts/AuthContext';
 import RootStackParamAuth from '../../../@types/RootStackParamAuth';
 
 // Styles
-import { colors, metrics } from '../../../styles';
+import { colors, fonts, metrics } from '../../../styles';
 import {
   Container,
   Header,
@@ -26,6 +26,7 @@ import { TextInput } from 'react-native';
 // Icons
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import LoginIcon from '../../../assets/images/svg/login-icon.svg';
+import hexToRGB from '../../../helpers/hexToRgba';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Login'>;
@@ -46,9 +47,9 @@ const Entrar = ({ navigation }: PropsNavigation) => {
     const logUser = {} as User;
     logUser.emailUsuario = email;
     logUser.senhaUsuario = password;
-    
+
     const response = await handleLogin(logUser);
-    
+
     console.debug('loginuser | response', response);
 
     if (!response.ok) {
@@ -149,7 +150,16 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 setPasswordError(null);
                 setPassword(txt);
               }}
+              lastOne
             />
+            <TextForgotPassword
+              style={{ color: hexToRGB(colors.davysGrey, 0.3) }}
+              onPress={() => {
+                navigation.navigate('PasswordRecovery');
+                hideNiceToast();
+              }}>
+              Esqueceu a senha?
+            </TextForgotPassword>
 
             <LinearGradient
               style={{ borderRadius: metrics.inputText.radius }}
@@ -166,19 +176,16 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 lastOne
               />
             </LinearGradient>
-            <TextForgotPassword
-              onPress={() => {
-                navigation.navigate('PasswordRecovery');
-                hideNiceToast();
-              }}>
-              Esqueci minha senha
-            </TextForgotPassword>
-            <TextNoAccount
-              onPress={() => {
-                navigation.dispatch(StackActions.replace('Name'));
-                hideNiceToast();
-              }}>
-              Ainda não tenho conta
+            <TextNoAccount style={{ color: hexToRGB(colors.davysGrey, 0.3) }}>
+              Não tem uma conta?{' '}
+              <TextNoAccount
+                style={{ color: colors.redCrayola }}
+                onPress={() => {
+                  navigation.dispatch(StackActions.replace('Name'));
+                  hideNiceToast();
+                }}>
+                Cadastrar
+              </TextNoAccount>
             </TextNoAccount>
           </Form>
         </Content>

@@ -3,6 +3,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { BackHandler } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
+import { Lancamento } from '../../../../contexts/EntriesContext';
+
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
@@ -80,7 +82,7 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
     const newSetupProps = setupUser;
     newSetupProps.expenseTagsCount--;
-    newSetupProps.incomeTagsCount = 0;
+    newSetupProps.incomeTagsCount--;
     updateSetupUserProps(newSetupProps);
     return true;
   };
@@ -96,6 +98,46 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
     hideNiceToast();
 
     const newSetupProps = setupUser;
+
+    // Reorganizando a entries com a nova ordem
+    if (setupUser.incomeTags) {
+      if (
+        JSON.stringify(selectedTags) != JSON.stringify(setupUser.incomeTags)
+      ) {
+        var oldExpenseEntries = setupUser.entries.filter(
+          (entry, index) => index < setupUser.expenseTags.length,
+        );
+
+        var oldIncomeEntries = setupUser.entries.filter(
+          (entry, index) => index >= setupUser.expenseTags.length,
+        );
+
+        console.log('-----ATUAL-----');
+        setupUser.entries.map(entry => console.log(entry.descricaoLancamento));
+
+        console.log('-----ANTIGO INCOME-----');
+        oldIncomeEntries.map(entry => console.log(entry.descricaoLancamento));
+
+        var newEntries = [] as Lancamento[];
+
+        for (let i = 0; i < selectedTags.length; i++) {
+          for (let j = 0; j < oldIncomeEntries.length; j++) {
+            if (selectedTags[i] == oldIncomeEntries[j].descricaoLancamento)
+              newEntries[i] = oldIncomeEntries[j];
+          }
+        }
+
+        setupUser.entries = [...oldExpenseEntries, ...newEntries];
+        updateSetupUserProps(newSetupProps);
+
+        console.log('-----NOVO VETOR DOS CRIA-----');
+        for (let i = 0; i < setupUser.entries.length; i++)
+          if (setupUser.entries[i] != undefined)
+            console.log(i + ' - ' + setupUser.entries[i].descricaoLancamento);
+          else console.log(i + ' - undefined');
+      }
+    }
+
     newSetupProps.incomeTags = selectedTags;
     newSetupProps.incomeTagsCount = 0;
     updateSetupUserProps(newSetupProps);

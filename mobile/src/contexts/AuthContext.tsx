@@ -25,7 +25,6 @@ export interface SetupUser {
   expenseTagsCount: number;
   incomeTags: string[];
   incomeTagsCount: number;
-  //tagsIterator: number;
 
   createdCategories: Categoria[];
   allCategories: Categoria[];

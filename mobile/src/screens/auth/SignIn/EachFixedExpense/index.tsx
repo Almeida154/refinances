@@ -40,13 +40,10 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.expenseTagsCount;
-    console.log('--------- EXPENSE ---------');
+    console.log('---------EXPENSE---------');
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
-    if (setupUser.entries) {
-      console.debug(`Entries: ${JSON.stringify(setupUser.entries)}`);
-      console.debug(`Size: ${setupUser.entries.length}`);
-    }
+    if (setupUser.entries) console.debug(`Size: ${setupUser.entries.length}`);
 
     showNiceToast('fake', 'Oops!', null, 500);
 

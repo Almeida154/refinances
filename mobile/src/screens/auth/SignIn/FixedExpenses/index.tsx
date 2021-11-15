@@ -4,6 +4,7 @@ import { BackHandler } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { Lancamento } from '../../../../contexts/EntriesContext';
+
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
@@ -94,22 +95,24 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
     const newSetupProps = setupUser;
 
-    // Reorganizando a entries com a possível nova ordem
+    // Reorganizando a entries com a nova ordem
     if (setupUser.entries) {
-      if (selectedTags.length != setupUser.expenseTags.length) {
+      if (
+        JSON.stringify(selectedTags) != JSON.stringify(setupUser.expenseTags)
+      ) {
         var oldExpenseEntries = setupUser.entries.filter(
-          (entry, index) => index <= setupUser.expenseTags.length,
+          (entry, index) => index < setupUser.expenseTags.length,
         );
-
-        console.log('ATUAL:');
-        setupUser.entries.map(entry => console.log(entry.descricaoLancamento));
-
-        console.log('OLDASSO EXPENSE:');
-        setupUser.entries.map(entry => console.log(entry.descricaoLancamento));
 
         var oldIncomeEntries = setupUser.entries.filter(
-          (entry, index) => index > setupUser.expenseTags.length,
+          (entry, index) => index >= setupUser.expenseTags.length,
         );
+
+        console.log('-----ATUAL-----');
+        setupUser.entries.map(entry => console.log(entry.descricaoLancamento));
+
+        console.log('-----ANTIGO EXPENSE-----');
+        oldExpenseEntries.map(entry => console.log(entry.descricaoLancamento));
 
         var newEntries = [] as Lancamento[];
 
@@ -120,14 +123,14 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
           }
         }
 
-        // console.log('-----NOVO VETOR DOS CRIA-----');
-        // for (let i = 0; i < newEntries.length; i++)
-        //   if (newEntries[i] != undefined)
-        //     console.log(i + ' - ' + newEntries[i].descricaoLancamento);
-        //   else console.log(i + ' - undefined');
-
-        setupUser.entries = newEntries;
+        setupUser.entries = [...newEntries, ...oldIncomeEntries];
         updateSetupUserProps(newSetupProps);
+
+        console.log('-----NOVO VETOR DOS CRIA-----');
+        for (let i = 0; i < setupUser.entries.length; i++)
+          if (setupUser.entries[i] != undefined)
+            console.log(i + ' - ' + setupUser.entries[i].descricaoLancamento);
+          else console.log(i + ' - undefined');
       }
     }
 

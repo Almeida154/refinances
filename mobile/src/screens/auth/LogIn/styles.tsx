@@ -40,18 +40,17 @@ export const Title = styled.Text`
 `;
 
 export const TextForgotPassword = styled.Text`
-  text-align: center;
+  text-align: right;
   font-family: ${fonts.familyType.bold};
-  font-size: ${`${fonts.size.medium}px`};
-  color: ${colors.platinum};
-  margin-top: ${`${heightPixel(120)}px`};
+  font-size: ${`${fonts.size.small}px`};
+  color: ${colors.davysGrey};
+  margin: ${`${heightPixel(48)}px`} 0;
 `;
 
 export const TextNoAccount = styled.Text`
   text-align: center;
   font-family: ${fonts.familyType.bold};
-  font-size: ${`${fonts.size.medium}px`};
+  font-size: ${`${fonts.size.small}px`};
   color: ${colors.davysGrey};
-  margin-top: ${`${heightPixel(20)}px`};
-  opacity: 0.3;
+  margin-top: ${`${heightPixel(48 * 2)}px`};
 `;

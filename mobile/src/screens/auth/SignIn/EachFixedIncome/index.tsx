@@ -9,13 +9,7 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
-import {
-  Container,
-  Content,
-  PrefixReaisSymbol,
-  Writting,
-  Error,
-} from './styles';
+import { Container, Content, PrefixReaisSymbol, Writting } from './styles';
 import { colors, fonts } from '../../../../styles';
 
 // Icon
@@ -38,8 +32,6 @@ export type PropsNavigation = {
 const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   const [incomeAmount, setIncomeAmount] = useState<number | null>(0);
   const [formattedIncomeAmount, setFormattedIncomeAmount] = useState('');
-  const [hasError, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
     UseAuth();
@@ -48,19 +40,29 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.incomeTagsCount;
-    console.log('----------------');
+    console.log('---------INCOME---------');
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
+    console.debug(`Size: ${setupUser.entries.length}`);
+
     showNiceToast('fake', 'Oops!', null, 500);
 
-    var entry = [0];
-    entry = setupUser.entries.map(entry =>
-      entry.descricaoLancamento ===
-      setupUser.incomeTags[setupUser.incomeTagsCount]
-        ? entry.parcelasLancamento[0].valorParcela
-        : 0,
-    );
-    setIncomeAmount(entry[0]);
+    // Caso já tenha passado pela tela, recupera a income aqui
+    if (
+      setupUser.entries[
+        setupUser.incomeTagsCount + setupUser.expenseTags.length
+      ] != undefined
+    ) {
+      var entryIndex = setupUser.entries.findIndex(
+        entry =>
+          entry.descricaoLancamento ==
+          setupUser.incomeTags[setupUser.incomeTagsCount],
+      );
+      if (entryIndex != -1) {
+        var entry = setupUser.entries[entryIndex];
+        setIncomeAmount(entry.parcelasLancamento[0].valorParcela);
+      }
+    }
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
@@ -80,11 +82,11 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   };
 
   async function next() {
-    const expenseAmount = Number(
+    const incomeAmount = Number(
       formattedIncomeAmount.replace(/[.]+/g, '').replace(',', '.'),
     );
 
-    if (expenseAmount < 1) {
+    if (incomeAmount < 1) {
       showNiceToast(
         'error',
         'Impossível!',
@@ -96,18 +98,23 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     hideNiceToast();
 
     const entry = {
-      descricaoLancamento:
-        setupUser.incomeTags[
-          setupUser.incomeTagsCount + setupUser.expenseTags.length
-        ],
+      descricaoLancamento: setupUser.incomeTags[setupUser.incomeTagsCount],
       lugarLancamento: 'extrato',
       tipoLancamento: 'receita',
       parcelasLancamento: [
         {
-          valorParcela: expenseAmount,
+          valorParcela: incomeAmount,
         } as Parcela,
       ],
       essencial: true,
+      categoryLancamento:
+        setupUser.entries[
+          setupUser.incomeTagsCount + setupUser.expenseTags.length
+        ] != undefined
+          ? setupUser.entries[
+              setupUser.incomeTagsCount + setupUser.expenseTags.length
+            ].categoryLancamento
+          : undefined,
     } as Lancamento;
 
     const newSetupProps = setupUser;
@@ -119,8 +126,6 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
       : (newSetupProps.entries = [entry]);
 
     updateSetupUserProps(newSetupProps);
-
-    console.debug(`Size: ${setupUser.entries.length}`);
 
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
   }
@@ -160,7 +165,6 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
             selectionColor={colors.davysGrey}
             onChangeText={formattedValue => {
               setFormattedIncomeAmount(formattedValue);
-              setError(false);
               if (incomeAmount == null) setIncomeAmount(0.0);
             }}
             ref={inputRef}
@@ -176,13 +180,11 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
               size={32}
               color={`rgba(82, 82, 82, .08)`}
               onPress={() => {
-                setError(false);
                 setIncomeAmount(0.0);
               }}
             />
           )}
         </Writting>
-        {hasError && <Error>{errorMessage}</Error>}
       </Content>
 
       <BottomNavigation

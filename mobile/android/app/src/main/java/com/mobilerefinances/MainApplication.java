@@ -1,6 +1,7 @@
 package com.mobilerefinances;
 
 //import com.github.wuxudong.rncharts.MPAndroidChartPackage;
+//import androidx.multidex.MultiDexApplication; // <-- ADD THIS IMPORT
 
 import com.facebook.react.bridge.JSIModulePackage; // <- add
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
@@ -9,6 +10,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.horcrux.svg.SvgPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactInstanceManager;

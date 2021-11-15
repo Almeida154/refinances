@@ -38,10 +38,9 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
   useEffect(() => {
     let iterator = setupUser.expenseTagsCount;
-    console.log('--------- CATEGORY ---------');
+    console.log('---------CATEGORY---------');
     console.debug(`Iterator: ${iterator}`);
     console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
-    console.debug(`Entries: ${JSON.stringify(setupUser.entries)}`);
     console.debug(`Size: ${setupUser.entries.length}`);
 
     showNiceToast('fake', 'Oops!', null, 500);
@@ -84,12 +83,14 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
         entry.descricaoLancamento ==
         setupUser.expenseTags[setupUser.expenseTagsCount],
     );
+
     if (entryIndex != -1) {
       var entry = setupUser.entries[entryIndex];
       if (entry.categoryLancamento != undefined) {
         console.log('a entry da eachcategory: ', entry);
         const selectedI = ctgrs.findIndex(
           category =>
+            // @ts-ignore
             category.nomeCategoria == entry?.categoryLancamento?.nomeCategoria,
         );
         ctgrs[selectedI].isSelected = true;
@@ -98,11 +99,16 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     }
 
     if (route.params?.createdCategoryName) {
-      const lastCreatedI = ctgrs.findIndex(
+      ctgrs.map(category => {
+        category.isSelected = false;
+        return category;
+      });
+
+      const lastCreatedIndex = ctgrs.findIndex(
         category => category.nomeCategoria == route.params?.createdCategoryName,
       );
-      ctgrs[lastCreatedI].isSelected = true;
-      setSelectedCategory(ctgrs[lastCreatedI]);
+      ctgrs[lastCreatedIndex].isSelected = true;
+      setSelectedCategory(ctgrs[lastCreatedIndex]);
     }
 
     setTimeout(() => setCategories(ctgrs), 400); // Efeito melhor
@@ -142,10 +148,12 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
   }
 
   const clearSelectedCategories = () => {
-    categories.map(category => {
+    var newCategories = categories.map(category => {
       category.isSelected = false;
       return category;
     });
+
+    setCategories(newCategories as Categoria[]);
 
     if (setupUser.createdCategories != undefined) {
       const newSetupProps = setupUser;

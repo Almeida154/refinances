@@ -20,9 +20,8 @@ const Button: React.FC<IProps> = ({
   ...rest
 }) => {
   return (
-    <Container {...rest} onPress={onPress} lastOne={lastOne != undefined}
-      style={backgroundColor ? { backgroundColor } : { backgroundColor: colors.lightGray }}>
-      <Text style={color ? { color } : { color: colors.davysGrey }}>
+    <Container {...rest} onPress={onPress} lastOne={lastOne != undefined}>
+      <Text style={color ? { color } : { color: colors.cultured }}>
         {title}
       </Text>
     </Container>
