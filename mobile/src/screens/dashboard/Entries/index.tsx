@@ -5,7 +5,6 @@ import {FormLancamentoStack} from '../../../@types/RootStackParamApp'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
-
 import FormCadastro from './components/FormCadastro'
 import FormTransferencia from './components/TransferForm'
 
@@ -20,28 +19,34 @@ import {
     Buttons,
     SectionButtons
 } from './styles'
-import { Text } from '../../../components/Button/styles';
+
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
-import { Conta } from '../../../contexts/AccountContext';
+
 import { Categoria } from '../../../contexts/CategoriesContext';
+import { Lancamento, UseLancamentos } from '../../../contexts/EntriesContext';
 import { ReadParcela } from '../../../contexts/InstallmentContext';
 
 export interface PropsNavigation {     
     tipoLancamento: string,
     valor: string,
     setValor: React.Dispatch<React.SetStateAction<string>>
-    receiveEntry?: ReadParcela
+    receiveEntry?: Lancamento
 }
 
-const FormLancamento = ({route}: any) => {
-    const receiveEntry: ReadParcela = route.params?.receiveEntry        
-    console.debug('receiveEntry', receiveEntry)
-    const [selected, setSelected] = useState(receiveEntry ? receiveEntry.lancamentoParcela.tipoLancamento == 'despesa' ? 0 : 1 : 0)    
+
+const FormLancamento = ({route}: any) => {    
+    let receiveEntry: Lancamento | undefined = route.params?.receiveEntry                    
+
+    const [selected, setSelected] = useState(receiveEntry ? receiveEntry.tipoLancamento == 'despesa' ? 0 : 1 : 0)    
     
     const {navigation} = UseDadosTemp()
     navigation.setOptions({headerShown: false})
     
-    const [valor, setValor] = useState(receiveEntry?.valorParcela ? String(receiveEntry.valorParcela) : '')
+    const [valor, setValor] = useState(receiveEntry?.totalParcelas ? String(receiveEntry.totalParcelas) : '')
+    
+    useEffect(() => {
+
+    }, [])
     
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', backAction);

@@ -1,4 +1,6 @@
 import { Conta } from '@contexts/AccountContext';
+import { Parcela } from '../../../../../contexts/InstallmentContext';
+
 import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native';
 
@@ -20,18 +22,10 @@ import {
 } from './styles'
 
 
-export type CardParcela = {
-    id: number;
-    conta: Conta | null;
-    data: string;
-    valor: number;
-    status: boolean
-}
-
 export type CardParcelaProps = {
-    item: CardParcela;
-    dataParcelas: CardParcela[];
-    setDataParcelas: React.Dispatch<React.SetStateAction<CardParcela[]>>;
+    item: Parcela;
+    dataParcelas: Parcela[];
+    setDataParcelas: React.Dispatch<React.SetStateAction<Parcela[]>>;
     tipoLancamento: string;
 }
 
@@ -48,7 +42,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
 
     const handleConfirm = (date: Date) => {
         const aux = item
-        aux.data = date.toLocaleDateString()
+        aux.dataParcela = date
         dataParcelas[aux.id] = aux
         setDataParcelas(dataParcelas)
         hideDatePicker();
@@ -56,7 +50,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
 
     const onChangeValor = (text: string) => {
         const aux = dataParcelas.slice()
-        aux[item.id].valor = text == '' ? NaN : parseFloat(text)
+        aux[item.id].valorParcela = text == '' ? NaN : parseFloat(text)
         
         console.log(aux)
         setDataParcelas(aux)                
@@ -64,23 +58,22 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
 
     function changeSituation() {
         const aux = dataParcelas.slice()
-        aux[item.id].status = aux[item.id].status ? false : true
+        aux[item.id].statusParcela = aux[item.id].statusParcela ? false : true
 
         setDataParcelas(aux)
     }
 
     function changeAccount(conta: Conta | null){
         const aux = dataParcelas.slice()
-        aux[item.id].conta = conta        
+        aux[item.id].contaParcela = conta        
         
         console.log(aux)
         setDataParcelas(aux)
     }
-            
-    console.log(dataParcelas[item.id].valor)
+                
     return (
         <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>
-            <TituloCardParcela onPress={showDatePicker}>Parcela de {item.data}</TituloCardParcela>
+            <TituloCardParcela onPress={showDatePicker}>Parcela de {item.dataParcela.toLocaleDateString()}</TituloCardParcela>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"
@@ -92,18 +85,18 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 keyboardType="numeric" 
                 placeholder="R$ 00,00" 
                 placeholderTextColor="gray"
-                value={isNaN(dataParcelas[item.id].valor) ? '' : String(dataParcelas[item.id].valor)}
+                value={isNaN(dataParcelas[item.id].valorParcela) ? '' : String(dataParcelas[item.id].valorParcela)}
                 onChangeText={onChangeValor}
             />
             <InputControlStatus>
                 <Checkbox 
-                    status={dataParcelas[item.id].status ? 'checked' : 'unchecked'}
+                    status={dataParcelas[item.id].statusParcela ? 'checked' : 'unchecked'}
                     onPress={changeSituation}
                     color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
                 />
                 <LabelStatus style={{color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</LabelStatus>
             </InputControlStatus>
-            <PickerContas conta={dataParcelas[item.id].conta} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
+            <PickerContas conta={dataParcelas[item.id].contaParcela} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
         </ContainerCardParcela>
 
     )

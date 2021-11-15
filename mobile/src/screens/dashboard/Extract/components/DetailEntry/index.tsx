@@ -2,6 +2,7 @@ import React from 'react'
 import { ToastAndroid } from 'react-native'
 
 import { ReadParcela } from '../../../../../contexts/InstallmentContext'
+import { UseLancamentos } from '../../../../../contexts/EntriesContext'
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { StackActions } from '@react-navigation/native';
 
@@ -28,6 +29,7 @@ interface PropsDetail {
 
 const DetailEntry: React.FC<PropsDetail> = ({item}) => {
     const {navigation} = UseDadosTemp()
+    const {handleLoadOneLancamentos} = UseLancamentos()
 
     if(!item) {
         return <></>
@@ -46,8 +48,12 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
         return <></>
     }
 
-    function navigateEdit() {
-        navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveEntry: item}}))
+    async function navigateEdit() {        
+        if(item) {
+            const response = await handleLoadOneLancamentos(item?.lancamentoParcela.id)
+            
+            navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveEntry: typeof response == 'string' ? undefined : response}}))
+        }
     }
 
     return (
