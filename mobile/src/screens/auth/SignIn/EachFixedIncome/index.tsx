@@ -97,6 +97,9 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
     hideNiceToast();
 
+    let dateNow = new Date(Date.now());
+    dateNow.setDate(21);
+
     const entry = {
       descricaoLancamento: setupUser.incomeTags[setupUser.incomeTagsCount],
       lugarLancamento: 'extrato',
@@ -104,6 +107,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
       parcelasLancamento: [
         {
           valorParcela: incomeAmount,
+          dataParcela: dateNow,
         } as Parcela,
       ],
       essencial: true,

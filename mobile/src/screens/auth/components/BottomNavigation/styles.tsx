@@ -5,7 +5,6 @@ export const Container = styled.TouchableHighlight`
   position: absolute;
   bottom: 0;
   width: 100%;
-  elevation: 0;
 `;
 
 export const Content = styled.View`

@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import hexToRGB from '../../../../helpers/hexToRgba';
+import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../../../styles';
 
 export const Container = styled.View`
@@ -26,4 +28,31 @@ export const PrefixReaisSymbol = styled.Text`
   color: ${colors.eerieBlack};
   opacity: 0.1;
   margin-right: 2%;
+`;
+
+export const SmoothPickerContainer = styled.View`
+  position: absolute;
+  width: 100%;
+  height: ${`${heightPixel(380)}px`};
+  background-color: ${hexToRGB(colors.redCrayola, 0.8)};
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+`;
+
+export const SmoothPickerTopDetail = styled.View`
+  position: absolute;
+  top: 0px;
+  align-items: center;
+  justify-content: center;
+  width: ${`${widthPixel(60)}`};
+  height: ${`${widthPixel(60)}`};
+`;
+
+export const SmoothPickerBottomDetail = styled.View`
+  position: absolute;
+  width: 3px;
+  height: ${`${heightPixel(50)}px`};
+  bottom: 0;
+  background-color: ${colors.bigDipOruby};
 `;
