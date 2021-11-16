@@ -312,18 +312,20 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     }
 
     function changeAccount(conta: Conta | null){
-        console.log("Vei no no useEffect[account]")
-
-        const parcelas: Parcela[] = []        
-
-        dataParcelas.map((item, index) => {
-            item.contaParcela = conta
-            
-            parcelas.push(item)        
-        })
-
-        setSelectedConta(conta)
-        setDataParcelas(parcelas)
+        
+        if(conta?.descricao != selectedConta?.descricao) {
+            console.log("Vei no no useEffect[account]")
+            const parcelas: Parcela[] = []        
+    
+            dataParcelas.map((item, index) => {
+                item.contaParcela = conta
+                
+                parcelas.push(item)        
+            })
+    
+            setSelectedConta(conta)
+            setDataParcelas(parcelas)
+        }
     }
     
     

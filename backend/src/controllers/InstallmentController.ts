@@ -261,6 +261,31 @@ class ParcelaController {
 
         return response.send({ message: parcela });
     }
+
+    async EditByEntry(request: Request, response: Response, next: NextFunction) {
+        const parcelaRepository = getRepository(Parcela);  
+        const contaRepository = getRepository(Conta);
+        const lancamentoRepository = getRepository(Lancamento);
+        const userRepository = getRepository(User);
+
+        const parcelasLancamento: Parcela[] = request.body.parcelasLancamento
+
+        const userExists = await userRepository.findOne({where: {id: parcelasLancamento[0].userParcela}})
+        const lancamentoExists = await lancamentoRepository.findOne({where: {id: parcelasLancamento[0].lancamentoParcela}})
+        const contaExists = await contaRepository.findOne({where: {id: parcelasLancamento[0].contaParcela}})
+        
+        if(!userExists) {
+            return response.send({error: "O user com o id especificado no atributo userParcela da primeira parcela não foi encontrado"})
+        }  
+        
+        if(!lancamentoExists) {
+            return response.send({error: "O lançamento com o id especificado no atributo lancamentoParcela da primeira parcela não foi encontrado"})
+        }   
+
+        await parcelaRepository.delete({lancamentoParcela: lancamentoExists})
+
+       
+    }
     
     async remove(request: Request, response: Response, next: NextFunction) {
         const parcelaRepository = getRepository(Parcela);
