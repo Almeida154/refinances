@@ -131,7 +131,7 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           message: 'Meta cadastrada com sucesso',
         },
       });
-      //navigation.dispatch(StackActions.replace('Main'));
+      navigation.dispatch(StackActions.replace('Main'));
 
       //limpando os campos
       setMeta('');
@@ -141,12 +141,36 @@ const CreateGoal = ({navigation}: PropsGoals) => {
 
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Erro!',
+          message: 'Verifique se os dados estão corretos!',
+        },
+      });
     }
     if (parseFloat(valorMeta) <= 0 || valorMeta == '') {
       setvalorTError('Insira um valor válido!');
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Erro!',
+          message: 'Verifique se os dados estão corretos!',
+        },
+      });
     }
     if (parseFloat(investidoMeta) < 0 || investidoMeta == '') {
       setinvestidoError('Insira um valor válido!');
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Erro!',
+          message: 'Verifique se os dados estão corretos!',
+        },
+      });
     }
   }
 

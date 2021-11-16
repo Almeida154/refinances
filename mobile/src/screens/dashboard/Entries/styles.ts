@@ -54,7 +54,7 @@ export const AlinhaParaDireita = styled.View`
     justify-content: space-between; 
     flex-direction: row;
     padding-left: 20px;
-    padding-right: 10px;
+    padding-right: 30px;
 `
 
 export const LabelCifrao = styled.Text`

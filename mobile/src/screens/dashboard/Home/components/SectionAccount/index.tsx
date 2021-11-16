@@ -112,7 +112,7 @@ const SectionAccount = () => {
                         {screen: 'ManageAccount'})
                         )}
                     title="Gerenciar"
-                    color="#444"
+                    color="#fff"
                     backgroundColor="#F5F2F3"
                 /> 
             </ContainerAccount>

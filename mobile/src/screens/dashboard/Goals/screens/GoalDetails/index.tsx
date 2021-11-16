@@ -62,17 +62,17 @@ const GoalDetails = ({ route, navigation }: Props) => {
   const percBalance = percentageBalance / 100; 
   const saldo = (goal.saldoAtualMeta);
 
-  /*const backAction = () => {
-    navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}))
-  };*/
+  const backAction = () => {
+    navigation.dispatch(
+      StackActions.replace('Main'),
+    );
+    return true;
+  };
 
   return (
     <ScrollView style={{ paddingTop: '5%', backgroundColor: '#f6f6f6' }}>
       <Header 
-        onBackButton={() => navigation.dispatch(
-          StackActions.replace('GoalsStack', 
-          {screen: 'GoalsList'})
-      )} title="" />
+        backButton={backAction} title="" />
 
       {console.debug('ROUTE:::: ', route)}
       <View style={styles.container}>
@@ -122,7 +122,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
           onPress={() => {
             navigation.dispatch(
               StackActions.replace('GoalsStack', {
-              screen: 'EditGoal',
+              screen: 'InvestGoals',
               params: { goalId: goal.id }
             }));
           }}
@@ -156,7 +156,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
           onPress={() => {
             navigation.dispatch(
               StackActions.replace('GoalsStack', {
-              screen: 'InvestGoals',
+              screen: 'EditGoals',
               params: { goalId: goal.id }
             }));
           }}

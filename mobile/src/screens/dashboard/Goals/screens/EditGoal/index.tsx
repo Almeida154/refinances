@@ -32,7 +32,7 @@ type PropsEditGoals = {
   route: RouteProp<GoalsStack, 'EditGoals'>;
 };
 
-const EditGoal = ({ navigation }: PropsEditGoals) => {
+const EditGoal = ({ route, navigation }: PropsEditGoals) => {
   const [goal, setGoal] = useState({} as Meta);
 
   const { handleGetGoalById } = UseMetas();
@@ -96,7 +96,7 @@ const EditGoal = ({ navigation }: PropsEditGoals) => {
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
 
-    if (meta != '' && parseFloat(valorMeta) > 0 && valorMeta != undefined) {
+    if (meta != '' || parseFloat(valorMeta) > 0 && valorMeta != undefined) {
       goal.saldoAtualMeta >= parseFloat(valorMeta)
         ? console.log('deu true')
         : setRealizado(false);
@@ -113,12 +113,18 @@ const EditGoal = ({ navigation }: PropsEditGoals) => {
           message: 'Meta atualizada com sucesso!',
         },
       });
-      navigation.dispatch(StackActions.replace('Main'));
-    } else if (meta == '') {
-      setdescError('Descrição obrigatória!');
-    }
-    if (parseFloat(valorMeta) <= 0 || valorMeta == '') {
-      setvalorTError('Insira um valor válido!');
+      navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
+    } else if (meta == '' || parseFloat(valorMeta) <= 0 || valorMeta == '') {
+      setdescError('Insira alguma descricao diferente!');
+      setvalorTError('Insira algum valor!');
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Erro!',
+          message: 'Verifique se os dados estão corretos!',
+        },
+      });
     }
   }
 
@@ -132,11 +138,19 @@ const EditGoal = ({ navigation }: PropsEditGoals) => {
   };
 
   const novoDesc = () => {
-    return meta;
+    if(meta != ''){
+      return meta;
+    }else{
+      return goal.descMeta;
+    }
   };
 
   const novoSaldoFinal = () => {
-    return parseFloat(valorMeta);
+    if(parseFloat(valorMeta) >= 0 && valorMeta != ''){
+      return parseFloat(valorMeta);
+    }else{
+      return goal.saldoFinalMeta;
+    }
   };
   const valorFim = '' + goal.saldoFinalMeta;
 
@@ -149,7 +163,7 @@ const EditGoal = ({ navigation }: PropsEditGoals) => {
 
   return (
     <ScrollView style={{ paddingTop: '8%', backgroundColor: '#f6f6f6' }}>
-      <Header onBackButton={backAction} title="" />
+      <Header backButton={backAction} title="" />
 
       <View style={styles.container}>
         <View style={{ marginTop: '15%' }}>
