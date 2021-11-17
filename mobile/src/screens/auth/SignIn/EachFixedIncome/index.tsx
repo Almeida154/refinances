@@ -95,6 +95,11 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
     showNiceToast('fake', 'Oops!', null, 500);
 
+    // Deixa o dia atual como default no smoothpicker
+    let currentDate = new Date(Date.now());
+    console.log(currentDate.getDate());
+    setSelectedDay(currentDate.getDate() - 1);
+
     // Caso já tenha passado pela tela, recupera a income aqui
     if (
       setupUser.entries[
@@ -221,7 +226,14 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
                 if (incomeAmount == null) setIncomeAmount(0.0);
               }}
               ref={inputRef}
-              autoFocus
+              onBlur={() => {
+                console.log('bluou');
+                setFocused(false);
+              }}
+              onFocus={() => {
+                console.log('focou');
+                setFocused(true);
+              }}
             />
             {incomeAmount != null && (
               <IonIcons
@@ -254,7 +266,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
               fontSize: fonts.size.small,
               color: colors.diffWhite,
             }}>
-            Dia de vencimento
+            Dia de recebimento
           </Text>
         </View>
         <View
