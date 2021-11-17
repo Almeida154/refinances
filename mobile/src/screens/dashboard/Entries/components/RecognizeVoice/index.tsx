@@ -27,8 +27,6 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
 import {FormLancamentoStack} from '../../../../../@types/RootStackParamApp'
 
-import {ReceiveVoice} from '../../'
-
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Voice, {
@@ -42,7 +40,7 @@ import { Parcela, ReadParcela } from '../../../../../contexts/InstallmentContext
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import CardInstallment from '../../../Extract/components/CardInstallment'
-import { FAB } from 'react-native-paper';
+import { FAB, Text } from 'react-native-paper';
 
 
 type Props = {
@@ -61,7 +59,7 @@ type State = {
   results: string[];
   partialResults: string[];
   isRecording: boolean;  
-  itemNovo: any | null;  
+  itemNovo: Lancamento[];  
 };
 
 class VoiceTest extends Component<Props, State> {
@@ -76,7 +74,7 @@ class VoiceTest extends Component<Props, State> {
     partialResults: [],
     isRecording: false, 
     categorias: [],
-    itemNovo: null,
+    itemNovo: [{}] as Lancamento[],
   };
   
   constructor(props: Props) {
@@ -165,7 +163,7 @@ class VoiceTest extends Component<Props, State> {
       partialResults: [],
       end: '',      
       isRecording: true,
-      itemNovo: null
+      itemNovo: [{}] as Lancamento[]
     });
 
     try {
@@ -178,7 +176,7 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
-       this.generatePrincipal(this.tratoNoTexto("Eu comprei uma picareta por r$ 20 da categoria cuidados pessoais da conta principal no dia 30 do 10 de 2021"))      
+       this.generatePrincipal(this.tratoNoTexto("Eu comprei uma picareta por r$ 20 da categoria cuidados pessoais da conta principal no dia 30 do 10 de 2021 vírgula eu comprei uma pá por r$ 50"))      
        this.setState({
          isRecording: false
        })
@@ -216,121 +214,132 @@ class VoiceTest extends Component<Props, State> {
 
 
   primeiroComando(texto: string) {
-    const captureLancamento = {
-      id: -1,
-      descricaoLancamento: '',
-      tipoLancamento: '',
-      parcelaBaseada: -1,
-      lugarLancamento: 'extrato',      
-      parcelasLancamento: [{
-        id: -1,
-        statusParcela: true
-      }] as Parcela[],      
-      essencial: false,
-      categoryLancamento: {} as Categoria
-    } as Lancamento    
     
     const acaoFluxoReceita = ['vendi', 'vendi um', 'vendi uma', 'recebi uma', 'recebi', 'vendido', 'recebido']
     const acaoFluxoDespesa = ['comprei ', 'comprei um', , 'comprei uma', 'comprado', 'torrei']
-
-    const categorias = ['alimentação', 'entretenimento', 'trabalho', 'varejo', 'ferramenta']   
-
-    // acaoFluxo
-    let indexFim_acaoFluxo: any
-    acaoFluxoReceita.map((item, index) => {
-      if (texto.indexOf(item) != -1) {
-        captureLancamento.tipoLancamento = 'receita'
-
-        indexFim_acaoFluxo = texto.indexOf(item) + item.length
-      }
-    })
-
-    if (captureLancamento.tipoLancamento == '')
-      acaoFluxoDespesa.map((item, index) => {
-          if(!item) return
-
-        if (texto.indexOf(item) != -1) {
-          captureLancamento.tipoLancamento = 'despesa'
-
-          indexFim_acaoFluxo = texto.indexOf(item) + item.length
-        }
-      })
-
-    if (captureLancamento.tipoLancamento == '')
-      return 'nao foi:fluxo de se é receita ou despesa não encontrado'
-
-    // item
-    let i = indexFim_acaoFluxo
-
     
-    for (; texto.substr(i, 3) != 'por' && i < texto.length; i++) {
-
-      captureLancamento.descricaoLancamento += texto[i]
-    }
-
-    captureLancamento.descricaoLancamento = captureLancamento.descricaoLancamento.trim()
-    
-    if (captureLancamento.descricaoLancamento == '')
-      return 'nao foi:O nome do lançamento não foi encontrado'
-    if(i == texto.length)
-      return 'nao foi:Não foi encontrado a relação do lançamento com o preço (Pode ter faltado a palavra \'por\')'
-
-    // dinheiro
-    let [moeda, valor] = texto.substr(i + 3).trim().split(' ')
-
-    captureLancamento.parcelasLancamento[0].valorParcela = parseFloat(valor)
-
-    i += valor.length + moeda.length + 2
-
-    if (captureLancamento.parcelasLancamento[0].valorParcela == undefined)
-    return 'nao foi:O valor ou a moeda não foram encontrados'
-    //categoria
-    
-    // Texto a partir das categorias para frente
-
-    const aux = texto.substr(i + 4)
-
-    
-
-    this.props.categorias.map(item => {
-      if (aux.indexOf(item.nomeCategoria.toLocaleLowerCase()) != -1) {
-        captureLancamento.categoryLancamento = item
-      }
-    })
-    
-    //conta
-    this.props.contas.map(item => {
-        if (aux.indexOf(item.descricao.toLocaleLowerCase()) != -1) {
-          captureLancamento.parcelasLancamento[0].contaParcela = item
-        }
-      })
-
-    const cacarDatas = aux.split(' ')
-
-    
-
-    for(var index = 0;index < cacarDatas.length-4;index++) {        
+    const actions = texto.split('vírgula');
         
+    let captureLancamento: Lancamento[] = []
 
-        if(!isNaN(parseInt(cacarDatas[index])) &&
-           cacarDatas[index+1] == 'do' &&
-           !isNaN(parseInt(cacarDatas[index+2])) &&
-           cacarDatas[index+3] == 'de' &&
-           !isNaN(parseInt(cacarDatas[index+4]))
-           ) {
-            const dataLocalAux = cacarDatas[index] + '/' + cacarDatas[index+2] + '/' + cacarDatas[index+4]
-            
-            captureLancamento.parcelasLancamento[0].dataParcela = toDate(dataLocalAux)
-           }
+    for(var j = 0;j < actions.length;j++) {
+
+      captureLancamento[j] = {
+        id: -1,
+        descricaoLancamento: '',
+        tipoLancamento: '',
+        parcelaBaseada: -1,
+        lugarLancamento: 'extrato',      
+        parcelasLancamento: [{
+          id: -1,
+          statusParcela: true
+        }] as Parcela[],      
+        essencial: false,
+        categoryLancamento: {} as Categoria
+      }
+      // acaoFluxo
+      let indexFim_acaoFluxo: any
+      acaoFluxoReceita.map((item, index) => {
+        if (actions[j].indexOf(item) != -1) {
+          captureLancamento[j].tipoLancamento = 'receita'
+  
+          indexFim_acaoFluxo = actions[j].indexOf(item) + item.length
+        }
+      })
+  
+      if (captureLancamento[j].tipoLancamento == '')
+        acaoFluxoDespesa.map((item, index) => {
+            if(!item) return
+  
+          if (actions[j].indexOf(item) != -1) {
+            captureLancamento[j].tipoLancamento = 'despesa'
+  
+            indexFim_acaoFluxo = actions[j].indexOf(item) + item.length
+          }
+        })
+  
+      if (captureLancamento[j].tipoLancamento == '')
+        return 'nao foi:fluxo de se é receita ou despesa não encontrado'
+  
+      // item
+      let i = indexFim_acaoFluxo
+  
+      
+      for (; actions[j].substr(i, 3) != 'por' && i < actions[j].length; i++) {
+  
+        captureLancamento[j].descricaoLancamento += actions[j][i]
+      }
+  
+      captureLancamento[j].descricaoLancamento = captureLancamento[j].descricaoLancamento.trim()
+      
+      if (captureLancamento[j].descricaoLancamento == '')
+        return 'nao foi:O nome do lançamento não foi encontrado'
+      if(i == actions[j].length)
+        return 'nao foi:Não foi encontrado a relação do lançamento com o preço (Pode ter faltado a palavra \'por\')'
+  
+      // dinheiro
+      let [moeda, valor] = actions[j].substr(i + 3).trim().split(' ')
+  
+      captureLancamento[j].parcelasLancamento[0].valorParcela = parseFloat(valor)
+  
+      i += valor.length + moeda.length + 2
+  
+      if (captureLancamento[j].parcelasLancamento[0].valorParcela == undefined)
+      return 'nao foi:O valor ou a moeda não foram encontrados'
+      //categoria
+      
+      // actions[j] a partir das categorias para frente
+  
+      const aux = actions[j].substr(i + 4)
+  
+      
+  
+      this.props.categorias.map(item => {
+        if (aux.indexOf(item.nomeCategoria.toLocaleLowerCase()) != -1) {
+          captureLancamento[j].categoryLancamento = item
+        }
+      })
+      
+      if(!captureLancamento[j].categoryLancamento.id) {
+        captureLancamento[j].categoryLancamento = j != 0 ? captureLancamento[j-1].categoryLancamento : this.props.categorias[0]
+      }
+
+      //conta
+      this.props.contas.map(item => {
+          if (aux.indexOf(item.descricao.toLocaleLowerCase()) != -1) {
+            captureLancamento[j].parcelasLancamento[0].contaParcela = item
+          }
+        })
+
+      if(!captureLancamento[j].parcelasLancamento[0].contaParcela) {
+        captureLancamento[j].parcelasLancamento[0].contaParcela = j != 0 ? captureLancamento[j-1].parcelasLancamento[0].contaParcela : this.props.contas[0]
+      }
+  
+      const cacarDatas = aux.split(' ')        
+  
+      for(var index = 0;index < cacarDatas.length-4;index++) {        
+          
+  
+          if(!isNaN(parseInt(cacarDatas[index])) &&
+             cacarDatas[index+1] == 'do' &&
+             !isNaN(parseInt(cacarDatas[index+2])) &&
+             cacarDatas[index+3] == 'de' &&
+             !isNaN(parseInt(cacarDatas[index+4]))
+             ) {
+              const dataLocalAux = cacarDatas[index] + '/' + cacarDatas[index+2] + '/' + cacarDatas[index+4]
+              
+              captureLancamento[j].parcelasLancamento[0].dataParcela = toDate(dataLocalAux)
+             }
+      }
+      
+      if(!captureLancamento[j].parcelasLancamento[0].dataParcela)
+        captureLancamento[j].parcelasLancamento[0].dataParcela = new Date(Date.now())
+      
+        
+      this.setState({
+        itemNovo: [...this.state.itemNovo,captureLancamento[j]]
+      })      
     }
-    
-    if(!captureLancamento.parcelasLancamento[0].dataParcela)
-      captureLancamento.parcelasLancamento[0].dataParcela = new Date(Date.now())
-    
-
-    this.setState({
-      itemNovo: captureLancamento
-    })
 
     return ''    
   }
@@ -344,6 +353,7 @@ class VoiceTest extends Component<Props, State> {
 
       this.setState({itemNovo: comandosJson})
 
+      console.log("O resultado pegado", comandosJson)
       // this.props.navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveVoice: itensNovo}}))
     } else {
       // alert('Nenhum foi encontrado')
@@ -353,8 +363,7 @@ class VoiceTest extends Component<Props, State> {
   
   ItemHandled = (item: Lancamento | null) => {        
 
-    
-    if(!item) return
+    if(!item?.id) return    
     
     const readParcela: ReadParcela = {
       id: -1,
@@ -413,25 +422,27 @@ class VoiceTest extends Component<Props, State> {
     }
   }
 
-  async handleItemCapture(itemNovo: Lancamento | null) {   
+  async handleItemCapture(itemNovo: Lancamento[] | null) {   
     if(!itemNovo) {
       return ToastAndroid.show("Nenhum item adicionado", ToastAndroid.SHORT)
     }          
     
-    const readItemNovo = {
-      ...itemNovo
-    }
-
-    readItemNovo.categoryLancamento = readItemNovo.categoryLancamento.nomeCategoria
-        
-    const response = await this.props.handleAdicionarLancamento(readItemNovo, await retornarIdDoUsuario())
+    itemNovo.map(async (item) => {
+      const readItemNovo = {
+        ...item
+      }
   
-    console.log("resultado", response == "" ? "cadastrou" : response)
-    if(response == '') {
-      
-    } else {
-      ToastAndroid.show(response, ToastAndroid.SHORT)
-    }
+      readItemNovo.categoryLancamento = readItemNovo.categoryLancamento.nomeCategoria
+          
+      const response = await this.props.handleAdicionarLancamento(readItemNovo, await retornarIdDoUsuario())
+    
+      console.log("resultado", response == "" ? "cadastrou" : response)
+      if(response == '') {
+        
+      } else {
+        ToastAndroid.show(response, ToastAndroid.SHORT)
+      }
+    })
   }
 
  
@@ -472,7 +483,11 @@ class VoiceTest extends Component<Props, State> {
                  
 
         {
-          this.ItemHandled(this.state.itemNovo)     
+          this.state.itemNovo[0].id == 0 ? 
+          {} : 
+          this.state.itemNovo.map((item, index) => {                        
+            return this.ItemHandled(item)                 
+          })
         }
 
         <FAB 
