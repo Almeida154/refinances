@@ -19,6 +19,8 @@ import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
 import Home from '../screens/dashboard/Home';
 import AddCategoryAccount from '../screens/dashboard/Home/components/CreateAccount/components/AddCategoryAccount';
 import ManageCategory from '../screens/dashboard/Home/components/ManageCategory/navigators/TopBarNavigator'
+import NewCategory from '../screens/dashboard/Home/components/newCategory/navigator/'
+
 
 import GoalsList from '../screens/dashboard/Goals/navigators/TopBarNavigator';
 import InvestGoals from '../screens/dashboard/Goals/screens/Invest';
@@ -53,6 +55,12 @@ export const HomeAccountStackNavigation = () => {
       <HomeStack.Screen
         name="ManageCategory"
         component={ManageCategory}
+        options={{headerShown: false}}
+      />
+
+      <HomeStack.Screen
+        name="NewCategory"
+        component={NewCategory}
         options={{headerShown: false}}
       />
 

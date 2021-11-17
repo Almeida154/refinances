@@ -137,6 +137,15 @@ export const MetasProvider: React.FC = ({ children }) => {
     }
   }
 
+  async function handleRemoveGoalById(id: number) {
+    try {
+      const response = await api.get(`/goal/remove/${id}`);
+      return response.data.goal;
+    } catch (error) {
+      console.debug('GoalsContext | handleRemoveGoalById: ' + error);
+    }
+  }
+
   return (
     <MetaContext.Provider
       value={{

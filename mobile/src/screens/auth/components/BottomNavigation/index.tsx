@@ -7,6 +7,7 @@ import { colors } from '../../../../styles';
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import hexToRGB from '../../../../helpers/hexToRgba';
+import { heightPixel } from '../../../../helpers/responsiveness';
 
 interface IProps {
   onPress?: () => void;
@@ -15,6 +16,7 @@ interface IProps {
   color?: string;
   backgroundColor?: string;
   iconColor?: string;
+  pickerOn?: boolean;
 }
 
 const BottomNavigation: React.FC<IProps> = ({
@@ -24,9 +26,15 @@ const BottomNavigation: React.FC<IProps> = ({
   color,
   backgroundColor,
   iconColor,
+  pickerOn,
 }) => {
   return (
-    <Container underlayColor={colors.white} onPress={onPress}>
+    <Container
+      underlayColor={colors.white}
+      onPress={onPress}
+      style={{
+        bottom: pickerOn ? heightPixel(380) : 0,
+      }}>
       <Content
         style={[
           {

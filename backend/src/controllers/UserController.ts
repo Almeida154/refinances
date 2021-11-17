@@ -43,7 +43,7 @@ class UserController {
       return response.send({ error: "Usuario nao encontrado" });
     }
 
-    //Categoria Conta
+    // Categoria Conta
     const nomesCategoriasContaPadroes = [
       ["Carteira", "Entypo:wallet"],
       ["Poupança", "MaterialCommunityIcons:currency-usd-circle"],
@@ -67,8 +67,8 @@ class UserController {
 
       await funcao(nomesCategoriasContaPadroes[i]);
     }
-    //Contas
 
+    // Contas
     const newConta = contaRepository.create({
       descricao: "Conta Principal",
       categoryConta: categoriasContasPadroes[0],
@@ -78,8 +78,7 @@ class UserController {
 
     const contaPrincipal = await contaRepository.save(newConta);
 
-    //Categorias
-
+    // Categorias
     const categoriasPadroes = [];
 
     for (var i = 0; i < allCategories.length; i++) {
@@ -99,8 +98,7 @@ class UserController {
       await funcao(allCategories[i]);
     }
 
-    //Lancamento
-
+    // Lancamentos
     entries.map(async (item) => {
       const categoriaLancamento = categoriasPadroes.findIndex((categoria) => {
         return categoria.nomeCategoria == item.categoryLancamento.nomeCategoria;
@@ -118,7 +116,7 @@ class UserController {
         })
       );
 
-      //parcela
+      // Parcela
       item.parcelasLancamento.map(async (parcela) => {
         contaPrincipal.saldoConta +=
           newLancamento.tipoLancamento == "despesa"
@@ -138,7 +136,7 @@ class UserController {
           userParcela: user,
           statusParcela: true,
           valorParcela: parcela.valorParcela,
-          dataParcela: new Date(Date.now()),
+          dataParcela: parcela.dataParcela,
         });
 
         await parcelaRepository.save(newParcela);

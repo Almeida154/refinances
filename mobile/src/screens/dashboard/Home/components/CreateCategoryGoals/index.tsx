@@ -70,9 +70,11 @@ const CreateGoal = () => {
 
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { StackActions } from '@react-navigation/native'
+import {Meta, UseMetas} from '../../../../../contexts/GoalsContext'
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
 const CreateCategoryGoals = () => {
-
+    const { metas, handleReadByUserMetas } = UseMetas();
     const { navigation } = UseDadosTemp()
 
     return (
@@ -80,22 +82,25 @@ const CreateCategoryGoals = () => {
             <Container>
                 <CreateCategory />
                 
-                <SectionButton>
+                <SectionButton onPress={() => {
+                    navigation.dispatch(StackActions.replace('StackAccount', {screen: 'NewCategory'}))
+                }}>
                     <Plus>+</Plus>                    
                 </SectionButton>
                 
             </Container>
-
+                
             <Container>
                 <CreateGoal />
-                
+                                    
                 <SectionButton onPress={() => {
-                                    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))
-                                }}>
+                    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))
+                }}>
                     <Plus>+</Plus>                    
                 </SectionButton>
-                
+                                    
             </Container>
+
         </SectionCreate>
 
     )

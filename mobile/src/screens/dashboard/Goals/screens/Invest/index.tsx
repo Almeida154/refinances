@@ -102,7 +102,14 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
     } as Parcela;
 
     if (parseFloat(valorDeposito) <= 0 || valorDeposito == '') {
-      ToastAndroid.show('Insira um valor válido!', ToastAndroid.SHORT);
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Erro!',
+          message: 'Insira os dados corretamente!',
+        },
+      });
     } else {
       const responseMeta = await handleAtualizarMeta(newGoal, goal.id);
 
@@ -117,7 +124,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
             message: 'Depósito realizado com sucesso!',
           },
         });
-        navigation.dispatch(StackActions.replace('Main'));
+        navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
       } else {
         ToastAndroid.show(responseParcela, ToastAndroid.SHORT);
       }
@@ -143,7 +150,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'transparent'} />
       <Header style={{ backgroundColor: '#ee4266' }}>
-        <HeaderTop onBackButton={backAction} title="" />
+        <HeaderTop backButton={backAction} title="" />
 
         <AlinhaParaDireita>
           <View></View>
@@ -162,12 +169,12 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
       <View style={styles.container}>
         <TextProgress>
-          Você já depositou
+          Falta
           <TextGoals style={{ left: '40%' }}>
             {' '}
-            R$ {goal.saldoFinalMeta}{' '}
+            R$ {goal.saldoFinalMeta - goal.saldoAtualMeta}{' '}
           </TextGoals>
-          em sua meta
+          para concluir sua meta
         </TextProgress>
 
         <PickerContas

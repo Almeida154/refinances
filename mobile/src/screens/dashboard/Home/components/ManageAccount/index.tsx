@@ -26,6 +26,8 @@ import { Text } from '../../../../../components/Button/styles'
 import { ActivityIndicator } from 'react-native-paper'
 import { StackActions } from '@react-navigation/native'
 
+import Header from '../../../../../components/Header'
+
 type PropsManageAccount = {
     navigation: StackNavigationProp<HomeAccountStack, "ManageAccount">
 }
@@ -61,6 +63,12 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
 
     return (
         <ScrollView>
+            <Header
+                title=""
+                backButton={() => {
+                    navigation.dispatch(
+                    StackActions.replace('Main'))}}
+            />
             
             {
                 stateReload ? (
@@ -75,6 +83,7 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                      </View>
                  ) :
                 <Container>
+                    
                     <Title>Bem vindo às suas contas!</Title>
                     <Subtitle>Aqui você as gerencia: editando, excluindo ou criando novas.</Subtitle>
                     {

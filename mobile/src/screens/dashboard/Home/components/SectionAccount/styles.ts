@@ -50,6 +50,7 @@ export const ContainerCardAccount = styled.View`
     flex-direction: row;
     align-items: center;
     margin-top: 15px;
+    margin-bottom: 15px;
 `
 export const SectionDescription = styled.View`
     display: flex;
@@ -80,7 +81,8 @@ export const SectionBalanceAccount = styled.View`
 export const LabelBalanceAccount = styled.Text`
     fontSize: ${`${fonts.size.medium}px`};
     fontFamily: ${`${fonts.familyType.bold}`};
-    color: #444
+    color: #444;
+    opacity: 0.7;
 `
 export const SectionIcon = styled.View`
     width: 45px;

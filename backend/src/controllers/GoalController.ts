@@ -179,6 +179,7 @@ class MetaController {
     await metaRepository.remove(metaToRemove);
     return response.send({ mes: "foi" });
   }
+  
 
   async removeAll(request: Request, response: Response, next: NextFunction) {
     const metaRepository = getRepository(Meta);

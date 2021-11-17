@@ -22,6 +22,11 @@ export const SectionName = styled.View`
     margin-left: 5px;
     width: 80%;
 `
+export const SectionText = styled.View`
+    flex: 1;
+    flex-direction: row;
+    alignItems: flex-end;
+`
 
 export const Progress = styled.View`
 `
@@ -41,6 +46,17 @@ export const CategoryDesc = styled.Text`
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
 `
+
+export const CategoryAddTetoGasto = styled.TouchableOpacity`
+    font-size: ${`${fonts.size.medium}px`};
+    color: #525252;
+    fontFamily: ${`${fonts.familyType.semiBold}`};
+    opacity: 0.7;
+    text-align: right;
+    right: 0;
+    margin-left: auto;
+`
+
 export const Percent = styled.View`
     backgroundColor: #fff;
     position: absolute;

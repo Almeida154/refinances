@@ -21,7 +21,7 @@ const Button: React.FC<IProps> = ({
 }) => {
   return (
     <Container {...rest} onPress={onPress} lastOne={lastOne != undefined}>
-      <Text style={color ? { color } : { color: colors.cultured }}>
+      <Text style={color ? { color } : { color: colors.darkGray }}>
         {title}
       </Text>
     </Container>

@@ -13,8 +13,6 @@ import { ActivityIndicator } from 'react-native-paper'
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
-import goalsJson from './goals.json';
-
 import { Title, Subtitle, Loading, TextLoading} from './styles'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -58,11 +56,11 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
           
   }, [])
 
-  const [metasRealizadas, setMetasRealizadas] = useState(
+  /*const [metasRealizadas, setMetasRealizadas] = useState(
     !metas ? null : metas.filter(metas => metas.realizacaoMeta),
-  );
+  );*/
 
-  if(metasRealizadas && metasRealizadas.length > 0 ){
+  if(metas && metas.length > 0 ){
     return (
       <ScrollView style={{ backgroundColor: '#fff' }}>
   
@@ -70,7 +68,7 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
             stateReload ? (
   
               <Loading>
-                <ActivityIndicator size='large' color='#E8871E' />
+                <ActivityIndicator size='large' color='#EE4266' />
                 <TextLoading>Carregando...</TextLoading>
               </Loading>
   
@@ -78,20 +76,18 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
   
               <View style={{margin: '10%'}}>
                 <Title>
-                  Parabéns!! 
+                  Parabéns!
                 </Title>
   
                 <Subtitle>
                   Continue registrando suas metas financeiras para viver uma vida mais confortável
                 </Subtitle>
-                {
-                  metasRealizadas && metasRealizadas.map((item, index) => {
-                    console.log("Item: ", metasRealizadas)                    
-                    return (
-                      <CardGoals item={item} key={index}/>
-                    )
-                  })   
-                }
+                {metas &&
+                  metas.map((item, index) => {
+                    console.log('Item: ', UseMetas);
+                    if(item.saldoAtualMeta >= item.saldoFinalMeta)
+                      return <CardGoals item={item} key={index} />;
+              })}
               </View>
             }
   
