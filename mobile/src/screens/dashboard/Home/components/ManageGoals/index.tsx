@@ -66,7 +66,7 @@ const SectionManage = () => {
                         navigation.dispatch(StackActions.replace('GoalsStack', 
                         { screen:'GoalList'}))}
                     title="Gerenciar"
-                    color="#fff"
+                    color="#444"
                     backgroundColor="#f5f2f3"
                 />
             </ContainerGoals>

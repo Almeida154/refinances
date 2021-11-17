@@ -70,7 +70,7 @@ const SectionManage = () => {
                         navigation.dispatch(StackActions.replace('StackAccount', 
                         { screen:'ManageCategory'}))}
                     title="Gerenciar"
-                    color="#fff"
+                    color="#444"
                     backgroundColor="#f5f2f3"
                 />
             </ContainerCategory>

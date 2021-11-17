@@ -12,7 +12,7 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
   justify-content: center;
   align-items: center;
   font-family: ${fonts.familyType.bold};
-  background-color: ${colors.paradisePink};
+  background-color: ${colors.silver};
   border-radius: ${`${metrics.inputText.radius}px`};
   margin: ${props => (props.lastOne ? 0 : heightPixel(22))}px 0;
 `;
