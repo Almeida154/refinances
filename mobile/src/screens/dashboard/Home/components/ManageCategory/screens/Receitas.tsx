@@ -64,7 +64,8 @@ const Receitas = ({ navigation }: PropsCategory) => {
             {categorias &&
               categorias.map((item, index) => {
                 console.log('Item: ', categorias);
-                return <CardCategory item={item} key={index} />;
+                if(item.tipoCategoria == 'receita')
+                  return <CardCategory item={item} key={index} />;
               })}
           </View>
         )}

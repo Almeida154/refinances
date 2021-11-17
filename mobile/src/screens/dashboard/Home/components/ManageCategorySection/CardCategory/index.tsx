@@ -13,7 +13,9 @@ import {
   SectionDescription,
   SectionIcon, 
   SectionName,
-  Progress
+  Progress,
+  CategoryAddTetoGasto,
+  SectionText
 } from './styles';
 
 import { UseDadosTemp } from '../../../../../../contexts/TemporaryDataContext';
@@ -47,7 +49,16 @@ const CardCategory = ({ item }: PropsCardCategory) => {
         </SectionIcon>
 
         <SectionName>
-          <CategoryDesc>{item.nomeCategoria}</CategoryDesc>
+
+          <SectionText>
+
+            <CategoryDesc>{item.nomeCategoria}</CategoryDesc>
+
+            <CategoryAddTetoGasto> 
+              <CategoryDesc>Editar</CategoryDesc>
+            </CategoryAddTetoGasto>
+          
+          </SectionText>
 
           <Progress>
             <ProgressBar

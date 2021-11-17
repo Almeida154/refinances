@@ -13,8 +13,6 @@ import { ActivityIndicator } from 'react-native-paper'
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
-import goalsJson from './goals.json';
-
 import { Title, Subtitle, Loading, TextLoading} from './styles'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -70,7 +68,7 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
             stateReload ? (
   
               <Loading>
-                <ActivityIndicator size='large' color='#E8871E' />
+                <ActivityIndicator size='large' color='#EE4266' />
                 <TextLoading>Carregando...</TextLoading>
               </Loading>
   
@@ -78,7 +76,7 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
   
               <View style={{margin: '10%'}}>
                 <Title>
-                  Parabéns!! 
+                  Parabéns!
                 </Title>
   
                 <Subtitle>

@@ -66,6 +66,7 @@ const Despesas = ({ navigation }: PropsCategory) => {
                 console.log('Item: ', categorias);
                 return <CardCategory item={item} key={index} />;
               })}
+
           </View>
         )}
       </ScrollView>
