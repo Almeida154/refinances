@@ -33,7 +33,7 @@ interface LancamentoContextType {
     lancamentoProps: Lancamento,
     idUser: number,
   ): Promise<string>;
-  handleLoadOneLancamentos(idEntry: number): Promise<Lancamento | string>
+  handleLoadOneLancamentos(idEntry: number): Promise<Lancamento | string>;
 }
 
 const LancamentoContext = createContext<LancamentoContextType>(
@@ -70,21 +70,22 @@ export const LancamentoProvider: React.FC = ({ children }) => {
   }
 
   async function handleLoadOneLancamentos(idEntry: number) {
-    try {     
-      const response = await api.get(`/entry/read/${idEntry}`);      
-      
-      if(response.data.error) {
-        return response.data.error
+    try {
+      const response = await api.get(`/entry/read/${idEntry}`);
+
+      if (response.data.error) {
+        return response.data.error;
       }
 
-      const readEntry: Lancamento = response.data.message    
+      const readEntry: Lancamento = response.data.message;
 
-        readEntry.parcelasLancamento.map((item, index) => {        
-          readEntry.parcelasLancamento[index].dataParcela = new Date(item.dataParcela)
-        })
+      readEntry.parcelasLancamento.map((item, index) => {
+        readEntry.parcelasLancamento[index].dataParcela = new Date(
+          item.dataParcela,
+        );
+      });
 
-      return readEntry
-
+      return readEntry;
     } catch (error) {
       console.log('Deu um erro no handleLoadLancamentos: ', error);
     }
@@ -95,22 +96,20 @@ export const LancamentoProvider: React.FC = ({ children }) => {
     idUser: number,
   ) {
     try {
-      
       const responseCategory = await api.post(
         `/category/findbyname/${idUser}`,
         {
           nomeCategoria: lancamento.categoryLancamento,
         },
-        );
-        
-        
+      );
+
       const response = await api.post('/entry/create', {
         descricaoLancamento: lancamento.descricaoLancamento,
         tipoLancamento: lancamento.tipoLancamento,
         parcelaBaseada: lancamento.parcelaBaseada,
         lugarLancamento: lancamento.lugarLancamento,
         categoryLancamento: responseCategory.data.idCategory,
-      });      
+      });
 
       if (response.data.error) return response.data.error;
 

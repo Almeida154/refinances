@@ -1,28 +1,48 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler, TextInput } from 'react-native';
+import {
+  BackHandler,
+  Keyboard,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
+import { Lancamento } from '../../../../contexts/EntriesContext';
+import { Parcela } from '../../../../contexts/InstallmentContext';
+
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
-import { Container, Content, PrefixReaisSymbol, Writting } from './styles';
+import {
+  Container,
+  Content,
+  PrefixReaisSymbol,
+  Writting,
+  SmoothPickerContainer,
+  SmoothPickerTopDetail,
+  SmoothPickerBottomDetail,
+} from './styles';
 import { colors, fonts } from '../../../../styles';
 
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 // Components
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
-
-import { Lancamento } from '@contexts/EntriesContext';
-import { Parcela } from '@contexts/InstallmentContext';
-
+import SmoothPickerItem from '../../components/SmoothPickerItem';
 import CurrencyInput from 'react-native-currency-input';
+// @ts-ignore
+import Picker from 'react-native-picker-horizontal';
+
+import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'EachFixedIncome'>;
@@ -32,11 +52,39 @@ export type PropsNavigation = {
 const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   const [incomeAmount, setIncomeAmount] = useState<number | null>(0);
   const [formattedIncomeAmount, setFormattedIncomeAmount] = useState('');
+  const [selectedDay, setSelectedDay] = useState(0);
+  const [isFocused, setFocused] = useState(false);
 
   const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
     UseAuth();
 
   const inputRef = useRef<TextInput>(null);
+
+  const days = Array.from(Array(30).keys());
+
+  useEffect(() => {
+    const willShowSubscription = Keyboard.addListener(
+      'keyboardWillShow',
+      () => {
+        setFocused(true);
+        console.log('vai mostrou');
+      },
+    );
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setFocused(true);
+      console.log('mostrou');
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setFocused(false);
+      console.log('fechou');
+    });
+
+    return () => {
+      willShowSubscription.remove();
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   useEffect(() => {
     let iterator = setupUser.incomeTagsCount;
@@ -147,54 +195,123 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
         }`}
       />
 
-      <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
-        <Writting>
-          <PrefixReaisSymbol>R$</PrefixReaisSymbol>
-          <CurrencyInput
-            style={{
-              flex: 1,
-              padding: 0,
-              color: colors.davysGrey,
-              fontFamily: fonts.familyType.bold,
-              fontSize: fonts.size.super + 14,
-            }}
-            value={incomeAmount}
-            onChangeValue={txt => setIncomeAmount(txt)}
-            delimiter="."
-            separator=","
-            precision={2}
-            placeholder="0,00"
-            maxValue={999999}
-            placeholderTextColor={'rgba(52, 52, 52, .3)'}
-            selectionColor={colors.davysGrey}
-            onChangeText={formattedValue => {
-              setFormattedIncomeAmount(formattedValue);
-              if (incomeAmount == null) setIncomeAmount(0.0);
-            }}
-            ref={inputRef}
-            autoFocus
-          />
-          {incomeAmount != null && (
-            <IonIcons
+      <ScrollView>
+        <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
+          <Writting>
+            <PrefixReaisSymbol>R$</PrefixReaisSymbol>
+            <CurrencyInput
               style={{
-                padding: 6,
-                marginLeft: 16,
+                flex: 1,
+                padding: 0,
+                color: colors.davysGrey,
+                fontFamily: fonts.familyType.bold,
+                fontSize: fonts.size.super + 14,
               }}
-              name="close"
-              size={32}
-              color={`rgba(82, 82, 82, .08)`}
-              onPress={() => {
-                setIncomeAmount(0.0);
+              value={incomeAmount}
+              onChangeValue={txt => setIncomeAmount(txt)}
+              delimiter="."
+              separator=","
+              precision={2}
+              placeholder="0,00"
+              maxValue={999999}
+              placeholderTextColor={'rgba(52, 52, 52, .3)'}
+              selectionColor={colors.davysGrey}
+              onChangeText={formattedValue => {
+                setFormattedIncomeAmount(formattedValue);
+                if (incomeAmount == null) setIncomeAmount(0.0);
               }}
+              ref={inputRef}
+              autoFocus
             />
-          )}
-        </Writting>
-      </Content>
+            {incomeAmount != null && (
+              <IonIcons
+                style={{
+                  padding: 6,
+                  marginLeft: 16,
+                }}
+                name="close"
+                size={32}
+                color={`rgba(82, 82, 82, .08)`}
+                onPress={() => {
+                  setIncomeAmount(0.0);
+                }}
+              />
+            )}
+          </Writting>
+        </Content>
+      </ScrollView>
+
+      <SmoothPickerContainer style={{ opacity: isFocused ? 0 : 1 }}>
+        <View
+          style={{
+            height: heightPixel(440) - heightPixel(340),
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.small,
+              color: colors.diffWhite,
+            }}>
+            Dia de vencimento
+          </Text>
+        </View>
+        <View
+          style={{
+            height: heightPixel(380),
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            bottom: 0,
+          }}>
+          <Picker
+            data={days}
+            itemWidth={widthPixel(180)}
+            mark={false}
+            renderItem={(item: number, index: number) => (
+              <View
+                style={{
+                  width: widthPixel(180),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <SmoothPickerItem isSelected={item == selectedDay} isIncome>
+                  {item + 1}
+                </SmoothPickerItem>
+              </View>
+            )}
+            initialIndex={selectedDay}
+            onChange={(day: number) => setSelectedDay(day)}
+            interpolateScale={(index: number, itemWidth: number) => ({
+              inputRange: [
+                itemWidth * (index - 2),
+                itemWidth * (index - 1),
+                itemWidth * index,
+                itemWidth * (index + 1),
+                itemWidth * (index + 2),
+              ],
+              outputRange: [0.8, 1, 1.2, 1, 0.8],
+            })}
+          />
+
+          <SmoothPickerTopDetail>
+            <AntDesign
+              name="caretdown"
+              size={widthPixel(40)}
+              color={colors.lincolnGreen}
+            />
+          </SmoothPickerTopDetail>
+          <SmoothPickerBottomDetail />
+        </View>
+      </SmoothPickerContainer>
 
       <BottomNavigation
         onPress={() => next()}
         description={'Escolher categoria'}
         iconColor={colors.slimyGreen}
+        pickerOn={!isFocused}
       />
     </Container>
   );
