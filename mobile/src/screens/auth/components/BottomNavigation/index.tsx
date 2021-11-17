@@ -33,7 +33,7 @@ const BottomNavigation: React.FC<IProps> = ({
       underlayColor={colors.white}
       onPress={onPress}
       style={{
-        bottom: pickerOn ? heightPixel(380) : 0,
+        bottom: pickerOn ? heightPixel(440) : 0,
       }}>
       <Content
         style={[

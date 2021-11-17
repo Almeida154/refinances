@@ -33,26 +33,24 @@ export const PrefixReaisSymbol = styled.Text`
 export const SmoothPickerContainer = styled.View`
   position: absolute;
   width: 100%;
-  height: ${`${heightPixel(380)}px`};
+  height: ${`${heightPixel(440)}px`};
   background-color: ${hexToRGB(colors.redCrayola, 0.8)};
-  justify-content: center;
-  align-items: center;
   bottom: 0;
 `;
 
 export const SmoothPickerTopDetail = styled.View`
   position: absolute;
-  top: 0px;
+  top: ${`${heightPixel(20)}px`};
   align-items: center;
   justify-content: center;
-  width: ${`${widthPixel(60)}`};
-  height: ${`${widthPixel(60)}`};
+  width: ${`${widthPixel(60)}px`};
+  height: ${`${widthPixel(60)}px`};
 `;
 
 export const SmoothPickerBottomDetail = styled.View`
   position: absolute;
   width: 3px;
-  height: ${`${heightPixel(50)}px`};
+  height: ${`${heightPixel(60)}px`};
   bottom: 0;
   background-color: ${colors.bigDipOruby};
 `;

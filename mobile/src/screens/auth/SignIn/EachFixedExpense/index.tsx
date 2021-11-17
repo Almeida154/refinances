@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler, Keyboard, TextInput, View } from 'react-native';
+import { BackHandler, Keyboard, Text, TextInput, View } from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -9,7 +9,10 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 import CurrencyInput from 'react-native-currency-input';
-import SmoothPicker from 'react-native-smooth-picker';
+//import SmoothPicker from 'react-native-smooth-picker';
+
+// @ts-ignore
+import Picker from 'react-native-picker-horizontal';
 
 // Styles
 import {
@@ -45,13 +48,15 @@ export type PropsNavigation = {
 const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   const [expenseAmount, setExpenseAmount] = useState<number | null>(0);
   const [formattedExpenseAmount, setFormattedExpenseAmount] = useState('');
-  const [selectedDay, setSelectedDay] = useState(2);
+  const [selectedDay, setSelectedDay] = useState(0);
   const [isFocused, setFocused] = useState(false);
 
   const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
     UseAuth();
 
   const inputRef = useRef<TextInput>(null);
+
+  const days = Array.from(Array(30).keys());
 
   useEffect(() => {
     const willShowSubscription = Keyboard.addListener(
@@ -85,6 +90,11 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     if (setupUser.entries) console.debug(`Size: ${setupUser.entries.length}`);
 
     showNiceToast('fake', 'Oops!', null, 500);
+
+    // Deixa o dia atual como default no smoothpicker
+    let currentDate = new Date(Date.now());
+    console.log(currentDate.getDate());
+    setSelectedDay(currentDate.getDate() - 1);
 
     // Caso já tenha passado pela tela, recupera o expense aqui
     if (setupUser.entries != undefined) {
@@ -233,42 +243,67 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       <SmoothPickerContainer style={{ opacity: isFocused ? 0 : 1 }}>
         <View
           style={{
+            height: heightPixel(440) - heightPixel(340),
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.small,
+              color: colors.diffWhite,
+            }}>
+            Dia de vencimento
+          </Text>
+        </View>
+        <View
+          style={{
+            height: heightPixel(380),
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
+            position: 'absolute',
+            bottom: 0,
           }}>
-          <SmoothPicker
-            style={{ width: '100%' }}
-            offsetSelection={widthPixel(16)}
-            contentContainerStyle={{
-              height: heightPixel(380),
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            magnet
-            horizontal
-            scrollAnimation
-            data={Array.from({ length: 31 }, (_, i) => i)}
-            showsHorizontalScrollIndicator={false}
-            initialScrollToIndex={2}
-            onSelected={({ item, index }) => setSelectedDay(index)}
-            renderItem={({ item, index }) => (
-              <SmoothPickerItem
-                isSelected={index == selectedDay}
-                lastDay={item == 31}>
-                {index + 1}
-              </SmoothPickerItem>
+          <Picker
+            data={days}
+            itemWidth={widthPixel(180)}
+            mark={false}
+            renderItem={(item: number, index: number) => (
+              <View
+                style={{
+                  width: widthPixel(180),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <SmoothPickerItem isSelected={item == selectedDay}>
+                  {item + 1}
+                </SmoothPickerItem>
+              </View>
             )}
+            initialIndex={selectedDay}
+            onChange={(day: number) => setSelectedDay(day)}
+            interpolateScale={(index: number, itemWidth: number) => ({
+              inputRange: [
+                itemWidth * (index - 2),
+                itemWidth * (index - 1),
+                itemWidth * index,
+                itemWidth * (index + 1),
+                itemWidth * (index + 2),
+              ],
+              outputRange: [0.8, 1, 1.2, 1, 0.8],
+            })}
           />
+
+          <SmoothPickerTopDetail>
+            <AntDesign
+              name="caretdown"
+              size={widthPixel(40)}
+              color={colors.bigDipOruby}
+            />
+          </SmoothPickerTopDetail>
+          <SmoothPickerBottomDetail />
         </View>
-        <SmoothPickerTopDetail>
-          <AntDesign
-            name="caretdown"
-            size={widthPixel(40)}
-            color={colors.bigDipOruby}
-          />
-        </SmoothPickerTopDetail>
-        <SmoothPickerBottomDetail />
       </SmoothPickerContainer>
 
       <BottomNavigation

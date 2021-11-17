@@ -12,12 +12,11 @@ export const Container = styled.View<DayProps>`
   background-color: ${props =>
     props.isSelected ? colors.diffWhite : hexToRGB(colors.bigDipOruby, 0.15)};
   width: ${props =>
-    props.isSelected ? `${widthPixel(180)}px` : `${widthPixel(120)}px`};
+    props.isSelected ? `${widthPixel(140)}px` : `${widthPixel(120)}px`};
   height: ${props =>
-    props.isSelected ? `${widthPixel(180)}px` : `${widthPixel(120)}px`};
-  margin-right: ${props => (props.lastDay ? 0 : `${widthPixel(40)}px`)};
+    props.isSelected ? `${widthPixel(140)}px` : `${widthPixel(120)}px`};
   border-radius: ${props =>
-    props.isSelected ? `${widthPixel(180 / 2)}px` : `${widthPixel(120 / 2)}px`};
+    props.isSelected ? `${widthPixel(140 / 2)}px` : `${widthPixel(120 / 2)}px`};
 
   justify-content: center;
   align-items: center;
