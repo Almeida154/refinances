@@ -87,10 +87,7 @@ const CreateCategoryGoals = () => {
                 </SectionButton>
                 
             </Container>
-                {
-                    metas && metas.map((item, index) => {
-                        if(index > 1){
-                            return (
+                
                                 <Container>
                                     <CreateGoal />
                                     
@@ -101,10 +98,7 @@ const CreateCategoryGoals = () => {
                                     </SectionButton>
                                     
                                 </Container>
-                            )
-                        }
-                    })
-                }
+
         </SectionCreate>
 
     )

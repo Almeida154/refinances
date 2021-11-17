@@ -58,11 +58,11 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
           
   }, [])
 
-  const [metasRealizadas, setMetasRealizadas] = useState(
+  /*const [metasRealizadas, setMetasRealizadas] = useState(
     !metas ? null : metas.filter(metas => metas.realizacaoMeta),
-  );
+  );*/
 
-  if(metasRealizadas && metasRealizadas.length > 0 ){
+  if(metas && metas.length > 0 ){
     return (
       <ScrollView style={{ backgroundColor: '#fff' }}>
   
@@ -84,14 +84,12 @@ const GoalsAccomplished = ({navigation}: PropsGoals) => {
                 <Subtitle>
                   Continue registrando suas metas financeiras para viver uma vida mais confortável
                 </Subtitle>
-                {
-                  metasRealizadas && metasRealizadas.map((item, index) => {
-                    console.log("Item: ", metasRealizadas)                    
-                    return (
-                      <CardGoals item={item} key={index}/>
-                    )
-                  })   
-                }
+                {metas &&
+                  metas.map((item, index) => {
+                    console.log('Item: ', UseMetas);
+                    if(item.saldoAtualMeta >= item.saldoFinalMeta)
+                      return <CardGoals item={item} key={index} />;
+              })}
               </View>
             }
   

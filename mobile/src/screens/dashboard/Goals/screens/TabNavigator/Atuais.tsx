@@ -49,11 +49,11 @@ const Goals = ({ navigation }: PropsGoals) => {
       })();
   }, []);
 
-  const [metasNaoRealizadas, setMetasNaoRealizadas] = useState(
+  /*const [metasNaoRealizadas, setMetasNaoRealizadas] = useState(
     !metas ? null : metas.filter(metas => !metas.realizacaoMeta),
-  );
+  );*/
 
-  if (metasNaoRealizadas && metasNaoRealizadas.length > 0) {
+  if (metas && metas.length > 0) {
     return (
       <ScrollView style={{ backgroundColor: '#fff' }}>
         {stateReload ? (
@@ -67,10 +67,11 @@ const Goals = ({ navigation }: PropsGoals) => {
               Registre os depósitos para acompanhar o progresso de suas metas
             </Subtitle>
 
-            {metasNaoRealizadas &&
-              metasNaoRealizadas.map((item, index) => {
-                console.log('Item: ', metasNaoRealizadas);
-                return <CardGoals item={item} key={index} />;
+            {metas &&
+              metas.map((item, index) => {
+                console.log('Item: ', UseMetas);
+                if(item.saldoAtualMeta < item.saldoFinalMeta)
+                  return <CardGoals item={item} key={index} />;
               })}
           </View>
         )}
