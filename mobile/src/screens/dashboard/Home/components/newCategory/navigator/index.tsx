@@ -4,7 +4,7 @@ import { StatusBar, BackHandler, ToastAndroid } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
+import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
@@ -12,17 +12,17 @@ import NewExpenseCategory from '../NewExpenseCategory';
 import NewIncomeCategory from '../NewIncomeCategory';
 
 import { Container } from './styles';
-// import { colors, fonts } from '../../../../../../styles';
-// import Header from '../../../../../../components/';
+import { colors, fonts } from '../../../../../../styles';
+import Header from '../../../../../../components/Header';
 
 const Tab = createMaterialTopTabNavigator();
 
-export type PropsNavigation = {
-  navigation: StackNavigationProp<RootStackParamAuth, 'NewCategory'>;
-  route: RouteProp<RootStackParamAuth, 'NewCategory'>;
-};
+type PropsCategory = {
+  navigation: StackNavigationProp<HomeAccountStack, "NewCategory">;
+  route: StackNavigationProp<HomeAccountStack, "NewCategory">;
+}
 
-const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
+const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
   const [routeName, setRouteName] = useState<string>();
 
   useEffect(() => {
@@ -32,10 +32,6 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
   }, [routeName]);
 
   const backNavAction = () => {
-    if (routeName == 'Despesa') {
-      navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
-      return true;
-    }
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
     return true;
   };
@@ -52,11 +48,10 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
         }
       />
       <Header
-        onBackButton={() => backNavAction()}
-        title="Nova categoria"
-        color={colors.white}
-        isShort
+        backButton={() => backNavAction()}
+        title=""
       />
+
       <Tab.Navigator
         initialRouteName={routeName}
         screenOptions={{
@@ -81,28 +76,10 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
           },
         })}>
         <Tab.Screen
-          listeners={{
-            tabPress: e => {
-              if (routeName == 'Receita') e.preventDefault();
-              ToastAndroid.show(
-                'Desculpe, você não pode fazer isso agora!',
-                ToastAndroid.SHORT,
-              );
-            },
-          }}
           name="Despesa"
           component={NewExpenseCategory}
         />
         <Tab.Screen
-          listeners={{
-            tabPress: e => {
-              if (routeName == 'Despesa') e.preventDefault();
-              ToastAndroid.show(
-                'Desculpe, você não pode fazer isso agora!',
-                ToastAndroid.SHORT,
-              );
-            },
-          }}
           name="Receita"
           component={NewIncomeCategory}
         />

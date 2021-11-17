@@ -82,22 +82,24 @@ const CreateCategoryGoals = () => {
             <Container>
                 <CreateCategory />
                 
-                <SectionButton>
+                <SectionButton onPress={() => {
+                    navigation.dispatch(StackActions.replace('StackAccount', {screen: 'NewCategory'}))
+                }}>
                     <Plus>+</Plus>                    
                 </SectionButton>
                 
             </Container>
                 
-                                <Container>
-                                    <CreateGoal />
+            <Container>
+                <CreateGoal />
                                     
-                                    <SectionButton onPress={() => {
-                                                        navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))
-                                                    }}>
-                                        <Plus>+</Plus>                    
-                                    </SectionButton>
+                <SectionButton onPress={() => {
+                    navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))
+                }}>
+                    <Plus>+</Plus>                    
+                </SectionButton>
                                     
-                                </Container>
+            </Container>
 
         </SectionCreate>
 
