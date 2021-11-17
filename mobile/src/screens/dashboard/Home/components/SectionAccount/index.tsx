@@ -40,6 +40,21 @@ type CardAccount = {
 const CardAccount = ({item}: CardAccount) => {
 
     console.log('item', typeof item.categoryConta != 'string' && item.categoryConta.iconeCategoryConta != "" )
+
+    const {contas, handleReadByUserContas} = UseContas()
+    const [saldoConta, setSaldoConta] = useState('0');
+    useEffect(() => {
+        let aux = 0
+
+        contas && contas.map(item => {
+            aux += item.saldoConta
+            setSaldoConta((item.saldoConta).toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
+        })
+
+        setSaldoConta(aux.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
+        
+    }, [contas])
+
     return(
         <ContainerCardAccount>
             <SectionDescription>
@@ -52,7 +67,7 @@ const CardAccount = ({item}: CardAccount) => {
                 </SectionName>
             </SectionDescription>
             <SectionBalanceAccount>
-                <LabelBalanceAccount>{item.saldoConta.toFixed(2)}</LabelBalanceAccount>                    
+                <LabelBalanceAccount>{saldoConta}</LabelBalanceAccount>                    
             </SectionBalanceAccount>            
         </ContainerCardAccount>
     )
@@ -63,7 +78,7 @@ const CardAccount = ({item}: CardAccount) => {
 const SectionAccount = () => {
     const {contas, handleReadByUserContas} = UseContas()
     const [saldo, setSaldo] = useState('0')
-
+    const [saldoConta, setSaldoConta] = useState('0');
     const { navigation }  = UseDadosTemp()
 
     useEffect(() => {
@@ -71,6 +86,7 @@ const SectionAccount = () => {
 
         contas && contas.map(item => {
             aux += item.saldoConta
+            setSaldoConta((item.saldoConta).toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
         })
 
         setSaldo(aux.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
@@ -85,7 +101,7 @@ const SectionAccount = () => {
     return (
         <Container>
             <SectionBalance>
-                <LabelDescriptionBalance>Saldo total</LabelDescriptionBalance>
+                <LabelDescriptionBalance>Saúde financeira</LabelDescriptionBalance>
                 <LabelBalance>{saldo}</LabelBalance>
             </SectionBalance>
 

@@ -32,7 +32,7 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
   }, [routeName]);
 
   const backNavAction = () => {
-    navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
+    navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
 

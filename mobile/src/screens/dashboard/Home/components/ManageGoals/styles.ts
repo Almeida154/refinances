@@ -7,12 +7,12 @@ export const Container = styled.View`
     background-color: white;
     width: 90%;
     border-radius: 15px;
+    margin-top: 15px;
 `
 export const SectionTop = styled.View`
     border-left-width: 6px;
     border-color: #EE4266;
     border-radius: 5px;
-
     width: 85%;
     margin-top: 15px;
     padding-left: 14px;

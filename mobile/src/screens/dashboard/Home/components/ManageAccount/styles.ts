@@ -28,7 +28,8 @@ export const TextButton = styled.Text`
 export const Title = styled.Text`
     color: #292929;
     marginBottom: 2%;
-    margin-top: 5%
+    margin-top: 15%;
+    color: #292929;
     fontFamily: ${`${fonts.familyType.black}`};
     font-size: ${`${fonts.size.big}px`};
 
