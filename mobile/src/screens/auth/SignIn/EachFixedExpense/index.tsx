@@ -1,18 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler, Keyboard, Text, TextInput, View } from 'react-native';
+import {
+  BackHandler,
+  Keyboard,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+} from 'react-native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
+import { Lancamento } from '../../../../contexts/EntriesContext';
+import { Parcela } from '../../../../contexts/InstallmentContext';
+
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
-
-import CurrencyInput from 'react-native-currency-input';
-//import SmoothPicker from 'react-native-smooth-picker';
-
-// @ts-ignore
-import Picker from 'react-native-picker-horizontal';
 
 // Styles
 import {
@@ -34,11 +38,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import SmoothPickerItem from '../../components/SmoothPickerItem';
+import CurrencyInput from 'react-native-currency-input';
+// @ts-ignore
+import Picker from 'react-native-picker-horizontal';
 
-import { Lancamento } from '../../../../contexts/EntriesContext';
-import { Parcela } from '../../../../contexts/InstallmentContext';
 import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'EachFixedExpense'>;

@@ -3,16 +3,18 @@ import { Container, Day } from './styles';
 
 interface IProps {
   isSelected?: boolean;
-  lastDay?: boolean;
+  isIncome?: boolean;
 }
 
 const SmoothPickerItem: React.FC<IProps> = ({
   isSelected,
-  lastDay,
+  isIncome,
   children,
 }) => (
-  <Container isSelected={isSelected} lastDay={lastDay}>
-    <Day isSelected={isSelected}>{children}</Day>
+  <Container isSelected={isSelected} isIncome={isIncome}>
+    <Day isSelected={isSelected} isIncome={isIncome}>
+      {children}
+    </Day>
   </Container>
 );
 

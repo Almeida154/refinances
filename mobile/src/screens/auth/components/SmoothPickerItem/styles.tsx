@@ -5,12 +5,17 @@ import { colors, fonts, metrics } from '../../../../styles';
 
 interface DayProps {
   isSelected?: boolean;
-  lastDay?: boolean;
+  isIncome?: boolean;
 }
 
 export const Container = styled.View<DayProps>`
   background-color: ${props =>
-    props.isSelected ? colors.diffWhite : hexToRGB(colors.bigDipOruby, 0.15)};
+    props.isSelected
+      ? colors.diffWhite
+      : hexToRGB(
+          props.isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          0.15,
+        )};
   width: ${props =>
     props.isSelected ? `${widthPixel(140)}px` : `${widthPixel(120)}px`};
   height: ${props =>
@@ -24,7 +29,9 @@ export const Container = styled.View<DayProps>`
 
 export const Day = styled.Text<DayProps>`
   color: ${props =>
-    props.isSelected ? hexToRGB(colors.redCrayola, 0.8) : colors.bigDipOruby};
+    props.isSelected
+      ? hexToRGB(props.isIncome ? colors.slimyGreen : colors.redCrayola, 0.8)
+      : hexToRGB(props.isIncome ? colors.lincolnGreen : colors.bigDipOruby)};
   font-size: ${props =>
     props.isSelected ? `${fonts.size.bigger}px` : `${fonts.size.small}px`};
   font-family: ${props =>
