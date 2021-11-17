@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from "express";
 
 import { Category } from "../entities/Category";
 import { User } from "../entities/User";
+import { Parcela } from "../entities/Parcela";
+import { Lancamento } from "../entities/Lancamento";
 
 class CategoryController {       
 
@@ -128,7 +130,59 @@ class CategoryController {
          
         
         return response.send({ categories });
-    }   
+    }
+
+    async CountByEntry(request: Request, response: Response, next: NextFunction) {
+        const categoryRepository = getRepository(Category);
+        const userRepository = getRepository(User);        
+
+        const user = await userRepository.findOne({
+            where: {
+                id: request.params.iduser
+            }
+        })
+
+        if(!user) {
+            return response.send({error: "usuário não encontrado"})
+        }
+
+       
+
+        let categories
+
+        if(request.body.tipoCategoria == 'todos') {                   
+                categories = await categoryRepository.createQueryBuilder("category")
+                .select(["category", "user.id"])
+                .leftJoinAndSelect("category.lancamentosCategory", "lancamento")
+                .leftJoin("category.userCategory", "user")                
+                .leftJoinAndSelect("lancamento.parcelasLancamento", "parcela")
+                .leftJoinAndSelect("parcela.contaParcela", "conta")
+                .getMany()
+                
+        } else {
+            categories = await categoryRepository.createQueryBuilder("category")
+            .select(["category", "user.id"])
+            .leftJoinAndSelect("category.lancamentosCategory", "lancamento")
+            .leftJoin("category.userCategory", "user")                
+            .leftJoinAndSelect("lancamento.parcelasLancamento", "parcela")
+            .leftJoinAndSelect("parcela.contaParcela", "conta")
+            .where("category.tipoCategoria = :tipo", {tipo: request.body.tipoCategoria})
+            .getMany() 
+        }
+                 
+        for(var i = 0;i < categories.length;i++) {
+            categories[i].valueLancamentos = 0
+
+            categories[i].lancamentosCategory.map((item: Lancamento) => {
+                for(var j = 0;j < item.parcelasLancamento.length;j++) {
+                    categories[i].valueLancamentos += item.tipoLancamento == 'despesa' ? -item.parcelasLancamento[j].valorParcela : item.parcelasLancamento[j].valorParcela
+                }
+            })
+
+        }
+        
+        return response.send({ categories });
+    }
 
     async remove(request: Request, response: Response, next: NextFunction) {
         const categoryRepository = getRepository(Category);
