@@ -58,7 +58,7 @@ const Goals = ({ navigation }: PropsGoals) => {
       <ScrollView style={{ backgroundColor: '#fff' }}>
         {stateReload ? (
           <Loading>
-            <ActivityIndicator size="large" color="#E8871E" />
+            <ActivityIndicator size="large" color="#EE4266" />
             <TextLoading>Carregando...</TextLoading>
           </Loading>
         ) : (

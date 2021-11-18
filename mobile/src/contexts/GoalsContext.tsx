@@ -26,6 +26,7 @@ interface MetaContextType {
   handleAdicionarMeta(metaProps: Meta): Promise<void>;
   handleReadByUserMetas(idUser: number): Promise<void>;
   handleGetGoalById(id: number): Promise<void>;
+  handleRemoveGoalById(id: number): Promise<void>;
   handleAtualizarMeta (meta: Meta, id: number): Promise<void>;
 }
 
@@ -139,7 +140,8 @@ export const MetasProvider: React.FC = ({ children }) => {
 
   async function handleRemoveGoalById(id: number) {
     try {
-      const response = await api.get(`/goal/remove/${id}`);
+      const response = await api.delete(`/goal/remove/${id}`);
+      handleReadByUserMetas(await retornarIdDoUsuario()); 
       return response.data.goal;
     } catch (error) {
       console.debug('GoalsContext | handleRemoveGoalById: ' + error);
@@ -155,6 +157,7 @@ export const MetasProvider: React.FC = ({ children }) => {
         handleAdicionarMeta,
         handleGetGoalById,
         handleAtualizarMeta,
+        handleRemoveGoalById,
       }}>
       {children}
     </MetaContext.Provider>

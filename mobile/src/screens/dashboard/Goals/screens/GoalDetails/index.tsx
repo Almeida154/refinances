@@ -22,6 +22,9 @@ import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { ProgressBar } from 'react-native-paper';
 import Button from '../../../../../components/Button';
 
+import Toast from '@zellosoft.com/react-native-toast-message';
+import NiceToast from '../../../../../components/NiceToast';
+
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
@@ -39,6 +42,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
   const [goal, setGoal] = useState({} as Meta);
 
   const { handleGetGoalById } = UseMetas();
+  const { handleRemoveGoalById } = UseMetas();
 
   useEffect(() => {
     (async () => {
@@ -136,13 +140,18 @@ const GoalDetails = ({ route, navigation }: Props) => {
         />
 
         <Button
-          onPress={() => {
-            navigation.dispatch(
-              StackActions.replace('GoalsStack', {
-              screen: 'EditGoal',
-              params: { goalId: goal.id }
-            }));
-          }}
+          onPress={() => { 
+            handleRemoveGoalById(goal.id);
+            navigation.dispatch(StackActions.replace('Main'));
+            Toast.show({
+              type: 'niceToast',
+              props: {
+                type: 'warning',
+                title: 'Excluido!',
+                message: 'Meta deletada com sucesso!',
+              },
+            });
+        }}
           title="Excluir"
           color="#ee4266"
           style={{
@@ -169,6 +178,8 @@ const GoalDetails = ({ route, navigation }: Props) => {
           }}
         />
       </View>
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>
   );
 };
