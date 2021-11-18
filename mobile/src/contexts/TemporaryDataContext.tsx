@@ -1,12 +1,5 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
-import api from '../services/api';
-
-import { UseAuth } from './AuthContext';
-
-import { Lancamento } from './EntriesContext';
-import { Categoria } from './CategoriesContext';
-import { Conta } from './AccountContext';
 import { PropsMainRoutes } from '../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IHandles } from 'react-native-modalize/lib/options';
@@ -14,26 +7,28 @@ import { Modalize } from 'react-native-modalize';
 import { Transferencia } from './TransferContext';
 import { ReadParcela } from './InstallmentContext';
 
-interface DadosTempContextType {
-  categoriasTemp: Categoria[];
-  rendaTemp: string;
-  contaTemp: Conta;
-  configuracoesDeConta: boolean[];
+import Toast from '@zellosoft.com/react-native-toast-message';
+
+interface DadosTempContextType {  
   navigation: StackNavigationProp<PropsMainRoutes, 'Main'>;
   modalizeRefDetailEntry: React.RefObject<IHandles>;
 
   setNavigation: React.Dispatch<
     React.SetStateAction<StackNavigationProp<PropsMainRoutes, 'Main'>>
-  >;
-  setupCategoriasPadroes(): void;
-  setupConta(conta: Conta): Promise<void>;
-  setRendaTemp: React.Dispatch<React.SetStateAction<string>>;
-  setCategoriasTemp: React.Dispatch<React.SetStateAction<Categoria[]>>;
-  setupConfiguracaoConta(quantidade: number): void;
-  mudarConfiguracaoConta(configuracaoContaProps: boolean[]): void;
+  >;  
 
   selectedItemExtract: ReadParcela | Transferencia | null;
   setSelectedItemExtract: React.Dispatch<React.SetStateAction<ReadParcela | Transferencia | null>>
+
+  showNiceToast(
+    type: string,
+    title?: string | null,
+    message?: string | null,
+    time?: number | null,
+    detailed?: boolean,
+  ): any;
+
+  hideNiceToast(): any;
 }
 
 const DadosTempContext = createContext<DadosTempContextType>(
@@ -43,14 +38,7 @@ const DadosTempContext = createContext<DadosTempContextType>(
 export const UseDadosTemp = () => useContext(DadosTempContext);
 
 export const DadosTempProvider: React.FC = ({ children }) => {
-  const [categoriasTemp, setCategoriasTemp] = useState<Categoria[]>([
-    {},
-  ] as Categoria[]);
-  const [rendaTemp, setRendaTemp] = useState('00.00');
-  const [contaTemp, setContaTemp] = useState<Conta>({} as Conta);
-  const [configuracoesDeConta, setConfiguracoesDeConta] = useState(
-    [] as boolean[],
-  );
+ 
   const [navigation, setNavigation] = useState(
     {} as StackNavigationProp<PropsMainRoutes, 'Main'>,
   );
@@ -59,84 +47,42 @@ export const DadosTempProvider: React.FC = ({ children }) => {
 
   const modalizeRefDetailEntry = useRef<Modalize>(null)
 
-  const { user } = UseAuth();
-
-  function setupCategoriasPadroes() {
-    const nomesCategoriasPadroes = [
-      'Educação',
-      'Casa',
-      'Restaurantes',
-      'Família',
-      'Impostos',
-      'Lazer',
-      'Mercado',
-      'Pets',
-      'Transporte',
-      'Viagem',
-    ];
-
-    const newCategorias: Categoria[] = [];
-
-    nomesCategoriasPadroes.map(item => {
-      const categoria = {
-        id: -1,
-        nomeCategoria: item,
-        tetoDeGastos: 0,
-        tipoCategoria: 'despesa',
-        essencial: false,
-        userCategoria: user.id,
-      };
-
-      newCategorias.push(categoria);
+  function showNiceToast(
+    type: string,
+    title?: string | null,
+    message?: string | null,
+    time?: 2500 | null,
+    detailed?: boolean | null,
+  ) {
+    Toast.show({
+      type: 'niceToast',
+      visibilityTime: time || 2500,
+      position: 'top',
+      // onShow: () => console.log('mostrou'),
+      // onPress: () => console.log('tocado'),
+      props: {
+        type,
+        title,
+        message,
+        detailed,
+      },
     });
-
-    setCategoriasTemp(newCategorias);
   }
 
-  async function setupConfiguracaoConta(quantidade: number) {
-    const aux = [];
-    for (var i = 0; i < quantidade; i++) aux.push(false);
-    console.log('aux + ', aux);
-    setConfiguracoesDeConta(aux);
-  }
-
-  function mudarConfiguracaoConta(configuracaoConta: boolean[]) {
-    setConfiguracoesDeConta(configuracaoConta);
-  }
-
-  async function setupConta(conta: Conta) {
-    try {
-      const newConta: Conta = {
-        id: -1,
-        saldoConta: conta.saldoConta,
-        descricao: conta.descricao,
-        userConta: conta.userConta,
-        categoryConta: conta.categoryConta,
-      };
-      setContaTemp(newConta);
-    } catch (error) {
-      console.log('Deu um erro no setupConta: ' + error);
-    }
-  }
+  function hideNiceToast() {
+    Toast.hide();
+  }  
 
   return (
     <DadosTempContext.Provider
       value={{
+        showNiceToast,
+        hideNiceToast,
         selectedItemExtract,
         setSelectedItemExtract,
         modalizeRefDetailEntry,
         setNavigation,
-        navigation,
-        contaTemp,
-        configuracoesDeConta,
-        mudarConfiguracaoConta,
-        setupConfiguracaoConta,
-        categoriasTemp,
-        rendaTemp,
-        setRendaTemp,
-        setupConta,
-        setupCategoriasPadroes,
-        setCategoriasTemp,
+        navigation,       
       }}>
       {children}
     </DadosTempContext.Provider>

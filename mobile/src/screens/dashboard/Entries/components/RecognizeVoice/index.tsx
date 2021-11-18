@@ -163,7 +163,7 @@ class VoiceTest extends Component<Props, State> {
       partialResults: [],
       end: '',      
       isRecording: true,
-      itemNovo: [{}] as Lancamento[]
+      itemNovo: !this.state.itemNovo ? [{}]  as Lancamento[] : this.state.itemNovo
     });
 
     try {
@@ -427,7 +427,10 @@ class VoiceTest extends Component<Props, State> {
       return ToastAndroid.show("Nenhum item adicionado", ToastAndroid.SHORT)
     }          
     
-    itemNovo.map(async (item) => {
+    let foi = false
+    itemNovo.map(async (item, index) => {
+      if(index == 1) foi = true
+
       const readItemNovo = {
         ...item
       }
@@ -440,9 +443,14 @@ class VoiceTest extends Component<Props, State> {
       if(response == '') {
         
       } else {
+        foi = false
         ToastAndroid.show(response, ToastAndroid.SHORT)
       }
     })
+
+    if(foi) {
+      ToastAndroid.show(`${itemNovo.length == 1 ? 'O cadastro' : 'Os cadastros'} foram real`, ToastAndroid.SHORT)
+    }
   }
 
  
