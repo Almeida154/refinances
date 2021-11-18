@@ -118,7 +118,7 @@ const TabNavigator = () => {
             )
           }
           backgroundColor={colors.platinum}
-          color={colors.silver}
+          color={colors.darkGray}
         />
         <Button
           title="Adição por voz"
@@ -128,7 +128,7 @@ const TabNavigator = () => {
             )
           }
           backgroundColor={colors.platinum}
-          color={colors.silver}
+          color={colors.darkGray}
         />
       </Modalize>
 
