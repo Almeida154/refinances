@@ -41,6 +41,8 @@ import SmoothPickerItem from '../../components/SmoothPickerItem';
 import CurrencyInput from 'react-native-currency-input';
 // @ts-ignore
 import Picker from 'react-native-picker-horizontal';
+import EntryPlaceholder from '../../components/EntryPlaceholder';
+import DatePlaceholder from '../../components/DatePlaceholder';
 
 import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 
@@ -52,8 +54,9 @@ export type PropsNavigation = {
 const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   const [expenseAmount, setExpenseAmount] = useState<number | null>(0);
   const [formattedExpenseAmount, setFormattedExpenseAmount] = useState('');
-  const [selectedDay, setSelectedDay] = useState(0);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [isFocused, setFocused] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
     UseAuth();
@@ -95,11 +98,6 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
 
     showNiceToast('fake', 'Oops!', null, 500);
 
-    // Deixa o dia atual como default no smoothpicker
-    let currentDate = new Date(Date.now());
-    console.log(currentDate.getDate());
-    setSelectedDay(currentDate.getDate() - 1);
-
     // Caso já tenha passado pela tela, recupera o expense aqui
     if (setupUser.entries != undefined) {
       if (setupUser.entries[setupUser.expenseTagsCount] != undefined) {
@@ -111,14 +109,31 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
         if (entryIndex != -1) {
           var entry = setupUser.entries[entryIndex];
           setExpenseAmount(entry.parcelasLancamento[0].valorParcela);
+          setSelectedDay(entry.parcelasLancamento[0].dataParcela.getDate() - 1);
         }
+      } else {
+        // Pegar do último
+        let previousEntry = setupUser.entries[setupUser.expenseTagsCount - 1];
+        console.log('penultimo else', previousEntry.parcelasLancamento[0]);
+        setSelectedDay(
+          previousEntry.parcelasLancamento[0].dataParcela.getDate() - 1,
+        );
       }
+    } else {
+      // Deixa o dia atual como default no smoothpicker
+      let currentDate = new Date(Date.now());
+      console.log('ultimo else', currentDate.getDate());
+      setSelectedDay(currentDate.getDate() - 1);
     }
 
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
+
+  useEffect(() => {
+    selectedDay != null && setTimeout(() => setLoading(false), 700);
+  }, [selectedDay]);
 
   const backAction = () => {
     if (setupUser.expenseTagsCount == 0) {
@@ -149,7 +164,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     hideNiceToast();
 
     let dateNow = new Date(Date.now());
-    dateNow.setDate(selectedDay + 1);
+    selectedDay != null && dateNow.setDate(selectedDay + 1);
 
     const entry = {
       descricaoLancamento: setupUser.expenseTags[setupUser.expenseTagsCount],
@@ -194,51 +209,57 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       <ScrollView>
         <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
           <Writting>
-            <PrefixReaisSymbol>R$</PrefixReaisSymbol>
-            <CurrencyInput
-              style={{
-                flex: 1,
-                padding: 0,
-                color: colors.davysGrey,
-                fontFamily: fonts.familyType.bold,
-                fontSize: fonts.size.super + 14,
-              }}
-              value={expenseAmount}
-              onChangeValue={txt => setExpenseAmount(txt)}
-              delimiter="."
-              separator=","
-              precision={2}
-              placeholder="0,00"
-              maxValue={999999}
-              placeholderTextColor={'rgba(52, 52, 52, .3)'}
-              selectionColor={colors.davysGrey}
-              onChangeText={formattedValue => {
-                setFormattedExpenseAmount(formattedValue);
-                if (expenseAmount == null) setExpenseAmount(0.0);
-              }}
-              ref={inputRef}
-              onBlur={() => {
-                console.log('bluou');
-                setFocused(false);
-              }}
-              onFocus={() => {
-                console.log('focou');
-                setFocused(true);
-              }}
-            />
-            {expenseAmount != null && (
-              <IonIcons
-                style={{
-                  padding: 6,
-                  marginLeft: 16,
-                }}
-                name="close"
-                size={32}
-                color={`rgba(82, 82, 82, .08)`}
-                onPress={() => {
-                  setExpenseAmount(0.0);
-                }}
-              />
+            {!isLoading ? (
+              <>
+                <PrefixReaisSymbol>R$</PrefixReaisSymbol>
+                <CurrencyInput
+                  style={{
+                    flex: 1,
+                    padding: 0,
+                    color: colors.davysGrey,
+                    fontFamily: fonts.familyType.bold,
+                    fontSize: fonts.size.super + 14,
+                  }}
+                  value={expenseAmount}
+                  onChangeValue={txt => setExpenseAmount(txt)}
+                  delimiter="."
+                  separator=","
+                  precision={2}
+                  placeholder="0,00"
+                  maxValue={999999}
+                  placeholderTextColor={'rgba(52, 52, 52, .3)'}
+                  selectionColor={colors.davysGrey}
+                  onChangeText={formattedValue => {
+                    setFormattedExpenseAmount(formattedValue);
+                    if (expenseAmount == null) setExpenseAmount(0.0);
+                  }}
+                  ref={inputRef}
+                  onBlur={() => {
+                    console.log('bluou');
+                    setFocused(false);
+                  }}
+                  onFocus={() => {
+                    console.log('focou');
+                    setFocused(true);
+                  }}
+                />
+                {expenseAmount != null && (
+                  <IonIcons
+                    style={{
+                      padding: 6,
+                      marginLeft: 16,
+                    }}
+                    name="close"
+                    size={32}
+                    color={`rgba(82, 82, 82, .08)`}
+                    onPress={() => {
+                      setExpenseAmount(0.0);
+                    }}
+                  />
+                )}
+              </>
+            ) : (
+              <EntryPlaceholder />
             )}
           </Writting>
         </Content>
@@ -269,35 +290,39 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
             position: 'absolute',
             bottom: 0,
           }}>
-          <Picker
-            data={days}
-            itemWidth={widthPixel(180)}
-            mark={false}
-            renderItem={(item: number, index: number) => (
-              <View
-                style={{
-                  width: widthPixel(180),
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <SmoothPickerItem isSelected={item == selectedDay}>
-                  {item + 1}
-                </SmoothPickerItem>
-              </View>
-            )}
-            initialIndex={selectedDay}
-            onChange={(day: number) => setSelectedDay(day)}
-            interpolateScale={(index: number, itemWidth: number) => ({
-              inputRange: [
-                itemWidth * (index - 2),
-                itemWidth * (index - 1),
-                itemWidth * index,
-                itemWidth * (index + 1),
-                itemWidth * (index + 2),
-              ],
-              outputRange: [0.8, 1, 1.2, 1, 0.8],
-            })}
-          />
+          {!isLoading ? (
+            <Picker
+              data={days}
+              itemWidth={widthPixel(180)}
+              mark={false}
+              renderItem={(item: number, index: number) => (
+                <View
+                  style={{
+                    width: widthPixel(180),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <SmoothPickerItem isSelected={item == selectedDay}>
+                    {item + 1}
+                  </SmoothPickerItem>
+                </View>
+              )}
+              initialIndex={selectedDay}
+              onChange={(day: number) => setSelectedDay(day)}
+              interpolateScale={(index: number, itemWidth: number) => ({
+                inputRange: [
+                  itemWidth * (index - 2),
+                  itemWidth * (index - 1),
+                  itemWidth * index,
+                  itemWidth * (index + 1),
+                  itemWidth * (index + 2),
+                ],
+                outputRange: [0.8, 1, 1.2, 1, 0.8],
+              })}
+            />
+          ) : (
+            <DatePlaceholder />
+          )}
 
           <SmoothPickerTopDetail>
             <AntDesign
