@@ -20,6 +20,7 @@ import Home from '../screens/dashboard/Home';
 import AddCategoryAccount from '../screens/dashboard/Home/components/CreateAccount/components/AddCategoryAccount';
 import ManageCategory from '../screens/dashboard/Home/components/ManageCategory/navigators/TopBarNavigator'
 import NewCategory from '../screens/dashboard/Home/components/newCategory/navigator/'
+import EditCategory from '../screens/dashboard/Home/components/EditCategory';
 
 
 import GoalsList from '../screens/dashboard/Goals/navigators/TopBarNavigator';
@@ -61,6 +62,12 @@ export const HomeAccountStackNavigation = () => {
       <HomeStack.Screen
         name="NewCategory"
         component={NewCategory}
+        options={{headerShown: false}}
+      />
+
+      <HomeStack.Screen
+        name="EditCategory"
+        component={EditCategory}
         options={{headerShown: false}}
       />
 
