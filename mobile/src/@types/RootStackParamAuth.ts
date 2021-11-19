@@ -10,6 +10,7 @@ type PropsNavigationAuth = {
   Password: undefined;
   ConfirmPassword: undefined;
   Photo: undefined;
+  Account: undefined;
 
   FixedExpenses: undefined;
   EachFixedExpense: undefined;

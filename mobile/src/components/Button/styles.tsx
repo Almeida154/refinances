@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { heightPixel } from '../../helpers/responsiveness';
+import { heightPixel, widthPixel } from '../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../styles';
 
 interface ContainerProps {
@@ -13,7 +13,7 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
   align-items: center;
   font-family: ${fonts.familyType.bold};
   background-color: ${colors.silver};
-  border-radius: ${`${metrics.inputText.radius}px`};
+  border-radius: ${`${widthPixel(20)}px`};
   margin: ${props => (props.lastOne ? 0 : heightPixel(22))}px 0;
 `;
 

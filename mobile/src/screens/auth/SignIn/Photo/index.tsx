@@ -66,7 +66,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
     newUser.fotoPerfilUsuario = avatar.base64 == '' ? null : avatar.base64;
     updateUserProps(newUser);
     console.debug('Photo | next(): ', JSON.stringify(user).substr(0, 200));
-    navigation.dispatch(StackActions.replace('FixedExpenses'));
+    navigation.dispatch(StackActions.replace('Account'));
   }
 
   const openCamera = () => {

@@ -81,7 +81,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('Photo'));
+    navigation.dispatch(StackActions.replace('Account'));
     return true;
   };
 

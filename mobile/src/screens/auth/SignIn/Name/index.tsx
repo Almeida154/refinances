@@ -28,7 +28,7 @@ export type PropsNavigation = {
 };
 
 const Name = ({ navigation }: PropsNavigation) => {
-  const [name, setName] = useState('Roberto Pesticida');
+  const [name, setName] = useState('Talisca');
   const [hasError, setError] = useState(false);
 
   const { user, updateUserProps, showNiceToast, hideNiceToast } = UseAuth();

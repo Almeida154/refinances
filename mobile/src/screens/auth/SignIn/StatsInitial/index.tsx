@@ -69,6 +69,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
           valueLineColor: processColor('#fff'),
           valueLinePart1Length: 0.5,
         },
+        label: '',
       },
     ],
   });
@@ -109,6 +110,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
             },
             { value: expensePercentage, label: 'Quanto gasta' },
           ],
+          label: '',
           config: {
             colors: [
               processColor(colors.redCrayola),

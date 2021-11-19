@@ -10,6 +10,8 @@ import Password from '../screens/auth/SignIn/Password';
 import ConfirmPassword from '../screens/auth/SignIn/ConfirmPassword';
 import Photo from '../screens/auth/SignIn/Photo';
 
+import Account from '../screens/auth/SignIn/Account';
+
 import NewCategory from '../screens/auth/SignIn/newCategory/navigator';
 
 import FixedExpenses from '../screens/auth/SignIn/FixedExpenses';
@@ -23,7 +25,6 @@ import EachFixedIncomeCategory from '../screens/auth/SignIn/EachFixedIncomeCateg
 import StatsInitial from '../screens/auth/SignIn/StatsInitial';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from 'react-native';
 
 const AuthStack = createStackNavigator();
 
@@ -38,6 +39,8 @@ const AuthRoutes: React.FC = () => {
       <AuthStack.Screen name="Password" component={Password} />
       <AuthStack.Screen name="ConfirmPassword" component={ConfirmPassword} />
       <AuthStack.Screen name="Photo" component={Photo} />
+
+      <AuthStack.Screen name="Account" component={Account} />
 
       <AuthStack.Screen name="NewCategory" component={NewCategory} />
 
