@@ -4,6 +4,8 @@ import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UseAuth } from './AuthContext';
 
+import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario';
+
 export type Categoria = {
   id: number;
   nomeCategoria: string;
@@ -26,6 +28,8 @@ interface CategoriaContextType {
     idUser: number,
     tipoCategoria: string,
   ): Promise<void>;
+  handleGetCategoryById (id: number): Promise<void>;
+  handleAtualizarCategoria (categoria: Categoria, id: number): Promise<void>;
 }
 
 const CategoriaContext = createContext<CategoriaContextType>(
@@ -124,6 +128,49 @@ export const CategoriasProvider: React.FC = ({ children }) => {
     } catch (error) {}
   }
 
+  async function handleAtualizarCategoria(categoria: Categoria, id: number) {
+    try {
+      const response = await api.put(`/category/edit/${id}`, {
+        nomeCategoria: categoria.nomeCategoria,
+        tetoDeGastos: categoria.tetoDeGastos,
+        tipoCategoria: categoria.tipoCategoria,
+        iconeCategoria: categoria.iconeCategoria,
+        userCategory: categoria.userCategoria,
+        corCategoria: categoria.corCategoria,
+      });
+
+      console.log(response.data);
+
+      if (response.data.error) console.log(response.data.error);
+
+      console.log('response.data', response.data);
+
+      const updateCategorias = categorias == null ? null : categorias.slice();
+
+      if (!updateCategorias) {
+        //Caso atualizou e não tinha nenhuma outras categorias carregadas, carregar todas contando com a atual
+        handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
+      } else {
+        console.log(response.data.categorias);
+        setCategorias(response.data.categorias);
+
+        console.log('categorias: ' + categorias);
+      }
+
+    } catch (error) {
+      console.log('Deu um erro no handleUpdatecategoria: ' + error);
+    }
+  }
+
+  async function handleGetCategoryById(id: number) {
+    try {
+      const response = await api.get(`/category/read/${id}`);
+      return response.data.categorias;
+    } catch (error) {
+      console.debug('CategoriesContext | handleGetCategoryById: ' + error);
+    }
+  }
+
   return (
     <CategoriaContext.Provider
       value={{
@@ -132,6 +179,8 @@ export const CategoriasProvider: React.FC = ({ children }) => {
         handleReadByUserCategorias,
         handleAdicionar,
         setupCategorias,
+        handleAtualizarCategoria, 
+        handleGetCategoryById
       }}>
       {children}
     </CategoriaContext.Provider>

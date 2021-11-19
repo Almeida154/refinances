@@ -7,6 +7,7 @@ export type HomeAccountStack = {
   AddCategoryAccount: undefined;
   ManageCategory: undefined;
   NewCategory: undefined;
+  EditCategory: { categoryId: number };
 };
 
 export type GoalsStack = {
