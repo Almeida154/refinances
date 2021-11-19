@@ -40,7 +40,7 @@ const Despesas = ({ navigation }: PropsCategory) => {
   }, [navigation]);
 
   useEffect(() => {
-    // Caso nenhuma meta seja carregada, recarregar
+    // Caso nenhuma despesa seja carregada, recarregar
     if (!categorias)
       (async function () {
         handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
@@ -52,7 +52,7 @@ const Despesas = ({ navigation }: PropsCategory) => {
       <ScrollView style={{ backgroundColor: '#fff' }}>
         {stateReload ? (
           <Loading>
-            <ActivityIndicator size="large" color="#E8871E" />
+            <ActivityIndicator size="large" color="#EE4266" />
             <TextLoading>Carregando...</TextLoading>
           </Loading>
         ) : (
@@ -64,7 +64,9 @@ const Despesas = ({ navigation }: PropsCategory) => {
             {categorias &&
               categorias.map((item, index) => {
                 console.log('Item: ', categorias);
-                return <CardCategory item={item} key={index} />;
+                if(item.tipoCategoria == "despesa"){
+                  return <CardCategory item={item} key={index} />;
+                }
               })}
 
           </View>

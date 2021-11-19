@@ -10,7 +10,7 @@ import {
   UseDadosTemp,
 } from '../../../../../contexts/TemporaryDataContext';
 
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, StatusBar } from 'react-native';
 
 import { TextRS, TextValor, Title, Valor } from './styles';
 
@@ -18,9 +18,17 @@ import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
+import HeaderTop from '../../../../../components/Header';
+import {
+  AlinhaParaDireita,
+  InputControlValue,
+  LabelCifrao,
+  TextInputValue,
+  Header,
+} from '../../../Entries/styles';
+
 import fonts from '../../../../../styles/fonts';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import Header from '../../../../../components/Header';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -98,45 +106,42 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
 
   return (
     <ScrollView style={{ paddingTop: '8%', backgroundColor: '#f6f6f6' }}>
-      <Header backButton={backAction} title="" />
+      <StatusBar backgroundColor={'#ee4266'} />
+       <Header style={{ backgroundColor: '#ee4266' }}>
+            <HeaderTop backButton={backAction} title="" />
 
-      <View style={styles.container}>
-        <View style={{ marginTop: '15%' }}>
+            <AlinhaParaDireita>
+              <View></View>
+              <InputControlValue>
+                <LabelCifrao>R$</LabelCifrao>
+                <TextInputValue
+                  keyboardType="numeric"
+                  placeholder="00,00"
+                  placeholderTextColor="#fff"
+                  value={tetoGastos}
+                  onChangeText={txt => {
+                    setValorError(null);
+                    setTetoGastos(txt);
+                  }}
+                />
+              </InputControlValue>
+            </AlinhaParaDireita>
+          </Header>
           <Title>{'category.nomeCategoria'}</Title>
 
-          <Valor>
-            <TextRS>R$</TextRS>
-            <TextValor>{'category.nomeCategoria'}</TextValor>
-          </Valor>
-
-          <View>
-            <InputText
-              value={tetoGastos}
-              label="Teto de gastos"
-              placeholder={"Ex.: R$100,00"}
-              error={valorError}
-              showClearIcon={tetoGastos != ''}
-              onClear={() => {
-                setValorError(null);
-                setTetoGastos('');
-              }}
-              onChangeText={txt => {
-                setValorError(null);
-                setTetoGastos(txt);
-              }}
-              keyboardType="numeric"
-            />
-          </View>
-
           <Button
-            onPress={handleUpdateCategory}
+            onPress={() => {
+              handleUpdateCategory();
+              navigation.dispatch(StackActions.replace('StackAccount', 
+                {screen: 'ManageCategory'}));
+
+              }
+            }
             title="Salvar"
             backgroundColor="#CCC"
             color="#444"
             lastOne={true}
           />
-        </View>
-      </View>
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>

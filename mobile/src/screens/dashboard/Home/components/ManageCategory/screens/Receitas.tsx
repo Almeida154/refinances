@@ -40,7 +40,7 @@ const Receitas = ({ navigation }: PropsCategory) => {
   }, [navigation]);
 
   useEffect(() => {
-    // Caso nenhuma meta seja carregada, recarregar
+    // Caso nenhuma receita seja carregada, recarregar
     if (!categorias)
       (async function () {
         handleReadByUserCategorias(await retornarIdDoUsuario(), 'receita');
@@ -52,21 +52,23 @@ const Receitas = ({ navigation }: PropsCategory) => {
       <ScrollView style={{ backgroundColor: '#fff' }}>
         {stateReload ? (
           <Loading>
-            <ActivityIndicator size="large" color="#E8871E" />
+            <ActivityIndicator size="large" color="#EE4266" />
             <TextLoading>Carregando...</TextLoading>
           </Loading>
         ) : (
           <View style={{ margin: '10%' }}>
             <Subtitle>
-              Cadastre novas categorias para se organizar ainda mais!
+              Adicione teto de gastos às categorias para se manter organizado(a)!
             </Subtitle>
 
             {categorias &&
               categorias.map((item, index) => {
                 console.log('Item: ', categorias);
-                if(item.tipoCategoria == 'receita')
+                if(item.tipoCategoria == "receita"){
                   return <CardCategory item={item} key={index} />;
+                }
               })}
+
           </View>
         )}
       </ScrollView>
