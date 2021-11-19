@@ -24,7 +24,7 @@ import Header from '../../../../../components/Header';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Categoria, UseCategories } from '@contexts/CategoriesContext';
+import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext';
 import { EXPORTDECLARATION_TYPES } from '@babel/types';
 
 type PropsEditCategory = {
@@ -52,12 +52,11 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
     const newCategory = {
       nomeCategoria: category.nomeCategoria,
       iconeCategoria: category.iconeCategoria,
-      tetoDeGastos: tetoGastos,
+      tetoDeGastos: parseFloat(tetoGastos),
       tipoCategoria: category.tipoCategoria,
       corCategoria: category.corCategoria,
-      userCategoria: category.userCategoria
-      userCategory: await retornarIdDoUsuario(),
-      isSelected: false
+      userCategoria: await retornarIdDoUsuario(),
+      isSelected: false,
     } as Categoria;
 
     if (parseFloat(tetoGastos) > 0 && tetoGastos != undefined) {

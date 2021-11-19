@@ -19,6 +19,10 @@ import Button from '../../../../../../components/Button';
 import Modalize from '../../../../../../components/Modalize';
 import IconByString from '../../../../../../helpers/gerarIconePelaString';
 
+
+import Toast from '@zellosoft.com/react-native-toast-message';
+import NiceToast from '../../../../../../components/NiceToast';
+
 import { Modalize as Modal } from 'react-native-modalize';
 import global from '../../../../../../global';
 import hexToRGB from '../../../../../../helpers/hexToRgba';
@@ -89,13 +93,27 @@ const NewExpenseCategory = () => {
     const response = await handleAdicionar(newCreatedCategory);
 
     if (response == '') {
-      ToastAndroid.show('Categoria Cadastrada com sucesso', ToastAndroid.SHORT);
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'success',
+          title: 'Foi!',
+          message: 'Categoria de receita adicionada com sucesso',
+        },
+      });
 
       navigation.dispatch(
-        StackActions.replace('Lancamentos', { screen: 'Main' }),
+        StackActions.replace('Main'),
       );
     } else {
-      ToastAndroid.show(response, ToastAndroid.SHORT);
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Erro!',
+          message: 'Verifique se tudo está correto',
+        },
+      });
     }
   };
 
@@ -213,6 +231,8 @@ const NewExpenseCategory = () => {
           ))}
         </ColorsContainer>
       </Modalize>
+      {/* @ts-ignore */}
+      <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </Container>
   );
 };

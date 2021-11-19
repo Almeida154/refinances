@@ -193,6 +193,14 @@ const GoalDetails = ({ route, navigation }: Props) => {
                 onPress={() =>{
                     handleRemoveGoalById(goal.id);
                     navigation.dispatch(StackActions.replace('Main'));
+                    Toast.show({
+                      type: 'niceToast',
+                      props: {
+                        type: 'success',
+                        title: 'Excluido!',
+                        message: 'Meta excluida com sucesso',
+                      },
+                    });
                   }
                 }
                 backgroundColor={colors.platinum}

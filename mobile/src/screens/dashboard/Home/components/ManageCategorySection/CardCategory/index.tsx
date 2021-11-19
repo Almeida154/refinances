@@ -36,10 +36,10 @@ const CardCategory = ({ item }: PropsCardCategory) => {
       <SectionDescription>
         <CategoryTouchable
           onPress={() => {
-            //navigation.navigate('GoalsStack', {
-              //screen: 'GoalDetails',
-              //params: { goalId: item.id },
-            //});
+            navigation.navigate('StackAccount', {
+              screen: 'EditCategory',
+              params: { categoryId: item.id },
+            });
           }}>
         
         </CategoryTouchable>
