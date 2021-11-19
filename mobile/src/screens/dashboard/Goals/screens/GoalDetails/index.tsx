@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Goal } from '../TabNavigator/styles';
@@ -34,6 +34,11 @@ import { toDate } from '../../../../../helpers/manipularDatas';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { StackActions } from '@react-navigation/native';
 import Header from '../../../../../components/Header';
+
+import { colors, fonts, metrics } from '../../../../../styles';
+import TabNavigator from '../../../../../navigation/TabNavigator/';
+import { Modalize as Modal } from 'react-native-modalize';
+import Modalize from '../../../../../components/Modalize';
 
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
@@ -73,6 +78,16 @@ const GoalDetails = ({ route, navigation }: Props) => {
     return true;
   };
 
+  const modalizeRef = useRef<Modal>(null);
+
+  const openModalize = () => {
+    modalizeRef.current?.open();
+  };
+
+  const closeModalize = () => {
+    modalizeRef.current?.close();
+  };
+  
   return (
     <ScrollView style={{ paddingTop: '5%', backgroundColor: '#f6f6f6' }}>
       <Header 
@@ -138,19 +153,10 @@ const GoalDetails = ({ route, navigation }: Props) => {
             backgroundColor: '#f5f2f3',
           }}
         />
-
+    
         <Button
           onPress={() => { 
-            handleRemoveGoalById(goal.id);
-            navigation.dispatch(StackActions.replace('Main'));
-            Toast.show({
-              type: 'niceToast',
-              props: {
-                type: 'warning',
-                title: 'Excluido!',
-                message: 'Meta deletada com sucesso!',
-              },
-            });
+            openModalize();
         }}
           title="Excluir"
           color="#ee4266"
@@ -178,6 +184,30 @@ const GoalDetails = ({ route, navigation }: Props) => {
           }}
         />
       </View>
+      <Modalize
+              ref={modalizeRef}
+              title="Tem certeza que deseja excluir esta meta?"
+              hasBodyBoundaries>
+              <Button
+                title="Excluir"
+                onPress={() =>{
+                    handleRemoveGoalById(goal.id);
+                    navigation.dispatch(StackActions.replace('Main'));
+                  }
+                }
+                backgroundColor={colors.platinum}
+                color={colors.paradisePink}
+              />
+              <Button
+                title="Cancelar"
+                onPress={() =>{
+                    closeModalize();
+                  }
+                }
+                backgroundColor={colors.platinum}
+                color={colors.darkGray}
+              />
+            </Modalize>
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>

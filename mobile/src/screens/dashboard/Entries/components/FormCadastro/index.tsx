@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TouchableHighlight, FlatList, View, ToastAndroid } from 'react-native'
+import { FlatList, ToastAndroid } from 'react-native'
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import { StackActions } from '@react-navigation/native'
 
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -12,7 +12,6 @@ import {
     ContainerForm,
     InputControl,
     Label,
-    TextInput,
     SectionDetalhes,
     TextDetalhes,
     SectionCardsParcelas,
@@ -24,17 +23,15 @@ import {
 import { Parcela } from '../../../../../contexts/InstallmentContext'
 import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext'
 import { UseLancamentos, Lancamento } from '../../../../../contexts/EntriesContext'
+import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
-import PickerCategoria from '../PickerCategoria'
 import PickerContas from '../PickerContas'
 import SelectionCategorias from '../SelectionCategories'
 
-import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 import {PropsNavigation} from '../..'
-import { Text, Checkbox, FAB } from 'react-native-paper'
+import { Checkbox, FAB } from 'react-native-paper'
 import { Conta, UseContas } from '../../../../../contexts/AccountContext';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import ItemParcela from '../CardParcela'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
@@ -44,6 +41,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     const {categorias} = UseCategories()
     const {contas} = UseContas()
     const {navigation} = UseDadosTemp()            
+    const {showNiceToast,  hideNiceToast} = UseDadosTemp()
     const {handleAdicionarLancamento, handleEditLancamento} = UseLancamentos()    
     
     console.debug('receiveEntry', receiveEntry)
@@ -79,11 +77,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
             statusParcela: status,
             lancamentoParcela: -1
         },
-    ])
-    
-    useEffect(() => {
-        console.debug("Data parcelas mudou")
-    }, [dataParcelas])
+    ])        
     
     const changeParcela = (text: string, date: string, newDataParcelas: Parcela[]) => {
         setParcelas(text)
@@ -136,7 +130,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         console.log("dataParcelas, ", dataParcelas)                          
 
         if(!selectedCategoria) 
-            return ToastAndroid.show("Categoria não encontrada", ToastAndroid.SHORT)
+            return showNiceToast("error", "Categoria não encontrada")
 
         
         let newLancamento = {} as Lancamento
@@ -192,18 +186,18 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
 
 
             if(message == '') {
-                ToastAndroid.show("Lançamento editado", ToastAndroid.SHORT)
+                showNiceToast("error", "Lançamento editado")
                 navigation.dispatch(StackActions.replace("Main", {screen: 'Extrato'}))
             }
             else {
-                ToastAndroid.show(message, ToastAndroid.SHORT)
+                showNiceToast("error", message)
             }
         } else {
 
             const message = await handleAdicionarLancamento(newLancamento, idUser);            
             
             if(message == '') {
-                ToastAndroid.show("Lançamento adicionado", ToastAndroid.SHORT)
+                showNiceToast("error", "Lançamento adicionado")
                 setDescricao('')
                 setValor('')
                 setSelectedCategoria(categorias ? categorias[0] : null) 
@@ -221,7 +215,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                 ])
             }
             else {
-                ToastAndroid.show(message, ToastAndroid.SHORT)
+                showNiceToast("error", message)
             }
         }
         

@@ -6,39 +6,8 @@ import { metrics } from '../../../../styles';
 
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 
-const Placeholder: React.FC = () => {
+const CategoryPlaceholder: React.FC = () => {
   return (
-    // <View style={{ marginBottom: metrics.default.boundaries, opacity: 0.4 }}>
-    //   <SkeletonContent isLoading>
-    //     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-    //       <View
-    //         style={{
-    //           width: widthPixel(160),
-    //           height: widthPixel(160),
-    //           borderRadius: widthPixel(160 / 2),
-    //         }}
-    //       />
-    //       <View style={{ marginLeft: 20 }}>
-    //         <View
-    //           style={{
-    //             width: widthPixel(520),
-    //             height: 20,
-    //             borderRadius: 4,
-    //           }}
-    //         />
-    //         <View
-    //           style={{
-    //             marginTop: 6,
-    //             width: widthPixel(300),
-    //             height: 20,
-    //             borderRadius: 4,
-    //           }}
-    //         />
-    //       </View>
-    //     </View>
-    //   </SkeletonContent>
-    // </View>
-
     <View
       style={{
         flex: 1,
@@ -78,4 +47,4 @@ const Placeholder: React.FC = () => {
   );
 };
 
-export default Placeholder;
+export default CategoryPlaceholder;

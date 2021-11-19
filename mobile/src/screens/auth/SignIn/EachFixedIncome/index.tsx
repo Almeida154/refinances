@@ -41,6 +41,8 @@ import SmoothPickerItem from '../../components/SmoothPickerItem';
 import CurrencyInput from 'react-native-currency-input';
 // @ts-ignore
 import Picker from 'react-native-picker-horizontal';
+import EntryPlaceholder from '../../components/EntryPlaceholder';
+import DatePlaceholder from '../../components/DatePlaceholder';
 
 import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 
@@ -52,8 +54,9 @@ export type PropsNavigation = {
 const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   const [incomeAmount, setIncomeAmount] = useState<number | null>(0);
   const [formattedIncomeAmount, setFormattedIncomeAmount] = useState('');
-  const [selectedDay, setSelectedDay] = useState(0);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [isFocused, setFocused] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const { setupUser, updateSetupUserProps, showNiceToast, hideNiceToast } =
     UseAuth();
@@ -95,25 +98,44 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
     showNiceToast('fake', 'Oops!', null, 500);
 
-    // Deixa o dia atual como default no smoothpicker
-    let currentDate = new Date(Date.now());
-    console.log(currentDate.getDate());
-    setSelectedDay(currentDate.getDate() - 1);
-
     // Caso já tenha passado pela tela, recupera a income aqui
     if (
       setupUser.entries[
         setupUser.incomeTagsCount + setupUser.expenseTags.length
       ] != undefined
     ) {
-      var entryIndex = setupUser.entries.findIndex(
-        entry =>
-          entry.descricaoLancamento ==
-          setupUser.incomeTags[setupUser.incomeTagsCount],
-      );
-      if (entryIndex != -1) {
-        var entry = setupUser.entries[entryIndex];
-        setIncomeAmount(entry.parcelasLancamento[0].valorParcela);
+      if (
+        setupUser.entries[
+          setupUser.incomeTagsCount + setupUser.expenseTags.length
+        ].descricaoLancamento != undefined
+      ) {
+        var entryIndex = setupUser.entries.findIndex(
+          entry =>
+            entry.descricaoLancamento ==
+            setupUser.incomeTags[setupUser.incomeTagsCount],
+        );
+        if (entryIndex != -1) {
+          var entry = setupUser.entries[entryIndex];
+          setIncomeAmount(entry.parcelasLancamento[0].valorParcela);
+          setSelectedDay(entry.parcelasLancamento[0].dataParcela.getDate() - 1);
+        }
+      }
+    } else {
+      if (setupUser.incomeTagsCount > 0) {
+        // Pegar do último
+        let previousEntry =
+          setupUser.entries[
+            setupUser.incomeTagsCount + setupUser.expenseTags.length - 1
+          ];
+        console.log('else if', previousEntry.parcelasLancamento[0]);
+        setSelectedDay(
+          previousEntry.parcelasLancamento[0].dataParcela.getDate() - 1,
+        );
+      } else {
+        // Deixa o dia atual como default no smoothpicker
+        let currentDate = new Date(Date.now());
+        console.log('ultimo else', currentDate.getDate());
+        setSelectedDay(currentDate.getDate() - 1);
       }
     }
 
@@ -121,6 +143,10 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
+
+  useEffect(() => {
+    selectedDay != null && setTimeout(() => setLoading(false), 700);
+  }, [selectedDay]);
 
   const backAction = () => {
     if (setupUser.incomeTagsCount == 0) {
@@ -151,7 +177,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
     hideNiceToast();
 
     let dateNow = new Date(Date.now());
-    dateNow.setDate(21);
+    selectedDay != null && dateNow.setDate(selectedDay + 1);
 
     const entry = {
       descricaoLancamento: setupUser.incomeTags[setupUser.incomeTagsCount],
@@ -203,51 +229,57 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
       <ScrollView>
         <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
           <Writting>
-            <PrefixReaisSymbol>R$</PrefixReaisSymbol>
-            <CurrencyInput
-              style={{
-                flex: 1,
-                padding: 0,
-                color: colors.davysGrey,
-                fontFamily: fonts.familyType.bold,
-                fontSize: fonts.size.super + 14,
-              }}
-              value={incomeAmount}
-              onChangeValue={txt => setIncomeAmount(txt)}
-              delimiter="."
-              separator=","
-              precision={2}
-              placeholder="0,00"
-              maxValue={999999}
-              placeholderTextColor={'rgba(52, 52, 52, .3)'}
-              selectionColor={colors.davysGrey}
-              onChangeText={formattedValue => {
-                setFormattedIncomeAmount(formattedValue);
-                if (incomeAmount == null) setIncomeAmount(0.0);
-              }}
-              ref={inputRef}
-              onBlur={() => {
-                console.log('bluou');
-                setFocused(false);
-              }}
-              onFocus={() => {
-                console.log('focou');
-                setFocused(true);
-              }}
-            />
-            {incomeAmount != null && (
-              <IonIcons
-                style={{
-                  padding: 6,
-                  marginLeft: 16,
-                }}
-                name="close"
-                size={32}
-                color={`rgba(82, 82, 82, .08)`}
-                onPress={() => {
-                  setIncomeAmount(0.0);
-                }}
-              />
+            {!isLoading ? (
+              <>
+                <PrefixReaisSymbol>R$</PrefixReaisSymbol>
+                <CurrencyInput
+                  style={{
+                    flex: 1,
+                    padding: 0,
+                    color: colors.davysGrey,
+                    fontFamily: fonts.familyType.bold,
+                    fontSize: fonts.size.super + 14,
+                  }}
+                  value={incomeAmount}
+                  onChangeValue={txt => setIncomeAmount(txt)}
+                  delimiter="."
+                  separator=","
+                  precision={2}
+                  placeholder="0,00"
+                  maxValue={999999}
+                  placeholderTextColor={'rgba(52, 52, 52, .3)'}
+                  selectionColor={colors.davysGrey}
+                  onChangeText={formattedValue => {
+                    setFormattedIncomeAmount(formattedValue);
+                    if (incomeAmount == null) setIncomeAmount(0.0);
+                  }}
+                  ref={inputRef}
+                  onBlur={() => {
+                    console.log('bluou');
+                    setFocused(false);
+                  }}
+                  onFocus={() => {
+                    console.log('focou');
+                    setFocused(true);
+                  }}
+                />
+                {incomeAmount != null && (
+                  <IonIcons
+                    style={{
+                      padding: 6,
+                      marginLeft: 16,
+                    }}
+                    name="close"
+                    size={32}
+                    color={`rgba(82, 82, 82, .08)`}
+                    onPress={() => {
+                      setIncomeAmount(0.0);
+                    }}
+                  />
+                )}
+              </>
+            ) : (
+              <EntryPlaceholder />
             )}
           </Writting>
         </Content>
@@ -278,35 +310,39 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
             position: 'absolute',
             bottom: 0,
           }}>
-          <Picker
-            data={days}
-            itemWidth={widthPixel(180)}
-            mark={false}
-            renderItem={(item: number, index: number) => (
-              <View
-                style={{
-                  width: widthPixel(180),
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <SmoothPickerItem isSelected={item == selectedDay} isIncome>
-                  {item + 1}
-                </SmoothPickerItem>
-              </View>
-            )}
-            initialIndex={selectedDay}
-            onChange={(day: number) => setSelectedDay(day)}
-            interpolateScale={(index: number, itemWidth: number) => ({
-              inputRange: [
-                itemWidth * (index - 2),
-                itemWidth * (index - 1),
-                itemWidth * index,
-                itemWidth * (index + 1),
-                itemWidth * (index + 2),
-              ],
-              outputRange: [0.8, 1, 1.2, 1, 0.8],
-            })}
-          />
+          {!isLoading ? (
+            <Picker
+              data={days}
+              itemWidth={widthPixel(180)}
+              mark={false}
+              renderItem={(item: number, index: number) => (
+                <View
+                  style={{
+                    width: widthPixel(180),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <SmoothPickerItem isSelected={item == selectedDay} isIncome>
+                    {item + 1}
+                  </SmoothPickerItem>
+                </View>
+              )}
+              initialIndex={selectedDay}
+              onChange={(day: number) => setSelectedDay(day)}
+              interpolateScale={(index: number, itemWidth: number) => ({
+                inputRange: [
+                  itemWidth * (index - 2),
+                  itemWidth * (index - 1),
+                  itemWidth * index,
+                  itemWidth * (index + 1),
+                  itemWidth * (index + 2),
+                ],
+                outputRange: [0.8, 1, 1.2, 1, 0.8],
+              })}
+            />
+          ) : (
+            <DatePlaceholder isIncome />
+          )}
 
           <SmoothPickerTopDetail>
             <AntDesign

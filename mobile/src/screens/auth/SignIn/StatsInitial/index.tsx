@@ -214,7 +214,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
 
   const handleSubTitleContent = () => {
     if (expensePercentage < 20)
-      return `Você quase não sente na conta, né, ${user.nomeUsuario}? Mas sempre há no que melhorar.`;
+      return `Você quase não sente na conta, né, ${user.nomeUsuario}? Mas sempre há o que melhorar.`;
     if (expensePercentage < 40)
       return `Podemos ver que seus gastos não comprometem o que ganha, isso é muito bom, ${user.nomeUsuario}.`;
     if (expensePercentage < 60)
