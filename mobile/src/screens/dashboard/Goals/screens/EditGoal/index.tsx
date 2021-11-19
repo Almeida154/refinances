@@ -234,7 +234,7 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
 
           <Button
             onPress={handleUpdateGoal}
-            title="Editar"
+            title="Salvar"
             backgroundColor="#CCC"
             color="#444"
             lastOne={true}

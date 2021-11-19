@@ -102,11 +102,11 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
 
       <View style={styles.container}>
         <View style={{ marginTop: '15%' }}>
-          <Title>{category.nomeCategoria}</Title>
+          <Title>{'category.nomeCategoria'}</Title>
 
           <Valor>
             <TextRS>R$</TextRS>
-            <TextValor>{category.tetoDeGastos}</TextValor>
+            <TextValor>{'category.nomeCategoria'}</TextValor>
           </Valor>
 
           <View>

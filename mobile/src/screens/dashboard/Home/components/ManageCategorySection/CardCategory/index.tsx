@@ -34,13 +34,7 @@ const CardCategory = ({ item }: PropsCardCategory) => {
   return (
     <Category key={item.id}>
       <SectionDescription>
-        <CategoryTouchable
-          onPress={() => {
-            navigation.navigate('StackAccount', {
-              screen: 'EditCategory',
-              params: { categoryId: item.id },
-            });
-          }}>
+        <CategoryTouchable>
         
         </CategoryTouchable>
 
@@ -54,7 +48,14 @@ const CardCategory = ({ item }: PropsCardCategory) => {
 
             <CategoryDesc>{item.nomeCategoria}</CategoryDesc>
 
-            <CategoryAddTetoGasto> 
+              <CategoryAddTetoGasto 
+                onPress={() => {
+                navigation.navigate('StackAccount', {
+                  screen: 'EditCategory',
+                  params: { categoryId: item.id },
+                });
+              }}> 
+              
               <CategoryDesc>Editar</CategoryDesc>
             </CategoryAddTetoGasto>
           
