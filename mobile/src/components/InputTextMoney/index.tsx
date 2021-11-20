@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 
 import { TextInput, TextInputProps } from 'react-native';
 
@@ -11,12 +11,12 @@ import {
   Label,
   Error,
 } from './styles';
-import { colors } from '../../styles';
-
-import CurrencyInput from 'react-native-currency-input';
+import { colors, fonts } from '../../styles';
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import IconByString from '../../helpers/gerarIconePelaString';
+import { heightPixel, widthPixel } from '../../helpers/responsiveness';
+import CurrencyInput from 'react-native-currency-input';
 
 export type IconProps = {
   description?: string;
@@ -25,17 +25,21 @@ export type IconProps = {
   hex?: string;
 };
 
-interface IProps extends TextInputProps {
+const inputRef = useRef<TextInput>(null);
+interface IProps {
   label?: string;
   lastOne?: boolean;
   placeholder?: string;
   colorLabel?: string;
   error?: string | null;
+  showErrorMessage?: boolean;
   showClearIcon?: boolean;
   icon?: IconProps;
   inputColor?: string;
   onClear?: () => void;
   onPress?: () => void;
+  value?: number | null;
+  setValue?: number | null;
 }
 
 const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
@@ -45,11 +49,14 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
     placeholder,
     colorLabel,
     error,
+    showErrorMessage,
     showClearIcon,
     icon,
     inputColor,
     onClear,
     onPress,
+    value,
+    setValue,
     ...rest
   },
   ref: any,
@@ -58,18 +65,14 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
     <>
       <Container
         style={[
-          lastOne ? {} : { marginBottom: 10 },
-          error
-            ? {
-                marginBottom: 4,
-                borderColor: 'rgba(248, 22, 80, .3)',
-              }
-            : {},
+          lastOne ? {} : { marginBottom: heightPixel(22) },
+          error ? { borderColor: '#f816504c' } : {},
           {
             shadowColor: 'rgba(0, 0, 0, .3)',
             shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.08,
             shadowRadius: 20,
+            elevation: 20,
           },
         ]}
         underlayColor={colors.white}
@@ -87,24 +90,35 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
                   size={20}
                 />
               )}
-              <Input
-                placeholder={
-                  placeholder != undefined ? placeholder : 'Sem placeholder'
-                }
-                placeholderTextColor={colors.platinum}
-                ref={ref}
-                selectionColor={colors.davysGrey}
-                style={[
-                  icon?.hex != null || icon?.icon != null
-                    ? { marginLeft: 10 }
-                    : {},
-                  icon?.hex != null || icon?.icon != null
-                    ? { color: icon.hex, opacity: 0.7 }
-                    : {},
-                  inputColor ? { color: inputColor } : {},
-                ]}
-                {...rest}
-              />
+
+                <CurrencyInput
+                  style={[
+                    icon?.hex != null || icon?.icon != null
+                      ? { marginLeft: widthPixel(30) }
+                      : {},
+                    icon?.hex != null || icon?.icon != null
+                      ? { color: icon.hex, opacity: 0.7 }
+                      : {},
+                    inputColor ? { color: inputColor } : {color: colors.davysGrey},
+                    {flex: 1,
+                      padding: 0,
+                      fontFamily: fonts.familyType.bold,
+                      fontSize: fonts.size.big,}
+                  ]}
+                  delimiter="."
+                  separator=","
+                  precision={2}
+                  placeholder={
+                    placeholder != undefined ? placeholder : 'R$ 0,00'
+                  }
+                  maxValue={999999}
+                  placeholderTextColor={'#000'}
+                  selectionColor={colors.davysGrey}
+                  ref={inputRef}
+                  value={value}
+                  onChangeValue={setValue}
+                  {...rest}
+                />
             </RowAux>
           </Writting>
           <IconClean>
@@ -119,7 +133,7 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
           </IconClean>
         </>
       </Container>
-      {error && <Error>{error}</Error>}
+      {error && showErrorMessage && <Error>{error}</Error>}
     </>
   );
 };

@@ -45,6 +45,7 @@ const Despesas = ({ navigation }: PropsCategory) => {
       (async function () {
         handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
       })();
+    console.warn('categorias: ', categorias);
   }, []);
 
   if (categorias?.length > 0) {
@@ -63,7 +64,7 @@ const Despesas = ({ navigation }: PropsCategory) => {
 
             {categorias &&
               categorias.map((item, index) => {
-                console.log('Item: ', categorias);
+                //console.log('Item: ', categorias);
                 if(item.tipoCategoria == "despesa"){
                   return <CardCategory item={item} key={index} />;
                 }

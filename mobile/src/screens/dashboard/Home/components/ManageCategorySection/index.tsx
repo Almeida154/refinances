@@ -41,7 +41,6 @@ const SectionManage = () => {
               
       }, [])
       
-    
 
       if (categorias?.length > 0) {
         return (
@@ -58,9 +57,9 @@ const SectionManage = () => {
                 {
                     categorias && categorias.map((item, index) => {
                         if(index < 3){
-                        return (
-                            <CardCategory item={item} key={index}/>
-                        )
+                            return (
+                                <CardCategory item={item} key={index}/>
+                            )
                         }
                     })
                 }

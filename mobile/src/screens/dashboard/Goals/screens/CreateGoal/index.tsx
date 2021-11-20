@@ -7,6 +7,13 @@ import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import {
+  Container,
+  Label
+} from '../../../../../components/InputTextMoney/styles'
+
+import { TextInputMask } from 'react-native-masked-text'
+
+import {
   DadosTempProvider,
   UseDadosTemp,
 } from '../../../../../contexts/TemporaryDataContext';
@@ -20,22 +27,22 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
   View,
-  TextInput,
-  ToastAndroid,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
+import { colors, fonts } from '../../../../../styles'
 
 import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
-import fonts from '../../../../../styles/fonts';
 import { StackActions } from '@react-navigation/native';
 import Header from '../../../../../components/Header';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
+
+import CurrencyInput from 'react-native-currency-input';
 
 type PropsGoals = {
   navigation: StackNavigationProp<GoalsStack, "CreateGoals">
@@ -54,6 +61,8 @@ const CreateGoal = ({navigation}: PropsGoals) => {
   const [valorTError, setvalorTError] = useState<any | null>(null);
   const [investidoError, setinvestidoError] = useState<any | null>(null);
   const [dtPrevError, setdtPrevError] = useState<any | null>(null);
+
+  const [value, setValue] = React.useState(0); // can also be null
 
   const { handleAdicionarMeta } = UseMetas();
 
@@ -233,43 +242,53 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           />
         </View>
 
-        <View>
-          <InputText
-            value={valorMeta}
-            label="Valor"
-            placeholder="Ex.: R$ 1.000,00"
-            error={valorTError}
-            showClearIcon={valorMeta != ''}
-            onClear={() => {
-              setvalorTError(null);
-              setValorMeta('');
-            }}
-            onChangeText={txt => {
-              setvalorTError(null);
-              setValorMeta(txt);
-            }}
-            keyboardType="numeric"
-          />
-        </View>
+        <Container>
+          
+          <Label>Valor</Label>
 
-        <View>
-          <InputText
-            value={investidoMeta}
-            label="Valor já investido"
+          <CurrencyInput 
+            value={valorMeta} 
+            onChangeValue={txt => setValorMeta(txt)}
+            style={{
+              flex: 1,
+              padding: 0,
+              color: colors.davysGrey,
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.medium,
+            }}
+            delimiter="."
+            separator=","
+            precision={2}
             placeholder="Ex.: R$ 100,00"
-            error={investidoError}
-            showClearIcon={investidoMeta != ''}
-            onClear={() => {
-              setinvestidoError(null);
-              setInvestido('');
+            maxValue={999999}
+            placeholderTextColor={'rgba(52, 52, 52, .3)'}
+            selectionColor={colors.davysGrey}
+            />
+        </Container>
+
+        <Container>
+          
+          <Label>Valor já investido</Label>
+
+          <CurrencyInput 
+            value={investidoMeta} 
+            onChangeValue={txt => setInvestido(txt)}
+            style={{
+              flex: 1,
+              padding: 0,
+              color: colors.davysGrey,
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.medium,
             }}
-            onChangeText={txt => {
-              setinvestidoError(null);
-              setInvestido(txt);
-            }}
-            keyboardType="numeric"
-          />
-        </View>
+            delimiter="."
+            separator=","
+            precision={2}
+            placeholder="Ex.: R$ 100,00"
+            maxValue={999999}
+            placeholderTextColor={'rgba(52, 52, 52, .3)'}
+            selectionColor={colors.davysGrey}
+            />
+        </Container>
 
         {/* DatePicker */}
         <InputText
@@ -297,8 +316,9 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           title="Criar"
           backgroundColor="#CCC"
           color="#444"
-          style={{marginTop: '20%'}}
+          style={{marginTop: '5%'}}
         />
+
       </View>
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />

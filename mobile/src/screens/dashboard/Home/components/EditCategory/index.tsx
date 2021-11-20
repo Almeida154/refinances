@@ -137,7 +137,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
                 //handleUpdateCategory();
                 //navigation.dispatch(StackActions.replace('StackAccount', 
                   //{screen: 'ManageCategory'}));
-                console.debug(category.nomeCategoria);
+                console.debug(category);
               }}
               title="Salvar"
               backgroundColor="#CCC"
