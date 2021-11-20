@@ -1,5 +1,8 @@
 import styled from 'styled-components/native'
 
+import {colors, metrics, fonts} from '../../../../../../../styles'
+import hexToRGB from '../../../../../../../helpers/hexToRgba';
+
 export const Container = styled.View`
     display: flex;
     align-items: center;
@@ -10,17 +13,6 @@ export const Form = styled.View`
     margin-top: 20px;
     width: 80%;
 `
-
-export const SectionIcon = styled.View`
-    width: 45px;
-    height: 45px;
-    border-radius: 50px;
-    border-width: 4px;
-    border-color: #6bb760;
-    align-items: center;
-    justify-content: center;
-`
-
 export const InputControl = styled.View`    
     background-color: #fff;
     margin-bottom: 20px;
@@ -36,7 +28,7 @@ export const TextInputAdd = styled.TextInput`
     color: #000;
 `
 
-export const ButtonAdd = styled.TouchableOpacity`
+export const ButtonAdd = styled.TouchableHighlight`
     background-color: #ccc;
     width: 100%;
     height: 50px;
@@ -49,13 +41,13 @@ export const TextButton = styled.Text`
     font-size: 18px;
 `
 
-export const ButtonPress = styled.TouchableOpacity`
+export const ButtonPress = styled.TouchableHighlight`
 
 `
 
 export const Circle = styled.View`
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     margin: 10px;
 
     border-radius: 50px;
@@ -67,8 +59,7 @@ export const BodyModalize = styled.View`
     justify-content: center;
 
     flex-direction: column;
-    padding: 40px;
-    
+    padding: 50px;
 
 `
 
@@ -77,3 +68,40 @@ export const RowColor = styled.View`
 
     flex-direction: row;
 `
+
+
+export const ColorsContainer = styled.ScrollView`
+  flex: 1;
+  padding: ${`${metrics.default.boundaries}px`};
+`;
+
+interface ColorProps {
+  bg?: string;
+  mr?: boolean;
+}
+
+export const Color = styled.TouchableOpacity<ColorProps>`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border-width: 5px;
+  border-color: ${props => hexToRGB(props.bg, 1)};
+  background-color: ${props => hexToRGB(props.bg, 0.7)};
+  margin-right: ${props => (props.mr ? '10px' : 0)};
+`;
+
+interface IconProps {
+  mr?: boolean;
+}
+
+export const Icon = styled.TouchableOpacity<IconProps>`
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border-width: 5px;
+  border-color: ${colors.platinum};
+  background-color: ${colors.diffWhite};
+  margin-right: ${props => (props.mr ? '10px' : 0)};
+`;

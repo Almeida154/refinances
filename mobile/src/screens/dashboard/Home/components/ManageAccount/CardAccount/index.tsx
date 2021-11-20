@@ -17,17 +17,25 @@ import {
     Bottom,
     LabelBalance
 } from './styles'
+import { Image } from 'react-native'
 
 type PropsCardAccount = {
     item: Conta
 }
 
 const CardAccount = ({item}: PropsCardAccount) => {
+    if(typeof item.categoryConta == 'string') {
+        return <Container />
+    }
     return (
         <Container>
             <Upside>
                 <SectionLeft>
-                <Icon size={25} color='gray' stringIcon={typeof item.categoryConta != 'string' && item.categoryConta.iconeCategoryConta != "" ?  item.categoryConta.iconeCategoryConta : 'Ionicons:wallet'}/>
+                {
+                    item.categoryConta.iconeCategoryConta.indexOf("https://") != -1 ?
+                    <Image source={{uri: item.categoryConta.iconeCategoryConta, width: 25, height: 25}}/> :
+                    <Icon size={25} color='gray' stringIcon={typeof item.categoryConta != 'string' && item.categoryConta.iconeCategoryConta != "" ?  item.categoryConta.iconeCategoryConta : 'Ionicons:wallet'}/>
+                }
                     <SectionDescription>
                         <LabelDescriptionAccount>{item.descricao}</LabelDescriptionAccount>
                         <LabelCategoryAccount>{typeof item.categoryConta == 'string' ? item.categoryConta: item.categoryConta.descricaoCategoryConta}</LabelCategoryAccount>

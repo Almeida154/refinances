@@ -44,7 +44,7 @@ export const Stat = styled.Text`
 `
 
 export const Header = styled.View`
-    background-color: #2F75FD;
+    background-color: ${colors.silver};
     width: 100%;
     height: 90px;
 
@@ -57,6 +57,9 @@ export const ButtonRecord = styled.TouchableOpacity`
 `
 
 export const ContainerResults = styled.View`
-    margin: 30px auto;
-    
+    margin: 30px auto;    
+`
+
+export const ContainerItem = styled.View`
+    width: 80%;        
 `

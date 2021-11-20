@@ -26,9 +26,10 @@ class CategoryContaController {
         const categoryContaRepository = getRepository(CategoryConta);  
         const userRepository = getRepository(User);
 
-        const { descricaoCategoryConta, iconeCategoryConta, userCategoryConta } = request.body;
+        const { descricaoCategoryConta, iconeCategoryConta, userCategoryConta, corCategoryConta } = request.body;
 
         if (descricaoCategoryConta == '') return response.send({ error: "Descrição em branco!" });
+        if (!corCategoryConta) return response.send({error: "Cor da categoria conta não especificado"})
         if (userCategoryConta == null) return response.send({ error: "Sem Usuário!" });
 
         const user = await userRepository.findOne({

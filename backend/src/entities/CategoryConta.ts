@@ -20,6 +20,9 @@ export class CategoryConta {
     descricaoCategoryConta: string;
 
     @Column()
+    corCategoryConta: string;
+
+    @Column()
     iconeCategoryConta: string;
 
     // Foreign Keys

@@ -23,6 +23,7 @@ type PropsIcon = {
 };
 
 const Icon = ({ stringIcon, color, size }: PropsIcon) => {
+  console.debug("Icon | entrou")
   stringIcon = stringIcon != undefined ? stringIcon : 'MaterialIcons:error';
   const [lib, icon] = stringIcon.split(':');
 

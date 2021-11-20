@@ -10,6 +10,7 @@ export type CategoriaConta = {
     descricaoCategoryConta: string,
     iconeCategoryConta: string,
     userCategoryConta: number,
+    corCategoryConta: string,
     id: number
 }
 
@@ -58,7 +59,8 @@ export const CategoriasContaProvider: React.FC = ({ children }) => {
             const response = await api.post('/categoryAccount/create', {
                 descricaoCategoryConta: categoriaConta.descricaoCategoryConta,
                 iconeCategoryConta: categoriaConta.iconeCategoryConta,
-                userCategoryConta: categoriaConta.userCategoryConta
+                userCategoryConta: categoriaConta.userCategoryConta,
+                corCategoryConta: categoriaConta.corCategoryConta
             });
 
             if(response.data.error) {

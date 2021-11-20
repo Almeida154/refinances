@@ -6,7 +6,8 @@ export const ContainerItem = styled.TouchableOpacity`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 20px;    
+    width: 100%;
 `
 export const SectionIcon = styled.View`
     width: 40px;

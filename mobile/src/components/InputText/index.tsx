@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { TextInput, TextInputProps } from 'react-native';
+import { TextInput, TextInputProps, Image } from 'react-native';
 
 import {
   Container,
@@ -77,7 +77,9 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
               {label != undefined ? label : 'Sem label'}
             </Label>
             <RowAux>
-              {(icon?.hex != null || icon?.icon != null) && (
+              {(icon?.hex != null || icon?.icon != null || icon?.icon != undefined) && (
+                icon?.icon && icon.icon.indexOf("https://") != -1 ?
+                <Image source={{uri: icon.icon, height: 20, width: 20}}/> :
                 <IconByString
                   color={icon.hex ?? colors.davysGrey}
                   stringIcon={icon.icon ?? 'Fontisto:blood-drop'}

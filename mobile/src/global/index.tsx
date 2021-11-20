@@ -202,4 +202,32 @@ export default {
       color: '#98c1d9',
     },
   ],
+  DEFAULT_ICONS_CATEGORYACCOUNT: [
+    { description: 'Caixa', icon: 'https://logodownload.org/wp-content/uploads/2014/02/caixa-logo.jpg' },
+    { description: 'Banco do Brasil', icon: 'https://play-lh.googleusercontent.com/1-aNhsSPNqiVluwNGZar_7F5PbQ4u1zteuJ1jumnArhe8bfYHHaVwu4aVOF5-NAmLaA' },
+    {
+      description: 'Itaú', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banco_Ita%C3%BA_logo.svg/1200px-Banco_Ita%C3%BA_logo.svg.png',
+    },
+    {
+      description: 'Moeda em círculo', icon: 'MaterialCommunityIcons:currency-usd-circle'
+    },
+    { description: 'Banco da Amazônia', icon: 'https://projeto-cdn.infra.grancursosonline.com.br/basa.png' },
+    { description: 'Nubank', icon: 'https://t2.tudocdn.net/354716?w=1200' },
+    {
+      description: 'Bradesco', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg1QN1uIngc6pkX2Zg5Mn_mvZ501sC6x0luIz9TQ1W1jUi8zTSCiwSOMmJKs-uNiu6uXw&usqp=CAU'
+    },
+    {
+      description: 'Carteira', icon: 'Entypo:wallet'
+    },
+    {
+      description: 'Banco Safra', icon: 'https://seeklogo.com/images/B/Banco_Safra-logo-517D130E32-seeklogo.com.png',
+    },
+    {
+      description: 'Gráfico', icon: 'MaterialIcons:show-chart'
+    },
+    {
+      description: 'Banco Inter', icon: 'https://play-lh.googleusercontent.com/FDCnEZ5wKIYucB6n63jQC8tymfmoaNtM2GScjDP5fuKzG4bjXqWshysyfDvxccVYwg',
+    },
+    
+  ]
 };

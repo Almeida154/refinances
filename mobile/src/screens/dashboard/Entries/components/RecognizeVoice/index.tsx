@@ -3,6 +3,7 @@ import {
   BackHandler,
   ToastAndroid,
   TouchableHighlight,
+  View,
 } from 'react-native';
 
 import {StackActions} from '@react-navigation/native'
@@ -20,7 +21,8 @@ import {
     Welcome,
     Header,
     ButtonRecord,
-    ContainerResults
+    ContainerResults,
+    ContainerItem
 } from './styles'
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
@@ -377,8 +379,8 @@ class VoiceTest extends Component<Props, State> {
       statusParcela: item.parcelasLancamento[0].statusParcela
     }
         
-    return (
-      <CardInstallment item={readParcela}/>
+    return (      
+        <CardInstallment item={readParcela}/>      
     )
   }
 
@@ -486,13 +488,15 @@ class VoiceTest extends Component<Props, State> {
         </ContainerResults>        
                  
 
-        {
-          this.state.itemNovo[0].id == 0 ? 
-          {} : 
-          this.state.itemNovo.map((item, index) => {                        
-            return this.ItemHandled(item)                 
-          })
-        }
+        <ContainerItem>
+          {
+            this.state.itemNovo[0].id == 0 ? 
+            {} : 
+            this.state.itemNovo.map((item, index) => {                        
+              return this.ItemHandled(item)                 
+            })
+          }
+        </ContainerItem>
 
         <FAB 
           icon="check"

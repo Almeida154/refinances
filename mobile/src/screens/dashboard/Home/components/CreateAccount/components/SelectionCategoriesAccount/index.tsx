@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import {Alert, TextInput} from 'react-native'
+import {Alert, Image, TextInput} from 'react-native'
 import {CategoriaConta, UseCategoriasConta} from '../../../../../../../contexts/CategoriesAccountContext'
 
 import retornarIdDoUsuario from '../../../../../../../helpers/retornarIdDoUsuario'
@@ -42,7 +42,11 @@ const RenderOption = (settings: OptionTemplateSettings) => {
     const { item, getLabel } = settings
     return (
         <ContainerItem>
-            <Icon size={24} stringIcon={'Entypo:wallet'} color={'red'}/>
+            {
+                item.iconeCategoryConta.indexOf("https://") != -1 ?
+                <Image source={{uri: item.iconeCategoryConta, width: 25, height: 25}}/> :
+                <Icon size={25} color='gray' stringIcon={item.iconeCategoryConta}/>
+            }
             <NomeItem >{getLabel(item)}</NomeItem>
 
             <Separator />

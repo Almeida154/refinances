@@ -2,6 +2,7 @@ import { RouteProp } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 
+import {View, Image} from 'react-native'
 
 import Button from '../../../../../components/Button'
 
@@ -38,36 +39,26 @@ type CardAccount = {
 }
 
 const CardAccount = ({item}: CardAccount) => {
-
-    console.log('item', typeof item.categoryConta != 'string' && item.categoryConta.iconeCategoryConta != "" )
-
-    const {contas, handleReadByUserContas} = UseContas()
-    const [saldoConta, setSaldoConta] = useState('0');
-    useEffect(() => {
-        let aux = 0
-
-        contas && contas.map(item => {
-            aux += item.saldoConta
-            setSaldoConta((item.saldoConta).toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
-        })
-
-        setSaldoConta(aux.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
-        
-    }, [contas])
+    if(typeof item.categoryConta == 'string')
+        return <View />
 
     return(
         <ContainerCardAccount>
             <SectionDescription>
                 <SectionIcon>
-                    <Icon size={25} color='gray' stringIcon={typeof item.categoryConta != 'string' && item.categoryConta.iconeCategoryConta != "" ?  item.categoryConta.iconeCategoryConta : 'Ionicons:wallet'}/>
+                    {
+                        item.categoryConta.iconeCategoryConta.indexOf("https://") != -1 ?
+                        <Image source={{uri: item.categoryConta.iconeCategoryConta, width: 25, height: 25}} /> :
+                        <Icon size={25} color='gray' stringIcon={item.categoryConta.iconeCategoryConta}/>
+                    }
                 </SectionIcon>
                 <SectionName>
                     <LabelName>{item.descricao}</LabelName>
-                    <LabelCategory>Conta Corrente</LabelCategory>
+                    <LabelCategory>{item.categoryConta.descricaoCategoryConta}</LabelCategory>
                 </SectionName>
             </SectionDescription>
             <SectionBalanceAccount>
-                <LabelBalanceAccount>{saldoConta}</LabelBalanceAccount>                    
+                <LabelBalanceAccount>{item.saldoConta.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'})}</LabelBalanceAccount>                    
             </SectionBalanceAccount>            
         </ContainerCardAccount>
     )

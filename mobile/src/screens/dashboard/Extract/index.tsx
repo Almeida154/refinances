@@ -42,7 +42,6 @@ import {
     ButtonAccessDetail   
     
 } from './styles'
-import { colors } from '../../../styles';
 
 interface PropsRenderSection {
     item: (ReadParcela[] | Transferencia[])[];

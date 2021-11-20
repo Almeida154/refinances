@@ -13,8 +13,6 @@ import SelectionCategoriesAccount from './components/SelectionCategoriesAccount'
 
 import {
     Container,
-    ButtonText,
-    
 } from './styles'
 
 import fonts from '../../../../../styles/fonts'
@@ -22,16 +20,12 @@ import fonts from '../../../../../styles/fonts'
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import {CategoriaConta} from '../../../../../contexts/CategoriesAccountContext'
 
-import { TouchableOpacity } from 'react-native'
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/core';
-import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 
 
 const CreateAccount = () => {
     const {handleAdicionarConta} = UseContas()
         
-    const {navigation} = UseDadosTemp()
+    const {navigation, showNiceToast} = UseDadosTemp()
 
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')    
@@ -61,10 +55,10 @@ const CreateAccount = () => {
 
        
        if(response == '') {
-            ToastAndroid.show("Conta criada com sucesso!", ToastAndroid.SHORT)
+            showNiceToast("success", "Conta criada com sucesso!")
             navigation.dispatch(StackActions.replace("StackAccount", {screen: 'ManageAccount'}))
        } else {
-            ToastAndroid.show(response, ToastAndroid.SHORT)
+            showNiceToast("error", response)
        }
         
     }
