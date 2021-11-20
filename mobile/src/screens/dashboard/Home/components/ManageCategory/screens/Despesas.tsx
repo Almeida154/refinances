@@ -24,8 +24,12 @@ type PropsCategory = {
 };
 
 const Despesas = ({ navigation }: PropsCategory) => {
-  const { categorias, handleReadByUserCategorias } = UseCategories();
+  const { categorias, handleReadByUserCategorias, handleCountByEntry } = UseCategories();
   const [stateReload, setStateReload] = useState(false);
+
+  const countbyentry = (async function(){
+    handleCountByEntry(await retornarIdDoUsuario(), 'despesa')
+  })
 
   useEffect(() => {
     if (!navigation.addListener) return;
@@ -41,11 +45,13 @@ const Despesas = ({ navigation }: PropsCategory) => {
 
   useEffect(() => {
     // Caso nenhuma despesa seja carregada, recarregar
-    if (!categorias)
+    console.warn('categorias: ', countbyentry);
+    /*if (!categorias)
       (async function () {
         handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
-      })();
-    console.warn('categorias: ', categorias);
+      })();*/
+
+    
   }, []);
 
   if (categorias?.length > 0) {
@@ -57,14 +63,19 @@ const Despesas = ({ navigation }: PropsCategory) => {
             <TextLoading>Carregando...</TextLoading>
           </Loading>
         ) : (
-          <View style={{ margin: '10%' }}>
+          <View style={{ padding: '10%' }}>
+            <Button
+              onPress={() => (async function () {
+                console.log('inferno')
+                handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
+              })}
+              title="teste"/>
             <Subtitle>
               Adicione teto de gastos às categorias para se manter organizado(a)!
             </Subtitle>
 
             {categorias &&
               categorias.map((item, index) => {
-                //console.log('Item: ', categorias);
                 if(item.tipoCategoria == "despesa"){
                   return <CardCategory item={item} key={index} />;
                 }

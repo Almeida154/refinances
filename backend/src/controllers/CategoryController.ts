@@ -201,7 +201,7 @@ class CategoryController {
       });
     }
 
-    return response.send({ categories });
+    return response.send( 'kjdwbjw' );
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {
