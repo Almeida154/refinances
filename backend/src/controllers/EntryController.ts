@@ -18,8 +18,10 @@ class LancamentoController {
         const lancamentoRepository = getRepository(Lancamento);
 
         const lancamentos = await lancamentoRepository.createQueryBuilder("lancamento")
+            .select(["lancamento", "user.id"])
             .leftJoinAndSelect("lancamento.categoryLancamento", "category")
             .leftJoinAndSelect("lancamento.parcelasLancamento", "parcela")
+            .leftJoin("lancamento.userLancamento", "user")
             .getMany();
 
         return response.send({ message: lancamentos });
@@ -74,7 +76,7 @@ class LancamentoController {
 
             lancamento.parcelasLancamento.map((item, index) => {
                 totalParcelas += item.valorParcela
-                lancamento.parcelasLancamento[index].id = index
+                lancamento.parcelasLancamento[index].indexOfLancamento = index
             })
 
             if(lancamento.parcelaBaseada == -1) {

@@ -78,12 +78,18 @@ class ContaController {
     async one(request: Request, response: Response, next: NextFunction) {
         const contaRepository = getRepository(Conta);
         
-        const contas = await contaRepository.createQueryBuilder("conta")
+        const conta = await contaRepository.createQueryBuilder("conta")
             .leftJoinAndSelect("conta.userConta", "user")
+            .leftJoinAndSelect("conta.parcelasConta", "parcela")
+            .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
             .where("conta.id = :id", { id: request.params.id })
-            .getMany();
+            .getOne();
         
-        return response.send({ contas });
+        conta.parcelasConta.map(item => {
+            conta.saldoConta += item.lancamentoParcela.tipoLancamento == 'despesa' ? -item.valorParcela : item.valorParcela
+        })
+
+        return response.send({ conta });
     }   
 
     async FindByUser(request: Request, response: Response, next: NextFunction) {
@@ -100,16 +106,20 @@ class ContaController {
             return response.send({error: "usuário não encontrado"})
         }
 
-        const contas = await contaRepository.find({            
-            where: { userConta: user },
-            join: {
-                alias: 'conta',
-                leftJoinAndSelect: {
-                    CategoryConta: 'conta.categoryConta'
-                }
-            }
-            
-        });        
+        const contas = await contaRepository.createQueryBuilder("conta")
+        .select(["conta", "user.id"])
+        .leftJoinAndSelect("conta.userConta", "user")
+        .leftJoinAndSelect("conta.parcelasConta", "parcela")
+        .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")        
+        .leftJoinAndSelect("conta.categoryConta", "categoryconta")        
+        .where("user.id = :id", { id: user.id })
+        .getMany();
+
+        contas.map((conta, index) => {
+            conta.parcelasConta.map(item => {
+                contas[index].saldoConta += item.lancamentoParcela.tipoLancamento == 'despesa' ? -item.valorParcela : item.valorParcela
+            })
+        })
 
         return response.send({ contas });
     }   

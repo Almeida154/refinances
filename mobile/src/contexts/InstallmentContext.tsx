@@ -17,6 +17,7 @@ export type Parcela = {
     contaParcela: Conta | null
     lancamentoParcela: number | Lancamento,
     statusParcela: boolean
+    indexOfLancamento: number
 }
 
 export type ReadParcela = {
@@ -86,38 +87,15 @@ export const ParcelaProvider: React.FC = ({ children }) => {
         return ''
     }
 
-    async function handleEditParcela(parcelasProps: Parcela[]) {
+    async function handleEditParcela(parcelasProps: Parcela[]) {                
         
-        console.log("parcelasProps", parcelasProps)
-        
+        console.debug("handleEditParcela | parcelasProps", parcelasProps)
         try {
-            const arrayParcelas: Parcela[] = parcelasProps;
-
-            const idUser = await retornarIdDoUsuario()
-            parcelasProps.map(async item => {
-                const response = await api.put(`/installment/edit/${item.id}`, {
-                    dataParcela: item.dataParcela,
-                    valorParcela: item.valorParcela,
-                    contaParcela: item.contaParcela?.id,
-                    lancamentoParcela: item.lancamentoParcela,
-                    statusParcela: item.statusParcela
-                });
-
-                if(response.data.error) {
-                    return response.data.error
-                };
-                
-                const newParcela = response.data.message                                
-
-                if(readParcelas) {
-                    const [dayRead, monthRead, yearRead] = new Date(readParcelas[0][0].dataParcela).toLocaleDateString().split('/')
-                    const [day, month, year] = new Date(newParcela.dataParcela).toLocaleDateString().split('/')
-                    
-                    if(month == month && year == yearRead) {
-                        await handleInstallmentGroupByDate(idUser, new Date(newParcela.dataParcela).toISOString())
-                    }
-                }
-            })
+            const arrayParcelas: Parcela[] = parcelasProps;            
+            
+            const response = await api.put(`/installment/edit`, {
+               editParcelas: arrayParcelas
+            });                              
 
         } catch (error) {
             console.log("Deu um erro ao adicionar a parcela: ", error);

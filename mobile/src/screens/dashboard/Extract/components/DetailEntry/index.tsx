@@ -28,7 +28,7 @@ interface PropsDetail {
 }
 
 const DetailEntry: React.FC<PropsDetail> = ({item}) => {
-    const {navigation} = UseDadosTemp()
+    const {navigation, showNiceToast} = UseDadosTemp()
     const {handleLoadOneLancamentos} = UseLancamentos()
 
     if(!item) {
@@ -36,15 +36,15 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
     }
 
     if(typeof item.lancamentoParcela == 'number') {
-        ToastAndroid.show("O lançamento não foi reconhecido", ToastAndroid.SHORT)
+        showNiceToast("error", "O lançamento não foi reconhecido")
         return <></>
     }
     if(typeof item.lancamentoParcela.categoryLancamento == 'string') {
-        ToastAndroid.show("A categoria do lançamento não foi reconhecida", ToastAndroid.SHORT)
+        showNiceToast("A categoria do lançamento não foi reconhecida")
         return <></>
     }
     if(!item.contaParcela) {
-        ToastAndroid.show("A Conta não foi reconhecida", ToastAndroid.SHORT)
+        showNiceToast("A Conta não foi reconhecida")
         return <></>
     }
 
