@@ -14,6 +14,9 @@ import PropsMainRoutes, { GoalsStack } from '../../../../@types/RootStackParamAp
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StackActions } from '@react-navigation/native';
 
+import { colors, fonts, metrics } from '../../../../styles';
+import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
+
 import Header from '../../components/Header';
 
 export type PropsNavigation = {
@@ -28,7 +31,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
   return (
     <View
       style={{
-        paddingTop: 20,
+        paddingTop: heightPixel(150),
         backgroundColor: '#fff',
         flex: 1,
       }}>
@@ -43,12 +46,18 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
       <Tab.Navigator
         initialRouteName="Atuais"
         screenOptions={{
-          tabBarLabelStyle: { fontSize: 14 },
           tabBarIndicatorStyle: {
             backgroundColor: '#525252',
           },
           tabBarActiveTintColor: '#525252',
+          tabBarLabelStyle: {
+            fontSize: fonts.size.medium,
+            fontFamily: fonts.familyType.bold,
+            textTransform: 'capitalize',
+            justifyContent: 'center'
+          },
         }}>
+
         <Tab.Screen name="Atuais" component={Atuais} />
         <Tab.Screen name="Concluidas" component={Concluidas} />
       </Tab.Navigator>

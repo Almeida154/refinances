@@ -30,10 +30,15 @@ import { StackActions } from '@react-navigation/native';
 
 const SectionManage = () => {
     const { navigation } = UseDadosTemp()
-    const { categorias, handleReadByUserCategorias } = UseCategories();
+    const { categorias, handleReadByUserCategorias, handleCountByEntry } = UseCategories();
+
+    const countbyentry = (async function(){
+        handleCountByEntry(await retornarIdDoUsuario(), 'despesa')
+    })
 
     useEffect(() => {
         // Caso nenhuma Categoria seja carregada, recarregar
+        console.debug(countbyentry);
         if(!categorias)
             (async function(){
                 handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa')

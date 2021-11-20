@@ -29,6 +29,10 @@ interface CategoriaContextType {
   ): Promise<void>;
   handleGetCategoryById(id: number): Promise<void>;
   handleAtualizarCategoria(categoria: Categoria, id: number): Promise<void>;
+  handleCountByEntry(
+    idUser: number,
+    tipoCategoria: string,
+  ): Promise<void>;
 }
 
 const CategoriaContext = createContext<CategoriaContextType>(
@@ -170,6 +174,15 @@ export const CategoriasProvider: React.FC = ({ children }) => {
     }
   }
 
+  async function handleCountByEntry(idUser: number, tipoCategoria: string) {
+    try {
+      const response = await api.get(`/category/countbyentry/${idUser}`);
+      return response.data.categories;
+    } catch (error) {
+      console.debug('CategoriesContext | handleCountByEntry: ' + error);
+    }
+  }
+
   return (
     <CategoriaContext.Provider
       value={{
@@ -180,6 +193,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
         setupCategorias,
         handleAtualizarCategoria,
         handleGetCategoryById,
+        handleCountByEntry
       }}>
       {children}
     </CategoriaContext.Provider>

@@ -9,6 +9,7 @@ import Despesas from '../screens/Despesas';
 import Receitas from '../screens/Receitas';
 
 import Header from '../../../../components/Header';
+import { colors, fonts } from '../../../../../../styles';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -46,7 +47,12 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
       <Tab.Navigator
         initialRouteName="Despesas"
         screenOptions={{
-          tabBarLabelStyle: { fontSize: 14 },
+          tabBarLabelStyle: {
+            fontSize: fonts.size.medium,
+            fontFamily: fonts.familyType.bold,
+            textTransform: 'capitalize',
+            justifyContent: 'center'
+          },
           tabBarIndicatorStyle: {
             backgroundColor: '#525252',
           },
