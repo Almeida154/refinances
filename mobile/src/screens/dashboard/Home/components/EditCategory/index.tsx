@@ -48,8 +48,10 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   useEffect(() => {
     (async () => {
       const category = await handleGetCategoryById(route.params?.categoryId);
-      setCategory(category);
+      console.debug('Id categoria: ', route.params?.categoryId);
       console.debug('A categoria aqui: ', category);
+
+      setCategory(category);
     })();
   }, []);
   
@@ -81,7 +83,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
         },
       });
 
-      navigation.dispatch(StackActions.replace('AccountStack', { screen: 'ManageCategory' }));
+      //navigation.dispatch(StackActions.replace('AccountStack', { screen: 'ManageCategory' }));
 
     } else {
 
@@ -91,7 +93,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
         props: {
           type: 'error',
           title: 'Erro!',
-          message: 'Dado inválido',
+          message: 'Dado inválido'
         },
       });
 
@@ -105,7 +107,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   };
 
   return (
-    <ScrollView style={{ paddingTop: '8%', backgroundColor: '#f6f6f6' }}>
+    <ScrollView style={{backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'#ee4266'} />
        <Header style={{ backgroundColor: '#ee4266' }}>
             <HeaderTop backButton={backAction} title="" />
@@ -127,21 +129,22 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
               </InputControlValue>
             </AlinhaParaDireita>
           </Header>
-          <Title>{'category.nomeCategoria'}</Title>
+          <Title>{category.id}</Title>
 
-          <Button
-            onPress={() => {
-              handleUpdateCategory();
-              navigation.dispatch(StackActions.replace('StackAccount', 
-                {screen: 'ManageCategory'}));
-
-              }
-            }
-            title="Salvar"
-            backgroundColor="#CCC"
-            color="#444"
-            lastOne={true}
-          />
+          <View style={{paddingLeft: '10%', paddingRight: '10%'}}>
+            <Button
+              onPress={() => {
+                //handleUpdateCategory();
+                //navigation.dispatch(StackActions.replace('StackAccount', 
+                  //{screen: 'ManageCategory'}));
+                console.debug(category.nomeCategoria);
+              }}
+              title="Salvar"
+              backgroundColor="#CCC"
+              color="#444"
+              lastOne={true}
+            />
+          </View>
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>
@@ -151,8 +154,8 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: '0%',
-    marginLeft: '10%',
-    marginRight: '10%',
+    paddingLeft: '10%',
+    paddingRight: '10%',
   },
 });
 

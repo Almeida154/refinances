@@ -14,7 +14,6 @@ export type Categoria = {
   userCategoria: number;
   iconeCategoria: string;
   corCategoria: string;
-
   isSelected: boolean;
 };
 
@@ -165,7 +164,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
   async function handleGetCategoryById(id: number) {
     try {
       const response = await api.get(`/category/read/${id}`);
-      return response.data.categorias;
+      return response.data.categories;
     } catch (error) {
       console.debug('CategoriesContext | handleGetCategoryById: ' + error);
     }

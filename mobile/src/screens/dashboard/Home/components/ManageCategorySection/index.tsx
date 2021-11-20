@@ -22,7 +22,7 @@ import {
 
 import CardCategory from './CardCategory'
 
-import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext'
 import { StackActions } from '@react-navigation/native';
 
