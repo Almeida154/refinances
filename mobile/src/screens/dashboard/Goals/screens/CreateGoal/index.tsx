@@ -5,6 +5,9 @@ import Button from '../../../../../components/Button';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
+import { heightPixel, widthPixel } from '../../../../../helpers/responsiveness';
+
+import GoalsIcon from '../../../../../assets/images/svg/goalsIcon.svg';
 
 import {
   Container,
@@ -200,29 +203,26 @@ const CreateGoal = ({navigation}: PropsGoals) => {
 
   return (
     <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
-      <Header backButton={backAction} title="" />
+      <Header backButton={backAction} 
+      title="Nova meta" 
+      subtitle="Que bom que decidiu criar uma meta!"
+      isShort={true} />
+
       <View style={styles.container}>
         <Text
           style={{
-            marginTop: '35%',
-            marginBottom: '2%',
-            fontSize: 20,
-            color: '#444',
-            fontFamily: fonts.familyType.black,
-          }}>
-          Que bom que decidiu criar uma meta!
-        </Text>
-
-        <Text
-          style={{
-            marginBottom: '10%',
-            fontSize: 15,
+            marginBottom: heightPixel(50),
+            marginTop: heightPixel(450),
+            fontSize: fonts.size.medium,
+            textAlign: 'center',
             fontFamily: fonts.familyType.regular,
             color: '#292929',
           }}>
           Calcularemos seu investimento mensal e te notificaremos para não
           esquecer ;)
         </Text>
+
+        
 
         <View>
           <InputText
@@ -328,7 +328,6 @@ const CreateGoal = ({navigation}: PropsGoals) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '0%',
     marginLeft: '10%',
     marginRight: '10%',
   },

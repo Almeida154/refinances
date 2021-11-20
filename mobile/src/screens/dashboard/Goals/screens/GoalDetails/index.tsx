@@ -14,6 +14,7 @@ import {
   Title,
   Valor,
   DaysLeft,
+  BtnGroup
 } from './styles';
 
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
@@ -87,6 +88,19 @@ const GoalDetails = ({ route, navigation }: Props) => {
   const closeModalize = () => {
     modalizeRef.current?.close();
   };
+
+  const excluir = () => {
+    handleRemoveGoalById(goal.id);
+    navigation.dispatch(StackActions.replace('Main'));
+    Toast.show({
+      type: 'niceToast',
+      props: {
+        type: 'success',
+        title: 'Excluido!',
+        message: 'Meta excluida com sucesso',
+      },
+    });
+  }
   
   return (
     <ScrollView style={{ paddingTop: '5%', backgroundColor: '#f6f6f6' }}>
@@ -185,37 +199,27 @@ const GoalDetails = ({ route, navigation }: Props) => {
         />
       </View>
       <Modalize
-              ref={modalizeRef}
-              title="Tem certeza que deseja excluir esta meta?"
-              hasBodyBoundaries>
-              <Button
-                title="Excluir"
-                onPress={() =>{
-                    handleRemoveGoalById(goal.id);
-                    navigation.dispatch(StackActions.replace('Main'));
-                    Toast.show({
-                      type: 'niceToast',
-                      props: {
-                        type: 'success',
-                        title: 'Excluido!',
-                        message: 'Meta excluida com sucesso',
-                      },
-                    });
-                  }
-                }
-                backgroundColor={colors.platinum}
-                color={colors.paradisePink}
-              />
-              <Button
-                title="Cancelar"
-                onPress={() =>{
-                    closeModalize();
-                  }
-                }
-                backgroundColor={colors.platinum}
-                color={colors.darkGray}
-              />
-            </Modalize>
+        ref={modalizeRef}
+        title="Tem certeza que deseja excluir esta meta?"
+        hasBodyBoundaries>
+        <BtnGroup>
+          <Button
+            title="Excluir"
+            onPress={excluir}
+            color={colors.platinum}
+            style={{width: '50%', marginRight: '5%', backgroundColor: colors.paradisePink}}
+          />
+          <Button
+            title="Cancelar"
+            onPress={() =>{
+              closeModalize();
+            }}
+            backgroundColor={colors.platinum}
+            color={colors.darkGray}
+            style={{width: '50%'}}
+          />
+        </BtnGroup>
+      </Modalize>
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>

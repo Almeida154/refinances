@@ -57,6 +57,12 @@ export const GoalDate = styled.View`
     width: 100%;
     paddingBottom: 1%;
 `
+export const BtnGroup = styled.View`
+    flexDirection: row;
+    width: 100%;
+    justifyContent: center;
+    align-items: center
+`
 export const TextGoalsH = styled.Text`
     fontSize: ${`${fonts.size.medium}px`}
     color: #525252;
@@ -72,3 +78,4 @@ export const TextGoalsLighter = styled.Text`
     width: 50%;
     opacity: 0.85;
 `
+
