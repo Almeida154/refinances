@@ -65,25 +65,6 @@ Routes.put("/account/edit/:id", AccountController.edit);
 Routes.delete("/account/remove/:id", AccountController.remove);
 Routes.delete("/account/remove", AccountController.removeAll);
 
-// Necessidade
-Routes.post("/necessity/create", NecessityController.save);
-Routes.get("/necessity/read", NecessityController.showRelations);
-Routes.get("/necessity/read/:id", NecessityController.one);
-Routes.put("/necessity/edit/:id", NecessityController.edit);
-Routes.delete("/necessity/remove/:id", NecessityController.remove);
-Routes.delete("/necessity/remove", NecessityController.removeAll);
-
-// Conecta Necessidades
-Routes.post("/connectNecessity/create", ConnectNecessityController.save);
-Routes.get("/connectNecessity/read", ConnectNecessityController.showRelations);
-Routes.get("/connectNecessity/read/:id", ConnectNecessityController.one);
-Routes.put("/connectNecessity/edit/:id", ConnectNecessityController.edit);
-Routes.delete(
-  "/connectNecessity/remove/:id",
-  ConnectNecessityController.remove
-);
-Routes.delete("/connectNecessity/remove", ConnectNecessityController.removeAll);
-
 // Lançamento
 Routes.post("/entry/create", EntryController.save);
 Routes.get("/entry/read", EntryController.showRelations);
@@ -106,7 +87,7 @@ Routes.delete("/goal/remove", GoalController.removeAll);
 Routes.post("/installment/create", InstallmentController.save);
 Routes.get("/installment/read", InstallmentController.showRelations);
 Routes.get("/installment/read/:id", InstallmentController.one);
-Routes.put("/installment/edit/:id", InstallmentController.edit);
+Routes.put("/installment/edit", InstallmentController.edit);
 Routes.post(
   "/installment/groupbydate/:iduser",
   InstallmentController.GroupByDate

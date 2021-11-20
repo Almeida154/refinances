@@ -44,7 +44,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
         console.debug("Veio no handleConfirm")
         const aux = item
         aux.dataParcela = date
-        dataParcelas[aux.id] = aux
+        dataParcelas[item.indexOfLancamento] = aux
         setDataParcelas(dataParcelas)
         hideDatePicker();
     };
@@ -52,7 +52,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
     const onChangeValor = (text: string) => {
         console.debug("Veio no onChangeValor")
         const aux = dataParcelas.slice()
-        aux[item.id].valorParcela = text == '' ? NaN : parseFloat(text)
+        aux[item.indexOfLancamento].valorParcela = text == '' ? NaN : parseFloat(text)
         
         console.log(aux)
         setDataParcelas(aux)                
@@ -62,7 +62,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
         console.debug("Veio no onChangeValor")        
 
         const aux = dataParcelas.slice()
-        aux[item.id].statusParcela = aux[item.id].statusParcela ? false : true
+        aux[item.indexOfLancamento].statusParcela = aux[item.indexOfLancamento].statusParcela ? false : true
 
         setDataParcelas(aux)
     }
@@ -70,7 +70,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
     function changeAccount(conta: Conta | null){        
         if(item.contaParcela?.descricao != conta?.descricao) {
             const aux = dataParcelas.slice()
-            aux[item.id].contaParcela = conta        
+            aux[item.indexOfLancamento].contaParcela = conta        
             
             console.log(aux)
             setDataParcelas(aux)
@@ -91,18 +91,18 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 keyboardType="numeric" 
                 placeholder="R$ 00,00" 
                 placeholderTextColor="gray"
-                value={isNaN(dataParcelas[item.id].valorParcela) ? '' : String(dataParcelas[item.id].valorParcela)}
+                value={isNaN(dataParcelas[item.indexOfLancamento].valorParcela) ? '' : String(dataParcelas[item.indexOfLancamento].valorParcela)}
                 onChangeText={onChangeValor}
             />
             <InputControlStatus>
                 <Checkbox 
-                    status={dataParcelas[item.id].statusParcela ? 'checked' : 'unchecked'}
+                    status={dataParcelas[item.indexOfLancamento].statusParcela ? 'checked' : 'unchecked'}
                     onPress={changeSituation}
                     color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
                 />
                 <LabelStatus style={{color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</LabelStatus>
             </InputControlStatus>
-            <PickerContas conta={dataParcelas[item.id].contaParcela} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
+            <PickerContas conta={dataParcelas[item.indexOfLancamento].contaParcela} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
         </ContainerCardParcela>
 
     )

@@ -48,6 +48,7 @@ type Props = {
     contas: Conta[]
     navigation: any
     handleAdicionarLancamento: (lancamentoProps: Lancamento, idUser: number) => Promise<string>
+    showNiceToast: any
 };
 
 type State = {
@@ -176,7 +177,7 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
-       this.generatePrincipal(this.tratoNoTexto("Eu comprei uma picareta por r$ 20 da categoria cuidados pessoais da conta principal no dia 30 do 10 de 2021 vírgula eu comprei uma pá por r$ 50"))      
+       this.generatePrincipal(this.tratoNoTexto("Eu comprei uma contra-torpedeira por r$ 1000 da categoria cuidados pessoais da conta principal no dia 30 do 10 de 2021 vírgula eu vendi uma picareta por r$ 100"))      
        this.setState({
          isRecording: false
        })
@@ -411,24 +412,17 @@ class VoiceTest extends Component<Props, State> {
     console.log('auxDoAuxDoAux: ' + auxDoAuxDoAux.trim())
 
     return auxDoAuxDoAux.trim()
-  }
+  } 
 
-  executaBotao() {
-        
-    if (this.state.isRecording) {
-      this._stopRecognizing()      
-    } else {
-      
-    }
-  }
-
-  async handleItemCapture(itemNovo: Lancamento[] | null) {   
-    if(!itemNovo) {
-      return ToastAndroid.show("Nenhum item adicionado", ToastAndroid.SHORT)
+  async handleItemCapture(itemNovos: Lancamento[]) {   
+    if(!itemNovos[0].id && itemNovos.length == 1) {      
+      return this.props.showNiceToast("error","Nenhum item adicionado")
     }          
     
     let foi = false
-    itemNovo.map(async (item, index) => {
+    itemNovos.map(async (item, index) => {
+      if(index == 0)
+        return
       if(index == 1) foi = true
 
       const readItemNovo = {
@@ -443,13 +437,15 @@ class VoiceTest extends Component<Props, State> {
       if(response == '') {
         
       } else {
-        foi = false
-        ToastAndroid.show(response, ToastAndroid.SHORT)
+        foi = false        
       }
     })
 
-    if(foi) {
-      ToastAndroid.show(`${itemNovo.length == 1 ? 'O cadastro' : 'Os cadastros'} foram real`, ToastAndroid.SHORT)
+    if(foi) {      
+      this.props.showNiceToast("success",`${itemNovos.length == 1 ? 'O cadastro foi realizado' : 'Os cadastros foram realizados'}`)
+      this.setState({
+        itemNovo: [{}] as Lancamento[]
+      })
     }
   }
 
@@ -511,9 +507,9 @@ class VoiceTest extends Component<Props, State> {
 export default () => {
     const {categorias, handleReadByUserCategorias} = UseCategories()
     const {contas, handleReadByUserContas} = UseContas()
-    const {handleAdicionarLancamento} = UseLancamentos()
+    const {handleAdicionarLancamento} = UseLancamentos()    
 
-    const {navigation} = UseDadosTemp()
+    const {navigation, showNiceToast} = UseDadosTemp()
 
     useEffect(() => {
         (async function () {
@@ -541,6 +537,6 @@ export default () => {
 
 
     return (
-        <VoiceTest navigation={navigation} handleAdicionarLancamento={handleAdicionarLancamento} categorias={categorias ? categorias : []} contas={contas ? contas : []}/>
+        <VoiceTest showNiceToast={showNiceToast} navigation={navigation} handleAdicionarLancamento={handleAdicionarLancamento} categorias={categorias ? categorias : []} contas={contas ? contas : []}/>
     )
 };

@@ -70,16 +70,17 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     
     const [dataParcelas, setDataParcelas] = useState<Parcela[]>(receiveEntry?.parcelasLancamento ? receiveEntry.parcelasLancamento : [
         {
-            id: 0,
+            id: -1,
             contaParcela: selectedConta,
             valorParcela: valor == '' ? 0 : parseFloat(valor),
             dataParcela: dataPagamento,
             statusParcela: status,
-            lancamentoParcela: -1
+            lancamentoParcela: -1,
+            indexOfLancamento: 0
         },
-    ])        
-    
-    const changeParcela = (text: string, date: string, newDataParcelas: Parcela[]) => {
+    ])                
+
+    const changeParcela = (text: string, date: Date, newDataParcelas: Parcela[]) => {
         setParcelas(text)
         
         if (text == '') return
@@ -87,41 +88,49 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         let aux: Parcela[] = []
         const num = parseInt(text)            
         
-        let valorParcelaDividido =parseFloat((parseFloat(valor) / num).toFixed(2))
+        let valorParcelaDividido = parseFloat((parseFloat(valor) / num).toFixed(2))
 
         if (num < newDataParcelas.length) {
             for (var i = 0; i < num; i++) {
                 newDataParcelas[i].valorParcela = valorParcelaDividido
-                newDataParcelas[i].dataParcela = i == 0 ? toDate(date) : addMonths(toDate(date), 1)
+                newDataParcelas[i].dataParcela = i == 0 ? new Date(date) : addMonths(new Date(date), 1)
 
                 aux.push(newDataParcelas[i])
             }
+            setDataParcelas(aux)
         } else if (num > newDataParcelas.length) {            
             for (var i = 0; i < num; i++) {
-                const adicaoDeUmMes = i == 0 ? toDate(date) : addMonths(aux[i-1].dataParcela, 1)
+                const adicaoDeUmMes = i == 0 ? new Date(date) : addMonths(new Date(aux[i-1].dataParcela), 1)
+
+                console.log(adicaoDeUmMes)
+                
                 if(i < newDataParcelas.length) {
                     newDataParcelas[i].valorParcela = valorParcelaDividido
-                    newDataParcelas[i].dataParcela = adicaoDeUmMes
+                    newDataParcelas[i].dataParcela = new Date(adicaoDeUmMes)
                     
-                    console.log("newDataParcelas[0]", newDataParcelas[i])
                     aux.push(newDataParcelas[i])
                 
                 } else {
                     aux.push({
-                        id: i,
+                        id: -1,
                         contaParcela: selectedConta,
-                        dataParcela: adicaoDeUmMes,
+                        dataParcela: new Date(adicaoDeUmMes),
                         valorParcela: isNaN(valorParcelaDividido) ? 0 : valorParcelaDividido ,
                         statusParcela: status,
-                        lancamentoParcela: -1
+                        lancamentoParcela: -1,
+                        indexOfLancamento: i
                     })                                       
                 } 
-
+                
+                
+                if(i == num-1) {
+                    setDataParcelas(aux)
+                }
+                    console.log(`aux[${i}]`, aux)
                 
             }
         }        
 
-        setDataParcelas(aux)
     }
 
     async function handleSubmit() {                    
@@ -161,7 +170,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                     contaParcela: item.contaParcela,
                     dataParcela:item.dataParcela,
                     valorParcela: item.valorParcela,
-                    statusParcela: item.statusParcela                    
+                    statusParcela: item.statusParcela,
+                    indexOfLancamento: item.indexOfLancamento,
                 })
             })  
 
@@ -186,7 +196,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
 
 
             if(message == '') {
-                showNiceToast("error", "Lançamento editado")
+                showNiceToast("success", "Lançamento editado")
                 navigation.dispatch(StackActions.replace("Main", {screen: 'Extrato'}))
             }
             else {
@@ -197,7 +207,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
             const message = await handleAdicionarLancamento(newLancamento, idUser);            
             
             if(message == '') {
-                showNiceToast("error", "Lançamento adicionado")
+                showNiceToast("success", "Lançamento adicionado")
                 setDescricao('')
                 setValor('')
                 setSelectedCategoria(categorias ? categorias[0] : null) 
@@ -210,7 +220,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                         valorParcela: valor == '' ? 0 : parseFloat(valor),
                         dataParcela: new Date(dataPagamento),
                         statusParcela: status,
-                        lancamentoParcela: -1
+                        lancamentoParcela: -1,
+                        indexOfLancamento: 0
                     },
                 ])
             }
@@ -275,6 +286,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
 
         setDataParcelas(parcelas)
     }
+
+    console.log(dataParcelas)
 
     function changeMensal() {
         const newMensal = mensal ? false : true
@@ -409,7 +422,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                         label="Quantidade de Parcelas"
                         colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
                         value={parcelas}
-                        onChangeText={(text) => changeParcela(text, dataPagamento.toLocaleDateString(), dataParcelas)}
+                        onChangeText={(text) => changeParcela(text, dataPagamento, dataParcelas)}
                         placeholder="1"
                         keyboardType="numeric"
                         />

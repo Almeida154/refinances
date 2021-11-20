@@ -27,8 +27,8 @@ interface CategoriaContextType {
     idUser: number,
     tipoCategoria: string,
   ): Promise<void>;
-  handleGetCategoryById (id: number): Promise<void>;
-  handleAtualizarCategoria (categoria: Categoria, id: number): Promise<void>;
+  handleGetCategoryById(id: number): Promise<void>;
+  handleAtualizarCategoria(categoria: Categoria, id: number): Promise<void>;
 }
 
 const CategoriaContext = createContext<CategoriaContextType>(
@@ -91,7 +91,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
         corCategoria: categoria.corCategoria,
       });
 
-      console.log(response.data)
+      console.log(response.data);
       if (response.data.error) {
         return response.data.error;
       }
@@ -116,12 +116,13 @@ export const CategoriasProvider: React.FC = ({ children }) => {
     idUser: number,
     tipoCategoria: string,
   ) {
-    console.log('foia qui');
+    console.debug('handleReadByUserCategorias | entrou');
     setLoading(true);
     try {
       const response = await api.post(`/category/findbyuser/${idUser}`, {
         tipoCategoria,
       });
+      //console.debug('handleReadByUserCategorias | ', response.data.categories);
       setCategorias(response.data.categories);
       setLoading(false);
     } catch (error) {}
@@ -155,7 +156,6 @@ export const CategoriasProvider: React.FC = ({ children }) => {
 
         console.log('categorias: ' + categorias);
       }
-
     } catch (error) {
       console.log('Deu um erro no handleUpdatecategoria: ' + error);
     }
@@ -178,8 +178,8 @@ export const CategoriasProvider: React.FC = ({ children }) => {
         handleReadByUserCategorias,
         handleAdicionar,
         setupCategorias,
-        handleAtualizarCategoria, 
-        handleGetCategoryById
+        handleAtualizarCategoria,
+        handleGetCategoryById,
       }}>
       {children}
     </CategoriaContext.Provider>
