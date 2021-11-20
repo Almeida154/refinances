@@ -1,4 +1,4 @@
-import { RouteProp } from '@react-navigation/core';
+import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
@@ -21,6 +21,7 @@ import PropsNavigationApp, {
 const { width } = Dimensions.get('screen');
 
 import { UseAuth } from '../../../contexts/AuthContext';
+import { UseCategories } from '../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 
 import SectionAccount from './components/SectionAccount';
@@ -38,6 +39,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
+  const { handleReadByUserCategorias, categorias, loading } = UseCategories();
   const { navigation } = UseDadosTemp();
 
   const [stateReload, setStateReload] = useState(false);
@@ -63,6 +65,20 @@ const Home = () => {
       );
     })();
   });
+
+  useEffect(() => {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaa');
+    (async () => {
+      const req = await handleReadByUserCategorias(
+        await retornarIdDoUsuario(),
+        'despesa',
+      );
+    })();
+  }, []);
+
+  useEffect(() => {
+    loading && console.debug('CATEGORIAS: ', categorias);
+  }, [loading]);
 
   return (
     <ScrollView>
@@ -139,15 +155,13 @@ const Home = () => {
 
           <ScrollView style={styles.scroll}>
             <View style={styles.containerBody}>
-              
               <SectionAccount />
 
               <CreateCategoryGoals />
 
               <ManageCategory />
-              
+
               <ManageGoals />
-              
             </View>
           </ScrollView>
         </View>
@@ -174,7 +188,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomEndRadius: 15,
-    borderBottomStartRadius: 15
+    borderBottomStartRadius: 15,
   },
   iconProfile: {
     width: 70,
