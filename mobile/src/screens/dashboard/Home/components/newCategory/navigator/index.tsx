@@ -42,14 +42,12 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
         backgroundColor:
           routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
       }}>
-      <StatusBar
-        backgroundColor={
-          routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen
-        }
-      />
+
       <Header
         backButton={() => backNavAction()}
-        title=""
+        title="Nova categoria"
+        color="#fff"
+        isShort={true}
       />
 
       <Tab.Navigator
@@ -64,6 +62,7 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,
             textTransform: 'capitalize',
+            justifyContent: 'center'
           },
           tabBarIndicatorStyle: {
             backgroundColor: colors.white,
