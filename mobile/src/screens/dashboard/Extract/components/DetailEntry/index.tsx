@@ -56,6 +56,8 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
         }
     }
 
+    console.log(item.lancamentoParcela)
+
     return (
         <Container>
             <SepareRow style={{justifyContent: 'space-between', marginBottom: 50}}>
@@ -97,8 +99,8 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
                     </GroupLabel>
 
                     <GroupLabel>
-                        <Label>Total</Label>
-                        <Value>R$ 940,00</Value>
+                        <Label>{item.lancamentoParcela.parcelaBaseada == -1 ? "Total" : "Incidência"}</Label>
+                        <Value>{item.lancamentoParcela.parcelaBaseada == -1 ? item.lancamentoParcela.valueLancamento.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}) : item.valorParcela}</Value>
                     </GroupLabel>
 
                     

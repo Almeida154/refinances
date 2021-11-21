@@ -88,8 +88,7 @@ export const SectionIcon = styled.View`
     width: 45px;
     height: 45px;
     border-radius: 50px;
-    border-width: 4px;
-    border-color: #6bb760;
+    border-width: 4px;    
     align-items: center;
     justify-content: center;
 `

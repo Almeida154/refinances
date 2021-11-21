@@ -45,7 +45,7 @@ const CardAccount = ({item}: CardAccount) => {
     return(
         <ContainerCardAccount>
             <SectionDescription>
-                <SectionIcon>
+                <SectionIcon style={{borderColor: item.categoryConta.corCategoryConta}}>
                     {
                         item.categoryConta.iconeCategoryConta.indexOf("https://") != -1 ?
                         <Image source={{uri: item.categoryConta.iconeCategoryConta, width: 25, height: 25}} /> :

@@ -99,7 +99,7 @@ class ParcelaController {
             .where("(parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth OR lancamento.parcelaBaseada != -1) AND user.id = :id", {firstDayOfMonth, lastDayOfMonth, id: user.id})            
             .getMany()       
        
-        const dataLancamentos = await lancamentoRepository.find({where: {userLancamento: {id: user.id}}, join: {
+        const dataLancamentos: any = await lancamentoRepository.find({where: {userLancamento: {id: user.id}}, join: {
             alias: 'lancamento',
             leftJoinAndSelect: {
                 user: 'lancamento.userLancamento',
@@ -124,9 +124,17 @@ class ParcelaController {
         dataLancamentos.map((item, index) => {
             const auxParcela = item.parcelasLancamento.slice()
 
-            auxParcela.sort((a, b) => a.dataParcela < b.dataParcela ? -1 : a.dataParcela > b.dataParcela ? 1 : 0)
+            let valueLancamento = 0
+            auxParcela.sort((a, b) => {                
+                return a.dataParcela < b.dataParcela ? -1 : a.dataParcela > b.dataParcela ? 1 : 0
+            })
+
+            auxParcela.map(item => {
+                valueLancamento += item.valorParcela
+            })
 
             dataLancamentos[index].parcelasLancamento = auxParcela
+            dataLancamentos[index].valueLancamento = valueLancamento
         })
 
         const parcelas = []
@@ -153,7 +161,9 @@ class ParcelaController {
 
             readParcela.indexOfLancamento = indexParcela+1
             readParcela.totalParcelas = dataLancamentos[indexId].parcelasLancamento.length                                            
-            
+            readParcela.lancamentoParcela.valueLancamento = dataLancamentos[indexId].valueLancamento
+
+            console.log(readParcela)
             if(parcelaData == atual) {
                 aux.push(readParcela)
             } else {

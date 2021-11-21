@@ -106,22 +106,38 @@ class ContaController {
             return response.send({error: "usuário não encontrado"})
         }
 
-        const contas = await contaRepository.createQueryBuilder("conta")
+        const contasRecebidas = await contaRepository.createQueryBuilder("conta")
         .select(["conta", "user.id"])
         .leftJoinAndSelect("conta.userConta", "user")
         .leftJoinAndSelect("conta.parcelasConta", "parcela")
         .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")        
         .leftJoinAndSelect("conta.categoryConta", "categoryconta")        
+        .leftJoinAndSelect("conta.transferenciasRecebidas", "transferencia")
         .where("user.id = :id", { id: user.id })
         .getMany();
 
-        contas.map((conta, index) => {
-            conta.parcelasConta.map(item => {
-                contas[index].saldoConta += item.lancamentoParcela.tipoLancamento == 'despesa' ? -item.valorParcela : item.valorParcela
+        const contasEnviadas = await contaRepository.createQueryBuilder("conta")
+        .select(["conta", "user.id"])
+        .leftJoinAndSelect("conta.userConta", "user")                        
+        .leftJoinAndSelect("conta.transferenciasEnviadas", "transferencia")
+        .where("user.id = :id", { id: user.id })
+        .getMany();
+
+        contasRecebidas.map((conta, index) => {
+            conta.parcelasConta.map(item => {                
+                contasRecebidas[index].saldoConta += item.lancamentoParcela.tipoLancamento == 'despesa' ? -item.valorParcela : item.valorParcela
+            })
+
+            conta.transferenciasRecebidas.map((transferenciaRecebida, index) => {
+                contasRecebidas[index].saldoConta += transferenciaRecebida.valorTransferencia
+            })
+
+            contasEnviadas[index].transferenciasEnviadas.map((transferenciaEnviada, index) => {
+                contasRecebidas[index].saldoConta -= transferenciaEnviada.valorTransferencia
             })
         })
 
-        return response.send({ contas });
+        return response.send({ contas: contasRecebidas });
     }   
 
     async edit(request: Request, response: Response, next: NextFunction) {

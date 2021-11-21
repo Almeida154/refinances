@@ -45,9 +45,9 @@ class UserController {
 
     // Categoria Conta
     const nomesCategoriasContaPadroes = [
-      ["Carteira", "Entypo:wallet"],
-      ["Poupança", "MaterialCommunityIcons:currency-usd-circle"],
-      ["Investimentos", "MaterialIcons:show-chart"],
+      ["Carteira", "Entypo:wallet", "#669941"],
+      ["Poupança", "MaterialCommunityIcons:currency-usd-circle", "#123456"],
+      ["Investimentos", "MaterialIcons:show-chart", "#654321"],
     ];
 
     const categoriasContasPadroes = [] as CategoryConta[];
@@ -58,6 +58,7 @@ class UserController {
           iconeCategoryConta: item[1],
           descricaoCategoryConta: item[0],
           userCategoryConta: user,
+          corCategoryConta: item[2]
         });
 
         categoriasContasPadroes.push(

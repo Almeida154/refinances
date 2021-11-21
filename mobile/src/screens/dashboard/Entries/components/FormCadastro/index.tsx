@@ -42,9 +42,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     const {contas} = UseContas()
     const {navigation} = UseDadosTemp()            
     const {showNiceToast,  hideNiceToast} = UseDadosTemp()
-    const {handleAdicionarLancamento, handleEditLancamento} = UseLancamentos()    
-    
-    console.debug('receiveEntry', receiveEntry)
+    const {handleAdicionarLancamento, handleEditLancamento} = UseLancamentos()            
 
     const [detalhes, setDetalhes] = useState(false)
     
@@ -59,8 +57,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
         
     useEffect(() => {
         if(receiveEntry?.categoryLancamento && typeof receiveEntry?.categoryLancamento != 'string') {
-            setSelectedCategoria(receiveEntry?.categoryLancamento)        
-            console.log(receiveEntry?.categoryLancamento)                
+            setSelectedCategoria(receiveEntry?.categoryLancamento)                                   
             }
     }, [])
 
@@ -100,9 +97,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
             setDataParcelas(aux)
         } else if (num > newDataParcelas.length) {            
             for (var i = 0; i < num; i++) {
-                const adicaoDeUmMes = i == 0 ? new Date(date) : addMonths(new Date(aux[i-1].dataParcela), 1)
-
-                console.log(adicaoDeUmMes)
+                const adicaoDeUmMes = i == 0 ? new Date(date) : addMonths(new Date(aux[i-1].dataParcela), 1)                
                 
                 if(i < newDataParcelas.length) {
                     newDataParcelas[i].valorParcela = valorParcelaDividido
@@ -125,8 +120,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                 
                 if(i == num-1) {
                     setDataParcelas(aux)
-                }
-                    console.log(`aux[${i}]`, aux)
+                }                    
                 
             }
         }        
@@ -134,9 +128,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     }
 
     async function handleSubmit() {                    
-        const newParcelas: Parcela[] = []
-        
-        console.log("dataParcelas, ", dataParcelas)                          
+        const newParcelas: Parcela[] = []                
 
         if(!selectedCategoria) 
             return showNiceToast("error", "Categoria não encontrada")
@@ -248,8 +240,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     const handleConfirm = (date: Date) => {                
         setDataPagamento(date)
          
-        changeDate(date.toLocaleDateString())
-        console.log('date', date)
+        changeDate(date.toLocaleDateString())        
         hideDatePicker();
     };    
 
@@ -257,7 +248,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     useEffect(() => {
         if(valor == '') return
         
-        console.log("Vei no no useEffect[valor]")
+        console.debug("useEffect[valor] | entrou")
         const parcelas = dataParcelas.slice()
 
         const valorParcela = (parseFloat(valor) / dataParcelas.length).toFixed(2)
@@ -270,7 +261,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     }, [valor])
 
     function changeStatus() {
-        console.log("Vei no no useEffect[status]")
+        console.debug("useEffect[status] | Entrou")
 
         const newStatus = status ? false : true
         setStatus(newStatus)
@@ -285,9 +276,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
 
 
         setDataParcelas(parcelas)
-    }
-
-    console.log(dataParcelas)
+    }    
 
     function changeMensal() {
         const newMensal = mensal ? false : true
@@ -295,7 +284,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     }
 
     function changeDate(date: string){
-        console.log("Vei no no useEffect[date]")
+        console.debug("useEffect[date] | Entrou")
 
         const parcelas: Parcela[] = []        
 
@@ -307,11 +296,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
             
             parcelas.push(item)
             
-            proximoMes = addMonths(toDate(proximoMes), 1).toLocaleDateString()
-            
-            // if(index = dataParcelas.length-1) {
-                // console.debug("useEffect[dataPagamento] | parcelas", parcelas)
-                // }
+            proximoMes = addMonths(toDate(proximoMes), 1).toLocaleDateString()                        
         })
 
 
@@ -321,7 +306,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     function changeAccount(conta: Conta | null){
         
         if(conta?.descricao != selectedConta?.descricao) {
-            console.log("Vei no no useEffect[account]")
+            console.debug("useEffect[account] | Entrou")
             const parcelas: Parcela[] = []        
     
             dataParcelas.map((item, index) => {
