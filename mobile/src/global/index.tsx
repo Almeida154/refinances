@@ -206,563 +206,676 @@ export default {
     {
       description: 'ABC Brasil',
       accent: '#ececec',
+      icon: require('../assets/images/banks/ABC Brasil.png'),
     },
 
     {
-      description: 'Acesso Banco',
+      description: 'Acesso Bank',
       accent: '#00bf66',
+      icon: require('../assets/images/banks/Acesso Bank.png'),
     },
 
     {
       description: 'ActivTrades',
       accent: '#040c1b',
+      icon: require('../assets/images/banks/ActivTrades.png'),
     },
 
     {
       description: 'Agibank',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Agibank.png'),
     },
 
     {
       description: 'Ágora Investimentos',
       accent: '#002529',
+      icon: require('../assets/images/banks/Ágora Investimentos.png'),
     },
 
     {
       description: 'alelo',
       accent: '#7f9525',
+      icon: require('../assets/images/banks/alelo.png'),
     },
 
     {
       description: 'Ame Digital',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Ame Digital.png'),
     },
 
     {
       description: 'Avenue Securitie',
       accent: '#1d1d1d',
+      icon: require('../assets/images/banks/Avenue Securitie.png'),
     },
 
     {
       description: 'B2S',
       accent: '#231d98',
+      icon: require('../assets/images/banks/B2S.png'),
     },
 
     {
       description: 'Banco Cacique',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Banco Cacique.png'),
     },
 
     {
       description: 'Banco da Amazônia',
       accent: '#052a15',
+      icon: require('../assets/images/banks/Banco da Amazônia.png'),
     },
 
     {
       description: 'Banco do Brasil',
       accent: '#afaf33',
+      icon: require('../assets/images/banks/Banco do Brasil.png'),
     },
 
     {
       description: 'Banco do Nordeste',
       accent: '#5d0f22',
+      icon: require('../assets/images/banks/Banco do Nordeste.png'),
     },
 
     {
       description: 'Banco Inter',
       accent: '#d7d7d7',
+      icon: require('../assets/images/banks/Banco Inter.png'),
     },
 
     {
       description: 'Banco Original',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Banco Original.png'),
     },
 
     {
       description: 'Banco PAN',
       accent: '#0c8ec9',
+      icon: require('../assets/images/banks/Banco PAN.png'),
     },
 
     {
       description: 'Banco Sofisa direto',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Banco Sofisa direto.png'),
     },
 
     {
       description: 'Banco Votorantim',
       accent: '#034c2e',
+      icon: require('../assets/images/banks/Banco Votorantim.png'),
     },
 
     {
       description: 'Banestes',
       accent: '#003365',
+      icon: require('../assets/images/banks/Banestes.png'),
     },
 
     {
       description: 'Banif',
       accent: '#660075',
+      icon: require('../assets/images/banks/Banif.png'),
     },
 
     {
       description: 'Banpara',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Banpara.png'),
     },
 
     {
       description: 'Banrisul',
       accent: '#005889',
+      icon: require('../assets/images/banks/Banrisul.png'),
     },
 
     {
       description: 'bbm',
       accent: '#ececec',
+      icon: require('../assets/images/banks/bbm.png'),
     },
 
     {
       description: 'BBVA',
       accent: '#003365',
+      icon: require('../assets/images/banks/BBVA.png'),
     },
 
     {
       description: 'Ben Visa Vale',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Ben Visa Vale.png'),
     },
 
     {
       description: 'Binance',
       accent: '#232323',
+      icon: require('../assets/images/banks/Binance.png'),
     },
 
     {
-      description: 'BGM',
+      description: 'BMG',
       accent: '#cd7318',
+      icon: require('../assets/images/banks/BMG.png'),
     },
 
     {
       description: 'Bradesco',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Bradesco.png'),
     },
 
     {
       description: 'BRB',
       accent: '#ececec',
+      icon: require('../assets/images/banks/BRB.png'),
     },
 
     {
       description: 'BRDE',
       accent: '#ececec',
+      icon: require('../assets/images/banks/BRDE.png'),
     },
 
     {
       description: 'BTG Pactual',
       accent: '#000c32',
+      icon: require('../assets/images/banks/BTG Pactual.png'),
     },
 
     {
       description: 'BTG+',
       accent: '#232323',
+      icon: require('../assets/images/banks/BTG+.png'),
     },
 
     {
       description: 'C6 Bank',
       accent: '#141414',
+      icon: require('../assets/images/banks/C6 Bank.png'),
     },
 
     {
       description: 'Caixa',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Caixa.png'),
     },
 
     {
       description: 'Carrefour',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Carrefour.png'),
     },
 
     {
       description: 'Celcoin',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Celcoin.png'),
     },
 
     {
       description: 'Cetelem',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Cetelem.png'),
     },
 
     {
       description: 'Citibank',
       accent: '#003365',
+      icon: require('../assets/images/banks/Citibank.png'),
     },
 
     {
       description: 'Clear Investimentos',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Clear Investimentos.png'),
     },
 
     {
-      description: 'Cruzeirodosul',
+      description: 'Cruzeiro do Sul',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Cruzeiro do Sul.png'),
     },
 
     {
       description: 'Daycoval',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Daycoval.png'),
     },
 
     {
       description: 'Desjardins Bank',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Desjardins Bank.png'),
     },
 
     {
       description: 'Digi+',
       accent: '#000624',
+      icon: require('../assets/images/banks/Digi+.png'),
     },
 
     {
       description: 'Digio',
       accent: '#000b3d',
+      icon: require('../assets/images/banks/Digio.png'),
     },
 
     {
       description: 'Diin',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Diin.png'),
     },
 
     {
       description: 'Easynvest',
       accent: '#d9d9b8',
+      icon: require('../assets/images/banks/Easynvest.png'),
     },
 
     {
       description: 'EbanxGo',
       accent: '#171b21',
+      icon: require('../assets/images/banks/EbanxGo.png'),
     },
 
     {
       description: 'Elliot',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Elliot.png'),
     },
 
     {
       description: 'Genial Investimentos',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Genial Investimentos.png'),
     },
 
     {
       description: 'Havan',
       accent: '#002959',
+      icon: require('../assets/images/banks/Havan.png'),
     },
 
     {
       description: 'Hotmart',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Hotmart.png'),
     },
 
     {
       description: 'HSBC',
       accent: '#ececec',
+      icon: require('../assets/images/banks/HSBC.png'),
     },
 
     {
       description: 'Icatu',
       accent: '#002959',
+      icon: require('../assets/images/banks/Icatu.png'),
     },
 
     {
       description: 'IQ Option',
       accent: '#003365',
+      icon: require('../assets/images/banks/IQ Option.png'),
     },
 
     {
       description: 'Itaú Personnalite',
       accent: '#050914',
+      icon: require('../assets/images/banks/Itaú Personnalite.png'),
     },
 
     {
       description: 'Itaú',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Itaú.png'),
     },
 
     {
       description: 'Iti',
       accent: '#bb0671',
+      icon: require('../assets/images/banks/Iti.png'),
     },
 
     {
       description: 'Juno',
       accent: '#0d14a8',
+      icon: require('../assets/images/banks/Juno.png'),
     },
 
     {
       description: 'LHV',
       accent: '#ececec',
+      icon: require('../assets/images/banks/LHV.png'),
     },
 
     {
       description: 'Magnetis',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Magnetis.png'),
     },
 
     {
       description: 'Méliuz',
       accent: '#cb1e3a',
+      icon: require('../assets/images/banks/Méliuz.png'),
     },
 
     {
       description: 'Mercado Bitcoin',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Mercado Bitcoin.png'),
     },
 
     {
       description: 'MercadoPago',
       accent: '#ececec',
+      icon: require('../assets/images/banks/MercadoPago.png'),
     },
 
     {
       description: 'Mercantil do Brasil',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Mercantil do Brasil.png'),
     },
 
     {
       description: 'ModalMais',
       accent: '#191a21',
+      icon: require('../assets/images/banks/ModalMais.png'),
     },
 
     {
       description: 'Moip',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Moip.png'),
     },
 
     {
       description: 'Monetizze',
       accent: '#00345a',
+      icon: require('../assets/images/banks/Monetizze.png'),
     },
 
     {
       description: 'Monetus',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Monetus.png'),
     },
 
     {
       description: 'N26',
       accent: '#ececec',
+      icon: require('../assets/images/banks/N26.png'),
     },
 
     {
       description: 'Neon',
       accent: '#07aac3',
+      icon: require('../assets/images/banks/Neon.png'),
     },
 
     {
       description: 'Next',
       accent: '#01bb46',
+      icon: require('../assets/images/banks/Next.png'),
     },
 
     {
       description: 'Nova Futura Investimentos',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Nova Futura Investimentos.png'),
     },
     {
       description: 'NovaDAX',
       accent: '#cac7bf',
+      icon: require('../assets/images/banks/NovaDAX.png'),
     },
 
     {
       description: 'NuBank',
       accent: '#6306a0',
+      icon: require('../assets/images/banks/NuBank.png'),
     },
 
     {
       description: 'Órama',
       accent: '#01571d',
+      icon: require('../assets/images/banks/Órama.png'),
     },
 
     {
       description: 'Pag!',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Pag!.png'),
     },
 
     {
       description: 'PagBank',
       accent: '#01571d',
+      icon: require('../assets/images/banks/PagBank.png'),
     },
 
     {
       description: 'PagSeguro',
       accent: '#009a7e',
+      icon: require('../assets/images/banks/PagSeguro.png'),
     },
 
     {
       description: 'Paypal',
       accent: '#00488d',
+      icon: require('../assets/images/banks/Paypal.png'),
     },
 
     {
       description: 'PayU Brasil',
       accent: '#a0ae00',
+      icon: require('../assets/images/banks/PayU Brasil.png'),
     },
 
     {
       description: 'PicPay',
       accent: '#489e39',
+      icon: require('../assets/images/banks/PicPay.png'),
     },
 
     {
       description: 'Porto Seguro',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Porto Seguro.png'),
     },
     {
       description: 'Primacredi',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Primacredi.png'),
     },
 
     {
       description: 'RCI',
       accent: '#ececec',
+      icon: require('../assets/images/banks/RCI.png'),
     },
 
     {
       description: 'Recargapay',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Recargapay.png'),
     },
 
     {
       description: 'Rico',
       accent: '#cf4502',
+      icon: require('../assets/images/banks/Rico.png'),
     },
 
     {
       description: 'Safra',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Safra.png'),
     },
 
     {
       description: 'Santander',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Santander.png'),
     },
 
     {
       description: 'Shoptime',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Shoptime.png'),
     },
 
     {
       description: 'Sicoob',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Sicoob.png'),
     },
 
     {
       description: 'Sicredi',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Sicredi.png'),
     },
 
     {
       description: 'Social Bank',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Social Bank.png'),
     },
 
     {
       description: 'Sodexo',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Sodexo.png'),
     },
 
     {
       description: 'Sumup',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Sumup.png'),
     },
 
     {
       description: 'Tangerine',
       accent: '#ca610d',
+      icon: require('../assets/images/banks/Tangerine.png'),
     },
 
     {
       description: 'TD AmeriTrade',
       accent: '#ececec',
+      icon: require('../assets/images/banks/TD AmeriTrade.png'),
     },
     {
       description: 'Tesouro Direto',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Tesouro Direto.png'),
     },
 
     {
       description: 'Tesouro Nacional',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Tesouro Nacional.png'),
     },
 
     {
       description: 'Ticket',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Ticket.png'),
     },
 
     {
       description: 'Toro Investimentos',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Toro Investimentos.png'),
     },
 
     {
       description: 'Tribanco',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Tribanco.png'),
     },
 
     {
       description: 'Tudo Azul',
       accent: '#000d24',
+      icon: require('../assets/images/banks/Tudo Azul.png'),
     },
 
     {
       description: 'Unicred',
       accent: '#012a1a',
+      icon: require('../assets/images/banks/Unicred.png'),
     },
 
     {
       description: 'Uniprime',
       accent: '#003850',
+      icon: require('../assets/images/banks/Uniprime.png'),
     },
 
     {
       description: 'Urbe.Me',
       accent: '#000d24',
+      icon: require('../assets/images/banks/Urbe.Me.png'),
     },
 
     {
       description: 'UrPay',
       accent: '#ececec',
+      icon: require('../assets/images/banks/UrPay.png'),
     },
 
     {
       description: 'Viacredi',
       accent: '#004661',
+      icon: require('../assets/images/banks/Viacredi.png'),
     },
 
     {
       description: 'Vitreo',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Vitreo.png'),
     },
 
     {
       description: 'Warren',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Warren.png'),
     },
 
     {
       description: 'Wirecard',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Wirecard.png'),
     },
 
     {
       description: 'Woop',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Woop.png'),
     },
 
     {
       description: 'Xdex',
       accent: '#ececec',
+      icon: require('../assets/images/banks/Xdex.png'),
     },
 
     {
       description: 'Xp Investimentos',
       accent: '#02131d',
+      icon: require('../assets/images/banks/Xp Investimentos.png'),
     },
 
     {

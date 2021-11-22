@@ -40,8 +40,8 @@ const Account = ({ navigation }: PropsNavigation) => {
     // Carteira
     if (setupUser.account == undefined) {
       const walletAccount = {
-        categoryConta: 'Carteira',
-        descricao: 'Carteira',
+        categoryConta: 'Conta Corrente',
+        descricao: 'alelo',
         saldoConta: 0,
       } as Conta;
 

@@ -1,4 +1,8 @@
-const doubleToCurrency = (value: number, language: 'pt-br', currency: 'BRL') =>
+const doubleToCurrency = (
+  value: number,
+  language = 'pt-br',
+  currency = 'BRL',
+) =>
   value.toLocaleString(language, {
     style: 'currency',
     currency: currency,
