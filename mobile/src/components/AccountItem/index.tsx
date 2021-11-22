@@ -44,8 +44,8 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
           source={require('../../assets/images/banks/picpay.png')}
         />
         <Info>
-          <Description>PicPay</Description>
-          <Category>Conta Corrente</Category>
+          <Description>{account?.descricao}</Description>
+          <Category>{account?.descricao}</Category>
         </Info>
         <Icon>
           <MaterialCommunityIcons

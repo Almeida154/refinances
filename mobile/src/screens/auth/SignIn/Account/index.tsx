@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { BackHandler } from 'react-native';
+import { BackHandler, Text } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
+import { Conta } from '../../../../contexts/AccountContext';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
@@ -25,7 +26,9 @@ export type PropsNavigation = {
 };
 
 const Account = ({ navigation }: PropsNavigation) => {
-  const { user, updateUserProps } = UseAuth();
+  const [isLoading, setLoading] = useState(true);
+
+  const { user, updateSetupUserProps, setupUser } = UseAuth();
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -33,11 +36,27 @@ const Account = ({ navigation }: PropsNavigation) => {
       BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
 
+  useEffect(() => {
+    // Carteira
+    if (setupUser.account == undefined) {
+      const walletAccount = {
+        categoryConta: 'Carteira',
+        descricao: 'Carteira',
+        saldoConta: 0,
+      } as Conta;
+
+      const newSetupProps = setupUser;
+      newSetupProps.account = [walletAccount];
+      updateSetupUserProps(newSetupProps);
+    }
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 700);
+  }, [setupUser.account]);
+
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Photo'));
-    const newUser = user;
-    newUser.emailUsuario = '';
-    updateUserProps(newUser);
     return true;
   };
 
@@ -54,13 +73,19 @@ const Account = ({ navigation }: PropsNavigation) => {
         subtitle="Agora, além da carteira, vamos configurar sua conta principal. Todo o processo seguinte será atrelado à essa conta."
       />
       <Content>
-        <AccountItem />
-        <Button
-          style={{ backgroundColor: colors.platinum }}
-          title="Nova conta principal"
-          color={colors.silver}
-          onPress={() => {}}
-        />
+        {!isLoading ? (
+          <>
+            <AccountItem account={setupUser.account[0]} />
+            <Button
+              style={{ backgroundColor: colors.platinum }}
+              title="Nova conta principal"
+              color={colors.silver}
+              onPress={() => {}}
+            />
+          </>
+        ) : (
+          <Text>Carregando</Text>
+        )}
       </Content>
       <BottomNavigation onPress={() => next()} description="Próximo" />
     </Container>
