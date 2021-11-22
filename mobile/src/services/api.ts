@@ -6,7 +6,7 @@ const api = axios.create({
   // Mari: 192.168.15.26'
   // Samuel: 192.168.15.114
 
-  baseURL: 'http://192.168.15.26:3333',
+  baseURL: 'http://192.168.48.245:3333',
 });
 
 export default api;

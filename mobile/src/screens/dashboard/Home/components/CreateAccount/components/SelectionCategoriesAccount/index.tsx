@@ -35,7 +35,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { StackActions } from '@react-navigation/native'
 import { UseDadosTemp } from '../../../../../../../contexts/TemporaryDataContext'
 
-
+import { fonts, colors } from '../../../../../../../styles'
 
 
 const RenderOption = (settings: OptionTemplateSettings) => {
@@ -63,7 +63,7 @@ type PropsRenderHeader = {
 const RenderHeader = ({search, setSearch}: PropsRenderHeader) => {    
     return (
         <Searchbar 
-            placeholder="Type Here..."
+            placeholder="Pesquisar..."
             onChangeText={setSearch}
             value={search}
         />
@@ -74,7 +74,12 @@ const RenderFooter = () => {
     const {navigation} = UseDadosTemp()
     return (
         <BotaoAdicionarCategoria>
-            <LabelAdicionarCategoria onPress={() => navigation.dispatch(StackActions.replace("StackAccount", {screen: 'AddCategoryAccount'}))}>Adicionar Categoria</LabelAdicionarCategoria>
+            <LabelAdicionarCategoria 
+            onPress={() => navigation.dispatch(
+                StackActions.replace("StackAccount", 
+                {screen: 'AddCategoryAccount'}
+                ))}>Adicionar Categoria
+            </LabelAdicionarCategoria>
         </BotaoAdicionarCategoria>
     )
 }
@@ -129,8 +134,9 @@ const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta}: PropsSe
     return (
         <Container>
 
-            <TouchableOpacity onPress={onOpen}>
+            
                 <InputText 
+                    onPress={onOpen}
                     label="Categoria"
                     value={categoriaConta == null ? '' : categoriaConta.descricaoCategoryConta}
                     placeholder="Selecione uma categoria conta"
@@ -140,7 +146,7 @@ const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta}: PropsSe
                     onClear={() => {}}
                 />
 
-            </TouchableOpacity>
+
 
             {
                 categoriasConta &&   

@@ -2,7 +2,7 @@ import styled from 'styled-components/native'
 
 export const Container = styled.View`
     padding: 10%;
-    align-items: center;
+    
 `
 
 export const ButtonText = styled.Text`
