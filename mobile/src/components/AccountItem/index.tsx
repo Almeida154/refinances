@@ -41,7 +41,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
             borderWidth: widthPixel(10),
             borderColor: colors.slimyGreen,
           }}
-          source={require('../../assets/images/banks/picpay.png')}
+          source={require('../../assets/images/banks/PicPay.png')}
         />
         <Info>
           <Description>{account?.descricao}</Description>
