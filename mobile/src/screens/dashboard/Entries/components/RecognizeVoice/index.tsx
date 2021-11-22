@@ -179,7 +179,7 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
-       this.generatePrincipal(this.tratoNoTexto("Eu comprei uma contra-torpedeira por r$ 1000 da categoria cuidados pessoais da conta principal no dia 30 do 10 de 2021 vírgula eu vendi uma picareta por r$ 100"))      
+       this.generatePrincipal(this.tratoNoTexto(this.state.results[0]))      
        this.setState({
          isRecording: false
        })
@@ -298,7 +298,8 @@ class VoiceTest extends Component<Props, State> {
       
   
       this.props.categorias.map(item => {
-        if (aux.indexOf(item.nomeCategoria.toLocaleLowerCase()) != -1) {
+        if (aux.toLocaleLowerCase().indexOf(item.nomeCategoria.toLocaleLowerCase()) != -1) {
+          console.log(captureLancamento[j].categoryLancamento, item)
           captureLancamento[j].categoryLancamento = item
         }
       })
@@ -309,7 +310,7 @@ class VoiceTest extends Component<Props, State> {
 
       //conta
       this.props.contas.map(item => {
-          if (aux.indexOf(item.descricao.toLocaleLowerCase()) != -1) {
+          if (aux.toLocaleLowerCase().indexOf(item.descricao.toLocaleLowerCase()) != -1) {
             captureLancamento[j].parcelasLancamento[0].contaParcela = item
           }
         })
@@ -354,9 +355,7 @@ class VoiceTest extends Component<Props, State> {
       console.log('caiu no primeiroComando')
       const comandosJson = JSON.parse(text)    
 
-      this.setState({itemNovo: comandosJson})
-
-      console.log("O resultado pegado", comandosJson)
+      this.setState({itemNovo: comandosJson})      
       // this.props.navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveVoice: itensNovo}}))
     } else {
       // alert('Nenhum foi encontrado')
