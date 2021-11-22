@@ -19,8 +19,7 @@ import {
     LabelIndex,
     EditLabel,
 } from './styles'
-import {Checkbox} from 'react-native-paper'
-
+import {Checkbox} from 'react-native-paper';
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
 type PropsCardInstallment = {
@@ -30,6 +29,7 @@ type PropsCardInstallment = {
 const CardInstallment = ({item}: PropsCardInstallment) => {
     const {modalizeRefDetailEntry, setSelectedItemExtract} = UseDadosTemp()
     const textParcela = item.totalParcelas != 1 && item.totalParcelas ? item.indexOfLancamento + 'ª parcela de ' + item.totalParcelas : ''
+    const [checked, setChecked] = React.useState(false);
     
     function openModalize(){
         setSelectedItemExtract(item)
@@ -53,8 +53,8 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
                 <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{(item.valorParcela).toFixed(2)}</LabelValue>                                                    
                 <SectionCheck>     
                     <Checkbox 
-                        status={item.lancamentoParcela.tipoLancamento == 'despesa' ? 'checked' : 'unchecked'}
-                        onPress={() => {}}
+                        status={checked ? 'checked' : 'unchecked'}
+                        onPress={() => {setChecked(!checked);}}
                         color={'#EE4266'}
                 
                     />
