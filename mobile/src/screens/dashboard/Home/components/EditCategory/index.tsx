@@ -48,9 +48,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   useEffect(() => {
     (async () => {
       const category = await handleGetCategoryById(route.params?.categoryId);
-      console.debug('Id categoria: ', route.params?.categoryId);
-      console.debug('A categoria aqui: ', category);
-
+      
       setCategory(category);
     })();
   }, []);
@@ -58,6 +56,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   const [tetoGastos, setTetoGastos] = useState('');
   const [valorError, setValorError] = useState<any | null>(null);
 
+  
   async function handleUpdateCategory() {
     if(!category)
       return console.log("category nulo")
@@ -74,22 +73,22 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
     if (parseFloat(tetoGastos) > 0 && tetoGastos != undefined) {
 
       handleAtualizarCategoria(newCategory, category.id);
-      console.log(newCategory);
+      //console.log(newCategory);
+      console.log(parseFloat(tetoGastos));
+      console.log(category.tetoDeGastos);
 
-      Toast.show({
+      /* Toast.show({
         type: 'niceToast',
         props: {
           type: 'success',
           title: 'Foi!',
           message: 'Teto de gastos adicionado com sucesso',
         },
-      });
+      }); */
 
       //navigation.dispatch(StackActions.replace('AccountStack', { screen: 'ManageCategory' }));
 
     } else {
-
-      setValorError('Insira um valor válido!');
       Toast.show({
         type: 'niceToast',
         props: {
@@ -114,7 +113,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
     <ScrollView style={{backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'#ee4266'} />
        <Header style={{ backgroundColor: '#ee4266' }}>
-            <HeaderTop backButton={backAction} title="" />
+            <HeaderTop backButton={backAction} title='Teto de gasto' isShort={true} color={'#fff'}/>
 
             <AlinhaParaDireita>
               <View></View>
@@ -125,23 +124,17 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
                   placeholder="00,00"
                   placeholderTextColor="#fff"
                   value={tetoGastos}
-                  onChangeText={txt => {
-                    setValorError(null);
-                    setTetoGastos(txt);
-                  }}
+                  onChangeText={setTetoGastos}
                 />
               </InputControlValue>
             </AlinhaParaDireita>
           </Header>
           <Title>{category?.nomeCategoria}</Title>
-
+          <Title>{category?.tetoDeGastos}</Title>
+          <Title>{parseFloat(tetoGastos)}</Title>
           <View style={{paddingLeft: '10%', paddingRight: '10%'}}>
             <Button
-              onPress={() => {
-                handleUpdateCategory();
-                //navigation.dispatch(StackActions.replace('StackAccount', 
-                  //{screen: 'ManageCategory'}));                
-              }}
+              onPress={handleUpdateCategory}
               title="Salvar"
               backgroundColor="#CCC"
               color="#444"

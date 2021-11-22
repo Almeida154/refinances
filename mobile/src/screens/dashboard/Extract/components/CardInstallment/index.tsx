@@ -12,11 +12,14 @@ import {
     SectionLancamento,
     SectionDescription,
     SectionValues,
+    SectionCheck,
     LabelName,
     LabelAccount,
     LabelValue,
-    LabelIndex
+    LabelIndex,
+    EditLabel,
 } from './styles'
+import {Checkbox} from 'react-native-paper'
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 
@@ -46,9 +49,18 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
             </SectionLancamento>
 
             
-            <SectionValues >
+            <SectionValues>
                 <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{(item.valorParcela).toFixed(2)}</LabelValue>                                                    
-                <LabelIndex>{textParcela}</LabelIndex>                
+                <SectionCheck>     
+                    <Checkbox 
+                        status={item.lancamentoParcela.tipoLancamento == 'despesa' ? 'checked' : 'unchecked'}
+                        onPress={() => {}}
+                        color={'#EE4266'}
+                
+                    />
+                    <EditLabel>Pago?</EditLabel>  
+                </SectionCheck>
+                <LabelIndex>{textParcela}</LabelIndex> 
             </SectionValues>
         </ContainerItem>
     )
