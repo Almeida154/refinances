@@ -11,6 +11,8 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
 import SelectionCategoriesAccount from './components/SelectionCategoriesAccount'
 
+import HeaderTop from '../../../../../components/Header';
+
 import {
     Container,
 } from './styles'
@@ -65,6 +67,7 @@ const CreateAccount = () => {
 
     return (
         <Container>
+        <HeaderTop backButton={backAction} title="" />
 
         <Text 
          style={{marginBottom: '2%', 

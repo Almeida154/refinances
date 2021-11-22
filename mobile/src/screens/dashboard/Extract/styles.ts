@@ -79,7 +79,7 @@ export const CardBalance = styled.View`
 `
 export const LabelBalance = styled.Text`
     font-family: ${`${fonts.familyType.bold}`};
-    font-size: ${`${fonts.size.smaller}px`};
+    font-size: ${`${fonts.size.small}px`};
     color: #444;
 `
 export const LabelValueBalance = styled.Text`

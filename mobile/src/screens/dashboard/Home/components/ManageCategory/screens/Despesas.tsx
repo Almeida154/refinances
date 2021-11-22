@@ -73,12 +73,6 @@ const Despesas = ({ navigation }: PropsCategory) => {
           </Loading>
         ) : (
           <View style={{ padding: '10%' }}>
-            <Button
-              onPress={() => (async function () {
-                console.warn('inferno')
-                // handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
-              })()}
-              title="teste"/>
             <Subtitle>
               Adicione teto de gastos às categorias para se manter organizado(a)!
             </Subtitle>

@@ -19,6 +19,14 @@ export const SectionIcon = styled.View`
     margin-right: 10px;
 `
 
+export const EditLabel = styled.Text`
+    font-size: ${`${fonts.size.medium}px`};
+    color: #525252;
+    fontFamily: ${`${fonts.familyType.semiBold}`};
+    opacity: 0.7;
+    margin-bottom: ${`${fonts.size.smaller}px`};
+`
+
 export const SectionDescription = styled.View`
     
 `
@@ -36,8 +44,16 @@ export const LabelName = styled.Text`
 
 export const SectionValues = styled.View`
     display: flex;
-    flex-direction: column;
+    flex-flow: column wrap;
+    justify-content: space-between;
     align-items: flex-end;
+`
+export const SectionCheck = styled.View`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    
 `
 
 export const LabelAccount = styled.Text`

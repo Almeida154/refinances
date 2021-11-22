@@ -97,7 +97,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       contaParcela: selectedConta,
       dataParcela: new Date(Date.now()),
       lancamentoParcela: goal.lancamentoMeta.id,
-      statusParcela: true,
+      statusParcela: sttsParcela(),
       valorParcela: parseFloat(valorDeposito),
     } as Parcela;
 
@@ -130,8 +130,15 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       }
     }
   }
-
-  const novoSaldo = () => {
+  const sttsParcela = () =>{
+    if(goal.saldoAtualMeta < goal.saldoFinalMeta){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+  const novoSaldo = () => { 
     return goal.saldoAtualMeta + parseFloat(valorDeposito);
   };
 

@@ -8,6 +8,8 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 import FormCadastro from './components/FormCadastro'
 import FormTransferencia from './components/TransferForm'
 
+import HeaderTop from '../../../components/Header';
+
 import {
     Container,
     InputControlValue,
@@ -63,6 +65,7 @@ const FormLancamento = ({route}: any) => {
             {
                 <Container>
                     <Header style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}>
+                    <HeaderTop backButton={backAction} title=""/>
                     <AlinhaParaDireita>
                         <View></View>
                         <InputControlValue>
