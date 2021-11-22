@@ -9,7 +9,7 @@ import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario';
 export type Categoria = {
   id: number;
   nomeCategoria: string;
-  tetoDeGastos: number | null;
+  tetoDeGastos: number;
   tipoCategoria: string;
   userCategoria: number;
   iconeCategoria: string;
@@ -176,8 +176,13 @@ export const CategoriasProvider: React.FC = ({ children }) => {
 
   async function handleCountByEntry(idUser: number, tipoCategoria: string) {
     try {
-      const response = await api.get(`/category/countbyentry/${idUser}`);
-      return response.data.categories;
+      const response = await api.post(`/category/countbyentry/${idUser}`, {
+        tipoCategoria,
+      });              
+      //console.debug('handleReadByUserCategorias | ', response.data.categories);
+      setCategorias(response.data.categories);  
+      
+      console.log(response.data.categories)
     } catch (error) {
       console.debug('CategoriesContext | handleCountByEntry: ' + error);
     }

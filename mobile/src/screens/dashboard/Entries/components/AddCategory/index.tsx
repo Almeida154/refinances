@@ -28,6 +28,7 @@ import {
 } from '../../../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
+import Header from '../../../../../components/Header';
 
 const NewExpenseCategory = ({ route }: { route: any }) => {
   const { navigation } = UseDadosTemp();
@@ -100,9 +101,16 @@ const NewExpenseCategory = ({ route }: { route: any }) => {
       ToastAndroid.show(response, ToastAndroid.SHORT);
     }
   };
-
+  const backAction = () => {
+    navigation.dispatch(
+      StackActions.replace('Lancamentos', {screen: 'Main'}),
+    );
+    return true;
+  };
   return (
     <Container>
+      <Header 
+        backButton={backAction} title={`Adicionar Categoria de ${tipoCategoria}`} isShort={true} />
       <Form>
         <InputText
           label="Nome"

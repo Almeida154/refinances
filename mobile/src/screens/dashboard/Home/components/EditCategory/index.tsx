@@ -41,7 +41,7 @@ type PropsEditCategory = {
 };
 
 const EditCategory = ({ route, navigation }: PropsEditCategory) => {
-  const [category, setCategory] = useState({} as Categoria);
+  const [category, setCategory] = useState<null | Categoria>(null);
 
   const { handleAtualizarCategoria, handleGetCategoryById } = UseCategories();
 
@@ -59,6 +59,8 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   const [valorError, setValorError] = useState<any | null>(null);
 
   async function handleUpdateCategory() {
+    if(!category)
+      return console.log("category nulo")
     const newCategory = {
       nomeCategoria: category.nomeCategoria,
       iconeCategoria: category.iconeCategoria,
@@ -100,6 +102,8 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
     }
   }
 
+  console.log(category)
+
   const backAction = () => {
     navigation.dispatch(StackActions.replace('StackAccount', 
     { screen:'ManageCategory'}))
@@ -115,7 +119,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
             <AlinhaParaDireita>
               <View></View>
               <InputControlValue>
-                <LabelCifrao>R$</LabelCifrao>
+                <LabelCifrao>R$ </LabelCifrao>
                 <TextInputValue
                   keyboardType="numeric"
                   placeholder="00,00"
@@ -129,15 +133,14 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
               </InputControlValue>
             </AlinhaParaDireita>
           </Header>
-          <Title>{category.id}</Title>
+          <Title>{category?.nomeCategoria}</Title>
 
           <View style={{paddingLeft: '10%', paddingRight: '10%'}}>
             <Button
               onPress={() => {
-                //handleUpdateCategory();
+                handleUpdateCategory();
                 //navigation.dispatch(StackActions.replace('StackAccount', 
-                  //{screen: 'ManageCategory'}));
-                console.debug(category);
+                  //{screen: 'ManageCategory'}));                
               }}
               title="Salvar"
               backgroundColor="#CCC"

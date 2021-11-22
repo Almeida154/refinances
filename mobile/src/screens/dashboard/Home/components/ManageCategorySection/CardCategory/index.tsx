@@ -63,7 +63,7 @@ const CardCategory = ({ item }: PropsCardCategory) => {
 
           <Progress>
             <ProgressBar
-              progress={0.25}
+              progress={1}
               color={item.corCategoria}
               style={{
                 height: 7,

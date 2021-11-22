@@ -81,7 +81,7 @@ class CategoryController {
       .createQueryBuilder("category")
       .leftJoinAndSelect("category.userCategory", "user")
       .where("category.id = :id", { id: request.params.id })
-      .getMany();
+      .getOne();
 
     return response.send({ categories });
   }
@@ -201,7 +201,7 @@ class CategoryController {
       });
     }
 
-    return response.send( 'kjdwbjw' );
+    return response.send( {categories} );
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {
@@ -227,8 +227,7 @@ class CategoryController {
     const {
       nomeCategoria,
       tetoDeGastos,
-      tipoCategoria,
-      essencial,
+      tipoCategoria,      
       userCategory,
     } = request.body;
 
@@ -236,8 +235,7 @@ class CategoryController {
 
     if (tipoCategoria != "receita" && tipoCategoria != "despesa")
       return response.send({ error: "Não existe esse tipo" });
-
-    if (essencial == null) return response.send({ error: "Senha em branco!" });
+    
     if (userCategory == null) return response.send({ error: "Sem Usuário!" });
 
     const categoryexists = await categoryRepository.find({
