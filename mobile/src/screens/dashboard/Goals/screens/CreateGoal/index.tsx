@@ -162,25 +162,25 @@ const CreateGoal = ({navigation}: PropsGoals) => {
         },
       });
     }
-    if (parseFloat(valorMeta) <= 0 || valorMeta == '') {
+    if (parseFloat(valorMeta) <= 0.00 || valorMeta == '') {
       setvalorTError('Insira um valor válido!');
       Toast.show({
         type: 'niceToast',
         props: {
           type: 'error',
           title: 'Erro!',
-          message: 'Verifique se os dados estão corretos!',
+          message: 'Verifique se o valor estão corretos!',
         },
       });
     }
-    if (parseFloat(investidoMeta) < 0 || investidoMeta == '') {
+    if (parseFloat(investidoMeta) < 0.00 || investidoMeta == '') {
       setinvestidoError('Insira um valor válido!');
       Toast.show({
         type: 'niceToast',
         props: {
           type: 'error',
           title: 'Erro!',
-          message: 'Verifique se os dados estão corretos!',
+          message: 'Verifique se o vslor investido estão corretos!',
         },
       });
     }

@@ -41,7 +41,7 @@ export const Body = styled.View`
 `
 
 export const ScrollBody = styled.ScrollView`
-    height: ${`${Dimensions.get('window').height * 0.65}px`};
+    height: ${`${Dimensions.get('window').height * 0.97}px`};
     width: 100%;
 `
 
@@ -65,8 +65,10 @@ export const Footer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     padding: 20px;
-    top: 80;
+    bottom: -10;
+    width: 100%;
     height: 20%;
+    position: absolute;
 `
 export const CardBalance = styled.View`
     width: 30%;

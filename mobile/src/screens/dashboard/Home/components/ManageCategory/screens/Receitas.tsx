@@ -4,7 +4,7 @@ import { ScrollView, View } from 'react-native';
 import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { UseCategories } from '../../../../../../contexts/CategoriesContext';
+import { Categoria, UseCategories } from '../../../../../../contexts/CategoriesContext';
 
 import { ActivityIndicator } from 'react-native-paper';
 
@@ -24,8 +24,10 @@ type PropsCategory = {
 };
 
 const Receitas = ({ navigation }: PropsCategory) => {
-  const { categorias, handleReadByUserCategorias } = UseCategories();
+  const { categorias, handleReadByUserCategorias, handleCountByEntry } = UseCategories();
   const [stateReload, setStateReload] = useState(false);
+
+  const [receitasCategorias, setReceitasCategorias] = useState<Categoria[] | null>(null)
 
   useEffect(() => {
     if (!navigation.addListener) return;
@@ -40,14 +42,23 @@ const Receitas = ({ navigation }: PropsCategory) => {
   }, [navigation]);
 
   useEffect(() => {
-    // Caso nenhuma receita seja carregada, recarregar
-    if (!categorias)
-      (async function () {
-        handleReadByUserCategorias(await retornarIdDoUsuario(), 'receita');
-      })();
+    // Caso nenhuma despesa seja carregada, recarregar    
+            
+    
   }, []);
 
-  if (categorias?.length > 0) {
+  useEffect(() => {
+    const aux: Categoria[] = []
+    
+    categorias?.map(item => {
+      if(item.tipoCategoria == 'receita')
+        aux.push(item)
+    })
+
+    setReceitasCategorias(aux)
+  }, [categorias])
+
+  if (receitasCategorias?.length > 0) {
     return (
       <ScrollView style={{ backgroundColor: '#fff' }}>
         {stateReload ? (
@@ -61,9 +72,9 @@ const Receitas = ({ navigation }: PropsCategory) => {
               Adicione teto de gastos às categorias para se manter organizado(a)!
             </Subtitle>
 
-            {categorias &&
-              categorias.map((item, index) => {
-                console.log('Item: ', categorias);
+            {receitasCategorias &&
+              receitasCategorias.map((item, index) => {
+                console.log('Item: ', receitasCategorias);
                 if(item.tipoCategoria == "receita"){
                   return <CardCategory item={item} key={index} />;
                 }

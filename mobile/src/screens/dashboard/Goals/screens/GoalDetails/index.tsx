@@ -58,19 +58,25 @@ const GoalDetails = ({ route, navigation }: Props) => {
     })();
   }, []);
 
- /*  const objDataFimMeta = toDate(goal.dataFimMeta);
-  const objDataIniMeta = toDate(goal.dataInicioMeta);
-
-  // Subtrai uma data pela outra
-  const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); 
-
-  // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
- */
-  // Algum cálculo para calcular a porcentagem aqui
-  const percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta;
-  const percBalance = percentageBalance / 100; 
-  const saldo = (goal.saldoAtualMeta);
+  let percentageBalance = 100
+  let days = 0
+  
+  if(goal.dataFimMeta) {
+    const objDataFimMeta = toDate(goal.dataFimMeta); 
+     
+    const objDataIniMeta = toDate(goal.dataInicioMeta);
+  
+    // Subtrai uma data pela outra
+    const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); 
+  
+    // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
+    days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+   
+    // Algum cálculo para calcular a porcentagem aqui
+    percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta;
+    const percBalance = percentageBalance / 100; 
+    const saldo = (goal.saldoAtualMeta);
+  }
 
   const backAction = () => {
     navigation.dispatch(
@@ -118,8 +124,8 @@ const GoalDetails = ({ route, navigation }: Props) => {
 
         {/* Ta dando merda aqui */}
         <ProgressBar
-        //progress={percBalance}
-        progress={0.1}
+        progress={percentageBalance / 100}
+        //progress={0.1}
         color="#F81650"
         style={{
           height: 10,
@@ -137,7 +143,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
         <Goal>
           {/* Ta dando merda aqui tbm*/}
           <DaysLeft>
-            <Icon name="exclamation" color="#525252" size={22} /> Faltam 14 dias
+              <Icon name="exclamation" color="#525252" size={22} /> Faltam {days} dias
           </DaysLeft>
 
           <GoalDate>

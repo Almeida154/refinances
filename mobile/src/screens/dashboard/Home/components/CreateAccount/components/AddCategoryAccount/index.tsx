@@ -23,6 +23,7 @@ import {
 } from '../../../../../../../contexts/CategoriesAccountContext';
 import { UseDadosTemp } from '../../../../../../../contexts/TemporaryDataContext';
 import retornarIdDoUsuario from '../../../../../../../helpers/retornarIdDoUsuario';
+import Header from '../../../../../components/Header';
 
 const NewCategoryAccount = ({ route }: { route: any }) => {
   const { navigation, showNiceToast } = UseDadosTemp();
@@ -92,9 +93,16 @@ const NewCategoryAccount = ({ route }: { route: any }) => {
       showNiceToast('error', response);
     }
   };
-
+  const backAction = () => {
+    navigation.dispatch(
+      StackActions.replace('StackAccount', {screen: 'CreateAccount'}),
+    );
+    return true;
+  };
   return (
     <Container>
+      <Header 
+        onBackButton={backAction} title="Adicionar Categoria da Conta" isShort={true} />
       <Form>
         <InputText
           label="Nome"

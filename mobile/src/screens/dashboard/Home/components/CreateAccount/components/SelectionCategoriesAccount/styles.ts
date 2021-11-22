@@ -20,9 +20,6 @@ export const ListaCategorias = styled.FlatList`
 export const ContainerItem = styled.View`
     display: flex;
     flex-direction: row;
-
-
-    
     border-top-width: 1px;
     align-items: center;
     height: 40px;
@@ -41,7 +38,7 @@ export const BotaoAdicionarCategoria = styled.View`
     align-items: center;
     justify-content: center;
     background-color: #EE4266;
-    Color: #fff;
+    color: #fff;
     fontFamily: ${`${fonts.familyType.semiBold}`};
 `
 

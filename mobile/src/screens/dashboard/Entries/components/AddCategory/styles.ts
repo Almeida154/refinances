@@ -5,13 +5,15 @@ import hexToRGB from '../../../../../helpers/hexToRgba';
 
 export const Container = styled.View`
     display: flex;
-    align-items: center;
+    
     background-color: #EEEEEE;
+    padding-top: 40%;
 `
 
 export const Form = styled.View`
-    margin-top: 20px;
-    width: 80%;
+    padding: 10%;
+    width: 100%;
+    height: 100%;
 `
 export const InputControl = styled.View`    
     background-color: #fff;

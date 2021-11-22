@@ -4,7 +4,7 @@ import { ScrollView, View } from 'react-native';
 import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { UseCategories } from '../../../../../../contexts/CategoriesContext';
+import { Categoria, UseCategories } from '../../../../../../contexts/CategoriesContext';
 
 import { ActivityIndicator } from 'react-native-paper';
 
@@ -25,11 +25,10 @@ type PropsCategory = {
 
 const Despesas = ({ navigation }: PropsCategory) => {
   const { categorias, handleReadByUserCategorias, handleCountByEntry } = UseCategories();
-  const [stateReload, setStateReload] = useState(false);
 
-  const countbyentry = (async function(){
-    handleCountByEntry(await retornarIdDoUsuario(), 'despesa')
-  })
+  const [despesasCategorias, setDespesasCategorias] = useState<Categoria[] | null>(null)
+
+  const [stateReload, setStateReload] = useState(false);
 
   useEffect(() => {
     if (!navigation.addListener) return;
@@ -44,17 +43,27 @@ const Despesas = ({ navigation }: PropsCategory) => {
   }, [navigation]);
 
   useEffect(() => {
-    // Caso nenhuma despesa seja carregada, recarregar
-    console.warn('categorias: ', countbyentry);
-    /*if (!categorias)
+        
       (async function () {
-        handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
-      })();*/
+        handleCountByEntry(await retornarIdDoUsuario(), 'todos');
+      })();
 
     
   }, []);
 
-  if (categorias?.length > 0) {
+  useEffect(() => {
+    const aux: Categoria[] = []
+    
+    console.log("categories", categorias)
+    categorias?.map(item => {
+      if(item.tipoCategoria == 'despesa')
+        aux.push(item)
+    })
+
+    setDespesasCategorias(aux)
+  }, [categorias])
+  
+  if (despesasCategorias?.length > 0) {
     return (
       <ScrollView style={{ backgroundColor: '#fff' }}>
         {stateReload ? (
@@ -66,16 +75,16 @@ const Despesas = ({ navigation }: PropsCategory) => {
           <View style={{ padding: '10%' }}>
             <Button
               onPress={() => (async function () {
-                console.log('inferno')
-                handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
-              })}
+                console.warn('inferno')
+                // handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
+              })()}
               title="teste"/>
             <Subtitle>
               Adicione teto de gastos às categorias para se manter organizado(a)!
             </Subtitle>
 
-            {categorias &&
-              categorias.map((item, index) => {
+            {despesasCategorias &&
+              despesasCategorias.map((item, index) => {
                 if(item.tipoCategoria == "despesa"){
                   return <CardCategory item={item} key={index} />;
                 }

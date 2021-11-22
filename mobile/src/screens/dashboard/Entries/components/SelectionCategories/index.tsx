@@ -92,7 +92,8 @@ const RenderFooter = ({tipoCategoria}: PropsRenderFooter) => {
 
 
 
-const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSelectionCategorias) => {        
+const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSelectionCategorias) => {  
+          
     const {categorias, loading, handleReadByUserCategorias} = UseCategories()    
 
     const [search, setSearch] = useState('') 
