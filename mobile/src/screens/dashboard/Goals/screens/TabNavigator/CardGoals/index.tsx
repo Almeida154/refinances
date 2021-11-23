@@ -41,38 +41,40 @@ const CardGoals = ({ item }: PropsCardGoals) => {
   const percentageBalance = (item.saldoAtualMeta * 100) / item.saldoFinalMeta; 
 
   return (
-    <Goal key={item.id}>
-      <GoalTouchable
-        onPress={() => {
-          navigation.navigate('GoalsStack', {
-            screen: 'GoalDetails',
-            params: { goalId: item.id },
-          });
-        }}>
-        <GoalDesc>{item.descMeta}</GoalDesc>
-      </GoalTouchable>
+    <GoalTouchable
+      onPress={() => {
+        navigation.navigate('GoalsStack', {
+          screen: 'GoalDetails',
+          params: { goalId: item.id },
+        });
+    }}>
+      <Goal key={item.id}>
+        
+          <GoalDesc>{item.descMeta}</GoalDesc>
+        
 
-      <DaysLeft>
-        <Icon name="exclamation" color="#525252"/> Faltam {days} dias</DaysLeft>
+        <DaysLeft>
+          <Icon name="exclamation" color="#525252"/> Faltam {days} dias</DaysLeft>
 
-      <ProgressBar
-        progress={percentageBalance / 100}
-        color="#F81650"
-        style={{
-          height: 10,
-          marginVertical: 8,
-          borderRadius: 10,
-        }}
-      />
+        <ProgressBar
+          progress={percentageBalance / 100}
+          color="#F81650"
+          style={{
+            height: 10,
+            marginVertical: 8,
+            borderRadius: 10,
+          }}
+        />
 
-      <InvestedMoney>
-        {`R$ ${item.saldoAtualMeta} de R$ ${item.saldoFinalMeta}`}
-      </InvestedMoney>
+        <InvestedMoney>
+          {`R$ ${item.saldoAtualMeta} de R$ ${item.saldoFinalMeta}`}
+        </InvestedMoney>
 
-      <Percent>
-        <PercentText>{percentageBalance.toFixed(1)}%</PercentText>
-      </Percent>
-    </Goal>
+        <Percent>
+          <PercentText>{percentageBalance.toFixed(1)}%</PercentText>
+        </Percent>
+      </Goal>
+    </GoalTouchable>
   );
 };
 

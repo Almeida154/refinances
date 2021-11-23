@@ -138,7 +138,7 @@ const TabNavigator = () => {
             backgroundColor: '#fff',
             elevation: 0,
             zIndex: 999,
-            padding: 5,
+            padding: 10,
             height: '8%',
           },
           headerShown: false,

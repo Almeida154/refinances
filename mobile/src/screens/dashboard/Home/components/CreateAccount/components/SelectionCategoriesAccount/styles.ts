@@ -17,33 +17,36 @@ export const ListaCategorias = styled.FlatList`
 
 `
 
+export const SectionImage = styled.View`
+    border-width: 3;
+    padding: 1%;
+    border-radius: 50;
+    border-color: #444
+`
+
 export const ContainerItem = styled.View`
     display: flex;
     flex-direction: row;
-    border-top-width: 1px;
     align-items: center;
-    height: 40px;
+    padding: 4%;
 `
 export const NomeItem = styled.Text`
     margin-left: 10px;
-`
-
-export const Separator = styled.View`
-
+    fontFamily: ${`${fonts.familyType.semiBold}`};
+    color: #444;
 `
 
 export const BotaoAdicionarCategoria = styled.View`
-    width: 100%;
-    height: 50px;
+    padding: 7%;
     align-items: center;
     justify-content: center;
-    background-color: #EE4266;
-    color: #fff;
-    fontFamily: ${`${fonts.familyType.semiBold}`};
+    background-color: #ccc;
 `
 
 export const LabelAdicionarCategoria = styled.Text`
-
+    fontFamily: ${`${fonts.familyType.semiBold}`};
+    color: #444;
+    fontSize: ${`${fonts.size.medium}px`};
 `
 
 export const ButtonText = styled.TouchableOpacity`

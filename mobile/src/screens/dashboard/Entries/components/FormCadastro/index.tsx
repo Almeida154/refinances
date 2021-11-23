@@ -36,6 +36,7 @@ import { Conta, UseContas } from '../../../../../contexts/AccountContext';
 import ItemParcela from '../CardParcela'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import {addMonths, toDate} from '../../../../../helpers/manipularDatas'
+import Button from '../../../../../components/Button';
 
 const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor, tipoLancamento}) => {
     const {categorias} = UseCategories()
@@ -372,12 +373,12 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                 />
             </InputControl>   
 
-            <SectionDetalhes>
+            <SectionDetalhes onPress={DefinirDetalhes}>
                     
                 <Icon name={detalhes ? 'caretup' : 'caretdown'} 
                     size={25}
                     color="#525252"
-                    onPress={DefinirDetalhes}
+                    
                     style={{
                 }}/>
 
@@ -425,14 +426,14 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                         extraData={dataParcelas}/>}
                 </SectionCardsParcelas>
             </ContainerDetalhes>
-        
 
-        <FAB 
-            icon="check"
+        <Button 
+            title="Adicionar" 
+            onPress={handleSubmit}
             style={{
                 backgroundColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'
             }}
-            onPress={handleSubmit}
+            color="#fff"
         />
       
         </ContainerForm>

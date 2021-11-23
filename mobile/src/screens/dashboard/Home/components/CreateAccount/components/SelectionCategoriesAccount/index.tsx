@@ -14,11 +14,9 @@ import {
     Header,
     Body,
     ListaCategorias,
-
     ContainerItem,
     NomeItem,
-    Separator,
-
+    SectionImage,
     BotaoAdicionarCategoria,
     LabelAdicionarCategoria
 } from './styles'
@@ -44,12 +42,17 @@ const RenderOption = (settings: OptionTemplateSettings) => {
         <ContainerItem>
             {
                 item.iconeCategoryConta.indexOf("https://") != -1 ?
-                <Image source={{uri: item.iconeCategoryConta, width: 25, height: 25}}/> :
-                <Icon size={25} color='gray' stringIcon={item.iconeCategoryConta}/>
+                
+                <Image source={{uri: item.iconeCategoryConta, 
+                    width: 25, 
+                    height: 25,
+                }}/> :
+                <SectionImage>
+                    <Icon size={25} color='gray' stringIcon={item.iconeCategoryConta}/>
+                </SectionImage>
             }
             <NomeItem >{getLabel(item)}</NomeItem>
 
-            <Separator />
         </ContainerItem>
     )
 }
@@ -66,6 +69,8 @@ const RenderHeader = ({search, setSearch}: PropsRenderHeader) => {
             placeholder="Pesquisar..."
             onChangeText={setSearch}
             value={search}
+            style={{fontFamily: fonts.familyType.semiBold,
+            padding: '2%'}}
         />
     )
 }
@@ -75,10 +80,10 @@ const RenderFooter = () => {
     return (
         <BotaoAdicionarCategoria>
             <LabelAdicionarCategoria 
-            onPress={() => navigation.dispatch(
-                StackActions.replace("StackAccount", 
-                {screen: 'AddCategoryAccount'}
-                ))}>Adicionar Categoria
+                onPress={() => navigation.dispatch(
+                    StackActions.replace("StackAccount", 
+                    {screen: 'AddCategoryAccount'}
+                ))}>Nova categoria
             </LabelAdicionarCategoria>
         </BotaoAdicionarCategoria>
     )
@@ -133,20 +138,15 @@ const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta}: PropsSe
     
     return (
         <Container>
-
-            
-                <InputText 
-                    onPress={onOpen}
-                    label="Categoria"
-                    value={categoriaConta == null ? '' : categoriaConta.descricaoCategoryConta}
-                    placeholder="Selecione uma categoria conta"
-                    placeholderTextColor={"#bbb"}
-                    editable={false}
-                    showClearIcon={false}
-                    onClear={() => {}}
-                />
-
-
+            <InputText 
+                onPress={onOpen}
+                label="Categoria"
+                value={categoriaConta == null ? '' : categoriaConta.descricaoCategoryConta}
+                placeholder="Selecione uma categoria conta"
+                editable={false}
+                showClearIcon={false}
+                onClear={() => {}}
+            />
 
             {
                 categoriasConta &&   
@@ -162,9 +162,9 @@ const SelectionCategoriesAccount = ({categoriaConta, setCategoriaConta}: PropsSe
                     modalStyle={{minHeight: 400}}
                     onValueChange={(value: CategoriaConta) => {
                         setCategoriaConta(value)
-                        
                     }}
-                    style={{display: 'none'}}
+                    style={{display: 'none', 
+                    borderRadius: 20}}
                 />
             }
             

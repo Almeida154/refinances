@@ -20,7 +20,7 @@ export const Title = styled.Text`
 
 export const TextButton = styled.Text`
     color: #fff;
-    font-weight: bold;
+    font-family: ${fonts.familyType.bold};
 `
 
 export const Header = styled.View`

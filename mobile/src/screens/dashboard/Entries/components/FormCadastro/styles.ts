@@ -6,8 +6,8 @@ export const ContainerForm = styled.View`
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 95%;
-    padding: 5px;
+    width: 100%;
+    padding: 5%;
 `
 
 export const InputControl = styled.View`
@@ -20,7 +20,6 @@ export const InputControlCheckBox = styled.View`
     display: flex;
     width: 90%;
     margin-top: 10px;
-
     flex-direction: row;
     align-items: center;
 `
@@ -43,7 +42,6 @@ export const TextInputValor = styled.TextInput`
     height: 60px;
     border-color: #858c87;
     opacity: 0.7;    
-
     font-size: 30px;
 `
 
@@ -52,14 +50,14 @@ export const Label = styled.Text`
     font-family: ${fonts.familyType.semiBold};
 `
 
-export const SectionDetalhes = styled.View`
+export const SectionDetalhes = styled.TouchableOpacity`
     width: 90%;
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex: 1;
-    margin: 20px;
+    margin: 10px;
 `
 
 export const TextDetalhes = styled.Text`
@@ -75,8 +73,8 @@ export const SectionCardsParcelas = styled.View`
 
 export const ContainerDetalhes = styled.View`
     align-items: flex-start;
-    width: 90%;
-
+    width: 100%;
+    padding: 5%
 `
 
 export const DetalhesMensal = styled.Text`   

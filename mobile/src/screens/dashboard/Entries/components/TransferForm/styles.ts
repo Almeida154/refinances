@@ -5,14 +5,14 @@ import {colors, fonts, metrics} from '../../../../../styles'
 export const ContainerForm = styled.View`
     display: flex;
     align-items: center;
-    flex-direction: column;
-    width: 95%;
-    padding: 5px;
+    flex: 1;
+    background-color: white;
+    padding: 7%;
 `
 
 export const InputControl = styled.View`
     display: flex;
-    width: 90%;
+    width: 100%;
     margin-top: 10px;
 `
 
@@ -46,7 +46,6 @@ export const SectionDetalhes = styled.View`
     margin-top: 20px;
     margin-bottom: 20px;
     width: 90%;
-
     align-items: center;
 `
 
