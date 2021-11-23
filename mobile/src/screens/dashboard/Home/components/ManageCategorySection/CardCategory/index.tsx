@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Categoria } from '../../../../../../contexts/CategoriesContext';
+import { Categoria, UseCategories } from '../../../../../../contexts/CategoriesContext';
 
 import { ProgressBar } from 'react-native-paper';
 
@@ -19,8 +19,7 @@ import {
 } from './styles';
 
 import { UseDadosTemp } from '../../../../../../contexts/TemporaryDataContext';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { GoalsStack } from '../../../../../../@types/RootStackParamApp';
+import retornarIdDoUsuario from '../../../../../../helpers/retornarIdDoUsuario';
 
 import Icon from '../../../../../../helpers/gerarIconePelaString'
 
@@ -30,6 +29,14 @@ type PropsCardCategory = {
 
 const CardCategory = ({ item }: PropsCardCategory) => {
   const { navigation } = UseDadosTemp();
+
+  const {handleCountByEntry} = UseCategories();
+
+  const countbyentry = (async function(){
+    handleCountByEntry(await retornarIdDoUsuario(), 'todos')
+  })
+
+  console.warn('categorias: ', countbyentry);
 
   return (
     <Category key={item.id}>
@@ -74,11 +81,6 @@ const CardCategory = ({ item }: PropsCardCategory) => {
           </Progress>
         </SectionName>
       </SectionDescription>
-
-
-      {/*<Percent>
-        <PercentText>25%</PercentText>
-      </Percent>*/}
 
     </Category>
   );

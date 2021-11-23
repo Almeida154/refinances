@@ -263,6 +263,10 @@ const CreateGoal = ({navigation}: PropsGoals) => {
             maxValue={999999}
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
             selectionColor={colors.davysGrey}
+            onChangeText={formattedValue => {
+              setValorMeta(valorMeta);
+              
+            }}
             />
         </Container>
 
@@ -287,6 +291,9 @@ const CreateGoal = ({navigation}: PropsGoals) => {
             maxValue={999999}
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
             selectionColor={colors.davysGrey}
+            onChangeText={formattedValue => {
+              setInvestido(investidoMeta);
+            }}
             />
         </Container>
 
@@ -302,7 +309,8 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           onClear={() => {
             setPrevisao(dataAtual);
             setdtPrevError(null);
-          }}></InputText>
+          }}
+          ></InputText>
 
         <DateTimePickerModal
           isVisible={isDatePickerVisible}

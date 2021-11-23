@@ -109,7 +109,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
     return true;
   };
 
-  const teto = category?.tetoDeGastos;
+  const teto = category?.tetoDeGastos || 0;
   return (
     <ScrollView style={{backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'#ee4266'} />

@@ -35,6 +35,7 @@ interface CategoriaContextType {
   ): Promise<void>;
 }
 
+
 const CategoriaContext = createContext<CategoriaContextType>(
   {} as CategoriaContextType,
 );
@@ -115,6 +116,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
       console.log('Deu um erro no handleAdicionar: ' + error);
     }
   }
+
 
   async function handleReadByUserCategorias(
     idUser: number,

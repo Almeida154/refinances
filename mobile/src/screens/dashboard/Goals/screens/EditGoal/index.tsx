@@ -203,7 +203,9 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
                 setvalorTError(null);
                 setValorMeta('');
               }}
+              // @ts-ignore
               onChangeText={txt => {
+                if (valorMeta == null) setValorMeta('0.0');
                 setvalorTError(null);
                 setValorMeta(txt);
               }}

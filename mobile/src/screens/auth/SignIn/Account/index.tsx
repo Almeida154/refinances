@@ -148,6 +148,7 @@ const Account = ({ navigation }: PropsNavigation) => {
           onChangeText={() => {
             if (walletAmount == null) setWalletAmount(0.0);
           }}
+          
         />
         <Button
           style={{ backgroundColor: colors.platinum }}
