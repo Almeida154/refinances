@@ -45,6 +45,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     const {showNiceToast,  hideNiceToast} = UseDadosTemp()
     const {handleAdicionarLancamento, handleEditLancamento} = UseLancamentos()            
 
+    console.debug("FormCadastro | receiveEntry", receiveEntry)
+    
     const [detalhes, setDetalhes] = useState(false)
     
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);        

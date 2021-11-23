@@ -336,9 +336,9 @@ export default {
     },
 
     {
-      description: 'bbm',
+      description: 'Bbm',
       accent: '#ececec',
-      icon: require('../assets/images/banks/bbm.png'),
+      icon: require('../assets/images/banks/Bbm.png'),
     },
 
     {

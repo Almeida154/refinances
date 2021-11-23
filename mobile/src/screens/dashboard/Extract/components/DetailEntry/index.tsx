@@ -1,9 +1,11 @@
 import React from 'react'
 import { ToastAndroid } from 'react-native'
 
-import { ReadParcela } from '../../../../../contexts/InstallmentContext'
-import { UseLancamentos } from '../../../../../contexts/EntriesContext'
+import { ReadParcela, Parcela } from '../../../../../contexts/InstallmentContext'
+import { UseLancamentos, Lancamento } from '../../../../../contexts/EntriesContext'
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
+import { toDate } from '../../../../../helpers/manipularDatas'
+
 import { StackActions } from '@react-navigation/native';
 
 import Icon from '../../../../../helpers/gerarIconePelaString'
@@ -50,9 +52,23 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
 
     async function navigateEdit() {        
         if(item) {
-            const response = await handleLoadOneLancamentos(item?.lancamentoParcela.id)
+            const receiveEntry = await handleLoadOneLancamentos(item?.lancamentoParcela.id)
             
-            navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveEntry: typeof response == 'string' ? undefined : response}}))
+            if(typeof receiveEntry == 'string')
+                return showNiceToast("error", "Ocorreu um erro ao carregar esse lançamento")            
+
+            const parcelaUpdate = {
+                id: item.id,
+                contaParcela: item.contaParcela,
+                dataParcela: new Date(item.dataParcela),
+                indexOfLancamento: receiveEntry.parcelaBaseada,
+                statusParcela: item.statusParcela,
+                valorParcela: item.valorParcela,
+                lancamentoParcela: -1
+            } as Parcela
+
+            receiveEntry.parcelasLancamento = [parcelaUpdate]
+            navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveEntry: typeof receiveEntry == 'string' ? undefined : receiveEntry}}))
         }
     }
 
@@ -96,8 +112,8 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
                     </GroupLabel>
 
                     <GroupLabel>
-                        <Label>Nota</Label>
-                        <Value>Adicionar</Value>
+                        <Label>Sitaução</Label>
+                        <Value>{item.statusParcela ? item.lancamentoParcela.tipoLancamento == 'despesa' ? "Pago" : "Recebido" : item.lancamentoParcela.tipoLancamento == 'despesa' ? "Não pago" : "Não recebido"}</Value>
                     </GroupLabel>
                 </Row>
                 <Row>
