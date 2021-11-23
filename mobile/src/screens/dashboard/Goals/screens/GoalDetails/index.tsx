@@ -122,10 +122,8 @@ const GoalDetails = ({ route, navigation }: Props) => {
           <TextValor>{goal.saldoAtualMeta}</TextValor>
         </Valor>
 
-        {/* Ta dando merda aqui */}
         <ProgressBar
         progress={percentageBalance / 100}
-        //progress={0.1}
         color="#F81650"
         style={{
           height: 10,
@@ -141,7 +139,6 @@ const GoalDetails = ({ route, navigation }: Props) => {
         </TextProgress>
 
         <Goal>
-          {/* Ta dando merda aqui tbm*/}
           <DaysLeft>
               <Icon name="exclamation" color="#525252" size={22} /> Faltam {days} dias
           </DaysLeft>
@@ -170,7 +167,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
           style={{
             marginBottom: 10,
             marginTop: 10,
-            backgroundColor: '#f5f2f3',
+            backgroundColor: '#EEEEEE',
           }}
         />
     
@@ -183,7 +180,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
           style={{
             marginBottom: 10,
             marginTop: 10,
-            backgroundColor: '#f5f2f3',
+            backgroundColor: '#EEEEEE',
           }}
         />
 
@@ -200,7 +197,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
           style={{
             marginBottom: 10,
             marginTop: 10,
-            backgroundColor: '#f5f2f3',
+            backgroundColor: '#EEEEEE',
           }}
         />
       </View>

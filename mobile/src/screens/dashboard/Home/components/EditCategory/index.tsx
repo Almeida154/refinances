@@ -12,7 +12,7 @@ import {
 
 import { ScrollView, StyleSheet, View, StatusBar } from 'react-native';
 
-import { TextRS, TextValor, Title, Valor } from './styles';
+import {  Title, Subtitle,  SubtitleT} from './styles';
 
 import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
@@ -25,6 +25,7 @@ import {
   LabelCifrao,
   TextInputValue,
   Header,
+
 } from '../../../Entries/styles';
 
 import fonts from '../../../../../styles/fonts';
@@ -73,20 +74,19 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
     if (parseFloat(tetoGastos) > 0 && tetoGastos != undefined) {
 
       handleAtualizarCategoria(newCategory, category.id);
-      //console.log(newCategory);
-      console.log(parseFloat(tetoGastos));
-      console.log(category.tetoDeGastos);
+      console.log(newCategory);
 
-      /* Toast.show({
+
+       Toast.show({
         type: 'niceToast',
         props: {
           type: 'success',
           title: 'Foi!',
           message: 'Teto de gastos adicionado com sucesso',
         },
-      }); */
+      }); 
 
-      //navigation.dispatch(StackActions.replace('AccountStack', { screen: 'ManageCategory' }));
+      
 
     } else {
       Toast.show({
@@ -109,11 +109,12 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
     return true;
   };
 
+  const teto = category?.tetoDeGastos;
   return (
     <ScrollView style={{backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'#ee4266'} />
        <Header style={{ backgroundColor: '#ee4266' }}>
-            <HeaderTop backButton={backAction} title='Teto de gasto' isShort={true} color={'#fff'}/>
+            <HeaderTop backButton={backAction} title='Teto de gastos' isShort={true} color={'#fff'}/>
 
             <AlinhaParaDireita>
               <View></View>
@@ -130,11 +131,17 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
             </AlinhaParaDireita>
           </Header>
           <Title>{category?.nomeCategoria}</Title>
-          <Title>{category?.tetoDeGastos}</Title>
-          <Title>{parseFloat(tetoGastos)}</Title>
+          <Subtitle>É importante adicionar limites aos seus gastos para se manter sempre na linha! </Subtitle>
+          
+          <SubtitleT style={{display: teto > 0? 'flex' : 'none'}}>Teto de gastos atual: {teto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})} </SubtitleT>
+          
           <View style={{paddingLeft: '10%', paddingRight: '10%'}}>
             <Button
-              onPress={handleUpdateCategory}
+              onPress={() =>{
+                handleUpdateCategory();
+                navigation.dispatch(StackActions.replace('StackAccount', 
+                { screen:'ManageCategory'}))
+              }}
               title="Salvar"
               backgroundColor="#CCC"
               color="#444"

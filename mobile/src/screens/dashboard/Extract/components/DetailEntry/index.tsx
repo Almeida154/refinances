@@ -56,6 +56,14 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
         }
     }
 
+    async function navigateDelete() {        
+        if(item) {
+            const response = await handleLoadOneLancamentos(item?.lancamentoParcela.id)
+            
+            navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveEntry: typeof response == 'string' ? undefined : response}}))
+        }
+    }
+
     console.log(item.lancamentoParcela)
 
     return (
@@ -70,7 +78,7 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
                         <Icon stringIcon="MaterialCommunityIcons:pencil" size={25} color="#000"/>
                         
                     </CircleIcon>
-                    <CircleIcon>
+                    <CircleIcon onPress={navigateDelete}>
                         <Icon stringIcon="Ionicons:trash-bin-sharp" size={25} color="#000"/>
                     </CircleIcon>
                 </SepareRow>
