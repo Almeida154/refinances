@@ -336,7 +336,7 @@ export default {
     },
 
     {
-      description: 'bbm',
+      description: 'Bbm',
       accent: '#ececec',
       icon: require('../assets/images/banks/Bbm.png'),
     },
@@ -685,7 +685,7 @@ export default {
     {
       description: 'PicPay',
       accent: '#489e39',
-      icon: require('../assets/images/banks/picpay.png'),
+      icon: require('../assets/images/banks/PicPay.png'),
     },
 
     {
