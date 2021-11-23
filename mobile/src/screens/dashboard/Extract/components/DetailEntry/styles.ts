@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import {colors, fonts, metrics} from '../../../../../styles/'
 
 export const Container = styled.View`
-    margin: 0 30px;
+    padding: 0 10% 10% 10%;
 
 `
 export const LabelTitle = styled.Text`
@@ -11,7 +11,8 @@ export const LabelTitle = styled.Text`
     font-family: ${fonts.familyType.bold};
 `
 export const LabelQuantity = styled.Text`
-
+    font-size: ${fonts.size.small};
+    font-family: ${fonts.familyType.regular};
 `
 
 export const GroupLabel = styled.View`

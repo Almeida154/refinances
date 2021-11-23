@@ -209,8 +209,7 @@ const Extrato = () => {
                 ref={modalizeRefDetailEntry}
                 title=""
                 backgroundColor={'#F6F6F6'}
-                
-                >
+            >
             <DetailEntry item={selectedItemExtract}/>
                     
             </Modalize>

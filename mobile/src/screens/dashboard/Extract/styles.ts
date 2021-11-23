@@ -4,7 +4,8 @@ import { Dimensions } from 'react-native'
 import { fonts } from '../../../styles'
 
 export const Container = styled.View`
-
+    width: 100%;
+    height: 100%;
 `
 
 export const Header = styled.View`
@@ -65,15 +66,16 @@ export const Footer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     padding: 20px;
-    bottom: -10;
+    bottom: 0;
     width: 100%;
-    height: 20%;
-    position: absolute;
+    height: auto;
 `
 export const CardBalance = styled.View`
     width: 30%;
+    height: auto;
     align-items: center;
-    padding: 10px;
+    justify-content: center;
+    padding: 20px 10px;
     background-color: #F6F6F6;
     border-radius: 10px;
 `
@@ -83,7 +85,7 @@ export const LabelBalance = styled.Text`
     color: #444;
 `
 export const LabelValueBalance = styled.Text`
-    font-family: ${`${fonts.familyType.semiBold}`};
+    font-family: ${`${fonts.familyType.bold}`};
     font-size: ${`${fonts.size.small}px`};
 `
 export const TextPicker = styled.Text`

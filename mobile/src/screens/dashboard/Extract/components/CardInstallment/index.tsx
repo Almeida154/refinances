@@ -6,6 +6,8 @@ import {View, TouchableOpacity} from 'react-native'
 
 import Icon from '../../../../../helpers/gerarIconePelaString'
 
+import {colors, fonts, metrics} from '../../../../../styles'
+
 import {
     ContainerItem,
     SectionIcon,
@@ -55,10 +57,9 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
                     <Checkbox 
                         status={checked ? 'checked' : 'unchecked'}
                         onPress={() => {setChecked(!checked);}}
-                        color={'#EE4266'}
-                
+                        color={item.lancamentoParcela.tipoLancamento == 'despesa' ? colors.paradisePink : colors.slimyGreen}
                     />
-                    <EditLabel>Pago?</EditLabel>  
+                    <EditLabel>{item.lancamentoParcela.tipoLancamento == 'despesa' ? 'pago' : 'recebido'}</EditLabel>  
                 </SectionCheck>
                 <LabelIndex>{textParcela}</LabelIndex> 
             </SectionValues>
