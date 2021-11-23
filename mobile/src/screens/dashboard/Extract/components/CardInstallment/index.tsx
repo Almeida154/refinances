@@ -18,7 +18,6 @@ import {
     LabelName,
     LabelAccount,
     LabelValue,
-    LabelIndex,
     EditLabel,
 } from './styles'
 import {Checkbox} from 'react-native-paper';
@@ -30,8 +29,9 @@ type PropsCardInstallment = {
 
 const CardInstallment = ({item}: PropsCardInstallment) => {
     const {modalizeRefDetailEntry, setSelectedItemExtract} = UseDadosTemp()
-    const textParcela = item.totalParcelas != 1 && item.totalParcelas ? item.indexOfLancamento + 'ª parcela de ' + item.totalParcelas : ''
+    const textParcela = item.totalParcelas != 1 && item.totalParcelas ? ' ' + item.indexOfLancamento + '/' + item.totalParcelas : ''
     const [checked, setChecked] = React.useState(false);
+    const [valor, setValor] = React.useState(((item.valorParcela).toFixed(2)).replace('.',','));
     
     function openModalize(){
         setSelectedItemExtract(item)
@@ -45,25 +45,28 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
                     <Icon size={24} color={'gray'} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
                 </SectionIcon>
                 <SectionDescription>             
-                    <LabelName>{item.lancamentoParcela.descricaoLancamento}</LabelName>
+                    <LabelName>{item.lancamentoParcela.descricaoLancamento + textParcela}</LabelName>
                     <LabelAccount>{item.contaParcela == null ? "Conta não identificada" : item.contaParcela.descricao}</LabelAccount>
                 </SectionDescription>
             </SectionLancamento>
 
-            
             <SectionValues>
-                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{(item.valorParcela).toFixed(2)}</LabelValue>                                                    
-                <SectionCheck>     
+                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{valor}</LabelValue>                                                    
+                
+                <SectionCheck>
                     <Checkbox 
                         status={checked ? 'checked' : 'unchecked'}
-                        onPress={() => {setChecked(!checked);}}
+                        onPress={() => {setChecked(!checked)}}
+                        style={{height: 2}}
                         color={item.lancamentoParcela.tipoLancamento == 'despesa' ? colors.paradisePink : colors.slimyGreen}
                     />
                     <EditLabel>{item.lancamentoParcela.tipoLancamento == 'despesa' ? 'pago' : 'recebido'}</EditLabel>  
                 </SectionCheck>
-                <LabelIndex>{textParcela}</LabelIndex> 
+
             </SectionValues>
         </ContainerItem>
+
+        
     )
 }
 

@@ -79,13 +79,12 @@ const Despesas = ({ navigation }: PropsCategory) => {
 
             {despesasCategorias &&
               despesasCategorias.map((item, index) => {
-                if(item.tipoCategoria == "despesa"){
-                  return <CardCategory item={item} key={index} />;
-                }
+                  return <CardCategory item={item} key={index} />
               })}
 
           </View>
         )}
+
       </ScrollView>
     );
   } else {
