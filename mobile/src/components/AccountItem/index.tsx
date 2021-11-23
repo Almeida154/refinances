@@ -85,7 +85,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
           <MaterialCommunityIcons
             name="lead-pencil"
             size={widthPixel(60)}
-            color={colors.davysGrey}
+            color={hexToRGB(colors.davysGrey, 0.2)}
           />
         </Icon>
       </Content>
