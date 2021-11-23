@@ -1,11 +1,13 @@
 import React, { forwardRef, VoidFunctionComponent } from 'react';
 
-import { Title, Body } from './styles';
+import { Title, Subtitle, Body } from './styles';
 import { Modalize as Modal } from 'react-native-modalize';
+import { ModalizeProps } from 'react-native-modalize'; // Deviamos ter usado as props :|
 import { colors } from '../../styles';
 
 interface IProps {
   title?: string;
+  subtitle?: string;
   height?: number;
   maxHeight?: number;
   isCentered?: boolean;
@@ -17,6 +19,7 @@ interface IProps {
 const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
   {
     title,
+    subtitle,
     height,
     maxHeight,
     isCentered,
@@ -33,7 +36,12 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
       snapPoint={maxHeight}
       modalHeight={height}
       modalStyle={{ backgroundColor: backgroundColor || colors.white }}
-      HeaderComponent={<Title>{title}</Title>}>
+      HeaderComponent={
+        <>
+          <Title>{title}</Title>
+          {subtitle && <Subtitle>{subtitle}</Subtitle>}
+        </>
+      }>
       <Body
         hasBodyBoundaries={hasBodyBoundaries}
         style={

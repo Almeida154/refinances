@@ -21,6 +21,7 @@ import { heightPixel, widthPixel } from '../../helpers/responsiveness';
 import hexToRGB from '../../helpers/hexToRgba';
 import global from '../../global';
 import doubleToCurrency from '../../helpers/doubleToCurrency';
+import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
 interface IProps extends TouchableOpacityProps {
   account?: Conta;
@@ -41,16 +42,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
         shadowRadius: 2,
         elevation: 10,
       }}>
-      <Content>
-<<<<<<< HEAD
-        <Image
-          style={{
-            borderWidth: widthPixel(10),
-            borderColor: colors.slimyGreen,
-          }}
-          source={require('../../assets/images/banks/picpay.png')}
-        />
-=======
+      <Content {...rest} activeOpacity={1}>
         {account?.categoryConta == 'carteira' && (
           <Image
             style={{
@@ -85,11 +77,11 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
               }
             />
           )}
-
->>>>>>> 51f72e93a2c6146abc066d74be512591236c7b94
         <Info>
           <Description>{account?.descricao}</Description>
-          <Category>{account?.categoryConta}</Category>
+          <Category>
+            {capitalizeFirstLetter(account?.categoryConta.toString())}
+          </Category>
         </Info>
         <Icon>
           <MaterialCommunityIcons

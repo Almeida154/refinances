@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { BackHandler, Text } from 'react-native';
+import { BackHandler, Text, View } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -20,6 +20,10 @@ import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import AccountItem from '../../../../components/AccountItem';
 import AccountsPlaceholder from '../../components/AccountsPlaceholder';
+import InputText from '../../../../components/InputText';
+import Modalize from '../../../../components/Modalize';
+
+import { Modalize as Modal } from 'react-native-modalize';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Account'>;
@@ -27,9 +31,13 @@ export type PropsNavigation = {
 };
 
 const Account = ({ navigation }: PropsNavigation) => {
+  const [walletAmount, setWalletAmount] = useState<number | null>(0);
+  const [formattedWalletAmount, setFormattedWalletAmount] = useState('');
   const [isLoading, setLoading] = useState(true);
 
   const { user, updateSetupUserProps, setupUser } = UseAuth();
+
+  const modalizeRef = useRef<Modal>(null);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -53,8 +61,9 @@ const Account = ({ navigation }: PropsNavigation) => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 700);
-  }, [setupUser.account]);
+    setTimeout(() => setLoading(false), 500);
+    setWalletAmount(setupUser.account[0].saldoConta);
+  }, [setupUser.account, isLoading]);
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Photo'));
@@ -66,6 +75,9 @@ const Account = ({ navigation }: PropsNavigation) => {
     navigation.dispatch(StackActions.replace('FixedExpenses'));
   }
 
+  const openModalize = () => modalizeRef.current?.open();
+  const closeModalize = () => modalizeRef.current?.close();
+
   return (
     <Container>
       <Header
@@ -76,7 +88,19 @@ const Account = ({ navigation }: PropsNavigation) => {
       <Content>
         {!isLoading ? (
           <>
-            <AccountItem account={setupUser.account[0]} />
+            {setupUser.account.map((acc, index) => (
+              <View style={{ elevation: 0 }}>
+                <AccountItem
+                  key={index}
+                  account={acc}
+                  onPress={() => {
+                    index == 0
+                      ? openModalize()
+                      : console.log('Aqui vai pra tela de edição');
+                  }}
+                />
+              </View>
+            ))}
             <Button
               style={{ backgroundColor: colors.platinum }}
               title="Nova conta principal"
@@ -85,10 +109,49 @@ const Account = ({ navigation }: PropsNavigation) => {
             />
           </>
         ) : (
-          <AccountsPlaceholder />
+          <AccountsPlaceholder
+            moreThanOne={
+              setupUser.account != undefined && setupUser.account.length > 1
+            }
+          />
         )}
       </Content>
       <BottomNavigation onPress={() => next()} description="Próximo" />
+
+      {/* 💰💵👀🎣🐟 */}
+      <Modalize
+        ref={modalizeRef}
+        title="Minha carteira 👀"
+        subtitle="Seu dinheiro físico. Quanto tem na sua carteira agora?"
+        backgroundColor={colors.cultured}
+        hasBodyBoundaries>
+        <InputText
+          label="Quanto tem?"
+          isCurrencyInput
+          //@ts-ignore
+          value={walletAmount}
+          onChangeValue={(amt: number) => setWalletAmount(amt)}
+          onChangeText={formattedValue => {
+            if (walletAmount == null) setWalletAmount(0.0);
+          }}
+        />
+        <Button
+          style={{ backgroundColor: colors.platinum }}
+          title="Atualizar"
+          onPress={() => {
+            setLoading(true);
+            console.log(walletAmount);
+
+            const newSetupProps = setupUser;
+            newSetupProps.account[0].saldoConta = walletAmount || 0;
+            updateSetupUserProps(newSetupProps);
+
+            closeModalize();
+          }}
+          color={colors.silver}
+          lastOne
+        />
+      </Modalize>
     </Container>
   );
 };

@@ -89,13 +89,8 @@ const Photo = ({ navigation }: PropsNavigation) => {
     );
   };
 
-  const openModalize = () => {
-    modalizeRef.current?.open();
-  };
-
-  const closeModalize = () => {
-    modalizeRef.current?.close();
-  };
+  const openModalize = () => modalizeRef.current?.open();
+  const closeModalize = () => modalizeRef.current?.close();
 
   return (
     <Container>

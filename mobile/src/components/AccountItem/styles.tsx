@@ -11,7 +11,7 @@ export const Container = styled.View`
   margin: ${`${heightPixel(22)}px`} 0;
 `;
 
-export const Content = styled.View`
+export const Content = styled.TouchableOpacity`
   width: 100%;
   height: ${`${heightPixel(340 - 120)}px`};
   background-color: ${colors.white};

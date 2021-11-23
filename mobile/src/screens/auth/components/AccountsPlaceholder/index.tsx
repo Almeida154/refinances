@@ -6,7 +6,11 @@ import { metrics } from '../../../../styles';
 
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 
-const AccountsPlaceholder: React.FC = () => {
+interface IProps {
+  moreThanOne?: boolean;
+}
+
+const AccountsPlaceholder: React.FC<IProps> = ({ moreThanOne }) => {
   return (
     <View>
       <View
@@ -45,6 +49,45 @@ const AccountsPlaceholder: React.FC = () => {
           isLoading={true}
         />
       </View>
+      {moreThanOne && (
+        <View
+          style={{
+            flex: 1,
+            marginTop: metrics.default.boundaries * 1.5,
+            marginBottom: metrics.default.boundaries,
+            flexDirection: 'row',
+            opacity: 0.3,
+          }}>
+          <SkeletonContent
+            containerStyle={{ width: widthPixel(135), marginRight: 20 }}
+            animationDirection="horizontalLeft"
+            layout={[
+              {
+                width: widthPixel(135),
+                height: widthPixel(135),
+                borderRadius: widthPixel(135) / 2,
+              },
+            ]}
+            isLoading={true}
+          />
+          <SkeletonContent
+            containerStyle={{ width: '50%' }}
+            animationDirection="horizontalLeft"
+            layout={[
+              {
+                width: widthPixel(260),
+                height: widthPixel(60),
+                marginBottom: widthPixel(15),
+              },
+              {
+                width: widthPixel(520),
+                height: widthPixel(60),
+              },
+            ]}
+            isLoading={true}
+          />
+        </View>
+      )}
       <View
         style={{
           flex: 1,

@@ -11,11 +11,13 @@ import {
   Label,
   Error,
 } from './styles';
-import { colors } from '../../styles';
+import { colors, fonts } from '../../styles';
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import IconByString from '../../helpers/gerarIconePelaString';
 import { heightPixel, widthPixel } from '../../helpers/responsiveness';
+
+import CurrencyInput, { CurrencyInputProps } from 'react-native-currency-input';
 
 export type IconProps = {
   description?: string;
@@ -34,6 +36,7 @@ interface IProps extends TextInputProps {
   showClearIcon?: boolean;
   icon?: IconProps;
   inputColor?: string;
+  isCurrencyInput?: boolean;
   onClear?: () => void;
   onPress?: () => void;
 }
@@ -49,6 +52,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
     showClearIcon,
     icon,
     inputColor,
+    isCurrencyInput,
     onClear,
     onPress,
     ...rest
@@ -77,33 +81,59 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
               {label != undefined ? label : 'Sem label'}
             </Label>
             <RowAux>
-              {(icon?.hex != null || icon?.icon != null || icon?.icon != undefined) && (
-                icon?.icon && icon.icon.indexOf("https://") != -1 ?
-                <Image source={{uri: icon.icon, height: 20, width: 20}}/> :
-                <IconByString
-                  color={icon.hex ?? colors.davysGrey}
-                  stringIcon={icon.icon ?? 'Fontisto:blood-drop'}
-                  size={20}
+              {(icon?.hex != null ||
+                icon?.icon != null ||
+                icon?.icon != undefined) &&
+                (icon?.icon && icon.icon.indexOf('https://') != -1 ? (
+                  <Image source={{ uri: icon.icon, height: 20, width: 20 }} />
+                ) : (
+                  <IconByString
+                    color={icon.hex ?? colors.davysGrey}
+                    stringIcon={icon.icon ?? 'Fontisto:blood-drop'}
+                    size={20}
+                  />
+                ))}
+              {isCurrencyInput ? (
+                // @ts-ignore
+                <CurrencyInput
+                  style={{
+                    flex: 1,
+                    padding: 0,
+                    color: colors.davysGrey,
+                    fontFamily: fonts.familyType.bold,
+                    fontSize: fonts.size.medium,
+                    paddingTop: heightPixel(-14),
+                  }}
+                  allowFontScaling
+                  delimiter="."
+                  separator=","
+                  precision={2}
+                  placeholder="0,00"
+                  maxValue={999999}
+                  placeholderTextColor={'rgba(52, 52, 52, .3)'}
+                  selectionColor={colors.davysGrey}
+                  {...rest}
+                />
+              ) : (
+                <Input
+                  placeholder={
+                    placeholder != undefined ? placeholder : 'Sem placeholder'
+                  }
+                  placeholderTextColor={colors.platinum}
+                  ref={ref}
+                  selectionColor={colors.davysGrey}
+                  style={[
+                    icon?.hex != null || icon?.icon != null
+                      ? { marginLeft: widthPixel(30) }
+                      : {},
+                    icon?.hex != null || icon?.icon != null
+                      ? { color: icon.hex, opacity: 0.7 }
+                      : {},
+                    inputColor ? { color: inputColor } : {},
+                  ]}
+                  {...rest}
                 />
               )}
-              <Input
-                placeholder={
-                  placeholder != undefined ? placeholder : 'Sem placeholder'
-                }
-                placeholderTextColor={colors.platinum}
-                ref={ref}
-                selectionColor={colors.davysGrey}
-                style={[
-                  icon?.hex != null || icon?.icon != null
-                    ? { marginLeft: widthPixel(30) }
-                    : {},
-                  icon?.hex != null || icon?.icon != null
-                    ? { color: icon.hex, opacity: 0.7 }
-                    : {},
-                  inputColor ? { color: inputColor } : {},
-                ]}
-                {...rest}
-              />
             </RowAux>
           </Writting>
           <IconClean>
