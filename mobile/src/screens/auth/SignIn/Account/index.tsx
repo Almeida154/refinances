@@ -19,6 +19,7 @@ import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import AccountItem from '../../../../components/AccountItem';
+import AccountsPlaceholder from '../../components/AccountsPlaceholder';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Account'>;
@@ -40,7 +41,7 @@ const Account = ({ navigation }: PropsNavigation) => {
     // Carteira
     if (setupUser.account == undefined) {
       const walletAccount = {
-        categoryConta: 'Carteira',
+        categoryConta: 'carteira',
         descricao: 'Carteira',
         saldoConta: 0,
       } as Conta;
@@ -84,7 +85,7 @@ const Account = ({ navigation }: PropsNavigation) => {
             />
           </>
         ) : (
-          <Text>Carregando</Text>
+          <AccountsPlaceholder />
         )}
       </Content>
       <BottomNavigation onPress={() => next()} description="Próximo" />

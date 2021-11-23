@@ -68,10 +68,10 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
 
     return (
         <Container>
-            <SepareRow style={{justifyContent: 'space-between', marginBottom: 50}}>
+            <SepareRow style={{justifyContent: 'space-between', marginBottom: 10}}>
                 <SepareColumn>
                     <LabelTitle>{item.lancamentoParcela.descricaoLancamento}</LabelTitle>
-                    <LabelQuantity>{item.valorParcela}</LabelQuantity>
+                    <LabelQuantity>{item.valorParcela.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'})}</LabelQuantity>
                 </SepareColumn>
                 <SepareRow>
                     <CircleIcon onPress={navigateEdit}>

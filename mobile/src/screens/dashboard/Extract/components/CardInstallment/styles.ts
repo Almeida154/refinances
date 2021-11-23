@@ -1,12 +1,12 @@
 import styled from 'styled-components/native'
 
 import {colors, fonts, metrics} from '../../../../../styles'
+import { heightPixel } from '../../../../../helpers/responsiveness';
 
 export const ContainerItem = styled.TouchableOpacity`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 20px;    
     width: 100%;
 `
 export const SectionIcon = styled.View`
@@ -24,7 +24,7 @@ export const EditLabel = styled.Text`
     color: #525252;
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
-    margin-bottom: ${`${fonts.size.smaller}px`};
+    margin-bottom: ${`${heightPixel(26)}px`};
 `
 
 export const SectionDescription = styled.View`
@@ -53,7 +53,7 @@ export const SectionCheck = styled.View`
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-end;
-    
+    height: ${`${heightPixel(100)}px`};
 `
 
 export const LabelAccount = styled.Text`
@@ -68,4 +68,5 @@ export const LabelValue = styled.Text`
 `
 export const LabelIndex = styled.Text`
     font-family: ${fonts.familyType.regular};
+    fontSize: ${`${fonts.size.medium}px`};
 `

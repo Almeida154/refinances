@@ -11,6 +11,8 @@ import {
 
 import {colors} from '../../../../../styles'
 
+import Button from '../../../../../components/Button';
+
 import { UseTransferencias, Transferencia } from '../../../../../contexts/TransferContext'
 
 import InputText from '../../../../../components/InputText'
@@ -113,14 +115,15 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                     onCancel={hideDatePicker}
                     date={dataPagamento}
                 />
-                </InputControl>   
-
-                <FAB 
-                    icon="check"
+                </InputControl>
+                
+                <Button 
+                    title="Adicionar" 
+                    onPress={handleSubmit}
                     style={{
                         backgroundColor: '#333'
                     }}
-                    onPress={handleSubmit}
+                    color="#fff"
                 />
             </ContainerForm>
         </ScrollView>

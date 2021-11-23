@@ -19,6 +19,8 @@ import {
 import { Conta } from '../../contexts/AccountContext';
 import { heightPixel, widthPixel } from '../../helpers/responsiveness';
 import hexToRGB from '../../helpers/hexToRgba';
+import global from '../../global';
+import doubleToCurrency from '../../helpers/doubleToCurrency';
 
 interface IProps extends TouchableOpacityProps {
   account?: Conta;
@@ -26,6 +28,10 @@ interface IProps extends TouchableOpacityProps {
 }
 
 const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
+  let globalAccountIndex = global.DEFAULT_ICONS_CATEGORYACCOUNT.findIndex(
+    acc => acc.description == account?.descricao,
+  );
+
   return (
     <Container
       style={{
@@ -36,6 +42,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
         elevation: 10,
       }}>
       <Content>
+<<<<<<< HEAD
         <Image
           style={{
             borderWidth: widthPixel(10),
@@ -43,15 +50,52 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
           }}
           source={require('../../assets/images/banks/picpay.png')}
         />
+=======
+        {account?.categoryConta == 'carteira' && (
+          <Image
+            style={{
+              borderWidth: widthPixel(10),
+              borderColor: '#44270f',
+            }}
+            source={require('../../assets/images/banks/default/carteira.png')}
+          />
+        )}
+
+        {account?.categoryConta == 'outro' && (
+          <Image
+            style={{
+              borderWidth: widthPixel(10),
+              borderColor: '#929292',
+            }}
+            source={require('../../assets/images/banks/default/outro.png')}
+          />
+        )}
+
+        {account?.categoryConta != 'carteira' &&
+          account?.categoryConta != 'outro' && (
+            <Image
+              style={{
+                borderWidth: widthPixel(10),
+                borderColor:
+                  global.DEFAULT_ICONS_CATEGORYACCOUNT[globalAccountIndex]
+                    .accent,
+              }}
+              source={
+                global.DEFAULT_ICONS_CATEGORYACCOUNT[globalAccountIndex].icon
+              }
+            />
+          )}
+
+>>>>>>> 51f72e93a2c6146abc066d74be512591236c7b94
         <Info>
           <Description>{account?.descricao}</Description>
-          <Category>{account?.descricao}</Category>
+          <Category>{account?.categoryConta}</Category>
         </Info>
         <Icon>
           <MaterialCommunityIcons
             name="lead-pencil"
             size={widthPixel(60)}
-            color={colors.davysGrey}
+            color={hexToRGB(colors.davysGrey, 0.2)}
           />
         </Icon>
       </Content>
@@ -63,7 +107,9 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
           shadowRadius: 20,
           elevation: 10,
         }}>
-        <Amount>R$ 129,00</Amount>
+        <Amount>
+          {doubleToCurrency(account?.saldoConta || 0, 'pt-br', 'BRL')}
+        </Amount>
       </Data>
     </Container>
   );
