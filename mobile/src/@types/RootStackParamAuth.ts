@@ -11,6 +11,7 @@ type PropsNavigationAuth = {
   ConfirmPassword: undefined;
   Photo: undefined;
   Account: undefined;
+  InteractWithAccount: { accountIndex?: number; accountType?: string };
 
   FixedExpenses: undefined;
   EachFixedExpense: undefined;

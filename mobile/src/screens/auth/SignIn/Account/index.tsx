@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Ref, useEffect, useRef, useState } from 'react';
 
 import { BackHandler, Text, View } from 'react-native';
 
@@ -32,12 +32,18 @@ export type PropsNavigation = {
 
 const Account = ({ navigation }: PropsNavigation) => {
   const [walletAmount, setWalletAmount] = useState<number | null>(0);
-  const [formattedWalletAmount, setFormattedWalletAmount] = useState('');
   const [isLoading, setLoading] = useState(true);
 
-  const { user, updateSetupUserProps, setupUser } = UseAuth();
+  const {
+    user,
+    updateSetupUserProps,
+    setupUser,
+    showNiceToast,
+    hideNiceToast,
+  } = UseAuth();
 
-  const modalizeRef = useRef<Modal>(null);
+  const walletModalizeRef = useRef<Modal>(null);
+  const newAccountModalizeRef = useRef<Modal>(null);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -71,12 +77,20 @@ const Account = ({ navigation }: PropsNavigation) => {
   };
 
   async function next() {
+    if (setupUser.account.length < 2)
+      return showNiceToast(
+        'error',
+        'Calma ✋',
+        'Adicione uma conta além da carteira!',
+      );
+
+    hideNiceToast();
     console.debug('Photo | next(): ', JSON.stringify(user).substr(0, 200));
     navigation.dispatch(StackActions.replace('FixedExpenses'));
   }
 
-  const openModalize = () => modalizeRef.current?.open();
-  const closeModalize = () => modalizeRef.current?.close();
+  const openModalize = (ref: any) => ref.current?.open();
+  const closeModalize = (ref: any) => ref.current?.close();
 
   return (
     <Container>
@@ -95,7 +109,7 @@ const Account = ({ navigation }: PropsNavigation) => {
                   account={acc}
                   onPress={() => {
                     index == 0
-                      ? openModalize()
+                      ? openModalize(walletModalizeRef)
                       : console.log('Aqui vai pra tela de edição');
                   }}
                 />
@@ -105,7 +119,7 @@ const Account = ({ navigation }: PropsNavigation) => {
               style={{ backgroundColor: colors.platinum }}
               title="Nova conta principal"
               color={colors.silver}
-              onPress={() => {}}
+              onPress={() => openModalize(newAccountModalizeRef)}
             />
           </>
         ) : (
@@ -120,7 +134,7 @@ const Account = ({ navigation }: PropsNavigation) => {
 
       {/* 💰💵👀🎣🐟 */}
       <Modalize
-        ref={modalizeRef}
+        ref={walletModalizeRef}
         title="Minha carteira 👀"
         subtitle="Seu dinheiro físico. Quanto tem na sua carteira agora?"
         backgroundColor={colors.cultured}
@@ -128,10 +142,10 @@ const Account = ({ navigation }: PropsNavigation) => {
         <InputText
           label="Quanto tem?"
           isCurrencyInput
-          //@ts-ignore
+          // @ts-ignore
           value={walletAmount}
           onChangeValue={(amt: number) => setWalletAmount(amt)}
-          onChangeText={formattedValue => {
+          onChangeText={() => {
             if (walletAmount == null) setWalletAmount(0.0);
           }}
         />
@@ -146,8 +160,55 @@ const Account = ({ navigation }: PropsNavigation) => {
             newSetupProps.account[0].saldoConta = walletAmount || 0;
             updateSetupUserProps(newSetupProps);
 
-            closeModalize();
+            closeModalize(walletModalizeRef);
           }}
+          color={colors.silver}
+          lastOne
+        />
+      </Modalize>
+
+      <Modalize
+        ref={newAccountModalizeRef}
+        title="Escolha o tipo da conta"
+        backgroundColor={colors.cultured}
+        hasBodyBoundaries>
+        <Button
+          style={{ backgroundColor: colors.platinum }}
+          title="Conta Poupança"
+          onPress={() =>
+            navigation.dispatch(
+              StackActions.replace('InteractWithAccount', {
+                accountType: 'conta poupança',
+              }),
+            )
+          }
+          color={colors.silver}
+          lastOne
+        />
+
+        <Button
+          style={{ backgroundColor: colors.platinum }}
+          title="Conta Corrente"
+          onPress={() =>
+            navigation.dispatch(
+              StackActions.replace('InteractWithAccount', {
+                accountType: 'conta corrente',
+              }),
+            )
+          }
+          color={colors.silver}
+        />
+
+        <Button
+          style={{ backgroundColor: colors.platinum }}
+          title="Outro"
+          onPress={() =>
+            navigation.dispatch(
+              StackActions.replace('InteractWithAccount', {
+                accountType: 'outro',
+              }),
+            )
+          }
           color={colors.silver}
           lastOne
         />

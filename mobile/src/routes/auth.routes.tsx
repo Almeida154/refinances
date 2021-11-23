@@ -11,6 +11,7 @@ import ConfirmPassword from '../screens/auth/SignIn/ConfirmPassword';
 import Photo from '../screens/auth/SignIn/Photo';
 
 import Account from '../screens/auth/SignIn/Account';
+import InteractWithAccount from '../screens/auth/SignIn/InteractWithAccount';
 
 import NewCategory from '../screens/auth/SignIn/newCategory/navigator';
 
@@ -41,6 +42,10 @@ const AuthRoutes: React.FC = () => {
       <AuthStack.Screen name="Photo" component={Photo} />
 
       <AuthStack.Screen name="Account" component={Account} />
+      <AuthStack.Screen
+        name="InteractWithAccount"
+        component={InteractWithAccount}
+      />
 
       <AuthStack.Screen name="NewCategory" component={NewCategory} />
 

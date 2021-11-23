@@ -102,7 +102,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
                     color: colors.davysGrey,
                     fontFamily: fonts.familyType.bold,
                     fontSize: fonts.size.medium,
-                    paddingTop: heightPixel(-14),
+                    marginTop: heightPixel(-14),
                   }}
                   allowFontScaling
                   delimiter="."
