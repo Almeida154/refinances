@@ -17,7 +17,7 @@ import {
 } from './styles';
 
 import { Conta } from '../../contexts/AccountContext';
-import { heightPixel, widthPixel } from '../../helpers/responsiveness';
+import { widthPixel } from '../../helpers/responsiveness';
 import hexToRGB from '../../helpers/hexToRgba';
 import global from '../../global';
 import doubleToCurrency from '../../helpers/doubleToCurrency';

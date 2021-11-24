@@ -11,13 +11,13 @@ import { Category } from "../entities/Category";
 import { Conta } from "../entities/Conta";
 import { Parcela } from "../entities/Parcela";
 
-function addMonths(date: Date, months: number) {    
-    var d = date.getDate();
-    date.setMonth(date.getMonth() + +months);
-    if (date.getDate() != d) {
-        date.setDate(0);
-    }
-    return date;
+function addMonths(date: Date, months: number) {
+  var d = date.getDate();
+  date.setMonth(date.getMonth() + +months);
+  if (date.getDate() != d) {
+    date.setDate(0);
+  }
+  return date;
 }
 
 class UserController {
@@ -67,7 +67,7 @@ class UserController {
           iconeCategoryConta: item[1],
           descricaoCategoryConta: item[0],
           userCategoryConta: user,
-          corCategoryConta: item[2]
+          corCategoryConta: item[2],
         });
 
         categoriasContasPadroes.push(
@@ -128,32 +128,34 @@ class UserController {
 
       // Parcela
 
-        item.parcelasLancamento
-        const newParcela = parcelaRepository.create({
-          contaParcela: contaPrincipal,
-          lancamentoParcela: newLancamento,
-          userParcela: user,
-          statusParcela: new Date(item.parcelasLancamento[0].dataParcela) > new Date() ? false : true,
-          valorParcela: item.parcelasLancamento[0].valorParcela,
-          dataParcela: item.parcelasLancamento[0].dataParcela,
-        });
+      item.parcelasLancamento;
+      const newParcela = parcelaRepository.create({
+        contaParcela: contaPrincipal,
+        lancamentoParcela: newLancamento,
+        userParcela: user,
+        statusParcela:
+          new Date(item.parcelasLancamento[0].dataParcela) > new Date()
+            ? false
+            : true,
+        valorParcela: item.parcelasLancamento[0].valorParcela,
+        dataParcela: item.parcelasLancamento[0].dataParcela,
+      });
 
-        await parcelaRepository.save(newParcela);
-        
-        const updateDate = new Date(newParcela.dataParcela)
-        let parcela: any
-        for(var i = 1;i < 24;i++) {
-            parcela = parcelaRepository.create(newParcela);
+      await parcelaRepository.save(newParcela);
 
-            parcela.dataParcela = updateDate
+      const updateDate = new Date(newParcela.dataParcela);
+      let parcela: any;
+      for (var i = 1; i < 24; i++) {
+        parcela = parcelaRepository.create(newParcela);
 
-            parcela.statusParcela = false
+        parcela.dataParcela = updateDate;
 
-            await parcelaRepository.save(parcela);    
+        parcela.statusParcela = false;
 
-            addMonths(updateDate, 1)
-        }
+        await parcelaRepository.save(parcela);
 
+        addMonths(updateDate, 1);
+      }
     });
 
     return response.send({ message: entries });
