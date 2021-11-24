@@ -27,4 +27,5 @@ interface BodyProps {
 export const Body = styled.View<BodyProps>`
   padding: ${props =>
     props.hasBodyBoundaries ? `${metrics.default.boundaries}px` : 0};
+  flex: 1;
 `;

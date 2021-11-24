@@ -206,13 +206,13 @@ export default {
     {
       description: 'ABC Brasil',
       accent: '#ececec',
-      icon: require('../assets/images/banks/ABC Brasil.png'),
+      icon: require('../assets/images/banks/ABC-Brasil.png'),
     },
 
     {
       description: 'Acesso Bank',
       accent: '#00bf66',
-      icon: require('../assets/images/banks/Acesso Bank.png'),
+      icon: require('../assets/images/banks/Acesso-Bank.png'),
     },
 
     {
@@ -230,7 +230,7 @@ export default {
     {
       description: 'Ágora Investimentos',
       accent: '#002529',
-      icon: require('../assets/images/banks/Ágora Investimentos.png'),
+      icon: require('../assets/images/banks/Ágora-Investimentos.png'),
     },
 
     {
@@ -242,13 +242,13 @@ export default {
     {
       description: 'Ame Digital',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Ame Digital.png'),
+      icon: require('../assets/images/banks/Ame-Digital.png'),
     },
 
     {
       description: 'Avenue Securitie',
       accent: '#1d1d1d',
-      icon: require('../assets/images/banks/Avenue Securitie.png'),
+      icon: require('../assets/images/banks/Avenue-Securitie.png'),
     },
 
     {
@@ -260,55 +260,55 @@ export default {
     {
       description: 'Banco Cacique',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Banco Cacique.png'),
+      icon: require('../assets/images/banks/Banco-Cacique.png'),
     },
 
     {
       description: 'Banco da Amazônia',
       accent: '#052a15',
-      icon: require('../assets/images/banks/Banco da Amazônia.png'),
+      icon: require('../assets/images/banks/Banco-da-Amazônia.png'),
     },
 
     {
       description: 'Banco do Brasil',
       accent: '#afaf33',
-      icon: require('../assets/images/banks/Banco do Brasil.png'),
+      icon: require('../assets/images/banks/Banco-do-Brasil.png'),
     },
 
     {
       description: 'Banco do Nordeste',
       accent: '#5d0f22',
-      icon: require('../assets/images/banks/Banco do Nordeste.png'),
+      icon: require('../assets/images/banks/Banco-do-Nordeste.png'),
     },
 
     {
       description: 'Banco Inter',
       accent: '#d7d7d7',
-      icon: require('../assets/images/banks/Banco Inter.png'),
+      icon: require('../assets/images/banks/Banco-Inter.png'),
     },
 
     {
       description: 'Banco Original',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Banco Original.png'),
+      icon: require('../assets/images/banks/Banco-Original.png'),
     },
 
     {
       description: 'Banco PAN',
       accent: '#0c8ec9',
-      icon: require('../assets/images/banks/Banco PAN.png'),
+      icon: require('../assets/images/banks/Banco-PAN.png'),
     },
 
     {
       description: 'Banco Sofisa direto',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Banco Sofisa direto.png'),
+      icon: require('../assets/images/banks/Banco-Sofisa-direto.png'),
     },
 
     {
       description: 'Banco Votorantim',
       accent: '#034c2e',
-      icon: require('../assets/images/banks/Banco Votorantim.png'),
+      icon: require('../assets/images/banks/Banco-Votorantim.png'),
     },
 
     {
@@ -336,7 +336,7 @@ export default {
     },
 
     {
-      description: 'bbm',
+      description: 'Bbm',
       accent: '#ececec',
       icon: require('../assets/images/banks/Bbm.png'),
     },
@@ -350,7 +350,7 @@ export default {
     {
       description: 'Ben Visa Vale',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Ben Visa Vale.png'),
+      icon: require('../assets/images/banks/Ben-Visa-Vale.png'),
     },
 
     {
@@ -386,7 +386,7 @@ export default {
     {
       description: 'BTG Pactual',
       accent: '#000c32',
-      icon: require('../assets/images/banks/BTG Pactual.png'),
+      icon: require('../assets/images/banks/BTG-Pactual.png'),
     },
 
     {
@@ -398,7 +398,7 @@ export default {
     {
       description: 'C6 Bank',
       accent: '#141414',
-      icon: require('../assets/images/banks/C6 Bank.png'),
+      icon: require('../assets/images/banks/C6-Bank.png'),
     },
 
     {
@@ -434,13 +434,13 @@ export default {
     {
       description: 'Clear Investimentos',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Clear Investimentos.png'),
+      icon: require('../assets/images/banks/Clear-Investimentos.png'),
     },
 
     {
       description: 'Cruzeiro do Sul',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Cruzeiro do Sul.png'),
+      icon: require('../assets/images/banks/Cruzeiro-do-Sul.png'),
     },
 
     {
@@ -452,7 +452,7 @@ export default {
     {
       description: 'Desjardins Bank',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Desjardins Bank.png'),
+      icon: require('../assets/images/banks/Desjardins-Bank.png'),
     },
 
     {
@@ -494,7 +494,7 @@ export default {
     {
       description: 'Genial Investimentos',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Genial Investimentos.png'),
+      icon: require('../assets/images/banks/Genial-Investimentos.png'),
     },
 
     {
@@ -524,13 +524,13 @@ export default {
     {
       description: 'IQ Option',
       accent: '#003365',
-      icon: require('../assets/images/banks/IQ Option.png'),
+      icon: require('../assets/images/banks/IQ-Option.png'),
     },
 
     {
       description: 'Itaú Personnalite',
       accent: '#050914',
-      icon: require('../assets/images/banks/Itaú Personnalite.png'),
+      icon: require('../assets/images/banks/Itaú-Personnalite.png'),
     },
 
     {
@@ -572,7 +572,7 @@ export default {
     {
       description: 'Mercado Bitcoin',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Mercado Bitcoin.png'),
+      icon: require('../assets/images/banks/Mercado-Bitcoin.png'),
     },
 
     {
@@ -584,7 +584,7 @@ export default {
     {
       description: 'Mercantil do Brasil',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Mercantil do Brasil.png'),
+      icon: require('../assets/images/banks/Mercantil-do-Brasil.png'),
     },
 
     {
@@ -632,7 +632,7 @@ export default {
     {
       description: 'Nova Futura Investimentos',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Nova Futura Investimentos.png'),
+      icon: require('../assets/images/banks/Nova-Futura-Investimentos.png'),
     },
     {
       description: 'NovaDAX',
@@ -679,19 +679,21 @@ export default {
     {
       description: 'PayU Brasil',
       accent: '#a0ae00',
-      icon: require('../assets/images/banks/PayU Brasil.png'),
+      icon: require('../assets/images/banks/PayU-Brasil.png'),
     },
 
     {
       description: 'PicPay',
       accent: '#489e39',
       icon: require('../assets/images/banks/Picpay.png'),
+
+
     },
 
     {
       description: 'Porto Seguro',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Porto Seguro.png'),
+      icon: require('../assets/images/banks/Porto-Seguro.png'),
     },
     {
       description: 'Primacredi',
@@ -750,7 +752,7 @@ export default {
     {
       description: 'Social Bank',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Social Bank.png'),
+      icon: require('../assets/images/banks/Social-Bank.png'),
     },
 
     {
@@ -774,18 +776,18 @@ export default {
     {
       description: 'TD AmeriTrade',
       accent: '#ececec',
-      icon: require('../assets/images/banks/TD AmeriTrade.png'),
+      icon: require('../assets/images/banks/TD-AmeriTrade.png'),
     },
     {
       description: 'Tesouro Direto',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Tesouro Direto.png'),
+      icon: require('../assets/images/banks/Tesouro-Direto.png'),
     },
 
     {
       description: 'Tesouro Nacional',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Tesouro Nacional.png'),
+      icon: require('../assets/images/banks/Tesouro-Nacional.png'),
     },
 
     {
@@ -797,7 +799,7 @@ export default {
     {
       description: 'Toro Investimentos',
       accent: '#ececec',
-      icon: require('../assets/images/banks/Toro Investimentos.png'),
+      icon: require('../assets/images/banks/Toro-Investimentos.png'),
     },
 
     {
@@ -809,7 +811,7 @@ export default {
     {
       description: 'Tudo Azul',
       accent: '#000d24',
-      icon: require('../assets/images/banks/Tudo Azul.png'),
+      icon: require('../assets/images/banks/Tudo-Azul.png'),
     },
 
     {
@@ -875,49 +877,49 @@ export default {
     {
       description: 'Xp Investimentos',
       accent: '#02131d',
-      icon: require('../assets/images/banks/Xp Investimentos.png'),
+      icon: require('../assets/images/banks/Xp-Investimentos.png'),
     },
 
-    {
-      description: 'Caixa',
-      icon: 'https://logodownload.org/wp-content/uploads/2014/02/caixa-logo.jpg',
-    },
-    {
-      description: 'Banco do Brasil',
-      icon: 'https://play-lh.googleusercontent.com/1-aNhsSPNqiVluwNGZar_7F5PbQ4u1zteuJ1jumnArhe8bfYHHaVwu4aVOF5-NAmLaA',
-    },
-    {
-      description: 'Itaú',
-      icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banco_Ita%C3%BA_logo.svg/1200px-Banco_Ita%C3%BA_logo.svg.png',
-    },
-    {
-      description: 'Moeda em círculo',
-      icon: 'MaterialCommunityIcons:currency-usd-circle',
-    },
-    {
-      description: 'Banco da Amazônia',
-      icon: 'https://projeto-cdn.infra.grancursosonline.com.br/basa.png',
-    },
-    { description: 'Nubank', icon: 'https://t2.tudocdn.net/354716?w=1200' },
-    {
-      description: 'Bradesco',
-      icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg1QN1uIngc6pkX2Zg5Mn_mvZ501sC6x0luIz9TQ1W1jUi8zTSCiwSOMmJKs-uNiu6uXw&usqp=CAU',
-    },
-    {
-      description: 'Carteira',
-      icon: 'Entypo:wallet',
-    },
-    {
-      description: 'Banco Safra',
-      icon: 'https://seeklogo.com/images/B/Banco_Safra-logo-517D130E32-seeklogo.com.png',
-    },
-    {
-      description: 'Gráfico',
-      icon: 'MaterialIcons:show-chart',
-    },
-    {
-      description: 'Banco Inter',
-      icon: 'https://play-lh.googleusercontent.com/FDCnEZ5wKIYucB6n63jQC8tymfmoaNtM2GScjDP5fuKzG4bjXqWshysyfDvxccVYwg',
-    },
+    // {
+    //   description: 'Caixa',
+    //   icon: 'https://logodownload.org/wp-content/uploads/2014/02/caixa-logo.jpg',
+    // },
+    // {
+    //   description: 'Banco do Brasil',
+    //   icon: 'https://play-lh.googleusercontent.com/1-aNhsSPNqiVluwNGZar_7F5PbQ4u1zteuJ1jumnArhe8bfYHHaVwu4aVOF5-NAmLaA',
+    // },
+    // {
+    //   description: 'Itaú',
+    //   icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banco_Ita%C3%BA_logo.svg/1200px-Banco_Ita%C3%BA_logo.svg.png',
+    // },
+    // {
+    //   description: 'Moeda em círculo',
+    //   icon: 'MaterialCommunityIcons:currency-usd-circle',
+    // },
+    // {
+    //   description: 'Banco da Amazônia',
+    //   icon: 'https://projeto-cdn.infra.grancursosonline.com.br/basa.png',
+    // },
+    // { description: 'Nubank', icon: 'https://t2.tudocdn.net/354716?w=1200' },
+    // {
+    //   description: 'Bradesco',
+    //   icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg1QN1uIngc6pkX2Zg5Mn_mvZ501sC6x0luIz9TQ1W1jUi8zTSCiwSOMmJKs-uNiu6uXw&usqp=CAU',
+    // },
+    // {
+    //   description: 'Carteira',
+    //   icon: 'Entypo:wallet',
+    // },
+    // {
+    //   description: 'Banco Safra',
+    //   icon: 'https://seeklogo.com/images/B/Banco_Safra-logo-517D130E32-seeklogo.com.png',
+    // },
+    // {
+    //   description: 'Gráfico',
+    //   icon: 'MaterialIcons:show-chart',
+    // },
+    // {
+    //   description: 'Banco Inter',
+    //   icon: 'https://play-lh.googleusercontent.com/FDCnEZ5wKIYucB6n63jQC8tymfmoaNtM2GScjDP5fuKzG4bjXqWshysyfDvxccVYwg',
+    // },
   ],
 };

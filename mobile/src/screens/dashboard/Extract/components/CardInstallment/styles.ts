@@ -53,7 +53,7 @@ export const SectionCheck = styled.View`
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-end;
-    height: ${`${heightPixel(100)}px`};
+    margin-bottom: ${`${heightPixel(20)}px`};
 `
 
 export const LabelAccount = styled.Text`
@@ -67,6 +67,9 @@ export const LabelValue = styled.Text`
     font-family: ${fonts.familyType.bold};
 `
 export const LabelIndex = styled.Text`
-    font-family: ${fonts.familyType.regular};
+    font-family: ${fonts.familyType.semiBold};
     fontSize: ${`${fonts.size.medium}px`};
+    margin-right: ${`${heightPixel(50)}px`};
+    color: #525252
+    margin-bottom: ${`${heightPixel(17)}px`};
 `

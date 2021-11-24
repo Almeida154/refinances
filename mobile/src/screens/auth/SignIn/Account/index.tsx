@@ -103,9 +103,8 @@ const Account = ({ navigation }: PropsNavigation) => {
         {!isLoading ? (
           <>
             {setupUser.account.map((acc, index) => (
-              <View style={{ elevation: 0 }}>
+              <View style={{ elevation: 0 }} key={index}>
                 <AccountItem
-                  key={index}
                   account={acc}
                   onPress={() => {
                     index == 0

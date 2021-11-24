@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { colors, fonts, metrics } from '../../styles';
+import { widthPixel, heightPixel } from '../../helpers/responsiveness'
 
 import {
   createStackNavigator,
@@ -42,7 +43,6 @@ import {
   GestureResponderEvent,
   TouchableOpacity,
   View,
-  Text,
 } from 'react-native';
 
 import { StackActions } from '@react-navigation/native';
@@ -62,14 +62,8 @@ type PropsCustomBar = {
 
 const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
   return (
-    <TouchableOpacity
-      style={{
-        top: -15,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      onPress={onPress}>
-      <View
+      <TouchableOpacity
+        onPress={onPress}
         style={{
           width: 60,
           height: 60,
@@ -82,12 +76,11 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
           },
           shadowOpacity: 0.32,
           shadowRadius: 5.46,
-
           elevation: 9,
+          marginTop: heightPixel(-90)
         }}>
         {children}
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
   );
 };
 
@@ -111,7 +104,7 @@ const TabNavigator = () => {
         title="Escolha uma opção para adicionar o lançamento"
         hasBodyBoundaries>
         <Button
-          title="Adição por formulário"
+          title="Inserção por formulário"
           onPress={() =>
             navigation.dispatch(
               StackActions.replace('Lancamentos', { screen: 'Main' }),
@@ -121,12 +114,13 @@ const TabNavigator = () => {
           color={colors.darkGray}
         />
         <Button
-          title="Adição por voz"
+          title="Inserção por voz"
           onPress={() =>
             navigation.dispatch(
               StackActions.replace('Lancamentos', { screen: 'RecognizeVoice' }),
             )
           }
+          style={{marginBottom: heightPixel(170)}}
           backgroundColor={colors.platinum}
           color={colors.darkGray}
         />
@@ -136,11 +130,15 @@ const TabNavigator = () => {
         screenOptions={{
           tabBarStyle: {
             backgroundColor: '#fff',
-            elevation: 0,
-            zIndex: 999,
-            padding: 10,
-            height: '8%',
+            paddingBottom: 10,
+            paddingTop: 10,
+            height: heightPixel(180),
+
           },
+          tabBarLabelStyle: 
+            {fontFamily: fonts.familyType.bold, 
+            fontSize: fonts.size.small,
+            marginTop: 0 },
           headerShown: false,
           tabBarActiveTintColor: '#EE4266',
           tabBarInactiveTintColor: '#bbb',

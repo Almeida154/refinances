@@ -25,7 +25,6 @@ const ShortHeader: React.FC<IProps> = ({ onBackButton, title }) => {
         shadowRadius: 20,
         elevation: 10,
       }}>
-      <StatusBar backgroundColor={colors.white} />
       <Boundaries>
         <IonIcons
           style={{ marginLeft: -6, opacity: 0.2 }}

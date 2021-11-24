@@ -110,6 +110,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   };
 
   const teto = category?.tetoDeGastos || 0;
+
   return (
     <ScrollView style={{backgroundColor: '#f6f6f6' }}>
       <StatusBar backgroundColor={'#ee4266'} />
@@ -133,7 +134,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
           <Title>{category?.nomeCategoria}</Title>
           <Subtitle>É importante adicionar limites aos seus gastos para se manter sempre na linha! </Subtitle>
           
-          <SubtitleT style={{display: teto > 0? 'flex' : 'none'}}>Teto de gastos atual: {teto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})} </SubtitleT>
+          <SubtitleT style={{display: category?.tetoDeGastos > 0? 'flex' : 'none'}}>Teto de gastos atual: {teto} </SubtitleT>
           
           <View style={{paddingLeft: '10%', paddingRight: '10%'}}>
             <Button

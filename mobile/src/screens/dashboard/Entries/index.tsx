@@ -54,7 +54,6 @@ const FormLancamento = ({route}: any) => {
     
       const backAction = () => {
         navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}));
-        
         return true;
       };
 

@@ -9,7 +9,7 @@ interface IProps {
   title?: string;
   subtitle?: string;
   height?: number;
-  maxHeight?: number;
+  snapPoint?: number;
   isCentered?: boolean;
   backgroundColor?: string;
   hasBodyBoundaries?: boolean;
@@ -21,7 +21,7 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
     title,
     subtitle,
     height,
-    maxHeight,
+    snapPoint,
     isCentered,
     backgroundColor,
     hasBodyBoundaries,
@@ -32,10 +32,10 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
   return (
     <Modal
       ref={ref}
-      adjustToContentHeight
-      snapPoint={maxHeight}
+      adjustToContentHeight={!height && !snapPoint}
+      snapPoint={snapPoint}
       modalHeight={height}
-      modalStyle={{ backgroundColor: backgroundColor || colors.white }}
+      modalStyle={{ backgroundColor: backgroundColor || colors.white, flex: 1 }}
       HeaderComponent={
         <>
           <Title>{title}</Title>
