@@ -134,7 +134,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
           <Title>{category?.nomeCategoria}</Title>
           <Subtitle>É importante adicionar limites aos seus gastos para se manter sempre na linha! </Subtitle>
           
-          <SubtitleT style={{display: category?.tetoDeGastos > 0? 'flex' : 'none'}}>Teto de gastos atual: {teto} </SubtitleT>
+          <SubtitleT style={{display: teto > 0? 'flex' : 'none'}}>Teto de gastos atual: {teto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})} </SubtitleT>
           
           <View style={{paddingLeft: '10%', paddingRight: '10%'}}>
             <Button

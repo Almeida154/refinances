@@ -169,6 +169,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               placeholderTextColor="#fff"
               value={valorDeposito}
               onChangeText={setValor}
+              
             />
           </InputControlValue>
         </AlinhaParaDireita>
@@ -176,12 +177,12 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
       <View style={styles.container}>
         <TextProgress>
-          Falta
+          Faltam
           <TextGoals style={{ left: '40%' }}>
             {' '}
-            R$ {goal.saldoFinalMeta - goal.saldoAtualMeta}{' '}
+            R$ {(goal.saldoFinalMeta - goal.saldoAtualMeta).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}{' '}
           </TextGoals>
-          para concluir sua meta
+          para concluir { goal.descMeta }
         </TextProgress>
 
         <PickerContas

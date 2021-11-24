@@ -53,7 +53,7 @@ export const InputControlValue = styled.View`
 export const AlinhaParaDireita = styled.View`
     justify-content: space-between; 
     flex-direction: row;
-    padding-left: 20px;
+    align-items: flex-end;
     padding-right: 30px;
 `
 

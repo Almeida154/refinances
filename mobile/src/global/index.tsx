@@ -685,7 +685,7 @@ export default {
     {
       description: 'PicPay',
       accent: '#489e39',
-      icon: require('../assets/images/banks/Picpay.png'),
+      icon: require('../assets/images/banks/PicPay.png'),
 
 
     },

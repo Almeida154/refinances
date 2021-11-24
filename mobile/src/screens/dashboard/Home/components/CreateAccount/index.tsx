@@ -30,7 +30,7 @@ const CreateAccount = () => {
     const {navigation, showNiceToast} = UseDadosTemp()
 
     const [description, setDescription] = useState('')
-    const [value, setValue] = useState('')    
+    const [value, setValue] = useState(0)    
     const [categoriaConta, setCategoriaConta] = useState<null | CategoriaConta>(null)    
 
     useEffect(() => {
@@ -93,17 +93,23 @@ const CreateAccount = () => {
                 }}
             />
 
-            <InputText 
-                onChangeText={setValue}
-                value={value}
-                label="Saldo"
-                placeholder="Saldo de sua nova conta"
-                keyboardType='decimal-pad'
+            <InputText
+              label="Saldo"
+              placeholder={'Saldo de sua nova conta'}
+              showClearIcon={true}
+              isCurrencyInput
+              
+              // @ts-ignore
+              value={value}
+              onClear={() => {
+                setValue(0)
+             }}
+              onChangeValue={(amt: number) => setValue(amt)}
+              onChangeText={() => {
+                if (value == null) setValue(0.00);
+              }}
+              keyboardType='decimal-pad'
 
-                showClearIcon={false}
-                onClear={() => {
-                    setValue('')
-                }}
             />
 
 

@@ -47,7 +47,7 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
   const [meta, setMeta] = useState('');
   const { handleAtualizarMeta } = UseMetas();
 
-  const [valorMeta, setValorMeta] = useState('');
+  const [valorMeta, setValorMeta] = useState(0);
   const [previsao, setPrevisao] = useState(new Date());
   const [realizado, setRealizado] = useState(false);
 
@@ -96,8 +96,8 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
 
-    if (meta != '' || parseFloat(valorMeta) > 0 && valorMeta != undefined) {
-      goal.saldoAtualMeta >= parseFloat(valorMeta)
+    if (meta != '' || (valorMeta) > 0 && valorMeta != undefined) {
+      goal.saldoAtualMeta >= (valorMeta)
         ? console.log('deu true')
         : setRealizado(false);
 
@@ -114,7 +114,7 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
         },
       });
       navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
-    } else if (meta == '' || parseFloat(valorMeta) <= 0 || valorMeta == '') {
+    } else if (meta == '' || (valorMeta) <= 0 || valorMeta == 0) {
       setdescError('Insira alguma descricao diferente!');
       setvalorTError('Insira algum valor!');
       Toast.show({
@@ -129,7 +129,7 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
   }
 
   const realizacao = () => {
-    goal.saldoAtualMeta >= parseFloat(valorMeta)
+    goal.saldoAtualMeta >= valorMeta
       ? setRealizado(true)
       : setRealizado(false);
 
@@ -146,8 +146,8 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
   };
 
   const novoSaldoFinal = () => {
-    if(parseFloat(valorMeta) >= 0 && valorMeta != ''){
-      return parseFloat(valorMeta);
+    if(valorMeta >= 0 && valorMeta != 0){
+      return valorMeta;
     }else{
       return goal.saldoFinalMeta;
     }
@@ -194,20 +194,19 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
 
           <View>
             <InputText
-              value={valorMeta}
               label="Valor final"
               placeholder={valorFim.toString()}
               error={valorTError}
-              showClearIcon={valorMeta != ''}
+              showClearIcon={valorMeta != 0}
+              isCurrencyInput
               onClear={() => {
                 setvalorTError(null);
-                setValorMeta('');
               }}
               // @ts-ignore
-              onChangeText={txt => {
-                if (valorMeta == null) setValorMeta('0.0');
-                setvalorTError(null);
-                setValorMeta(txt);
+              value={valorMeta}
+              onChangeValue={(amt: number) => setValorMeta(amt)}
+              onChangeText={() => {
+                if (valorMeta == null) setValorMeta(0.0);
               }}
               keyboardType="numeric"
             />

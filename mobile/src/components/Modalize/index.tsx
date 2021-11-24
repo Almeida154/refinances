@@ -35,7 +35,7 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
       adjustToContentHeight={!height && !snapPoint}
       snapPoint={snapPoint}
       modalHeight={height}
-      modalStyle={{ backgroundColor: backgroundColor || colors.white, flex: 1 }}
+      modalStyle={{ backgroundColor: backgroundColor || colors.white }}
       HeaderComponent={
         <>
           <Title>{title}</Title>
