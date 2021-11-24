@@ -24,7 +24,7 @@ type PropsCategory = {
 };
 
 const Despesas = ({ navigation }: PropsCategory) => {
-  const { categorias, handleReadByUserCategorias, handleCountByEntry } = UseCategories();
+  const { categorias, handleReadByUserCategorias } = UseCategories();
 
   const [despesasCategorias, setDespesasCategorias] = useState<Categoria[] | null>(null)
 
@@ -43,23 +43,21 @@ const Despesas = ({ navigation }: PropsCategory) => {
   }, [navigation]);
 
   useEffect(() => {
-        
-      (async function () {
-        handleCountByEntry(await retornarIdDoUsuario(), 'todos');
-      })();
-
     
+      (async function () {
+        handleReadByUserCategorias(await retornarIdDoUsuario(), 'todos');
+      })();
+  
   }, []);
 
   useEffect(() => {
     const aux: Categoria[] = []
     
-    console.log("categories", categorias)
     categorias?.map(item => {
       if(item.tipoCategoria == 'despesa')
         aux.push(item)
-    })
-
+      })
+            
     setDespesasCategorias(aux)
   }, [categorias])
   

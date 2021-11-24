@@ -28,7 +28,7 @@ interface CategoriaContextType {
     tipoCategoria: string,
   ): Promise<void>;
   handleGetCategoryById(id: number): Promise<void>;
-  handleAtualizarCategoria(categoria: Categoria, id: number): Promise<void>;
+  handleAtualizarCategoria(categoria: Categoria, id: number): Promise<string>;
   handleCountByEntry(idUser: number, tipoCategoria: string): Promise<void>;
 }
 
@@ -141,24 +141,13 @@ export const CategoriasProvider: React.FC = ({ children }) => {
         userCategory: categoria.userCategoria,
         corCategoria: categoria.corCategoria,
       });
+      
 
-      console.log(response.data);
-
-      if (response.data.error) console.log(response.data.error);
-
-      console.log('response.data', response.data);
-
-      const updateCategorias = categorias == null ? null : categorias.slice();
-
-      if (!updateCategorias) {
-        //Caso atualizou e não tinha nenhuma outras categorias carregadas, carregar todas contando com a atual
-        handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
-      } else {
-        console.log(response.data.categorias);
-        setCategorias(response.data.categorias);
-
-        console.log('categorias: ' + categorias);
-      }
+      if (response.data.error) return response.data.error;                      
+              
+      handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
+     
+      return ''
     } catch (error) {
       console.log('Deu um erro no handleUpdatecategoria: ' + error);
     }

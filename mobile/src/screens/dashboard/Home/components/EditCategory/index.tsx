@@ -73,21 +73,30 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
 
     if (parseFloat(tetoGastos) > 0 && tetoGastos != undefined) {
 
-      handleAtualizarCategoria(newCategory, category.id);
-      console.log(newCategory);
+      const response = await handleAtualizarCategoria(newCategory, category.id);
+      console.debug("handleUpdateCategory | response", response);
 
 
-       Toast.show({
-        type: 'niceToast',
-        props: {
-          type: 'success',
-          title: 'Foi!',
-          message: 'Teto de gastos adicionado com sucesso',
-        },
-      }); 
-
-      
-
+      if(response != '') { //Se teve algum erro ao atualizar
+        Toast.show({
+          type: 'niceToast',
+          props: {
+            type: 'error',
+            title: 'Aconteceu um erro',
+            message: response,
+          },
+        }); 
+  
+      } else {
+        Toast.show({
+         type: 'niceToast',
+         props: {
+           type: 'success',
+           title: 'Foi!',
+           message: 'Teto de gastos adicionado com sucesso',
+         },
+       }); 
+      }      
     } else {
       Toast.show({
         type: 'niceToast',
@@ -99,9 +108,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
       });
 
     }
-  }
-
-  console.log(category)
+  }  
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('StackAccount', 

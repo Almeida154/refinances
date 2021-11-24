@@ -24,7 +24,7 @@ type PropsCategory = {
 };
 
 const Receitas = ({ navigation }: PropsCategory) => {
-  const { categorias, handleReadByUserCategorias, handleCountByEntry } = UseCategories();
+  const { categorias, handleReadByUserCategorias } = UseCategories();
   const [stateReload, setStateReload] = useState(false);
 
   const [receitasCategorias, setReceitasCategorias] = useState<Categoria[] | null>(null)
@@ -40,21 +40,17 @@ const Receitas = ({ navigation }: PropsCategory) => {
       setStateReload(true);
     });
   }, [navigation]);
-
-  useEffect(() => {
-    // Caso nenhuma despesa seja carregada, recarregar    
-            
-    
-  }, []);
+  
 
   useEffect(() => {
     const aux: Categoria[] = []
-    
+        
     categorias?.map(item => {
       if(item.tipoCategoria == 'receita')
         aux.push(item)
     })
 
+    console.debug("useEffect[categorias] | aux", aux)
     setReceitasCategorias(aux)
   }, [categorias])
 

@@ -28,16 +28,12 @@ type PropsCardCategory = {
 };
 
 const CardCategory = ({ item }: PropsCardCategory) => {
-  const { navigation } = UseDadosTemp();
+  const { navigation } = UseDadosTemp();   
 
-  const {handleCountByEntry} = UseCategories();
-
-  const countbyentry = (async function(){
-    handleCountByEntry(await retornarIdDoUsuario(), 'todos')
-  })
-
-  console.warn('categorias: ', countbyentry);
-
+  console.debug("CardCategory | item[nome]", item.nomeCategoria)
+  console.debug("CardCategory | item[valueLancamentos]", item.valueLancamentos)
+  console.debug("CardCategory | item[tetodeGastos]", item.tetoDeGastos)
+  console.log()
   return (
     <Category key={item.id}>
       <SectionDescription>
@@ -70,7 +66,7 @@ const CardCategory = ({ item }: PropsCardCategory) => {
 
           <Progress>
             <ProgressBar
-              progress={1}
+              progress={item.tetoDeGastos != 0 ? Math.abs(item.valueLancamentos / item.tetoDeGastos) : 0}
               color={item.corCategoria}
               style={{
                 height: 7,

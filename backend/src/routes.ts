@@ -34,7 +34,7 @@ Routes.post("/category/create", CategoryController.save);
 Routes.get("/category/read", CategoryController.showRelations);
 Routes.get("/category/read/:id", CategoryController.one);
 Routes.post("/category/findbyname/:iduser", CategoryController.FindByName);
-Routes.post("/category/findbyuser/:iduser", CategoryController.FindByUser);
+Routes.post("/category/findbyuser/:iduser", CategoryController.CountByEntry); // Mudança pro CountByEntry
 Routes.post("/category/countbyentry/:iduser", CategoryController.CountByEntry);
 Routes.put("/category/edit/:id", CategoryController.edit);
 Routes.delete("/category/remove/:id", CategoryController.remove);

@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Not, Repository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 
 import { Category } from "../entities/Category";
@@ -138,7 +138,6 @@ class CategoryController {
       return response.send({ categories });
     }
 
-    console.log("entrou em qualquer um");
     categories = await categoryRepository.find({
       where: {
         tipoCategoria: request.body.tipoCategoria,
@@ -173,6 +172,9 @@ class CategoryController {
         .leftJoin("category.userCategory", "user")
         .leftJoinAndSelect("lancamento.parcelasLancamento", "parcela")
         .leftJoinAndSelect("parcela.contaParcela", "conta")
+        .where("user.id = :iduser", {          
+          iduser: user.id
+        })
         .getMany();
     } else {
       categories = await categoryRepository
@@ -182,8 +184,9 @@ class CategoryController {
         .leftJoin("category.userCategory", "user")
         .leftJoinAndSelect("lancamento.parcelasLancamento", "parcela")
         .leftJoinAndSelect("parcela.contaParcela", "conta")
-        .where("category.tipoCategoria = :tipo", {
+        .where("category.tipoCategoria = :tipo and user.id = :iduser", {
           tipo: request.body.tipoCategoria,
+          iduser: user.id
         })
         .getMany();
     }
@@ -238,20 +241,29 @@ class CategoryController {
     
     if (userCategory == null) return response.send({ error: "Sem Usuário!" });
 
-    const categoryexists = await categoryRepository.find({
-      where: { nomeCategoria },
+    
+    const user = await userRepository.findOne({ where: { id: userCategory } });
+
+    if(!user) {
+      return response.send({error: "Não existe esse usuário"})
+    }
+
+    const newCategory = request.body;
+    
+    newCategory.userCategory = user;
+    const categoryexists = await categoryRepository.findOne({
+      where: { nomeCategoria, id: Not(id), userCategory: user },
+      join: {
+        alias: 'category',
+        leftJoinAndSelect: {
+          user: 'category.userCategory'
+        }
+      }
     });
 
-    if (
-      categoryexists.length > 1 ||
-      (categoryexists.length == 1 && categoryexists[0].id != id)
-    )
+    if (categoryexists)
       return response.send({ error: "Nome já cadastrado" });
 
-    const user = await userRepository.findOne({ where: { id: userCategory } });
-    const newCategory = request.body;
-
-    newCategory.userCategory = user;
     await categoryRepository.update(id, newCategory);
 
     const updatedCategory = await categoryRepository.findOne({
