@@ -79,6 +79,15 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
     }
   }, [search]);
 
+  useEffect(() => {
+    if (route.params.accountIndex) {
+      const account = setupUser.account[route.params.accountIndex];
+      setDesc(account.descricao);
+      setAmount(account.saldoConta);
+      setInstituition(account.descricao);
+    }
+  }, []);
+
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Account'));
     AndroidKeyboardAdjust.setAdjustResize();
@@ -91,8 +100,22 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
     if (desc == '') return showNiceToast('error', 'Preecha a descrição');
     hideNiceToast();
 
-    navigation.dispatch(StackActions.replace('Account'));
-    showNiceToast('success', 'Tudo certo!', 'Conta criada com sucesso :)');
+    if (route.params.accountIndex) {
+      const account = setupUser.account[route.params.accountIndex];
+      account.descricao = desc;
+      account.saldoConta = amount || 0;
+
+      const newSetupProps = setupUser;
+      newSetupProps.account[route.params.accountIndex] = account;
+      updateSetupUserProps(newSetupProps);
+
+      navigation.dispatch(StackActions.replace('Account'));
+      return showNiceToast(
+        'success',
+        'Tudo certo!',
+        'Conta editada com sucesso :)',
+      );
+    }
 
     const newAccount = {
       categoryConta: route.params.accountType,
@@ -103,6 +126,9 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
     const newSetupProps = setupUser;
     newSetupProps.account.push(newAccount);
     updateSetupUserProps(newSetupProps);
+
+    navigation.dispatch(StackActions.replace('Account'));
+    showNiceToast('success', 'Tudo certo!', 'Conta criada com sucesso :)');
   }
 
   const openModalize = () => modalizeRef.current?.open();
@@ -145,7 +171,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
       </Content>
       <BottomNavigation
         onPress={() => interact()}
-        description="Adicionar"
+        description={route.params.accountIndex ? 'Editar' : 'Adicionar'}
         isCentered
       />
 

@@ -109,7 +109,11 @@ const Account = ({ navigation }: PropsNavigation) => {
                   onPress={() => {
                     index == 0
                       ? openModalize(walletModalizeRef)
-                      : console.log('Aqui vai pra tela de edição');
+                      : navigation.dispatch(
+                          StackActions.replace('InteractWithAccount', {
+                            accountIndex: index,
+                          }),
+                        );
                   }}
                 />
               </View>
