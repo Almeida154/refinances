@@ -8,7 +8,11 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 import FormCadastro from './components/FormCadastro'
 import FormTransferencia from './components/TransferForm'
 
+import {colors, fonts, metrics} from '../../../styles'
+
 import HeaderTop from '../../../components/Header';
+
+import CurrencyInput from 'react-native-currency-input';
 
 import {
     Container,
@@ -27,6 +31,7 @@ import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import { Categoria } from '../../../contexts/CategoriesContext';
 import { Lancamento, UseLancamentos } from '../../../contexts/EntriesContext';
 import { ReadParcela } from '../../../contexts/InstallmentContext';
+import { Valor } from '../Goals/screens/Invest/styles';
 
 export interface PropsNavigation {     
     tipoLancamento: string,
@@ -44,7 +49,7 @@ const FormLancamento = ({route}: any) => {
     const {navigation} = UseDadosTemp()
     navigation.setOptions({headerShown: false})
     
-    const [valor, setValor] = useState(receiveEntry?.totalParcelas ? String(receiveEntry.totalParcelas.toFixed(2)) : '')    
+    const [valor, setValor] = useState(receiveEntry?.totalParcelas ? String(receiveEntry.totalParcelas.toFixed(2)) : '0')    
     
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -59,25 +64,44 @@ const FormLancamento = ({route}: any) => {
 
     return (
         <ScrollView
-            style={{height: '100%'}}>
+            style={{height: '100%', width: '100%'}}>
             <StatusBar backgroundColor={selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}/>
             {
                 <Container>
                     <Header style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}>
                     <HeaderTop backButton={backAction} title=""/>
+
                     <AlinhaParaDireita>
-                        <View></View>
-                        <InputControlValue>
-                            <LabelCifrao>R$</LabelCifrao>    
-                                <TextInputValue
-                                    keyboardType='numeric'
-                                    placeholder="0,00"
-                                    placeholderTextColor="#fff"
-                                    value={valor}
-                                    onChangeText={setValor}                                
+                        
+                        
+                            <LabelCifrao>R$</LabelCifrao> 
+                            <View></View>
+
+                            
+                            
+                            <CurrencyInput
+                                value={parseFloat(valor)}
+                                onChangeValue={txt => setValor(txt?.toString())}
+                                style={{
+                                    alignContent: 'flex-end',
+                                    alignItems: 'center',
+                                    color: '#F5F2F3',
+                                    fontFamily: fonts.familyType.bold,
+                                    fontSize: fonts.size.super +20,
+                                    opacity: 0.7,
+                                    width: '100%'
+                                }}
+                                delimiter="."
+                                separator=","
+                                precision={2}
+                                maxValue={999999}
+                                placeholderTextColor={'#F5F2F3'}
+                                selectionColor={colors.davysGrey}
+                                onChangeText={formattedValue => {
+                                    formattedValue == '' ? setValor((0).toString()) : setValor(valor);
+                                }}
                                 />
-                        </InputControlValue>
-                    </AlinhaParaDireita>
+                        </AlinhaParaDireita>
                         <SectionButtons>
                             <Buttons onPress={() => setSelected(0)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>despesa</TextButton></Buttons>
                             <Buttons onPress={() => setSelected(1)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>receita</TextButton></Buttons>
