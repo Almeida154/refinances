@@ -114,12 +114,14 @@ const Account = ({ navigation }: PropsNavigation) => {
                 />
               </View>
             ))}
-            <Button
-              style={{ backgroundColor: colors.platinum }}
-              title="Nova conta principal"
-              color={colors.silver}
-              onPress={() => openModalize(newAccountModalizeRef)}
-            />
+            {setupUser.account.length < 2 && (
+              <Button
+                style={{ backgroundColor: colors.platinum }}
+                title="Nova conta principal"
+                color={colors.silver}
+                onPress={() => openModalize(newAccountModalizeRef)}
+              />
+            )}
           </>
         ) : (
           <AccountsPlaceholder

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { TextInput, TextInputProps, Image } from 'react-native';
+import { TextInput, TextInputProps, Image, Text, View } from 'react-native';
 
 import {
   Container,
@@ -18,6 +18,7 @@ import IconByString from '../../helpers/gerarIconePelaString';
 import { heightPixel, widthPixel } from '../../helpers/responsiveness';
 
 import CurrencyInput, { CurrencyInputProps } from 'react-native-currency-input';
+import global from '../../global';
 
 export type IconProps = {
   description?: string;
@@ -25,8 +26,6 @@ export type IconProps = {
   name?: string;
   hex?: string;
 };
-
-export type AccountProps = {};
 
 interface IProps extends TextInputProps {
   label?: string;
@@ -37,7 +36,7 @@ interface IProps extends TextInputProps {
   showErrorMessage?: boolean;
   showClearIcon?: boolean;
   icon?: IconProps;
-  accountInstitution?: AccountProps;
+  accountInstitution?: string;
   inputColor?: string;
   isCurrencyInput?: boolean;
   onClear?: () => void;
@@ -54,6 +53,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
     showErrorMessage,
     showClearIcon,
     icon,
+    accountInstitution,
     inputColor,
     isCurrencyInput,
     onClear,
@@ -62,6 +62,10 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
   },
   ref: any,
 ) => {
+  var instituition = global.DEFAULT_ICONS_CATEGORYACCOUNT.find(
+    acc => acc.description == accountInstitution,
+  );
+
   return (
     <>
       <Container
@@ -80,64 +84,99 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
         onPress={onPress != undefined ? onPress : () => ref?.current.focus()}>
         <>
           <Writting>
-            <Label style={colorLabel != undefined ? { color: colorLabel } : {}}>
-              {label != undefined ? label : 'Sem label'}
-            </Label>
-            <RowAux>
-              {(icon?.hex != null ||
-                icon?.icon != null ||
-                icon?.icon != undefined) &&
-                (icon?.icon && icon.icon.indexOf('https://') != -1 ? (
-                  <Image source={{ uri: icon.icon, height: 20, width: 20 }} />
-                ) : (
-                  <IconByString
-                    color={icon.hex ?? colors.davysGrey}
-                    stringIcon={icon.icon ?? 'Fontisto:blood-drop'}
-                    size={20}
-                  />
-                ))}
-              {isCurrencyInput ? (
-                // @ts-ignore
-                <CurrencyInput
+            {accountInstitution ? (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Image
+                  source={instituition?.icon}
                   style={{
-                    flex: 1,
-                    padding: 0,
-                    color: colors.davysGrey,
-                    fontFamily: fonts.familyType.bold,
-                    fontSize: fonts.size.medium,
-                    marginTop: heightPixel(-14),
+                    width: widthPixel(120),
+                    height: widthPixel(120),
+                    borderRadius: widthPixel(120 / 2),
+                    borderWidth: 3,
+                    borderColor: instituition?.accent,
                   }}
-                  allowFontScaling
-                  delimiter="."
-                  separator=","
-                  precision={2}
-                  placeholder="0,00"
-                  maxValue={999999}
-                  placeholderTextColor={'rgba(52, 52, 52, .3)'}
-                  selectionColor={colors.davysGrey}
-                  {...rest}
                 />
-              ) : (
-                <Input
-                  placeholder={
-                    placeholder != undefined ? placeholder : 'Sem placeholder'
-                  }
-                  placeholderTextColor={colors.platinum}
-                  ref={ref}
-                  selectionColor={colors.davysGrey}
-                  style={[
-                    icon?.hex != null || icon?.icon != null
-                      ? { marginLeft: widthPixel(30) }
-                      : {},
-                    icon?.hex != null || icon?.icon != null
-                      ? { color: icon.hex, opacity: 0.7 }
-                      : {},
-                    inputColor ? { color: inputColor } : {},
-                  ]}
-                  {...rest}
-                />
-              )}
-            </RowAux>
+                <Label
+                  style={{
+                    color: colors.davysGrey,
+                    fontSize: fonts.size.medium,
+                    marginLeft: widthPixel(40),
+                  }}>
+                  {accountInstitution}
+                </Label>
+              </View>
+            ) : (
+              <>
+                <Label
+                  style={colorLabel != undefined ? { color: colorLabel } : {}}>
+                  {label != undefined ? label : 'Sem label'}
+                </Label>
+                <RowAux>
+                  {(icon?.hex != null ||
+                    icon?.icon != null ||
+                    icon?.icon != undefined) &&
+                    (icon?.icon && icon.icon.indexOf('https://') != -1 ? (
+                      <Image
+                        source={{ uri: icon.icon, height: 20, width: 20 }}
+                      />
+                    ) : (
+                      <IconByString
+                        color={icon.hex ?? colors.davysGrey}
+                        stringIcon={icon.icon ?? 'Fontisto:blood-drop'}
+                        size={20}
+                      />
+                    ))}
+                  {isCurrencyInput ? (
+                    // @ts-ignore
+                    <CurrencyInput
+                      style={{
+                        flex: 1,
+                        padding: 0,
+                        color: colors.davysGrey,
+                        fontFamily: fonts.familyType.bold,
+                        fontSize: fonts.size.medium,
+                        marginTop: heightPixel(-14),
+                      }}
+                      allowFontScaling
+                      delimiter="."
+                      separator=","
+                      precision={2}
+                      placeholder="0,00"
+                      maxValue={999999}
+                      placeholderTextColor={'rgba(52, 52, 52, .3)'}
+                      selectionColor={colors.davysGrey}
+                      {...rest}
+                    />
+                  ) : (
+                    <Input
+                      placeholder={
+                        placeholder != undefined
+                          ? placeholder
+                          : 'Sem placeholder'
+                      }
+                      placeholderTextColor={colors.platinum}
+                      ref={ref}
+                      selectionColor={colors.davysGrey}
+                      style={[
+                        icon?.hex != null || icon?.icon != null
+                          ? { marginLeft: widthPixel(30) }
+                          : {},
+                        icon?.hex != null || icon?.icon != null
+                          ? { color: icon.hex, opacity: 0.7 }
+                          : {},
+                        inputColor ? { color: inputColor } : {},
+                      ]}
+                      {...rest}
+                    />
+                  )}
+                </RowAux>
+              </>
+            )}
           </Writting>
           <IconClean>
             {showClearIcon && (

@@ -15,7 +15,7 @@ import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
 import { Container, Content } from './styles';
-import { colors, metrics } from '../../../../styles';
+import { colors, fonts, metrics } from '../../../../styles';
 
 // Components
 import ShortHeader from '../../../../components/ShortHeader';
@@ -27,6 +27,9 @@ import { Modalize as Modal } from 'react-native-modalize';
 import global from '../../../../global';
 import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 import ModalizeItem from '../../../../components/ModalizeItem';
+
+// Icon
+import NoResults from '../../../../assets/images/svg/noResults.svg';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'InteractWithAccount'>;
@@ -43,7 +46,17 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
   const [search, setSearch] = useState('');
   const [instituitions, setInstituitions] = useState<InstituitionProps[]>([{}]);
 
-  const { user, updateSetupUserProps, setupUser } = UseAuth();
+  const [instituition, setInstituition] = useState('');
+  const [desc, setDesc] = useState('');
+  const [amount, setAmount] = useState<number | null>(0);
+
+  const {
+    user,
+    updateSetupUserProps,
+    setupUser,
+    showNiceToast,
+    hideNiceToast,
+  } = UseAuth();
 
   const modalizeRef = useRef<Modal>(null);
 
@@ -73,7 +86,23 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
   };
 
   async function interact() {
-    console.log('integariu');
+    if (instituition == '')
+      return showNiceToast('error', 'Escolha uma instituição');
+    if (desc == '') return showNiceToast('error', 'Preecha a descrição');
+    hideNiceToast();
+
+    navigation.dispatch(StackActions.replace('Account'));
+    showNiceToast('success', 'Tudo certo!', 'Conta criada com sucesso :)');
+
+    const newAccount = {
+      categoryConta: route.params.accountType,
+      descricao: desc,
+      saldoConta: amount,
+    } as Conta;
+
+    const newSetupProps = setupUser;
+    newSetupProps.account.push(newAccount);
+    updateSetupUserProps(newSetupProps);
   }
 
   const openModalize = () => modalizeRef.current?.open();
@@ -94,10 +123,25 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
               Keyboard.dismiss();
               openModalize();
             }}
+            accountInstitution={instituition != '' ? instituition : undefined}
           />
         )}
-        <InputText label="Descrição" placeholder="Itaú Personnalite" />
-        <InputText label="Valor da conta" isCurrencyInput />
+        <InputText
+          label="Descrição"
+          placeholder="Itaú Personnalite"
+          onChangeText={txt => setDesc(txt)}
+          value={desc}
+        />
+        <InputText
+          label="Valor da conta"
+          isCurrencyInput
+          // @ts-ignore
+          value={amount}
+          onChangeValue={(amt: number) => setAmount(amt)}
+          onChangeText={() => {
+            if (amount == null) setAmount(0.0);
+          }}
+        />
       </Content>
       <BottomNavigation
         onPress={() => interact()}
@@ -130,13 +174,40 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
         {instituitions.length > 0 ? (
           instituitions.map((instituition, index) => (
             <ModalizeItem
+              key={index}
               accent={instituition.accent}
               description={instituition.description}
               icon={instituition.icon}
+              onPress={() => {
+                // @ts-ignore
+                setDesc(instituition.description);
+                // @ts-ignore
+                setInstituition(instituition.description);
+                closeModalize();
+              }}
             />
           ))
         ) : (
-          <Text>Nao encontrad ookkk</Text>
+          <View
+            style={{
+              opacity: 0.7,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: heightPixel(100),
+            }}>
+            <NoResults width={widthPixel(340)} height={widthPixel(340)} />
+            <Text
+              style={{
+                fontSize: fonts.size.small,
+                fontFamily: fonts.familyType.bold,
+              }}>
+              <Text style={{ color: colors.darkGray }}>
+                Nenhum resultado para:{' '}
+              </Text>
+
+              <Text style={{ color: colors.redCrayola }}>"{search}"</Text>
+            </Text>
+          </View>
         )}
       </Modalize>
     </Container>

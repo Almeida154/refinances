@@ -3,25 +3,25 @@ import hexToRGB from '../../helpers/hexToRgba';
 import { heightPixel, widthPixel } from '../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../styles';
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   flex-direction: row;
   background-color: ${colors.white};
-  height: ${`${heightPixel(200)}px`};
+  height: ${`${heightPixel(180)}px`};
   margin-bottom: ${`${heightPixel(20)}px`};
   padding: 0 ${`${metrics.default.boundaries}px`};
   align-items: center;
 `;
 
 export const Icon = styled.View`
-  width: ${`${widthPixel(150)}px`};
-  height: ${`${widthPixel(150)}px`};
-  border-radius: ${`${widthPixel(150 / 2)}px`}; ;
+  width: ${`${widthPixel(130)}px`};
+  height: ${`${widthPixel(130)}px`};
+  border-radius: ${`${widthPixel(130 / 2)}px`}; ;
 `;
 
 export const Image = styled.Image`
   width: 100%;
   height: 100%;
-  border-radius: ${`${widthPixel(150 / 2)}px`};
+  border-radius: ${`${widthPixel(130 / 2)}px`};
 `;
 
 export const Description = styled.Text`
