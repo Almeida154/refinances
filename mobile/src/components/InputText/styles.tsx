@@ -4,6 +4,7 @@ import { colors, fonts, metrics } from '../../styles';
 
 export const Container = styled.TouchableHighlight`
   width: 100%;
+  min-height: 68px;
   background-color: ${colors.white};
   border-radius: ${`${metrics.inputText.radius}px`};
   padding: ${`${heightPixel(20)}px`} ${`${widthPixel(48)}px`};

@@ -204,19 +204,14 @@ export default {
   ],
   DEFAULT_ICONS_CATEGORYACCOUNT: [
     {
-      description: 'Cruzeiro do Sul',
-      accent: '#ececec',
-      icon: require('../assets/images/banks/Cruzeiro-do-Sul.png'),
-    },
-    {
       description: 'ABC Brasil',
-      accent: '#ececec',
+      accent: '#000',
       icon: require('../assets/images/banks/ABC-Brasil.png'),
     },
 
     {
       description: 'Acesso Bank',
-      accent: '#00bf66',
+      accent: '#dadada',
       icon: require('../assets/images/banks/Acesso-Bank.png'),
     },
 
@@ -246,7 +241,7 @@ export default {
 
     {
       description: 'Ame Digital',
-      accent: '#ececec',
+      accent: '#dadada',
       icon: require('../assets/images/banks/Ame-Digital.png'),
     },
 
@@ -270,7 +265,7 @@ export default {
 
     {
       description: 'Banco da Amazônia',
-      accent: '#052a15',
+      accent: '#ececec',
       icon: require('../assets/images/banks/Banco-da-Amazônia.png'),
     },
 
@@ -294,7 +289,7 @@ export default {
 
     {
       description: 'Banco Original',
-      accent: '#ececec',
+      accent: '#0b4423',
       icon: require('../assets/images/banks/Banco-Original.png'),
     },
 
@@ -312,7 +307,7 @@ export default {
 
     {
       description: 'Banco Votorantim',
-      accent: '#034c2e',
+      accent: '#15225c',
       icon: require('../assets/images/banks/Banco-Votorantim.png'),
     },
 
@@ -330,7 +325,7 @@ export default {
 
     {
       description: 'Banpara',
-      accent: '#ececec',
+      accent: '#db213d',
       icon: require('../assets/images/banks/Banpara.png'),
     },
 
@@ -372,7 +367,7 @@ export default {
 
     {
       description: 'Bradesco',
-      accent: '#ececec',
+      accent: '#db213d',
       icon: require('../assets/images/banks/Bradesco.png'),
     },
 
@@ -426,13 +421,13 @@ export default {
 
     {
       description: 'Cetelem',
-      accent: '#ececec',
+      accent: '#0b4b1b',
       icon: require('../assets/images/banks/Cetelem.png'),
     },
 
     {
       description: 'Citibank',
-      accent: '#003365',
+      accent: '#ececec',
       icon: require('../assets/images/banks/Citibank.png'),
     },
 
@@ -443,14 +438,20 @@ export default {
     },
 
     {
+      description: 'Cruzeiro do Sul',
+      accent: '#171669',
+      icon: require('../assets/images/banks/Cruzeiro-do-Sul.png'),
+    },
+
+    {
       description: 'Daycoval',
-      accent: '#ececec',
+      accent: '#0c0341',
       icon: require('../assets/images/banks/Daycoval.png'),
     },
 
     {
       description: 'Desjardins Bank',
-      accent: '#ececec',
+      accent: '#0b4b1b',
       icon: require('../assets/images/banks/Desjardins-Bank.png'),
     },
 
@@ -474,25 +475,25 @@ export default {
 
     {
       description: 'Easynvest',
-      accent: '#d9d9b8',
+      accent: '#4e0455',
       icon: require('../assets/images/banks/Easynvest.png'),
     },
 
     {
       description: 'EbanxGo',
-      accent: '#171b21',
+      accent: '#ececec',
       icon: require('../assets/images/banks/EbanxGo.png'),
     },
 
     {
       description: 'Elliot',
-      accent: '#ececec',
+      accent: '#c49b2c',
       icon: require('../assets/images/banks/Elliot.png'),
     },
 
     {
       description: 'Genial Investimentos',
-      accent: '#ececec',
+      accent: '#000b3d',
       icon: require('../assets/images/banks/Genial-Investimentos.png'),
     },
 
@@ -522,7 +523,7 @@ export default {
 
     {
       description: 'IQ Option',
-      accent: '#003365',
+      accent: '#ececec',
       icon: require('../assets/images/banks/IQ-Option.png'),
     },
 
@@ -647,7 +648,7 @@ export default {
 
     {
       description: 'Órama',
-      accent: '#01571d',
+      accent: '#ececec',
       icon: require('../assets/images/banks/Órama.png'),
     },
 
@@ -689,7 +690,7 @@ export default {
 
     {
       description: 'Porto Seguro',
-      accent: '#ececec',
+      accent: '#0b1277',
       icon: require('../assets/images/banks/Porto-Seguro.png'),
     },
     {
@@ -760,7 +761,7 @@ export default {
 
     {
       description: 'Sumup',
-      accent: '#ececec',
+      accent: '#000',
       icon: require('../assets/images/banks/Sumup.png'),
     },
 
@@ -789,7 +790,7 @@ export default {
 
     {
       description: 'Ticket',
-      accent: '#ececec',
+      accent: '#5f0303',
       icon: require('../assets/images/banks/Ticket.png'),
     },
 
@@ -867,13 +868,13 @@ export default {
 
     {
       description: 'Xdex',
-      accent: '#ececec',
+      accent: '#02131d',
       icon: require('../assets/images/banks/Xdex.png'),
     },
 
     {
       description: 'Xp Investimentos',
-      accent: '#02131d',
+      accent: '#ececec',
       icon: require('../assets/images/banks/Xp-Investimentos.png'),
     },
 

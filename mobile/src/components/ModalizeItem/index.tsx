@@ -9,11 +9,16 @@ interface IProps extends TouchableOpacityProps {
   icon?: any;
 }
 
-const ModalizeItem: React.FC<IProps> = ({ description, accent, icon }) => {
+const ModalizeItem: React.FC<IProps> = ({
+  description,
+  accent,
+  icon,
+  ...rest
+}) => {
   return (
-    <Container>
+    <Container activeOpacity={1} {...rest}>
       <Icon>
-        <Image style={{ borderWidth: 4, borderColor: accent }} source={icon} />
+        <Image style={{ borderWidth: 3, borderColor: accent }} source={icon} />
       </Icon>
       <Description>{description}</Description>
     </Container>
