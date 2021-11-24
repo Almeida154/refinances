@@ -279,6 +279,22 @@ class ParcelaController {
         return response.send({ message: parcelas });
     }
 
+    async ChangeStatus(request: Request, response: Response, next: NextFunction) {
+        const parcelaRepository = getRepository(Parcela);  
+
+        const parcela = await parcelaRepository.findOne({where: {id: request.params.id}})
+
+        if(!parcela) {
+            return response.send({error: "Não existe uma parcela com esse id"})
+        }
+
+        parcela.statusParcela = parcela.statusParcela ? false : true
+
+        await parcelaRepository.update(parcela.id, parcela)
+
+        return response.send({message: parcela})
+    }
+
     async EditByEntry(request: Request, response: Response, next: NextFunction) {
         const parcelaRepository = getRepository(Parcela);  
         const contaRepository = getRepository(Conta);

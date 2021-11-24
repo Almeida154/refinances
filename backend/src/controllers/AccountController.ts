@@ -124,7 +124,8 @@ class ContaController {
         .getMany();
 
         contasRecebidas.map((conta, index) => {
-            conta.parcelasConta.map(item => {                
+            conta.parcelasConta.map(item => {
+                if(item.statusParcela)                
                 contasRecebidas[index].saldoConta += item.lancamentoParcela.tipoLancamento == 'despesa' ? -item.valorParcela : item.valorParcela
             })
 

@@ -90,6 +90,7 @@ Routes.post(
   "/installment/groupbydate/:iduser",
   InstallmentController.GroupByDate
 );
+Routes.put("/installment/changestatus/:id", InstallmentController.ChangeStatus);
 Routes.delete("/installment/remove/:id", InstallmentController.remove);
 Routes.delete("/installment/remove", InstallmentController.removeAll);
 
