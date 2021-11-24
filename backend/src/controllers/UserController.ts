@@ -11,6 +11,15 @@ import { Category } from "../entities/Category";
 import { Conta } from "../entities/Conta";
 import { Parcela } from "../entities/Parcela";
 
+function addMonths(date: Date, months: number) {    
+    var d = date.getDate();
+    date.setMonth(date.getMonth() + +months);
+    if (date.getDate() != d) {
+        date.setDate(0);
+    }
+    return date;
+}
+
 class UserController {
   async index(request: Request, response: Response, next: NextFunction) {
     return response.send({ userID: request.userId });
@@ -118,30 +127,33 @@ class UserController {
       );
 
       // Parcela
-      item.parcelasLancamento.map(async (parcela) => {
-        contaPrincipal.saldoConta +=
-          newLancamento.tipoLancamento == "despesa"
-            ? -parcela.valorParcela
-            : parcela.valorParcela;
 
-        await contaRepository.update(contaPrincipal.id, {
-          saldoConta: contaPrincipal.saldoConta,
-        });
-        let updateConta = await contaRepository.findOne({
-          where: { id: contaPrincipal.id },
-        });
-
+        item.parcelasLancamento
         const newParcela = parcelaRepository.create({
-          contaParcela: updateConta,
+          contaParcela: contaPrincipal,
           lancamentoParcela: newLancamento,
           userParcela: user,
-          statusParcela: true,
-          valorParcela: parcela.valorParcela,
-          dataParcela: parcela.dataParcela,
+          statusParcela: new Date(item.parcelasLancamento[0].dataParcela) > new Date() ? false : true,
+          valorParcela: item.parcelasLancamento[0].valorParcela,
+          dataParcela: item.parcelasLancamento[0].dataParcela,
         });
 
         await parcelaRepository.save(newParcela);
-      });
+        
+        const updateDate = new Date(newParcela.dataParcela)
+        let parcela: any
+        for(var i = 1;i < 24;i++) {
+            parcela = parcelaRepository.create(newParcela);
+
+            parcela.dataParcela = updateDate
+
+            parcela.statusParcela = false
+
+            await parcelaRepository.save(parcela);    
+
+            addMonths(updateDate, 1)
+        }
+
     });
 
     return response.send({ message: entries });

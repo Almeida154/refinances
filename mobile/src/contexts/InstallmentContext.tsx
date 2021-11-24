@@ -68,8 +68,7 @@ export const ParcelaProvider: React.FC = ({ children }) => {
                     return response.data.error
                 };
                 
-                const newParcela = response.data.message                
-                console.log("response.data.message | parcelasy", response.data.message)                
+                const newParcela = response.data.message                                
 
                 if(readParcelas) {
                     const [dayRead, monthRead, yearRead] = new Date(readParcelas[0][0].dataParcela).toLocaleDateString().split('/')

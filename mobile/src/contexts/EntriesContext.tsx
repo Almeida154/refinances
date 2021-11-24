@@ -117,11 +117,10 @@ export const LancamentoProvider: React.FC = ({ children }) => {
         lancamento.parcelasLancamento[index].lancamentoParcela =
           response.data.message.id;
       });
+      
+      const responseParcela = await handleAdicionarParcela(lancamento.parcelasLancamento);
 
-      console.log('Parcelas handlelizadas', lancamento.parcelasLancamento);
-      await handleAdicionarParcela(lancamento.parcelasLancamento);
-
-      return '';
+      return responseParcela
     } catch (error) {
       console.log('Deu um erro no handleAdicionarLancamento: ' + error);
     }

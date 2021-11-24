@@ -6,6 +6,16 @@ import { Conta } from "../entities/Conta";
 import { Lancamento } from "../entities/Lancamento";
 import { User } from "../entities/User";
 
+
+function addMonths(date: Date, months: number) {    
+    var d = date.getDate();
+    date.setMonth(date.getMonth() + +months);
+    if (date.getDate() != d) {
+        date.setDate(0);
+    }
+    return date;
+}
+
 class ParcelaController {       
 
     async all(request: Request, response: Response, next: NextFunction) {        
@@ -68,10 +78,28 @@ class ParcelaController {
         newParcela.userParcela = contaExists.userConta;
         newParcela.contaParcela = contaExists
 
-        const parcela = parcelaRepository.create(newParcela);
-        await parcelaRepository.save(parcela);
+        if(lancamentoExists.parcelaBaseada != -1) {
+            const updateDate = new Date(newParcela.dataParcela)
+            let parcela
+            for(var i = 0;i < 24;i++) {
+                let parcela: any = parcelaRepository.create(newParcela);
 
-        return response.send({ message: parcela });
+                parcela.dataParcela = updateDate
+
+                parcela.statusParcela = updateDate > new Date() ? false : true
+
+                await parcelaRepository.save(parcela);    
+
+                addMonths(updateDate, 1)
+            }
+
+            return response.send({ message: parcela });
+        } else {
+            const parcela = parcelaRepository.create(newParcela);
+            await parcelaRepository.save(parcela);
+
+            return response.send({ message: parcela });
+        }
     }
     
     async GroupByDate(request: Request, response: Response, next: NextFunction) {
@@ -96,7 +124,7 @@ class ParcelaController {
             .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
             .leftJoin("parcela.userParcela", "user")
             .leftJoinAndSelect("lancamento.categoryLancamento", "category")
-            .where("(parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth OR lancamento.parcelaBaseada != -1) AND user.id = :id", {firstDayOfMonth, lastDayOfMonth, id: user.id})            
+            .where("parcela.dataParcela BETWEEN :firstDayOfMonth AND :lastDayOfMonth AND user.id = :id", {firstDayOfMonth, lastDayOfMonth, id: user.id})            
             .getMany()       
        
         const dataLancamentos: any = await lancamentoRepository.find({where: {userLancamento: {id: user.id}}, join: {
