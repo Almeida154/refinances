@@ -204,6 +204,11 @@ export default {
   ],
   DEFAULT_ICONS_CATEGORYACCOUNT: [
     {
+      description: 'Cruzeiro do Sul',
+      accent: '#ececec',
+      icon: require('../assets/images/banks/Cruzeiro-do-Sul.png'),
+    },
+    {
       description: 'ABC Brasil',
       accent: '#ececec',
       icon: require('../assets/images/banks/ABC-Brasil.png'),
@@ -435,12 +440,6 @@ export default {
       description: 'Clear Investimentos',
       accent: '#ececec',
       icon: require('../assets/images/banks/Clear-Investimentos.png'),
-    },
-
-    {
-      description: 'Cruzeiro do Sul',
-      accent: '#ececec',
-      icon: require('../assets/images/banks/Cruzeiro-do-Sul.png'),
     },
 
     {
@@ -686,8 +685,6 @@ export default {
       description: 'PicPay',
       accent: '#489e39',
       icon: require('../assets/images/banks/PicPay.png'),
-
-
     },
 
     {

@@ -2,16 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // @ts-ignore
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
-AndroidKeyboardAdjust.setAdjustPan();
 
-import {
-  BackHandler,
-  Image,
-  StatusBar,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { BackHandler, Keyboard, Text, View } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -34,32 +26,51 @@ import Modalize from '../../../../components/Modalize';
 import { Modalize as Modal } from 'react-native-modalize';
 import global from '../../../../global';
 import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
+import ModalizeItem from '../../../../components/ModalizeItem';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'InteractWithAccount'>;
   route: RouteProp<RootStackParamAuth, 'InteractWithAccount'>;
 };
 
+interface InstituitionProps {
+  description?: string;
+  accent?: string;
+  icon?: any;
+}
+
 const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
   const [search, setSearch] = useState('');
+  const [instituitions, setInstituitions] = useState<InstituitionProps[]>([{}]);
 
   const { user, updateSetupUserProps, setupUser } = UseAuth();
 
   const modalizeRef = useRef<Modal>(null);
 
   useEffect(() => {
+    AndroidKeyboardAdjust.setAdjustPan();
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>
       BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
+
+  useEffect(() => {
+    // Colocando em ordem alfabética
+    if (search == '') {
+      const sortedVet = global.DEFAULT_ICONS_CATEGORYACCOUNT.sort((a, b) => {
+        if (a.description < b.description) return -1;
+        if (a.description > b.description) return 1;
+        return 0;
+      });
+      setInstituitions(sortedVet);
+    }
+  }, [search]);
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Account'));
     AndroidKeyboardAdjust.setAdjustResize();
     return true;
   };
-
-  // route.params.accountType
 
   async function interact() {
     console.log('integariu');
@@ -79,7 +90,10 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
             label="Instituição"
             placeholder="Entidade da conta"
             editable={false}
-            onPress={() => openModalize()}
+            onPress={() => {
+              Keyboard.dismiss();
+              openModalize();
+            }}
           />
         )}
         <InputText label="Descrição" placeholder="Itaú Personnalite" />
@@ -101,41 +115,29 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
           metrics.screen.height / 1.4 - metrics.default.statusBarHeight * 2
         }
         headerHasFullBoundaries
-        searchEvent={(txt: string) => setSearch(txt)}
+        searchEvent={(txt: string) => {
+          setSearch(txt);
+
+          var filtered = global.DEFAULT_ICONS_CATEGORYACCOUNT.filter(
+            intituition =>
+              intituition.description?.substring(0, txt.length).toLowerCase() ==
+              txt.toLowerCase(),
+          );
+          setInstituitions(filtered);
+        }}
         searchValue={search}
         onClearSearch={() => setSearch('')}>
-        {global.DEFAULT_ICONS_CATEGORYACCOUNT.map((instituition, index) => (
-          <View
-            key={index}
-            style={{
-              flexDirection: 'row',
-              backgroundColor: 'white',
-              height: heightPixel(200),
-              marginBottom: 10,
-              alignItems: 'center',
-              paddingHorizontal: metrics.default.boundaries,
-            }}>
-            <View
-              style={{
-                backgroundColor: 'tomato',
-                height: widthPixel(150),
-                width: widthPixel(150),
-                borderRadius: widthPixel(150 / 2),
-              }}>
-              <Image
-                source={instituition.icon}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: widthPixel(150 / 2),
-                  borderWidth: 4,
-                  borderColor: instituition.accent,
-                }}
-              />
-            </View>
-            <Text style={{ marginLeft: 10 }}>{instituition.description}</Text>
-          </View>
-        ))}
+        {instituitions.length > 0 ? (
+          instituitions.map((instituition, index) => (
+            <ModalizeItem
+              accent={instituition.accent}
+              description={instituition.description}
+              icon={instituition.icon}
+            />
+          ))
+        ) : (
+          <Text>Nao encontrad ookkk</Text>
+        )}
       </Modalize>
     </Container>
   );
