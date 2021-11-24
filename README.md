@@ -24,7 +24,7 @@
   <img alt="Server" src="https://img.shields.io/static/v1?label=server&message=NodeJS&color=5C45F9">
 </div>
 
-<h3 align="center">💰 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</h3>
+<h3 align="center">💰  Um sistema de organização financeira pode ajudar pessoas comuns e sem entendimento de finanças a administrar melhor seu dinheiro. </h3>
 
 <p align="center">
   <a href="#-por-quê">Por quê?</a> •
@@ -45,9 +45,9 @@
 <br><br>
 
 <h2>🧐 Por quê?</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+<p>Um planejamento financeiro estruturado auxilia a ter noção exata das despesas e dos ganhos, tornando de fácil entendimento a realidade na qual as finanças estão.</p>
+<p>Uma gestão financeira simples é suficiente, já que garante ao usuário um panorama necessário que permite manter as contas em ordem.</p>
+<p>É otimo também para poupar dinheiro, tanto para eventuais imprevistos quanto para um determinado objetivo, somado às facilidades que o aplicativo traz para registrar e exibir tais gastos e ganhos.</p>
 
 <br>
 
