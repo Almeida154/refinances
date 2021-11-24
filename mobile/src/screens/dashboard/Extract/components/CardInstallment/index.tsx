@@ -65,7 +65,6 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
 
             </SectionValues>
         </ContainerItem>
-
         
     )
 }

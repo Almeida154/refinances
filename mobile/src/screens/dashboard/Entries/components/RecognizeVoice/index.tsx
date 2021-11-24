@@ -1,9 +1,6 @@
 import React, { Component, useEffect } from 'react';
 import {  
   BackHandler,
-  ToastAndroid,
-  TouchableHighlight,
-  View,
 } from 'react-native';
 
 import {StackActions} from '@react-navigation/native'
@@ -11,6 +8,8 @@ import {StackActions} from '@react-navigation/native'
 import {UseCategories, Categoria} from '../../../../../contexts/CategoriesContext'
 import {UseContas, Conta} from '../../../../../contexts/AccountContext'
 import {toDate} from '../../../../../helpers/manipularDatas'
+
+import ButtonAdd from '../../../../../components/Button'
 
 import {
     Action,
@@ -22,8 +21,11 @@ import {
     Header,
     ButtonRecord,
     ContainerResults,
-    ContainerItem
+    ContainerItem,
+    Bold
 } from './styles'
+
+import HeaderMain from '../../../components/Header';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
 
@@ -450,28 +452,29 @@ class VoiceTest extends Component<Props, State> {
     }
   }
 
- 
-
   render() {
     return (
       <Container>
-       
+
        <Header>
           <ButtonRecord 
-          style={{backgroundColor: this.state.isRecording ? '#fff' : '#EE5976', borderRadius: 50}}
+          style={{backgroundColor: this.state.isRecording ? '#fff' : '#EE4266', borderRadius: 50}}
           onPress={this.state.isRecording ? this._stopRecognizing : this._startRecognizing}>
             <Icon 
               style={{width: 100, height: 100}} 
               name="keyboard-voice"
-              color={this.state.isRecording ? '#EE5976' : '#fff'}
+              color={this.state.isRecording ? '#EE4276' : '#fff'}
               size={100}
             />
           </ButtonRecord>          
        </Header>
 
-
         <Instructions style={{textAlign: 'justify'}}>
-          Clique no botão e adicione por comandos de voz: Ex: “Eu comprei um sapato por 5 reais”, “Eu comprei arroz por 15 reais da categoria mercado no dia 10 do 10 de 2021”
+          Clique no botão acima e insira por 
+          <Bold> comandos de voz </Bold>
+          {"\n\n"}
+          <Bold>Ex: </Bold>
+          “Eu comprei arroz por 15 reais da categoria mercado no dia 10 do 10 de 2021”
         </Instructions>
         
         <ContainerResults>
@@ -484,8 +487,7 @@ class VoiceTest extends Component<Props, State> {
               );
             })}
           </Stat>
-        </ContainerResults>        
-                 
+        </ContainerResults>
 
         <ContainerItem>
           {
@@ -497,11 +499,13 @@ class VoiceTest extends Component<Props, State> {
           }
         </ContainerItem>
 
-        <FAB 
-          icon="check"
+        <ButtonAdd
+          title="Adicionar"
           onPress={() => this.handleItemCapture(this.state.itemNovo)}
           style={{backgroundColor: '#ee4266'}}
+          color="#fff"
         />
+
       </Container>
     );
   }
