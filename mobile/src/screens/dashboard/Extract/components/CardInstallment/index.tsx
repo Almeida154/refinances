@@ -31,6 +31,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
     const {modalizeRefDetailEntry, setSelectedItemExtract} = UseDadosTemp()
     const textParcela = item.totalParcelas != 1 && item.totalParcelas ? ' ' + item.indexOfLancamento + '/' + item.totalParcelas : ''
     const [checked, setChecked] = React.useState(false);
+    const [essencial, setEssencial] = React.useState(item.lancamentoParcela.essencial);
     const [valor, setValor] = React.useState(((item.valorParcela).toFixed(2)).replace('.',','));
     
     function openModalize(){
@@ -39,7 +40,8 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
 
     }
     return (
-        <ContainerItem onPress={openModalize}>
+        <ContainerItem onPress={openModalize}
+            style={essencial ? {} : {marginBottom: 20}}>
             <SectionLancamento>   
                 <SectionIcon style={{borderColor: typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento ? 'yellow' : item.lancamentoParcela.categoryLancamento.corCategoria   }}>
                     <Icon size={24} color={'gray'} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
@@ -53,14 +55,18 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
             <SectionValues>
                 <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{valor}</LabelValue>                                                    
                 
-                <SectionCheck>
-                    <Checkbox 
+                <SectionCheck
+                    style={essencial ? {} : {display: 'none'}}>
+                    
+                    <Checkbox
                         status={checked ? 'checked' : 'unchecked'}
                         onPress={() => {setChecked(!checked)}}
                         style={{height: 2}}
                         color={item.lancamentoParcela.tipoLancamento == 'despesa' ? colors.paradisePink : colors.slimyGreen}
                     />
-                    <EditLabel>{item.lancamentoParcela.tipoLancamento == 'despesa' ? 'pago' : 'recebido'}</EditLabel>  
+                    <EditLabel>{item.lancamentoParcela.tipoLancamento == 'despesa' ? 'pago' : 'recebido'}</EditLabel>
+
+                    <EditLabel></EditLabel>  
                 </SectionCheck>
 
             </SectionValues>

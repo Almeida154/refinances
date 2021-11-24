@@ -247,8 +247,8 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           <Label>Valor</Label>
 
           <CurrencyInput 
-            value={valorMeta} 
-            onChangeValue={txt => setValorMeta(txt)}
+            value={parseFloat(valorMeta)} 
+            onChangeValue={txt => setValorMeta(txt?.toString())}
             style={{
               flex: 1,
               padding: 0,
@@ -275,8 +275,8 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           <Label>Valor já investido</Label>
 
           <CurrencyInput 
-            value={investidoMeta} 
-            onChangeValue={txt => setInvestido(txt)}
+            value={parseFloat(investidoMeta)} 
+            onChangeValue={txt => setInvestido(txt?.toString())}
             style={{
               flex: 1,
               padding: 0,
