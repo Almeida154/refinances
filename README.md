@@ -24,7 +24,7 @@
   <img alt="Server" src="https://img.shields.io/static/v1?label=server&message=NodeJS&color=5C45F9">
 </div>
 
-<h3 align="center">💰 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</h3>
+<h3 align="center">💰  Um sistema de organização financeira pode ajudar pessoas comuns e sem entendimento de finanças a administrar melhor seu dinheiro. </h3>
 
 <p align="center">
   <a href="#-por-quê">Por quê?</a> •
