@@ -3,6 +3,8 @@ package com.mobilerefinances;
 //import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 //import androidx.multidex.MultiDexApplication; // <-- ADD THIS IMPORT
 
+import net.zubricky.AndroidKeyboardAdjust.AndroidKeyboardAdjustPackage;
+
 import com.facebook.react.bridge.JSIModulePackage; // <- add
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
 
@@ -36,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           //packages.add(new MPAndroidChartPackage());
+          //packages.add(new AndroidKeyboardAdjustPackage());
           return packages;
         }
 

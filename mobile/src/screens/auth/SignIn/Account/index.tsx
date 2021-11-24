@@ -102,7 +102,7 @@ const Account = ({ navigation }: PropsNavigation) => {
       <Content>
         {!isLoading ? (
           <>
-            {setupUser.account.map((acc, index) => (
+            {setupUser.account.map((acc: Conta, index: number) => (
               <View style={{ elevation: 0 }} key={index}>
                 <AccountItem
                   account={acc}
@@ -147,7 +147,6 @@ const Account = ({ navigation }: PropsNavigation) => {
           onChangeText={() => {
             if (walletAmount == null) setWalletAmount(0.0);
           }}
-          
         />
         <Button
           style={{ backgroundColor: colors.platinum }}

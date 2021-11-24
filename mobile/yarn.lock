@@ -7404,6 +7404,11 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
+"react-native-android-keyboard-adjust@^1.2.0":
+  "integrity" "sha512-Q280bmf0zXnzLbHU9DcVoKZSKihd0s3hltz2kIUCJ5Q9EhLVR/pjgZ3Bwd1VgrHxQPnduHXdCp0432msklRMow=="
+  "resolved" "https://registry.npmjs.org/react-native-android-keyboard-adjust/-/react-native-android-keyboard-adjust-1.2.0.tgz"
+  "version" "1.2.0"
+
 "react-native-charts-wrapper@^0.5.7":
   "integrity" "sha512-d1lOSN47YRUqFGOht4uBP+P7N7OvtRrhgwTOdTNlXC+ZmoveBIIE+bl65uwGkS08kUUBudRBugsCRkf5MB/p2w=="
   "resolved" "https://registry.npmjs.org/react-native-charts-wrapper/-/react-native-charts-wrapper-0.5.7.tgz"

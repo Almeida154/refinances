@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+// @ts-ignore
+import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
+AndroidKeyboardAdjust.setAdjustPan();
+
 import {
   BackHandler,
   Image,
@@ -24,9 +28,6 @@ import { colors, metrics } from '../../../../styles';
 // Components
 import ShortHeader from '../../../../components/ShortHeader';
 import BottomNavigation from '../../components/BottomNavigation';
-import Button from '../../../../components/Button';
-import AccountItem from '../../../../components/AccountItem';
-import AccountsPlaceholder from '../../components/AccountsPlaceholder';
 import InputText from '../../../../components/InputText';
 import Modalize from '../../../../components/Modalize';
 
@@ -40,7 +41,7 @@ export type PropsNavigation = {
 };
 
 const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
-  const [walletAmount, setWalletAmount] = useState<number | null>(0);
+  const [search, setSearch] = useState('');
 
   const { user, updateSetupUserProps, setupUser } = UseAuth();
 
@@ -54,6 +55,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Account'));
+    AndroidKeyboardAdjust.setAdjustResize();
     return true;
   };
 
@@ -95,18 +97,13 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
         subtitle="Escolha uma instituição financeira"
         backgroundColor={colors.cultured}
         height={metrics.screen.height - metrics.default.statusBarHeight * 2}
-        snapPoint={500}>
-        <View style={{ padding: metrics.default.boundaries }}>
-          <TextInput
-            style={{
-              backgroundColor: 'white',
-              alignSelf: 'center',
-              width: '100%',
-              height: heightPixel(100),
-              borderRadius: widthPixel(20),
-            }}
-          />
-        </View>
+        snapPoint={
+          metrics.screen.height / 1.4 - metrics.default.statusBarHeight * 2
+        }
+        headerHasFullBoundaries
+        searchEvent={(txt: string) => setSearch(txt)}
+        searchValue={search}
+        onClearSearch={() => setSearch('')}>
         {global.DEFAULT_ICONS_CATEGORYACCOUNT.map((instituition, index) => (
           <View
             key={index}
