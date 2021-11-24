@@ -26,6 +26,8 @@ export type IconProps = {
   hex?: string;
 };
 
+export type AccountProps = {};
+
 interface IProps extends TextInputProps {
   label?: string;
   lastOne?: boolean;
@@ -35,6 +37,7 @@ interface IProps extends TextInputProps {
   showErrorMessage?: boolean;
   showClearIcon?: boolean;
   icon?: IconProps;
+  accountInstitution?: AccountProps;
   inputColor?: string;
   isCurrencyInput?: boolean;
   onClear?: () => void;

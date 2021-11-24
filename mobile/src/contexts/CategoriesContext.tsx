@@ -9,7 +9,7 @@ import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario';
 export type Categoria = {
   id: number;
   nomeCategoria: string;
-  tetoDeGastos: number;
+  tetoDeGastos: number | null;
   tipoCategoria: string;
   userCategoria: number;
   iconeCategoria: string;
@@ -29,10 +29,7 @@ interface CategoriaContextType {
   ): Promise<void>;
   handleGetCategoryById(id: number): Promise<void>;
   handleAtualizarCategoria(categoria: Categoria, id: number): Promise<void>;
-  handleCountByEntry(
-    idUser: number,
-    tipoCategoria: string,
-  ): Promise<void>;
+  handleCountByEntry(idUser: number, tipoCategoria: string): Promise<void>;
 }
 
 const CategoriaContext = createContext<CategoriaContextType>(
@@ -178,11 +175,11 @@ export const CategoriasProvider: React.FC = ({ children }) => {
     try {
       const response = await api.post(`/category/countbyentry/${idUser}`, {
         tipoCategoria,
-      });              
+      });
       //console.debug('handleReadByUserCategorias | ', response.data.categories);
-      setCategorias(response.data.categories);  
-      
-      console.log(response.data.categories)
+      setCategorias(response.data.categories);
+
+      console.log(response.data.categories);
     } catch (error) {
       console.debug('CategoriesContext | handleCountByEntry: ' + error);
     }
@@ -198,7 +195,7 @@ export const CategoriasProvider: React.FC = ({ children }) => {
         setupCategorias,
         handleAtualizarCategoria,
         handleGetCategoryById,
-        handleCountByEntry
+        handleCountByEntry,
       }}>
       {children}
     </CategoriaContext.Provider>
