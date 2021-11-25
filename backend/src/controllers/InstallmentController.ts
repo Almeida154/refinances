@@ -84,9 +84,7 @@ class ParcelaController {
             for(var i = 0;i < 24;i++) {
                 let parcela: any = parcelaRepository.create(newParcela);
 
-                parcela.dataParcela = updateDate
-
-                parcela.statusParcela = updateDate > new Date() ? false : true
+                parcela.dataParcela = updateDate                
 
                 await parcelaRepository.save(parcela);    
 
@@ -295,29 +293,61 @@ class ParcelaController {
         return response.send({message: parcela})
     }
 
-    async EditByEntry(request: Request, response: Response, next: NextFunction) {
+    async EditOne(request: Request, response: Response, next: NextFunction) {
         const parcelaRepository = getRepository(Parcela);  
         const contaRepository = getRepository(Conta);
         const lancamentoRepository = getRepository(Lancamento);
-        const userRepository = getRepository(User);
 
-        const parcelasLancamento: Parcela[] = request.body.parcelasLancamento
+        const {dataParcela, statusParcela, contaParcela, lancamentoParcela, valorParcela} = request.body
 
-        const userExists = await userRepository.findOne({where: {id: parcelasLancamento[0].userParcela}})
-        const lancamentoExists = await lancamentoRepository.findOne({where: {id: parcelasLancamento[0].lancamentoParcela}})
-        const contaExists = await contaRepository.findOne({where: {id: parcelasLancamento[0].contaParcela}})
+        console.log(statusParcela)
+        const id = parseInt(request.params.id)
+
+        if(!dataParcela) {
+            return response.send({error: "Data da parcela não especificado"})
+        }
+        if(statusParcela == undefined) {
+            return response.send({error: "Status da parcela não especificado"})
+        }
+        if(!contaParcela) {
+            return response.send({error: "Conta da parcela não especificado"})
+        }
+        if(!lancamentoParcela) {
+            return response.send({error: "Lançamento da parcela não especificado"})
+        }
+        if(!valorParcela) {
+            return response.send({error: "Valor da parcela não especificado"})
+        }
         
-        if(!userExists) {
-            return response.send({error: "O user com o id especificado no atributo userParcela da primeira parcela não foi encontrado"})
-        }  
+        const lancamentoExists = await lancamentoRepository.findOne({where: {id: lancamentoParcela}})
+        const contaExists = await contaRepository.findOne({where: {id: contaParcela.id}, join: {
+            alias: "conta",
+            leftJoinAndSelect: {
+                user: "conta.userConta"
+            }
+        }})            
         
         if(!lancamentoExists) {
             return response.send({error: "O lançamento com o id especificado no atributo lancamentoParcela da primeira parcela não foi encontrado"})
         }   
 
-        await parcelaRepository.delete({lancamentoParcela: lancamentoExists})
-
+        if(!contaExists) {
+            return response.send({error: "A Conta não foi encontrada"})
+        }           
        
+        const updateParcela: Parcela = {
+            id,
+            dataParcela: new Date(dataParcela),
+            contaParcela: contaExists,
+            lancamentoParcela: lancamentoExists,
+            statusParcela: statusParcela,
+            userParcela: contaExists.userConta,
+            valorParcela: valorParcela            
+        }
+
+        await parcelaRepository.update(id, updateParcela)
+
+        return response.send({message: updateParcela})
     }
     
     async remove(request: Request, response: Response, next: NextFunction) {
