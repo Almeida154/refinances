@@ -67,6 +67,9 @@ const Config = () => {
   const [isTouch, setIsTouch] = React.useState(false);
   const onSwitchTouch = () => setIsTouch(!isTouch);
 
+  const [isDark, setIsDark] = React.useState(false);
+  const onSwitchDark = () => setIsDark(!isDark);
+
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
@@ -86,6 +89,11 @@ const Config = () => {
     })();
   });
 
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('Main'))
+    return true;
+  };
+
   return (
     <ScrollView>
       {stateReload ? (
@@ -95,7 +103,7 @@ const Config = () => {
             height: '100%',
             justifyContent: 'center',
           }}>
-          <ActivityIndicator size="large" color="#E8871E" />
+          <ActivityIndicator size="large" color="#EE4266" />
           <Text
             style={{
               color: '#183153',
@@ -113,7 +121,7 @@ const Config = () => {
           <HeaderContainer>
 
             <Header
-              onBackButton={() => {}}
+              onBackButton={backAction}
               title=""
               isShort
             />
@@ -247,7 +255,11 @@ const Config = () => {
                 <MainTitle>Conta</MainTitle>
 
                 {/* Contas */}
-                <ContainerItems>
+                <ContainerItems
+                  onTouchStart={() => {
+                    navigation.dispatch(
+                    StackActions.replace('StackAccount', { screen: 'ManageAccount'})
+                  )}}>
                   <SectionIconLeft>
                     <Entypo
                       name="credit-card"
@@ -283,7 +295,11 @@ const Config = () => {
                 <Separator/>
 
                 {/* CATEGORIAS */}
-                <ContainerItems>
+                <ContainerItems
+                  onTouchStart={() => {
+                    navigation.dispatch(
+                    StackActions.replace('StackAccount', { screen: 'ManageCategory'})
+                  )}}>
                   <SectionIconLeft>
                     <AntDesign
                       name="addfolder"
@@ -318,8 +334,12 @@ const Config = () => {
 
                 <Separator/>
 
-                {/* CATEGORIAS */}
-                <ContainerItems>
+                {/* METAS */}
+                <ContainerItems
+                  onTouchStart={() => {
+                    navigation.dispatch(
+                    StackActions.replace('GoalsStack', { screen: 'GoalsList'})
+                  )}}>
                   <SectionIconLeft>
                     <Ionicons
                       name="medal-outline"
@@ -333,8 +353,7 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item 
-                  onTouchStart={() => {}}>
+                  <Item >
                     <Title>Metas</Title>
                     <Subtitle>Veja suas metas</Subtitle>
                   </Item>
@@ -378,15 +397,14 @@ const Config = () => {
                   </Item>
 
                   <SectionIconRight>
-                    <AntDesign
-                      name="right"
-                      color={colors.silver}
-                      size={25}
+                    <Switch value={isSenha} 
+                      onValueChange={onSwitchSenha}
                       style={{
                         justifyContent: 'center',
                         alignItems: 'center',
-                        flex: 1
-                      }}
+                        flex: 1}}
+                      theme={{}}
+                      color={colors.paradisePink}
                     />
                   </SectionIconRight>
                 </ContainerItems>
@@ -420,6 +438,7 @@ const Config = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         flex: 1}}
+                      theme={{}}
                       color={colors.paradisePink}
                      />
                   </SectionIconRight>
@@ -446,20 +465,19 @@ const Config = () => {
 
                   <Item>
                     <Title>Tema</Title>
-                    <Subtitle>light</Subtitle>
+                    <Subtitle>{isDark ? 'escuro' : 'claro'}</Subtitle>
                   </Item>
 
                   <SectionIconRight>
-                    <AntDesign
-                      name="right"
-                      color={colors.silver}
-                      size={25}
+                    <Switch value={isDark} 
+                      onValueChange={onSwitchDark}
                       style={{
                         justifyContent: 'center',
                         alignItems: 'center',
-                        flex: 1
-                      }}
-                    />
+                        flex: 1}}
+                      theme={{}}
+                      color={colors.paradisePink}
+                     />
                   </SectionIconRight>
                 </ContainerItems>
 
@@ -614,7 +632,8 @@ const Config = () => {
                 <MainTitle>Sair</MainTitle>
 
                 {/* SAIR */}
-                <ContainerItems>
+                <ContainerItems
+                  onTouchStart={handleLogout}>
                   <SectionIconLeft>
                     <MCicons
                       name="logout"
