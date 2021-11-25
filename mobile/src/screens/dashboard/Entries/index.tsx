@@ -49,7 +49,8 @@ const FormLancamento = ({route}: any) => {
     const {navigation} = UseDadosTemp()
     navigation.setOptions({headerShown: false})
     
-    const [valor, setValor] = useState(receiveEntry?.totalParcelas ? String(receiveEntry.totalParcelas.toFixed(2)) : '0')    
+    console.debug("FormLancamento | receiveEntry", receiveEntry)
+    const [valor, setValor] = useState(receiveEntry?.totalParcelas ? String(receiveEntry.totalParcelas.toFixed(2)) : '0')
     
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', backAction);

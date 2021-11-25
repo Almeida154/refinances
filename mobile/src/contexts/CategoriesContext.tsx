@@ -119,7 +119,6 @@ export const CategoriasProvider: React.FC = ({ children }) => {
     idUser: number,
     tipoCategoria: string,
   ) {
-    console.debug('handleReadByUserCategorias | entrou');
     setLoading(true);
     try {
       const response = await api.post(`/category/findbyuser/${idUser}`, {
