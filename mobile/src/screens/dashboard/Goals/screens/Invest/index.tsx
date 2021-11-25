@@ -25,6 +25,8 @@ import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
+import {colors, fonts, metrics} from '../../../../../styles'
+
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
@@ -50,6 +52,8 @@ import {
   Parcela,
   UseParcelas,
 } from '../../../../../contexts/InstallmentContext';
+
+import CurrencyInput from 'react-native-currency-input';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<GoalsStack, 'InvestGoals'>;
@@ -97,7 +101,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       contaParcela: selectedConta,
       dataParcela: new Date(Date.now()),
       lancamentoParcela: goal.lancamentoMeta.id,
-      statusParcela: sttsParcela(),
+      statusParcela: true,
       valorParcela: parseFloat(valorDeposito),
     } as Parcela;
 
@@ -132,9 +136,11 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
   }
   const sttsParcela = () =>{
     if(goal.saldoAtualMeta < goal.saldoFinalMeta){
+      //se nao concluiu continua false
       return false;
     }
     else{
+      //se concluiu manda true
       return true;
     }
   }
@@ -158,21 +164,36 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       <StatusBar backgroundColor={'transparent'} />
       <Header style={{ backgroundColor: '#ee4266' }}>
         <HeaderTop backButton={backAction} title="" />
-
         <AlinhaParaDireita>
-          <View></View>
-          <InputControlValue>
-            <LabelCifrao>R$</LabelCifrao>
-            <TextInputValue
-              keyboardType="numeric"
-              placeholder="00,00"
-              placeholderTextColor="#fff"
-              value={valorDeposito}
-              onChangeText={setValor}
-              
-            />
-          </InputControlValue>
-        </AlinhaParaDireita>
+
+          <LabelCifrao>R$</LabelCifrao> 
+
+          <CurrencyInput
+              value={parseFloat(valorDeposito)}
+              onChangeValue={txt => setValor(txt?.toString())}
+              style={{
+                  alignContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  color: '#F5F2F3',
+                  fontFamily: fonts.familyType.bold,
+                  fontSize: fonts.size.super +20,
+                  opacity: 0.7,
+                  width: '100%',
+                  marginLeft: 10,
+              }}
+              textAlign="right"
+              delimiter="."
+              separator=","
+              precision={2}
+              maxValue={999999}
+              placeholderTextColor={'#F5F2F3'}
+              selectionColor={colors.davysGrey}
+              onChangeText={formattedValue => {
+                  formattedValue == '' ? setValor((0).toString()) : setValor(valorDeposito);
+              }}
+              />
+          </AlinhaParaDireita>
+
       </Header>
 
       <View style={styles.container}>
@@ -180,7 +201,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
           Faltam
           <TextGoals style={{ left: '40%' }}>
             {' '}
-            R$ {(goal.saldoFinalMeta - goal.saldoAtualMeta).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}{' '}
+            {(goal.saldoFinalMeta - goal.saldoAtualMeta).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}{' '}
           </TextGoals>
           para concluir { goal.descMeta }
         </TextProgress>

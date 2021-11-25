@@ -17,6 +17,9 @@ import {  Title, Subtitle,  SubtitleT} from './styles';
 import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
+import CurrencyInput from 'react-native-currency-input';
+import {colors, fonts, metrics} from '../../../../../styles'
+
 
 import HeaderTop from '../../../../../components/Header';
 import {
@@ -28,7 +31,6 @@ import {
 
 } from '../../../Entries/styles';
 
-import fonts from '../../../../../styles/fonts';
 import { RouteProp, StackActions } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
@@ -123,20 +125,32 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
       <StatusBar backgroundColor={'#ee4266'} />
        <Header style={{ backgroundColor: '#ee4266' }}>
             <HeaderTop backButton={backAction} title='Teto de gastos' isShort={true} color={'#fff'}/>
-
-            <AlinhaParaDireita>
-              <View></View>
-              <InputControlValue>
-                <LabelCifrao>R$ </LabelCifrao>
-                <TextInputValue
-                  keyboardType="numeric"
-                  placeholder="00,00"
-                  placeholderTextColor="#fff"
-                  value={tetoGastos}
-                  onChangeText={setTetoGastos}
-                />
-              </InputControlValue>
-            </AlinhaParaDireita>
+          <AlinhaParaDireita>
+            <CurrencyInput
+              value={parseFloat(tetoGastos)}
+              onChangeValue={txt => setTetoGastos(txt?.toString())}
+              style={{
+                  alignContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  color: '#F5F2F3',
+                  fontFamily: fonts.familyType.bold,
+                  fontSize: fonts.size.super +20,
+                  opacity: 0.7,
+                  width: '100%',
+                  marginLeft: 10,
+              }}
+              textAlign="right"
+              delimiter="."
+              separator=","
+              precision={2}
+              maxValue={999999}
+              placeholderTextColor={'#F5F2F3'}
+              selectionColor={colors.davysGrey}
+              onChangeText={formattedValue => {
+                  formattedValue == '' ? setTetoGastos((0).toString()) : setTetoGastos(tetoGastos);
+              }}
+              />
+          </AlinhaParaDireita>
           </Header>
           <Title>{category?.nomeCategoria}</Title>
           <Subtitle>É importante adicionar limites aos seus gastos para se manter sempre na linha! </Subtitle>
