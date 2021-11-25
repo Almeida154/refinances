@@ -2,6 +2,8 @@ import styled from "styled-components/native"
 
 import fonts from "../../../../../../styles/fonts"
 
+import {widthPixel, heightPixel} from "../../../../../../helpers/responsiveness"
+
 export const Category = styled.View`
     position: relative;
     paddingTop: 5px;
@@ -21,19 +23,22 @@ export const SectionDescription = styled.View`
 export const SectionName = styled.View`
     margin-left: 5px;
     width: 80%;
+    justify-content: center;
+    margin-bottom: 5;
 `
 export const SectionText = styled.View`
     flex: 1;
     flex-direction: row;
     alignItems: flex-end;
+    height: ${heightPixel(80)}
 `
 
 export const Progress = styled.View`
 `
 
 export const SectionIcon = styled.View`
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     border-radius: 50px;
     border-width: 4px;
     align-items: center;
@@ -45,15 +50,18 @@ export const CategoryDesc = styled.Text`
     color: #525252;
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
+    bottom: ${heightPixel(35)};
 `
 
-export const CategoryAddTetoGasto = styled.TouchableOpacity`
-    font-size: ${`${fonts.size.medium}px`};
+export const AddLimite = styled.Text`
+    font-size: ${`${fonts.size.small}px`};
     color: #525252;
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
-    text-align: right;
-    right: 0;
+`
+
+export const CategoryAddTetoGasto = styled.TouchableOpacity`
+    opacity: 0.7;
     margin-left: auto;
 `
 

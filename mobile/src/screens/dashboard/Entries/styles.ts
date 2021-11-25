@@ -52,15 +52,19 @@ export const InputControlValue = styled.View`
 `
 
 export const AlinhaParaDireita = styled.View`
-    justify-content: space-between; 
+    justify-content: flex-end; 
     flex-direction: row;
     align-items: flex-end;
     margin-right: 30px;
+    flex: 1;
 `
 
 export const LabelCifrao = styled.Text`
     font-size: 20px;
     color: #fff;
+    top: 0;
+    position: absolute;
+    right: ${heightPixel(250)}px;
     font-family: ${fonts.familyType.semiBold};
 `
 export const TextInputValue = styled.TextInput`

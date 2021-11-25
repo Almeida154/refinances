@@ -69,28 +69,32 @@ const FormLancamento = ({route}: any) => {
             {
                 <Container>
                     <Header style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}>
-                    <HeaderTop backButton={backAction} title=""/>
+
+                    <HeaderTop 
+                        backButton={backAction} 
+                        title={selected == 0? 'Nova despesa' : selected == 1 ? 'Nova receita' : 'Nova transferência'}
+                        color="#fff"
+                        isShort
+                    />
 
                     <AlinhaParaDireita>
-                        
-                        
-                            <LabelCifrao>R$</LabelCifrao> 
-                            <View></View>
 
-                            
-                            
+                            <LabelCifrao>R$</LabelCifrao> 
+
                             <CurrencyInput
                                 value={parseFloat(valor)}
                                 onChangeValue={txt => setValor(txt?.toString())}
                                 style={{
                                     alignContent: 'flex-end',
-                                    alignItems: 'center',
+                                    alignItems: 'flex-end',
                                     color: '#F5F2F3',
                                     fontFamily: fonts.familyType.bold,
                                     fontSize: fonts.size.super +20,
                                     opacity: 0.7,
-                                    width: '100%'
+                                    width: '100%',
+                                    marginLeft: 10,
                                 }}
+                                textAlign="right"
                                 delimiter="."
                                 separator=","
                                 precision={2}
@@ -102,6 +106,7 @@ const FormLancamento = ({route}: any) => {
                                 }}
                                 />
                         </AlinhaParaDireita>
+
                         <SectionButtons>
                             <Buttons onPress={() => setSelected(0)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>despesa</TextButton></Buttons>
                             <Buttons onPress={() => setSelected(1)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>receita</TextButton></Buttons>

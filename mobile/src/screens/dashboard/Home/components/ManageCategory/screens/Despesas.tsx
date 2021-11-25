@@ -43,10 +43,10 @@ const Despesas = ({ navigation }: PropsCategory) => {
   }, [navigation]);
 
   useEffect(() => {
-    
-      (async function () {
-        handleReadByUserCategorias(await retornarIdDoUsuario(), 'todos');
-      })();
+      if(!categorias)
+        (async function () {
+          handleReadByUserCategorias(await retornarIdDoUsuario(), 'todos');
+        })();
   
   }, []);
 

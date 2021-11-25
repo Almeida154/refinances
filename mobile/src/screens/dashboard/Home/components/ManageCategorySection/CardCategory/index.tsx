@@ -15,7 +15,8 @@ import {
   SectionName,
   Progress,
   CategoryAddTetoGasto,
-  SectionText
+  SectionText,
+  AddLimite
 } from './styles';
 
 import { UseDadosTemp } from '../../../../../../contexts/TemporaryDataContext';
@@ -47,19 +48,35 @@ const CardCategory = ({ item }: PropsCardCategory) => {
 
         <SectionName>
 
-          <SectionText>
+          <SectionText
+            style={item.tetoDeGastos == 0 ? {
+              justifyContent: 'center',
+              alignItems: 'center'
+            } 
+              : {}
+                }>
 
             <CategoryDesc>{item.nomeCategoria}</CategoryDesc>
 
-              <CategoryAddTetoGasto 
-                onPress={() => {
-                navigation.navigate('StackAccount', {
-                  screen: 'EditCategory',
-                  params: { categoryId: item.id },
-                });
-              }}> 
+              <CategoryAddTetoGasto
+                onPress={item.tipoCategoria == 'despesa' ?
+                          () => {
+                            navigation.navigate('StackAccount', {
+                              screen: 'EditCategory',
+                              params: { categoryId: item.id },
+                          });}
+                : () => {}
+              }> 
               
-              <CategoryDesc>Editar</CategoryDesc>
+              <AddLimite>
+                {item.tipoCategoria == 'despesa' ?
+                  item.tetoDeGastos != 0 ? 'R$ '+Math.abs(item.valueLancamentos) +
+                  ' de R$ '+ item.tetoDeGastos : 'Novo limite'
+                
+                : 'R$ ' + (Math.abs(item.valueLancamentos)).toFixed(2).replace('.', ',')
+                
+                }
+                </AddLimite>
             </CategoryAddTetoGasto>
           
           </SectionText>
@@ -68,11 +85,13 @@ const CardCategory = ({ item }: PropsCardCategory) => {
             <ProgressBar
               progress={item.tetoDeGastos != 0 ? Math.abs(item.valueLancamentos / item.tetoDeGastos) : 0}
               color={item.corCategoria}
-              style={{
-                height: 7,
-                marginVertical: 8,
-                borderRadius: 10,
-              }}
+              style={
+                item.tetoDeGastos != 0 ? {
+                  height: 7,
+                  marginVertical: 8,
+                  borderRadius: 10,} 
+                  : {display: 'none'}
+                }
             />
           </Progress>
         </SectionName>

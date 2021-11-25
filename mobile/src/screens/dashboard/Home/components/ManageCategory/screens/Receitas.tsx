@@ -43,6 +43,12 @@ const Receitas = ({ navigation }: PropsCategory) => {
   
 
   useEffect(() => {
+    //se nao tiver categorias, recarrega
+    if (!categorias)
+      (async function () {
+        handleReadByUserCategorias(await retornarIdDoUsuario(), 'receita');
+      })();
+
     const aux: Categoria[] = []
         
     categorias?.map(item => {
@@ -65,7 +71,7 @@ const Receitas = ({ navigation }: PropsCategory) => {
         ) : (
           <View style={{ margin: '10%' }}>
             <Subtitle>
-              Adicione teto de gastos às categorias para se manter organizado(a)!
+              Aqui você encontra suas categorias de receita e o valor total delas por mês!
             </Subtitle>
 
             {receitasCategorias &&

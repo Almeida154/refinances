@@ -12,6 +12,7 @@ import { Conta, UseContas } from '../../../../contexts/AccountContext';
 
 import InputText from '../../../../components/InputText';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { fonts } from '../../../../styles';
 
 interface PropsPickerContas {
   conta: Conta | null;
@@ -85,7 +86,7 @@ const PickerContas: React.FC<PropsPickerContas> = ({
             return (
               <Picker.Item
                 key={index}
-                style={{ backgroundColor: 'orange' }}
+                style={{ color: '#fff', fontFamily: fonts.familyType.semiBold }}
                 label={item.descricao}
                 value={index}
               />
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     backgroundColor: 'white',
-    color: 'black',
+    color: 'white',
   },
 });
 
