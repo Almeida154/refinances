@@ -47,6 +47,15 @@ import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 
 import CurrencyInput from 'react-native-currency-input';
 
+import { Conta } from '../../../../../contexts/AccountContext';
+import {
+  Parcela,
+  UseParcelas,
+} from '../../../../../contexts/InstallmentContext';
+import PickerContas from '../../../Entries/components/PickerContas';
+import { Goal } from '../../../Home/components/ManageGoals/styles';
+
+
 type PropsGoals = {
   navigation: StackNavigationProp<GoalsStack, "CreateGoals">
 }
@@ -120,6 +129,13 @@ const CreateGoal = ({navigation}: PropsGoals) => {
       },
     } as Meta;
 
+/*     const newParcela = {
+      contaParcela: selectedConta,
+      dataParcela: new Date(Date.now()),
+      lancamentoParcela: lancamentoMeta.id,
+      statusParcela: sttsParcela(),
+      valorParcela: parseFloat(investidoMeta),
+    } as Parcela; */
     if (
       meta != '' &&
       parseFloat(valorMeta) > 0 &&
@@ -185,7 +201,16 @@ const CreateGoal = ({navigation}: PropsGoals) => {
       });
     }
   }
-
+  const sttsParcela = () =>{
+    if(parseFloat(investidoMeta) < parseFloat(valorMeta)){
+      //se nao concluiu continua false
+      return false;
+    }
+    else if(parseFloat(investidoMeta) >= parseFloat(valorMeta)){
+      //se concluiu manda true
+      return true;
+    }
+  }
   const realizacao = () => {
     parseFloat(investidoMeta) >= parseFloat(valorMeta)
       ? setRealizado(true)
@@ -195,6 +220,11 @@ const CreateGoal = ({navigation}: PropsGoals) => {
     return realizado;
   };
 
+  const [selectedConta, setSelectedConta] = useState<Conta | null>(null);
+
+  function changeAccount(conta: Conta | null) {
+    setSelectedConta(conta);
+  }
   const backAction = () => {
     console.debug('veio aqui')
     navigation.dispatch(StackActions.replace('Main'));
@@ -318,7 +348,13 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
-
+      {/* <View style={{display: parseFloat(investidoMeta) > 0? 'flex' : 'none'}}>
+        <PickerContas
+          conta={selectedConta}
+          changeAccount={changeAccount}
+          tipoLancamento="despesa"
+        />
+      </View> */}
         <Button
           onPress={handleCreateGoal}
           title="Criar"
