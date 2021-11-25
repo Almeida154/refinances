@@ -76,6 +76,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
             setDataParcelas(aux)
         }
     }
+    
                 
     return (
         <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>

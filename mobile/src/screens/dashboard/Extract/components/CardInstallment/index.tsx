@@ -79,7 +79,6 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
                             setChecked(!checked)
                             mudarOStatusRapidao()
                         }}
-                        style={{height: 2}}
                         color={item.lancamentoParcela.tipoLancamento == 'despesa' ? colors.paradisePink : colors.slimyGreen}
                     />
                     <EditLabel>{item.lancamentoParcela.tipoLancamento == 'despesa' ? 'pago' : 'recebido'}</EditLabel>

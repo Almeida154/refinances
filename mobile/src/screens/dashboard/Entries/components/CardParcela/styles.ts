@@ -4,7 +4,7 @@ import {colors, fonts, metrics} from '../../../../../styles'
 
 export const ContainerCardParcela = styled.SafeAreaView`
     width: 200px;
-    height: 200px;
+    height: 230px;
     border-radius: 20px;
     padding: 15px;    
     border-width: 1px;
