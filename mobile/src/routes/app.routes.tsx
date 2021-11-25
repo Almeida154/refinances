@@ -21,7 +21,7 @@ import AddCategoryAccount from '../screens/dashboard/Home/components/CreateAccou
 import ManageCategory from '../screens/dashboard/Home/components/ManageCategory/navigators/TopBarNavigator'
 import NewCategory from '../screens/dashboard/Home/components/newCategory/navigator/'
 import EditCategory from '../screens/dashboard/Home/components/EditCategory';
-
+import Config from '../screens/dashboard/Home/components/Config';
 
 import GoalsList from '../screens/dashboard/Goals/navigators/TopBarNavigator';
 import InvestGoals from '../screens/dashboard/Goals/screens/Invest';
@@ -68,6 +68,12 @@ export const HomeAccountStackNavigation = () => {
       <HomeStack.Screen
         name="EditCategory"
         component={EditCategory}
+        options={{headerShown: false}}
+      />
+
+      <HomeStack.Screen
+        name="Config"
+        component={Config}
         options={{headerShown: false}}
       />
 

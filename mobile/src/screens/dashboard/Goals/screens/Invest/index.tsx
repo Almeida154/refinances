@@ -101,8 +101,8 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       contaParcela: selectedConta,
       dataParcela: new Date(Date.now()),
       lancamentoParcela: goal.lancamentoMeta.id,
-      statusParcela: true,
-      valorParcela: parseFloat(valorDeposito),
+      statusParcela: sttsParcela(),
+      valorParcela: novoSaldo(),
     } as Parcela;
 
     if (parseFloat(valorDeposito) <= 0 || valorDeposito == '') {
@@ -135,11 +135,11 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
     }
   }
   const sttsParcela = () =>{
-    if(goal.saldoAtualMeta < goal.saldoFinalMeta){
+    if(novoSaldo() < goal.saldoFinalMeta){
       //se nao concluiu continua false
       return false;
     }
-    else{
+    else if(novoSaldo() >= goal.saldoFinalMeta){
       //se concluiu manda true
       return true;
     }
@@ -154,9 +154,37 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
     );
     return true;
   };
-
   function changeAccount(conta: Conta | null) {
     setSelectedConta(conta);
+  }
+  const saldoA = goal.saldoAtualMeta
+  const saldoF = goal.saldoFinalMeta
+  const saldoD = (goal.saldoFinalMeta - goal.saldoAtualMeta)
+
+  function testeConcluido(){
+    if(goal.saldoFinalMeta > goal.saldoAtualMeta){
+      return <TextProgress>
+                Faltam
+                <TextGoals style={{ left: '40%' }}>
+                  {' '}
+                  {saldoD}{' '}
+                </TextGoals>
+                para concluir { goal.descMeta }
+              </TextProgress>
+    }else{
+      return <TextProgress>
+                Parabens por concluir a meta { goal.descMeta } de
+                <TextGoals style={{ left: '40%' }}>
+                  {' '}
+                  {saldoF}{' '}
+                </TextGoals>
+                sendo investido um total de 
+                <TextGoals style={{ left: '40%' }}>
+                  {' '}
+                  {saldoA}{' '}
+                </TextGoals>
+              </TextProgress>
+    }
   }
 
   return (
@@ -197,14 +225,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       </Header>
 
       <View style={styles.container}>
-        <TextProgress>
-          Faltam
-          <TextGoals style={{ left: '40%' }}>
-            {' '}
-            {(goal.saldoFinalMeta - goal.saldoAtualMeta).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}{' '}
-          </TextGoals>
-          para concluir { goal.descMeta }
-        </TextProgress>
+          {testeConcluido()}
 
         <PickerContas
           conta={selectedConta}

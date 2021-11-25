@@ -67,7 +67,6 @@ const Home = () => {
   });
 
   useEffect(() => {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaa');
     (async () => {
       const req = await handleReadByUserCategorias(
         await retornarIdDoUsuario(),
@@ -139,15 +138,20 @@ const Home = () => {
             </View>
 
             <View style={styles.containerSetting}>
-              <Icon2
-                name="settings"
-                color="#9D3147"
-                size={30}
-                style={{ marginRight: 20 }}
-              />
+              <TouchableOpacity
+              onPress={() => {
+                navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config'}))
+              }}>
+                <Icon2
+                  name="settings"
+                  color="#9D3147"
+                  size={25}
+                  style={{ marginRight: 20 }}
+                />
+              </TouchableOpacity>
 
               <TouchableOpacity onPress={handleLogout}>
-                <Icon name="logout" color="#9D3147" size={30} />
+                <Icon name="logout" color="#9D3147" size={25} />
               </TouchableOpacity>
             </View>
           </View>
