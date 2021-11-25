@@ -256,7 +256,7 @@ const Config = () => {
 
                 {/* Contas */}
                 <ContainerItems
-                  onTouchStart={() => {
+                  onTouchEnd={() => {
                     navigation.dispatch(
                     StackActions.replace('StackAccount', { screen: 'ManageAccount'})
                   )}}>
@@ -296,7 +296,7 @@ const Config = () => {
 
                 {/* CATEGORIAS */}
                 <ContainerItems
-                  onTouchStart={() => {
+                  onTouchEnd={() => {
                     navigation.dispatch(
                     StackActions.replace('StackAccount', { screen: 'ManageCategory'})
                   )}}>
@@ -336,7 +336,7 @@ const Config = () => {
 
                 {/* METAS */}
                 <ContainerItems
-                  onTouchStart={() => {
+                  onTouchEnd={() => {
                     navigation.dispatch(
                     StackActions.replace('GoalsStack', { screen: 'GoalsList'})
                   )}}>
@@ -633,7 +633,7 @@ const Config = () => {
 
                 {/* SAIR */}
                 <ContainerItems
-                  onTouchStart={handleLogout}>
+                  onTouchEnd={handleLogout}>
                   <SectionIconLeft>
                     <MCicons
                       name="logout"

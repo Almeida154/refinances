@@ -66,7 +66,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
             </SectionLancamento>
 
             <SectionValues>
-                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{valor}</LabelValue>                                                    
+                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: colors.paradisePink} : {color: colors.slimyGreen}}>{valor}</LabelValue>                                                    
                 
                 <SectionCheck>
                     
@@ -75,11 +75,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
                         onPress={() => {
                             setChecked(!checked)
                             mudarOStatusRapidao()
-<<<<<<< HEAD
                         }}                        
-=======
-                        }}
->>>>>>> 4c60691214008d86b2e67e91ed629689ced28544
                         color={item.lancamentoParcela.tipoLancamento == 'despesa' ? colors.paradisePink : colors.slimyGreen}
                     />
                     <EditLabel>{item.lancamentoParcela.tipoLancamento == 'despesa' ? 'pago' : 'recebido'}</EditLabel>
