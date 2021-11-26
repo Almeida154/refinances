@@ -1,5 +1,5 @@
 import styled from 'styled-components/native'
-import fonts from '../../../../../styles/fonts'
+import {colors, fonts, metrics} from '../../../../../styles'
 
 
 export const Container = styled.View`
@@ -17,7 +17,7 @@ export const Container = styled.View`
 
 `
 export const SectionButton = styled.TouchableOpacity`
-    background: #EE4266;
+    background: ${colors.paradisePink};
     height: 100%;
     width: 15%;
     border-bottom-right-radius: 15px;
@@ -30,13 +30,13 @@ export const SectionButton = styled.TouchableOpacity`
 
 export const Plus = styled.Text`
     font-size: 50px;
-    color: #9D3147;
+    color: ${colors.bigDipOruby};
     
 `
 export const LabelDescriptionCreate = styled.Text`
     font-size: ${`${fonts.size.medium}`};
     fontFamily: ${`${fonts.familyType.black}`};
-    color: #555;
+    color: ${colors.davysGray};
     
 `
 
@@ -82,7 +82,7 @@ export const SectionIcon = styled.View`
     height: 45px;
     border-radius: 50px;
     border-width: 4px;
-    border-color: #444;
+    border-color: ${colors.black};
     align-items: center;
     justify-content: center;
 `

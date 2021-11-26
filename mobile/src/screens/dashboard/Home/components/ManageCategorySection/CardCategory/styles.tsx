@@ -1,6 +1,6 @@
 import styled from "styled-components/native"
 
-import fonts from "../../../../../../styles/fonts"
+import {fonts, colors} from "../../../../../../styles"
 
 import {widthPixel, heightPixel} from "../../../../../../helpers/responsiveness"
 
@@ -47,7 +47,7 @@ export const SectionIcon = styled.View`
 
 export const CategoryDesc = styled.Text`
     font-size: ${`${fonts.size.medium}px`};
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
     bottom: ${heightPixel(35)};
@@ -55,7 +55,7 @@ export const CategoryDesc = styled.Text`
 
 export const AddLimite = styled.Text`
     font-size: ${`${fonts.size.small}px`};
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
 `
@@ -66,7 +66,7 @@ export const CategoryAddTetoGasto = styled.TouchableOpacity`
 `
 
 export const Percent = styled.View`
-    backgroundColor: #fff;
+    backgroundColor: ${colors.white};
     position: absolute;
     right: -20;
     top: -20;
@@ -80,6 +80,6 @@ export const Percent = styled.View`
 `
 
 export const PercentText = styled.Text`
-    color: #525252 
+    color: ${colors.davysGrey}
     fontFamily: ${`${fonts.familyType.regular}`};
 `

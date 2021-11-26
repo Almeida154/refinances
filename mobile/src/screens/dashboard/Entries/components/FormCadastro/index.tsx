@@ -19,6 +19,7 @@ import {
     ContainerDetalhes,
     DetalhesMensal
 } from './styles'
+import {colors, fonts, metrics} from '../../../../../styles'
 
 import { Parcela } from '../../../../../contexts/InstallmentContext'
 import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext'
@@ -330,9 +331,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                 <Checkbox 
                     status={status ? 'checked' : 'unchecked'}
                     onPress={changeStatus}                    
-                    color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                    color={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}
                 />
-                <Label style={{color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</Label>
+                <Label style={{color: tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</Label>
             </InputControlCheckBox>
 
             <InputControl>
@@ -343,8 +344,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                     value={descricao}
                     onChangeText={setDescricao}
                     placeholder={tipoLancamento == 'despesa' ? 'Mercadinho' : 'Recebimento empréstimo'}
-                    placeholderTextColor={"#bbb"}
-                    colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}></InputText>
+                    placeholderTextColor={colors.silver}
+                    colorLabel={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}></InputText>
             </InputControl>
 
             <InputControl>
@@ -364,7 +365,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                     onPress={showDatePicker}
                     value={dataPagamento.toLocaleDateString()}
                     placeholder={tipoLancamento == 'despesa' ? 'Data de Pagamento do lançamento' : 'Data de Recebimento do lançamento'}
-                    colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                    colorLabel={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}
                 />               
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
@@ -379,7 +380,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                     
                 <Icon name={detalhes ? 'caretup' : 'caretdown'} 
                     size={25}
-                    color="#525252"
+                    color={colors.davysGrey}
                     
                     style={{
                 }}/>
@@ -393,9 +394,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                     <Checkbox 
                         status={mensal ? 'checked' : 'unchecked'}
                         onPress={changeMensal}                    
-                        color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                        color={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}
                     />
-                    <Label style={{color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>{tipoLancamento == 'despesa' ? 'Gasto Mensal' : 'Receita Mensal'}</Label>
+                    <Label style={{color: tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}}>{tipoLancamento == 'despesa' ? 'Gasto Mensal' : 'Receita Mensal'}</Label>
                 </InputControlCheckBox>
                 <DetalhesMensal
                     style={{display: mensal ? 'flex' : 'none' }}>
@@ -408,7 +409,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                         onClear={() => {}}
                         showClearIcon={false}
                         label="Quantidade de Parcelas"
-                        colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                        colorLabel={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}
                         value={parcelas}
                         onChangeText={(text) => changeParcela(text, dataPagamento, dataParcelas)}
                         placeholder="1"
@@ -433,9 +434,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
             title="Adicionar" 
             onPress={handleSubmit}
             style={{
-                backgroundColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'
+                backgroundColor: tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen
             }}
-            color="#fff"
+            color={colors.white}
         />
       
         </ContainerForm>

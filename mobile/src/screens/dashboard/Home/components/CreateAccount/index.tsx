@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import {BackHandler, Text, ToastAndroid} from 'react-native'
-
+import {colors, fonts, metrics} from '../../../../../styles'
 import {StackActions} from '@react-navigation/native'
 import InputText from '../../../../../components/InputText'
 
@@ -17,7 +17,6 @@ import {
     Container,
 } from './styles'
 
-import fonts from '../../../../../styles/fonts'
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
 import {CategoriaConta} from '../../../../../contexts/CategoriesAccountContext'
@@ -73,14 +72,14 @@ const CreateAccount = () => {
          style={{marginBottom: '2%', 
          marginTop: '15%',
          fontSize: 20,
-         color: '#292929',
+         color: colors.jet,
          fontFamily: fonts.familyType.black
          }}>Bem vindo à criação de suas contas!</Text>
 
         <Text style={{marginBottom: '10%', 
          fontSize: 15,
          fontFamily: fonts.familyType.regular,
-         color: '#292929'}}>Aqui você adiciona outras contas além da sua principal, como a de outros bancos por exemplo.</Text>
+         color: colors.jet}}>Aqui você adiciona outras contas além da sua principal, como a de outros bancos por exemplo.</Text>
             
             <InputText 
                 onChangeText={setDescription}
@@ -118,8 +117,8 @@ const CreateAccount = () => {
             <Button 
                 onPress={handleCreateAccount}
                 title="Criar"
-                color="#444"
-                backgroundColor="#ccc"
+                color={colors.darkGray}
+                backgroundColor={colors.blackSilver}
             />              
         </Container>
     )

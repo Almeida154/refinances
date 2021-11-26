@@ -6,7 +6,7 @@ import hexToRGB from '../../../../../helpers/hexToRgba';
 export const Container = styled.View`
     display: flex;
     
-    background-color: #EEEEEE;
+    background-color: ${colors.culture};
     padding-top: 40%;
 `
 
@@ -16,22 +16,22 @@ export const Form = styled.View`
     height: 100%;
 `
 export const InputControl = styled.View`    
-    background-color: #fff;
+    background-color: ${colors.white};
     margin-bottom: 20px;
     border-radius: 10px;
     padding: 10px;
 `
 export const LabelForm = styled.Text`
-    color: #EE4266;
+    color: ${colors.paradisePink};
     font-weight: bold;
     font-size: 18px;
 `
 export const TextInputAdd = styled.TextInput`
-    color: #000;
+    color: ${colors.black};
 `
 
 export const ButtonAdd = styled.TouchableHighlight`
-    background-color: #ccc;
+    background-color: ${colors.blackSilver};
     width: 100%;
     height: 50px;
     justify-content: center;
@@ -39,7 +39,7 @@ export const ButtonAdd = styled.TouchableHighlight`
 `
 
 export const TextButton = styled.Text`
-    color: #000;
+    color: ${colors.black};
     font-size: 18px;
 `
 

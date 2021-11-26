@@ -19,6 +19,7 @@ import {
 } from './styles'
 
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
+import { colors } from '../../../../../styles'
 
 type PropsCardInstallment = {
     item: ReadParcela
@@ -37,7 +38,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
         <ContainerItem onPress={openModalize}>
             <SectionLancamento>   
                 <SectionIcon style={{borderColor: typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento ? 'yellow' : item.lancamentoParcela.categoryLancamento.corCategoria   }}>
-                    <Icon size={24} color={'gray'} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
+                    <Icon size={24} color={colors.davysGrey} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
                 </SectionIcon>
                 <SectionDescription>             
                     <LabelName>{item.lancamentoParcela.descricaoLancamento}</LabelName>
@@ -47,7 +48,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
 
             
             <SectionValues >
-                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{(item.valorParcela).toFixed(2)}</LabelValue>                                                    
+                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: colors.paradisePink} : {color: colors.budGreen}}>{(item.valorParcela).toFixed(2)}</LabelValue>                                                    
                 <LabelIndex>{textParcela}</LabelIndex>                
             </SectionValues>
         </ContainerItem>

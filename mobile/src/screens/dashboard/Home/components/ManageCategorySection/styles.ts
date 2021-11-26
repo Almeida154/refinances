@@ -1,18 +1,18 @@
 import styled from 'styled-components/native'
-import fonts from '../../../../../styles/fonts'
+import {fonts, colors} from '../../../../../styles'
 
 export const Container = styled.View`
     display: flex;
     align-items: center;
     margin-top: 15px;
     margin-bottom: 15px
-    background-color: white;
+    background-color: ${colors.white};
     width: 90%;
     border-radius: 15px;
 `
 export const SectionTop = styled.View`
     border-left-width: 6px;
-    border-color: #EE4266;
+    border-color: ${colors.paradisePink};
     border-radius: 5px;
     width: 85%;
     margin-top: 15px;
@@ -26,13 +26,13 @@ export const LabelDescription = styled.Text`
 
 export const Separator = styled.View`
     height: 2px;
-    background-color: #ddd;
+    background-color: ${colors.gainsboro};
     margin-top: 18px;
     width: 85%;
 `
 export const LabelDescriptionCategory = styled.Text`
     font-size: 20px;
-    color: #555;
+    color: ${colors.davysGray};
     fontFamily: ${`${fonts.familyType.black}`};
 `
 
@@ -49,7 +49,7 @@ export const ContainerCard = styled.View`
 
 export const Goal = styled.View`
     position: relative;
-    background-color: #fafafa;
+    background-color: ${colors.cultured};
     margin-bottom: 10px;
     padding: 20px;
     border-radius: 10px;
@@ -58,18 +58,18 @@ export const Goal = styled.View`
 
 export const GoalDesc = styled.Text`
     font-size: 22px;
-    color: #525252;
+    color: ${colors.davysGrey};
     font-weight: bold;
 `
 
 export const GoalDaysLeft = styled.Text`
     font-size: 14px;
-    color: #525252;
+    color: ${colors.davysGrey};
     font-weight: bold;
     opacity: 0.3;
 `
 export const VwPercent = styled.View`
-    backgroundColor: #fff;
+    backgroundColor: ${colors.white};
     position: absolute;
     right: -20;
     top: -20;
@@ -83,7 +83,7 @@ export const VwPercent = styled.View`
 `
 
 export const GoalPercent = styled.Text`
-    color: #525252
+    color: ${colors.davysGrey}
 
 `
 

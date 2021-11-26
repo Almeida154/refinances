@@ -7,20 +7,20 @@ export const Container = styled.View`
     display: flex;
     align-items: center;
     flex: 1;
-    background-color: white;
+    background-color: ${colors.white};
 `
 
 export const Title = styled.Text`
     margin-top: 25px;
     margin-left: 15px;
     font-size: 40px;
-    color: #fff;
+    color: ${colors.white};
     padding: 20px;
     font-family: ${fonts.familyType.semiBold};
 `
 
 export const TextButton = styled.Text`
-    color: #fff;
+    color: ${colors.white};
     font-family: ${fonts.familyType.bold};
 `
 
@@ -61,7 +61,7 @@ export const AlinhaParaDireita = styled.View`
 
 export const LabelCifrao = styled.Text`
     font-size: 20px;
-    color: #fff;
+    color: ${colors.white};
     top: 0;
     position: absolute;
     right: ${heightPixel(250)}px;
@@ -71,6 +71,6 @@ export const TextInputValue = styled.TextInput`
     opacity: 0.7;
     font-size: ${fonts.size.super + 20};
     font-family: ${fonts.familyType.semiBold};
-    color: #fff;
+    color: ${colors.white};
     width: auto;
 `

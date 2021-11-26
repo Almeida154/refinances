@@ -42,6 +42,7 @@ import {
     ButtonAccessDetail   
     
 } from './styles'
+import { colors } from '../../../styles';
 
 interface PropsRenderSection {
     item: (ReadParcela[] | Transferencia[])[];
@@ -168,7 +169,7 @@ const Extrato = () => {
                 <ScrollBody>
                     <Header>                        
                         <PeriodoAnterior onPress={() => updateDate(-1)}>
-                            <Icon size={24} name={"arrow-back-ios"} color="#444"/>
+                            <Icon size={24} name={"arrow-back-ios"} color={colors.darkGray}/>
                         </PeriodoAnterior>
                         
                         <PeriodoAtual>
@@ -176,7 +177,7 @@ const Extrato = () => {
                         </PeriodoAtual>
 
                         <PeriodoPosterior onPress={() => updateDate(1)}>
-                            <Icon size={24} name={"arrow-forward-ios"} color="#444"/>
+                            <Icon size={24} name={"arrow-forward-ios"} color={colors.darkGray}/>
                         </PeriodoPosterior>
                     </Header>
                     <Body>                          
@@ -191,24 +192,24 @@ const Extrato = () => {
                 <Footer>
                     <CardBalance>
                         <LabelBalance> Ganhos </LabelBalance>
-                        <LabelValueBalance style={{color: '#6CB760'}}>{ganho}</LabelValueBalance>
+                        <LabelValueBalance style={{color: colors.budGreen}}>{ganho}</LabelValueBalance>
                     </CardBalance>
 
                     <CardBalance>
                         <LabelBalance> Gastos </LabelBalance>
-                        <LabelValueBalance style={{color: '#EE4266'}}>{gasto}</LabelValueBalance>
+                        <LabelValueBalance style={{color: colors.paradisePink}}>{gasto}</LabelValueBalance>
                     </CardBalance>
 
                     <CardBalance>
                         <LabelBalance> Saldo atual </LabelBalance>
-                        <LabelValueBalance style={{color: '#999'}}>{saldo}</LabelValueBalance>
+                        <LabelValueBalance style={{color: colors.jet}}>{saldo}</LabelValueBalance>
                     </CardBalance>
                 </Footer>
 
             <Modalize
                 ref={modalizeRefDetailEntry}
                 title=""
-                backgroundColor={'#F6F6F6'}
+                backgroundColor={colors.cultured}
             >
             <DetailEntry item={selectedItemExtract}/>
                     
@@ -220,7 +221,7 @@ const Extrato = () => {
 const styles = StyleSheet.create({       
     title: {
         fontSize: 20,
-        color: '#fff',
+        color: colors.white,
     },
 });
 export default Extrato;

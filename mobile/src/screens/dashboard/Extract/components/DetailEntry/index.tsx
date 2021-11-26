@@ -7,7 +7,7 @@ import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { toDate } from '../../../../../helpers/manipularDatas'
 
 import { StackActions } from '@react-navigation/native';
-
+import {colors, fonts, metrics} from '../../../../../styles'
 import Icon from '../../../../../helpers/gerarIconePelaString'
 
 import {
@@ -91,11 +91,11 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
                 </SepareColumn>
                 <SepareRow>
                     <CircleIcon onPress={navigateEdit}>
-                        <Icon stringIcon="MaterialCommunityIcons:pencil" size={25} color="#000"/>
+                        <Icon stringIcon="MaterialCommunityIcons:pencil" size={25} color={colors.black}/>
                         
                     </CircleIcon>
                     <CircleIcon onPress={navigateDelete}>
-                        <Icon stringIcon="Ionicons:trash-bin-sharp" size={25} color="#000"/>
+                        <Icon stringIcon="Ionicons:trash-bin-sharp" size={25} color={colors.black}/>
                     </CircleIcon>
                 </SepareRow>
             </SepareRow> 

@@ -15,7 +15,7 @@ import { Title, Subtitle, Loading, TextLoading } from './styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Button from '../../../../../../components/Button';
-
+import {colors, fonts, metrics} from '../../../../../../styles'
 import CardCategory from '../../ManageCategorySection/CardCategory';
 import { StackActions } from '@react-navigation/native';
 
@@ -62,10 +62,10 @@ const Receitas = ({ navigation }: PropsCategory) => {
 
   if (receitasCategorias?.length > 0) {
     return (
-      <ScrollView style={{ backgroundColor: '#fff' }}>
+      <ScrollView style={{ backgroundColor: colors.white }}>
         {stateReload ? (
           <Loading>
-            <ActivityIndicator size="large" color="#EE4266" />
+            <ActivityIndicator size="large" color={colors.paradisePink} />
             <TextLoading>Carregando...</TextLoading>
           </Loading>
         ) : (
@@ -88,12 +88,12 @@ const Receitas = ({ navigation }: PropsCategory) => {
     );
   } else {
     return (
-      <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+      <ScrollView style={{ backgroundColor: colors.cultured }}>
         <View style={{ margin: '10%', alignItems: 'center' }}>
           <Icon
             name="emoticon-sad-outline"
             size={50}
-            color="#525252"
+            color={colors.davysGrey}
             style={{
               alignItems: 'center',
               justifyContent: 'center',
@@ -110,7 +110,7 @@ const Receitas = ({ navigation }: PropsCategory) => {
 
           <Button
             title="Criar nova categoria"
-            backgroundColor="#ee4266"
+            backgroundColor={colors.paradisePink}
             onPress={() => {
               navigation.dispatch(StackActions.replace('CreateCategory'))
             }}></Button>

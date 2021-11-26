@@ -18,7 +18,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { UseDadosTemp } from '../../../../../../contexts/TemporaryDataContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { GoalsStack } from '../../../../../../@types/RootStackParamApp';
-
+import {colors, fonts, metrics} from '../../../../../../styles'
 import Icon from 'react-native-vector-icons/EvilIcons'
 
 type PropsCardGoals = {
@@ -54,11 +54,11 @@ const CardGoals = ({ item }: PropsCardGoals) => {
         
 
         <DaysLeft>
-          <Icon name="exclamation" color="#525252"/> Faltam {days} dias</DaysLeft>
+          <Icon name="exclamation" color={colors.davysGrey}/> Faltam {days} dias</DaysLeft>
 
         <ProgressBar
           progress={percentageBalance / 100}
-          color="#F81650"
+          color={colors.redCrayola}
           style={{
             height: 10,
             marginVertical: 8,

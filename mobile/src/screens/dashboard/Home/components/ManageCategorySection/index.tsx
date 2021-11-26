@@ -22,6 +22,7 @@ import {
 
 import CardCategory from './CardCategory'
 
+import {colors, fonts, metrics} from '../../../../../styles'
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext'
 import { StackActions } from '@react-navigation/native';
@@ -74,8 +75,8 @@ const SectionManage = () => {
                         navigation.dispatch(StackActions.replace('StackAccount', 
                         { screen:'ManageCategory'}))}
                     title="Gerenciar"
-                    color="#444"
-                    backgroundColor="#f5f2f3"
+                    color={colors.darkGray}
+                    backgroundColor={colors.lightGray}
                 />
             </ContainerCategory>
         </Container>

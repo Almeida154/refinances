@@ -12,7 +12,7 @@ import { Conta, UseContas } from '../../../../contexts/AccountContext';
 
 import InputText from '../../../../components/InputText';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { fonts } from '../../../../styles';
+import { colors, fonts } from '../../../../styles';
 
 interface PropsPickerContas {
   conta: Conta | null;
@@ -70,8 +70,8 @@ const PickerContas: React.FC<PropsPickerContas> = ({
           label={label ? label : 'Conta'}
           value={conta == null ? '' : conta.descricao}
           placeholder="Selecione uma conta"
-          placeholderTextColor={'#bbb'}
-          colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+          placeholderTextColor={colors.silver}
+          colorLabel={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}
           editable={false}
         />
       <Picker
@@ -86,7 +86,7 @@ const PickerContas: React.FC<PropsPickerContas> = ({
             return (
               <Picker.Item
                 key={index}
-                style={{ color: '#fff', fontFamily: fonts.familyType.semiBold }}
+                style={{ color: colors.white, fontFamily: fonts.familyType.semiBold }}
                 label={item.descricao}
                 value={index}
               />
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     display: 'none',
     width: '100%',
     height: 50,
-    color: '#555',
+    color: colors.davysGrey,
   },
   pickerItem: {
     backgroundColor: 'white',

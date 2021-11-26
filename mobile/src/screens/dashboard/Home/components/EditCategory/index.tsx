@@ -121,10 +121,9 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   const teto = category?.tetoDeGastos || 0;
 
   return (
-    <ScrollView style={{backgroundColor: '#f6f6f6' }}>
-      <StatusBar backgroundColor={'#ee4266'} />
-       <Header style={{ backgroundColor: '#ee4266' }}>
-            <HeaderTop backButton={backAction} title='Teto de gastos' isShort={true} color={'#fff'}/>
+    <ScrollView style={{backgroundColor: colors.cultured }}>
+       <Header style={{ backgroundColor: colors.paradisePink }}>
+            <HeaderTop backButton={backAction} title='Teto de gastos' isShort={true} color={colors.white}/>
           <AlinhaParaDireita>
             <CurrencyInput
               value={parseFloat(tetoGastos)}
@@ -132,7 +131,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
               style={{
                   alignContent: 'flex-end',
                   alignItems: 'flex-end',
-                  color: '#F5F2F3',
+                  color: colors.lightGray,
                   fontFamily: fonts.familyType.bold,
                   fontSize: fonts.size.super +20,
                   opacity: 0.7,
@@ -144,7 +143,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
               separator=","
               precision={2}
               maxValue={999999}
-              placeholderTextColor={'#F5F2F3'}
+              placeholderTextColor={colors.lightGray}
               selectionColor={colors.davysGrey}
               onChangeText={formattedValue => {
                   formattedValue == '' ? setTetoGastos((0).toString()) : setTetoGastos(tetoGastos);
@@ -165,8 +164,8 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
                 { screen:'ManageCategory'}))
               }}
               title="Salvar"
-              backgroundColor="#CCC"
-              color="#444"
+              backgroundColor={colors.blackSilver}
+              color={colors.darkGray}
               lastOne={true}
             />
           </View>

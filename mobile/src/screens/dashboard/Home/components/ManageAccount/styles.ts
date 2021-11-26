@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import fonts from '../../../../../styles/fonts'
+import {fonts, colors} from '../../../../../styles'
 
 export const Container = styled.View`
     display: flex;
@@ -15,21 +15,20 @@ export const ButtonAdd = styled.TouchableHighlight`
     width: 100%;
     align-items: center;
     justify-content: center;
-    background-color: #ccc;
+    background-color: ${colors.blackSilver};
     height: 60px;
     border-radius: 5px;
 `
 
 export const TextButton = styled.Text`
     font-weight: 600;
-    color: #444;
+    color: ${colors.darkGray};
     font-size: 20px;
 `
 export const Title = styled.Text`
-    color: #292929;
     marginBottom: 2%;
     margin-top: 15%;
-    color: #292929;
+    color: ${colors.jet};
     fontFamily: ${`${fonts.familyType.black}`};
     font-size: ${`${fonts.size.big}px`};
 
@@ -37,7 +36,7 @@ export const Title = styled.Text`
 
 export const Subtitle = styled.Text`
     marginBottom: 2%;
-    color: #292929;
+    color: ${colors.jet};
     fontFamily: ${`${fonts.familyType.regular}`};
     font-size: ${`${fonts.size.small}px`};
     marginBottom: 10%;

@@ -1,17 +1,17 @@
 import styled from 'styled-components/native'
-import fonts from '../../../../../styles/fonts'
+import {fonts, colors} from '../../../../../styles'
 
 export const Container = styled.View`
     display: flex;
     align-items: center;
-    background-color: white;
+    background-color: ${colors.white};
     width: 90%;
     border-radius: 15px;
     margin-bottom: 20px;
 `
 export const SectionBalance = styled.View`
     border-left-width: 6px;
-    border-color: #EE4266;
+    border-color: ${colors.paradisePink};
     border-radius: 5px;
     width: 85%;
     margin-top: 15px;
@@ -29,18 +29,18 @@ export const LabelBalance = styled.Text`
 `
 export const Separator = styled.View`
     height: 2px;
-    background-color: #ddd;
+    background-color: ${colors.gainsboro};
     margin-top: 18px;
     width: 85%;
 `
 export const LabelDescriptionAccount = styled.Text`
     font-size: 20px;
     fontFamily: ${`${fonts.familyType.black}`};
-    color: #444;
+    color: ${colors.darkGray};
 `
 export const LabelManager = styled.Text`
     font-weight: 600;
-    color: #444;
+    color: ${colors.darkGray};
     font-size: 20px;
 `
 
@@ -68,12 +68,12 @@ export const SectionName = styled.View`
 export const LabelName = styled.Text`
     fontSize: ${`${fonts.size.medium}px`};
     fontFamily: ${`${fonts.familyType.bold}`};
-    color: #444
+    color: ${colors.darkGray}
 `
 export const LabelCategory = styled.Text`
     fontSize: ${`${fonts.size.small}px`};
     fontFamily: ${`${fonts.familyType.semiBold}`};
-    color: #888
+    color: ${colors.battleGray}
 `
 export const SectionBalanceAccount = styled.View`
 
@@ -81,7 +81,7 @@ export const SectionBalanceAccount = styled.View`
 export const LabelBalanceAccount = styled.Text`
     fontSize: ${`${fonts.size.medium}px`};
     fontFamily: ${`${fonts.familyType.bold}`};
-    color: #444;
+    color: ${colors.darkGray};
     opacity: 0.7;
 `
 export const SectionIcon = styled.View`

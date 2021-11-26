@@ -1,25 +1,25 @@
 import styled from "styled-components/native"
 
-import fonts from "../../../../../styles/fonts"
+import {fonts, colors} from "../../../../../styles"
 
 export const Title = styled.Text`
     fontFamily: ${`${fonts.familyType.semiBold}`};
     textAlign: center; 
     fontSize: ${`${fonts.size.medium}px`}
-    color: #525252;
+    color: ${colors.davysGrey};
     margin-top: 10
     margin-bottom: 10
 `
 
 export const TextGoals = styled.Text`
     fontSize: ${`${fonts.size.medium}px`}
-    color: #292929;
+    color: ${colors.jet};
     fontFamily: ${`${fonts.familyType.bold}`};
 `
 
 export const Container = styled.View`
     padding: 10%;
     padding-top: 15%;
-    backgroundColor: #fff;
+    backgroundColor: ${colors.white};
     height: 100%;
 `

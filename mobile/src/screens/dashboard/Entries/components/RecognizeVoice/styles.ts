@@ -10,7 +10,7 @@ export const Button = styled.Image`
 
 export const Container = styled.View`
     flex: 1px;
-    background-color: #F5FCFF;
+    background-color: ${colors.aliceBlue};
     font-family: ${fonts.familyType.regular};
     padding: 10%;
 `
@@ -23,7 +23,7 @@ export const Welcome = styled.Text`
 
 export const Action = styled.Text`
     text-align: center;
-    color: #0000FF;
+    color: ${colors.blue};
     margin: 5px 0;
     font-weight: bold;
 `
@@ -31,18 +31,18 @@ export const Action = styled.Text`
 export const Instructions = styled.Text`
     font-family: ${`${fonts.familyType.semiBold}`};
     font-size: ${`${fonts.size.medium - 1.5}px`};
-    color: #333333;
+    color: ${colors.jet};
     width: 100%;
     padding: 20% 0 10% 0;
 `
 export const Bold = styled.Text`
     font-family: ${`${fonts.familyType.bold}`};
-    color: #333333;
+    color: ${colors.jet};
 `
 
 export const Stat = styled.Text`
     text-align: center;
-    color: #B0171F;
+    color: ${colors.fireBrick};
     margin-bottom: 1px;
 `
 
@@ -58,7 +58,7 @@ export const ButtonRecord = styled.TouchableOpacity`
 export const ContainerResults = styled.ScrollView`
     width: 100%;
     height: auto;
-    background-color: #f5f2f3;
+    background-color: ${colors.lightGray};
     margin-bottom: 10%;
 `
 

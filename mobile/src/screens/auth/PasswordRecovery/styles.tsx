@@ -1,8 +1,9 @@
 import { StatusBar } from 'react-native';
 import styled from 'styled-components/native';
+import {colors, fonts, metrics} from '../../../styles'
 
 export const Container = styled.View`
-    background-color: #EE4266;
+    background-color: ${colors.paradisePink};
     padding-top: ${`${StatusBar.currentHeight}px`};
     font-family: "Nunito-Italic";
     height: 100%;
@@ -13,7 +14,7 @@ export const Boundaries = styled.View`
     padding-right: 30px;
     padding-left: 30px;
     height: 100%;
-    background-color: #fff;
+    background-color: ${colors.white};
     border-top-right-radius: 22px;
     border-top-left-radius: 22px;
 `;
@@ -29,7 +30,7 @@ export const Header = styled.View`
 
 export const Title = styled.Text`
     font-size: 32px;
-    color: #fff;
+    color: ${colors.white};
     font-family: "Nunito-Black";
     line-height: 36px;
 `;
@@ -46,7 +47,7 @@ export const Content = styled.View`
 
 export const ButtonText = styled.Text`
     font-size: 20px;
-    color: #fff;
+    color: ${colors.white};
     font-family: "Nunito-Bold";
     text-align: center;
 `;
@@ -60,14 +61,14 @@ export const ContainerContentButtonGoogle = styled.View`
 `;
 
 export const ButtonTextGoogle = styled(ButtonText)`
-    color: #000000;
+    color: ${colors.black};
     opacity: .75;
     margin-left: 20px;
 `;
 
 export const Txt = styled.Text`
     font-size: 20px;
-    color: #0000005e;
+    color: ${colors.navyBlue};
     font-family: "Nunito-Italic";
     text-align: center;
 `;

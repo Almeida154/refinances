@@ -27,6 +27,8 @@ import { ActivityIndicator } from 'react-native-paper'
 import { StackActions } from '@react-navigation/native'
 
 import Header from '../../../../../components/Header'
+import { colors } from '../../../../../styles'
+
 
 type PropsManageAccount = {
     navigation: StackNavigationProp<HomeAccountStack, "ManageAccount">
@@ -75,8 +77,8 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                     <View style={{alignSelf: 'center',
                      height: '100%',
                      justifyContent: 'center'}}>
-                         <ActivityIndicator size='large' color='#E8871E' />
-                         <Text style={{color: '#183153',
+                         <ActivityIndicator size='large' color={colors.fulvous} />
+                         <Text style={{color: colors.PrussianBlue,
                            fontSize: 22,
                            fontFamily: 'Poppins-Bold',
                            marginTop: 20}}>Carregando...</Text>
@@ -98,8 +100,8 @@ const ManageAccount = ({navigation}: PropsManageAccount) => {
                     <Button 
                         onPress={() => navigation.dispatch(StackActions.replace('StackAccount', {screen: 'CreateAccount'}))}
                         title="Criar"
-                        color="#444"
-                        backgroundColor="#ccc"
+                        color={colors.darkGray}
+                        backgroundColor={colors.blackSilver}
                     />   
 
                 </Container>

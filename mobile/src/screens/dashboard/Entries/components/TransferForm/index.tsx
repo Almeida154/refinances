@@ -86,10 +86,10 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                         onClear={() => {}}
                         showClearIcon={false}
                         label="Descrição"
-                        colorLabel="#333333"
+                        colorLabel={colors.jet}
                         value={descricao}
                         onChangeText={setDescricao}                
-                        placeholderTextColor={"#bbb"}
+                        placeholderTextColor={colors.silver}
                         placeholder="Descrição de sua transferência"></InputText>
                 </InputControl>
 
@@ -105,7 +105,7 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                     <InputTextView
                         value={dataPagamento.toLocaleDateString()}
                         label="Data de Efetuação"
-                        colorLabel="#333"
+                        colorLabel={colors.jet}
                         onPress={showDatePicker}
                     />
                 <DateTimePickerModal
@@ -121,9 +121,9 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                     title="Adicionar" 
                     onPress={handleSubmit}
                     style={{
-                        backgroundColor: '#333'
+                        backgroundColor: colors.jet
                     }}
-                    color="#fff"
+                    color={colors.white}
                 />
             </ContainerForm>
         </ScrollView>

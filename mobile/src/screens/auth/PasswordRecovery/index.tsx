@@ -19,12 +19,14 @@ import {
   TxtBottom, Header,
   ButtonTextGoogle, ContainerContentButtonGoogle
 } from './styles';
+import {colors, fonts, metrics} from '../../../styles'
 
 // Components
 import Button from '../../../components/Button';
 
 // Icons
 import BackArrowPink from '../../../assets/images/svg/arrow-back-pink.svg';
+import { color } from 'react-native-reanimated';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, "RecuperarConta">
@@ -66,7 +68,7 @@ const RecuperarConta = ({navigation}: PropsNavigation) => {
             <Text style={styles.label}>Digite seu e-mail cadastrado</Text>
             <TextInput style={styles.textInput}
               placeholder="email@exemplo.com"
-              placeholderTextColor="#0000001d"
+              placeholderTextColor={colors.xiketic}
               value={email}
               autoCapitalize="none"
               keyboardType="email-address"
@@ -103,9 +105,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderBottomWidth: 2,
     width: '100%',
-    color: '#858c87',
+    color: colors.battleGray,
     height: 40,
-    borderBottomColor: '#00000028'
+    borderBottomColor: colors.oxfordGray
   },
   inputControl: {
     display: 'flex',

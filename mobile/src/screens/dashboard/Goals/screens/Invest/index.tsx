@@ -188,9 +188,9 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+    <ScrollView style={{ backgroundColor: colors.cultured }}>
       <StatusBar backgroundColor={'transparent'} />
-      <Header style={{ backgroundColor: '#ee4266' }}>
+      <Header style={{ backgroundColor: colors.paradisePink }}>
         <HeaderTop backButton={backAction} title="" />
         <AlinhaParaDireita>
 
@@ -202,7 +202,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               style={{
                   alignContent: 'flex-end',
                   alignItems: 'flex-end',
-                  color: '#F5F2F3',
+                  color: colors.lightGray,
                   fontFamily: fonts.familyType.bold,
                   fontSize: fonts.size.super +20,
                   opacity: 0.7,
@@ -214,7 +214,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               separator=","
               precision={2}
               maxValue={999999}
-              placeholderTextColor={'#F5F2F3'}
+              placeholderTextColor={colors.lightGray}
               selectionColor={colors.davysGrey}
               onChangeText={formattedValue => {
                   formattedValue == '' ? setValor((0).toString()) : setValor(valorDeposito);

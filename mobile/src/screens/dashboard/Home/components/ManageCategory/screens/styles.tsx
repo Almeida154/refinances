@@ -1,10 +1,10 @@
 import styled from "styled-components/native"
 
-import fonts from "../../../../../../styles/fonts"
+import {fonts, colors} from "../../../../../../styles"
 
 export const Title = styled.Text `
     fontSize: ${fonts.size.big};
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.black}`};
     textAlign: center;
     margin-bottom: 20px
@@ -12,7 +12,7 @@ export const Title = styled.Text `
 
 export const Subtitle = styled.Text `
     fontSize: ${fonts.size.small};
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.bold}`};
     textAlign: center;
     opacity: 0.7;
@@ -21,7 +21,7 @@ export const Subtitle = styled.Text `
 
 export const Goal = styled.View`
     position: relative;
-    backgroundColor: #fafafa;
+    backgroundColor: ${colors.snow};
     marginBottom: 30px;
     padding: 20px;
     borderRadius: 10px;
@@ -31,13 +31,13 @@ export const GoalTouchable = styled.TouchableOpacity ``
 
 export const GoalDesc = styled.Text`
     font-size: ${`${fonts.size.medium}px`};
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.black}`};
 `
 
 export const DaysLeft = styled.Text`
     font-size: ${`${fonts.size.smaller}px`};
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.bold}`};
     opacity: 0.3;
 `
@@ -45,11 +45,11 @@ export const DaysLeft = styled.Text`
 export const InvestedMoney = styled.Text`
     font-size: ${`${fonts.size.smaller}px`};
     fontFamily: ${`${fonts.familyType.bold}`};
-    color: #525252;
+    color: ${colors.davysGrey};
 `
 
 export const Percent = styled.View`
-    backgroundColor: #fff;
+    backgroundColor: ${colors.white};
     position: absolute;
     right: -20;
     top: -20;
@@ -63,7 +63,7 @@ export const Percent = styled.View`
 `
 
 export const PercentText = styled.Text`
-    color: #525252 
+    color: ${colors.davysGrey}
     fontFamily: ${`${fonts.familyType.regular}`};
 `
 
@@ -74,7 +74,7 @@ export const Loading = styled.View`
 `;
 
 export const TextLoading = styled.Text`
-    color: #183153;
+    color: ${colors.PrussianBlue};
     font-size: ${`${fonts.size.big}px`};
     fontFamily: ${`${fonts.familyType.regular}`};
     marginTop: 20

@@ -33,7 +33,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
     <View
       style={{
         paddingTop: 0,
-        backgroundColor: '#fff',
+        backgroundColor: colors.white,
         flex: 1,
       }}>
       <StatusBar backgroundColor="transparent" />
@@ -54,9 +54,9 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
             justifyContent: 'center'
           },
           tabBarIndicatorStyle: {
-            backgroundColor: '#525252',
+            backgroundColor: colors.davysGrey,
           },
-          tabBarActiveTintColor: '#525252',
+          tabBarActiveTintColor: colors.davysGrey,
         }}>
         <Tab.Screen name="Despesas" component={Despesas} />
         <Tab.Screen name="Receitas" component={Receitas} />

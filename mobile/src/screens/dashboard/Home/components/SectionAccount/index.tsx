@@ -31,6 +31,7 @@ import {
     LabelBalanceAccount,
     SectionIcon
 } from './styles'
+import {colors, fonts, metrics} from '../../../../../styles'
 import { StackActions } from '@react-navigation/native'
 
 
@@ -119,8 +120,8 @@ const SectionAccount = () => {
                         {screen: 'ManageAccount'})
                         )}
                     title="Gerenciar"
-                    color="#444"
-                    backgroundColor="#F5F2F3"
+                    color={colors.darkGray}
+                    backgroundColor={colors.lightGray}
                 /> 
             </ContainerAccount>
         </Container>

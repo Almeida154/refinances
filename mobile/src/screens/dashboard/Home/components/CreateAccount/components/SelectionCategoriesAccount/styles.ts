@@ -21,7 +21,7 @@ export const SectionImage = styled.View`
     border-width: 3;
     padding: 1%;
     border-radius: 50;
-    border-color: #444
+    border-color: ${colors.darkGray}
 `
 
 export const ContainerItem = styled.View`
@@ -33,19 +33,19 @@ export const ContainerItem = styled.View`
 export const NomeItem = styled.Text`
     margin-left: 10px;
     fontFamily: ${`${fonts.familyType.semiBold}`};
-    color: #444;
+    color: ${colors.darkGray};
 `
 
 export const BotaoAdicionarCategoria = styled.View`
     padding: 7%;
     align-items: center;
     justify-content: center;
-    background-color: #ccc;
+    background-color: ${colors.blackSilver};
 `
 
 export const LabelAdicionarCategoria = styled.Text`
     fontFamily: ${`${fonts.familyType.semiBold}`};
-    color: #444;
+    color: ${colors.darkGray};
     fontSize: ${`${fonts.size.medium}px`};
 `
 

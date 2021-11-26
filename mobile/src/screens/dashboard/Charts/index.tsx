@@ -86,7 +86,7 @@ const Graficos = () => {
         <Container >
             <Header>                        
                 <PeriodoAnterior onPress={() => updateDate(-1)}>
-                    <Icon size={24} name={"arrow-back-ios"} color="#444"/>
+                    <Icon size={24} name={"arrow-back-ios"} color={colors.darkGray}/>
                 </PeriodoAnterior>
                         
                 <PeriodoAtual>
@@ -94,7 +94,7 @@ const Graficos = () => {
                 </PeriodoAtual>
 
                 <PeriodoPosterior onPress={() => updateDate(1)}>
-                    <Icon size={24} name={"arrow-forward-ios"} color="#444"/>
+                    <Icon size={24} name={"arrow-forward-ios"} color={colors.darkGray}/>
                 </PeriodoPosterior>
             </Header>
 
@@ -106,7 +106,7 @@ const Graficos = () => {
 const styles = StyleSheet.create({       
     title: {
         fontSize: 20,
-        color: '#fff',
+        color: colors.white,
     },
 });
 export default Graficos;

@@ -65,15 +65,15 @@ const FormLancamento = ({route}: any) => {
     return (
         <ScrollView
             style={{height: '100%', width: '100%'}}>
-            <StatusBar backgroundColor={selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}/>
+            <StatusBar backgroundColor={selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}/>
             {
                 <Container>
-                    <Header style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}>
+                    <Header style={{backgroundColor: selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}}>
 
                     <HeaderTop 
                         backButton={backAction} 
                         title={selected == 0? 'Nova despesa' : selected == 1 ? 'Nova receita' : 'Nova transferência'}
-                        color="#fff"
+                        color={colors.white}
                         isShort
                     />
 
@@ -87,7 +87,7 @@ const FormLancamento = ({route}: any) => {
                                 style={{
                                     alignContent: 'flex-end',
                                     alignItems: 'flex-end',
-                                    color: '#F5F2F3',
+                                    color: colors.lightGray,
                                     fontFamily: fonts.familyType.bold,
                                     fontSize: fonts.size.super +20,
                                     opacity: 0.7,
@@ -99,7 +99,7 @@ const FormLancamento = ({route}: any) => {
                                 separator=","
                                 precision={2}
                                 maxValue={999999}
-                                placeholderTextColor={'#F5F2F3'}
+                                placeholderTextColor={colors.lightGray}
                                 selectionColor={colors.davysGrey}
                                 onChangeText={formattedValue => {
                                     formattedValue == '' ? setValor((0).toString()) : setValor(valor);
@@ -108,9 +108,9 @@ const FormLancamento = ({route}: any) => {
                         </AlinhaParaDireita>
 
                         <SectionButtons>
-                            <Buttons onPress={() => setSelected(0)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>despesa</TextButton></Buttons>
-                            <Buttons onPress={() => setSelected(1)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>receita</TextButton></Buttons>
-                            <Buttons onPress={() => setSelected(2)} style={{backgroundColor: selected == 0? '#EE4266' : selected == 1 ? '#6CB760' : '#333333'}}><TextButton>transferência</TextButton></Buttons>
+                            <Buttons onPress={() => setSelected(0)} style={{backgroundColor: selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}}><TextButton>despesa</TextButton></Buttons>
+                            <Buttons onPress={() => setSelected(1)} style={{backgroundColor: selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}}><TextButton>receita</TextButton></Buttons>
+                            <Buttons onPress={() => setSelected(2)} style={{backgroundColor: selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}}><TextButton>transferência</TextButton></Buttons>
                         </SectionButtons>
                     </Header>
                     

@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 
 import {toDate} from '../../../../../helpers/manipularDatas'
+import {colors, fonts, metrics} from '../../../../../styles'
 
 import { ProgressBar, Colors } from 'react-native-paper';
 
@@ -66,8 +67,8 @@ const SectionManage = () => {
                         navigation.dispatch(StackActions.replace('GoalsStack', 
                         { screen:'GoalList'}))}
                     title="Gerenciar"
-                    color="#444"
-                    backgroundColor="#f5f2f3"
+                    color={colors.darkGray}
+                    backgroundColor={colors.lightGray}
                 />
             </ContainerGoals>
         </Container>
