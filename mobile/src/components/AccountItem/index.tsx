@@ -22,6 +22,7 @@ import hexToRGB from '../../helpers/hexToRgba';
 import global from '../../global';
 import doubleToCurrency from '../../helpers/doubleToCurrency';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
+import shadowBox from '../../helpers/shadowBox';
 
 interface IProps extends TouchableOpacityProps {
   account?: Conta;
@@ -34,14 +35,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
   );
 
   return (
-    <Container
-      style={{
-        shadowColor: 'rgba(0, 0, 0, .26)',
-        shadowOffset: { width: 0, height: 200 },
-        shadowOpacity: 0.08,
-        shadowRadius: 2,
-        elevation: 10,
-      }}>
+    <Container style={shadowBox(10, 0.26)}>
       <Content {...rest} activeOpacity={1}>
         {account?.tipo == 'carteira' && (
           <Image
@@ -87,14 +81,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
           />
         </Icon>
       </Content>
-      <Data
-        style={{
-          shadowColor: 'rgba(0, 0, 0, .4)',
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.08,
-          shadowRadius: 20,
-          elevation: 10,
-        }}>
+      <Data style={shadowBox(10, 0.4)}>
         <Amount>
           {doubleToCurrency(account?.saldoConta || 0, 'pt-br', 'BRL')}
         </Amount>

@@ -1,121 +1,95 @@
-import styled from 'styled-components/native'
-
-import { Dimensions } from 'react-native'
-import { fonts, colors } from '../../../styles'
+import styled from 'styled-components/native';
+import { heightPixel, widthPixel } from '../../../helpers/responsiveness';
+import { fonts, colors, metrics } from '../../../styles';
 
 export const Container = styled.View`
+  padding-top: ${`${metrics.default.statusBarHeight}px`};
+  flex: 1;
+`;
 
-`
+// Header
 
 export const Header = styled.View`
-    display: flex;
-    flex-direction: row;
-    height: 80px;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 20%;
-    padding-right: 20%;
-    margin-top: 10%;
-`
+  flex-direction: row;
+  height: ${`${heightPixel(220)}px`};
+  justify-content: center;
+  align-items: center;
+`;
 
 export const PeriodoAnterior = styled.TouchableOpacity`
+  opacity: 0.2;
+`;
 
-`
 export const PeriodoAtual = styled.View`
-
-`
+  padding: 0 ${`${widthPixel(60)}px`};
+  opacity: 0.7;
+`;
 
 export const PeriodoPosterior = styled.TouchableOpacity`
+  opacity: 0.2;
+`;
 
-`
 export const LabelPeriodo = styled.Text`
-    font-family: ${`${fonts.familyType.semiBold}`};
-    font-size: ${`${fonts.size.big}px`};
-    color: ${colors.darkGray}
-`
-export const Body = styled.View`
-    background-color: ${colors.white};
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 10px;
-`
+  font-family: ${`${fonts.familyType.bold}`};
+  background-color: ${colors.platinum};
+  padding-top: ${`${widthPixel(10)}px`};
+  padding-bottom: ${`${widthPixel(10)}px`};
+  padding-left: ${`${widthPixel(50)}px`};
+  padding-right: ${`${widthPixel(50)}px`};
+  border-radius: ${`${widthPixel(80)}px`};
+  font-size: ${`${fonts.size.big}px`};
+  color: ${colors.darkGray};
+`;
 
-export const ScrollBody = styled.ScrollView`
-    height: ${`${Dimensions.get('window').height * 0.65}px`};
-    width: 100%;
-`
+export const TopData = styled.View`
+  flex-direction: row;
+  background-color: ${colors.white};
+  height: ${`${heightPixel(280)}px`};
+  border-radius: ${`${widthPixel(60)}px`};
+`;
 
-export const CardItem = styled.View`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: gray;
-    margin-bottom: 40px;
-`
+export const TopDataItem = styled.View`
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+`;
 
-export const Section = styled.View`
-    display: flex;    
-    flex-direction: column;
-`
+export const TopDataTitle = styled.Text`
+  font-size: ${`${fonts.size.big}px`};
+  font-family: ${fonts.familyType.bold};
+  color: ${colors.davysGrey};
+`;
 
-export const Footer = styled.View`
-    display: flex;
-    background-color: ${colors.white};
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 20px;
-    top: 80;
-    height: 20%;
-`
-export const CardBalance = styled.View`
-    width: 30%;
-    align-items: center;
-    padding: 10px;
-    background-color: ${colors.cultured};
-    border-radius: 10px;
-`
-export const LabelBalance = styled.Text`
-    font-family: ${`${fonts.familyType.bold}`};
-    font-size: ${`${fonts.size.smaller}px`};
-    color: ${colors.darkGray};
-`
-export const LabelValueBalance = styled.Text`
-    font-family: ${`${fonts.familyType.semiBold}`};
-    font-size: ${`${fonts.size.small}px`};
-`
-export const TextPicker = styled.Text`
+export const TopDataBalance = styled.Text`
+  font-size: ${`${fonts.size.medium - widthPixel(8)}px`};
+  font-family: ${fonts.familyType.bold};
+  margin-top: ${`${heightPixel(-18)}px`};
+`;
 
-`
+export const TopDataDescription = styled.Text`
+  font-size: ${`${fonts.size.small}px`};
+  font-family: ${fonts.familyType.bold};
+  margin-top: ${`${heightPixel(20)}px`};
+  opacity: 0.3;
+`;
 
-export const ContainerPicker = styled.View`
-    padding-top: 60;
-    padding-bottom: 30;
-    flex: 1;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: ${colors.aliceBlue};
-`
+// Body
 
-export const WrapperHorizontal = styled.View`
-    height: 100;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    color: black;
-`
+export const Content = styled.View`
+  padding: ${`${metrics.default.boundaries / 1.6}px`};
+`;
 
-export const ButtonAccessDetail = styled.TouchableHighlight`
-    justify-content: center;
-    align-items: center;
-    margin-top: 10;
-    margin-bottom: 10;
-    padding-top: 10;
-    padding-bottom: 10;
-    padding-left: 30;
-    padding-right: 30;
-    height: 50;
-    border-width: 3;
-    border-radius: 10;
-`
+export const GeneralStatsCard = styled.View`
+  position: relative;
+  height: ${`${heightPixel(1000)}px`};
+  background-color: ${colors.diffWhite};
+  border-radius: ${`${widthPixel(24)}px`};
+`;
+
+export const GeneralStatsFooter = styled(GeneralStatsCard)`
+  position: absolute;
+  bottom: 0;
+  height: ${`${heightPixel(250)}px`};
+  width: 100%;
+  background-color: ${colors.white};
+`;
