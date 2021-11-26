@@ -14,7 +14,7 @@ import RootStackParamApp, {
 import { createStackNavigator } from '@react-navigation/stack';
 
 import ManageAccount from '../screens/dashboard/Home/components/ManageAccount';
-import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
+//import CreateAccount from '../screens/dashboard/Home/components/CreateAccount';
 // import newCategory from '../screens/dashboard/Home/components/newCategory';
 import Home from '../screens/dashboard/Home';
 import ManageCategory from '../screens/dashboard/Home/components/ManageCategory/navigators/TopBarNavigator';
@@ -41,11 +41,11 @@ export const HomeAccountStackNavigation = () => {
         options={{ headerShown: false }}
       />
 
-      <HomeStack.Screen
+      {/* <HomeStack.Screen
         name="CreateAccount"
         component={CreateAccount}
         options={{ headerShown: false }}
-      />
+      /> */}
 
       <HomeStack.Screen
         name="ManageCategory"
