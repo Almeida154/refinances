@@ -139,15 +139,20 @@ const Home = () => {
             </View>
 
             <View style={styles.containerSetting}>
-              <Icon2
-                name="settings"
-                color={colors.bigDipOruby}
-                size={30}
-                style={{ marginRight: 20 }}
-              />
+              <TouchableOpacity
+              onPress={() => {
+                navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config'}))
+              }}>
+                <Icon2
+                  name="settings"
+                  color={colors.bigDipOruby}
+                  size={25}
+                  style={{ marginRight: 20 }}
+                />
+              </TouchableOpacity>
 
               <TouchableOpacity onPress={handleLogout}>
-                <Icon name="logout" color={colors.bigDipOruby}size={30} />
+                <Icon name="logout" color={colors.bigDipOruby} size={25} />
               </TouchableOpacity>
             </View>
           </View>

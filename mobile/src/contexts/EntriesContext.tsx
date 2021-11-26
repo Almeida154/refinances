@@ -79,6 +79,8 @@ export const LancamentoProvider: React.FC = ({ children }) => {
 
       const readEntry: Lancamento = response.data.message;
 
+      console.debug("handleLoadOneLancamentos | readEntry.parcelasLancamento", readEntry.parcelasLancamento)
+
       readEntry.parcelasLancamento.map((item, index) => {
         readEntry.parcelasLancamento[index].dataParcela = new Date(
           item.dataParcela,
@@ -144,16 +146,32 @@ export const LancamentoProvider: React.FC = ({ children }) => {
         essencial: lancamento.essencial,
       });
 
-      if (response.data.error) return response.data.error;
-
-      console.debug('response.data.message.id ', response.data);
+      if (response.data.error) return response.data.error;      
 
       lancamento.parcelasLancamento.map((item, index) => {
         lancamento.parcelasLancamento[index].lancamentoParcela =
           response.data.message.id;
       });
 
-      await handleEditParcela(lancamento.parcelasLancamento);
+      if(lancamento.parcelaBaseada == -1) {
+        handleEditParcela(lancamento.parcelasLancamento);
+      } else {
+        const parcela: Parcela = lancamento.parcelasLancamento[0]
+
+        console.debug("handleEditLancamento | parcela", parcela)
+
+        const responseParcela = await api.put(`/installment/edit/${parcela.id}`, {
+            contaParcela: parcela.contaParcela,
+            dataParcela: parcela.dataParcela,
+            lancamentoParcela: parcela.lancamentoParcela,
+            statusParcela: parcela.statusParcela,
+            valorParcela: parcela.valorParcela
+        })
+
+        if(responseParcela.data.error) {
+          return responseParcela.data.error
+        }
+      }
 
       return '';
     } catch (error) {

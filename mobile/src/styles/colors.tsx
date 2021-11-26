@@ -4,7 +4,7 @@ export default {
   davysGrey: '#525252',
   silver: '#c4c4c4',
   lightGray: '#F5F2F3',
-  darkGray: '#444',
+  darkGray: '#444',#
 
   cultured: '#f6f6f6',
   white: '#ffffff',

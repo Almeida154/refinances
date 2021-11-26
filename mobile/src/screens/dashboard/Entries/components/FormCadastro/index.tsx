@@ -21,7 +21,7 @@ import {
 } from './styles'
 import {colors, fonts, metrics} from '../../../../../styles'
 
-import { Parcela } from '../../../../../contexts/InstallmentContext'
+import { UseParcelas, Parcela } from '../../../../../contexts/InstallmentContext'
 import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext'
 import { UseLancamentos, Lancamento } from '../../../../../contexts/EntriesContext'
 import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
@@ -41,12 +41,11 @@ import Button from '../../../../../components/Button';
 
 const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor, tipoLancamento}) => {
     const {categorias} = UseCategories()
-    const {contas} = UseContas()
+    const {contas, handleReadByUserContas} = UseContas()
     const {navigation} = UseDadosTemp()            
     const {showNiceToast,  hideNiceToast} = UseDadosTemp()
     const {handleAdicionarLancamento, handleEditLancamento} = UseLancamentos()            
-
-    console.debug("FormCadastro | receiveEntry", receiveEntry)
+    const {handleInstallmentGroupByDate} = UseParcelas()
     
     const [detalhes, setDetalhes] = useState(false)
     
@@ -54,17 +53,17 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
     
     const [descricao, setDescricao] =  useState(receiveEntry?.descricaoLancamento ? receiveEntry?.descricaoLancamento : '')
     const [dataPagamento, setDataPagamento] =  useState(receiveEntry?.parcelasLancamento[0].dataParcela ? new Date(receiveEntry.parcelasLancamento[0].dataParcela) : (new Date(Date.now())) )    
-    const [status, setStatus] = useState(true)
+    const [status, setStatus] = useState(receiveEntry?.parcelasLancamento[0].statusParcela ? true : false)
     const [mensal, setMensal] = useState(!receiveEntry ? false : receiveEntry?.parcelaBaseada == -1 ? false : true)
     
     const [selectedCategoria, setSelectedCategoria] = useState<Categoria | null>(null)    
-        
+    
     useEffect(() => {
         if(receiveEntry?.categoryLancamento && typeof receiveEntry?.categoryLancamento != 'string') {
             setSelectedCategoria(receiveEntry?.categoryLancamento)                                   
             }
     }, [])
-
+    
     const [selectedConta, setSelectedConta] = useState<Conta | null>(receiveEntry?.parcelasLancamento[0].contaParcela ? receiveEntry?.parcelasLancamento[0].contaParcela : null)    
 
     const [parcelas, setParcelas] =  useState(receiveEntry?.parcelasLancamento ? String(receiveEntry.parcelasLancamento.length) : '1')    
@@ -80,6 +79,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
             indexOfLancamento: 0
         },
     ])                
+
+    // console.debug("FormCadastro | dataParcelas", dataParcelas)
 
     const changeParcela = (text: string, date: Date, newDataParcelas: Parcela[]) => {
         setParcelas(text)
@@ -149,7 +150,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
                 parcelaBaseada: 0,
                 categoryLancamento: selectedCategoria?.nomeCategoria,
                 parcelasLancamento: [{
-                    id: receiveEntry ? receiveEntry.id : -1 ,
+                    id: dataParcelas[0].id ,
                     lancamentoParcela: -1,
                     contaParcela: selectedConta == null ? 0 : selectedConta,
                     dataParcela: dataPagamento,
@@ -193,6 +194,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({receiveEntry, valor, setValor,
 
             if(message == '') {
                 showNiceToast("success", "Lançamento editado")
+
+                handleReadByUserContas(idUser)
+                handleInstallmentGroupByDate(idUser, new Date().toISOString())
                 navigation.dispatch(StackActions.replace("Main", {screen: 'Extrato'}))
             }
             else {

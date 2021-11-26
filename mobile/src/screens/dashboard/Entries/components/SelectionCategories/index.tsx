@@ -122,7 +122,6 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
     }, [categorias])
 
     useEffect(() => {
-        console.debug('SelectionCategorias | categorias', categorias)
         if(search == '' && categorias) {
             setCategoriasAtual(categorias)
         } else if(categorias) {

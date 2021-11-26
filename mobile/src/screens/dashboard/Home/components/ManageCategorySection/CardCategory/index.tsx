@@ -31,10 +31,10 @@ type PropsCardCategory = {
 const CardCategory = ({ item }: PropsCardCategory) => {
   const { navigation } = UseDadosTemp();   
 
-  console.debug("CardCategory | item[nome]", item.nomeCategoria)
-  console.debug("CardCategory | item[valueLancamentos]", item.valueLancamentos)
-  console.debug("CardCategory | item[tetodeGastos]", item.tetoDeGastos)
-  console.log()
+  // console.debug("CardCategory | item[nome]", item.nomeCategoria)
+  // console.debug("CardCategory | item[valueLancamentos]", item.valueLancamentos)
+  // console.debug("CardCategory | item[tetodeGastos]", item.tetoDeGastos)
+  // console.log()
   return (
     <Category key={item.id}>
       <SectionDescription>

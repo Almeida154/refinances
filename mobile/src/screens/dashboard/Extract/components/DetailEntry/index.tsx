@@ -55,19 +55,22 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
             const receiveEntry = await handleLoadOneLancamentos(item?.lancamentoParcela.id)
             
             if(typeof receiveEntry == 'string')
-                return showNiceToast("error", "Ocorreu um erro ao carregar esse lançamento")            
+                return showNiceToast("error", "Ocorreu um erro ao carregar esse lançamento")                        
 
-            const parcelaUpdate = {
-                id: item.id,
-                contaParcela: item.contaParcela,
-                dataParcela: new Date(item.dataParcela),
-                indexOfLancamento: receiveEntry.parcelaBaseada,
-                statusParcela: item.statusParcela,
-                valorParcela: item.valorParcela,
-                lancamentoParcela: -1
-            } as Parcela
-
-            receiveEntry.parcelasLancamento = [parcelaUpdate]
+            if(receiveEntry.parcelaBaseada != -1) {
+                const parcelaUpdate = {
+                    id: item.id,
+                    contaParcela: item.contaParcela,
+                    dataParcela: new Date(item.dataParcela),
+                    indexOfLancamento: 0,
+                    statusParcela: item.statusParcela,
+                    valorParcela: item.valorParcela,
+                    lancamentoParcela: -1
+                } as Parcela
+    
+                receiveEntry.parcelasLancamento = [parcelaUpdate]
+                receiveEntry.totalParcelas = item.valorParcela
+            }
             navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveEntry: typeof receiveEntry == 'string' ? undefined : receiveEntry}}))
         }
     }
