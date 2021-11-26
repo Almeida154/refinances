@@ -125,18 +125,22 @@ class UserController {
       await parcelaRepository.save(newParcela);
 
       const updateDate = new Date(newParcela.dataParcela);
+      newParcela.id = undefined
+
       let parcela: any;
       for (var i = 1; i < 24; i++) {
+        addMonths(updateDate, 1);
         parcela = parcelaRepository.create(newParcela);
-
-        parcela.dataParcela = updateDate;
+        
+        parcela.dataParcela = new Date(updateDate);
 
         parcela.statusParcela = false;
 
         await parcelaRepository.save(parcela);
 
-        addMonths(updateDate, 1);
       }
+
+      console.log()
     });
 
     return response.send({ message: entries });
