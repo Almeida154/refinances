@@ -163,16 +163,16 @@ class ParcelaController {
         const parcelas = []
 
 
-        const [diaAtual, mesAtual, anoAtual] = dataByUser[0].dataParcela.toLocaleDateString().split('/')
+        const [diaAtual, mesAtual, anoAtual] = dataByUser[0].dataParcela.toLocaleDateString("pt-BR").split('/')
 
-        let atual = new Date(parseInt(anoAtual), parseInt(mesAtual), parseInt(diaAtual)).toLocaleDateString()
+        let atual = new Date(parseInt(anoAtual), parseInt(mesAtual), parseInt(diaAtual)).toLocaleDateString("pt-BR")
 
         let aux = []
 
         dataByUser.map((item: Parcela, index) => {
-            const [dia, mes, ano] = item.dataParcela.toLocaleDateString().split('/')
+            const [dia, mes, ano] = item.dataParcela.toLocaleDateString("pt-BR").split('/')
 
-            const parcelaData = new Date(parseInt(ano), parseInt(mes), parseInt(dia)).toLocaleDateString()
+            const parcelaData = new Date(parseInt(ano), parseInt(mes), parseInt(dia)).toLocaleDateString("pt-BR")
             
             let readParcela
 
