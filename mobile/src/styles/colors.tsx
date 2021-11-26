@@ -3,7 +3,7 @@ export default {
   jet: '#292929',
   davysGrey: '#525252',
   silver: '#c4c4c4',
-  lightGray: '#F5F2F3',
+  lightGray: '#f3f3f3',
   darkGray: '#444',
 
   cultured: '#f6f6f6',

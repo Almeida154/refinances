@@ -1,45 +1,51 @@
 import {
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-    PrimaryGeneratedColumn
-} from 'typeorm';
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
-import { CategoryConta } from './CategoryConta';
-import { User } from './User';
-import { Transferencia } from './Transferencia';
-import { Parcela } from './Parcela';
+import { User } from "./User";
+import { Transferencia } from "./Transferencia";
+import { Parcela } from "./Parcela";
 
 @Entity()
 export class Conta {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({
-        type: 'float'
-    })
-    saldoConta: number;
+  @Column({
+    type: "float",
+  })
+  saldoConta: number;
 
-    @Column()
-    descricao: string;
+  @Column()
+  descricao: string;
 
-    @ManyToOne(type => CategoryConta, categoryConta => categoryConta.contasCategoryConta)
-    categoryConta: CategoryConta
-    
-    // Foreign Keys
+  @Column()
+  tipo: string;
 
-    @ManyToOne(type => User, user => user.categoriesUser)
-    userConta: User
+  @Column({ nullable: true })
+  instituicao: string;
 
-    @OneToMany(type => Transferencia, transferencia => transferencia.contaDestino)
-    transferenciasRecebidas: Transferencia[]
+  // Foreign Keys
 
-    @OneToMany(type => Transferencia, transferencia => transferencia.contaOrigem)
-    transferenciasEnviadas: Transferencia[]
-    
-    @OneToMany(type => Parcela, parcela => parcela.contaParcela)
-    parcelasConta: Parcela[]
+  @ManyToOne((type) => User, (user) => user.categoriesUser)
+  userConta: User;
+
+  @OneToMany(
+    (type) => Transferencia,
+    (transferencia) => transferencia.contaDestino
+  )
+  transferenciasRecebidas: Transferencia[];
+
+  @OneToMany(
+    (type) => Transferencia,
+    (transferencia) => transferencia.contaOrigem
+  )
+  transferenciasEnviadas: Transferencia[];
+
+  @OneToMany((type) => Parcela, (parcela) => parcela.contaParcela)
+  parcelasConta: Parcela[];
 }

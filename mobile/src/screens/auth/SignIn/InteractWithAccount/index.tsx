@@ -81,10 +81,10 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
 
   useEffect(() => {
     if (route.params.accountIndex) {
-      const account = setupUser.account[route.params.accountIndex];
-      setDesc(account.descricao);
+      const account = setupUser.accounts[route.params.accountIndex];
+      setDesc(account.descricao || '');
       setAmount(account.saldoConta);
-      setInstituition(account.descricao);
+      setInstituition(account.instituicao || '');
     }
   }, []);
 
@@ -101,12 +101,12 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
     hideNiceToast();
 
     if (route.params.accountIndex) {
-      const account = setupUser.account[route.params.accountIndex];
+      const account = setupUser.accounts[route.params.accountIndex];
       account.descricao = desc;
       account.saldoConta = amount || 0;
 
       const newSetupProps = setupUser;
-      newSetupProps.account[route.params.accountIndex] = account;
+      newSetupProps.accounts[route.params.accountIndex] = account;
       updateSetupUserProps(newSetupProps);
 
       navigation.dispatch(StackActions.replace('Account'));
@@ -118,13 +118,14 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
     }
 
     const newAccount = {
-      categoryConta: route.params.accountType,
+      tipo: route.params.accountType,
       descricao: desc,
       saldoConta: amount,
+      instituicao: instituition,
     } as Conta;
 
     const newSetupProps = setupUser;
-    newSetupProps.account.push(newAccount);
+    newSetupProps.accounts.push(newAccount);
     updateSetupUserProps(newSetupProps);
 
     navigation.dispatch(StackActions.replace('Account'));

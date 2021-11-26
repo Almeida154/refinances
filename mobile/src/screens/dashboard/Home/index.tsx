@@ -36,6 +36,7 @@ import ManageCategory from './components/ManageCategorySection';
 
 import fonts from '../../../styles/fonts';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { colors, metrics } from '../../../styles';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
@@ -139,9 +140,11 @@ const Home = () => {
 
             <View style={styles.containerSetting}>
               <TouchableOpacity
-              onPress={() => {
-                navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config'}))
-              }}>
+                onPress={() => {
+                  navigation.dispatch(
+                    StackActions.replace('StackAccount', { screen: 'Config' }),
+                  );
+                }}>
                 <Icon2
                   name="settings"
                   color="#9D3147"
@@ -155,8 +158,8 @@ const Home = () => {
               </TouchableOpacity>
             </View>
           </View>
-          {/* Scrollable Content */}
 
+          {/* Scrollable Content */}
           <ScrollView style={styles.scroll}>
             <View style={styles.containerBody}>
               <SectionAccount />
@@ -179,7 +182,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: colors.lightGray,
   },
   headerContainer: {
     alignItems: 'center',
@@ -228,8 +231,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   scroll: {
-    top: -15,
+    paddingHorizontal: metrics.default.boundaries / 1.6,
+    top: -40,
   },
+
   sectionSaldoGeral: {
     width: width - 60,
     backgroundColor: '#202731',

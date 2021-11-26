@@ -53,23 +53,24 @@ const Account = ({ navigation }: PropsNavigation) => {
 
   useEffect(() => {
     // Carteira
-    if (setupUser.account == undefined) {
+    if (setupUser.accounts == undefined) {
       const walletAccount = {
-        categoryConta: 'carteira',
+        tipo: 'carteira',
         descricao: 'Carteira',
         saldoConta: 0,
+        instituicao: null,
       } as Conta;
 
       const newSetupProps = setupUser;
-      newSetupProps.account = [walletAccount];
+      newSetupProps.accounts = [walletAccount];
       updateSetupUserProps(newSetupProps);
     }
   }, []);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 500);
-    setWalletAmount(setupUser.account[0].saldoConta);
-  }, [setupUser.account, isLoading]);
+    setWalletAmount(setupUser.accounts[0].saldoConta);
+  }, [setupUser.accounts, isLoading]);
 
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Photo'));
@@ -77,7 +78,7 @@ const Account = ({ navigation }: PropsNavigation) => {
   };
 
   async function next() {
-    if (setupUser.account.length < 2)
+    if (setupUser.accounts.length < 2)
       return showNiceToast(
         'error',
         'Calma ✋',
@@ -102,7 +103,7 @@ const Account = ({ navigation }: PropsNavigation) => {
       <Content>
         {!isLoading ? (
           <>
-            {setupUser.account.map((acc: Conta, index: number) => (
+            {setupUser.accounts.map((acc: Conta, index: number) => (
               <View style={{ elevation: 0 }} key={index}>
                 <AccountItem
                   account={acc}
@@ -118,7 +119,7 @@ const Account = ({ navigation }: PropsNavigation) => {
                 />
               </View>
             ))}
-            {setupUser.account.length < 2 && (
+            {setupUser.accounts.length < 2 && (
               <Button
                 style={{ backgroundColor: colors.platinum }}
                 title="Nova conta principal"
@@ -130,7 +131,7 @@ const Account = ({ navigation }: PropsNavigation) => {
         ) : (
           <AccountsPlaceholder
             moreThanOne={
-              setupUser.account != undefined && setupUser.account.length > 1
+              setupUser.accounts != undefined && setupUser.accounts.length > 1
             }
           />
         )}
@@ -162,7 +163,7 @@ const Account = ({ navigation }: PropsNavigation) => {
             console.log(walletAmount);
 
             const newSetupProps = setupUser;
-            newSetupProps.account[0].saldoConta = walletAmount || 0;
+            newSetupProps.accounts[0].saldoConta = walletAmount || 0;
             updateSetupUserProps(newSetupProps);
 
             closeModalize(walletModalizeRef);

@@ -37,11 +37,11 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     UseAuth();
 
   useEffect(() => {
-    let iterator = setupUser.expenseTagsCount;
-    console.log('---------CATEGORY---------');
-    console.debug(`Iterator: ${iterator}`);
-    console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
-    console.debug(`Size: ${setupUser.entries.length}`);
+    // let iterator = setupUser.expenseTagsCount;
+    // console.log('---------CATEGORY---------');
+    // console.debug(`Iterator: ${iterator}`);
+    // console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
+    // console.debug(`Size: ${setupUser.entries.length}`);
 
     showNiceToast('fake', 'Oops!', null, 500);
     populateCategories();

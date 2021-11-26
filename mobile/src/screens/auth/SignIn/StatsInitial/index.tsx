@@ -154,12 +154,9 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
 
   const register = async () => {
     const response = await handleRegister();
-
-    console.log('response', response);
+    console.debug('StatsInitial | register(): ', response);
 
     const idUser = await retornarIdDoUsuario();
-
-    console.log(idUser);
 
     // @ts-ignore
     const logUser = JSON.parse(await AsyncStorage.getItem('user'));
@@ -200,6 +197,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
     api.post(`/user/setupuser/${idUser}`, {
       entries: setupUser.entries,
       allCategories: ctgrs == undefined ? [] : ctgrs,
+      accounts: setupUser.accounts,
     });
 
     logUser.signed = true;

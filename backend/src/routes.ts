@@ -2,7 +2,6 @@ import { Router } from "express";
 
 import UserController from "./controllers/UserController";
 import CategoryController from "./controllers/CategoryController";
-import CategoryAccountController from "./controllers/CategoryAccountController";
 import AccountController from "./controllers/AccountController";
 import EntryController from "./controllers/EntryController";
 import GoalController from "./controllers/GoalController";
@@ -37,22 +36,6 @@ Routes.post("/category/countbyentry/:iduser", CategoryController.CountByEntry);
 Routes.put("/category/edit/:id", CategoryController.edit);
 Routes.delete("/category/remove/:id", CategoryController.remove);
 Routes.delete("/category/remove", CategoryController.removeAll);
-
-// CategoryConta
-Routes.post("/categoryAccount/create", CategoryAccountController.save);
-Routes.get("/categoryAccount/read", CategoryAccountController.showRelations);
-Routes.get("/categoryAccount/read/:id", CategoryAccountController.one);
-Routes.post(
-  "/categoryAccount/findbyname/:iduser",
-  CategoryAccountController.FindByName
-);
-Routes.post(
-  "/categoryAccount/findbyuser/:iduser",
-  CategoryAccountController.FindByUser
-);
-Routes.put("/categoryAccount/edit/:id", CategoryAccountController.edit);
-Routes.delete("/categoryAccount/remove/:id", CategoryAccountController.remove);
-Routes.delete("/categoryAccount/remove", CategoryAccountController.removeAll);
 
 // Conta
 Routes.post("/account/create", AccountController.save);
@@ -95,7 +78,6 @@ Routes.delete("/installment/remove/:id", InstallmentController.remove);
 Routes.delete("/installment/remove", InstallmentController.removeAll);
 
 // Transferencia
-
 Routes.post("/transfer/create", TransferController.save);
 Routes.get("/transfer/read", TransferController.showRelations);
 Routes.get("/transfer/read/:id", TransferController.one);
@@ -104,5 +86,10 @@ Routes.post("/transfer/groupbydate/:iduser", TransferController.GroupByDate);
 Routes.put("/transfer/edit/:id", TransferController.edit);
 Routes.delete("/transfer/remove/:id", TransferController.remove);
 Routes.delete("/transfer/remove", TransferController.removeAll);
+
+// Config
+// Routes.post('/config/create/:user_id');
+// Routes.get('/config/read/:user_id');
+// Routes.put('/config/edit/:user_id');
 
 export default Routes;

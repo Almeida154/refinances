@@ -29,7 +29,7 @@ export interface SetupUser {
   createdCategories: Categoria[];
   allCategories: Categoria[];
   entries: Lancamento[];
-  account: Conta[];
+  accounts: Conta[];
 }
 
 export interface error {

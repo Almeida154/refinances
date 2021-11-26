@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 
 import VerificaSeOEmailExiste from "../helpers/VerificaSeOEmailExiste";
 import { Lancamento } from "../entities/Lancamento";
-import { CategoryConta } from "../entities/CategoryConta";
 import { Category } from "../entities/Category";
 import { Conta } from "../entities/Conta";
 import { Parcela } from "../entities/Parcela";
@@ -28,7 +27,6 @@ class UserController {
   async setupUser(request: Request, response: Response, next: NextFunction) {
     const userRepository = getRepository(User);
     const lancamentoRepository = getRepository(Lancamento);
-    const categoryContaRepository = getRepository(CategoryConta);
     const categoryRepository = getRepository(Category);
     const contaRepository = getRepository(Conta);
     const parcelaRepository = getRepository(Parcela);
@@ -39,6 +37,12 @@ class UserController {
 
     const entries = request.body.entries;
     const allCategories = request.body.allCategories;
+    const accounts = request.body.accounts;
+
+    console.log(accounts);
+    console.log("------------");
+    console.log(entries);
+
     allCategories.push({
       iconeCategoria: "Ionicons:rocket-outline",
       tetoDeGastos: 0,
@@ -52,41 +56,19 @@ class UserController {
       return response.send({ error: "Usuario nao encontrado" });
     }
 
-    // Categoria Conta
-    const nomesCategoriasContaPadroes = [
-      ["Carteira", "Entypo:wallet", "#669941"],
-      ["Poupança", "MaterialCommunityIcons:currency-usd-circle", "#123456"],
-      ["Investimentos", "MaterialIcons:show-chart", "#654321"],
-    ];
-
-    const categoriasContasPadroes = [] as CategoryConta[];
-
-    for (var i = 0; i < nomesCategoriasContaPadroes.length; i++) {
-      const funcao = async (item) => {
-        const newCategoriaConta = categoryContaRepository.create({
-          iconeCategoryConta: item[1],
-          descricaoCategoryConta: item[0],
-          userCategoryConta: user,
-          corCategoryConta: item[2],
-        });
-
-        categoriasContasPadroes.push(
-          await categoryContaRepository.save(newCategoriaConta)
-        );
-      };
-
-      await funcao(nomesCategoriasContaPadroes[i]);
-    }
-
     // Contas
-    const newConta = contaRepository.create({
-      descricao: "Conta Principal",
-      categoryConta: categoriasContasPadroes[0],
-      saldoConta: 0,
-      userConta: user,
-    });
+    const initialAccounts = [];
 
-    const contaPrincipal = await contaRepository.save(newConta);
+    accounts.map(async (account) => {
+      const newAccount = contaRepository.create({
+        descricao: account.descricao,
+        tipo: account.tipo,
+        instituicao: account.instituicao,
+        saldoConta: account.saldoConta,
+        userConta: user,
+      });
+      initialAccounts.push(await contaRepository.save(newAccount));
+    });
 
     // Categorias
     const categoriasPadroes = [];
@@ -127,10 +109,9 @@ class UserController {
       );
 
       // Parcela
-
       item.parcelasLancamento;
       const newParcela = parcelaRepository.create({
-        contaParcela: contaPrincipal,
+        contaParcela: initialAccounts[1],
         lancamentoParcela: newLancamento,
         userParcela: user,
         statusParcela:

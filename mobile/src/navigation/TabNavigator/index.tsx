@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { colors, fonts, metrics } from '../../styles';
-import { widthPixel, heightPixel } from '../../helpers/responsiveness'
+import { widthPixel, heightPixel } from '../../helpers/responsiveness';
 
 import {
   createStackNavigator,
@@ -39,11 +39,7 @@ import Icon2 from 'react-native-vector-icons/Feather';
 import Icon3 from 'react-native-vector-icons/Ionicons';
 import Icon4 from 'react-native-vector-icons/Entypo';
 
-import {
-  GestureResponderEvent,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { GestureResponderEvent, TouchableOpacity, View } from 'react-native';
 
 import { StackActions } from '@react-navigation/native';
 
@@ -62,25 +58,25 @@ type PropsCustomBar = {
 
 const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
   return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={{
-          width: 60,
-          height: 60,
-          borderRadius: 35,
-          backgroundColor: '#fff',
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 4,
-          },
-          shadowOpacity: 0.32,
-          shadowRadius: 5.46,
-          elevation: 9,
-          marginTop: heightPixel(-90)
-        }}>
-        {children}
-      </TouchableOpacity>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        width: 60,
+        height: 60,
+        borderRadius: 35,
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+        marginTop: heightPixel(-90),
+      }}>
+      {children}
+    </TouchableOpacity>
   );
 };
 
@@ -120,7 +116,7 @@ const TabNavigator = () => {
               StackActions.replace('Lancamentos', { screen: 'RecognizeVoice' }),
             )
           }
-          style={{marginBottom: heightPixel(170)}}
+          style={{ marginBottom: heightPixel(170) }}
           backgroundColor={colors.platinum}
           color={colors.darkGray}
         />
@@ -133,12 +129,12 @@ const TabNavigator = () => {
             paddingBottom: 10,
             paddingTop: 10,
             height: heightPixel(180),
-
           },
-          tabBarLabelStyle: 
-            {fontFamily: fonts.familyType.bold, 
+          tabBarLabelStyle: {
+            fontFamily: fonts.familyType.bold,
             fontSize: fonts.size.small,
-            marginTop: 0 },
+            marginTop: 0,
+          },
           headerShown: false,
           tabBarActiveTintColor: '#EE4266',
           tabBarInactiveTintColor: '#bbb',

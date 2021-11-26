@@ -70,16 +70,16 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
       'keyboardWillShow',
       () => {
         setFocused(true);
-        console.log('vai mostrou');
+        // console.log('vai mostrou');
       },
     );
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
       setFocused(true);
-      console.log('mostrou');
+      // console.log('mostrou');
     });
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
       setFocused(false);
-      console.log('fechou');
+      // console.log('fechou');
     });
 
     return () => {
@@ -90,11 +90,11 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
   }, []);
 
   useEffect(() => {
-    let iterator = setupUser.incomeTagsCount;
-    console.log('---------INCOME---------');
-    console.debug(`Iterator: ${iterator}`);
-    console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
-    console.debug(`Size: ${setupUser.entries.length}`);
+    // let iterator = setupUser.incomeTagsCount;
+    // console.log('---------INCOME---------');
+    // console.debug(`Iterator: ${iterator}`);
+    // console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
+    // console.debug(`Size: ${setupUser.entries.length}`);
 
     showNiceToast('fake', 'Oops!', null, 500);
 

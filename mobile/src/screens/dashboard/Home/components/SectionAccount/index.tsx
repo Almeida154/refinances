@@ -1,130 +1,158 @@
-import { RouteProp } from '@react-navigation/core'
-import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import Button from '../../../../../components/Button';
 
-import {View, Image} from 'react-native'
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
-import Button from '../../../../../components/Button'
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
-import {UseDadosTemp} from '../../../../../contexts/TemporaryDataContext'
-
-import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
-import Icon from '../../../../../helpers/gerarIconePelaString'
-
-import { UseContas, Conta } from '../../../../../contexts/AccountContext'
+import { UseContas, Conta } from '../../../../../contexts/AccountContext';
 
 import {
-    Container,
-    LabelDescriptionBalance,
-    LabelBalance,
-    Separator,
-    LabelDescriptionAccount,
-    SectionBalance,
-    ContainerAccount,
-
-    ContainerCardAccount,
-    SectionDescription,
-    SectionName,
-    LabelName,
-    LabelCategory,
-    SectionBalanceAccount,
-    LabelBalanceAccount,
-    SectionIcon
-} from './styles'
-import { StackActions } from '@react-navigation/native'
-
+  Container,
+  Description,
+  TotalBalance,
+  BalanceDetail,
+  SectionBalance,
+  Separator,
+  AccountsTitle,
+  AccountsContainer,
+  CardContainer,
+  Icon,
+  AccountData,
+  AccountBalance,
+  Name,
+  Type,
+  Balance,
+} from './styles';
+import { StackActions } from '@react-navigation/native';
+import capitalizeFirstLetter from '../../../../../helpers/capitalizeFirstLetter';
+import global from '../../../../../global';
+import { View } from 'react-native';
+import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
+import { widthPixel } from '../../../../../helpers/responsiveness';
+import { colors } from '../../../../../styles';
 
 type CardAccount = {
-    item: Conta
-}
+  item: Conta;
+};
 
-const CardAccount = ({item}: CardAccount) => {
-    if(typeof item.categoryConta == 'string')
-        return <View />
+const CardAccount = ({ item }: CardAccount) => {
+  let globalAccountIndex = global.DEFAULT_ICONS_CATEGORYACCOUNT.findIndex(
+    acc => acc.description == item?.instituicao,
+  );
+  console.log(globalAccountIndex);
 
-    return(
-        <ContainerCardAccount>
-            <SectionDescription>
-                <SectionIcon style={{borderColor: item.categoryConta.corCategoryConta}}>
-                    {
-                        item.categoryConta.iconeCategoryConta.indexOf("https://") != -1 ?
-                        <Image source={{uri: item.categoryConta.iconeCategoryConta, width: 25, height: 25}} /> :
-                        <Icon size={25} color='gray' stringIcon={item.categoryConta.iconeCategoryConta}/>
-                    }
-                </SectionIcon>
-                <SectionName>
-                    <LabelName>{item.descricao}</LabelName>
-                    <LabelCategory>{item.categoryConta.descricaoCategoryConta}</LabelCategory>
-                </SectionName>
-            </SectionDescription>
-            <SectionBalanceAccount>
-                <LabelBalanceAccount>{item.saldoConta.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'})}</LabelBalanceAccount>                    
-            </SectionBalanceAccount>            
-        </ContainerCardAccount>
-    )
-}
-
-
+  return (
+    <CardContainer>
+      {globalAccountIndex == -1 ? (
+        item.tipo == 'outro' ? (
+          <Icon
+            style={{
+              borderWidth: widthPixel(10),
+              borderColor: '#929292',
+            }}
+            source={require('../../../../../assets/images/banks/default/outro.png')}
+          />
+        ) : (
+          <Icon
+            style={{
+              borderWidth: widthPixel(10),
+              borderColor: '#44270f',
+            }}
+            source={require('../../../../../assets/images/banks/default/carteira.png')}
+          />
+        )
+      ) : (
+        <Icon
+          style={{
+            borderWidth: widthPixel(10),
+            borderColor:
+              global.DEFAULT_ICONS_CATEGORYACCOUNT[globalAccountIndex].accent,
+          }}
+          source={global.DEFAULT_ICONS_CATEGORYACCOUNT[globalAccountIndex].icon}
+        />
+      )}
+      <AccountData>
+        <Name numberOfLines={1}>{item.descricao}</Name>
+        <Type numberOfLines={1}>{capitalizeFirstLetter(item.tipo)}</Type>
+      </AccountData>
+      <AccountBalance>
+        <Balance
+          style={{
+            shadowColor: 'rgba(0, 0, 0, .2)',
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 0.08,
+            shadowRadius: 20,
+            elevation: 10,
+          }}
+          numberOfLines={1}>
+          {doubleToCurrency(item.saldoConta)}
+        </Balance>
+      </AccountBalance>
+    </CardContainer>
+  );
+};
 
 const SectionAccount = () => {
-    const {contas, handleReadByUserContas} = UseContas()
-    const [saldo, setSaldo] = useState('0')
-    const [saldoConta, setSaldoConta] = useState('0');
-    const { navigation }  = UseDadosTemp()
+  const { contas, handleReadByUserContas } = UseContas();
+  const [saldo, setSaldo] = useState('0');
+  const { navigation } = UseDadosTemp();
 
-    useEffect(() => {
-        let aux = 0
+  useEffect(() => {
+    let aux = 0;
 
-        contas && contas.map(item => {
-            aux += item.saldoConta
-            setSaldoConta((item.saldoConta).toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
-        })
+    contas &&
+      contas.map(item => {
+        aux += item.saldoConta;
+      });
 
-        setSaldo(aux.toLocaleString('pt-br',{ style: 'currency', currency: 'BRL'}))
-        
-    }, [contas])
+    setSaldo(
+      aux.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
+    );
+  }, [contas]);
 
-    useEffect(() => {
-        (async function(){
-            handleReadByUserContas(await retornarIdDoUsuario())
-        })()    
-    }, [])
-    return (
-        <Container>
-            <SectionBalance>
-                <LabelDescriptionBalance>Saúde financeira</LabelDescriptionBalance>
-                <LabelBalance>{saldo}</LabelBalance>
-            </SectionBalance>
+  useEffect(() => {
+    (async function () {
+      handleReadByUserContas(await retornarIdDoUsuario());
+    })();
+  }, []);
+  return (
+    <Container>
+      <SectionBalance>
+        <BalanceDetail />
+        <View>
+          <Description numberOfLines={1}>Saúde financeira</Description>
+          <TotalBalance numberOfLines={1}>{saldo}</TotalBalance>
+        </View>
+      </SectionBalance>
 
-            <Separator />
+      <Separator />
 
-            <ContainerAccount>
-                <LabelDescriptionAccount>Minhas contas</LabelDescriptionAccount>
+      <AccountsContainer>
+        <AccountsTitle numberOfLines={1}>Minhas contas</AccountsTitle>
 
-                {
-                    
-                    contas && contas.map((item, index) => {
-                        if(index > 1 )
-                            return
+        {contas &&
+          contas.map((item, index) => {
+            if (index > 1) return;
+            return <CardAccount key={index} item={item} />;
+          })}
 
-                        return (
-                            <CardAccount key={index} item={item}/>
-                        )
-                    })
-                }
+        <Button
+          style={{
+            backgroundColor: colors.lightGray,
+          }}
+          onPress={() =>
+            navigation.dispatch(
+              StackActions.replace('StackAccount', { screen: 'ManageAccount' }),
+            )
+          }
+          title="Gerenciar"
+          color="#444"
+          lastOne
+        />
+      </AccountsContainer>
+    </Container>
+  );
+};
 
-                <Button 
-                    onPress={() => navigation.dispatch(
-                        StackActions.replace('StackAccount', 
-                        {screen: 'ManageAccount'})
-                        )}
-                    title="Gerenciar"
-                    color="#444"
-                    backgroundColor="#F5F2F3"
-                /> 
-            </ContainerAccount>
-        </Container>
-    )
-}
-
-export default SectionAccount
+export default SectionAccount;

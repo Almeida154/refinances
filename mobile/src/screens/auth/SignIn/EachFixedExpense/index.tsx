@@ -70,16 +70,16 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
       'keyboardWillShow',
       () => {
         setFocused(true);
-        console.log('vai mostrou');
+        // console.log('vai mostrou');
       },
     );
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
       setFocused(true);
-      console.log('mostrou');
+      // console.log('mostrou');
     });
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
       setFocused(false);
-      console.log('fechou');
+      // console.log('fechou');
     });
 
     return () => {
@@ -90,11 +90,11 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
   }, []);
 
   useEffect(() => {
-    let iterator = setupUser.expenseTagsCount;
-    console.log('---------EXPENSE---------');
-    console.debug(`Iterator: ${iterator}`);
-    console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
-    if (setupUser.entries) console.debug(`Size: ${setupUser.entries.length}`);
+    // let iterator = setupUser.expenseTagsCount;
+    // console.log('---------EXPENSE---------');
+    // console.debug(`Iterator: ${iterator}`);
+    // console.debug(`Current: ${setupUser.expenseTags[iterator]}`);
+    // if (setupUser.entries) console.debug(`Size: ${setupUser.entries.length}`);
 
     showNiceToast('fake', 'Oops!', null, 500);
 

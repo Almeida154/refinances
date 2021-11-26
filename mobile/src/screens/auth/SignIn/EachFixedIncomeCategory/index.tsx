@@ -38,11 +38,11 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
     UseAuth();
 
   useEffect(() => {
-    let iterator = setupUser.incomeTagsCount;
-    console.log('--------- CATEGORY ---------');
-    console.debug(`Iterator: ${iterator}`);
-    console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
-    console.debug(`Size: ${setupUser.entries.length}`);
+    // let iterator = setupUser.incomeTagsCount;
+    // console.log('--------- CATEGORY ---------');
+    // console.debug(`Iterator: ${iterator}`);
+    // console.debug(`Current: ${setupUser.incomeTags[iterator]}`);
+    // console.debug(`Size: ${setupUser.entries.length}`);
 
     showNiceToast('fake', 'Oops!', null, 500);
     populateCategories();

@@ -7,7 +7,6 @@ import { CategoriasProvider } from './contexts/CategoriesContext';
 import { TransferenciaProvider } from './contexts/TransferContext';
 import { LancamentoProvider } from './contexts/EntriesContext';
 import { DadosTempProvider } from './contexts/TemporaryDataContext';
-import { CategoriasContaProvider } from './contexts/CategoriesAccountContext';
 import { ContasProvider } from './contexts/AccountContext';
 import { ParcelaProvider } from './contexts/InstallmentContext';
 import { MetasProvider } from './contexts/GoalsContext';
@@ -24,9 +23,7 @@ const App = () => {
                 <MetasProvider>
                   <TransferenciaProvider>
                     <CategoriasProvider>
-                      <CategoriasContaProvider>
-                        <Routes />
-                      </CategoriasContaProvider>
+                      <Routes />
                     </CategoriasProvider>
                   </TransferenciaProvider>
                 </MetasProvider>

@@ -30,7 +30,7 @@ interface IProps extends TouchableOpacityProps {
 
 const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
   let globalAccountIndex = global.DEFAULT_ICONS_CATEGORYACCOUNT.findIndex(
-    acc => acc.description == account?.descricao,
+    acc => acc.description == account?.instituicao,
   );
 
   return (
@@ -43,7 +43,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
         elevation: 10,
       }}>
       <Content {...rest} activeOpacity={1}>
-        {account?.categoryConta == 'carteira' && (
+        {account?.tipo == 'carteira' && (
           <Image
             style={{
               borderWidth: widthPixel(10),
@@ -53,7 +53,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
           />
         )}
 
-        {account?.categoryConta == 'outro' && (
+        {account?.tipo == 'outro' && (
           <Image
             style={{
               borderWidth: widthPixel(10),
@@ -63,25 +63,21 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
           />
         )}
 
-        {account?.categoryConta != 'carteira' &&
-          account?.categoryConta != 'outro' && (
-            <Image
-              style={{
-                borderWidth: widthPixel(10),
-                borderColor:
-                  global.DEFAULT_ICONS_CATEGORYACCOUNT[globalAccountIndex]
-                    .accent,
-              }}
-              source={
-                global.DEFAULT_ICONS_CATEGORYACCOUNT[globalAccountIndex].icon
-              }
-            />
-          )}
+        {account?.tipo != 'carteira' && account?.tipo != 'outro' && (
+          <Image
+            style={{
+              borderWidth: widthPixel(10),
+              borderColor:
+                global.DEFAULT_ICONS_CATEGORYACCOUNT[globalAccountIndex].accent,
+            }}
+            source={
+              global.DEFAULT_ICONS_CATEGORYACCOUNT[globalAccountIndex].icon
+            }
+          />
+        )}
         <Info>
           <Description>{account?.descricao}</Description>
-          <Category>
-            {capitalizeFirstLetter(account?.categoryConta.toString())}
-          </Category>
+          <Category>{capitalizeFirstLetter(account?.tipo.toString())}</Category>
         </Info>
         <Icon>
           <MaterialCommunityIcons
