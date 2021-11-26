@@ -140,10 +140,7 @@ class ParcelaController {
         }
 
         
-        dataByUser.sort((a, b) => {
-            a.dataParcela.setMonth(firstDayOfMonth.getMonth())
-            b.dataParcela.setMonth(firstDayOfMonth.getMonth())
-            
+        dataByUser.sort((a, b) => {            
             return a.dataParcela < b.dataParcela ? -1 : a.dataParcela > b.dataParcela ? 1 : 0
         })
 
@@ -166,16 +163,16 @@ class ParcelaController {
         const parcelas = []
 
 
-        const [dia, mes, ano] = dataByUser[0].dataParcela.toLocaleDateString().split('/')
+        const [diaAtual, mesAtual, anoAtual] = dataByUser[0].dataParcela.toLocaleDateString().split('/')
 
-        let atual = new Date(parseInt(ano), lastDayOfMonth.getMonth(), parseInt(dia)).toLocaleDateString()
+        let atual = new Date(parseInt(anoAtual), parseInt(mesAtual), parseInt(diaAtual)).toLocaleDateString()
 
         let aux = []
 
         dataByUser.map((item: Parcela, index) => {
             const [dia, mes, ano] = item.dataParcela.toLocaleDateString().split('/')
 
-            const parcelaData = new Date(parseInt(ano), firstDayOfMonth.getMonth(), parseInt(dia)).toLocaleDateString()
+            const parcelaData = new Date(parseInt(ano), parseInt(mes), parseInt(dia)).toLocaleDateString()
             
             let readParcela
 
@@ -188,8 +185,7 @@ class ParcelaController {
             readParcela.indexOfLancamento = indexParcela+1
             readParcela.totalParcelas = dataLancamentos[indexId].parcelasLancamento.length                                            
             readParcela.lancamentoParcela.valueLancamento = dataLancamentos[indexId].valueLancamento
-
-            console.log(readParcela)
+            
             if(parcelaData == atual) {
                 aux.push(readParcela)
             } else {
