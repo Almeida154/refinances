@@ -44,6 +44,7 @@ import {
   ScrollBody,
   ButtonAccessDetail,
 } from './styles';
+import { colors } from '../../../styles';
 
 interface PropsRenderSection {
   item: (ReadParcela[] | Transferencia[])[];
@@ -231,14 +232,14 @@ const Extrato = () => {
       <Footer>
         <CardBalance>
           <LabelBalance> Ganhos </LabelBalance>
-          <LabelValueBalance style={{ color: '#6CB760' }}>
+          <LabelValueBalance style={{ color: colors.slimyGreen }}>
             {ganho}
           </LabelValueBalance>
         </CardBalance>
 
         <CardBalance>
           <LabelBalance> Gastos </LabelBalance>
-          <LabelValueBalance style={{ color: '#EE4266' }}>
+          <LabelValueBalance style={{ color: colors.redCrayola }}>
             {gasto}
           </LabelValueBalance>
         </CardBalance>
@@ -254,7 +255,8 @@ const Extrato = () => {
       <Modalize
         ref={modalizeRefDetailEntry}
         title=""
-        backgroundColor={'#F6F6F6'}>
+        backgroundColor={colors.cultured}>
+        {/* @ts-ignore */}
         <DetailEntry item={selectedItemExtract} />
       </Modalize>
     </Container>
@@ -264,7 +266,7 @@ const Extrato = () => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
-    color: '#fff',
+    color: colors.white,
   },
 });
 export default Extrato;

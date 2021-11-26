@@ -46,7 +46,7 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
       <Header
         backButton={() => backNavAction()}
         title="Nova categoria"
-        color="#fff"
+        color={colors.white}
         isShort={true}
       />
 

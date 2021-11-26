@@ -6,6 +6,8 @@ import { Picker } from '@react-native-picker/picker'
 import {UseCategories} from '../../../../contexts/CategoriesContext'
 
 import { StyleSheet, View } from 'react-native'
+import { color } from 'react-native-reanimated';
+import { colors } from '../../../../styles';
 
 type PropsPickerCategorias = {
     tipoCategoria: string,
@@ -79,13 +81,13 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 50,
         borderBottomWidth: 2,
-        borderColor: '#858c87',
+        borderColor: colors.battleGray,
         opacity: 0.7
     },
     picker: {
         width: '100%',
         height: 50,
-        color: '#555',
+        color: colors.davysGrey,
 
     },
     pickerItem: {

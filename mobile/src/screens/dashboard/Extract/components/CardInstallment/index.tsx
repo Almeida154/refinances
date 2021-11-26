@@ -33,8 +33,7 @@ type PropsCardInstallment = {
 const CardInstallment = ({item}: PropsCardInstallment) => {
     const {modalizeRefDetailEntry, setSelectedItemExtract, showNiceToast} = UseDadosTemp()
     const textParcela = item.totalParcelas != 1 && item.totalParcelas ? ' ' + item.indexOfLancamento + '/' + item.totalParcelas : ''
-    const [checked, setChecked] = React.useState(item.statusParcela);
-    const [essencial, setEssencial] = React.useState(item.lancamentoParcela.essencial);
+    const [checked, setChecked] = React.useState(item.statusParcela);    
     const [valor, setValor] = React.useState(((item.valorParcela).toFixed(2)).replace('.',','));
     const {handleReadByUserContas} = UseContas()
     
@@ -55,8 +54,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
     }
 
     return (
-        <ContainerItem onPress={openModalize}
-            style={essencial ? {} : {marginBottom: 20}}>
+        <ContainerItem onPress={openModalize}>
             <SectionLancamento>   
                 <SectionIcon style={{borderColor: typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento ? 'yellow' : item.lancamentoParcela.categoryLancamento.corCategoria   }}>
                     <Icon size={24} color={'gray'} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
@@ -68,17 +66,17 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
             </SectionLancamento>
 
             <SectionValues>
-                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: '#EE4266'} : {color: '#75BB6A'}}>{valor}</LabelValue>                                                    
+                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: colors.paradisePink} : {color: colors.budGreen}}>{valor}</LabelValue>                                                    
+
                 
-                <SectionCheck
-                    style={essencial ? {} : {display: 'none'}}>
+                <SectionCheck>
                     
                     <Checkbox
                         status={checked ? 'checked' : 'unchecked'}
                         onPress={() => {
                             setChecked(!checked)
                             mudarOStatusRapidao()
-                        }}
+                        }}                        
                         color={item.lancamentoParcela.tipoLancamento == 'despesa' ? colors.paradisePink : colors.slimyGreen}
                     />
                     <EditLabel>{item.lancamentoParcela.tipoLancamento == 'despesa' ? 'pago' : 'recebido'}</EditLabel>

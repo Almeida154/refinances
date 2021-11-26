@@ -174,7 +174,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 onPress={LoginUser}
                 title="Entrar"
                 lastOne
-                color="#fff"
+                color={colors.white}
               />
             </LinearGradient>
             <TextNoAccount style={{ color: hexToRGB(colors.davysGrey, 0.3) }}>

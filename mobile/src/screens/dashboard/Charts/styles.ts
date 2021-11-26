@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 
 import { Dimensions } from 'react-native'
-import { fonts } from '../../../styles'
+import { fonts, colors } from '../../../styles'
 
 export const Container = styled.View`
 
@@ -31,10 +31,10 @@ export const PeriodoPosterior = styled.TouchableOpacity`
 export const LabelPeriodo = styled.Text`
     font-family: ${`${fonts.familyType.semiBold}`};
     font-size: ${`${fonts.size.big}px`};
-    color: #444
+    color: ${colors.darkGray}
 `
 export const Body = styled.View`
-    background-color: #fff;
+    background-color: ${colors.white};
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 10px;
@@ -61,7 +61,7 @@ export const Section = styled.View`
 
 export const Footer = styled.View`
     display: flex;
-    background-color: #fff;
+    background-color: ${colors.white};
     flex-direction: row;
     justify-content: space-between;
     padding: 20px;
@@ -72,13 +72,13 @@ export const CardBalance = styled.View`
     width: 30%;
     align-items: center;
     padding: 10px;
-    background-color: #F6F6F6;
+    background-color: ${colors.cultured};
     border-radius: 10px;
 `
 export const LabelBalance = styled.Text`
     font-family: ${`${fonts.familyType.bold}`};
     font-size: ${`${fonts.size.smaller}px`};
-    color: #444;
+    color: ${colors.darkGray};
 `
 export const LabelValueBalance = styled.Text`
     font-family: ${`${fonts.familyType.semiBold}`};
@@ -95,7 +95,7 @@ export const ContainerPicker = styled.View`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #F5FCFF;
+    background-color: ${colors.aliceBlue};
 `
 
 export const WrapperHorizontal = styled.View`

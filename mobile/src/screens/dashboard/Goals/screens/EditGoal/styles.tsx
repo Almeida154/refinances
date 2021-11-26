@@ -1,12 +1,12 @@
 import styled from "styled-components/native"
 
-import fonts from "../../../../../styles/fonts"
+import {fonts,colors} from "../../../../../styles"
 
 export const Title = styled.Text `
     marginBottom: 2%;
     marginTop: 15%;
     fontSize: ${`${fonts.size.super}px`};
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.black}`};
     textAlign: center;
 `
@@ -27,7 +27,7 @@ export const TextValor = styled.Text`
     fontFamily: ${`${fonts.familyType.black}`};
     fontSize: ${`${fonts.size.super}px`};
     textAlign: center;
-    color: #525252
+    color: ${colors.davysGrey}
 `
 
 export const DaysLeft = styled.Text`
@@ -41,14 +41,14 @@ export const TextProgress = styled.Text`
     fontFamily: ${`${fonts.familyType.semiBold}`};
     textAlign: center; 
     fontSize: ${`${fonts.size.medium}px`}
-    color: #525252;
+    color: ${colors.davysGrey};
     margin-top: 10
     margin-bottom: 10
 `
 
 export const TextGoals = styled.Text`
     fontSize: ${`${fonts.size.medium}px`}
-    color: #292929;
+    color: ${colors.jet};
     fontFamily: ${`${fonts.familyType.bold}`};
 `
 
@@ -59,14 +59,14 @@ export const GoalDate = styled.View`
 `
 export const TextGoalsH = styled.Text`
     fontSize: ${`${fonts.size.medium}px`}
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.bold}`};
     width: 50%;
 `
 
 export const TextGoalsLighter = styled.Text`
     fontSize: ${`${fonts.size.medium}px`}
-    color: #525252;
+    color: ${colors.davysGrey};
     textAlign: right;
     fontFamily: ${`${fonts.familyType.bold}`};
     width: 50%;

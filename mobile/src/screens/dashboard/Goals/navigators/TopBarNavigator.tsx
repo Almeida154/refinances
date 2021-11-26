@@ -32,7 +32,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
     <View
       style={{
         paddingTop: heightPixel(150),
-        backgroundColor: '#fff',
+        backgroundColor: colors.white,
         flex: 1,
       }}>
       <StatusBar backgroundColor="transparent" />
@@ -47,9 +47,9 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
         initialRouteName="Atuais"
         screenOptions={{
           tabBarIndicatorStyle: {
-            backgroundColor: '#525252',
+            backgroundColor: colors.davysGrey,
           },
-          tabBarActiveTintColor: '#525252',
+          tabBarActiveTintColor: colors.davysGrey,
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,

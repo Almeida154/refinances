@@ -50,7 +50,7 @@ export const SepareColumn  = styled.View`
 `
 
 export const CircleIcon = styled.TouchableOpacity`
-    background-color: #c4c4c4;
+    background-color: ${colors.silver};
     width: 40px;
     height: 40px;
 

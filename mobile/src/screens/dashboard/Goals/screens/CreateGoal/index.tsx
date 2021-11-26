@@ -232,7 +232,7 @@ const CreateGoal = ({navigation}: PropsGoals) => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+    <ScrollView style={{ backgroundColor: colors.cultured }}>
       <Header backButton={backAction} 
       title="Nova meta" 
       subtitle="Que bom que decidiu criar uma meta!"
@@ -246,7 +246,7 @@ const CreateGoal = ({navigation}: PropsGoals) => {
             fontSize: fonts.size.medium,
             textAlign: 'center',
             fontFamily: fonts.familyType.regular,
-            color: '#292929',
+            color: colors.jet,
           }}>
           Calcularemos seu investimento mensal e te notificaremos para não
           esquecer ;)
@@ -358,8 +358,8 @@ const CreateGoal = ({navigation}: PropsGoals) => {
         <Button
           onPress={handleCreateGoal}
           title="Criar"
-          backgroundColor="#CCC"
-          color="#444"
+          backgroundColor={colors.blackSilver}
+          color={colors.darkGray}
           style={{marginTop: '5%'}}
         />
 

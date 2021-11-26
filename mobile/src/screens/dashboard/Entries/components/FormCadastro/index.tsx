@@ -19,8 +19,12 @@ import {
   ContainerDetalhes,
   DetalhesMensal,
 } from './styles';
+import { colors, fonts, metrics } from '../../../../../styles';
 
-import { Parcela } from '../../../../../contexts/InstallmentContext';
+import {
+  UseParcelas,
+  Parcela,
+} from '../../../../../contexts/InstallmentContext';
 import {
   Categoria,
   UseCategories,
@@ -50,12 +54,11 @@ const FormCadastro: React.FC<PropsNavigation> = ({
   tipoLancamento,
 }) => {
   const { categorias } = UseCategories();
-  const { contas } = UseContas();
+  const { contas, handleReadByUserContas } = UseContas();
   const { navigation } = UseDadosTemp();
   const { showNiceToast, hideNiceToast } = UseDadosTemp();
   const { handleAdicionarLancamento, handleEditLancamento } = UseLancamentos();
-
-  console.debug('FormCadastro | receiveEntry', receiveEntry);
+  const { handleInstallmentGroupByDate } = UseParcelas();
 
   const [detalhes, setDetalhes] = useState(false);
 
@@ -69,7 +72,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({
       ? new Date(receiveEntry.parcelasLancamento[0].dataParcela)
       : new Date(Date.now()),
   );
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(
+    receiveEntry?.parcelasLancamento[0].statusParcela ? true : false,
+  );
   const [mensal, setMensal] = useState(
     !receiveEntry ? false : receiveEntry?.parcelaBaseada == -1 ? false : true,
   );
@@ -114,6 +119,8 @@ const FormCadastro: React.FC<PropsNavigation> = ({
           },
         ],
   );
+
+  // console.debug("FormCadastro | dataParcelas", dataParcelas)
 
   const changeParcela = (
     text: string,
@@ -189,7 +196,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({
         categoryLancamento: selectedCategoria?.nomeCategoria,
         parcelasLancamento: [
           {
-            id: receiveEntry ? receiveEntry.id : -1,
+            id: dataParcelas[0].id,
             lancamentoParcela: -1,
             contaParcela: selectedConta == null ? 0 : selectedConta,
             dataParcela: dataPagamento,
@@ -233,6 +240,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({
 
       if (message == '') {
         showNiceToast('success', 'Lançamento editado');
+
+        handleReadByUserContas(idUser);
+        handleInstallmentGroupByDate(idUser, new Date().toISOString());
         navigation.dispatch(
           StackActions.replace('Main', { screen: 'Extrato' }),
         );
@@ -363,11 +373,16 @@ const FormCadastro: React.FC<PropsNavigation> = ({
         <Checkbox
           status={status ? 'checked' : 'unchecked'}
           onPress={changeStatus}
-          color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+          color={
+            tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen
+          }
         />
         <Label
           style={{
-            color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760',
+            color:
+              tipoLancamento == 'despesa'
+                ? colors.paradisePink
+                : colors.budGreen,
           }}>
           {tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}
         </Label>
@@ -385,9 +400,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({
               ? 'Mercadinho'
               : 'Recebimento empréstimo'
           }
-          placeholderTextColor={'#bbb'}
+          placeholderTextColor={colors.silver}
           colorLabel={
-            tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'
+            tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen
           }></InputText>
       </InputControl>
 
@@ -424,7 +439,9 @@ const FormCadastro: React.FC<PropsNavigation> = ({
               ? 'Data de Pagamento do lançamento'
               : 'Data de Recebimento do lançamento'
           }
-          colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+          colorLabel={
+            tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen
+          }
         />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -439,7 +456,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({
         <Icon
           name={detalhes ? 'caretup' : 'caretdown'}
           size={25}
-          color="#525252"
+          color={colors.davysGrey}
           style={{}}
         />
 
@@ -451,11 +468,18 @@ const FormCadastro: React.FC<PropsNavigation> = ({
           <Checkbox
             status={mensal ? 'checked' : 'unchecked'}
             onPress={changeMensal}
-            color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+            color={
+              tipoLancamento == 'despesa'
+                ? colors.paradisePink
+                : colors.budGreen
+            }
           />
           <Label
             style={{
-              color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760',
+              color:
+                tipoLancamento == 'despesa'
+                  ? colors.paradisePink
+                  : colors.budGreen,
             }}>
             {tipoLancamento == 'despesa' ? 'Gasto Mensal' : 'Receita Mensal'}
           </Label>
@@ -477,7 +501,11 @@ const FormCadastro: React.FC<PropsNavigation> = ({
             onClear={() => {}}
             showClearIcon={false}
             label="Quantidade de Parcelas"
-            colorLabel={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+            colorLabel={
+              tipoLancamento == 'despesa'
+                ? colors.paradisePink
+                : colors.budGreen
+            }
             value={parcelas}
             onChangeText={text =>
               changeParcela(text, dataPagamento, dataParcelas)
@@ -511,9 +539,10 @@ const FormCadastro: React.FC<PropsNavigation> = ({
         title="Adicionar"
         onPress={handleSubmit}
         style={{
-          backgroundColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760',
+          backgroundColor:
+            tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen,
         }}
-        color="#fff"
+        color={colors.white}
       />
     </ContainerForm>
   );

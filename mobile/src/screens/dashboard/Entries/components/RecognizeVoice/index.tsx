@@ -45,6 +45,7 @@ import { Parcela, ReadParcela } from '../../../../../contexts/InstallmentContext
 import { StackNavigationProp } from '@react-navigation/stack';
 import CardInstallment from '../../../Extract/components/CardInstallment'
 import { FAB, Text } from 'react-native-paper';
+import { colors } from '../../../../../styles';
 
 
 type Props = {
@@ -458,12 +459,12 @@ class VoiceTest extends Component<Props, State> {
 
        <Header>
           <ButtonRecord 
-          style={{backgroundColor: this.state.isRecording ? '#fff' : '#EE4266', borderRadius: 50}}
+          style={{backgroundColor: this.state.isRecording ? colors.white : colors.paradisePink , borderRadius: 50}}
           onPress={this.state.isRecording ? this._stopRecognizing : this._startRecognizing}>
             <Icon 
               style={{width: 100, height: 100}} 
               name="keyboard-voice"
-              color={this.state.isRecording ? '#EE4276' : '#fff'}
+              color={this.state.isRecording ? colors.paradisePink : colors.white}
               size={100}
             />
           </ButtonRecord>          
@@ -502,8 +503,8 @@ class VoiceTest extends Component<Props, State> {
         <ButtonAdd
           title="Adicionar"
           onPress={() => this.handleItemCapture(this.state.itemNovo)}
-          style={{backgroundColor: '#ee4266'}}
-          color="#fff"
+          style={{backgroundColor: colors.paradisePink}}
+          color={colors.white}
         />
 
       </Container>

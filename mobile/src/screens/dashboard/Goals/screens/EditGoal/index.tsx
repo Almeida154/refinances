@@ -20,7 +20,7 @@ import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
-import fonts from '../../../../../styles/fonts';
+import {fonts, colors} from '../../../../../styles';
 import { RouteProp, StackActions } from '@react-navigation/native';
 import Header from '../../../../../components/Header';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -162,7 +162,7 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
   };
 
   return (
-    <ScrollView style={{ paddingTop: '8%', backgroundColor: '#f6f6f6' }}>
+    <ScrollView style={{ paddingTop: '8%', backgroundColor: colors.cultured }}>
       <Header backButton={backAction} title="" />
 
       <View style={styles.container}>
@@ -236,8 +236,8 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
           <Button
             onPress={handleUpdateGoal}
             title="Salvar"
-            backgroundColor="#CCC"
-            color="#444"
+            backgroundColor={colors.blackSilver}
+            color={colors.darkGray}
             lastOne={true}
           />
         </View>

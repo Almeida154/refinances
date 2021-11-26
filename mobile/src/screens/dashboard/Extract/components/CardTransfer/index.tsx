@@ -3,7 +3,7 @@ import React from 'react'
 import {Transferencia} from '../../../../../contexts/TransferContext'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import {colors, fonts, metrics} from '../../../../../styles'
 import {
     ContainerItem,
     SectionIcon,
@@ -36,7 +36,7 @@ const CardTransfer = ({item}: CardTransferProps) => {
 
             
             <SectionValues>
-                <LabelValue style={{color: '#333'}}>{item.valorTransferencia}</LabelValue>                
+                <LabelValue style={{color: colors.jet}}>{item.valorTransferencia}</LabelValue>                
             </SectionValues>
         </ContainerItem>
     )

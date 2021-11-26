@@ -7,7 +7,7 @@ import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { toDate } from '../../../../../helpers/manipularDatas'
 
 import { StackActions } from '@react-navigation/native';
-
+import {colors, fonts, metrics} from '../../../../../styles'
 import Icon from '../../../../../helpers/gerarIconePelaString'
 
 import {
@@ -55,19 +55,22 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
             const receiveEntry = await handleLoadOneLancamentos(item?.lancamentoParcela.id)
             
             if(typeof receiveEntry == 'string')
-                return showNiceToast("error", "Ocorreu um erro ao carregar esse lançamento")            
+                return showNiceToast("error", "Ocorreu um erro ao carregar esse lançamento")                        
 
-            const parcelaUpdate = {
-                id: item.id,
-                contaParcela: item.contaParcela,
-                dataParcela: new Date(item.dataParcela),
-                indexOfLancamento: receiveEntry.parcelaBaseada,
-                statusParcela: item.statusParcela,
-                valorParcela: item.valorParcela,
-                lancamentoParcela: -1
-            } as Parcela
-
-            receiveEntry.parcelasLancamento = [parcelaUpdate]
+            if(receiveEntry.parcelaBaseada != -1) {
+                const parcelaUpdate = {
+                    id: item.id,
+                    contaParcela: item.contaParcela,
+                    dataParcela: new Date(item.dataParcela),
+                    indexOfLancamento: 0,
+                    statusParcela: item.statusParcela,
+                    valorParcela: item.valorParcela,
+                    lancamentoParcela: -1
+                } as Parcela
+    
+                receiveEntry.parcelasLancamento = [parcelaUpdate]
+                receiveEntry.totalParcelas = item.valorParcela
+            }
             navigation.dispatch(StackActions.replace('Lancamentos', {screen: 'Main', params: {receiveEntry: typeof receiveEntry == 'string' ? undefined : receiveEntry}}))
         }
     }
@@ -91,11 +94,11 @@ const DetailEntry: React.FC<PropsDetail> = ({item}) => {
                 </SepareColumn>
                 <SepareRow>
                     <CircleIcon onPress={navigateEdit}>
-                        <Icon stringIcon="MaterialCommunityIcons:pencil" size={25} color="#000"/>
+                        <Icon stringIcon="MaterialCommunityIcons:pencil" size={25} color={colors.black}/>
                         
                     </CircleIcon>
                     <CircleIcon onPress={navigateDelete}>
-                        <Icon stringIcon="Ionicons:trash-bin-sharp" size={25} color="#000"/>
+                        <Icon stringIcon="Ionicons:trash-bin-sharp" size={25} color={colors.black}/>
                     </CircleIcon>
                 </SepareRow>
             </SepareRow> 

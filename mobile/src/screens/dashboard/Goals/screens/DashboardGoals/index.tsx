@@ -9,6 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { StackActions } from '@react-navigation/native'
 import Header from '../../../../../components/Header';
+import {colors, fonts, metrics} from '../../../../../styles'
 
 import {
   TextGoals,
@@ -32,7 +33,7 @@ const Goals = () => {
 
   return (
     <Container>
-      <StatusBar backgroundColor={'#ccc'} />
+      <StatusBar backgroundColor={colors.blackSilver} />
 
       <GoalsIcon height={'20%'} />
       <Title>
@@ -44,23 +45,23 @@ const Goals = () => {
         <Button
           title={'Metas atuais'}
           style={{ marginTop: 20,
-            backgroundColor: "#F5F2F3"}}
-          color="#ee4266"
+            backgroundColor: colors.lightGray}}
+          color={colors.paradisePink}
           onPress={() => {navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'GoalsList'}))}}/>
 
         <Button
           title={'Metas concluídas'}
           style={{ marginTop: 20,
-             backgroundColor: "#F5F2F3"}}
+             backgroundColor: colors.lightGray}}
           onPress={() => {navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'GoalsList'}))}}
-          color="#6CB760"
+          color={colors.budGreen}
           />
 
         <Button
           title={'Nova meta'}
           style={{ marginTop: 20,
-            backgroundColor: "#F5F2F3"}}
-          color="#888"
+            backgroundColor: colors.lightGray}}
+          color={colors.battleGray}
           onPress={() => {navigation.dispatch(StackActions.replace('GoalsStack', {screen: 'CreateGoals'}))}}/>
 
     </Container>    

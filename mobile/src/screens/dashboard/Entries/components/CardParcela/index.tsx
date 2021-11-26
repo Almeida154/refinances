@@ -20,7 +20,7 @@ import {
     InputControlStatus,
     LabelStatus
 } from './styles'
-
+import {colors, fonts, metrics} from '../../../../../styles'
 
 export type CardParcelaProps = {
     item: Parcela;
@@ -79,7 +79,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
     
                 
     return (
-        <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>
+        <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}}>
             <TituloCardParcela onPress={showDatePicker}>Parcela de {item.dataParcela.toLocaleDateString()}</TituloCardParcela>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
@@ -99,9 +99,9 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 <Checkbox 
                     status={dataParcelas[item.indexOfLancamento].statusParcela ? 'checked' : 'unchecked'}
                     onPress={changeSituation}
-                    color={tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}
+                    color={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}
                 />
-                <LabelStatus style={{color: tipoLancamento == 'despesa' ? '#EE4266' : '#6CB760'}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</LabelStatus>
+                <LabelStatus style={{color: tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</LabelStatus>
             </InputControlStatus>
             <PickerContas conta={dataParcelas[item.indexOfLancamento].contaParcela} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
         </ContainerCardParcela>

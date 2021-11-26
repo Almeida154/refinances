@@ -28,9 +28,9 @@ export const InputControlCheckBox = styled.View`
 export const TextInput = styled.TextInput`
     border-bottom-width: 2px;
     width: 100%;
-    color: #858c87;
+    color: ${colors.battleGray};
     height: 40px;
-    border-color: #858c87;
+    border-color: ${colors.battleGray};
     opacity: 0.7;    
 
 `
@@ -38,9 +38,9 @@ export const TextInput = styled.TextInput`
 export const TextInputValor = styled.TextInput`
     border-bottom-width: 2px;
     width: 100%;
-    color: #858c87;
+    color: ${colors.battleGray};
     height: 60px;
-    border-color: #858c87;
+    border-color: ${colors.battleGray};
     opacity: 0.7;    
     font-size: 30px;
 `

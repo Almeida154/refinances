@@ -34,6 +34,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext'
 import { StackActions } from '@react-navigation/native'
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario'
+import { colors } from '../../../../../styles'
 
 
 type PropsSelectionCategorias = {
@@ -121,7 +122,6 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
     }, [categorias])
 
     useEffect(() => {
-        console.debug('SelectionCategorias | categorias', categorias)
         if(search == '' && categorias) {
             setCategoriasAtual(categorias)
         } else if(categorias) {
@@ -152,8 +152,8 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
                     onPress={onOpen}
                     value={categoria ? categoria.nomeCategoria : ''}
                     placeholder="Selecione uma categoria"
-                    placeholderTextColor={"#bbb"}
-                    colorLabel={tipoCategoria == 'despesa' ? '#EE4266' : '#6CB760'} 
+                    placeholderTextColor={colors.silver}
+                    colorLabel={tipoCategoria == 'despesa' ? colors.paradisePink : colors.budGreen} 
                     editable={false}
                 />
 

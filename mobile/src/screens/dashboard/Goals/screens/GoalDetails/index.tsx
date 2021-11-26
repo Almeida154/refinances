@@ -109,7 +109,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
   }
   
   return (
-    <ScrollView style={{ paddingTop: '5%', backgroundColor: '#f6f6f6' }}>
+    <ScrollView style={{ paddingTop: '5%', backgroundColor: colors.cultured }}>
       <Header 
         backButton={backAction} title="" />
 
@@ -124,7 +124,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
 
         <ProgressBar
         progress={percentageBalance / 100}
-        color="#F81650"
+        color={colors.redCrayola}
         style={{
           height: 10,
           marginVertical: 8,
@@ -140,7 +140,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
 
         <Goal>
           <DaysLeft>
-              <Icon name="exclamation" color="#525252" size={22} /> Faltam {days} dias
+              <Icon name="exclamation" color={colors.davysGrey} size={22} /> Faltam {days} dias
           </DaysLeft>
 
           <GoalDate>
@@ -163,11 +163,11 @@ const GoalDetails = ({ route, navigation }: Props) => {
             }));
           }}
           title="Depositar"
-          color="#6CB760"
+          color={colors.budGreen}
           style={{
             marginBottom: 10,
             marginTop: 10,
-            backgroundColor: '#EEEEEE',
+            backgroundColor: colors.culture,
           }}
         />
     
@@ -176,11 +176,11 @@ const GoalDetails = ({ route, navigation }: Props) => {
             openModalize();
         }}
           title="Excluir"
-          color="#ee4266"
+          color={colors.paradisePink}
           style={{
             marginBottom: 10,
             marginTop: 10,
-            backgroundColor: '#EEEEEE',
+            backgroundColor: colors.culture,
           }}
         />
 
@@ -193,11 +193,11 @@ const GoalDetails = ({ route, navigation }: Props) => {
             }));
           }}
           title="Editar"
-          color="#444"
+          color={colors.darkGray}
           style={{
             marginBottom: 10,
             marginTop: 10,
-            backgroundColor: '#EEEEEE',
+            backgroundColor: colors.culture,
           }}
         />
       </View>

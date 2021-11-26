@@ -69,6 +69,7 @@ Routes.post("/installment/create", InstallmentController.save);
 Routes.get("/installment/read", InstallmentController.showRelations);
 Routes.get("/installment/read/:id", InstallmentController.one);
 Routes.put("/installment/edit", InstallmentController.edit);
+Routes.put("/installment/edit/:id", InstallmentController.EditOne);
 Routes.post(
   "/installment/groupbydate/:iduser",
   InstallmentController.GroupByDate

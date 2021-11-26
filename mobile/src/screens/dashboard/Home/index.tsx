@@ -11,7 +11,7 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-
+import Button from '../../../components/Button';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Feather';
 import PropsNavigationApp, {
@@ -34,9 +34,9 @@ import CreateCategoryGoals from './components/CreateCategoryGoals';
 import ManageGoals from './components/ManageGoals';
 import ManageCategory from './components/ManageCategorySection';
 
-import fonts from '../../../styles/fonts';
+import { colors, fonts, metrics } from '../../../styles';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { colors, metrics } from '../../../styles';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
@@ -51,7 +51,6 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
-      console.log(await retornarIdDoUsuario());
       // O avatar é a base64 da imagem
       setAvatar(base64?.slice(base64.indexOf(',') + 1));
 
@@ -77,7 +76,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    loading && console.debug('CATEGORIAS: ', categorias);
+    loading;
   }, [loading]);
 
   return (
@@ -89,10 +88,10 @@ const Home = () => {
             height: '100%',
             justifyContent: 'center',
           }}>
-          <ActivityIndicator size="large" color="#E8871E" />
+          <ActivityIndicator size="large" color={colors.fulvous} />
           <Text
             style={{
-              color: '#183153',
+              color: colors.PrussianBlue,
               fontSize: 22,
               fontFamily: 'Poppins-Bold',
               marginTop: 20,
@@ -119,7 +118,7 @@ const Home = () => {
               <View style={styles.textBoasVindas}>
                 <Text
                   style={{
-                    color: '#fff',
+                    color: colors.white,
                     fontSize: fonts.size.big,
                     fontFamily: fonts.familyType.bold,
                   }}>
@@ -130,7 +129,7 @@ const Home = () => {
                   style={{
                     fontSize: fonts.size.medium,
                     fontFamily: fonts.familyType.bold,
-                    color: '#fff',
+                    color: colors.white,
                     opacity: 0.4,
                   }}>
                   Bom dia
@@ -147,14 +146,14 @@ const Home = () => {
                 }}>
                 <Icon2
                   name="settings"
-                  color="#9D3147"
+                  color={colors.bigDipOruby}
                   size={25}
                   style={{ marginRight: 20 }}
                 />
               </TouchableOpacity>
 
               <TouchableOpacity onPress={handleLogout}>
-                <Icon name="logout" color="#9D3147" size={25} />
+                <Icon name="logout" color={colors.bigDipOruby} size={25} />
               </TouchableOpacity>
             </View>
           </View>
@@ -189,7 +188,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 20,
     paddingTop: 20,
-    backgroundColor: '#EE4266',
+    backgroundColor: colors.paradisePink,
     height: 200,
     display: 'flex',
     flexDirection: 'row',
@@ -201,7 +200,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 50,
-    borderColor: '#9D3147',
+    borderColor: colors.bigDipOruby,
     borderWidth: 4,
   },
   containerProfile: {
@@ -237,7 +236,7 @@ const styles = StyleSheet.create({
 
   sectionSaldoGeral: {
     width: width - 60,
-    backgroundColor: '#202731',
+    backgroundColor: colors.rainsBlack,
     height: 80,
     padding: 10,
     borderRadius: 20,

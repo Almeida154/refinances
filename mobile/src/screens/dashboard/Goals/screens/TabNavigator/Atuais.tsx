@@ -13,7 +13,7 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import goalsJson from './goals.json';
 
 import { Title, Subtitle, Loading, TextLoading } from './styles';
-
+import {colors, fonts, metrics} from '../../../../../styles'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Button from '../../../../../components/Button';
@@ -55,10 +55,10 @@ const Goals = ({ navigation }: PropsGoals) => {
 
   if (metas && metas.length > 0) {
     return (
-      <ScrollView style={{ backgroundColor: '#fff' }}>
+      <ScrollView style={{ backgroundColor: colors.white }}>
         {stateReload ? (
           <Loading>
-            <ActivityIndicator size="large" color="#EE4266" />
+            <ActivityIndicator size="large" color={colors.paradisePink} />
             <TextLoading>Carregando...</TextLoading>
           </Loading>
         ) : (
@@ -79,12 +79,12 @@ const Goals = ({ navigation }: PropsGoals) => {
     );
   } else {
     return (
-      <ScrollView style={{ backgroundColor: '#f6f6f6' }}>
+      <ScrollView style={{ backgroundColor: colors.cultured }}>
         <View style={{ margin: '10%', alignItems: 'center' }}>
           <Icon
             name="emoticon-sad-outline"
             size={50}
-            color="#525252"
+            color={colors.davysGrey}
             style={{
               alignItems: 'center',
               justifyContent: 'center',
@@ -101,7 +101,7 @@ const Goals = ({ navigation }: PropsGoals) => {
 
           <Button
             title="Criar nova meta"
-            backgroundColor="#ccc"
+            backgroundColor={colors.blackSilver}
             onPress={() => {
               navigation.dispatch(StackActions.replace('CreateGoals'))
             }}></Button>

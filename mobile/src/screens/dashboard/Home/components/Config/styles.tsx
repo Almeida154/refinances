@@ -2,8 +2,6 @@ import styled from "styled-components/native"
 import { colors, fonts, metrics } from "../../../../../styles"
 
 import { widthPixel, heightPixel } from "../../../../../helpers/responsiveness"
-import { color } from "react-native-reanimated"
-
 
 export const Container = styled.View`
     height: auto;
@@ -36,7 +34,7 @@ export const Profile = styled.Image`
 `
 
 export const HeaderContainer = styled.View`
-    backgroundColor: ${colors.paradisePink};
+    backgroundColor: ${colors.bigDipOruby};
     height: ${heightPixel(500)};
     display: flex;
 `
@@ -91,6 +89,7 @@ export const ContainerItems = styled.View`
     height: ${heightPixel(170)};
     
 `
+
 export const Item = styled.View`
     flexDirection: column;
     width: 70%;
@@ -98,6 +97,7 @@ export const Item = styled.View`
     flex: 1;
     bottom: ${widthPixel(30)};
 `
+
 export const Footer = styled.View`
     width: 100%;
     height: ${heightPixel(700)}
@@ -106,12 +106,14 @@ export const Footer = styled.View`
     align-items: center;
     background-color: ${colors.platinum};
 `
+
 export const SectionIcons = styled.View`
     width: 100%;
     margin: ${heightPixel(50)}px;
     flex-direction: row;
     justify-content: center;
 `
+
 export const Icon = styled.View`
     margin: ${heightPixel(30)}px;
     background-color: ${colors.silver}

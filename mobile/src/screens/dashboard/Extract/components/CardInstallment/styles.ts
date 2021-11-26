@@ -21,7 +21,7 @@ export const SectionIcon = styled.View`
 
 export const EditLabel = styled.Text`
     font-size: ${`${fonts.size.medium}px`};
-    color: #525252;
+    color: ${colors.davysGrey};
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
     margin-bottom: ${`${heightPixel(26)}px`};
@@ -39,7 +39,7 @@ export const SectionLancamento = styled.View`
 export const LabelName = styled.Text`
     fontSize: ${`${fonts.size.medium}px`};   
     font-family: ${fonts.familyType.semiBold};
-    color: #444;
+    color: ${colors.darkGray};
 `
 
 export const SectionValues = styled.View`
@@ -59,7 +59,7 @@ export const SectionCheck = styled.View`
 export const LabelAccount = styled.Text`
     fontSize: ${`${fonts.size.small}px`};
     font-family: ${fonts.familyType.regular};
-    color: #999
+    color: ${colors.silver}
     
 `
 export const LabelValue = styled.Text`
@@ -70,6 +70,6 @@ export const LabelIndex = styled.Text`
     font-family: ${fonts.familyType.semiBold};
     fontSize: ${`${fonts.size.medium}px`};
     margin-right: ${`${heightPixel(50)}px`};
-    color: #525252
+    color: ${colors.davysGrey}
     margin-bottom: ${`${heightPixel(17)}px`};
 `
