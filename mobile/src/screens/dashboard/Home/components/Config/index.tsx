@@ -670,7 +670,7 @@ const Config = () => {
                       <Icon>
                         <AntDesign
                           name="instagram"
-                          color={colors.culture}
+                          color={colors.cultured}
                           size={25}
                         />
                       </Icon>
@@ -678,7 +678,7 @@ const Config = () => {
                       <Icon>
                         <Feather
                           name="github"
-                          color={colors.culture}
+                          color={colors.cultured}
                           size={25}
                         />
                       </Icon>
@@ -686,7 +686,7 @@ const Config = () => {
                       <Icon>
                         <AntDesign
                           name="twitter"
-                          color={colors.culture}
+                          color={colors.cultured}
                           size={25}
                         />
                       </Icon>
@@ -694,7 +694,7 @@ const Config = () => {
                       <Icon>
                         <AntDesign
                           name="iconfontdesktop"
-                          color={colors.culture}
+                          color={colors.cultured}
                           size={25}
                         />
                       </Icon>
