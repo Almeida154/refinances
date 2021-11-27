@@ -164,6 +164,11 @@ class CategoryController {
 
     let categories;
 
+    const rawDate = new Date(!request.body.rawDate ? new Date(): request.body.rawDate)
+
+    const firstDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth(), 1)
+    const lastDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth() + 1, 0)        
+
     if (request.body.tipoCategoria == "todos") {
       categories = await categoryRepository
         .createQueryBuilder("category")
@@ -173,6 +178,8 @@ class CategoryController {
         .leftJoinAndSelect("lancamento.parcelasLancamento", "parcela")
         .leftJoinAndSelect("parcela.contaParcela", "conta")
         .where("user.id = :iduser", {          
+          firstDayOfMonth,
+          lastDayOfMonth,
           iduser: user.id
         })
         .getMany();
@@ -194,14 +201,29 @@ class CategoryController {
     for (var i = 0; i < categories.length; i++) {
       categories[i].valueLancamentos = 0;
 
+      const entriesInDate: Lancamento[] = []
+
       categories[i].lancamentosCategory.map((item: Lancamento) => {
+        const installmentInDate: Parcela[] = []
+
         for (var j = 0; j < item.parcelasLancamento.length; j++) {
-          categories[i].valueLancamentos +=
-            item.tipoLancamento == "despesa"
-              ? -item.parcelasLancamento[j].valorParcela
-              : item.parcelasLancamento[j].valorParcela;
+          if(item.parcelasLancamento[j].dataParcela >= firstDayOfMonth && item.parcelasLancamento[j].dataParcela <= lastDayOfMonth) {
+            categories[i].valueLancamentos +=
+              item.tipoLancamento == "despesa"
+                ? -item.parcelasLancamento[j].valorParcela
+                : item.parcelasLancamento[j].valorParcela;
+
+                installmentInDate.push(item.parcelasLancamento[j])
+          }
+        }
+
+        if(installmentInDate.length != 0) {
+          item.parcelasLancamento = installmentInDate
+          entriesInDate.push(item)
         }
       });
+
+      categories[i].lancamentosCategory = entriesInDate
     }
 
     return response.send( {categories} );
