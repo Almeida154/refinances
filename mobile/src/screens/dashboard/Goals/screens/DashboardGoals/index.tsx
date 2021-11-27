@@ -18,7 +18,6 @@ const Goals = () => {
   const { navigation } = UseDadosTemp();
 
   const backAction = () => {
-    //muda aq mary pra main
     navigation.dispatch(
       StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
     );

@@ -68,7 +68,7 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
           width: widthPixel(200),
           height: widthPixel(200),
           borderRadius: widthPixel(200 / 2),
-          backgroundColor: '#fff',
+          backgroundColor: colors.white,
           marginTop: widthPixel(-(200 / 2)),
         },
         shadowBox(14, 0.5),
@@ -123,7 +123,7 @@ const TabNavigator = () => {
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
-            backgroundColor: '#fff',
+            backgroundColor: colors.white,
             paddingBottom: 10,
             paddingTop: 10,
             height: heightPixel(180),
@@ -173,7 +173,11 @@ const TabNavigator = () => {
             tabBarLabel: () => null,
             headerShown: false,
             tabBarIcon: () => (
-              <Entypo name="plus" color={'#EE4266'} size={widthPixel(65)} />
+              <Entypo
+                name="plus"
+                color={colors.redCrayola}
+                size={widthPixel(65)}
+              />
             ),
             tabBarButton: props => {
               return (

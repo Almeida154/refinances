@@ -1,4 +1,4 @@
-const ShadowBox = (elevation: number = 20, opacity: number = 0.4) => {
+const shadowBox = (elevation: number = 20, opacity: number = 0.4) => {
   return {
     shadowColor: `rgba(0, 0, 0, ${opacity})`,
     shadowOffset: { width: 0, height: 0 },
@@ -8,4 +8,4 @@ const ShadowBox = (elevation: number = 20, opacity: number = 0.4) => {
   };
 };
 
-export default ShadowBox;
+export default shadowBox;
