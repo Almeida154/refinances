@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Button from '../../../components/Button';
 
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import Feather from 'react-native-vector-icons/Feather';
 
 import PropsNavigationApp, {
   PropsMainRoutes,
@@ -118,13 +118,17 @@ const Home = () => {
           <Salutation>{handleSalutation()}</Salutation>
         </Greeting>
         <ActionsAndAssets>
-          <NotificationContainer activeOpacity={0.8} style={shadowBox(14, 0.4)}>
-            <Fontisto
-              name="bell"
+          <NotificationContainer activeOpacity={0.8} style={shadowBox(14, 0.4)}
+            onPress={() => {
+              navigation.dispatch(StackActions.replace
+              ('StackAccount', { screen: 'Config'}))}}>
+            <Feather
+              name="settings"
               size={widthPixel(50)}
               color={hexToRGB(colors.eerieBlack, 0.3)}
             />
           </NotificationContainer>
+
           <TouchableOpacity activeOpacity={0.8} style={shadowBox(10, 1)}>
             {user.fotoPerfilUsuario == null ? (
               <Photo
