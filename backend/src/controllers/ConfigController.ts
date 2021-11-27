@@ -10,22 +10,7 @@ class ConfigController {
     const config = await configRepository.find();
 
     return response.send({ config });
-  }
-
-  async showRelations(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
-    const configRepository = getRepository(Config);
-
-    const config = await configRepository
-      .createQueryBuilder("config")
-      .leftJoinAndSelect("config.userConfig", "user")
-      .getMany();
-
-    return response.send({ config });
-  }
+  } 
 
   async save(request: Request, response: Response, next: NextFunction) {
     const configRepository = getRepository(Config);
@@ -36,12 +21,12 @@ class ConfigController {
       theme,
       senha,
       idioma,
-      userIdid,
+      userId,
     } = request.body;
 
     
     const user = await userRepository.findOne({
-      where: { id: userIdid },
+      where: { id: userId },
     });
 
     if (!user)
@@ -50,7 +35,7 @@ class ConfigController {
       });      
       
     const newConfig = request.body;
-    newConfig.userIdid = user;
+    newConfig.userConfig = user;
     
     const config = configRepository.create(newConfig);
     await configRepository.save(config);
@@ -59,12 +44,13 @@ class ConfigController {
   }
 
   async FindByUser(request: Request, response: Response, next: NextFunction) {
-    const metaRepository = getRepository(Config);
+    const configRepository = getRepository(Config);
     const userRepository = getRepository(User);
 
+    const iduser = parseInt(request.params.user_id)
     const user = await userRepository.findOne({
       where: {
-        id: request.params.iduser,
+        id: iduser
       },
     });
 
@@ -72,13 +58,15 @@ class ConfigController {
       return response.send({ error: "usuário não encontrado" });
     }
 
-    const config = await metaRepository.createQueryBuilder("config")
-      .select(["config", "user.id"])
-      .leftJoin("config.userIdid", "user")
-      .where("user.id = :id", {id: user.id})
-      .getMany()
-
-    console.log(config)
+    const config = await configRepository.findOne({
+      where: {userConfig: {id: iduser}}, 
+      join: {
+        alias: 'config',
+        leftJoinAndSelect: {
+          user: "config.userConfig"
+        }
+      }
+    })
 
     return response.send({ config });
   }
