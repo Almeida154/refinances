@@ -112,10 +112,12 @@ const GoalDetails = ({ route, navigation }: Props) => {
     });
   };
 
+return(
+
     <ScrollView
       style={{
         paddingTop: metrics.default.statusBarHeight,
-        backgroundColor: colors.silver,
+        backgroundColor: colors.back,
       }}>
       <ShortHeader onBackButton={backAction} title={goal.descMeta} />
 
@@ -250,6 +252,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
