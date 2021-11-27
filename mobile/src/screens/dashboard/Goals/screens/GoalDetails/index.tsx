@@ -113,6 +113,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
   };
 
 return(
+
     <ScrollView
       style={{
         paddingTop: metrics.default.statusBarHeight,

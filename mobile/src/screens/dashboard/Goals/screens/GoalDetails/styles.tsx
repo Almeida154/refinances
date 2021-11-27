@@ -11,7 +11,6 @@ export const Valor = styled.View`
 `;
 
 export const TextRS = styled.Text`
-
   text-align: center;
   font-family: ${`${fonts.familyType.bold}`};
   color: ${colors.silver};

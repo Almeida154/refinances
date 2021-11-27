@@ -246,7 +246,6 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
       <ScreenDescription style={{ backgroundColor: colors.culture }}>
         <Title>Que bom que resolveu criar uma meta</Title>
         <Subtitle>
-
           Calcularemos seu investimento mensal e te notificaremos para não
           esquecer.
         </Subtitle>
