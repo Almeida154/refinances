@@ -68,15 +68,6 @@ const CategoriesCard = () => {
     handleCountByEntry(await retornarIdDoUsuario(), 'despesa');
   };
 
-  useEffect(() => {
-    // Caso nenhuma Categoria seja carregada, recarregar
-    console.debug(countbyentry);
-    if (!categorias)
-      (async function () {
-        handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
-      })();
-  }, []);
-
   return (
     <Container style={shadowBox(30, 0.3)}>
       <TopSection>

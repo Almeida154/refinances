@@ -1,81 +1,75 @@
-import styled from "styled-components/native"
+import styled from 'styled-components/native';
+import { heightPixel, widthPixel } from '../../../../../helpers/responsiveness';
 
-import {fonts, colors} from "../../../../../styles"
-
-export const Title = styled.Text `
-    marginBottom: 2%;
-    marginTop: 15%;
-    fontSize: ${`${fonts.size.super}px`};
-    color: ${colors.davysGrey};
-    fontFamily: ${`${fonts.familyType.black}`};
-    textAlign: center;
-`
+import { fonts, colors } from '../../../../../styles';
 
 export const Valor = styled.View`
-    flexDirection: row;
-    flex: 1;
-    width: 100%;
-    justifyContent: center;
-`
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+`;
 
 export const TextRS = styled.Text`
-    textAlign: center;
-    fontFamily: ${`${fonts.familyType.regular}`};
-`
+  text-align: center;
+  font-family: ${`${fonts.familyType.bold}`};
+  color: ${colors.davysGrey};
+  opacity: 0.5;
+`;
 
 export const TextValor = styled.Text`
-    fontFamily: ${`${fonts.familyType.black}`};
-    fontSize: ${`${fonts.size.super}px`};
-    textAlign: center;
-    color: ${colors.davysGrey}
-`
+  font-family: ${`${fonts.familyType.black}`};
+  font-size: ${`${fonts.size.super}px`};
+  text-align: center;
+  color: ${colors.davysGrey};
+`;
 
 export const DaysLeft = styled.Text`
-    fontFamily: ${`${fonts.familyType.semiBold}`};
-    fontSize: ${`${fonts.size.medium}px`};
-    margin-bottom: 10px;
-    opacity: 0.5
-`
+  font-family: ${`${fonts.familyType.semiBold}`};
+  font-size: ${`${fonts.size.medium}px`};
+  margin-bottom: 10px;
+  opacity: 0.5;
+`;
 
 export const TextProgress = styled.Text`
-    fontFamily: ${`${fonts.familyType.semiBold}`};
-    textAlign: center; 
-    fontSize: ${`${fonts.size.medium}px`}
-    color: ${colors.davysGrey};
-    margin-top: 10
-    margin-bottom: 10
-`
+  font-family: ${`${fonts.familyType.bold}`};
+  text-align: center;
+  font-size: ${`${fonts.size.small - widthPixel(6)}px`};
+  color: ${colors.davysGrey};
+  opacity: 0.5;
+  margin-top: ${`${heightPixel(10)}px`};
+`;
 
 export const TextGoals = styled.Text`
-    fontSize: ${`${fonts.size.medium}px`}
-    color: ${colors.jet};
-    fontFamily: ${`${fonts.familyType.bold}`};
-`
+  color: ${colors.eerieBlack};
+  font-family: ${`${fonts.familyType.black}`};
+`;
 
 export const GoalDate = styled.View`
-    flexDirection: row;
-    width: 100%;
-    paddingBottom: 1%;
-`
+  flex-direction: row;
+  width: 100%;
+  opacity: 0.9;
+`;
+
 export const BtnGroup = styled.View`
-    flexDirection: row;
-    width: 100%;
-    justifyContent: center;
-    align-items: center
-`
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const TextGoalsH = styled.Text`
-    fontSize: ${`${fonts.size.medium}px`}
-    color: ${colors.davysGrey};
-    fontFamily: ${`${fonts.familyType.bold}`};
-    width: 50%;
-`
+  font-size: ${`${fonts.size.medium}px`};
+  color: ${colors.davysGrey};
+  font-family: ${`${fonts.familyType.bold}`};
+  width: 50%;
+`;
 
 export const TextGoalsLighter = styled.Text`
-    fontSize: ${`${fonts.size.medium}px`}
-    color: ${colors.davysGrey};
-    textAlign: right;
-    fontFamily: ${`${fonts.familyType.bold}`};
-    width: 50%;
-    opacity: 0.85;
-`
-
+  font-size: ${`${fonts.size.medium}px`};
+  color: ${colors.davysGrey};
+  text-align: right;
+  font-family: ${`${fonts.familyType.bold}`};
+  width: 50%;
+  opacity: 0.5;
+`;

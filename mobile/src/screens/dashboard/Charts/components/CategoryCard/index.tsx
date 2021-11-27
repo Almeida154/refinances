@@ -111,6 +111,7 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
           if (index > 2) return;
           return (
             <Category
+              key={index}
               style={{
                 borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
                 borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
