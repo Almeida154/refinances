@@ -1,5 +1,6 @@
 import styled from 'styled-components/native'
-import { widthPixel, heightPixel } from '../../../helpers/responsiveness';
+
+import { heightPixel, widthPixel } from '../../../helpers/responsiveness';
 
 import { Dimensions } from 'react-native'
 import { fonts, colors, metrics } from '../../../styles'
@@ -11,6 +12,7 @@ export const Container = styled.View`
 `;
 
 // Header
+
 
 export const Header = styled.View`
   flex-direction: row;

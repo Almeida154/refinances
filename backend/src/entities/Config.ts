@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from "typeorm";
 
 import { User } from "./User";
 
@@ -19,6 +19,6 @@ export class Config {
   @Column()
   idioma: string;
 
-  @ManyToOne((type) => User, (user) => user.id)
-  userId: User;
+  @OneToOne((type) => User, (user) => user.configUser)
+  userConfig: User;
 }

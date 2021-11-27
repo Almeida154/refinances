@@ -6,6 +6,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   AfterLoad,
+  OneToOne,
 } from "typeorm";
 
 import { Category } from "./Category";
@@ -17,6 +18,7 @@ import { Necessidade } from "./Necessidade";
 import bcrypt from "bcryptjs";
 import { Lancamento } from "./Lancamento";
 import { Transferencia } from "./Transferencia";
+import { Config } from "./Config";
 
 @Entity()
 export class User {
@@ -69,4 +71,7 @@ export class User {
     (transferencia) => transferencia.userTransferencia
   )
   transferenciasUser: Transferencia[];
+
+  @OneToOne((type) => Config,config => config.userConfig)
+  configUser: Config
 }
