@@ -42,7 +42,7 @@ export const Description = styled.Text`
   opacity: 0.4;
 `;
 
-export const RightButton = styled.View`
+export const RightButton = styled.TouchableOpacity`
   position: absolute;
   border-bottom-right-radius: ${widthPixel(40)};
   border-top-right-radius: ${widthPixel(40)};

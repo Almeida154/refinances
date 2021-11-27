@@ -22,9 +22,10 @@ import { widthPixel } from '../../../../../helpers/responsiveness';
 interface IProps {
   name: string;
   description: string;
+  onPress: () => void;
 }
 
-const CreateCard: React.FC<IProps> = ({ name, description }) => {
+const CreateCard: React.FC<IProps> = ({ name, description, onPress }) => {
   return (
     <Container style={shadowBox(30, 0.3)}>
       <View
@@ -40,7 +41,7 @@ const CreateCard: React.FC<IProps> = ({ name, description }) => {
           </DescriptionContainer>
         </Item>
       </View>
-      <RightButton>
+      <RightButton activeOpacity={0.8} onPress={onPress}>
         <Plus>+</Plus>
       </RightButton>
     </Container>

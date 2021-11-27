@@ -35,7 +35,6 @@ export const TotalBalance = styled.Text`
 `;
 
 export const Description = styled.Text`
-  font-weight: 300;
   font-size: ${`${fonts.size.small}px`};
   font-family: ${`${fonts.familyType.bold}`};
   color: ${colors.davysGrey};

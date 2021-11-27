@@ -22,7 +22,6 @@ import {
 import { StackActions } from '@react-navigation/native';
 import capitalizeFirstLetter from '../../../../../helpers/capitalizeFirstLetter';
 import global from '../../../../../global';
-import { View } from 'react-native';
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import { widthPixel } from '../../../../../helpers/responsiveness';
 import { colors } from '../../../../../styles';

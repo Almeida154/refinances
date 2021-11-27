@@ -51,7 +51,7 @@ import BalanceCard from './components/BalanceCard';
 import AccountsCard from './components/AccountsCard';
 import CreateCard from './components/CreateCard';
 import ManageGoals from './components/ManageGoals';
-import ManageCategory from './components/ManageCategorySection';
+import CategoriesCard from './components/CategoriesCard';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
@@ -103,7 +103,7 @@ const Home = () => {
     <Container>
       <Header>
         <Greeting>
-          <Name>Olá, {user.nomeUsuario}</Name>
+          <Name numberOfLines={1}>Olá, {user.nomeUsuario}</Name>
           <Salutation>{handleSalutation()}</Salutation>
         </Greeting>
         <ActionsAndAssets>
@@ -131,11 +131,21 @@ const Home = () => {
         <CreateCard
           name="categoria"
           description="Você pode criar categorias e definir limites para se organizar."
+          onPress={() =>
+            navigation.dispatch(
+              StackActions.replace('StackAccount', { screen: 'NewCategory' }),
+            )
+          }
         />
-        <ManageCategory />
+        <CategoriesCard />
         <CreateCard
           name="meta"
           description="As metas são úteis para o seu avanço pessoal e financeiro."
+          onPress={() => {
+            navigation.dispatch(
+              StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
+            );
+          }}
         />
         <ManageGoals />
       </Content>
