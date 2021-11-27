@@ -39,11 +39,14 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import { GestureResponderEvent, TouchableOpacity } from 'react-native';
+import { GestureResponderEvent, TouchableOpacity, Animated } from 'react-native';
 
 import { StackActions } from '@react-navigation/native';
 import hexToRGB from '../../helpers/hexToRgba';
 import shadowBox from '../../helpers/shadowBox';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
+import FabButton from './components/FabButton';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
@@ -58,7 +61,7 @@ type PropsCustomBar = {
     | undefined;
 };
 
-const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
+/*const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -73,10 +76,12 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
         },
         shadowBox(14, 0.5),
       ]}>
-      {children}
+      <Animated.View style={{position: 'absolute'}}>
+        {children}
+      </Animated.View>
     </TouchableOpacity>
   );
-};
+};*/
 
 const TabNavigator = () => {
   const { navigation } = UseDadosTemp();
@@ -126,7 +131,7 @@ const TabNavigator = () => {
             backgroundColor: colors.white,
             paddingBottom: 10,
             paddingTop: 10,
-            height: heightPixel(180),
+            height: heightPixel(200),
           },
           tabBarLabelStyle: {
             fontFamily: fonts.familyType.bold,
@@ -181,12 +186,10 @@ const TabNavigator = () => {
             ),
             tabBarButton: props => {
               return (
-                <CustomTabBarButton
-                  children={props.children}
-                  onPress={openModalize}
-                />
+                <FabButton/>
               );
             },
+
           }}
         />
 

@@ -112,21 +112,14 @@ const GoalDetails = ({ route, navigation }: Props) => {
     });
   };
 
-  return (
-<<<<<<< HEAD
-    <ScrollView style={{ paddingTop: '5%', backgroundColor: colors.cultured }}>
-      <Header 
-        backButton={backAction} 
-        color={colors.silver}
-        title="" />
-=======
+return(
+
     <ScrollView
       style={{
         paddingTop: metrics.default.statusBarHeight,
-        backgroundColor: colors.cultured,
+        backgroundColor: colors.back,
       }}>
       <ShortHeader onBackButton={backAction} title={goal.descMeta} />
->>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
 
       {/* {console.debug('ROUTE:::: ', route)} */}
 
