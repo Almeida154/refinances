@@ -11,10 +11,10 @@ import GoalsIcon from '../../../../../assets/images/svg/goalsIcon.svg';
 
 import {
   Container,
-  Label
-} from '../../../../../components/InputTextMoney/styles'
+  Label,
+} from '../../../../../components/InputTextMoney/styles';
 
-import { TextInputMask } from 'react-native-masked-text'
+import { TextInputMask } from 'react-native-masked-text';
 
 import {
   DadosTempProvider,
@@ -26,15 +26,10 @@ import {
   UseLancamentos,
 } from '../../../../../contexts/EntriesContext';
 
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import { colors, fonts } from '../../../../../styles'
+import { colors, fonts } from '../../../../../styles';
 
 import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
@@ -53,14 +48,13 @@ import {
   UseParcelas,
 } from '../../../../../contexts/InstallmentContext';
 import PickerContas from '../../../Entries/components/PickerContas';
-import { Goal } from '../../../Home/components/ManageGoals/styles';
-
+import { Goal } from '../../../Home/components/GoalsCard/styles';
 
 type PropsGoals = {
-  navigation: StackNavigationProp<GoalsStack, "CreateGoals">
-}
+  navigation: StackNavigationProp<GoalsStack, 'CreateGoals'>;
+};
 
-const CreateGoal = ({navigation}: PropsGoals) => {
+const CreateGoal = ({ navigation }: PropsGoals) => {
   const { handleAdicionarLancamento } = UseLancamentos();
   const [meta, setMeta] = useState('');
   const [valorMeta, setValorMeta] = useState('');
@@ -124,13 +118,15 @@ const CreateGoal = ({navigation}: PropsGoals) => {
         essencial: false,
         lugarLancamento: 'extrato',
         parcelaBaseada: -1,
-        parcelasLancamento: [{
-          contaParcela: selectedConta,
-          dataParcela: new Date(Date.now()),
-          lancamentoParcela: -1,
-          statusParcela: sttsParcela(),
-          valorParcela: parseFloat(investidoMeta),
-        }],
+        parcelasLancamento: [
+          {
+            contaParcela: selectedConta,
+            dataParcela: new Date(Date.now()),
+            lancamentoParcela: -1,
+            statusParcela: sttsParcela(),
+            valorParcela: parseFloat(investidoMeta),
+          },
+        ],
         tipoLancamento: 'despesa',
       },
     } as Meta;
@@ -165,7 +161,6 @@ const CreateGoal = ({navigation}: PropsGoals) => {
       setValorMeta('');
       setInvestido('');
       setPrevisao(dataAtual);
-
     } else if (meta == '') {
       setdescError('Descrição obrigatória!');
       Toast.show({
@@ -177,7 +172,7 @@ const CreateGoal = ({navigation}: PropsGoals) => {
         },
       });
     }
-    if (parseFloat(valorMeta) <= 0.00 || valorMeta == '') {
+    if (parseFloat(valorMeta) <= 0.0 || valorMeta == '') {
       setvalorTError('Insira um valor válido!');
       Toast.show({
         type: 'niceToast',
@@ -188,7 +183,7 @@ const CreateGoal = ({navigation}: PropsGoals) => {
         },
       });
     }
-    if (parseFloat(investidoMeta) < 0.00 || investidoMeta == '') {
+    if (parseFloat(investidoMeta) < 0.0 || investidoMeta == '') {
       setinvestidoError('Insira um valor válido!');
       Toast.show({
         type: 'niceToast',
@@ -200,16 +195,15 @@ const CreateGoal = ({navigation}: PropsGoals) => {
       });
     }
   }
-  const sttsParcela = () =>{
-    if(parseFloat(investidoMeta) < parseFloat(valorMeta)){
+  const sttsParcela = () => {
+    if (parseFloat(investidoMeta) < parseFloat(valorMeta)) {
       //se nao concluiu continua false
       return false;
-    }
-    else if(parseFloat(investidoMeta) >= parseFloat(valorMeta)){
+    } else if (parseFloat(investidoMeta) >= parseFloat(valorMeta)) {
       //se concluiu manda true
       return true;
     }
-  }
+  };
   const realizacao = () => {
     parseFloat(investidoMeta) >= parseFloat(valorMeta)
       ? setRealizado(true)
@@ -225,17 +219,19 @@ const CreateGoal = ({navigation}: PropsGoals) => {
     setSelectedConta(conta);
   }
   const backAction = () => {
-    console.debug('veio aqui')
+    console.debug('veio aqui');
     navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
 
   return (
     <ScrollView style={{ backgroundColor: colors.cultured }}>
-      <Header backButton={backAction} 
-      title="Nova meta" 
-      subtitle="Que bom que decidiu criar uma meta!"
-      isShort={true} />
+      <Header
+        backButton={backAction}
+        title="Nova meta"
+        subtitle="Que bom que decidiu criar uma meta!"
+        isShort={true}
+      />
 
       <View style={styles.container}>
         <Text
@@ -250,8 +246,6 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           Calcularemos seu investimento mensal e te notificaremos para não
           esquecer ;)
         </Text>
-
-        
 
         <View>
           <InputText
@@ -272,11 +266,10 @@ const CreateGoal = ({navigation}: PropsGoals) => {
         </View>
 
         <Container>
-          
           <Label>Valor</Label>
 
-          <CurrencyInput 
-            value={parseFloat(valorMeta)} 
+          <CurrencyInput
+            value={parseFloat(valorMeta)}
             onChangeValue={txt => setValorMeta(txt?.toString())}
             style={{
               flex: 1,
@@ -294,17 +287,15 @@ const CreateGoal = ({navigation}: PropsGoals) => {
             selectionColor={colors.davysGrey}
             onChangeText={formattedValue => {
               setValorMeta(valorMeta);
-              
             }}
-            />
+          />
         </Container>
 
         <Container>
-          
           <Label>Valor já investido</Label>
 
-          <CurrencyInput 
-            value={parseFloat(investidoMeta)} 
+          <CurrencyInput
+            value={parseFloat(investidoMeta)}
             onChangeValue={txt => setInvestido(txt?.toString())}
             style={{
               flex: 1,
@@ -323,7 +314,7 @@ const CreateGoal = ({navigation}: PropsGoals) => {
             onChangeText={formattedValue => {
               setInvestido(investidoMeta);
             }}
-            />
+          />
         </Container>
 
         {/* DatePicker */}
@@ -338,8 +329,7 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           onClear={() => {
             setPrevisao(dataAtual);
             setdtPrevError(null);
-          }}
-          ></InputText>
+          }}></InputText>
 
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -347,21 +337,21 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
-      <View style={{display: parseFloat(investidoMeta) > 0? 'flex' : 'none'}}>
-        <PickerContas
-          conta={selectedConta}
-          changeAccount={changeAccount}
-          tipoLancamento="despesa"
-        />
-      </View>
+        <View
+          style={{ display: parseFloat(investidoMeta) > 0 ? 'flex' : 'none' }}>
+          <PickerContas
+            conta={selectedConta}
+            changeAccount={changeAccount}
+            tipoLancamento="despesa"
+          />
+        </View>
         <Button
           onPress={handleCreateGoal}
           title="Criar"
           backgroundColor={colors.blackSilver}
           color={colors.darkGray}
-          style={{marginTop: '5%'}}
+          style={{ marginTop: '5%' }}
         />
-
       </View>
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />

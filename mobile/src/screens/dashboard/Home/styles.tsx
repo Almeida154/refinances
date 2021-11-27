@@ -56,4 +56,5 @@ export const Photo = styled.Image`
 export const Content = styled.View`
   padding: ${`${metrics.default.boundaries / 1.6}px`};
   padding-top: 0;
+  padding-bottom: ${`${heightPixel(160)}px`};
 `;

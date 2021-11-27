@@ -13,12 +13,12 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import goalsJson from './goals.json';
 
 import { Title, Subtitle, Loading, TextLoading } from './styles';
-import {colors, fonts, metrics} from '../../../../../styles'
+import { colors, fonts, metrics } from '../../../../../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Button from '../../../../../components/Button';
 
-import CardGoals from './CardGoals';
+import GoalItem from '../../../../../components/GoalItem';
 import { StackActions } from '@react-navigation/native';
 
 type PropsGoals = {
@@ -70,8 +70,8 @@ const Goals = ({ navigation }: PropsGoals) => {
             {metas &&
               metas.map((item, index) => {
                 console.log('Item: ', UseMetas);
-                if(item.saldoAtualMeta < item.saldoFinalMeta)
-                  return <CardGoals item={item} key={index} />;
+                if (item.saldoAtualMeta < item.saldoFinalMeta)
+                  return <GoalItem item={item} key={index} />;
               })}
           </View>
         )}
@@ -103,7 +103,7 @@ const Goals = ({ navigation }: PropsGoals) => {
             title="Criar nova meta"
             backgroundColor={colors.blackSilver}
             onPress={() => {
-              navigation.dispatch(StackActions.replace('CreateGoals'))
+              navigation.dispatch(StackActions.replace('CreateGoals'));
             }}></Button>
         </View>
       </ScrollView>

@@ -24,6 +24,7 @@ const { width } = Dimensions.get('screen');
 import { UseAuth } from '../../../contexts/AuthContext';
 import { UseCategories } from '../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
+import { UseMetas } from '../../../contexts/GoalsContext';
 
 import { StackActions } from '@react-navigation/native';
 
@@ -50,7 +51,7 @@ import hexToRGB from '../../../helpers/hexToRgba';
 import BalanceCard from './components/BalanceCard';
 import AccountsCard from './components/AccountsCard';
 import CreateCard from './components/CreateCard';
-import ManageGoals from './components/ManageGoals';
+import GoalsCard from './components/GoalsCard';
 import CategoriesCard from './components/CategoriesCard';
 
 const Home = () => {
@@ -88,11 +89,21 @@ const Home = () => {
     })();
   }, []);
 
+  const { metas, handleReadByUserMetas } = UseMetas();
+
+  useEffect(() => {
+    // Caso nenhuma meta seja carregada, recarregar
+    if (!metas)
+      (async function () {
+        await handleReadByUserMetas(await retornarIdDoUsuario());
+      })();
+  }, []);
+
   const handleSalutation = () => {
     const currentDate = new Date(Date.now());
     const currentHour = currentDate.getHours();
 
-    console.debug('Home | handleSalutation() - Horário: ' + currentHour);
+    // console.debug('Home | handleSalutation() - Horário: ' + currentHour);
 
     if (currentHour < 12) return `Bom dia`;
     if (currentHour < 19) return `Boa tarde`;
@@ -147,7 +158,7 @@ const Home = () => {
             );
           }}
         />
-        <ManageGoals />
+        {metas != undefined && metas?.length > 0 && <GoalsCard />}
       </Content>
     </Container>
   );
