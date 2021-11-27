@@ -18,9 +18,9 @@ import Header from '../../../../../../components/Header';
 const Tab = createMaterialTopTabNavigator();
 
 type PropsCategory = {
-  navigation: StackNavigationProp<HomeAccountStack, "NewCategory">;
-  route: StackNavigationProp<HomeAccountStack, "NewCategory">;
-}
+  navigation: StackNavigationProp<HomeAccountStack, 'NewCategory'>;
+  route: StackNavigationProp<HomeAccountStack, 'NewCategory'>;
+};
 
 const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
   const [routeName, setRouteName] = useState<string>();
@@ -42,7 +42,6 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
         backgroundColor:
           routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
       }}>
-
       <Header
         backButton={() => backNavAction()}
         title="Nova categoria"
@@ -53,7 +52,6 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
       <Tab.Navigator
         initialRouteName={routeName}
         screenOptions={{
-          swipeEnabled: false,
           tabBarStyle: {
             backgroundColor:
               routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
@@ -62,7 +60,7 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,
             textTransform: 'capitalize',
-            justifyContent: 'center'
+            justifyContent: 'center',
           },
           tabBarIndicatorStyle: {
             backgroundColor: colors.white,
@@ -74,14 +72,8 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
             setRouteName(route.name);
           },
         })}>
-        <Tab.Screen
-          name="Despesa"
-          component={NewExpenseCategory}
-        />
-        <Tab.Screen
-          name="Receita"
-          component={NewIncomeCategory}
-        />
+        <Tab.Screen name="Despesa" component={NewExpenseCategory} />
+        <Tab.Screen name="Receita" component={NewIncomeCategory} />
       </Tab.Navigator>
     </Container>
   );

@@ -4,7 +4,7 @@ import { fonts, colors, metrics } from '../../styles';
 
 export const Goal = styled.TouchableOpacity`
   background-color: ${colors.cultured};
-  margin-bottom: 10px;
+  margin-bottom: ${`${heightPixel(60)}px`};
   padding: ${`${metrics.default.boundaries / 2}px`};
   border-radius: ${widthPixel(20)};
 `;
