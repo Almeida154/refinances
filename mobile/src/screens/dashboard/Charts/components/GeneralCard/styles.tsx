@@ -36,8 +36,8 @@ export const GeneralStatsFooter = styled(GeneralStatsCard)`
   flex-direction: row;
   position: absolute;
   bottom: 0;
-  height: ${`${heightPixel(250)}px`};
   width: 100%;
+  height: ${`${heightPixel(250)}px`};
   background-color: ${colors.white};
 `;
 
@@ -48,7 +48,7 @@ export const GeneralStatsFooterItem = styled.View`
 `;
 
 export const GSFIBalance = styled.Text`
-  font-size: ${`${fonts.size.medium}px`};
+  font-size: ${`${fonts.size.medium - widthPixel(6)}px`};
   font-family: ${fonts.familyType.black};
 `;
 

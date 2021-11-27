@@ -67,7 +67,6 @@ export const Icon = styled.Image`
   width: ${`${widthPixel(120)}px`};
   height: ${`${widthPixel(120)}px`};
   border-radius: ${`${widthPixel(120 / 2)}px`};
-  background-color: brown;
 `;
 
 export const AccountData = styled.View`

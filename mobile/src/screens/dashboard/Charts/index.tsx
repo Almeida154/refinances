@@ -41,14 +41,20 @@ import {
   TopDataBalance,
   TopDataDescription,
   Content,
+  CountCard,
+  CountCardsContainer,
+  Count,
+  CountDescription,
 } from './styles';
-import { colors } from '../../../styles';
+
+import { colors, metrics } from '../../../styles';
 import { ScrollView, View } from 'react-native';
 import { widthPixel } from '../../../helpers/responsiveness';
 
 import doubleToCurrency from '../../../helpers/doubleToCurrency';
 import shadowBox from '../../../helpers/shadowBox';
 import GeneralCard from './components/GeneralCard';
+import CategoryCard from './components/CategoryCard';
 
 interface PropsRenderSection {
   item: (ReadParcela[] | Transferencia[])[];
@@ -151,6 +157,51 @@ const Graficos = () => {
       <ScrollView>
         <Content>
           <GeneralCard name="Geral" />
+          <CountCardsContainer>
+            <CountCard
+              style={[
+                {
+                  marginRight: metrics.default.boundaries / 1.6 / 2,
+                },
+                shadowBox(),
+              ]}>
+              <Count>02</Count>
+              <CountDescription>Receitas lançadas</CountDescription>
+            </CountCard>
+            <CountCard
+              style={[
+                {
+                  marginLeft: metrics.default.boundaries / 1.6 / 2,
+                },
+                shadowBox(),
+              ]}>
+              <Count>04</Count>
+              <CountDescription>Despesas lançadas</CountDescription>
+            </CountCard>
+          </CountCardsContainer>
+          <CategoryCard
+            name="Gastos por categoria"
+            categories={[
+              {
+                accent: '#2a9d8f',
+                icon: 'Octicons:mortar-board',
+                name: 'Educação',
+                total: 2400,
+              },
+              {
+                accent: '#C5B400',
+                icon: 'MaterialCommunityIcons:hanger',
+                name: 'Outfit',
+                total: 235,
+              },
+              {
+                accent: '#778745',
+                icon: 'MaterialCommunityIcons:heart-pulse',
+                name: 'Saúde',
+                total: 140,
+              },
+            ]}
+          />
         </Content>
       </ScrollView>
     </Container>

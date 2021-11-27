@@ -64,6 +64,7 @@ export const TopDataBalance = styled.Text`
   font-size: ${`${fonts.size.medium - widthPixel(8)}px`};
   font-family: ${fonts.familyType.black};
   margin-top: ${`${heightPixel(-18)}px`};
+  color: ${colors.davysGrey};
 `;
 
 export const TopDataDescription = styled.Text`
@@ -71,10 +72,40 @@ export const TopDataDescription = styled.Text`
   font-family: ${fonts.familyType.bold};
   margin-top: ${`${heightPixel(20)}px`};
   opacity: 0.3;
+  color: ${colors.davysGrey};
 `;
 
 // Body
 
 export const Content = styled.View`
   padding: ${`${metrics.default.boundaries / 1.6}px`};
+`;
+
+export const CountCardsContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
+`;
+
+export const CountCard = styled.View`
+  margin-top: ${`${metrics.default.boundaries / 1.6}px`};
+  background-color: ${colors.white};
+  flex: 1;
+  height: ${`${heightPixel(280)}px`};
+  border-radius: ${`${widthPixel(24)}px`};
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Count = styled.Text`
+  font-size: ${`${fonts.size.super + widthPixel(18)}px`};
+  font-family: ${fonts.familyType.light};
+  opacity: 0.5;
+  color: ${colors.davysGrey};
+`;
+
+export const CountDescription = styled.Text`
+  font-size: ${`${fonts.size.small}px`};
+  font-family: ${fonts.familyType.bold};
+  opacity: 0.3;
+  color: ${colors.davysGrey};
 `;

@@ -7,6 +7,7 @@ const doubleToCurrency = (
   value.toLocaleString(language, {
     style: isDecimal ? 'decimal' : 'currency',
     currency: currency,
+    minimumFractionDigits: 2,
   });
 
 export default doubleToCurrency;
