@@ -9,11 +9,6 @@ import { UseContas, Conta } from '../../../../../contexts/AccountContext';
 
 import {
   Container,
-  Description,
-  TotalBalance,
-  BalanceDetail,
-  SectionBalance,
-  Separator,
   AccountsTitle,
   AccountsContainer,
   CardContainer,
@@ -31,6 +26,7 @@ import { View } from 'react-native';
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import { widthPixel } from '../../../../../helpers/responsiveness';
 import { colors } from '../../../../../styles';
+import shadowBox from '../../../../../helpers/shadowBox';
 
 type CardAccount = {
   item: Conta;
@@ -93,7 +89,7 @@ const CardAccount = ({ item }: CardAccount) => {
   );
 };
 
-const SectionAccount = () => {
+const AccountsCard = () => {
   const { contas, handleReadByUserContas } = UseContas();
   const [saldo, setSaldo] = useState('0');
   const { navigation } = UseDadosTemp();
@@ -117,17 +113,7 @@ const SectionAccount = () => {
     })();
   }, []);
   return (
-    <Container>
-      <SectionBalance>
-        <BalanceDetail />
-        <View>
-          <Description numberOfLines={1}>Saúde financeira</Description>
-          <TotalBalance numberOfLines={1}>{saldo}</TotalBalance>
-        </View>
-      </SectionBalance>
-
-      <Separator />
-
+    <Container style={shadowBox(30, 0.3)}>
       <AccountsContainer>
         <AccountsTitle numberOfLines={1}>Minhas contas</AccountsTitle>
 
@@ -147,7 +133,7 @@ const SectionAccount = () => {
             )
           }
           title="Gerenciar"
-          color="#444"
+          color={colors.silver}
           lastOne
         />
       </AccountsContainer>
@@ -155,4 +141,4 @@ const SectionAccount = () => {
   );
 };
 
-export default SectionAccount;
+export default AccountsCard;

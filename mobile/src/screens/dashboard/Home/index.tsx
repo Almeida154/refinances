@@ -29,11 +29,6 @@ import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
 
-import SectionAccount from './components/SectionAccount';
-import CreateCategoryGoals from './components/CreateCategoryGoals';
-import ManageGoals from './components/ManageGoals';
-import ManageCategory from './components/ManageCategorySection';
-
 import { colors, fonts, metrics } from '../../../styles';
 
 import {
@@ -47,17 +42,21 @@ import {
   Photo,
   Salutation,
 } from './styles';
+
 import { widthPixel } from '../../../helpers/responsiveness';
 import shadowBox from '../../../helpers/shadowBox';
 import hexToRGB from '../../../helpers/hexToRgba';
+
 import BalanceCard from './components/BalanceCard';
+import AccountsCard from './components/AccountsCard';
+import CreateCard from './components/CreateCard';
+import ManageGoals from './components/ManageGoals';
+import ManageCategory from './components/ManageCategorySection';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
   const { handleReadByUserCategorias, categorias, loading } = UseCategories();
   const { navigation } = UseDadosTemp();
-
-  const [stateReload, setStateReload] = useState(false);
 
   const [avatar, setAvatar] = useState<string | undefined | null>('');
   const [mime, setMime] = useState<string | undefined | null>('');
@@ -128,6 +127,17 @@ const Home = () => {
       </Header>
       <Content>
         <BalanceCard />
+        <AccountsCard />
+        <CreateCard
+          name="categoria"
+          description="Você pode criar categorias e definir limites para se organizar."
+        />
+        <ManageCategory />
+        <CreateCard
+          name="meta"
+          description="As metas são úteis para o seu avanço pessoal e financeiro."
+        />
+        <ManageGoals />
       </Content>
     </Container>
   );

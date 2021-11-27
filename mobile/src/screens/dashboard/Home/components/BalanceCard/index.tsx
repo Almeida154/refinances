@@ -5,7 +5,7 @@ import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
-import { UseContas, Conta } from '../../../../../contexts/AccountContext';
+import { UseContas } from '../../../../../contexts/AccountContext';
 
 import {
   Container,

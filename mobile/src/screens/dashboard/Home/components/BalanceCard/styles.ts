@@ -9,7 +9,7 @@ export const Container = styled.View`
   padding: ${`${metrics.default.boundaries / 1.4}px`};
   background-color: ${colors.white};
   border-radius: ${widthPixel(40)};
-  margin-bottom: ${`${heightPixel(30)}px`};
+  margin-bottom: ${`${metrics.default.boundaries / 1.4}px`};
 `;
 
 export const SectionBalance = styled.View`

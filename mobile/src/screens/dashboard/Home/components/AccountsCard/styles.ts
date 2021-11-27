@@ -4,45 +4,11 @@ import { colors, metrics } from '../../../../../styles';
 import fonts from '../../../../../styles/fonts';
 
 export const Container = styled.View`
-  align-items: center;
   width: 100%;
   padding: ${`${metrics.default.boundaries / 1.6}px`};
   background-color: ${colors.white};
-  border-radius: ${widthPixel(60)};
-  margin-bottom: ${`${heightPixel(30)}px`};
-`;
-
-export const SectionBalance = styled.View`
-  flex-direction: row;
-  width: 100%;
-`;
-
-export const BalanceDetail = styled.View`
-  width: ${`${widthPixel(15)}px`};
-  border-radius: ${`${widthPixel(15)}px`};
-  height: 100%;
-  background-color: ${colors.redCrayola};
-  margin-right: ${`${widthPixel(25)}px`};
-`;
-
-export const TotalBalance = styled.Text`
-  font-size: ${`${fonts.size.big}`};
-  font-family: ${`${fonts.familyType.black}`};
-`;
-
-export const Description = styled.Text`
-  font-weight: 300;
-  font-size: ${`${fonts.size.small}px`};
-  font-family: ${`${fonts.familyType.bold}`};
-  opacity: 0.5;
-`;
-
-export const Separator = styled.View`
-  border-radius: ${`${widthPixel(30)}px`};
-  height: ${`${heightPixel(10)}px`};
-  background-color: ${colors.cultured};
-  margin: ${`${metrics.default.boundaries / 2}px`} 0;
-  width: 100%;
+  border-radius: ${widthPixel(40)};
+  margin-bottom: ${`${metrics.default.boundaries / 1.4}px`};
 `;
 
 export const AccountsTitle = styled.Text`
