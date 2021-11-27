@@ -37,12 +37,16 @@ const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
       <Content
         {...rest}
         activeOpacity={1}
-        onPress={() => {
-          navigation.navigate('StackAccount', {
-            screen: 'EditCategory',
-            params: { categoryId: category.id },
-          });
-        }}>
+        onPress={
+          category.tipoCategoria == 'despesa'
+            ? () => {
+                navigation.navigate('StackAccount', {
+                  screen: 'EditCategory',
+                  params: { categoryId: category.id },
+                });
+              }
+            : () => {}
+        }>
         <IconContainer style={{ borderColor: category.corCategoria }}>
           <Icon
             color={category.corCategoria}
@@ -63,15 +67,19 @@ const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
         </IconContainer>
         <Info>
           <Description numberOfLines={1}>{category?.nomeCategoria}</Description>
-          <Category numberOfLines={1}>Teto de gastos</Category>
+          {category.tipoCategoria == 'despesa' && (
+            <Category numberOfLines={1}>Teto de gastos</Category>
+          )}
         </Info>
-        <IconEdit>
-          <MaterialCommunityIcons
-            name="lead-pencil"
-            size={widthPixel(60)}
-            color={hexToRGB(colors.davysGrey, 0.2)}
-          />
-        </IconEdit>
+        {category.tipoCategoria == 'despesa' && (
+          <IconEdit>
+            <MaterialCommunityIcons
+              name="lead-pencil"
+              size={widthPixel(60)}
+              color={hexToRGB(colors.davysGrey, 0.2)}
+            />
+          </IconEdit>
+        )}
       </Content>
       <Data style={shadowBox(10, 0.4)}>
         {category.tetoDeGastos != 0 && (

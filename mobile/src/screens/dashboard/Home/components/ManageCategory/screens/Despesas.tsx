@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { BackHandler, ScrollView, Text, View } from 'react-native';
 
 import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,7 +10,14 @@ import {
 } from '../../../../../../contexts/CategoriesContext';
 
 import { colors, fonts, metrics } from '../../../../../../styles';
-import { Title, Subtitle, Loading, TextLoading } from './styles';
+import {
+  Title,
+  Subtitle,
+  Loading,
+  TextLoading,
+  ScreenDescription,
+  Content,
+} from './styles';
 
 import retornarIdDoUsuario from '../../../../../../helpers/retornarIdDoUsuario';
 
@@ -33,6 +40,17 @@ const Despesas = ({ navigation }: PropsCategory) => {
   >(null);
 
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('Main', { screen: 'Home' }));
+    return true;
+  };
+
+  useEffect(() => {
     (async function () {
       handleReadByUserCategorias(await retornarIdDoUsuario(), 'todos');
     })();
@@ -51,11 +69,13 @@ const Despesas = ({ navigation }: PropsCategory) => {
   if (despesasCategorias != null && despesasCategorias?.length > 0) {
     return (
       <ScrollView style={{ backgroundColor: colors.cultured }}>
-        <View style={{ padding: '10%' }}>
-          <Subtitle>
+        <ScreenDescription>
+          <Content>
             Adicione teto de gastos às categorias para se manter organizado(a)!
-          </Subtitle>
-
+            🤟
+          </Content>
+        </ScreenDescription>
+        <View style={{ padding: metrics.default.boundaries }}>
           {despesasCategorias &&
             despesasCategorias.map((item, index) => {
               return <CategoryItem key={index} category={item} />;

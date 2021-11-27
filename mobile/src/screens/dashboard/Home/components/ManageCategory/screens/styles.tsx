@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
+import { widthPixel } from '../../../../../../helpers/responsiveness';
 
-import { fonts, colors } from '../../../../../../styles';
+import { fonts, colors, metrics } from '../../../../../../styles';
 
 export const Title = styled.Text`
   font-size: ${fonts.size.big};
@@ -77,4 +78,18 @@ export const TextLoading = styled.Text`
   font-size: ${`${fonts.size.big}px`};
   font-family: ${`${fonts.familyType.regular}`};
   margin-top: 20;
+`;
+
+export const ScreenDescription = styled.View`
+  background-color: ${colors.culture};
+  padding: ${`${metrics.default.boundaries / 1.6}px`};
+  padding-left: ${`${metrics.default.boundaries}px`};
+  padding-right: ${`${metrics.default.boundaries}px`};
+`;
+
+export const Content = styled.Text`
+  color: ${colors.davysGrey};
+  font-family: ${`${fonts.familyType.semiBold}`};
+  font-size: ${`${fonts.size.small - widthPixel(8)}px`};
+  opacity: 0.3;
 `;

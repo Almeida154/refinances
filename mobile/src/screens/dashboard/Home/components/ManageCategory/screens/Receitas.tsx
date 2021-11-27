@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { BackHandler, ScrollView, Text, View } from 'react-native';
 
 import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,7 +13,14 @@ import { ActivityIndicator } from 'react-native-paper';
 
 import retornarIdDoUsuario from '../../../../../../helpers/retornarIdDoUsuario';
 
-import { Title, Subtitle, Loading, TextLoading } from './styles';
+import {
+  Title,
+  Subtitle,
+  Loading,
+  TextLoading,
+  ScreenDescription,
+  Content,
+} from './styles';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -35,6 +42,17 @@ const Receitas = ({ navigation }: PropsCategory) => {
   >(null);
 
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('Main', { screen: 'Home' }));
+    return true;
+  };
+
+  useEffect(() => {
     //se nao tiver categorias, recarrega
     if (!categorias)
       (async function () {
@@ -53,13 +71,14 @@ const Receitas = ({ navigation }: PropsCategory) => {
 
   if (receitasCategorias != undefined && receitasCategorias?.length > 0) {
     return (
-      <ScrollView style={{ backgroundColor: colors.white }}>
-        <View style={{ margin: '10%' }}>
-          <Subtitle>
-            Aqui você encontra suas categorias de receita e o valor total delas
-            por mês!
-          </Subtitle>
-
+      <ScrollView style={{ backgroundColor: colors.cultured }}>
+        <ScreenDescription>
+          <Content>
+            Aqui estão suas categorias de receita, elas não recebem teto de
+            gasto!
+          </Content>
+        </ScreenDescription>
+        <View style={{ padding: metrics.default.boundaries }}>
           {receitasCategorias &&
             receitasCategorias.map((item, index) => {
               console.log('Item: ', receitasCategorias);
