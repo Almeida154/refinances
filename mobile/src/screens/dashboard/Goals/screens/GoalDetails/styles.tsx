@@ -11,18 +11,12 @@ export const Valor = styled.View`
 `;
 
 export const TextRS = styled.Text`
-<<<<<<< HEAD
-    textAlign: center;
-    fontFamily: ${`${fonts.familyType.regular}`};
-    color: ${colors.silver};
-`
-=======
+
   text-align: center;
   font-family: ${`${fonts.familyType.bold}`};
-  color: ${colors.davysGrey};
+  color: ${colors.silver};
   opacity: 0.5;
 `;
->>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
 
 export const TextValor = styled.Text`
   font-family: ${`${fonts.familyType.black}`};
@@ -32,21 +26,12 @@ export const TextValor = styled.Text`
 `;
 
 export const DaysLeft = styled.Text`
-<<<<<<< HEAD
-    fontFamily: ${`${fonts.familyType.semiBold}`};
-    fontSize: ${`${fonts.size.medium}px`};
-    margin-bottom: 10px;
-    opacity: 0.5
-    color: ${colors.davysGrey};
-`
-=======
   font-family: ${`${fonts.familyType.semiBold}`};
   font-size: ${`${fonts.size.medium}px`};
   margin-bottom: 10px;
   opacity: 0.5;
+  color: ${colors.davysGrey};
 `;
->>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
-
 export const TextProgress = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
   text-align: center;

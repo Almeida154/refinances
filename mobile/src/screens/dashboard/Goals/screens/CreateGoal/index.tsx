@@ -52,12 +52,8 @@ import {
   UseParcelas,
 } from '../../../../../contexts/InstallmentContext';
 import PickerContas from '../../../Entries/components/PickerContas';
-<<<<<<< HEAD
-import { Goal } from '../../../Home/components/GoalsCard/styles';
-import { color } from 'react-native-reanimated';
-=======
+
 import ShortHeader from '../../../../../components/ShortHeader';
->>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
 
 type PropsGoals = {
   navigation: StackNavigationProp<GoalsStack, 'CreateGoals'>;
@@ -240,27 +236,6 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
   };
 
   return (
-<<<<<<< HEAD
-    <ScrollView style={{ backgroundColor: colors.cultured }}>
-      <Header
-        backButton={backAction}
-        title="Nova meta"
-        color={colors.silver}
-        subtitle="Que bom que decidiu criar uma meta!"
-        isShort={true}
-      />
-
-      <View style={styles.container}>
-        <Text
-          style={{
-            marginBottom: heightPixel(50),
-            marginTop: heightPixel(450),
-            fontSize: fonts.size.medium,
-            textAlign: 'center',
-            fontFamily: fonts.familyType.regular,
-            color: colors.jet,
-          }}>
-=======
     <ScrollView
       style={{
         backgroundColor: colors.cultured,
@@ -271,7 +246,7 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
       <ScreenDescription style={{ backgroundColor: colors.culture }}>
         <Title>Que bom que resolveu criar uma meta</Title>
         <Subtitle>
->>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
+
           Calcularemos seu investimento mensal e te notificaremos para não
           esquecer.
         </Subtitle>

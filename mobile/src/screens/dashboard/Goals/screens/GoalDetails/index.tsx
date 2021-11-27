@@ -112,21 +112,13 @@ const GoalDetails = ({ route, navigation }: Props) => {
     });
   };
 
-  return (
-<<<<<<< HEAD
-    <ScrollView style={{ paddingTop: '5%', backgroundColor: colors.cultured }}>
-      <Header 
-        backButton={backAction} 
-        color={colors.silver}
-        title="" />
-=======
+
     <ScrollView
       style={{
         paddingTop: metrics.default.statusBarHeight,
-        backgroundColor: colors.cultured,
+        backgroundColor: colors.silver,
       }}>
       <ShortHeader onBackButton={backAction} title={goal.descMeta} />
->>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
 
       {/* {console.debug('ROUTE:::: ', route)} */}
 
@@ -259,7 +251,6 @@ const GoalDetails = ({ route, navigation }: Props) => {
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>
-  );
 };
 
 const styles = StyleSheet.create({
