@@ -236,7 +236,6 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
   };
 
   return (
-
     <ScrollView
       style={{
         backgroundColor: colors.cultured,
