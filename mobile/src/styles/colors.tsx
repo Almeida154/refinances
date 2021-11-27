@@ -5,21 +5,16 @@ export default {
   silver: '#c4c4c4',
   lightGray: '#f3f3f3',
   darkGray: '#444',
-
   cultured: '#f6f6f6',
   white: '#ffffff',
   diffWhite: '#fbfbfb',
   platinum: '#E6E6E6',
-
   bigDipOruby: '#9d3147',
-  paradisePink: '#ee4266',
+  paradisePink: false ? '#489e39' : '#ee4266',
   redCrayola: '#f81650',
-
   slimyGreen: '#489e39',
   lincolnGreen: '#16550c',
-
   deepSafron: '#FB9637',
-
   gainsboro: '#E0E0E0',
   rainsBlack: '#202731',
   PrussianBlue: '#183153',

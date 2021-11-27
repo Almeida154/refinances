@@ -80,6 +80,7 @@ const Home = () => {
   }, [loading]);
 
   return (
+
     <ScrollView>
       {stateReload ? (
         <View

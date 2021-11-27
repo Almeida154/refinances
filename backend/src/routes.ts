@@ -7,6 +7,7 @@ import EntryController from "./controllers/EntryController";
 import GoalController from "./controllers/GoalController";
 import InstallmentController from "./controllers/InstallmentController";
 import TransferController from "./controllers/TransferController";
+import ConfigController from "./controllers/ConfigController";
 
 import authMiddleware from "./middlewares/authMiddleware";
 
@@ -89,8 +90,8 @@ Routes.delete("/transfer/remove/:id", TransferController.remove);
 Routes.delete("/transfer/remove", TransferController.removeAll);
 
 // Config
-// Routes.post('/config/create/:user_id');
-// Routes.get('/config/read/:user_id');
-// Routes.put('/config/edit/:user_id');
+Routes.post('/config/create/:user_id');
+Routes.get('/config/read/:user_id');
+Routes.put('/config/edit/:user_id');
 
 export default Routes;
