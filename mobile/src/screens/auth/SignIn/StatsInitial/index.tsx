@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BackHandler, View, processColor, Text } from 'react-native';
+import { BackHandler, View, processColor } from 'react-native';
 
 import api from '../../../../services/api';
 

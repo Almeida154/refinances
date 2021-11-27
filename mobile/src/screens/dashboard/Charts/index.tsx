@@ -41,8 +41,6 @@ import {
   TopDataBalance,
   TopDataDescription,
   Content,
-  GeneralStatsCard,
-  GeneralStatsFooter,
 } from './styles';
 import { colors } from '../../../styles';
 import { ScrollView, View } from 'react-native';
@@ -50,6 +48,7 @@ import { widthPixel } from '../../../helpers/responsiveness';
 
 import doubleToCurrency from '../../../helpers/doubleToCurrency';
 import shadowBox from '../../../helpers/shadowBox';
+import GeneralCard from './components/GeneralCard';
 
 interface PropsRenderSection {
   item: (ReadParcela[] | Transferencia[])[];
@@ -151,9 +150,7 @@ const Graficos = () => {
       </TopData>
       <ScrollView>
         <Content>
-          <GeneralStatsCard style={shadowBox(20, 0.2)}>
-            <GeneralStatsFooter style={shadowBox()}></GeneralStatsFooter>
-          </GeneralStatsCard>
+          <GeneralCard name="Geral" />
         </Content>
       </ScrollView>
     </Container>

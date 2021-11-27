@@ -2,9 +2,10 @@ const doubleToCurrency = (
   value: number,
   language = 'pt-br',
   currency = 'BRL',
+  isDecimal = false,
 ) =>
   value.toLocaleString(language, {
-    style: 'currency',
+    style: isDecimal ? 'decimal' : 'currency',
     currency: currency,
   });
 

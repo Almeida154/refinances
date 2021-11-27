@@ -62,7 +62,7 @@ export const TopDataTitle = styled.Text`
 
 export const TopDataBalance = styled.Text`
   font-size: ${`${fonts.size.medium - widthPixel(8)}px`};
-  font-family: ${fonts.familyType.bold};
+  font-family: ${fonts.familyType.black};
   margin-top: ${`${heightPixel(-18)}px`};
 `;
 
@@ -77,19 +77,4 @@ export const TopDataDescription = styled.Text`
 
 export const Content = styled.View`
   padding: ${`${metrics.default.boundaries / 1.6}px`};
-`;
-
-export const GeneralStatsCard = styled.View`
-  position: relative;
-  height: ${`${heightPixel(1000)}px`};
-  background-color: ${colors.diffWhite};
-  border-radius: ${`${widthPixel(24)}px`};
-`;
-
-export const GeneralStatsFooter = styled(GeneralStatsCard)`
-  position: absolute;
-  bottom: 0;
-  height: ${`${heightPixel(250)}px`};
-  width: 100%;
-  background-color: ${colors.white};
 `;
