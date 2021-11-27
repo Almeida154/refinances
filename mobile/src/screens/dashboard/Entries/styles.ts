@@ -61,7 +61,7 @@ export const AlinhaParaDireita = styled.View`
 
 export const LabelCifrao = styled.Text`
     font-size: 20px;
-    color: ${colors.white};
+    color: ${colors.silver};
     top: 0;
     position: absolute;
     right: ${heightPixel(250)}px;

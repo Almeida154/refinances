@@ -122,7 +122,7 @@ const Home = () => {
             <Fontisto
               name="bell"
               size={widthPixel(50)}
-              color={hexToRGB(colors.eerieBlack, 0.3)}
+              color={hexToRGB(colors.silver, 0.3)}
             />
           </NotificationContainer>
           <TouchableOpacity activeOpacity={0.8} style={shadowBox(10, 1)}>

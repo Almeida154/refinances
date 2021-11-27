@@ -111,7 +111,9 @@ const GoalDetails = ({ route, navigation }: Props) => {
   return (
     <ScrollView style={{ paddingTop: '5%', backgroundColor: colors.cultured }}>
       <Header 
-        backButton={backAction} title="" />
+        backButton={backAction} 
+        color={colors.silver}
+        title="" />
 
       {console.debug('ROUTE:::: ', route)}
       <View style={styles.container}>

@@ -123,15 +123,20 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   return (
     <ScrollView style={{backgroundColor: colors.cultured }}>
        <Header style={{ backgroundColor: colors.paradisePink }}>
-            <HeaderTop backButton={backAction} title='Teto de gastos' isShort={true} color={colors.white}/>
+            <HeaderTop 
+            backButton={backAction} 
+            title='Teto de gastos' 
+            color={colors.silver}
+            isShort={true}/>
           <AlinhaParaDireita>
+          <LabelCifrao>R$</LabelCifrao> 
             <CurrencyInput
               value={parseFloat(tetoGastos)}
               onChangeValue={txt => setTetoGastos(txt?.toString())}
               style={{
                   alignContent: 'flex-end',
                   alignItems: 'flex-end',
-                  color: colors.lightGray,
+                  color: colors.silver,
                   fontFamily: fonts.familyType.bold,
                   fontSize: fonts.size.super +20,
                   opacity: 0.7,

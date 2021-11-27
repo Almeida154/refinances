@@ -49,6 +49,7 @@ import {
 } from '../../../../../contexts/InstallmentContext';
 import PickerContas from '../../../Entries/components/PickerContas';
 import { Goal } from '../../../Home/components/GoalsCard/styles';
+import { color } from 'react-native-reanimated';
 
 type PropsGoals = {
   navigation: StackNavigationProp<GoalsStack, 'CreateGoals'>;
@@ -229,6 +230,7 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
       <Header
         backButton={backAction}
         title="Nova meta"
+        color={colors.silver}
         subtitle="Que bom que decidiu criar uma meta!"
         isShort={true}
       />

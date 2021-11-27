@@ -36,7 +36,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
         backgroundColor: colors.white,
         flex: 1,
       }}>
-      <StatusBar backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent" />
 
       <Header 
         onBackButton={() => navigation.dispatch(

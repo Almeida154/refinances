@@ -5,6 +5,7 @@ import { fonts, colors, metrics } from '../../../styles';
 export const Container = styled.ScrollView`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
+  background: ${colors.back};
 `;
 
 export const Header = styled.View`

@@ -21,6 +21,7 @@ export const Valor = styled.View`
 export const TextRS = styled.Text`
     textAlign: center;
     fontFamily: ${`${fonts.familyType.regular}`};
+    color: ${colors.silver};
 `
 
 export const TextValor = styled.Text`
@@ -35,6 +36,7 @@ export const DaysLeft = styled.Text`
     fontSize: ${`${fonts.size.medium}px`};
     margin-bottom: 10px;
     opacity: 0.5
+    color: ${colors.davysGrey};
 `
 
 export const TextProgress = styled.Text`

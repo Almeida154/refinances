@@ -1,39 +1,49 @@
 import styled from 'styled-components/native'
+import { widthPixel, heightPixel } from '../../../helpers/responsiveness';
 
 import { Dimensions } from 'react-native'
-import { fonts, colors } from '../../../styles'
+import { fonts, colors, metrics } from '../../../styles'
 
 export const Container = styled.View`
-    width: 100%;
-    height: 100%;
-`
+  padding-top: ${`${metrics.default.statusBarHeight}px`};
+  flex: 1;
+  background: ${colors.back};
+`;
+
+// Header
 
 export const Header = styled.View`
-    display: flex;
-    flex-direction: row;
-    height: 80px;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 20%;
-    padding-right: 20%;
-    margin-top: 10%;
-`
+  flex-direction: row;
+  height: ${`${heightPixel(220)}px`};
+  justify-content: center;
+  align-items: center;
+`;
 
 export const PeriodoAnterior = styled.TouchableOpacity`
+  opacity: 0.2;
+`;
 
-`
 export const PeriodoAtual = styled.View`
-
-`
+  padding: 0 ${`${widthPixel(60)}px`};
+  opacity: 0.7;
+`;
 
 export const PeriodoPosterior = styled.TouchableOpacity`
+  opacity: 0.2;
+`;
 
-`
 export const LabelPeriodo = styled.Text`
-    font-family: ${`${fonts.familyType.semiBold}`};
-    font-size: ${`${fonts.size.big}px`};
-    color: ${colors.darkGray}
-`
+  font-family: ${`${fonts.familyType.bold}`};
+  background-color: ${colors.platinum};
+  padding-top: ${`${widthPixel(10)}px`};
+  padding-bottom: ${`${widthPixel(10)}px`};
+  padding-left: ${`${widthPixel(50)}px`};
+  padding-right: ${`${widthPixel(50)}px`};
+  border-radius: ${`${widthPixel(80)}px`};
+  font-size: ${`${fonts.size.big}px`};
+  color: ${colors.darkGray};
+`;
+
 export const Body = styled.View`
     background-color: ${colors.white};
     padding-left: 25px;

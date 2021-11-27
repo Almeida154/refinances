@@ -19,7 +19,7 @@ const Main = ({ navigation }: PropsMain) => {
 
   return (
     <>
-      <StatusBar translucent backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent" />
       <RootNavigator />
     </>
   );

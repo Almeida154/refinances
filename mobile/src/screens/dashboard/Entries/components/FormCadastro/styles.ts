@@ -8,6 +8,7 @@ export const ContainerForm = styled.View`
     flex-direction: column;
     width: 100%;
     padding: 5%;
+    background: ${colors.white};
 `
 
 export const InputControl = styled.View`
