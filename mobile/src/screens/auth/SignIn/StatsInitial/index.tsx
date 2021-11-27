@@ -6,6 +6,7 @@ import api from '../../../../services/api';
 import global from '../../../../global';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
+import { UseConfig } from '../../../../contexts/ConfigContext';
 import retornarIdDoUsuario from '../../../../helpers/retornarIdDoUsuario';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -81,6 +82,8 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
     handleRegister,
     updateUserProps,
   } = UseAuth();
+
+  const { handleAdicionarConfigByUser } = UseConfig;
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
@@ -199,6 +202,8 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
       allCategories: ctgrs == undefined ? [] : ctgrs,
       accounts: setupUser.accounts,
     });
+
+
 
     logUser.signed = true;
     updateUserProps(logUser);

@@ -24,8 +24,8 @@ export const ContainerProfile = styled.View`
 `
 
 export const Profile = styled.Image`
-    width: ${widthPixel(250)};
-    height: ${heightPixel(270)};
+    width: ${widthPixel(300)};
+    height: ${heightPixel(330)};
     borderRadius: ${widthPixel(250)};;
     borderColor: ${colors.bigDipOruby};
     borderWidth: 4;
@@ -35,7 +35,7 @@ export const Profile = styled.Image`
 
 export const HeaderContainer = styled.View`
     backgroundColor: ${colors.bigDipOruby};
-    height: ${heightPixel(500)};
+    height: ${heightPixel(550)};
     display: flex;
 `
 
