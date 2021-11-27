@@ -27,21 +27,23 @@ import { UseDadosTemp } from '../../contexts/TemporaryDataContext';
 
 import Home from '../../screens/dashboard/Home';
 import Charts from '../../screens/dashboard/Charts';
-import Variados from '../../screens/dashboard/Sundry';
+// import Variados from '../../screens/dashboard/Sundry';
 import Extrato from '../../screens/dashboard/Extract';
-import FormLancamentos from '../../screens/dashboard/Entries';
-import AddCategory from '../../screens/dashboard/Entries/components/AddCategory';
-import ManageAccount from '../../screens/dashboard/Home/components/ManageAccount';
+// import FormLancamentos from '../../screens/dashboard/Entries';
+// import AddCategory from '../../screens/dashboard/Entries/components/AddCategory';
+// import ManageAccount from '../../screens/dashboard/Home/components/ManageAccount';
 import DashboardGoals from '../../screens/dashboard/Goals/screens/DashboardGoals';
 
-import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Feather';
-import Icon3 from 'react-native-vector-icons/Ionicons';
-import Icon4 from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
 
-import { GestureResponderEvent, TouchableOpacity, View } from 'react-native';
+import { GestureResponderEvent, TouchableOpacity } from 'react-native';
 
 import { StackActions } from '@react-navigation/native';
+import hexToRGB from '../../helpers/hexToRgba';
+import shadowBox from '../../helpers/shadowBox';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
@@ -60,21 +62,17 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={{
-        width: 60,
-        height: 60,
-        borderRadius: 35,
-        backgroundColor: '#fff',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 4,
+      activeOpacity={0.8}
+      style={[
+        {
+          width: widthPixel(200),
+          height: widthPixel(200),
+          borderRadius: widthPixel(200 / 2),
+          backgroundColor: '#fff',
+          marginTop: widthPixel(-(200 / 2)),
         },
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9,
-        marginTop: heightPixel(-90),
-      }}>
+        shadowBox(14, 0.5),
+      ]}>
       {children}
     </TouchableOpacity>
   );
@@ -136,8 +134,8 @@ const TabNavigator = () => {
             marginTop: 0,
           },
           headerShown: false,
-          tabBarActiveTintColor: '#EE4266',
-          tabBarInactiveTintColor: '#bbb',
+          tabBarActiveTintColor: colors.redCrayola,
+          tabBarInactiveTintColor: colors.silver,
         }}>
         <Tab.Screen
           name="Home"
@@ -145,7 +143,11 @@ const TabNavigator = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ color }) => (
-              <Icon3 name="md-home" color={color} size={24} />
+              <Ionicons
+                name="md-home"
+                color={hexToRGB(color, 0.4)}
+                size={widthPixel(65)}
+              />
             ),
           }}
         />
@@ -155,7 +157,11 @@ const TabNavigator = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ color }) => (
-              <Icon2 name="file-text" color={color} size={24} />
+              <Feather
+                name="file-text"
+                color={hexToRGB(color, 0.4)}
+                size={widthPixel(65)}
+              />
             ),
           }}
         />
@@ -166,7 +172,9 @@ const TabNavigator = () => {
           options={{
             tabBarLabel: () => null,
             headerShown: false,
-            tabBarIcon: () => <Icon4 name="plus" color={'#EE4266'} size={24} />,
+            tabBarIcon: () => (
+              <Entypo name="plus" color={'#EE4266'} size={widthPixel(65)} />
+            ),
             tabBarButton: props => {
               return (
                 <CustomTabBarButton
@@ -184,7 +192,11 @@ const TabNavigator = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ color }) => (
-              <Icon3 name="stats-chart" color={color} size={24} />
+              <Ionicons
+                name="stats-chart"
+                color={hexToRGB(color, 0.4)}
+                size={widthPixel(65)}
+              />
             ),
           }}
         />
@@ -194,7 +206,11 @@ const TabNavigator = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ color }) => (
-              <Icon3 name="rocket" color={color} size={24} />
+              <Ionicons
+                name="rocket"
+                color={hexToRGB(color, 0.4)}
+                size={widthPixel(65)}
+              />
             ),
           }}
         />
