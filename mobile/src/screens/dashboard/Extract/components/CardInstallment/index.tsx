@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
 import {ReadParcela, Parcela} from '../../../../../contexts/InstallmentContext'
 import {UseContas} from '../../../../../contexts/AccountContext'
@@ -33,9 +33,11 @@ type PropsCardInstallment = {
 const CardInstallment = ({item}: PropsCardInstallment) => {
     const {modalizeRefDetailEntry, setSelectedItemExtract, showNiceToast} = UseDadosTemp()
     const textParcela = item.totalParcelas != 1 && item.totalParcelas ? ' ' + item.indexOfLancamento + '/' + item.totalParcelas : ''
-    const [checked, setChecked] = React.useState(item.statusParcela);    
-    const [valor, setValor] = React.useState(((item.valorParcela).toFixed(2)).replace('.',','));
+    const [checked, setChecked] = React.useState(item.statusParcela);        
     const {handleReadByUserContas} = UseContas()
+    
+    
+        console.debug("item", item)
     
     function openModalize(){
         setSelectedItemExtract(item)
@@ -66,7 +68,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
             </SectionLancamento>
 
             <SectionValues>
-                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: colors.paradisePink} : {color: colors.budGreen}}>{valor}</LabelValue>                                                    
+                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: colors.paradisePink} : {color: colors.budGreen}}>{((item.valorParcela).toFixed(2)).replace('.',',')}</LabelValue>                                                    
 
                 
                 <SectionCheck>

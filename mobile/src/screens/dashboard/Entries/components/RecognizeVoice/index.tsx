@@ -182,6 +182,10 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
+      // this.setState({
+      //   results: ["Eu comprei uma bazuca por r$ 4"]
+      // })
+
        this.generatePrincipal(this.tratoNoTexto(this.state.results[0]))      
        this.setState({
          isRecording: false
@@ -479,14 +483,8 @@ class VoiceTest extends Component<Props, State> {
         </Instructions>
         
         <ContainerResults>
-          <Stat>
-            {this.state.results.map((result, index) => {
-              return (
-                <Stat key={`result-${index}`}>
-                  {result}
-                </Stat>
-              );
-            })}
+          <Stat>            
+          {this.state.results[0]}
           </Stat>
         </ContainerResults>
 
