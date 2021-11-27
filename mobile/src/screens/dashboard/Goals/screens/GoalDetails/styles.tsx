@@ -35,7 +35,7 @@ export const DaysLeft = styled.Text`
 export const TextProgress = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
   text-align: center;
-  font-size: ${`${fonts.size.small - widthPixel(6)}px`};
+  font-size: ${`${fonts.size.medium - widthPixel(6)}px`};
   color: ${colors.davysGrey};
   opacity: 0.5;
   margin-top: ${`${heightPixel(10)}px`};
