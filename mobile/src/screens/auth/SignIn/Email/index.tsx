@@ -82,7 +82,7 @@ const Email = ({ navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <StatusBar translucent backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       <Header onBackButton={() => backAction()} title="Qual seu e-mail?" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>

@@ -167,7 +167,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <StatusBar backgroundColor={colors.white} />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       <Header
         onBackButton={() => backAction()}
         title="Selecione ou crie uma categoria para"

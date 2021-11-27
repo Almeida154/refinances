@@ -50,7 +50,7 @@ const BalanceCard = () => {
         aux.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
       );
     }
-    setBalance('R$ ------ 🤫');
+    setBalance('R$ ------');
   }, [contas, isBalanceVisible]);
 
   useEffect(() => {

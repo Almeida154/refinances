@@ -124,7 +124,7 @@ const Password = ({ navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <StatusBar translucent backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       <Header onBackButton={() => backAction()} title="Insira uma senha" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>

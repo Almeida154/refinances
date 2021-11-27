@@ -1,12 +1,18 @@
 import styled from 'styled-components/native'
+
 import { heightPixel, widthPixel } from '../../../helpers/responsiveness';
+
 import { Dimensions } from 'react-native'
 import { fonts, colors, metrics } from '../../../styles'
 
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
+  background: ${colors.back};
 `;
+
+// Header
+
 
 export const Header = styled.View`
   flex-direction: row;

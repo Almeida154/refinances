@@ -17,16 +17,20 @@ import {
   TextLoading,
   ScreenDescription,
   Content,
+  FAB,
 } from './styles';
 
 import retornarIdDoUsuario from '../../../../../../helpers/retornarIdDoUsuario';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 import Button from '../../../../../../components/Button';
 import CategoryItem from '../../../../../../components/CategoryItem';
 
 import { StackActions } from '@react-navigation/native';
+import shadowBox from '../../../../../../helpers/shadowBox';
+import { widthPixel } from '../../../../../../helpers/responsiveness';
 
 type PropsCategory = {
   navigation: StackNavigationProp<HomeAccountStack, 'ManageCategory'>;
@@ -68,20 +72,32 @@ const Despesas = ({ navigation }: PropsCategory) => {
 
   if (despesasCategorias != null && despesasCategorias?.length > 0) {
     return (
-      <ScrollView style={{ backgroundColor: colors.cultured }}>
-        <ScreenDescription>
-          <Content>
-            Adicione teto de gastos às categorias para se manter organizado(a)!
-            🤟
-          </Content>
-        </ScreenDescription>
-        <View style={{ padding: metrics.default.boundaries }}>
-          {despesasCategorias &&
-            despesasCategorias.map((item, index) => {
-              return <CategoryItem key={index} category={item} />;
-            })}
-        </View>
-      </ScrollView>
+      <View>
+        <ScrollView style={{ backgroundColor: colors.cultured }}>
+          <ScreenDescription>
+            <Content>
+              Adicione teto de gastos às categorias para se manter
+              organizado(a)! 🤟
+            </Content>
+          </ScreenDescription>
+          <View style={{ padding: metrics.default.boundaries }}>
+            {despesasCategorias &&
+              despesasCategorias.map((item, index) => {
+                return <CategoryItem key={index} category={item} />;
+              })}
+          </View>
+        </ScrollView>
+        <FAB
+          onPress={() => {
+            navigation.dispatch(
+              StackActions.replace('StackAccount', { screen: 'NewCategory' }),
+            );
+          }}
+          activeOpacity={0.8}
+          style={[shadowBox(), { backgroundColor: colors.redCrayola }]}>
+          <Entypo name="plus" size={widthPixel(60)} color={colors.white} />
+        </FAB>
+      </View>
     );
   } else {
     return (

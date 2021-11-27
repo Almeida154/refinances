@@ -93,3 +93,15 @@ export const Content = styled.Text`
   font-size: ${`${fonts.size.small - widthPixel(8)}px`};
   opacity: 0.3;
 `;
+
+export const FAB = styled.TouchableOpacity`
+  background-color: ${colors.white};
+  width: ${`${widthPixel(160)}px`};
+  height: ${`${widthPixel(160)}px`};
+  border-radius: ${`${widthPixel(160 / 2)}px`};
+  position: absolute;
+  bottom: ${`${metrics.default.boundaries / 2}px`};
+  right: ${`${metrics.default.boundaries / 2}px`};
+  justify-content: center;
+  align-items: center;
+`;

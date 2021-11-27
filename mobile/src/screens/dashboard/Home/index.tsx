@@ -57,6 +57,7 @@ import CategoriesCard from './components/CategoriesCard';
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
   const { handleReadByUserCategorias, categorias, loading } = UseCategories();
+  const { metas, handleReadByUserMetas } = UseMetas();
   const { navigation } = UseDadosTemp();
 
   const [avatar, setAvatar] = useState<string | undefined | null>('');
@@ -89,13 +90,19 @@ const Home = () => {
     })();
   }, []);
 
-  const { metas, handleReadByUserMetas } = UseMetas();
-
   useEffect(() => {
     // Caso nenhuma meta seja carregada, recarregar
     if (!metas)
       (async function () {
         await handleReadByUserMetas(await retornarIdDoUsuario());
+      })();
+  }, []);
+
+  useEffect(() => {
+    // Caso nenhuma Categoria seja carregada, recarregar
+    if (!categorias)
+      (async function () {
+        handleReadByUserCategorias(await retornarIdDoUsuario(), 'despesa');
       })();
   }, []);
 
@@ -125,7 +132,7 @@ const Home = () => {
             <Feather
               name="settings"
               size={widthPixel(50)}
-              color={hexToRGB(colors.eerieBlack, 0.3)}
+              color={hexToRGB(colors.silver, 0.3)}
             />
           </NotificationContainer>
 
@@ -152,7 +159,7 @@ const Home = () => {
             )
           }
         />
-        <CategoriesCard />
+        {categorias != undefined && categorias.length > 0 && <CategoriesCard />}
         <CreateCard
           name="meta"
           description="As metas são úteis para o seu avanço pessoal e financeiro."

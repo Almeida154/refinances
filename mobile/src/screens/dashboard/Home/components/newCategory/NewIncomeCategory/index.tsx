@@ -19,7 +19,6 @@ import Button from '../../../../../../components/Button';
 import Modalize from '../../../../../../components/Modalize';
 import IconByString from '../../../../../../helpers/gerarIconePelaString';
 
-
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../../components/NiceToast';
 
@@ -47,7 +46,7 @@ const NewExpenseCategory = () => {
     icon: string;
   };
 
-  const [name, setName] = useState<string>('Essa é nova');
+  const [name, setName] = useState<string>('');
   const [nameError, setNameError] = useState<null | string>(null);
   const nameRef = useRef<TextInput>(null);
 
@@ -97,14 +96,12 @@ const NewExpenseCategory = () => {
         type: 'niceToast',
         props: {
           type: 'success',
-          title: 'Foi!',
-          message: 'Categoria de receita adicionada com sucesso',
+          title: 'Tudo certo!',
+          message: 'Categoria adicionada com sucesso',
         },
       });
 
-      navigation.dispatch(
-        StackActions.replace('Main'),
-      );
+      navigation.dispatch(StackActions.replace('Main'));
     } else {
       Toast.show({
         type: 'niceToast',
@@ -183,10 +180,12 @@ const NewExpenseCategory = () => {
           icon={icon}
         />
         <Button
+          style={{
+            backgroundColor: colors.platinum,
+          }}
           onPress={() => add()}
           title="Adicionar"
-          backgroundColor={colors.platinum}
-          color={colors.davysGrey}
+          color={colors.silver}
         />
       </Form>
 

@@ -210,7 +210,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         showNiceToast,
         hideNiceToast,
       }}>
-      <StatusBar backgroundColor="transparent" translucent />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       {children}
       <Toast
         ref={ref => Toast.setRef(ref)}

@@ -163,7 +163,10 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
 
   return (
     <ScrollView style={{ paddingTop: '8%', backgroundColor: colors.cultured }}>
-      <Header backButton={backAction} title="" />
+      <Header 
+      backButton={backAction} 
+      color={colors.silver}
+      title="" />
 
       <View style={styles.container}>
         <View style={{ marginTop: '15%' }}>
@@ -236,8 +239,8 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
           <Button
             onPress={handleUpdateGoal}
             title="Salvar"
-            backgroundColor={colors.blackSilver}
-            color={colors.darkGray}
+            style={{backgroundColor:colors.culture,}}
+            color={colors.silver}
             lastOne={true}
           />
         </View>

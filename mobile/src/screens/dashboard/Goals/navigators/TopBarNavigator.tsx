@@ -10,7 +10,9 @@ import Concluidas from '../screens/TabNavigator/Concluidas';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import PropsMainRoutes, { GoalsStack } from '../../../../@types/RootStackParamApp';
+import PropsMainRoutes, {
+  GoalsStack,
+} from '../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StackActions } from '@react-navigation/native';
 
@@ -31,33 +33,38 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
   return (
     <View
       style={{
-        paddingTop: heightPixel(150),
+        paddingTop: metrics.default.statusBarHeight,
         backgroundColor: colors.white,
         flex: 1,
       }}>
-      <StatusBar backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
 
-      <Header 
-        onBackButton={() => navigation.dispatch(
-          StackActions.replace('Main', 
-          {screen: 'Home'})
-      )} title="Metas" />
+      <Header
+        onBackButton={() =>
+          navigation.dispatch(StackActions.replace('Main', { screen: 'Home' }))
+        }
+        title="Metas"
+        isShort
+      />
 
       <Tab.Navigator
         initialRouteName="Atuais"
         screenOptions={{
-          tabBarIndicatorStyle: {
-            backgroundColor: colors.davysGrey,
+          tabBarStyle: {
+            backgroundColor: colors.white,
           },
-          tabBarActiveTintColor: colors.davysGrey,
+          tabBarIndicatorStyle: {
+            backgroundColor: colors.lightGray,
+          },
+          tabBarActiveTintColor: colors.davysGray,
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,
             textTransform: 'capitalize',
-            justifyContent: 'center'
+            justifyContent: 'center',
           },
         }}>
-
+        {/* @ts-ignore */}
         <Tab.Screen name="Atuais" component={Atuais} />
         <Tab.Screen name="Concluidas" component={Concluidas} />
       </Tab.Navigator>

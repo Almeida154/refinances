@@ -33,7 +33,9 @@ const ShortHeader: React.FC<IProps> = ({ onBackButton, title }) => {
           color={colors.davysGrey}
           onPress={onBackButton}
         />
-        <Title>{title != undefined ? title : 'Sem título'}</Title>
+        <Title numberOfLines={1}>
+          {title != undefined ? title : 'Sem título'}
+        </Title>
       </Boundaries>
     </View>
   );

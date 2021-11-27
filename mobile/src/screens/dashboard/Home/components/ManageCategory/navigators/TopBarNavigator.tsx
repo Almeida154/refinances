@@ -9,7 +9,7 @@ import Despesas from '../screens/Despesas';
 import Receitas from '../screens/Receitas';
 
 import Header from '../../../../components/Header';
-import { colors, fonts } from '../../../../../../styles';
+import { colors, fonts, metrics } from '../../../../../../styles';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -20,6 +20,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import PropsMainRoutes, {
   HomeAccountStack,
 } from '../../../../../../@types/RootStackParamApp';
+import ShortHeader from '../../../../../../components/ShortHeader';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<HomeAccountStack, 'ManageCategory'>;
@@ -32,17 +33,18 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
   return (
     <View
       style={{
-        paddingTop: 0,
+        paddingTop: metrics.default.statusBarHeight,
         backgroundColor: colors.white,
         flex: 1,
       }}>
-      <StatusBar backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent" />
 
       <Header
         onBackButton={() =>
           navigation.dispatch(StackActions.replace('Main', { screen: 'Home' }))
         }
         title="Categorias"
+        isShort
       />
 
       <Tab.Navigator
@@ -53,6 +55,9 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
             fontFamily: fonts.familyType.bold,
             textTransform: 'capitalize',
             justifyContent: 'center',
+          },
+          tabBarStyle: {
+            backgroundColor: colors.white,
           },
           tabBarIndicatorStyle: {
             backgroundColor: colors.davysGrey,

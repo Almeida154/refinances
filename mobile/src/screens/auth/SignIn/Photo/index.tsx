@@ -94,7 +94,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <StatusBar translucent backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       <ScrollView>
         <Header
           onBackButton={() => backAction()}

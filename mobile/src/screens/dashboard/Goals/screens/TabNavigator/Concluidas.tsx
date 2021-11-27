@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View } from 'react-native';
+import { BackHandler, ScrollView, View } from 'react-native';
 
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -29,18 +29,6 @@ const GoalsAccomplished = ({ navigation }: PropsGoals) => {
   const [stateReload, setStateReload] = useState(false);
 
   useEffect(() => {
-    if (!navigation.addListener) return;
-
-    const focus = navigation.addListener('focus', () => {
-      setStateReload(false);
-    });
-
-    const blur = navigation.addListener('blur', () => {
-      setStateReload(true);
-    });
-  }, [navigation]);
-
-  useEffect(() => {
     // Caso nenhuma meta seja carregada, recarregar
     if (!metas)
       (async function () {
@@ -52,30 +40,34 @@ const GoalsAccomplished = ({ navigation }: PropsGoals) => {
     !metas ? null : metas.filter(metas => metas.realizacaoMeta),
   );*/
 
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('Main', { screen: 'Home' }));
+    return true;
+  };
+
   if (metas && metas.length > 0) {
     return (
       <ScrollView style={{ backgroundColor: colors.white }}>
-        {stateReload ? (
-          <Loading>
-            <ActivityIndicator size="large" color={colors.paradisePink} />
-            <TextLoading>Carregando...</TextLoading>
-          </Loading>
-        ) : (
-          <View style={{ margin: '10%' }}>
-            <Title>Parabéns!</Title>
+        <View style={{ margin: '10%' }}>
+          <Title>Parabéns!</Title>
 
-            <Subtitle>
-              Continue registrando suas metas financeiras para viver uma vida
-              mais confortável
-            </Subtitle>
-            {metas &&
-              metas.map((item, index) => {
-                console.log('Item: ', UseMetas);
-                if (item.saldoAtualMeta >= item.saldoFinalMeta)
-                  return <GoalItem item={item} key={index} />;
-              })}
-          </View>
-        )}
+          <Subtitle>
+            Continue registrando suas metas financeiras para viver uma vida mais
+            confortável
+          </Subtitle>
+          {metas &&
+            metas.map((item, index) => {
+              console.log('Item: ', UseMetas);
+              if (item.saldoAtualMeta >= item.saldoFinalMeta)
+                return <GoalItem item={item} key={index} />;
+            })}
+        </View>
       </ScrollView>
     );
   } else {
@@ -105,7 +97,8 @@ const GoalsAccomplished = ({ navigation }: PropsGoals) => {
             backgroundColor={colors.blackSilver}
             onPress={() => {
               navigation.dispatch(StackActions.replace('CreateGoals'));
-            }}></Button>
+            }}
+          />
         </View>
       </ScrollView>
     );

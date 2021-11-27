@@ -48,7 +48,7 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
         backgroundColor:
           routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
       }}>
-      <StatusBar backgroundColor="transparent" translucent />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       <View style={{ elevation: 0 }}>
         <Header
           onBackButton={() => backNavAction()}
