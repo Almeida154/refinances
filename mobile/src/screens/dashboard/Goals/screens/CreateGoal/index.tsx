@@ -26,10 +26,10 @@ import {
   UseLancamentos,
 } from '../../../../../contexts/EntriesContext';
 
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import { colors, fonts } from '../../../../../styles';
+import { colors, fonts, metrics } from '../../../../../styles';
 
 import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
@@ -40,7 +40,11 @@ import Header from '../../../../../components/Header';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 
-import CurrencyInput from 'react-native-currency-input';
+import {
+  ScreenDescription,
+  Subtitle,
+  Title,
+} from '../../../Home/components/ManageAccount/styles';
 
 import { Conta } from '../../../../../contexts/AccountContext';
 import {
@@ -48,8 +52,12 @@ import {
   UseParcelas,
 } from '../../../../../contexts/InstallmentContext';
 import PickerContas from '../../../Entries/components/PickerContas';
+<<<<<<< HEAD
 import { Goal } from '../../../Home/components/GoalsCard/styles';
 import { color } from 'react-native-reanimated';
+=======
+import ShortHeader from '../../../../../components/ShortHeader';
+>>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
 
 type PropsGoals = {
   navigation: StackNavigationProp<GoalsStack, 'CreateGoals'>;
@@ -219,13 +227,20 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
   function changeAccount(conta: Conta | null) {
     setSelectedConta(conta);
   }
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
   const backAction = () => {
-    console.debug('veio aqui');
     navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
 
   return (
+<<<<<<< HEAD
     <ScrollView style={{ backgroundColor: colors.cultured }}>
       <Header
         backButton={backAction}
@@ -245,10 +260,23 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
             fontFamily: fonts.familyType.regular,
             color: colors.jet,
           }}>
-          Calcularemos seu investimento mensal e te notificaremos para não
-          esquecer ;)
-        </Text>
+=======
+    <ScrollView
+      style={{
+        backgroundColor: colors.cultured,
+        paddingTop: metrics.default.statusBarHeight,
+      }}>
+      <ShortHeader onBackButton={backAction} title="Nova meta" />
 
+      <ScreenDescription style={{ backgroundColor: colors.culture }}>
+        <Title>Que bom que resolveu criar uma meta</Title>
+        <Subtitle>
+>>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
+          Calcularemos seu investimento mensal e te notificaremos para não
+          esquecer.
+        </Subtitle>
+      </ScreenDescription>
+      <View style={styles.container}>
         <View>
           <InputText
             value={meta}
@@ -267,57 +295,30 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
           />
         </View>
 
-        <Container>
-          <Label>Valor</Label>
+        <InputText
+          label="Valor total"
+          isCurrencyInput
+          // @ts-ignore
+          value={parseFloat(valorMeta)}
+          onChangeValue={(txt: string) => setValorMeta(txt?.toString() || '')}
+          placeholderTextColor={'rgba(52, 52, 52, .3)'}
+          selectionColor={colors.davysGrey}
+          onChangeText={formattedValue => {
+            setValorMeta(valorMeta);
+          }}
+        />
 
-          <CurrencyInput
-            value={parseFloat(valorMeta)}
-            onChangeValue={txt => setValorMeta(txt?.toString())}
-            style={{
-              flex: 1,
-              padding: 0,
-              color: colors.davysGrey,
-              fontFamily: fonts.familyType.bold,
-              fontSize: fonts.size.medium,
-            }}
-            delimiter="."
-            separator=","
-            precision={2}
-            placeholder="Ex.: R$ 100,00"
-            maxValue={999999}
-            placeholderTextColor={'rgba(52, 52, 52, .3)'}
-            selectionColor={colors.davysGrey}
-            onChangeText={formattedValue => {
-              setValorMeta(valorMeta);
-            }}
-          />
-        </Container>
-
-        <Container>
-          <Label>Valor já investido</Label>
-
-          <CurrencyInput
-            value={parseFloat(investidoMeta)}
-            onChangeValue={txt => setInvestido(txt?.toString())}
-            style={{
-              flex: 1,
-              padding: 0,
-              color: colors.davysGrey,
-              fontFamily: fonts.familyType.bold,
-              fontSize: fonts.size.medium,
-            }}
-            delimiter="."
-            separator=","
-            precision={2}
-            placeholder="Ex.: R$ 100,00"
-            maxValue={999999}
-            placeholderTextColor={'rgba(52, 52, 52, .3)'}
-            selectionColor={colors.davysGrey}
-            onChangeText={formattedValue => {
-              setInvestido(investidoMeta);
-            }}
-          />
-        </Container>
+        <InputText
+          label="Valor já investido"
+          isCurrencyInput
+          // @ts-ignore
+          value={parseFloat(investidoMeta)}
+          onChangeValue={(txt: string) => setInvestido(txt?.toString() || '')}
+          selectionColor={colors.davysGrey}
+          onChangeText={formattedValue => {
+            setInvestido(investidoMeta);
+          }}
+        />
 
         {/* DatePicker */}
         <InputText
@@ -350,9 +351,8 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
         <Button
           onPress={handleCreateGoal}
           title="Criar"
-          backgroundColor={colors.blackSilver}
-          color={colors.darkGray}
-          style={{ marginTop: '5%' }}
+          color={colors.silver}
+          style={{ backgroundColor: colors.platinum }}
         />
       </View>
       {/* @ts-ignore */}
@@ -363,8 +363,7 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: '10%',
-    marginRight: '10%',
+    padding: metrics.default.boundaries,
   },
 });
 

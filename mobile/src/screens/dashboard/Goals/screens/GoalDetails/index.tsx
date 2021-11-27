@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { Goal } from '../TabNavigator/styles';
-
 import {
   GoalDate,
   TextGoals,
@@ -11,10 +9,8 @@ import {
   TextProgress,
   TextRS,
   TextValor,
-  Title,
   Valor,
-  DaysLeft,
-  BtnGroup
+  BtnGroup,
 } from './styles';
 
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
@@ -40,11 +36,20 @@ import { colors, fonts, metrics } from '../../../../../styles';
 import TabNavigator from '../../../../../navigation/TabNavigator/';
 import { Modalize as Modal } from 'react-native-modalize';
 import Modalize from '../../../../../components/Modalize';
+import ShortHeader from '../../../../../components/ShortHeader';
+import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
+import { heightPixel, widthPixel } from '../../../../../helpers/responsiveness';
+import hexToRGB from '../../../../../helpers/hexToRgba';
+import {
+  DaysLeft,
+  IconContainer,
+  Subtitle,
+} from '../../../../../components/GoalItem/styles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<GoalsStack, 'GoalDetails'>;
 
 const GoalDetails = ({ route, navigation }: Props) => {
-
   const [goal, setGoal] = useState({} as Meta);
 
   const { handleGetGoalById } = UseMetas();
@@ -53,35 +58,34 @@ const GoalDetails = ({ route, navigation }: Props) => {
   useEffect(() => {
     (async () => {
       const goal = await handleGetGoalById(route.params?.goalId);
+      // @ts-ignore
       setGoal(goal);
-      console.debug('O GOAL AQUI Ó:::: ', goal);
+      //console.debug('O GOAL AQUI Ó:::: ', goal);
     })();
   }, []);
 
-  let percentageBalance = 100
-  let days = 0
-  
-  if(goal.dataFimMeta) {
-    const objDataFimMeta = toDate(goal.dataFimMeta); 
-     
+  let percentageBalance = 100;
+  let days = 0;
+
+  if (goal.dataFimMeta) {
+    const objDataFimMeta = toDate(goal.dataFimMeta);
+
     const objDataIniMeta = toDate(goal.dataInicioMeta);
-  
+
     // Subtrai uma data pela outra
-    const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime()); 
-  
+    const diff = Math.abs(objDataFimMeta.getTime() - objDataIniMeta.getTime());
+
     // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
     days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-   
+
     // Algum cálculo para calcular a porcentagem aqui
     percentageBalance = (goal.saldoAtualMeta * 100) / goal.saldoFinalMeta;
-    const percBalance = percentageBalance / 100; 
-    const saldo = (goal.saldoAtualMeta);
+    const percBalance = percentageBalance / 100;
+    const saldo = goal.saldoAtualMeta;
   }
 
   const backAction = () => {
-    navigation.dispatch(
-      StackActions.replace('Main'),
-    );
+    navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
 
@@ -106,44 +110,70 @@ const GoalDetails = ({ route, navigation }: Props) => {
         message: 'Meta excluida com sucesso',
       },
     });
-  }
-  
+  };
+
   return (
+<<<<<<< HEAD
     <ScrollView style={{ paddingTop: '5%', backgroundColor: colors.cultured }}>
       <Header 
         backButton={backAction} 
         color={colors.silver}
         title="" />
+=======
+    <ScrollView
+      style={{
+        paddingTop: metrics.default.statusBarHeight,
+        backgroundColor: colors.cultured,
+      }}>
+      <ShortHeader onBackButton={backAction} title={goal.descMeta} />
+>>>>>>> 25aaaa6a65f8e24264778a6b523f90e10ce0ca9a
 
-      {console.debug('ROUTE:::: ', route)}
+      {/* {console.debug('ROUTE:::: ', route)} */}
+
       <View style={styles.container}>
-        <Title>{goal.descMeta}</Title>
-
         <Valor>
           <TextRS>R$</TextRS>
-          <TextValor>{goal.saldoAtualMeta}</TextValor>
+          <TextValor>
+            {doubleToCurrency(goal.saldoAtualMeta || 0, 'pt-br', 'BRL', true)}
+          </TextValor>
         </Valor>
 
         <ProgressBar
-        progress={percentageBalance / 100}
-        color={colors.redCrayola}
-        style={{
-          height: 10,
-          marginVertical: 8,
-          borderRadius: 10,
-        }}
-      />
+          progress={percentageBalance / 100}
+          color={colors.redCrayola}
+          style={{
+            height: 10,
+            marginVertical: 8,
+            borderRadius: 10,
+          }}
+        />
 
         <TextProgress>
           Você já progrediu sua meta em
           <TextGoals> {percentageBalance.toFixed(1)}% </TextGoals>
-          de <TextGoals>R$ {goal.saldoFinalMeta}</TextGoals>
+          de{' '}
+          <TextGoals>
+            {doubleToCurrency(goal.saldoFinalMeta || 0, 'pt-br', 'BRL', true)}
+          </TextGoals>
         </TextProgress>
 
-        <Goal>
-          <DaysLeft>
-              <Icon name="exclamation" color={colors.davysGrey} size={22} /> Faltam {days} dias
-          </DaysLeft>
+        <View
+          style={{
+            backgroundColor: hexToRGB(colors.platinum, 0.4),
+            marginVertical: heightPixel(80),
+            padding: metrics.default.boundaries / 1.6,
+            borderRadius: widthPixel(20),
+          }}>
+          <Subtitle>
+            <IconContainer>
+              <MaterialCommunityIcons
+                name="exclamation"
+                color={hexToRGB(colors.davysGrey)}
+                size={widthPixel(30)}
+              />
+            </IconContainer>
+            <DaysLeft>Faltam {days} dias</DaysLeft>
+          </Subtitle>
 
           <GoalDate>
             <TextGoalsH>Início</TextGoalsH>
@@ -154,51 +184,48 @@ const GoalDetails = ({ route, navigation }: Props) => {
             <TextGoalsH>Previsão</TextGoalsH>
             <TextGoalsLighter>{goal.dataFimMeta}</TextGoalsLighter>
           </GoalDate>
-        </Goal>
-        
+        </View>
+
         <Button
           onPress={() => {
             navigation.dispatch(
               StackActions.replace('GoalsStack', {
-              screen: 'InvestGoals',
-              params: { goalId: goal.id }
-            }));
+                screen: 'InvestGoals',
+                params: { goalId: goal.id },
+              }),
+            );
           }}
           title="Depositar"
           color={colors.budGreen}
           style={{
-            marginBottom: 10,
-            marginTop: 10,
-            backgroundColor: colors.culture,
-          }}
-        />
-    
-        <Button
-          onPress={() => { 
-            openModalize();
-        }}
-          title="Excluir"
-          color={colors.paradisePink}
-          style={{
-            marginBottom: 10,
-            marginTop: 10,
             backgroundColor: colors.culture,
           }}
         />
 
         <Button
           onPress={() => {
+            openModalize();
+          }}
+          title="Excluir"
+          color={colors.paradisePink}
+          style={{
+            backgroundColor: colors.culture,
+          }}
+          lastOne
+        />
+
+        <Button
+          onPress={() => {
             navigation.dispatch(
               StackActions.replace('GoalsStack', {
-              screen: 'EditGoals',
-              params: { goalId: goal.id }
-            }));
+                screen: 'EditGoals',
+                params: { goalId: goal.id },
+              }),
+            );
           }}
           title="Editar"
           color={colors.darkGray}
           style={{
-            marginBottom: 10,
-            marginTop: 10,
             backgroundColor: colors.culture,
           }}
         />
@@ -212,16 +239,20 @@ const GoalDetails = ({ route, navigation }: Props) => {
             title="Excluir"
             onPress={excluir}
             color={colors.platinum}
-            style={{width: '50%', marginRight: '5%', backgroundColor: colors.paradisePink}}
+            style={{
+              width: '50%',
+              marginRight: '5%',
+              backgroundColor: colors.paradisePink,
+            }}
           />
           <Button
             title="Cancelar"
-            onPress={() =>{
+            onPress={() => {
               closeModalize();
             }}
             backgroundColor={colors.platinum}
             color={colors.darkGray}
-            style={{width: '50%'}}
+            style={{ width: '50%' }}
           />
         </BtnGroup>
       </Modalize>

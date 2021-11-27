@@ -20,6 +20,7 @@ import {
   TextLoading,
   ScreenDescription,
   Content,
+  FAB,
 } from './styles';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -29,6 +30,9 @@ import { colors, fonts, metrics } from '../../../../../../styles';
 import CardCategory from '../../CategoriesCard/index';
 import { StackActions } from '@react-navigation/native';
 import CategoryItem from '../../../../../../components/CategoryItem';
+import shadowBox from '../../../../../../helpers/shadowBox';
+import { widthPixel } from '../../../../../../helpers/responsiveness';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 type PropsCategory = {
   navigation: StackNavigationProp<HomeAccountStack, 'ManageCategory'>;
@@ -71,23 +75,35 @@ const Receitas = ({ navigation }: PropsCategory) => {
 
   if (receitasCategorias != undefined && receitasCategorias?.length > 0) {
     return (
-      <ScrollView style={{ backgroundColor: colors.cultured }}>
-        <ScreenDescription>
-          <Content>
-            Aqui estão suas categorias de receita, elas não recebem teto de
-            gasto!
-          </Content>
-        </ScreenDescription>
-        <View style={{ padding: metrics.default.boundaries }}>
-          {receitasCategorias &&
-            receitasCategorias.map((item, index) => {
-              console.log('Item: ', receitasCategorias);
-              if (item.tipoCategoria == 'receita') {
-                return <CategoryItem key={index} category={item} />;
-              }
-            })}
-        </View>
-      </ScrollView>
+      <View>
+        <ScrollView style={{ backgroundColor: colors.cultured }}>
+          <ScreenDescription>
+            <Content>
+              Aqui estão suas categorias de receita, elas não recebem teto de
+              gasto!
+            </Content>
+          </ScreenDescription>
+          <View style={{ padding: metrics.default.boundaries }}>
+            {receitasCategorias &&
+              receitasCategorias.map((item, index) => {
+                console.log('Item: ', receitasCategorias);
+                if (item.tipoCategoria == 'receita') {
+                  return <CategoryItem key={index} category={item} />;
+                }
+              })}
+          </View>
+        </ScrollView>
+        <FAB
+          onPress={() => {
+            navigation.dispatch(
+              StackActions.replace('StackAccount', { screen: 'NewCategory' }),
+            );
+          }}
+          activeOpacity={0.8}
+          style={[shadowBox(), { backgroundColor: colors.slimyGreen }]}>
+          <Entypo name="plus" size={widthPixel(60)} color={colors.white} />
+        </FAB>
+      </View>
     );
   } else {
     return (
