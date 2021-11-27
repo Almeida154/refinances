@@ -1,122 +1,107 @@
 import React, { useState, useEffect } from 'react';
-// import { ScrollView, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 
-// import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
-// import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-// import { Categoria, UseCategories } from '../../../../../../contexts/CategoriesContext';
+import {
+  Categoria,
+  UseCategories,
+} from '../../../../../../contexts/CategoriesContext';
 
-// import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 
-// import retornarIdDoUsuario from '../../../../../../helpers/retornarIdDoUsuario';
+import retornarIdDoUsuario from '../../../../../../helpers/retornarIdDoUsuario';
 
-// import { Title, Subtitle, Loading, TextLoading } from './styles';
+import { Title, Subtitle, Loading, TextLoading } from './styles';
 
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// import Button from '../../../../../../components/Button';
-// import {colors, fonts, metrics} from '../../../../../../styles'
-// import CardCategory from '../../CategoriesCard/index';
-// import { StackActions } from '@react-navigation/native';
+import Button from '../../../../../../components/Button';
+import { colors, fonts, metrics } from '../../../../../../styles';
+import CardCategory from '../../CategoriesCard/index';
+import { StackActions } from '@react-navigation/native';
+import CategoryItem from '../../../../../../components/CategoryItem';
 
-// type PropsCategory = {
-//   navigation: StackNavigationProp<HomeAccountStack, 'ManageCategory'>;
-// };
+type PropsCategory = {
+  navigation: StackNavigationProp<HomeAccountStack, 'ManageCategory'>;
+};
 
-// const Receitas = ({ navigation }: PropsCategory) => {
-//   const { categorias, handleReadByUserCategorias } = UseCategories();
-//   const [stateReload, setStateReload] = useState(false);
+const Receitas = ({ navigation }: PropsCategory) => {
+  const { categorias, handleReadByUserCategorias } = UseCategories();
 
-//   const [receitasCategorias, setReceitasCategorias] = useState<Categoria[] | null>(null)
+  const [receitasCategorias, setReceitasCategorias] = useState<
+    Categoria[] | null
+  >(null);
 
-//   useEffect(() => {
-//     if (!navigation.addListener) return;
+  useEffect(() => {
+    //se nao tiver categorias, recarrega
+    if (!categorias)
+      (async function () {
+        handleReadByUserCategorias(await retornarIdDoUsuario(), 'receita');
+      })();
 
-//     const focus = navigation.addListener('focus', () => {
-//       setStateReload(false);
-//     });
+    const aux: Categoria[] = [];
 
-//     const blur = navigation.addListener('blur', () => {
-//       setStateReload(true);
-//     });
-//   }, [navigation]);
+    categorias?.map(item => {
+      if (item.tipoCategoria == 'receita') aux.push(item);
+    });
 
-//   useEffect(() => {
-//     //se nao tiver categorias, recarrega
-//     if (!categorias)
-//       (async function () {
-//         handleReadByUserCategorias(await retornarIdDoUsuario(), 'receita');
-//       })();
+    console.debug('useEffect[categorias] | aux', aux);
+    setReceitasCategorias(aux);
+  }, [categorias]);
 
-//     const aux: Categoria[] = []
+  if (receitasCategorias != undefined && receitasCategorias?.length > 0) {
+    return (
+      <ScrollView style={{ backgroundColor: colors.white }}>
+        <View style={{ margin: '10%' }}>
+          <Subtitle>
+            Aqui você encontra suas categorias de receita e o valor total delas
+            por mês!
+          </Subtitle>
 
-//     categorias?.map(item => {
-//       if(item.tipoCategoria == 'receita')
-//         aux.push(item)
-//     })
+          {receitasCategorias &&
+            receitasCategorias.map((item, index) => {
+              console.log('Item: ', receitasCategorias);
+              if (item.tipoCategoria == 'receita') {
+                return <CategoryItem key={index} category={item} />;
+              }
+            })}
+        </View>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <ScrollView style={{ backgroundColor: colors.cultured }}>
+        <View style={{ margin: '10%', alignItems: 'center' }}>
+          <Icon
+            name="emoticon-sad-outline"
+            size={50}
+            color={colors.davysGrey}
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 30,
+            }}
+          />
 
-//     console.debug("useEffect[categorias] | aux", aux)
-//     setReceitasCategorias(aux)
-//   }, [categorias])
+          <Title>Você não tem categorias cadastradas!</Title>
 
-//   if (receitasCategorias?.length > 0) {
-//     return (
-//       <ScrollView style={{ backgroundColor: colors.white }}>
-//         {stateReload ? (
-//           <Loading>
-//             <ActivityIndicator size="large" color={colors.paradisePink} />
-//             <TextLoading>Carregando...</TextLoading>
-//           </Loading>
-//         ) : (
-//           <View style={{ margin: '10%' }}>
-//             <Subtitle>
-//               Aqui você encontra suas categorias de receita e o valor total delas por mês!
-//             </Subtitle>
+          <Subtitle>
+            Categorias com teto de gastos são muito importantes para impor
+            limites em si mesmo, não deixe de criar e gerenciá-las.
+          </Subtitle>
 
-//             {receitasCategorias &&
-//               receitasCategorias.map((item, index) => {
-//                 console.log('Item: ', receitasCategorias);
-//                 if(item.tipoCategoria == "receita"){
-//                   return <CardCategory item={item} key={index} />;
-//                 }
-//               })}
+          <Button
+            title="Criar nova categoria"
+            backgroundColor={colors.paradisePink}
+            onPress={() => {
+              navigation.dispatch(StackActions.replace('CreateCategory'));
+            }}></Button>
+        </View>
+      </ScrollView>
+    );
+  }
+};
 
-//           </View>
-//         )}
-//       </ScrollView>
-//     );
-//   } else {
-//     return (
-//       <ScrollView style={{ backgroundColor: colors.cultured }}>
-//         <View style={{ margin: '10%', alignItems: 'center' }}>
-//           <Icon
-//             name="emoticon-sad-outline"
-//             size={50}
-//             color={colors.davysGrey}
-//             style={{
-//               alignItems: 'center',
-//               justifyContent: 'center',
-//               marginBottom: 30,
-//             }}
-//           />
-
-//           <Title>Você não tem categorias cadastradas!</Title>
-
-//           <Subtitle>
-//             Categorias com teto de gastos são muito importantes para
-//             impor limites em si mesmo, não deixe de criar e gerenciá-las.
-//           </Subtitle>
-
-//           <Button
-//             title="Criar nova categoria"
-//             backgroundColor={colors.paradisePink}
-//             onPress={() => {
-//               navigation.dispatch(StackActions.replace('CreateCategory'))
-//             }}></Button>
-//         </View>
-//       </ScrollView>
-//     );
-//   }
-// };
-
-// export default Receitas;
+export default Receitas;

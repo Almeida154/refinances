@@ -15,10 +15,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 
-import { UseDadosTemp } from '../../../../../../contexts/TemporaryDataContext';
 import { StackActions } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import PropsMainRoutes, {HomeAccountStack} from '../../../../../../@types/RootStackParamApp';
+import PropsMainRoutes, {
+  HomeAccountStack,
+} from '../../../../../../@types/RootStackParamApp';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<HomeAccountStack, 'ManageCategory'>;
@@ -26,7 +27,6 @@ export type PropsNavigation = {
 };
 
 export default function TopBarNavigator({ navigation }: PropsNavigation) {
-
   const insets = useSafeAreaInsets();
 
   return (
@@ -38,11 +38,12 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
       }}>
       <StatusBar backgroundColor="transparent" />
 
-      <Header 
-        onBackButton={() => navigation.dispatch(
-          StackActions.replace('Main', 
-          {screen: 'Home'})
-      )} title="Categorias" />
+      <Header
+        onBackButton={() =>
+          navigation.dispatch(StackActions.replace('Main', { screen: 'Home' }))
+        }
+        title="Categorias"
+      />
 
       <Tab.Navigator
         initialRouteName="Despesas"
@@ -51,7 +52,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,
             textTransform: 'capitalize',
-            justifyContent: 'center'
+            justifyContent: 'center',
           },
           tabBarIndicatorStyle: {
             backgroundColor: colors.davysGrey,

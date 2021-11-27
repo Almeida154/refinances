@@ -64,7 +64,8 @@ export const Percent = styled.View`
 `;
 
 export const PercentText = styled.Text`
-  color: ${colors.platinum};
+  color: ${colors.redCrayola};
+  opacity: 0.7;
   font-size: ${`${fonts.size.small}px`};
   font-family: ${`${fonts.familyType.black}`};
 `;
