@@ -77,49 +77,44 @@ const CategoriesCard = () => {
       })();
   }, []);
 
-  if (categorias != undefined && categorias?.length > 0) {
-    return (
-      <Container style={shadowBox(30, 0.3)}>
-        <TopSection>
-          <Detail />
-          <Description>
-            Para controlar melhor seus gastos, defina limites às categorias.
-          </Description>
-        </TopSection>
+  return (
+    <Container style={shadowBox(30, 0.3)}>
+      <TopSection>
+        <Detail />
+        <Description>
+          Para controlar melhor seus gastos, defina limites às categorias.
+        </Description>
+      </TopSection>
 
-        <Separator />
+      <Separator />
+      <Title>Minhas categorias</Title>
 
-        <Title>Minhas categorias</Title>
-
-        <CategoriesContainer>
-          {categorias &&
-            categorias.map((item, index) => {
-              if (index < 3) {
-                return <Category item={item} key={index} />;
-              }
-            })}
-
-          <Button
-            style={{
-              backgroundColor: colors.lightGray,
-            }}
-            onPress={() =>
-              navigation.dispatch(
-                StackActions.replace('StackAccount', {
-                  screen: 'ManageCategory',
-                }),
-              )
+      <CategoriesContainer>
+        {categorias &&
+          categorias.map((item, index) => {
+            if (index < 3) {
+              return <Category item={item} key={index} />;
             }
-            title="Gerenciar"
-            color={colors.silver}
-            lastOne
-          />
-        </CategoriesContainer>
-      </Container>
-    );
-  } else {
-    return <Container></Container>;
-  }
+          })}
+
+        <Button
+          style={{
+            backgroundColor: colors.lightGray,
+          }}
+          onPress={() =>
+            navigation.dispatch(
+              StackActions.replace('StackAccount', {
+                screen: 'ManageCategory',
+              }),
+            )
+          }
+          title="Gerenciar"
+          color={colors.silver}
+          lastOne
+        />
+      </CategoriesContainer>
+    </Container>
+  );
 };
 
 export default CategoriesCard;
