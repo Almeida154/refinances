@@ -5,6 +5,7 @@ import { Category } from "../entities/Category";
 import { User } from "../entities/User";
 import { Meta } from "../entities/Meta";
 import { Lancamento } from "../entities/Lancamento";
+import { Parcela } from "../entities/Parcela";
 
 class MetaController {
   async all(request: Request, response: Response, next: NextFunction) {
@@ -34,6 +35,7 @@ class MetaController {
     const metaRepository = getRepository(Meta);
     const userRepository = getRepository(User);
     const lancamentoRepository = getRepository(Lancamento);
+    const parcelaRepository = getRepository(Parcela);
     const categoryRepository = getRepository(Category);
 
     const {
@@ -78,6 +80,12 @@ class MetaController {
 
     await lancamentoRepository.save(lancamentoCreate)
        
+    lancamentoMeta.parcelasLancamento[0].lancamentoParcela = lancamentoCreate
+    lancamentoMeta.parcelasLancamento[0].userParcela = user
+    const newParcela = parcelaRepository.create(lancamentoMeta.parcelasLancamento[0])
+
+    await parcelaRepository.save(newParcela)
+
     const newMeta = request.body;
     newMeta.userMeta = user;
     newMeta.lancamentoMeta = lancamentoCreate;

@@ -124,18 +124,17 @@ const CreateGoal = ({navigation}: PropsGoals) => {
         essencial: false,
         lugarLancamento: 'extrato',
         parcelaBaseada: -1,
-        parcelasLancamento: [],
+        parcelasLancamento: [{
+          contaParcela: selectedConta,
+          dataParcela: new Date(Date.now()),
+          lancamentoParcela: -1,
+          statusParcela: sttsParcela(),
+          valorParcela: parseFloat(investidoMeta),
+        }],
         tipoLancamento: 'despesa',
       },
     } as Meta;
 
-/*     const newParcela = {
-      contaParcela: selectedConta,
-      dataParcela: new Date(Date.now()),
-      lancamentoParcela: lancamentoMeta.id,
-      statusParcela: sttsParcela(),
-      valorParcela: parseFloat(investidoMeta),
-    } as Parcela; */
     if (
       meta != '' &&
       parseFloat(valorMeta) > 0 &&
@@ -348,13 +347,13 @@ const CreateGoal = ({navigation}: PropsGoals) => {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
-      {/* <View style={{display: parseFloat(investidoMeta) > 0? 'flex' : 'none'}}>
+      <View style={{display: parseFloat(investidoMeta) > 0? 'flex' : 'none'}}>
         <PickerContas
           conta={selectedConta}
           changeAccount={changeAccount}
           tipoLancamento="despesa"
         />
-      </View> */}
+      </View>
         <Button
           onPress={handleCreateGoal}
           title="Criar"
