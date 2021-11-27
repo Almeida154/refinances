@@ -10,7 +10,7 @@ export const Container = styled.ScrollView`
 export const Header = styled.View`
   flex-direction: row;
   height: ${`${heightPixel(300)}px`};
-  padding: ${`${metrics.default.boundaries / 1.6}px`};
+  padding: ${`${metrics.default.boundaries / 1.4}px`};
   justify-content: space-between;
   align-items: center;
 `;
@@ -51,4 +51,9 @@ export const Photo = styled.Image`
   width: ${`${widthPixel(100)}`};
   height: ${`${widthPixel(100)}`};
   border-radius: ${`${widthPixel(35)}`};
+`;
+
+export const Content = styled.View`
+  padding: ${`${metrics.default.boundaries / 1.6}px`};
+  padding-top: 0;
 `;

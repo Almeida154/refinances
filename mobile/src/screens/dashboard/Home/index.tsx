@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import Button from '../../../components/Button';
 
@@ -38,6 +39,7 @@ import { colors, fonts, metrics } from '../../../styles';
 import {
   ActionsAndAssets,
   Container,
+  Content,
   Greeting,
   Header,
   Name,
@@ -48,6 +50,7 @@ import {
 import { widthPixel } from '../../../helpers/responsiveness';
 import shadowBox from '../../../helpers/shadowBox';
 import hexToRGB from '../../../helpers/hexToRgba';
+import BalanceCard from './components/BalanceCard';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
@@ -86,22 +89,33 @@ const Home = () => {
     })();
   }, []);
 
+  const handleSalutation = () => {
+    const currentDate = new Date(Date.now());
+    const currentHour = currentDate.getHours();
+
+    console.debug('Home | handleSalutation() - Horário: ' + currentHour);
+
+    if (currentHour < 12) return `Bom dia`;
+    if (currentHour < 19) return `Boa tarde`;
+    return `Boa noite`;
+  };
+
   return (
     <Container>
       <Header>
         <Greeting>
-          <Name>Olá, Peter</Name>
-          <Salutation>Bom dia</Salutation>
+          <Name>Olá, {user.nomeUsuario}</Name>
+          <Salutation>{handleSalutation()}</Salutation>
         </Greeting>
         <ActionsAndAssets>
-          <NotificationContainer style={shadowBox(14, 0.4)}>
+          <NotificationContainer activeOpacity={0.8} style={shadowBox(14, 0.4)}>
             <Fontisto
               name="bell"
               size={widthPixel(50)}
               color={hexToRGB(colors.eerieBlack, 0.3)}
             />
           </NotificationContainer>
-          <View style={shadowBox(10, 1)}>
+          <TouchableOpacity activeOpacity={0.8} style={shadowBox(10, 1)}>
             {user.fotoPerfilUsuario == null ? (
               <Photo
                 source={require('../../../assets/images/avatarDefault.png')}
@@ -109,9 +123,12 @@ const Home = () => {
             ) : (
               <Photo source={{ uri: `data:${mime}base64,${avatar}` }} />
             )}
-          </View>
+          </TouchableOpacity>
         </ActionsAndAssets>
       </Header>
+      <Content>
+        <BalanceCard />
+      </Content>
     </Container>
   );
 };
