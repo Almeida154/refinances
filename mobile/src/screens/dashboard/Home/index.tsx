@@ -3,12 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
   Dimensions,
-  ScrollView,
-  Image,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import Button from '../../../components/Button';
@@ -39,7 +34,7 @@ import {
   Greeting,
   Header,
   Name,
-  NotificationContainer,
+  ConfigContainer,
   Photo,
   Salutation,
 } from './styles';
@@ -125,16 +120,16 @@ const Home = () => {
           <Salutation>{handleSalutation()}</Salutation>
         </Greeting>
         <ActionsAndAssets>
-          <NotificationContainer activeOpacity={0.8} style={shadowBox(14, 0.4)}
+          <ConfigContainer activeOpacity={0.8} style={shadowBox(14, 0.4)}
             onPress={() => {
               navigation.dispatch(StackActions.replace
               ('StackAccount', { screen: 'Config'}))}}>
             <Feather
               name="settings"
               size={widthPixel(50)}
-              color={hexToRGB(colors.silver, 0.3)}
+              color={colors.battleGray}
             />
-          </NotificationContainer>
+          </ConfigContainer>
 
           <TouchableOpacity activeOpacity={0.8} style={shadowBox(10, 1)}>
             {user.fotoPerfilUsuario == null ? (

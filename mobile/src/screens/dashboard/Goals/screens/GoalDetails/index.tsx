@@ -231,7 +231,7 @@ return(
           <Button
             title="Excluir"
             onPress={excluir}
-            color={colors.platinum}
+            color={colors.silver}
             style={{
               width: '50%',
               marginRight: '5%',
@@ -243,9 +243,9 @@ return(
             onPress={() => {
               closeModalize();
             }}
-            backgroundColor={colors.platinum}
-            color={colors.darkGray}
-            style={{ width: '50%' }}
+            backgroundColor={colors.lightGray}
+            color={colors.silver}
+            style={{ width: '50%', backgroundColor:colors.lightGray }}
           />
         </BtnGroup>
       </Modalize>
