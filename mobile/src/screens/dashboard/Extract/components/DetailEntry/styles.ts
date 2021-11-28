@@ -9,10 +9,12 @@ export const Container = styled.View`
 export const LabelTitle = styled.Text`
     font-size: ${fonts.size.big};
     font-family: ${fonts.familyType.bold};
+    color: ${colors.platinum};
 `
 export const LabelQuantity = styled.Text`
     font-size: ${fonts.size.small};
     font-family: ${fonts.familyType.regular};
+    color: ${colors.silver};
 `
 
 export const GroupLabel = styled.View`
@@ -22,11 +24,13 @@ export const GroupLabel = styled.View`
 export const Label = styled.Text`
     font-family: ${fonts.familyType.semiBold};
     font-size: ${fonts.size.medium};
+    color: ${colors.platinum};
 `
 
 export const Value = styled.Text`
     font-family: ${fonts.familyType.light};
     font-size: ${fonts.size.small};
+    color: ${colors.silver};
 `
 
 export const SectionDescription = styled.View`
@@ -50,7 +54,7 @@ export const SepareColumn  = styled.View`
 `
 
 export const CircleIcon = styled.TouchableOpacity`
-    background-color: ${colors.silver};
+    background-color: ${colors.lightGray};
     width: 40px;
     height: 40px;
 
