@@ -102,7 +102,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
       receiveAccount.saldoConta = amount || 0;      
       receiveAccount.instituicao = instituition;
       receiveAccount.userConta = await retornarIdDoUsuario()
-      
+
       const response = await handleEditarConta(receiveAccount)
       if(response == '') {
         navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}));
@@ -121,7 +121,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
     }
 
     const newAccount = {
-      tipo: 'carteira',
+      tipo: route.params.accountType,
       descricao: desc,
       saldoConta: amount,
       instituicao: instituition,

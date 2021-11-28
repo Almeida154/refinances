@@ -12,7 +12,7 @@ import {
   ScreenDescription,
 } from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { UseContas } from '../../../../../contexts/AccountContext';
+import { Conta, UseContas } from '../../../../../contexts/AccountContext';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import { Text } from '../../../../../components/Button/styles';
@@ -32,9 +32,10 @@ type PropsManageAccount = {
 };
 
 const ManageAccount = ({ navigation }: PropsManageAccount) => {
-  const { contas, handleReadByUserContas } = UseContas();
+  const { contas, handleReadByUserContas, handleEditarConta } = UseContas();
   const [stateReload, setStateReload] = useState(false);
-  const [walletAmount, setWalletAmount] = useState<number | null>(0);
+  const [selectedCarteira, setSelectedCarteira] = useState<Conta | null>(null);
+  const [walletAmount, setWalletAmmount] = useState(0)
 
   const walletModalizeRef = useRef<Modal>(null);
   const newAccountModalizeRef = useRef<Modal>(null);
@@ -60,7 +61,15 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
       })();
   }, []);
 
-  const openModalize = (ref: any) => ref.current?.open();
+  const openModalize = (ref: any, conta: Conta | null) => {
+    if(conta?.tipo == 'carteira') {
+      // @ts-ignore
+      conta.userConta = conta.userConta.id
+      setSelectedCarteira(conta)
+      setWalletAmmount(conta.saldoConta)
+    }
+    ref.current?.open()
+  };
   const closeModalize = (ref: any) => ref.current?.close();
 
   return (
@@ -106,7 +115,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
                   account={item}
                   onPress={() => {
                     item.tipo == 'carteira'
-                      ? openModalize(walletModalizeRef)
+                      ? openModalize(walletModalizeRef, item)
                       : navigation.dispatch(
                           StackActions.replace('StackAccount', {
                             screen: 'CreateAccount',
@@ -124,11 +133,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
                 backgroundColor: colors.platinum,
               }}
               onPress={() =>
-                navigation.dispatch(
-                  StackActions.replace('StackAccount', {
-                    screen: 'CreateAccount',
-                  }),
-                )
+                openModalize(newAccountModalizeRef, null)
               }
               title="Criar"
               color={colors.davysGrey}
@@ -147,7 +152,13 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           isCurrencyInput
           // @ts-ignore
           value={walletAmount}
-          // onChangeValue={(amt: number) => setWalletAmount(amt)}
+          onChangeValue={(amt: number) => {
+            if(selectedCarteira) {
+              selectedCarteira.saldoConta = amt
+              setWalletAmmount(amt)
+            }
+            setSelectedCarteira(selectedCarteira)
+          }}
           // onChangeText={() => {
           //   if (walletAmount == null) setWalletAmount(0.0);
           // }}
@@ -156,13 +167,8 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           style={{ backgroundColor: colors.platinum }}
           title="Atualizar"
           onPress={() => {
-            // setLoading(true);
-            // console.log(walletAmount);
-
-            // const newSetupProps = setupUser;
-            // newSetupProps.accounts[0].saldoConta = walletAmount || 0;
-            // updateSetupUserProps(newSetupProps);
-
+            if(selectedCarteira)
+              handleEditarConta(selectedCarteira)
             closeModalize(walletModalizeRef);
           }}
           color={colors.silver}
@@ -180,8 +186,9 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           title="Conta Poupança"
           onPress={() =>
             navigation.dispatch(
-              StackActions.replace('InteractWithAccount', {
-                accountType: 'conta poupança',
+              StackActions.replace('StackAccount', {
+                screen: 'CreateAccount',
+                params: {accountType: 'conta poupança'},
               }),
             )
           }
@@ -194,8 +201,9 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           title="Conta Corrente"
           onPress={() =>
             navigation.dispatch(
-              StackActions.replace('InteractWithAccount', {
-                accountType: 'conta corrente',
+              StackActions.replace('StackAccount', {
+                screen: 'CreateAccount',
+                params: {accountType: 'conta corrente'},
               }),
             )
           }
@@ -207,8 +215,9 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           title="Outro"
           onPress={() =>
             navigation.dispatch(
-              StackActions.replace('InteractWithAccount', {
-                receiveAccount: 'outro',
+              StackActions.replace('StackAccount', {
+                screen: 'CreateAccount',
+                params: {accountType: 'outro'},
               }),
             )
           }

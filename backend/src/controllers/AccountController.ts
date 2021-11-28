@@ -169,10 +169,10 @@ class ContaController {
 
     const { descricao, saldoConta, userConta } = request.body;
 
-    if (descricao == "")
+    if (!descricao)
       return response.send({ error: "descrição em branco!" });
-    if (saldoConta == "") return response.send({ error: "saldo em branco!" });
-    if (userConta == "") return response.send({ error: "user em branco!" });
+    if (typeof saldoConta != "number") return response.send({ error: "saldo em branco!" });
+    if (!userConta) return response.send({ error: "user em branco!" });
 
     const userExists = await userRepository.findOne({where: {id: userConta}})
 

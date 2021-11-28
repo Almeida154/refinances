@@ -4,7 +4,7 @@ import {Conta} from '../contexts/AccountContext'
 
 export type HomeAccountStack = {
   ManageAccount: undefined;
-  CreateAccount: {receiveAccount: Conta | undefined};
+  CreateAccount: {receiveAccount: Conta | undefined, accountType: string};
   AddCategoryAccount: undefined;
   ManageCategory: undefined;
   NewCategory: undefined;
