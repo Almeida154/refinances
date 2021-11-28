@@ -7,6 +7,7 @@ import {
   BeforeUpdate,
   AfterLoad,
   OneToOne,
+  JoinColumn,
 } from "typeorm";
 
 import { Category } from "./Category";
@@ -73,5 +74,6 @@ export class User {
   transferenciasUser: Transferencia[];
 
   @OneToOne((type) => Config,config => config.userConfig)
+  @JoinColumn()
   configUser: Config
 }

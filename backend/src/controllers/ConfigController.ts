@@ -16,28 +16,30 @@ class ConfigController {
     const configRepository = getRepository(Config);
     const userRepository = getRepository(User);
 
-    const {
-      fingerprint,
+    const {      
       theme,
-      senha,
-      idioma,
       userId,
     } = request.body;
 
     
+    if(!theme) {
+      return response.send({error: "Tema não encontrado"})
+    }
+    
     const user = await userRepository.findOne({
-      where: { id: userId },
+      where: { id: request.params.user_id },
     });
-
+    
     if (!user)
-      return response.send({
-        error: "Não existe esse id de user",
-      });      
-      
+    return response.send({
+      error: "Não existe esse id de user",
+    });      
+    
     const newConfig = request.body;
     newConfig.userConfig = user;
     
     const config = configRepository.create(newConfig);
+    console.log("VEio aquio", config)
     await configRepository.save(config);
 
     return response.send({ config: config });
@@ -58,15 +60,12 @@ class ConfigController {
       return response.send({ error: "usuário não encontrado" });
     }
 
-    const config = await configRepository.findOne({
-      where: {userConfig: {id: iduser}}, 
-      join: {
-        alias: 'config',
-        leftJoinAndSelect: {
-          user: "config.userConfig"
-        }
-      }
-    })
+    const config = await configRepository.createQueryBuilder("config")
+      .select(["config", "user.id"])
+      .leftJoinAndSelect("config.userConfig", "user")
+      .where("user.id = :id", {id: request.params.user_id})
+      .getOne()
+      
 
     return response.send({ config });
   }
@@ -85,39 +84,26 @@ class ConfigController {
     const configRepository = getRepository(Config);
     const userRepository = getRepository(User);
 
-    const {
-      fingerprint,
-      theme,
-      senha,
-      idioma,
-      userIdid,
-    } = request.body;
-    const id = parseInt(request.params.id);
-
-    if (fingerprint == "") return response.send({ error: "FingerPrint vazio!" });
-    if (theme == "")
-      return response.send({ error: "Tema vazio" });
-    if (senha == "")
-      return response.send({ error: "Senha não inserido!" });
-    if (idioma == "")
-      return response.send({ error: "Idioma não inserido!" });
+    const {      
+      theme,          
+    } = request.body;    
 
     const userExists = await userRepository.findOne({
-      where: { id: userIdid },
+      where: { id: request.params.user_id },
     });
 
     if (!userExists)
       return response.send({
-        //error: "Não existe esse user aí",
+        error: "Não existe esse user aí",
       });
 
     const updateConfig = request.body;
     updateConfig.userIdid = userExists;
+    updateConfig.id = request.params.id
 
-    await configRepository.update(id, updateConfig);
-    const config = await configRepository.findOne({ where: { id } });
+    await configRepository.update(request.params.id, updateConfig);    
 
-    return response.send({ message: "atualizou a config " + config });
+    return response.send({ message: updateConfig });
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {

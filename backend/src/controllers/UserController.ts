@@ -148,7 +148,12 @@ class UserController {
 
   async all(request: Request, response: Response, next: NextFunction) {
     const userRepository = getRepository(User);
-    const user = await userRepository.find();
+    const user = await userRepository.find({join: {
+      alias: 'user',
+      leftJoinAndSelect: {
+        config: 'user.configUser'
+      }
+    }});
     return response.send({ user });
   }
 
@@ -185,6 +190,12 @@ class UserController {
 
     const user = await userRepository.findOne({
       where: { emailUsuario },
+      join: {
+        alias: 'user',
+        leftJoinAndSelect: {
+          config: 'user.configUser'
+        }
+      }
     });
 
     if (!user)
@@ -218,6 +229,7 @@ class UserController {
           user.fotoPerfilUsuario != null
             ? user.fotoPerfilUsuario.toString()
             : null,
+        config: user.configUser
       },
       token,
     });

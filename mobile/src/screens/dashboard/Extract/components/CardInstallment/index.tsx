@@ -34,10 +34,12 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
     const {modalizeRefDetailEntry, setSelectedItemExtract, showNiceToast} = UseDadosTemp()
     const textParcela = item.totalParcelas != 1 && item.totalParcelas ? ' ' + item.indexOfLancamento + '/' + item.totalParcelas : ''
     const [checked, setChecked] = React.useState(item.statusParcela);        
+
     const {handleReadByUserContas} = UseContas()
-    
-    
-        console.debug("item", item)
+        
+    useEffect(() => {
+        setChecked(item.statusParcela)
+    }, [item])
     
     function openModalize(){
         setSelectedItemExtract(item)
