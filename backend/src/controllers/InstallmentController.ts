@@ -168,7 +168,7 @@ class ParcelaController {
         let atual = new Date(parseInt(anoAtual), parseInt(mesAtual), parseInt(diaAtual)).toLocaleDateString("pt-BR")
 
         let aux = []
-
+        
         dataByUser.map((item: Parcela, index) => {
             const [dia, mes, ano] = item.dataParcela.toLocaleDateString("pt-BR").split('/')
 
@@ -177,6 +177,7 @@ class ParcelaController {
             let readParcela
 
             const indexId = dataLancamentos.findIndex(itemLancamento => itemLancamento.id == item.lancamentoParcela.id)
+            
 
             const indexParcela = dataLancamentos[indexId].parcelasLancamento.findIndex(itemParcela => itemParcela.id == item.id)
     

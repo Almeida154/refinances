@@ -1,136 +1,248 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// import { BackHandler, Text, ToastAndroid } from 'react-native';
+// @ts-ignore
+import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 
-// import { StackActions } from '@react-navigation/native';
-// import InputText from '../../../../../components/InputText';
+import { BackHandler, Keyboard, Text, View } from 'react-native';
 
-// import Button from '../../../../../components/Button';
-// import { Conta, UseContas } from '../../../../../contexts/AccountContext';
-// import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp, StackActions } from '@react-navigation/native';
 
-// // import SelectionCategoriesAccount from './components/SelectionCategoriesAccount';
+import { Conta, UseContas } from '../../../../../contexts/AccountContext';
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
-// import HeaderTop from '../../../../../components/Header';
+import {HomeAccountStack} from '../../../../../@types/RootStackParamApp';
 
-// import { Container } from './styles';
+// Styles
+import { Container, Content } from './styles';
+import { colors, fonts, metrics } from '../../../../../styles';
 
-// import fonts from '../../../../../styles/fonts';
+// Components
+import ShortHeader from '../../../../../components/ShortHeader';
 
-// import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+import InputText from '../../../../../components/InputText';
+import Modalize from '../../../../../components/Modalize';
+import Button from '../../../../../components/Button';
 
-// const CreateAccount = () => {
-//   const { handleAdicionarConta } = UseContas();
+import { Modalize as Modal } from 'react-native-modalize';
+import global from '../../../../../global';
+import { heightPixel, widthPixel } from '../../../../../helpers/responsiveness';
+import ModalizeItem from '../../../../../components/ModalizeItem';
 
-//   const { navigation, showNiceToast } = UseDadosTemp();
+// Icon
+import NoResults from 'react-native-vector-icons/MaterialCommunityIcons';
+import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-//   const [description, setDescription] = useState('');
-//   const [value, setValue] = useState(0);
-//   const [categoriaConta, setCategoriaConta] = useState<null | CategoriaConta>(
-//     null,
-//   );
+export type PropsNavigation = {
+  navigation: StackNavigationProp<HomeAccountStack, 'CreateAccount'>;
+  route: RouteProp<HomeAccountStack, 'CreateAccount'>;
+};
 
-//   useEffect(() => {
-//     BackHandler.addEventListener('hardwareBackPress', backAction);
-//     return () =>
-//       BackHandler.removeEventListener('hardwareBackPress', backAction);
-//   }, []);
+interface InstituitionProps {
+  description?: string;
+  accent?: string;
+  icon?: any;
+}
 
-//   const backAction = () => {
-//     navigation.dispatch(
-//       StackActions.replace('StackAccount', { screen: 'ManageAccount' }),
-//     );
+const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
+  const {showNiceToast, hideNiceToast} = UseDadosTemp()
+  const {handleAdicionarConta, handleEditarConta} = UseContas()
 
-//     return true;
-//   };
+  const [search, setSearch] = useState('');
+  const [instituitions, setInstituitions] = useState<InstituitionProps[]>([{}]);
+  const [instituition, setInstituition] = useState('');
+  const [desc, setDesc] = useState('');
+  const [amount, setAmount] = useState<number | null>(0);
+  
+  const modalizeRef = useRef<Modal>(null);
+  const receiveAccount = route.params?.receiveAccount
 
-//   async function handleCreateAccount() {
-//     const newConta = {
-//       descricao: description,
-//       // @ts-ignore
-//       saldoConta: parseFloat(value),
-//       userConta: await retornarIdDoUsuario(),
-//     } as Conta;
+  useEffect(() => {
+    AndroidKeyboardAdjust.setAdjustPan();
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
 
-//     const response = await handleAdicionarConta(newConta);
+  useEffect(() => {
+    // Colocando em ordem alfabética
+    if (search == '') {
+      const sortedVet = global.DEFAULT_ICONS_CATEGORYACCOUNT.sort((a, b) => {
+        if (a.description < b.description) return -1;
+        if (a.description > b.description) return 1;
+        return 0;
+      });
+      setInstituitions(sortedVet);
+    }
+  }, [search]);
 
-//     if (response == '') {
-//       showNiceToast('success', 'Conta criada com sucesso!');
-//       navigation.dispatch(
-//         StackActions.replace('StackAccount', { screen: 'ManageAccount' }),
-//       );
-//     } else {
-//       showNiceToast('error', response);
-//     }
-//   }
+  useEffect(() => {
+    if (receiveAccount) {        
+      setDesc(receiveAccount.descricao || '');
+      setAmount(receiveAccount.saldoConta);
+      setInstituition(receiveAccount.instituicao || '');
+    }
+  }, []);
 
-//   return (
-//     <Container>
-//       <HeaderTop backButton={backAction} title="" />
+  const backAction = () => {
+    navigation.dispatch(StackActions.replace('StackAccount', {screen: "ManageAccount"}));
+    AndroidKeyboardAdjust.setAdjustResize();
+    return true;
+  };
 
-//       <Text
-//         style={{
-//           marginBottom: '2%',
-//           marginTop: '15%',
-//           fontSize: 20,
-//           color: '#292929',
-//           fontFamily: fonts.familyType.black,
-//         }}>
-//         Bem vindo à criação de suas contas!
-//       </Text>
+  async function interact() {
+    if (instituition == '')
+      return showNiceToast('error', 'Escolha uma instituição');
+    if (desc == '') return showNiceToast('error', 'Preecha a descrição');
+    hideNiceToast();
 
-//       <Text
-//         style={{
-//           marginBottom: '10%',
-//           fontSize: 15,
-//           fontFamily: fonts.familyType.regular,
-//           color: '#292929',
-//         }}>
-//         Aqui você adiciona outras contas além da sua principal, como a de outros
-//         bancos por exemplo.
-//       </Text>
+    if (receiveAccount) {  
+      receiveAccount.descricao = desc;
+      receiveAccount.saldoConta = amount || 0;      
+      receiveAccount.instituicao = instituition;
+      receiveAccount.userConta = await retornarIdDoUsuario()
+      
+      const response = await handleEditarConta(receiveAccount)
+      if(response == '') {
+        navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}));
+        showNiceToast('success', 'Tudo certo!', 'Conta criada com sucesso :)');
+      } else {
+        showNiceToast('error', response);
+      }
+      
+      navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}));
 
-//       <InputText
-//         onChangeText={setDescription}
-//         value={description}
-//         label="Descrição"
-//         placeholder="Descrição de sua nova conta"
-//         showClearIcon={false}
-//         onClear={() => {
-//           setDescription('');
-//         }}
-//       />
+      return showNiceToast(
+        'success',
+        'Tudo certo!',
+        'Conta editada com sucesso :)',
+      );
+    }
 
-//       <InputText
-//         label="Saldo"
-//         placeholder={'Saldo de sua nova conta'}
-//         showClearIcon={true}
-//         isCurrencyInput
-//         // @ts-ignore
-//         value={value}
-//         onClear={() => {
-//           setValue(0);
-//         }}
-//         onChangeValue={(amt: number) => setValue(amt)}
-//         onChangeText={() => {
-//           if (value == null) setValue(0.0);
-//         }}
-//         keyboardType="decimal-pad"
-//       />
+    const newAccount = {
+      tipo: 'carteira',
+      descricao: desc,
+      saldoConta: amount,
+      instituicao: instituition,
+      userConta: await retornarIdDoUsuario()
+    } as Conta;            
 
-//       <SelectionCategoriesAccount
-//         categoriaConta={categoriaConta}
-//         setCategoriaConta={setCategoriaConta}
-//       />
+    const response = await handleAdicionarConta(newAccount)
+    if(response == '') {
+      navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}));
+      showNiceToast('success', 'Tudo certo!', 'Conta criada com sucesso :)');
+    } else {
+      showNiceToast('error', response);
+    }
+  }
 
-//       <Button
-//         onPress={handleCreateAccount}
-//         title="Criar"
-//         color="#444"
-//         backgroundColor="#ccc"
-//       />
-//     </Container>
-//   );
-// };
+  const openModalize = () => modalizeRef.current?.open();
+  const closeModalize = () => modalizeRef.current?.close();
 
-// export default CreateAccount;
+  return (
+    <Container>
+      <View style={{ elevation: 0 }}>
+        <ShortHeader onBackButton={() => backAction()} title="Nova conta" />
+      </View>
+      <Content style={{ elevation: 0 }}>
+        {receiveAccount?.tipo != 'outro' && (
+          <InputText
+            label="Instituição"
+            placeholder="Entidade da conta"
+            editable={false}
+            onPress={() => {
+              Keyboard.dismiss();
+              openModalize();
+            }}
+            accountInstitution={instituition != '' ? instituition : undefined}
+          />
+        )}
+        <InputText
+          label="Descrição"
+          placeholder="Itaú Personnalite"
+          onChangeText={txt => setDesc(txt)}
+          value={desc}
+        />
+        <InputText
+          label="Valor da conta"
+          isCurrencyInput
+          // @ts-ignore
+          value={amount}
+          onChangeValue={(amt: number) => setAmount(amt)}
+          onChangeText={() => {
+            if (amount == null) setAmount(0.0);
+          }}
+        />
+      </Content>
+      <Button
+        onPress={() => interact()}        
+        title={receiveAccount ? 'Editar' : 'Adicionar'}        
+      />
+
+      <Modalize
+        ref={modalizeRef}
+        title="Clique para selecionar"
+        subtitle="Escolha uma instituição financeira"
+        backgroundColor={colors.cultured}
+        height={metrics.screen.height - metrics.default.statusBarHeight * 2}
+        snapPoint={
+          metrics.screen.height / 1.4 - metrics.default.statusBarHeight * 2
+        }
+        headerHasFullBoundaries
+        searchEvent={(txt: string) => {
+          setSearch(txt);
+
+          var filtered = global.DEFAULT_ICONS_CATEGORYACCOUNT.filter(
+            intituition =>
+              intituition.description?.substring(0, txt.length).toLowerCase() ==
+              txt.toLowerCase(),
+          );
+          setInstituitions(filtered);
+        }}
+        searchValue={search}
+        onClearSearch={() => setSearch('')}>
+        {instituitions.length > 0 ? (
+          instituitions.map((instituition, index) => (
+            <ModalizeItem
+              key={index}
+              accent={instituition.accent}
+              description={instituition.description}
+              icon={instituition.icon}
+              onPress={() => {
+                // @ts-ignore
+                setDesc(instituition.description);
+                // @ts-ignore
+                setInstituition(instituition.description);
+                closeModalize();
+              }}
+            />
+          ))
+        ) : (
+          <View
+            style={{
+              opacity: 0.7,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: heightPixel(100),
+            }}>
+            <NoResults name="error" size={widthPixel(340)} />
+            <Text
+              style={{
+                fontSize: fonts.size.small,
+                fontFamily: fonts.familyType.bold,
+              }}>
+              <Text style={{ color: colors.darkGray }}>
+                Nenhum resultado para:{' '}
+              </Text>
+
+              <Text style={{ color: colors.redCrayola }}>"{search}"</Text>
+            </Text>
+          </View>
+        )}
+      </Modalize>
+    </Container>
+  );
+};
+
+export default InteractWithAccount;

@@ -17,6 +17,8 @@ interface ContaContextType {
   contas: Conta[] | null;
   loading: boolean;
   handleAdicionarConta(contaProps: Conta): Promise<string>;
+  handleEditarConta(contaProps: Conta): Promise<string>;
+
   handleReadByUserContas(idUser: number): Promise<void>;
 }
 
@@ -54,6 +56,30 @@ export const ContasProvider: React.FC = ({ children }) => {
     }
   }
 
+  async function handleEditarConta(conta: Conta) {
+    try {
+      const response = await api.put(`/account/edit/${conta.id}`, {
+        saldoConta: conta.saldoConta,
+        descricao: conta.descricao,
+        instituicao: conta.instituicao,
+        tipo: conta.tipo,
+        userConta: conta.userConta,
+      });
+
+      if (response.data.error) return response.data.error;      
+
+      if (contas != null) {
+        const newContas = contas;
+        newContas.push(response.data.message);
+        setContas(newContas);
+      }
+
+      return '';
+    } catch (error) {
+      console.log('Deu um erro no handleEditarConta: ' + error);
+    }
+  }
+
   async function handleReadByUserContas(idUser: number) {
     setLoading(true);
     try {
@@ -70,7 +96,7 @@ export const ContasProvider: React.FC = ({ children }) => {
 
   return (
     <ContaContext.Provider
-      value={{ contas, handleReadByUserContas, loading, handleAdicionarConta }}>
+      value={{ handleEditarConta, contas, handleReadByUserContas, loading, handleAdicionarConta }}>
       {children}
     </ContaContext.Provider>
   );

@@ -50,6 +50,20 @@ class UserController {
       tipoCategoria: "despesa",
       userCategory: user,
       corCategoria: "#434235",
+    }, {
+      iconeCategoria: "Entypo:dots-three-horizontal",
+      tetoDeGastos: 0,
+      nomeCategoria: "Outro",
+      tipoCategoria: "despesa",
+      userCategory: user,
+      corCategoria: "#884372",
+    }, {
+      iconeCategoria: "Entypo:dots-three-horizontal",
+      tetoDeGastos: 0,
+      nomeCategoria: "Outro",
+      tipoCategoria: "receita",
+      userCategory: user,
+      corCategoria: "#559972",
     });
 
     if (!user) {

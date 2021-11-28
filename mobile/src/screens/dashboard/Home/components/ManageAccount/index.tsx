@@ -108,8 +108,9 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
                     item.tipo == 'carteira'
                       ? openModalize(walletModalizeRef)
                       : navigation.dispatch(
-                          StackActions.replace('InteractWithAccount', {
-                            accountIndex: index,
+                          StackActions.replace('StackAccount', {
+                            screen: 'CreateAccount',
+                            params: {receiveAccount: item},
                           }),
                         );
                   }}
@@ -207,7 +208,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           onPress={() =>
             navigation.dispatch(
               StackActions.replace('InteractWithAccount', {
-                accountType: 'outro',
+                receiveAccount: 'outro',
               }),
             )
           }

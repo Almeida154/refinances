@@ -1,9 +1,10 @@
 import react from 'react';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import {Conta} from '../contexts/AccountContext'
 
 export type HomeAccountStack = {
   ManageAccount: undefined;
-  CreateAccount: undefined;
+  CreateAccount: {receiveAccount: Conta | undefined};
   AddCategoryAccount: undefined;
   ManageCategory: undefined;
   NewCategory: undefined;
