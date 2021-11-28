@@ -90,8 +90,8 @@ Routes.delete("/transfer/remove/:id", TransferController.remove);
 Routes.delete("/transfer/remove", TransferController.removeAll);
 
 // Config
-Routes.post('/config/create/:user_id');
-Routes.get('/config/read/:user_id');
+Routes.post('/config/create/:user_id', ConfigController.save);
+Routes.post('/config/findbyuser/:user_id', ConfigController.FindByUser);
 Routes.put('/config/edit/:user_id');
 
 export default Routes;
