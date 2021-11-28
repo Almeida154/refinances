@@ -44,7 +44,7 @@ class UserController {
     console.log(entries);
 
     allCategories.push({
-      iconeCategoria: "Ionicons:rocket-outline",
+      iconeCategoria: "Ionicons:rocket-sharp",
       tetoDeGastos: 0,
       nomeCategoria: "Meta",
       tipoCategoria: "despesa",
@@ -125,22 +125,19 @@ class UserController {
       await parcelaRepository.save(newParcela);
 
       const updateDate = new Date(newParcela.dataParcela);
-      newParcela.id = undefined
+      newParcela.id = undefined;
 
       let parcela: any;
       for (var i = 1; i < 24; i++) {
         addMonths(updateDate, 1);
         parcela = parcelaRepository.create(newParcela);
-        
+
         parcela.dataParcela = new Date(updateDate);
 
         parcela.statusParcela = false;
 
         await parcelaRepository.save(parcela);
-
       }
-
-      console.log()
     });
 
     return response.send({ message: entries });

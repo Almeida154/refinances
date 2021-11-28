@@ -73,6 +73,7 @@ export const TopDataDescription = styled.Text`
   margin-top: ${`${heightPixel(20)}px`};
   opacity: 0.3;
   color: ${colors.davysGrey};
+  margin-right: ${`${widthPixel(26)}px`};
 `;
 
 // Body

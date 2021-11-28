@@ -22,10 +22,18 @@ import {
 import hexToRGB from '../../../../../helpers/hexToRgba';
 
 interface IProps {
-  name?: string;
+  name: string;
+  totalIncome: number;
+  totalExpense: number;
+  balance: number;
 }
 
-const GeneralCard: React.FC<IProps> = ({ name }) => {
+const GeneralCard: React.FC<IProps> = ({
+  name,
+  totalIncome,
+  totalExpense,
+  balance,
+}) => {
   const [data, setData] = useState({
     dataSets: [
       {
@@ -89,7 +97,7 @@ const GeneralCard: React.FC<IProps> = ({ name }) => {
       <GeneralStatsFooter style={shadowBox()}>
         <GeneralStatsFooterItem>
           <GSFIBalance style={{ color: colors.slimyGreen }}>
-            {doubleToCurrency(14997, 'pt-br', 'BRL', true)}
+            {doubleToCurrency(totalIncome || 0, 'pt-br', 'BRL', true)}
           </GSFIBalance>
           <GSFIDescription>de receitas</GSFIDescription>
         </GeneralStatsFooterItem>
@@ -101,13 +109,13 @@ const GeneralCard: React.FC<IProps> = ({ name }) => {
             borderRightColor: colors.cultured,
           }}>
           <GSFIBalance style={{ color: colors.redCrayola }}>
-            {doubleToCurrency(2795.3, 'pt-br', 'BRL', true)}
+            {doubleToCurrency(totalExpense || 0, 'pt-br', 'BRL', true)}
           </GSFIBalance>
           <GSFIDescription>de despesas</GSFIDescription>
         </GeneralStatsFooterItem>
         <GeneralStatsFooterItem>
           <GSFIBalance style={{ color: colors.eerieBlack }}>
-            {doubleToCurrency(12201.7, 'pt-br', 'BRL', true)}
+            {doubleToCurrency(balance || 0, 'pt-br', 'BRL', true)}
           </GSFIBalance>
           <GSFIDescription>de saldo</GSFIDescription>
         </GeneralStatsFooterItem>

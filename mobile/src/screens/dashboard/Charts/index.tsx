@@ -18,10 +18,6 @@ import { converterNumeroParaData } from '../../../helpers/converterDataParaManus
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
 import generateDates from '../../../helpers/generateDates';
 
-import DetailEntry from './components/DetailEntry';
-
-import Modalize from '../../../components/Modalize';
-
 import { addMonths, toDate } from '../../../helpers/manipularDatas';
 
 import SectionByDate from './components/SectionByDate';
@@ -86,15 +82,139 @@ const Graficos = () => {
     new Date(Date.now()).toLocaleDateString(),
   );
 
+  const [allDatas, setAllDatas] = useState<
+    (ReadParcela[] | Transferencia[])[][] | null
+  >(null);
+
+  const [gasto, setGasto] = useState(0);
+  const [ganho, setGanho] = useState(0);
+  const [saldo, setSaldo] = useState(0);
+  const [maiorGasto, setMaiorGasto] = useState({
+    valor: 0,
+    descricao: '',
+  });
+  const [maiorGanho, setMaiorGanho] = useState({
+    valor: 0,
+    descricao: '',
+  });
+
+  function calcStats(alldata: (ReadParcela[] | Transferencia[])[][]) {
+    let gastos = 0,
+      ganhos = 0,
+      maiorGasto = { valor: 0, descricao: '' },
+      maiorGanho = { valor: 0, descricao: '' };
+
+    alldata.map((item, index) => {
+      const parcelas: ReadParcela[] = ConvertToParcela(item[0]);
+
+      parcelas.map(parcela => {
+        if (
+          typeof parcela.lancamentoParcela != 'number'
+            ? parcela.lancamentoParcela.tipoLancamento == 'despesa'
+            : false
+        ) {
+          if (maiorGasto.valor < parcela.valorParcela) {
+            maiorGasto.valor = parcela.valorParcela;
+            maiorGasto.descricao =
+              parcela.lancamentoParcela.descricaoLancamento;
+          }
+          gastos += parcela.valorParcela;
+        } else if (
+          typeof parcela.lancamentoParcela != 'number'
+            ? parcela.lancamentoParcela.tipoLancamento == 'receita'
+            : false
+        ) {
+          if (maiorGanho.valor < parcela.valorParcela) {
+            maiorGanho.valor = parcela.valorParcela;
+            maiorGanho.descricao =
+              parcela.lancamentoParcela.descricaoLancamento;
+          }
+          ganhos += parcela.valorParcela;
+        }
+      });
+    });
+
+    setGasto(gastos);
+    setGanho(ganhos);
+    setSaldo(ganhos - gastos);
+
+    setMaiorGasto(maiorGasto);
+    setMaiorGanho(maiorGanho);
+  }
+
+  function loadInAllDatas() {
+    var i = 0,
+      j = 0;
+
+    if (!readTransferencias || !readParcelas) {
+      return;
+    }
+
+    let aux = [];
+
+    while (i < readParcelas.length) {
+      const dateOfInstallment = new Date(
+        readParcelas[i][0].dataParcela,
+      ).toLocaleDateString();
+      let dateOfTransfer;
+
+      if (readTransferencias[j])
+        dateOfTransfer = new Date(
+          readTransferencias[j][0].dataTransferencia,
+        ).toLocaleDateString();
+
+      if (
+        !dateOfTransfer ||
+        toDate(dateOfInstallment) < toDate(dateOfTransfer)
+      ) {
+        aux.push([readParcelas[i], []]);
+        i++;
+      } else if (toDate(dateOfInstallment) > toDate(dateOfTransfer)) {
+        aux.push([[], readTransferencias[j]]);
+        j++;
+      } else {
+        aux.push([readParcelas[i], readTransferencias[j]]);
+        j++;
+        i++;
+      }
+    }
+
+    while (j < readTransferencias.length) {
+      aux.push([[], readTransferencias[j]]);
+      j++;
+    }
+
+    setAllDatas(aux);
+    calcStats(aux);
+  }
+
+  async function loadTransferencias(date: Date) {
+    handleTransferGroupByDate(await retornarIdDoUsuario(), date.toISOString());
+  }
+
+  async function loadParcelas(date: Date) {
+    handleInstallmentGroupByDate(
+      await retornarIdDoUsuario(),
+      date.toISOString(),
+    );
+  }
+
   useEffect(() => {
     const getDate = toDate(dateCurrent);
+    loadParcelas(getDate);
+    loadTransferencias(getDate);
   }, []);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    loadInAllDatas();
+  }, [readTransferencias, readParcelas]);
 
   function updateDate(action: number) {
     const newDate = addMonths(toDate(dateCurrent), action);
     setDateCurrent(newDate.toLocaleDateString());
+
+    loadParcelas(newDate);
+    loadTransferencias(newDate);
   }
 
   return (
@@ -135,9 +255,13 @@ const Graficos = () => {
           <View>
             <TopDataTitle>Maior receita</TopDataTitle>
             <TopDataBalance style={{ color: colors.slimyGreen }}>
-              {doubleToCurrency(14000)}
+              {doubleToCurrency(maiorGanho.valor)}
             </TopDataBalance>
-            <TopDataDescription>Salário</TopDataDescription>
+            <TopDataDescription>
+              {maiorGanho.descricao != ''
+                ? maiorGanho.descricao
+                : 'Nada encontrado'}
+            </TopDataDescription>
           </View>
         </TopDataItem>
         <TopDataItem
@@ -148,15 +272,24 @@ const Graficos = () => {
           <View>
             <TopDataTitle>Maior despesa</TopDataTitle>
             <TopDataBalance style={{ color: colors.redCrayola }}>
-              {doubleToCurrency(2400)}
+              {doubleToCurrency(maiorGasto.valor)}
             </TopDataBalance>
-            <TopDataDescription>Faculdade</TopDataDescription>
+            <TopDataDescription numberOfLines={1}>
+              {maiorGasto.descricao != ''
+                ? maiorGasto.descricao
+                : 'Nada encontrado'}
+            </TopDataDescription>
           </View>
         </TopDataItem>
       </TopData>
       <ScrollView>
         <Content>
-          <GeneralCard name="Geral" />
+          <GeneralCard
+            name="Geral"
+            totalIncome={ganho}
+            totalExpense={gasto}
+            balance={saldo}
+          />
           <CountCardsContainer>
             <CountCard
               style={[
