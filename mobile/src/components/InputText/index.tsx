@@ -148,7 +148,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
                       precision={2}
                       placeholder="0,00"
                       maxValue={999999}
-                      placeholderTextColor={'rgba(52, 52, 52, .3)'}
+                      placeholderTextColor={colors.platinum}
                       selectionColor={colors.davysGrey}
                       {...rest}
                     />

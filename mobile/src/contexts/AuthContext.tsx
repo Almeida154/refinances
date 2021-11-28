@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Categoria } from './CategoriesContext';
 import { Conta } from './AccountContext';
 import { Lancamento } from './EntriesContext';
-
+import {Config} from './ConfigContext'
 import Toast from '@zellosoft.com/react-native-toast-message';
 import global from '../global';
 
@@ -18,6 +18,7 @@ export type User = {
   fotoPerfilUsuario: string | undefined | null;
   senhaUsuario: string;
   signed: boolean;
+  config: Config
 };
 
 export interface SetupUser {
@@ -210,7 +211,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         showNiceToast,
         hideNiceToast,
       }}>
-      <StatusBar backgroundColor="transparent" translucent />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       {children}
       <Toast
         ref={ref => Toast.setRef(ref)}

@@ -1,25 +1,7 @@
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Dimensions,
-  ScrollView,
-  Image,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
-import Button from '../../../components/Button';
+import { Dimensions, TouchableOpacity } from 'react-native';
 
-import Fontisto from 'react-native-vector-icons/Fontisto';
-
-import PropsNavigationApp, {
-  PropsMainRoutes,
-} from '../../../@types/RootStackParamApp';
-
-const { width } = Dimensions.get('screen');
+import Feather from 'react-native-vector-icons/Feather';
 
 import { UseAuth } from '../../../contexts/AuthContext';
 import { UseCategories } from '../../../contexts/CategoriesContext';
@@ -39,14 +21,13 @@ import {
   Greeting,
   Header,
   Name,
-  NotificationContainer,
+  ConfigContainer,
   Photo,
   Salutation,
 } from './styles';
 
 import { widthPixel } from '../../../helpers/responsiveness';
 import shadowBox from '../../../helpers/shadowBox';
-import hexToRGB from '../../../helpers/hexToRgba';
 
 import BalanceCard from './components/BalanceCard';
 import AccountsCard from './components/AccountsCard';
@@ -125,13 +106,21 @@ const Home = () => {
           <Salutation>{handleSalutation()}</Salutation>
         </Greeting>
         <ActionsAndAssets>
-          <NotificationContainer activeOpacity={0.8} style={shadowBox(14, 0.4)}>
-            <Fontisto
-              name="bell"
+          <ConfigContainer
+            activeOpacity={0.8}
+            style={shadowBox(14, 0.4)}
+            onPress={() => {
+              navigation.dispatch(
+                StackActions.replace('StackAccount', { screen: 'Config' }),
+              );
+            }}>
+            <Feather
+              name="settings"
               size={widthPixel(50)}
-              color={hexToRGB(colors.eerieBlack, 0.3)}
+              color={colors.battleGray}
             />
-          </NotificationContainer>
+          </ConfigContainer>
+
           <TouchableOpacity activeOpacity={0.8} style={shadowBox(10, 1)}>
             {user.fotoPerfilUsuario == null ? (
               <Photo

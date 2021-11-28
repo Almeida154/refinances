@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { widthPixel } from '../../../helpers/responsiveness';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
@@ -28,7 +28,7 @@ import { addMonths, toDate } from '../../../helpers/manipularDatas';
 import SectionByDate from './components/SectionByDate';
 
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
-
+import Feather from 'react-native-vector-icons/Feather';
 import {
   Header,
   PeriodoAnterior,
@@ -87,8 +87,8 @@ const Extrato = () => {
 
   function calcBalance(alldata: (ReadParcela[] | Transferencia[])[][]) {
     let gastos = 0,
-      ganhos = 0,
-      balance = 0;
+        ganhos = 0,
+        balance = 0;
 
     alldata.map((item, index) => {
       const parcelas: ReadParcela[] = ConvertToParcela(item[0]);
@@ -202,24 +202,32 @@ const Extrato = () => {
   return (
     <Container>
       <ScrollBody>
-        <Header>
-          <PeriodoAnterior onPress={() => updateDate(-1)}>
-            <Icon size={24} name={'arrow-back-ios'} color="#444" />
-          </PeriodoAnterior>
+      <Header>
+        <PeriodoAnterior onPress={() => updateDate(-1)}>
+          <Feather
+            size={widthPixel(60)}
+            name={'chevron-left'}
+            color={colors.darkGray}
+          />
+        </PeriodoAnterior>
 
-          <PeriodoAtual>
-            <LabelPeriodo>
-              {converterNumeroParaData(
-                dateCurrent,
-                !(yearCurrent == dateCurrent.split('/')[2]),
-              )}
-            </LabelPeriodo>
-          </PeriodoAtual>
+        <PeriodoAtual>
+          <LabelPeriodo>
+            {converterNumeroParaData(
+              dateCurrent,
+              !(yearCurrent == dateCurrent.split('/')[2]),
+            )}
+          </LabelPeriodo>
+        </PeriodoAtual>
 
-          <PeriodoPosterior onPress={() => updateDate(1)}>
-            <Icon size={24} name={'arrow-forward-ios'} color="#444" />
-          </PeriodoPosterior>
-        </Header>
+        <PeriodoPosterior onPress={() => updateDate(1)}>
+          <Feather
+            size={widthPixel(60)}
+            name={'chevron-right'}
+            color={colors.darkGray}
+          />
+        </PeriodoPosterior>
+      </Header>
         <Body>
           <FlatList
             data={allDatas}

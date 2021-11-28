@@ -74,7 +74,7 @@ const FormLancamento = ({route}: any) => {
                     <HeaderTop 
                         backButton={backAction} 
                         title={selected == 0? 'Nova despesa' : selected == 1 ? 'Nova receita' : 'Nova transferência'}
-                        color={colors.white}
+                        color={colors.silver}
                         isShort
                     />
 
@@ -88,7 +88,7 @@ const FormLancamento = ({route}: any) => {
                                 style={{
                                     alignContent: 'flex-end',
                                     alignItems: 'flex-end',
-                                    color: colors.lightGray,
+                                    color: colors.silver,
                                     fontFamily: fonts.familyType.bold,
                                     fontSize: fonts.size.super +20,
                                     opacity: 0.7,

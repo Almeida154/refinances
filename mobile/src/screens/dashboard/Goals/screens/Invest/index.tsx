@@ -166,8 +166,8 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       return <TextProgress>
                 Faltam
                 <TextGoals style={{ left: '40%' }}>
-                  {' '}
-                  {saldoD}{' '}
+                  {' R$ '}
+                  {saldoD.toFixed(2)}{' '}
                 </TextGoals>
                 para concluir { goal.descMeta }
               </TextProgress>
@@ -175,12 +175,12 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       return <TextProgress>
                 Parabens por concluir a meta { goal.descMeta } de
                 <TextGoals style={{ left: '40%' }}>
-                  {' '}
+                  {' R$ '}
                   {saldoF}{' '}
                 </TextGoals>
                 sendo investido um total de 
                 <TextGoals style={{ left: '40%' }}>
-                  {' '}
+                  {' R$ '}
                   {saldoA}{' '}
                 </TextGoals>
               </TextProgress>
@@ -189,9 +189,12 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
   return (
     <ScrollView style={{ backgroundColor: colors.cultured }}>
-      <StatusBar backgroundColor={'transparent'} />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       <Header style={{ backgroundColor: colors.paradisePink }}>
-        <HeaderTop backButton={backAction} title="" />
+        <HeaderTop 
+        backButton={backAction} 
+        color={colors.silver}
+        title="" />
         <AlinhaParaDireita>
 
           <LabelCifrao>R$</LabelCifrao> 
@@ -202,7 +205,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               style={{
                   alignContent: 'flex-end',
                   alignItems: 'flex-end',
-                  color: colors.lightGray,
+                  color: colors.silver,
                   fontFamily: fonts.familyType.bold,
                   fontSize: fonts.size.super +20,
                   opacity: 0.7,
@@ -235,7 +238,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
         <Button
           title={'Investir'}
-          style={{ marginTop: 30 }}
+          style={{ marginTop: 30, backgroundColor: colors.culture }}
           onPress={handleUpdateGoal}></Button>
       </View>
       {/* @ts-ignore */}

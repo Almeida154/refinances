@@ -54,7 +54,7 @@ const RecuperarConta = ({navigation}: PropsNavigation) => {
   
   return (
     <Container>
-      <StatusBar translucent={true} backgroundColor="transparent" />
+      <StatusBar c backgroundColor="transparent" />
       <Header>
         <BackArrowPink
           onPress={() => console.log('back')}

@@ -41,9 +41,12 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
       ? ' ' + item.indexOfLancamento + '/' + item.totalParcelas
       : '';
   const [checked, setChecked] = React.useState(item.statusParcela);
+
   const { handleReadByUserContas } = UseContas();
 
-  // console.debug("item", item)
+  useEffect(() => {
+    setChecked(item.statusParcela);
+  }, [item]);
 
   function openModalize() {
     setSelectedItemExtract(item);

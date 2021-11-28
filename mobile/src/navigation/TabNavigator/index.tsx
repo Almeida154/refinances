@@ -1,13 +1,8 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { colors, fonts, metrics } from '../../styles';
+import { colors, fonts } from '../../styles';
 import { widthPixel, heightPixel } from '../../helpers/responsiveness';
-
-import {
-  createStackNavigator,
-  StackNavigationProp,
-} from '@react-navigation/stack';
 
 import Modalize from '../../components/Modalize';
 import Button from '../../components/Button';
@@ -27,11 +22,7 @@ import { UseDadosTemp } from '../../contexts/TemporaryDataContext';
 
 import Home from '../../screens/dashboard/Home';
 import Charts from '../../screens/dashboard/Charts';
-// import Variados from '../../screens/dashboard/Sundry';
 import Extrato from '../../screens/dashboard/Extract';
-// import FormLancamentos from '../../screens/dashboard/Entries';
-// import AddCategory from '../../screens/dashboard/Entries/components/AddCategory';
-// import ManageAccount from '../../screens/dashboard/Home/components/ManageAccount';
 import DashboardGoals from '../../screens/dashboard/Goals/screens/DashboardGoals';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -39,11 +30,12 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import { GestureResponderEvent, TouchableOpacity } from 'react-native';
+import { GestureResponderEvent } from 'react-native';
 
 import { StackActions } from '@react-navigation/native';
 import hexToRGB from '../../helpers/hexToRgba';
-import shadowBox from '../../helpers/shadowBox';
+
+import FabButton from './components/FabButton';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
@@ -58,7 +50,7 @@ type PropsCustomBar = {
     | undefined;
 };
 
-const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
+/*const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -73,10 +65,12 @@ const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
         },
         shadowBox(14, 0.5),
       ]}>
-      {children}
+      <Animated.View style={{position: 'absolute'}}>
+        {children}
+      </Animated.View>
     </TouchableOpacity>
   );
-};
+};*/
 
 const TabNavigator = () => {
   const { navigation } = UseDadosTemp();
@@ -126,7 +120,7 @@ const TabNavigator = () => {
             backgroundColor: colors.white,
             paddingBottom: 10,
             paddingTop: 10,
-            height: heightPixel(180),
+            height: heightPixel(200),
           },
           tabBarLabelStyle: {
             fontFamily: fonts.familyType.bold,
@@ -180,12 +174,7 @@ const TabNavigator = () => {
               />
             ),
             tabBarButton: props => {
-              return (
-                <CustomTabBarButton
-                  children={props.children}
-                  onPress={openModalize}
-                />
-              );
+              return <FabButton />;
             },
           }}
         />

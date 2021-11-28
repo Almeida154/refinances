@@ -112,11 +112,12 @@ const GoalDetails = ({ route, navigation }: Props) => {
     });
   };
 
-  return (
+return(
+
     <ScrollView
       style={{
         paddingTop: metrics.default.statusBarHeight,
-        backgroundColor: colors.cultured,
+        backgroundColor: colors.back,
       }}>
       <ShortHeader onBackButton={backAction} title={goal.descMeta} />
 
@@ -230,7 +231,7 @@ const GoalDetails = ({ route, navigation }: Props) => {
           <Button
             title="Excluir"
             onPress={excluir}
-            color={colors.platinum}
+            color={colors.silver}
             style={{
               width: '50%',
               marginRight: '5%',
@@ -242,9 +243,9 @@ const GoalDetails = ({ route, navigation }: Props) => {
             onPress={() => {
               closeModalize();
             }}
-            backgroundColor={colors.platinum}
-            color={colors.darkGray}
-            style={{ width: '50%' }}
+            backgroundColor={colors.lightGray}
+            color={colors.silver}
+            style={{ width: '50%', backgroundColor:colors.lightGray }}
           />
         </BtnGroup>
       </Modalize>

@@ -7,7 +7,7 @@ export class Config {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   fingerprint: boolean;
 
   @Column()
@@ -16,9 +16,9 @@ export class Config {
   @Column({ nullable: true })
   senha: string;
 
-  @Column()
+  @Column({ nullable: true })
   idioma: string;
 
-  @OneToOne((type) => User, (user) => user.configUser)
+  @OneToOne((type) => User, (user) => user.id)
   userConfig: User;
 }

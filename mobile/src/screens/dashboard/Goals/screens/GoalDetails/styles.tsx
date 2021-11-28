@@ -13,7 +13,7 @@ export const Valor = styled.View`
 export const TextRS = styled.Text`
   text-align: center;
   font-family: ${`${fonts.familyType.bold}`};
-  color: ${colors.davysGrey};
+  color: ${colors.silver};
   opacity: 0.5;
 `;
 
@@ -29,12 +29,12 @@ export const DaysLeft = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
   margin-bottom: 10px;
   opacity: 0.5;
+  color: ${colors.davysGrey};
 `;
-
 export const TextProgress = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
   text-align: center;
-  font-size: ${`${fonts.size.small - widthPixel(6)}px`};
+  font-size: ${`${fonts.size.medium - widthPixel(6)}px`};
   color: ${colors.davysGrey};
   opacity: 0.5;
   margin-top: ${`${heightPixel(10)}px`};

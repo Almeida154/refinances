@@ -6,6 +6,7 @@ import hexToRGB from '../../../../../../helpers/hexToRgba';
 export const Container = styled.View`
   padding: ${`${metrics.default.boundaries}px`};
   flex: 1;
+  background: ${colors.back};
 `;
 
 export const Form = styled.View`

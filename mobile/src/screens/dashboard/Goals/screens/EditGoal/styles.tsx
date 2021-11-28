@@ -21,6 +21,7 @@ export const Valor = styled.View`
 export const TextRS = styled.Text`
     textAlign: center;
     fontFamily: ${`${fonts.familyType.regular}`};
+    color: ${colors.silver};
 `
 
 export const TextValor = styled.Text`

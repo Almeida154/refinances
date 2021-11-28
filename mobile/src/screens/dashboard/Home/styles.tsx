@@ -5,6 +5,7 @@ import { fonts, colors, metrics } from '../../../styles';
 export const Container = styled.ScrollView`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
+  background-color: ${colors.cultured};
 `;
 
 export const Header = styled.View`
@@ -34,12 +35,14 @@ export const Salutation = styled.Text`
 
 export const ActionsAndAssets = styled.View`
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const NotificationContainer = styled.TouchableOpacity`
+export const ConfigContainer = styled.TouchableOpacity`
   background-color: ${colors.cultured};
-  width: ${`${widthPixel(100)}`};
-  height: ${`${widthPixel(100)}`};
+  width: ${`${widthPixel(140)}`};
+  height: ${`${widthPixel(140)}`};
   border-radius: ${`${widthPixel(35)}`};
   margin-right: ${`${metrics.default.boundaries / 5}px`};
   justify-content: center;
@@ -48,8 +51,8 @@ export const NotificationContainer = styled.TouchableOpacity`
 
 export const Photo = styled.Image`
   background-color: ${colors.white};
-  width: ${`${widthPixel(100)}`};
-  height: ${`${widthPixel(100)}`};
+  width: ${`${widthPixel(140)}`};
+  height: ${`${widthPixel(140)}`};
   border-radius: ${`${widthPixel(35)}`};
 `;
 

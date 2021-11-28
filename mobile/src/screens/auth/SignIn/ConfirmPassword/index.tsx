@@ -68,7 +68,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
 
   return (
     <Container>
-      <StatusBar translucent backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
       <Header onBackButton={() => backAction()} title="Confirme sua senha" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>

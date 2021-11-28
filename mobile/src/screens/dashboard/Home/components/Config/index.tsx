@@ -233,7 +233,7 @@ const Config = () => {
 
                   <Item>
                     <Title>Senha</Title>
-                    <Subtitle>tem nada aq ainda nao viado</Subtitle>
+                    <Subtitle>Alterar senha</Subtitle>
                   </Item>
 
                   <SectionIconRight>

@@ -37,7 +37,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
         backgroundColor: colors.white,
         flex: 1,
       }}>
-      <StatusBar backgroundColor="transparent" />
+      <StatusBar translucent={true} backgroundColor="transparent"/>
 
       <Header
         onBackButton={() =>
@@ -50,10 +50,13 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
       <Tab.Navigator
         initialRouteName="Atuais"
         screenOptions={{
-          tabBarIndicatorStyle: {
-            backgroundColor: colors.davysGrey,
+          tabBarStyle: {
+            backgroundColor: colors.white,
           },
-          tabBarActiveTintColor: colors.davysGrey,
+          tabBarIndicatorStyle: {
+            backgroundColor: colors.lightGray,
+          },
+          tabBarActiveTintColor: colors.davysGray,
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,

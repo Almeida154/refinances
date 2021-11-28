@@ -110,7 +110,10 @@ const NewExpenseCategory = ({ route }: { route: any }) => {
   return (
     <Container>
       <Header 
-        backButton={backAction} title={`Adicionar Categoria de ${tipoCategoria}`} isShort={true} />
+        backButton={backAction} 
+        title={`Adicionar Categoria de ${tipoCategoria}`} 
+        color={colors.silver}
+        isShort={true} />
       <Form>
         <InputText
           label="Nome"

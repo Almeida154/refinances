@@ -5,6 +5,7 @@ import { widthPixel, heightPixel } from "../../../../../helpers/responsiveness"
 
 export const Container = styled.View`
     height: auto;
+    background: ${colors.back};
 `
 
 export const ContainerBody = styled.View`
@@ -24,18 +25,18 @@ export const ContainerProfile = styled.View`
 `
 
 export const Profile = styled.Image`
-    width: ${widthPixel(250)};
-    height: ${heightPixel(270)};
+    width: ${widthPixel(300)};
+    height: ${heightPixel(330)};
     borderRadius: ${widthPixel(250)};;
-    borderColor: ${colors.bigDipOruby};
+    borderColor: ${colors.paradisePink};
     borderWidth: 4;
     justify-content: center;
     position: absolute;
 `
 
 export const HeaderContainer = styled.View`
-    backgroundColor: ${colors.bigDipOruby};
-    height: ${heightPixel(500)};
+    backgroundColor: ${colors.paradisePink};
+    height: ${heightPixel(550)};
     display: flex;
 `
 
@@ -55,7 +56,7 @@ export const MainTitle = styled.Text `
     fontSize: ${`${fonts.size.big}px`};
     color: ${colors.paradisePink};
     line-height: ${heightPixel(150)};
-    background-color: ${colors.platinum};
+    background-color: ${colors.culture};
     fontFamily: ${`${fonts.familyType.bold}`};
     padding-left: ${widthPixel(30)};
 `
@@ -83,6 +84,7 @@ export const Copyright = styled.Text `
 `
 
 export const ContainerItems = styled.View`
+
     flexDirection: row;
     width: 100%;
     top: ${heightPixel(70)}
@@ -104,7 +106,7 @@ export const Footer = styled.View`
     bottom: ${widthPixel(30)};
     justify-content: center;
     align-items: center;
-    background-color: ${colors.platinum};
+    background-color: ${colors.lightGray};
 `
 
 export const SectionIcons = styled.View`
@@ -116,7 +118,7 @@ export const SectionIcons = styled.View`
 
 export const Icon = styled.View`
     margin: ${heightPixel(30)}px;
-    background-color: ${colors.silver}
+    background-color: ${colors.platinum}
     padding: ${heightPixel(10)}px;
     border-radius: 20px;
     justify-content: center;
