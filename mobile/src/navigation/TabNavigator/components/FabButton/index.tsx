@@ -13,7 +13,6 @@ import { Container, TouchableBtn } from './styles'
 import { UseDadosTemp } from '../../../../contexts/TemporaryDataContext';
 
 import { StackActions } from '@react-navigation/native';
-
 export default class FabButton extends Component {
 
     animation = new Animated.Value(0);
@@ -31,8 +30,8 @@ export default class FabButton extends Component {
     }
 
     render(){
-        //const { navigation } = UseDadosTemp();
-
+        
+    //const { navigation } = UseDadosTemp();
         const cameraStyle = {
             transform: [
                 { scale: this.animation },

@@ -35,9 +35,11 @@ export const Salutation = styled.Text`
 
 export const ActionsAndAssets = styled.View`
   flex-direction: row;
+  justify-content: center;
+  align-items: center
 `;
 
-export const NotificationContainer = styled.TouchableOpacity`
+export const ConfigContainer = styled.TouchableOpacity`
   background-color: ${colors.cultured};
   width: ${`${widthPixel(100)}`};
   height: ${`${widthPixel(100)}`};
@@ -49,8 +51,8 @@ export const NotificationContainer = styled.TouchableOpacity`
 
 export const Photo = styled.Image`
   background-color: ${colors.white};
-  width: ${`${widthPixel(100)}`};
-  height: ${`${widthPixel(100)}`};
+  width: ${`${widthPixel(200)}`};
+  height: ${`${widthPixel(200)}`};
   border-radius: ${`${widthPixel(35)}`};
 `;
 

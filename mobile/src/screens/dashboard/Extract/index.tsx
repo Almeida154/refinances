@@ -87,8 +87,8 @@ const Extrato = () => {
 
   function calcBalance(alldata: (ReadParcela[] | Transferencia[])[][]) {
     let gastos = 0,
-      ganhos = 0,
-      balance = 0;
+        ganhos = 0,
+        balance = 0;
 
     alldata.map((item, index) => {
       const parcelas: ReadParcela[] = ConvertToParcela(item[0]);
