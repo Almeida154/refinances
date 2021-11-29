@@ -172,6 +172,12 @@ class UserController {
     const userRepository = getRepository(User);
     const user = await userRepository.findOne({
       where: { id: request.params.id },
+      join: {
+        alias: "user",
+        leftJoinAndSelect: {
+          config: "user.configUser"
+        }
+      }
     });
     return response.send({ user });
   }

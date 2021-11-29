@@ -45,16 +45,20 @@ import { Switch } from 'react-native-paper';
 
 import { UseAuth } from '../../../../../contexts/AuthContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+import { UseConfig } from '../../../../../contexts/ConfigContext';
 
 import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import { colors } from '../../../../../styles';
+import api from '../../../../../services/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Config = () => {
-  const { user, handleLogout, userAvatar } = UseAuth();
-  const { navigation } = UseDadosTemp();
+  const { user, handleLogout, userAvatar, updateUserProps } = UseAuth();
+  const { navigation, showNiceToast } = UseDadosTemp();
+  const { isDark, setIsDark } = UseConfig();
 
   const [stateReload, setStateReload] = useState(false);
 
@@ -66,10 +70,29 @@ const Config = () => {
 
   const [isTouch, setIsTouch] = React.useState(false);
   const onSwitchTouch = () => setIsTouch(!isTouch);
+  
+  const onSwitchDark = () => {
+    (async function(){
+      const response = await api.put(`/config/edit/${user.id}`, {
+        theme: isDark ? 'light' : 'dark'
+      })
 
-  const [isDark, setIsDark] = React.useState(user.config?.theme == 'dark' ? true : false);
-  const onSwitchDark = () => setIsDark(!isDark);
+    if(response.data.error) {
+     return showNiceToast("error", response.data.error)
+    }
 
+    user.config.theme = isDark ? 'light' : 'dark'
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+     updateUserProps(user)
+    })()
+    
+    
+    setIsDark(!isDark)
+  };
+
+  useEffect(() => {
+    console.log(user)
+  }, [user])
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
