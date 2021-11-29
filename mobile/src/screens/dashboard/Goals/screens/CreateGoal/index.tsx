@@ -7,20 +7,6 @@ import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import { heightPixel, widthPixel } from '../../../../../helpers/responsiveness';
 
-import GoalsIcon from '../../../../../assets/images/svg/goalsIcon.svg';
-
-import {
-  Container,
-  Label,
-} from '../../../../../components/InputTextMoney/styles';
-
-import { TextInputMask } from 'react-native-masked-text';
-
-import {
-  DadosTempProvider,
-  UseDadosTemp,
-} from '../../../../../contexts/TemporaryDataContext';
-
 import {
   Lancamento,
   UseLancamentos,

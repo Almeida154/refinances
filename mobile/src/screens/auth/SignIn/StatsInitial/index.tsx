@@ -341,7 +341,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
       <BottomNavigation
         onPress={() => register()}
         description="Quero começar"
-        color={colors.white}
+        color={colors.blackSilver}
         backgroundColor={colors.paradisePink}
         isCentered
       />

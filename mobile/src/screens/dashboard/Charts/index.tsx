@@ -97,12 +97,16 @@ const Graficos = () => {
     valor: 0,
     descricao: '',
   });
+  const [qntdGanhos, setQntdGanhos] = useState(0);
+  const [qntdGastos, setQntdGastos] = useState(0);
 
   function calcStats(alldata: (ReadParcela[] | Transferencia[])[][]) {
     let gastos = 0,
       ganhos = 0,
       maiorGasto = { valor: 0, descricao: '' },
-      maiorGanho = { valor: 0, descricao: '' };
+      maiorGanho = { valor: 0, descricao: '' },
+      qntdGastos = 0,
+      qntdGanhos = 0;
 
     alldata.map((item, index) => {
       const parcelas: ReadParcela[] = ConvertToParcela(item[0]);
@@ -119,6 +123,7 @@ const Graficos = () => {
               parcela.lancamentoParcela.descricaoLancamento;
           }
           gastos += parcela.valorParcela;
+          qntdGastos++;
         } else if (
           typeof parcela.lancamentoParcela != 'number'
             ? parcela.lancamentoParcela.tipoLancamento == 'receita'
@@ -130,6 +135,7 @@ const Graficos = () => {
               parcela.lancamentoParcela.descricaoLancamento;
           }
           ganhos += parcela.valorParcela;
+          qntdGanhos++;
         }
       });
     });
@@ -140,6 +146,9 @@ const Graficos = () => {
 
     setMaiorGasto(maiorGasto);
     setMaiorGanho(maiorGanho);
+
+    setQntdGanhos(qntdGanhos);
+    setQntdGastos(qntdGastos);
   }
 
   function loadInAllDatas() {
@@ -298,7 +307,7 @@ const Graficos = () => {
                 },
                 shadowBox(),
               ]}>
-              <Count>02</Count>
+              <Count>{qntdGanhos}</Count>
               <CountDescription>Receitas lançadas</CountDescription>
             </CountCard>
             <CountCard
@@ -308,7 +317,7 @@ const Graficos = () => {
                 },
                 shadowBox(),
               ]}>
-              <Count>04</Count>
+              <Count>{qntdGastos}</Count>
               <CountDescription>Despesas lançadas</CountDescription>
             </CountCard>
           </CountCardsContainer>
