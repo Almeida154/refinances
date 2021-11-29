@@ -74,7 +74,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     (async () => {
       const storagedUser = await AsyncStorage.getItem('user');
       console.debug('ASYNC STORAGE: ', await AsyncStorage.getItem('user'));
-      if (storagedUser) setUser(JSON.parse(storagedUser));
+      if (storagedUser) setUser(JSON.parse(storagedUser));      
     })();
   }, []);
 
@@ -110,14 +110,20 @@ export const AuthProvider: React.FC = ({ children }) => {
         fotoPerfilUsuario: user.fotoPerfilUsuario,
       });
 
+      const responseConfig = await api.post(`config/create/${response.data.user.id}`, {
+          theme: 'light'
+      })
       if (response.data.error) {
         return response.data.error.toString();
+      }
+      if (responseConfig.data.error) {
+        return responseConfig.data.error.toString();
       }
 
       const newUser: User = response.data.user;
       newUser.fotoPerfilUsuario =
         newUser.fotoPerfilUsuario != null ? 'base64' : null; // Definindo 'base64' porque a imagem é gigante
-
+      newUser.config = responseConfig.data.config
       await AsyncStorage.setItem('user', JSON.stringify(newUser));
 
       return '';
@@ -141,12 +147,22 @@ export const AuthProvider: React.FC = ({ children }) => {
         JSON.stringify(response).substr(0, 200) + '...',
       );
 
+      const responseConfig = await api.post(`config/create/${response.data.user.id}`, {
+        theme: 'light'
+    })
+
+    if (responseConfig.data.error) {
+      return responseConfig.data.error.toString();
+    }
+
       const loggedUser: User = response.data.user;
 
       loggedUser.fotoPerfilUsuario =
         loggedUser.fotoPerfilUsuario != null ? 'base64' : null; // Definindo 'base64' porque a imagem é gigante
       loggedUser.signed = true;
+    loggedUser.config = responseConfig.data.config
 
+    
       await AsyncStorage.setItem('user', JSON.stringify(loggedUser));
       setUser(loggedUser);
 

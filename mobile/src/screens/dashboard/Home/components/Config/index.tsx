@@ -67,7 +67,7 @@ const Config = () => {
   const [isTouch, setIsTouch] = React.useState(false);
   const onSwitchTouch = () => setIsTouch(!isTouch);
 
-  const [isDark, setIsDark] = React.useState(false);
+  const [isDark, setIsDark] = React.useState(user.config.theme == 'light' ? false : true);
   const onSwitchDark = () => setIsDark(!isDark);
 
   useEffect(() => {
@@ -465,7 +465,7 @@ const Config = () => {
 
                   <Item>
                     <Title>Tema</Title>
-                    <Subtitle>{isDark ? 'escuro' : 'claro'}</Subtitle>
+                    <Subtitle>{isDark ? 'dark' : 'light'}</Subtitle>
                   </Item>
 
                   <SectionIconRight>

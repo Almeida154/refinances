@@ -19,6 +19,6 @@ export class Config {
   @Column({ nullable: true })
   idioma: string;
 
-  @OneToOne((type) => User, (user) => user.id)
+  @OneToOne((type) => User, (user) => user.configUser)
   userConfig: User;
 }

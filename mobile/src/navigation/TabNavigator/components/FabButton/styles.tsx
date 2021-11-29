@@ -7,6 +7,6 @@ export const Container = styled.View `
     align-items: center;
 `;
 
-export const TouchableBtn = styled.TouchableHighlight `
-
+export const TouchableBtn = styled.TouchableHighlight`
+    position: absolute;
 `

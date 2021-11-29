@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { Dimensions, TouchableOpacity, View } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -34,6 +34,7 @@ import AccountsCard from './components/AccountsCard';
 import CreateCard from './components/CreateCard';
 import GoalsCard from './components/GoalsCard';
 import CategoriesCard from './components/CategoriesCard';
+import FabButton from '../../../navigation/TabNavigator/components/FabButton';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
@@ -132,6 +133,7 @@ const Home = () => {
           </TouchableOpacity>
         </ActionsAndAssets>
       </Header>
+      
       <Content>
         <BalanceCard />
         <AccountsCard />

@@ -49,7 +49,7 @@ class UserController {
       nomeCategoria: "Meta",
       tipoCategoria: "despesa",
       userCategory: user,
-      corCategoria: "#434235",
+      corCategoria: "#ee4266",
     }, {
       iconeCategoria: "Entypo:dots-three-horizontal",
       tetoDeGastos: 0,

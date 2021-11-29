@@ -39,7 +39,7 @@ class ConfigController {
     newConfig.userConfig = user;
     
     const config = configRepository.create(newConfig);
-    console.log("VEio aquio", config)
+    console.log("Veio aquio", config)
     await configRepository.save(config);
 
     return response.send({ config: config });

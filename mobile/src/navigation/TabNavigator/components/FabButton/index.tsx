@@ -42,7 +42,7 @@ const FabButton = () => {
       {
         translateY: animation.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, heightPixel(-480)],
+          outputRange: [0, heightPixel(-280)],
         }),
       },
       {
@@ -60,7 +60,7 @@ const FabButton = () => {
       {
         translateY: animation.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, heightPixel(-300)],
+          outputRange: [0, heightPixel(-180)],
         }),
       },
 
@@ -104,57 +104,58 @@ const FabButton = () => {
   };
 
   return (
-    <Container style={{ marginHorizontal: widthPixel(40) }}>
-      <TouchableBtn onPress={() => console.log('form')}>
+    <Container style={{ marginHorizontal: widthPixel(130) }}>
         <Animated.View
           style={[
             styles.submenu,
             styles.button,
             formStyle,
-            shadowBox(14, 0.5),
+            shadowBox(20, 0.5),
             { width: widthPixel(120), height: heightPixel(120) },
           ]}>
+            <TouchableBtn onPress={() => console.log('form')}>
           <MaterialCommunity
             name="pencil"
             color={colors.redCrayola}
             size={widthPixel(50)}
-          />
+            />
+            </TouchableBtn>
         </Animated.View>
-      </TouchableBtn>
 
-      <TouchableBtn activeOpacity={0.8} onPress={() => console.log('voice')}>
+
         <Animated.View
           style={[
             styles.submenu,
             styles.button,
             voiceStyle,
-            shadowBox(14, 0.5),
+            shadowBox(20, 0.5),
             { width: widthPixel(120), height: heightPixel(120) },
           ]}>
+                  <TouchableBtn activeOpacity={0.8} onPress={() => console.log('voice')}>
           <MaterialIcons
             name="keyboard-voice"
             color={colors.redCrayola}
             size={widthPixel(50)}
-          />
-        </Animated.View>
+            />
       </TouchableBtn>
+            </Animated.View>
 
-      <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.8}>
         <Animated.View
           style={[
             styles.submenu,
             styles.button,
             cameraStyle,
-            shadowBox(14, 0.5),
+            shadowBox(20, 0.5),
             { width: widthPixel(120), height: heightPixel(120) },
           ]}>
+            <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.8}>
           <Entypo
             name="camera"
             color={colors.redCrayola}
             size={widthPixel(50)}
           />
-        </Animated.View>
       </TouchableBtn>
+        </Animated.View>
 
       <TouchableBtn
         activeOpacity={0.8}
@@ -191,6 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: widthPixel(210 / 2),
     backgroundColor: colors.white,
+    position: 'absolute'
   },
 
   submenu: {
@@ -206,6 +208,7 @@ const styles = StyleSheet.create({
 
   btnPlus: {
     position: 'absolute',
+    elevation: 10,
     width: widthPixel(210),
     height: widthPixel(210),
     borderRadius: widthPixel(210 / 2),

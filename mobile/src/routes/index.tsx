@@ -4,6 +4,9 @@ import AuthRoutes from './auth.routes';
 import AppRoutes from './app.routes';
 
 import { UseAuth, User } from '../contexts/AuthContext';
+import { ThemeProvider } from 'styled-components/native';
+import Dark from '../themes/dark'
+import Light from '../themes/light'
 
 const Routes: React.FC = () => {
   const { user = {} as User } = UseAuth();
@@ -11,7 +14,14 @@ const Routes: React.FC = () => {
     '[Routes/index] User logged: ',
     JSON.stringify(user).substr(0, 150),
   );
-  return user.signed ? <AppRoutes /> : <AuthRoutes />;
+  return (
+    <>
+    <ThemeProvider theme={{colors: user.config?.theme == 'light' ? Light : Dark}}>
+      
+      {user.signed ? <AppRoutes /> : <AuthRoutes />}
+    </ThemeProvider>
+    </>
+  );
 };
 
 export default Routes;
