@@ -10,6 +10,7 @@ export type HomeAccountStack = {
   NewCategory: undefined;
   EditCategory: { categoryId: number };
   Config: undefined;
+  EditProfile: { route: string };
 };
 
 export type GoalsStack = {
