@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { processColor } from 'react-native';
 
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
@@ -38,8 +38,8 @@ const GeneralCard: React.FC<IProps> = ({
     dataSets: [
       {
         values: [
-          { value: 14997, label: 'Quanto ganha' },
-          { value: 2795.3, label: 'Quanto gasta' },
+          { value: 10, label: 'Quanto ganha' },
+          { value: 10, label: 'Quanto gasta' },
         ],
         config: {
           colors: [
@@ -58,6 +58,33 @@ const GeneralCard: React.FC<IProps> = ({
       },
     ],
   });
+
+  useEffect(() => {
+    setData({
+      dataSets: [
+        {
+          values: [
+            { value: totalIncome || 10, label: 'Quanto ganha' },
+            { value: totalExpense || 10, label: 'Quanto gasta' },
+          ],
+          config: {
+            colors: [
+              processColor(colors.slimyGreen),
+              processColor(colors.redCrayola),
+            ],
+            valueTextSize: 20,
+            valueTextColor: processColor('transparent'),
+            sliceSpace: 5,
+            selectionShift: 13,
+            valueFormatter: "#.#'%'",
+            valueLineColor: processColor(colors.white),
+            valueLinePart1Length: 0.5,
+          },
+          label: '',
+        },
+      ],
+    });
+  }, [totalIncome, totalExpense]);
 
   return (
     <GeneralStatsCard style={shadowBox(20, 0.2)}>
