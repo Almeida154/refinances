@@ -275,7 +275,7 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
           // @ts-ignore
           value={parseFloat(valorMeta)}
           onChangeValue={(txt: string) => setValorMeta(txt?.toString() || '')}
-          placeholderTextColor={'rgba(52, 52, 52, .3)'}
+          placeholderTextColor={colors.platinum}
           selectionColor={colors.davysGrey}
           onChangeText={formattedValue => {
             setValorMeta(valorMeta);

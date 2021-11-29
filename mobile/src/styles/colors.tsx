@@ -1,4 +1,3 @@
-import {UseConfig} from '../contexts/ConfigContext'
 
 export default {
   eerieBlack: true ? '#f2f2f2' : '#1c1c1c',
