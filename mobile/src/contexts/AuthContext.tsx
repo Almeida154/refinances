@@ -145,22 +145,13 @@ export const AuthProvider: React.FC = ({ children }) => {
       console.debug(
         'handleLogin | response',
         JSON.stringify(response).substr(0, 200) + '...',
-      );
-
-      const responseConfig = await api.post(`config/create/${response.data.user.id}`, {
-        theme: 'light'
-    })
-
-    if (responseConfig.data.error) {
-      return responseConfig.data.error.toString();
-    }
+      );      
 
       const loggedUser: User = response.data.user;
 
       loggedUser.fotoPerfilUsuario =
         loggedUser.fotoPerfilUsuario != null ? 'base64' : null; // Definindo 'base64' porque a imagem é gigante
-      loggedUser.signed = true;
-    loggedUser.config = responseConfig.data.config
+      loggedUser.signed = true;    
 
     
       await AsyncStorage.setItem('user', JSON.stringify(loggedUser));
