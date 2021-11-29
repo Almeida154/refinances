@@ -97,11 +97,18 @@ class ConfigController {
         error: "Não existe esse user aí",
       });
 
-    const updateConfig = request.body;
-    updateConfig.userIdid = userExists;
-    updateConfig.id = request.params.id
+      const updateConfig = await configRepository.createQueryBuilder("config")
+        .leftJoinAndSelect("config.userConfig", "user")
+        .where("user.id = :id", {id: userExists.id})
+        .getOne()
+        
+        console.log(userExists)
+      if(!updateConfig) {
+        return response.send({error: "Ocorreu um erro ao verificar as preferências"})
+      }
+    updateConfig.theme = theme
 
-    await configRepository.update(request.params.id, updateConfig);    
+    await configRepository.save(updateConfig);    
 
     return response.send({ message: updateConfig });
   }

@@ -10,6 +10,8 @@ import { DadosTempProvider } from './contexts/TemporaryDataContext';
 import { ContasProvider } from './contexts/AccountContext';
 import { ParcelaProvider } from './contexts/InstallmentContext';
 import { MetasProvider } from './contexts/GoalsContext';
+import { ConfigProvider } from './contexts/ConfigContext';
+
 import Routes from './routes';
 
 const App = () => {
@@ -23,7 +25,9 @@ const App = () => {
                 <MetasProvider>
                   <TransferenciaProvider>
                     <CategoriasProvider>
-                      <Routes />
+                      <ConfigProvider>
+                        <Routes />
+                      </ConfigProvider>
                     </CategoriasProvider>
                   </TransferenciaProvider>
                 </MetasProvider>

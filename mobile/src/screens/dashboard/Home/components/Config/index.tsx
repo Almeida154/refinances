@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 
 import Header from '../../../components/Header';
@@ -29,7 +30,8 @@ import {
   SubtitleFooter,
   SectionIcons,
   Copyright,
-  Icon
+  Icon,
+  Touchable
 } from './styles'
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -45,16 +47,20 @@ import { Switch } from 'react-native-paper';
 
 import { UseAuth } from '../../../../../contexts/AuthContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+import { UseConfig } from '../../../../../contexts/ConfigContext';
 
 import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import { colors } from '../../../../../styles';
+import api from '../../../../../services/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Config = () => {
-  const { user, handleLogout, userAvatar } = UseAuth();
-  const { navigation } = UseDadosTemp();
+  const { user, handleLogout, userAvatar, updateUserProps } = UseAuth();
+  const { navigation, showNiceToast } = UseDadosTemp();
+  const { isDark, setIsDark } = UseConfig();
 
   const [stateReload, setStateReload] = useState(false);
 
@@ -66,10 +72,29 @@ const Config = () => {
 
   const [isTouch, setIsTouch] = React.useState(false);
   const onSwitchTouch = () => setIsTouch(!isTouch);
+  
+  const onSwitchDark = () => {
+    (async function(){
+      const response = await api.put(`/config/edit/${user.id}`, {
+        theme: isDark ? 'light' : 'dark'
+      })
 
-  const [isDark, setIsDark] = React.useState(user.config?.theme == 'dark' ? true : false);
-  const onSwitchDark = () => setIsDark(!isDark);
+    if(response.data.error) {
+     return showNiceToast("error", response.data.error)
+    }
 
+    user.config.theme = isDark ? 'light' : 'dark'
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+     updateUserProps(user)
+    })()
+    
+    
+    setIsDark(!isDark)
+  };
+
+  useEffect(() => {
+    console.log(user)
+  }, [user])
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
@@ -159,10 +184,12 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
-                    <Title>Nome</Title>
-                    <Subtitle>{user.nomeUsuario}</Subtitle>
-                  </Item>
+                  <Touchable>
+                    <Item>
+                      <Title>Nome</Title>
+                      <Subtitle>{user.nomeUsuario}</Subtitle>
+                    </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -195,10 +222,12 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
+                  <Touchable>
+                    <Item>
                     <Title>E-mail</Title>
                     <Subtitle>{user.emailUsuario}</Subtitle>
                   </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -231,10 +260,12 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
-                    <Title>Senha</Title>
-                    <Subtitle>Alterar senha</Subtitle>
-                  </Item>
+                  <Touchable>
+                    <Item>
+                      <Title>Senha</Title>
+                      <Subtitle>Alterar senha</Subtitle>
+                    </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -255,11 +286,7 @@ const Config = () => {
                 <MainTitle>Conta</MainTitle>
 
                 {/* Contas */}
-                <ContainerItems
-                  onTouchEnd={() => {
-                    navigation.dispatch(
-                    StackActions.replace('StackAccount', { screen: 'ManageAccount'})
-                  )}}>
+                <ContainerItems>
                   <SectionIconLeft>
                     <Entypo
                       name="credit-card"
@@ -273,10 +300,16 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
+                  <Touchable
+                    onPress={()=> {
+                      navigation.dispatch(
+                      StackActions.replace('StackAccount', { screen: 'ManageAccount'}))
+                  }}>
+                    <Item>
                     <Title>Contas</Title>
                     <Subtitle>Veja suas contas</Subtitle>
                   </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -295,11 +328,7 @@ const Config = () => {
                 <Separator/>
 
                 {/* CATEGORIAS */}
-                <ContainerItems
-                  onTouchEnd={() => {
-                    navigation.dispatch(
-                    StackActions.replace('StackAccount', { screen: 'ManageCategory'})
-                  )}}>
+                <ContainerItems>
                   <SectionIconLeft>
                     <AntDesign
                       name="addfolder"
@@ -313,10 +342,16 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
+                  <Touchable
+                    onPress={()=> {
+                      navigation.dispatch(
+                      StackActions.replace('StackAccount', { screen: 'ManageCategory'}))
+                  }}>
+                    <Item>
                     <Title>Categorias</Title>
                     <Subtitle>Veja suas categorias</Subtitle>
                   </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -335,11 +370,7 @@ const Config = () => {
                 <Separator/>
 
                 {/* METAS */}
-                <ContainerItems
-                  onTouchEnd={() => {
-                    navigation.dispatch(
-                    StackActions.replace('GoalsStack', { screen: 'GoalsList'})
-                  )}}>
+                <ContainerItems>
                   <SectionIconLeft>
                     <Ionicons
                       name="medal-outline"
@@ -353,10 +384,16 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item >
-                    <Title>Metas</Title>
-                    <Subtitle>Veja suas metas</Subtitle>
-                  </Item>
+                  <Touchable
+                    onPress={()=> {
+                      navigation.dispatch(
+                      StackActions.replace('GoalsStack', { screen: 'GoalsList'}))
+                  }}>
+                    <Item >
+                      <Title>Metas</Title>
+                      <Subtitle>Veja suas metas</Subtitle>
+                    </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -391,18 +428,16 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
+                  <Touchable>
+                    <Item>
                     <Title>Ativar senha</Title>
                     <Subtitle>Defina uma senha</Subtitle>
                   </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <Switch value={isSenha} 
                       onValueChange={onSwitchSenha}
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flex: 1}}
                       theme={{}}
                       color={colors.paradisePink}
                     />
@@ -498,10 +533,12 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
+                  <Touchable>
+                    <Item>
                     <Title>Idioma</Title>
                     <Subtitle>pt-br</Subtitle>
                   </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -536,10 +573,12 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
+                  <Touchable>
+                    <Item>
                     <Title>Compartilhar</Title>
                     <Subtitle>Mostre para seus amigos</Subtitle>
                   </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -572,10 +611,12 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
+                  <Touchable>
+                    <Item>
                     <Title>Avaliar</Title>
                     <Subtitle>Avalie o aplicativo</Subtitle>
                   </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -608,10 +649,12 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
-                    <Title>Limpar dados</Title>
-                    <Subtitle>Excluir todas as transações</Subtitle>
-                  </Item>
+                  <Touchable>
+                    <Item>
+                      <Title>Limpar dados</Title>
+                      <Subtitle>Excluir todas as transações</Subtitle>
+                    </Item>
+                  </Touchable>
 
                   <SectionIconRight>
                     <AntDesign
@@ -632,8 +675,7 @@ const Config = () => {
                 <MainTitle>Sair</MainTitle>
 
                 {/* SAIR */}
-                <ContainerItems
-                  onTouchEnd={handleLogout}>
+                <ContainerItems>
                   <SectionIconLeft>
                     <MCicons
                       name="logout"
@@ -647,10 +689,12 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Item>
-                    <Title>Sair</Title>
-                    <Subtitle>Saia da sua conta</Subtitle>
-                  </Item>
+                  <Touchable onPress={handleLogout}>
+                    <Item>
+                      <Title>Sair</Title>
+                      <Subtitle>Saia da sua conta</Subtitle>
+                    </Item>
+                  </Touchable>
 
                 </ContainerItems>
 
