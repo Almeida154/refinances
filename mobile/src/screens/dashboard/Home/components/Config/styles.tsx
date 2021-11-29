@@ -5,7 +5,7 @@ import { widthPixel, heightPixel } from "../../../../../helpers/responsiveness"
 
 export const Container = styled.View`
     height: auto;
-    background: ${colors.back};
+    background: ${(props: any) => props.theme.colors.back};
 `
 
 export const ContainerBody = styled.View`
@@ -15,7 +15,7 @@ export const ContainerBody = styled.View`
 
 export const ContainerScroll = styled.ScrollView`
     height: 100%;
-    color: ${colors.cultured};
+    color: ${(props: any) => props.theme.colors.cultured};
     height: auto;
 `
 
@@ -28,49 +28,49 @@ export const Profile = styled.Image`
     width: ${widthPixel(300)};
     height: ${heightPixel(330)};
     borderRadius: ${widthPixel(250)};;
-    borderColor: ${colors.paradisePink};
+    borderColor: ${(props: any) => props.theme.colors.paradisePink};
     borderWidth: 4;
     justify-content: center;
     position: absolute;
 `
 
 export const HeaderContainer = styled.View`
-    backgroundColor: ${colors.paradisePink};
+    backgroundColor: ${(props: any) => props.theme.colors.paradisePink};
     height: ${heightPixel(550)};
     display: flex;
 `
 
 export const TitleFooter = styled.Text `
     fontSize: ${`${fonts.size.big}px`};
-    color: ${colors.paradisePink}
+    color: ${(props: any) => props.theme.colors.paradisePink}
     fontFamily: ${`${fonts.familyType.bold}`};
 `
 
 export const Title = styled.Text `
     fontSize: ${`${fonts.size.big}px`};
-    color: ${colors.darkGray}
+    color: ${(props: any) => props.theme.colors.darkGray}
     fontFamily: ${`${fonts.familyType.bold}`};
 `
 
 export const MainTitle = styled.Text `
     fontSize: ${`${fonts.size.big}px`};
-    color: ${colors.paradisePink};
+    color: ${(props: any) => props.theme.colors.paradisePink};
     line-height: ${heightPixel(150)};
-    background-color: ${colors.culture};
+    background-color: ${(props: any) => props.theme.colors.culture};
     fontFamily: ${`${fonts.familyType.bold}`};
     padding-left: ${widthPixel(30)};
 `
 
 export const Subtitle = styled.Text `
     fontSize: ${`${fonts.size.medium}px`};
-    color: ${colors.darkGray}
+    color: ${(props: any) => props.theme.colors.darkGray}
     fontFamily: ${`${fonts.familyType.bold}`};
     opacity: 0.5;
 `
 
 export const SubtitleFooter = styled.Text `
     fontSize: ${`${fonts.size.medium}px`};
-    color: ${colors.darkGray}
+    color: ${(props: any) => props.theme.colors.darkGray}
     fontFamily: ${`${fonts.familyType.bold}`};
     opacity: 0.5;
     text-align: center
@@ -78,7 +78,7 @@ export const SubtitleFooter = styled.Text `
 
 export const Copyright = styled.Text `
     fontSize: ${`${fonts.size.small}px`};
-    color: ${colors.darkGray}
+    color: ${(props: any) => props.theme.colors.darkGray}
     fontFamily: ${`${fonts.familyType.bold}`};
     opacity: 0.5;
 `
@@ -106,7 +106,7 @@ export const Footer = styled.View`
     bottom: ${widthPixel(30)};
     justify-content: center;
     align-items: center;
-    background-color: ${colors.lightGray};
+    background-color: ${(props: any) => props.theme.colors.lightGray};
 `
 
 export const SectionIcons = styled.View`
@@ -118,7 +118,7 @@ export const SectionIcons = styled.View`
 
 export const Icon = styled.View`
     margin: ${heightPixel(30)}px;
-    background-color: ${colors.platinum}
+    background-color: ${(props: any) => props.theme.colors.platinum}
     padding: ${heightPixel(10)}px;
     border-radius: 20px;
     justify-content: center;
@@ -140,6 +140,6 @@ export const SectionIconRight = styled.View`
 export const Separator = styled.View`
     width: 100%;
     height: 2px;
-    background-color: ${colors.platinum};
+    background-color: ${(props: any) => props.theme.colors.platinum};
     margin-top: ${heightPixel(20)};
 `

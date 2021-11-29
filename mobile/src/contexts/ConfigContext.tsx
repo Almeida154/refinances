@@ -136,7 +136,7 @@ export type Config = {
           handleAdicionarConfigByUser,
           handleGetConfigById,
           handleAtualizarConfig,
-        }}>
+        }}>          
         {children}
       </ConfigContext.Provider>
     );

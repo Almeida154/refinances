@@ -47,7 +47,7 @@ export const SectionIcon = styled.View`
 
 export const CategoryDesc = styled.Text`
     font-size: ${`${fonts.size.medium}px`};
-    color: ${colors.davysGrey};
+    color: ${(props: any) => props.theme.colors.davysGrey};
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
     bottom: ${heightPixel(35)};
@@ -55,7 +55,7 @@ export const CategoryDesc = styled.Text`
 
 export const AddLimite = styled.Text`
     font-size: ${`${fonts.size.small}px`};
-    color: ${colors.davysGrey};
+    color: ${(props: any) => props.theme.colors.davysGrey};
     fontFamily: ${`${fonts.familyType.semiBold}`};
     opacity: 0.7;
 `
@@ -66,7 +66,7 @@ export const CategoryAddTetoGasto = styled.TouchableOpacity`
 `
 
 export const Percent = styled.View`
-    backgroundColor: ${colors.white};
+    backgroundColor: ${(props: any) => props.theme.colors.white};
     position: absolute;
     right: -20;
     top: -20;
@@ -80,6 +80,6 @@ export const Percent = styled.View`
 `
 
 export const PercentText = styled.Text`
-    color: ${colors.davysGrey}
+    color: ${(props: any) => props.theme.colors.davysGrey}
     fontFamily: ${`${fonts.familyType.regular}`};
 `

@@ -16,7 +16,7 @@ const Routes: React.FC = () => {
   );
   return (
     <>
-    <ThemeProvider theme={{colors: user.config?.theme == 'light' ? Light : Dark}}>
+    <ThemeProvider theme={{colors: user.config?.theme == 'dark' ? Dark : Light}}>
       
       {user.signed ? <AppRoutes /> : <AuthRoutes />}
     </ThemeProvider>

@@ -5,7 +5,7 @@ import { fonts, colors, metrics } from '../../../styles';
 export const Container = styled.ScrollView`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
-  background-color: ${colors.cultured};
+  background-color: ${(props: any) => props.theme.colors.cultured};
 `;
 
 export const Header = styled.View`
@@ -21,7 +21,7 @@ export const Greeting = styled.View``;
 export const Name = styled.Text`
   font-size: ${`${fonts.size.bigger}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props: any) => props.theme.colors.davysGrey};
   opacity: 0.9;
 `;
 
@@ -29,7 +29,7 @@ export const Salutation = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
   font-family: ${fonts.familyType.bold};
   margin-top: ${`${heightPixel(-18)}px`};
-  color: ${colors.davysGrey};
+  color: ${(props: any) => props.theme.colors.davysGrey};
   opacity: 0.3;
 `;
 
@@ -40,7 +40,7 @@ export const ActionsAndAssets = styled.View`
 `;
 
 export const ConfigContainer = styled.TouchableOpacity`
-  background-color: ${colors.cultured};
+  background-color: ${(props: any) => props.theme.colors.cultured};
   width: ${`${widthPixel(140)}`};
   height: ${`${widthPixel(140)}`};
   border-radius: ${`${widthPixel(35)}`};
@@ -50,7 +50,7 @@ export const ConfigContainer = styled.TouchableOpacity`
 `;
 
 export const Photo = styled.Image`
-  background-color: ${colors.white};
+  background-color: ${(props: any) => props.theme.colors.white};
   width: ${`${widthPixel(140)}`};
   height: ${`${widthPixel(140)}`};
   border-radius: ${`${widthPixel(35)}`};
