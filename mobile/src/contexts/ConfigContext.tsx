@@ -32,6 +32,10 @@ export type Config = {
     const {user} = UseAuth()
     const [isDark, setIsDark] = useState<boolean>(user.config?.theme == 'dark');      
 
+    useEffect(() => {
+      setIsDark(user.config?.theme == 'dark')
+    }, [user])
+    
     return (
       <ConfigContext.Provider
         value={{
