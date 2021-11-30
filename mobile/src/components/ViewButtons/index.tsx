@@ -9,7 +9,13 @@ import { metrics } from '../../styles';
 const ViewButtons = () => {
   const { buttonIsEnabled, navigation } = UseDadosTemp();
   return (
-    <View style={{ display: buttonIsEnabled ? 'flex' : 'none' }}>
+    <View
+      style={{
+        position: 'absolute',
+        display: buttonIsEnabled ? 'flex' : 'none',
+        bottom: 0,
+        width: '100%',
+      }}>
       <TouchableOpacity
         onPress={() =>
           navigation.dispatch(
