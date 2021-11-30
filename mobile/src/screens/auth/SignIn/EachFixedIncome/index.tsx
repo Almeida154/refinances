@@ -296,7 +296,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
               textAlign: 'center',
               fontFamily: fonts.familyType.bold,
               fontSize: fonts.size.small,
-              color: colors.diffWhite,
+              color: colors.davysGrey,
             }}>
             Dia de recebimento
           </Text>

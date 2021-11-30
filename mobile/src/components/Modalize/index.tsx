@@ -14,6 +14,7 @@ import { colors, metrics } from '../../styles';
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import hexToRGB from '../../helpers/hexToRgba';
+import { View } from 'react-native';
 
 interface IProps {
   title?: string;
@@ -68,47 +69,51 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
         },
       }}
       HeaderComponent={
-        <>
-          <Title
-            style={{
-              paddingBottom:
-                subtitle == null && headerHasFullBoundaries
-                  ? metrics.default.boundaries
-                  : 0,
-            }}>
-            {title}
-          </Title>
-          {subtitle && (
-            <Subtitle
+        title ? (
+          <>
+            <Title
               style={{
                 paddingBottom:
-                  headerHasFullBoundaries && searchEvent == null
+                  subtitle == null && headerHasFullBoundaries
                     ? metrics.default.boundaries
-                    : headerHasFullBoundaries
-                    ? metrics.default.boundaries / 2
                     : 0,
               }}>
-              {subtitle}
-            </Subtitle>
-          )}
-          {searchEvent && (
-            <SearchContainer>
-              <Search
-                onChangeText={txt => searchEvent(txt)}
-                value={searchValue}
-                placeholder="Buscar"
-                placeholderTextColor={hexToRGB(colors.davysGrey, 0.4)}
-              />
-              <SearchDeleteButton activeOpacity={1} onPress={onClearSearch}>
-                <IonIcons
-                  name="close"
-                  size={24}
-                  color={`rgba(82, 82, 82, .1)`}
+              {title}
+            </Title>
+            {subtitle && (
+              <Subtitle
+                style={{
+                  paddingBottom:
+                    headerHasFullBoundaries && searchEvent == null
+                      ? metrics.default.boundaries
+                      : headerHasFullBoundaries
+                      ? metrics.default.boundaries / 2
+                      : 0,
+                }}>
+                {subtitle}
+              </Subtitle>
+            )}
+            {searchEvent && (
+              <SearchContainer>
+                <Search
+                  onChangeText={txt => searchEvent(txt)}
+                  value={searchValue}
+                  placeholder="Buscar"
+                  placeholderTextColor={hexToRGB(colors.davysGrey, 0.4)}
                 />
-              </SearchDeleteButton>
-            </SearchContainer>
-          )}
-        </>
+                <SearchDeleteButton activeOpacity={1} onPress={onClearSearch}>
+                  <IonIcons
+                    name="close"
+                    size={24}
+                    color={`rgba(82, 82, 82, .1)`}
+                  />
+                </SearchDeleteButton>
+              </SearchContainer>
+            )}
+          </>
+        ) : (
+          <View></View>
+        )
       }>
       <Body
         hasBodyBoundaries={hasBodyBoundaries}

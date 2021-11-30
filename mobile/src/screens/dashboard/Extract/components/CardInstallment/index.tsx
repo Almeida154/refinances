@@ -120,6 +120,7 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
                 ? colors.paradisePink
                 : colors.slimyGreen
             }
+            uncheckedColor={colors.jet}
           />
           <EditLabel>
             {item.lancamentoParcela.tipoLancamento == 'despesa'

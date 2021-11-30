@@ -50,6 +50,7 @@ interface AuthContextType {
   handleLogout(): void;
   emailExists(email: string): Promise<boolean>;
   userAvatar(): Promise<string | undefined | null>;
+  handleUpdateUser(user: User, id: number): Promise<void>;
 
   showNiceToast(
     type: string,
@@ -176,6 +177,39 @@ export const AuthProvider: React.FC = ({ children }) => {
     setSetupUserData(setupUserDataProps);
   }
 
+  async function handleUpdateUser(user: User, id: number) {
+    try {
+      const response = await api.put(`/goal/edit/${id}`, {
+        nomeUsuario: user.nomeUsuario,
+        emailUsuario: user.emailUsuario,
+        senhaUsuario: user.senhaUsuario,
+        fotoPerfilUsuario: user.fotoPerfilUsuario,
+      });
+
+      console.log(response.data);
+
+      if (response.data.error) console.log(response.data.error);
+
+      console.log('response.data', response.data);
+
+      //const updateUser = user == null ? null : user.slice();
+
+      /*if (!updateMetas) {
+        //Caso atualizou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
+        handleReadByUserMetas(await retornarIdDoUsuario());
+      } else {
+        console.log(response.data.metas);
+        setMetas(response.data.metas);
+
+        console.log('metas: ' + metas);
+      }*/
+
+      
+    } catch (error) {
+      console.log('AuthContext | handleUpdateUser(): ' + error);
+    }
+  }
+
   function showNiceToast(
     type: string,
     title?: string | null,
@@ -217,6 +251,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         userAvatar,
         showNiceToast,
         hideNiceToast,
+        handleUpdateUser
       }}>
       <StatusBar translucent={true} backgroundColor="transparent"/>
       {children}

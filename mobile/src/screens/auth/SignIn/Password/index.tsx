@@ -153,7 +153,7 @@ const Password = ({ navigation }: PropsNavigation) => {
                 }}
                 name="close"
                 size={32}
-                color={`rgba(82, 82, 82, .08)`}
+                color={colors.davysGray}
                 onPress={() => {
                   setPassword('');
                   setSecurePassword(true);
@@ -167,7 +167,7 @@ const Password = ({ navigation }: PropsNavigation) => {
                 }}
                 name={securePassword ? 'eye' : 'eye-off'}
                 size={28}
-                color={`rgba(82, 82, 82, .08)`}
+                color={colors.davysGray}
                 onPress={() => setSecurePassword(!securePassword)}
               />
             </>

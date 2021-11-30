@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { processColor, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { processColor, Text, View } from 'react-native';
 
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import shadowBox from '../../../../../helpers/shadowBox';
@@ -26,37 +26,31 @@ import {
 import hexToRGB from '../../../../../helpers/hexToRgba';
 import Icon from '../../../../../helpers/gerarIconePelaString';
 import Button from '../../../../../components/Button';
+import { Categoria } from '../../../../../contexts/CategoriesContext';
 
-type CategoryStat = {
-  accent: string;
-  icon: string;
-  name: string;
-  total: number;
+type GastosCategorias = {
+  totalGasto: number;
+  categoria: Categoria;
 };
 
 interface IProps {
   name?: string;
-  categories?: CategoryStat[];
+  gastosCategorias?: GastosCategorias[];
+  total?: number;
 }
 
-const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
+const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
   const [data, setData] = useState({
     dataSets: [
       {
         values: [
-          { value: 2400, label: 'Educação' },
-          { value: 235, label: 'Outfit' },
-          { value: 140, label: 'Saúde' },
-          { value: 480, label: 'Games' },
-          { value: 310, label: 'Mercado' },
+          { value: 10, label: 'Educação' },
+          { value: 10, label: 'Outfit' },
         ],
         config: {
           colors: [
-            processColor(colors.deepSafron),
-            processColor(colors.fireBrick),
-            processColor(colors.rainsBlack),
-            processColor(colors.budGreen),
-            processColor(colors.battleGray),
+            processColor(colors.culture),
+            processColor(colors.eerieBlack),
           ],
           valueTextSize: 20,
           valueTextColor: processColor('transparent'),
@@ -70,6 +64,54 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
       },
     ],
   });
+
+  useEffect(() => {
+    if (gastosCategorias == undefined) return;
+
+    var categorias = [];
+    var cores = [];
+
+    for (let i = 0; i < gastosCategorias?.length; i++) {
+      if (gastosCategorias[i].categoria != undefined) {
+        categorias.push({
+          value: gastosCategorias[i].totalGasto,
+          label: gastosCategorias[i].categoria.nomeCategoria,
+        });
+        cores.push(processColor(gastosCategorias[i].categoria.corCategoria));
+      }
+    }
+
+    setData({
+      dataSets: [
+        {
+          values:
+            categorias.length > 0
+              ? categorias
+              : [
+                  { value: 10, label: 'Default' },
+                  { value: 10, label: 'Default' },
+                ],
+          config: {
+            colors:
+              cores.length > 0
+                ? cores
+                : [
+                    processColor(colors.rainsBlack),
+                    processColor(colors.darkGray),
+                  ],
+            valueTextSize: 20,
+            valueTextColor: processColor('transparent'),
+            sliceSpace: 5,
+            selectionShift: 13,
+            valueFormatter: "#.#'%'",
+            valueLineColor: processColor(colors.white),
+            valueLinePart1Length: 0.5,
+          },
+          label: '',
+        },
+      ],
+    });
+  }, [gastosCategorias]);
 
   return (
     <CategoryStatsCard style={shadowBox(20, 0.2)}>
@@ -107,56 +149,83 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
         />
       </CategoryStatsBody>
       <CategoriesContainer style={shadowBox()}>
-        {categories?.map((category, index) => {
-          if (index > 2) return;
-          return (
-            <Category
-              key={index}
-              style={{
-                borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
-                borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
-                borderBottomWidth:
-                  index + 1 != categories.length ? heightPixel(6) : 0,
-                borderBottomColor: colors.cultured,
-              }}>
-              <CategoryIcon
-                style={{
-                  borderWidth: widthPixel(10),
-                  borderColor: category.accent,
-                }}>
-                <Icon
-                  stringIcon={category.icon}
-                  color={category.accent}
-                  size={widthPixel(60)}
-                />
-              </CategoryIcon>
-              <CategoryName>
-                <Name numberOfLines={1}>{category.name}</Name>
-              </CategoryName>
-              <CategoryData>
-                <Total numberOfLines={1}>
-                  {doubleToCurrency(category.total, 'pt-br', 'BRL', true)}
-                </Total>
-                <Percent>85,8%</Percent>
-              </CategoryData>
-            </Category>
-          );
-        })}
-        <View
-          style={{
-            paddingHorizontal: metrics.default.boundaries / 1.6,
-            paddingBottom: metrics.default.boundaries / 1.6,
-          }}>
-          <Button
-            onPress={() => console.log('Vai pra todas')}
+        {gastosCategorias != undefined &&
+          gastosCategorias?.map((gastoCateg, index) => {
+            if (index < 2 && gastoCateg.categoria != undefined)
+              return (
+                <Category
+                  key={index}
+                  style={{
+                    borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
+                    borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
+                    borderBottomWidth:
+                      index + 1 != gastosCategorias.length ? heightPixel(6) : 0,
+                    borderBottomColor: colors.cultured,
+                  }}>
+                  <CategoryIcon
+                    style={{
+                      borderWidth: widthPixel(10),
+                      borderColor: gastoCateg.categoria.corCategoria,
+                    }}>
+                    <Icon
+                      stringIcon={gastoCateg.categoria.iconeCategoria}
+                      color={gastoCateg.categoria.corCategoria || colors.white}
+                      size={widthPixel(60)}
+                    />
+                  </CategoryIcon>
+                  <CategoryName>
+                    <Name numberOfLines={1}>
+                      {gastoCateg.categoria.nomeCategoria}
+                    </Name>
+                  </CategoryName>
+                  <CategoryData>
+                    <Total numberOfLines={1}>
+                      {doubleToCurrency(
+                        gastoCateg.totalGasto,
+                        'pt-br',
+                        'BRL',
+                        true,
+                      )}
+                    </Total>
+                    <Percent>
+                      {((gastoCateg.totalGasto * 100) / (total || 1)).toFixed(
+                        1,
+                      )}
+                      %
+                    </Percent>
+                  </CategoryData>
+                </Category>
+              );
+          })}
+        {gastosCategorias != undefined && gastosCategorias?.length < 1 && (
+          <Text
             style={{
-              backgroundColor: colors.lightGray,
-            }}
-            color={hexToRGB(colors.davysGrey, 0.5)}
-            title="Ver tudo"
-            lastOne
-          />
-        </View>
+              padding: metrics.default.boundaries / 1.6,
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.small,
+              color: colors.davysGrey,
+              opacity: 0.3,
+            }}>
+            Nada encontrado
+          </Text>
+        )}
+        {gastosCategorias != undefined && gastosCategorias?.length > 1 && (
+          <View
+            style={{
+              paddingHorizontal: metrics.default.boundaries / 1.6,
+              paddingBottom: metrics.default.boundaries / 1.6,
+            }}>
+            <Button
+              onPress={() => console.log('Vai pra todas')}
+              style={{
+                backgroundColor: colors.lightGray,
+              }}
+              color={hexToRGB(colors.davysGrey, 0.5)}
+              title="Ver tudo"
+              lastOne
+            />
+          </View>
+        )}
       </CategoriesContainer>
     </CategoryStatsCard>
   );

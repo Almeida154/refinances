@@ -64,8 +64,8 @@ const GeneralCard: React.FC<IProps> = ({
       dataSets: [
         {
           values: [
-            { value: totalIncome || 10, label: 'Quanto ganha' },
-            { value: totalExpense || 10, label: 'Quanto gasta' },
+            { value: totalIncome || 10, label: 'Default' },
+            { value: totalExpense || 10, label: 'Default' },
           ],
           config: {
             colors: [

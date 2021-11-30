@@ -28,6 +28,7 @@ import EditGoal from '../screens/dashboard/Goals/screens/EditGoal';
 import GoalDetails from '../screens/dashboard/Goals/screens/GoalDetails';
 import CreateGoal from '../screens/dashboard/Goals/screens/CreateGoal';
 import GoalsDashboard from '../screens/dashboard/Goals/screens/DashboardGoals';
+import EditProfile from '../screens/dashboard/Home/components/Config/components/EditProfile';
 
 const MainStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -70,6 +71,13 @@ export const HomeAccountStackNavigation = () => {
         component={Config}
         options={{ headerShown: false }}
       />
+      
+      <HomeStack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{ headerShown: false }}
+      />
+
     </HomeStack.Navigator>
   );
 };

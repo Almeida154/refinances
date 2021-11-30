@@ -87,8 +87,8 @@ const Extrato = () => {
 
   function calcBalance(alldata: (ReadParcela[] | Transferencia[])[][]) {
     let gastos = 0,
-        ganhos = 0,
-        balance = 0;
+      ganhos = 0,
+      balance = 0;
 
     alldata.map((item, index) => {
       const parcelas: ReadParcela[] = ConvertToParcela(item[0]);
@@ -202,32 +202,32 @@ const Extrato = () => {
   return (
     <Container>
       <ScrollBody>
-      <Header>
-        <PeriodoAnterior onPress={() => updateDate(-1)}>
-          <Feather
-            size={widthPixel(60)}
-            name={'chevron-left'}
-            color={colors.darkGray}
-          />
-        </PeriodoAnterior>
+        <Header>
+          <PeriodoAnterior onPress={() => updateDate(-1)}>
+            <Feather
+              size={widthPixel(60)}
+              name={'chevron-left'}
+              color={colors.darkGray}
+            />
+          </PeriodoAnterior>
 
-        <PeriodoAtual>
-          <LabelPeriodo>
-            {converterNumeroParaData(
-              dateCurrent,
-              !(yearCurrent == dateCurrent.split('/')[2]),
-            )}
-          </LabelPeriodo>
-        </PeriodoAtual>
+          <PeriodoAtual>
+            <LabelPeriodo>
+              {converterNumeroParaData(
+                dateCurrent,
+                !(yearCurrent == dateCurrent.split('/')[2]),
+              )}
+            </LabelPeriodo>
+          </PeriodoAtual>
 
-        <PeriodoPosterior onPress={() => updateDate(1)}>
-          <Feather
-            size={widthPixel(60)}
-            name={'chevron-right'}
-            color={colors.darkGray}
-          />
-        </PeriodoPosterior>
-      </Header>
+          <PeriodoPosterior onPress={() => updateDate(1)}>
+            <Feather
+              size={widthPixel(60)}
+              name={'chevron-right'}
+              color={colors.darkGray}
+            />
+          </PeriodoPosterior>
+        </Header>
         <Body>
           <FlatList
             data={allDatas}
@@ -260,10 +260,7 @@ const Extrato = () => {
         </CardBalance>
       </Footer>
 
-      <Modalize
-        ref={modalizeRefDetailEntry}
-        title=""
-        backgroundColor={colors.cultured}>
+      <Modalize ref={modalizeRefDetailEntry} backgroundColor={colors.cultured}>
         {/* @ts-ignore */}
         <DetailEntry item={selectedItemExtract} />
       </Modalize>
@@ -271,10 +268,4 @@ const Extrato = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    color: colors.white,
-  },
-});
 export default Extrato;

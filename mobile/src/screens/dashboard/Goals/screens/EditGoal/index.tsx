@@ -202,6 +202,8 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
               error={valorTError}
               showClearIcon={valorMeta != 0}
               isCurrencyInput
+              placeholderTextColor={colors.platinum}
+              selectionColor={colors.davysGrey}
               onClear={() => {
                 setvalorTError(null);
               }}

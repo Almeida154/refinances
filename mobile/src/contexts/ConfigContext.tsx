@@ -29,7 +29,7 @@ export type Config = {
   
   export const ConfigProvider: React.FC = ({ children }) => {    
     const [config, setConfig] = useState<Config[] | null>(null);      
-    const {user} = UseAuth()
+    const { user } = UseAuth()
     const [isDark, setIsDark] = useState<boolean>(user.config?.theme == 'dark');      
 
     useEffect(() => {

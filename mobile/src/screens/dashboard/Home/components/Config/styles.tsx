@@ -84,20 +84,23 @@ export const Copyright = styled.Text `
 `
 
 export const ContainerItems = styled.View`
-
     flexDirection: row;
     width: 100%;
     top: ${heightPixel(70)}
     height: ${heightPixel(170)};
-    
 `
 
 export const Item = styled.View`
     flexDirection: column;
-    width: 70%;
+    width: 100%;
     left: ${widthPixel(30)};
     flex: 1;
     bottom: ${widthPixel(30)};
+`
+
+export const Touchable = styled.TouchableOpacity`
+    width: 100%;
+    flex: 1;
 `
 
 export const Footer = styled.View`
@@ -135,6 +138,8 @@ export const SectionIconRight = styled.View`
     padding-right: ${widthPixel(50)};
     justify-content: center;
     align-items: center;
+    height: 100%;
+    align-self: center;
 `
 
 export const Separator = styled.View`
