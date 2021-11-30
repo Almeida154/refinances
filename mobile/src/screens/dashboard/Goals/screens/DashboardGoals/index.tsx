@@ -31,7 +31,7 @@ const Goals = () => {
   const theme: any = useTheme()
 
   return (
-    <View >
+    <View>
       <Container>
         <GoalsIcon height={'20%'} />
         <Title>
@@ -51,18 +51,6 @@ const Goals = () => {
             );
           }}
         />
-
-<<<<<<< HEAD
-      <Button
-        title={'Metas atuais'}
-        style={{ marginTop: 20, backgroundColor: theme.colors.lightGray }}
-        color={theme.colors.paradisePink}
-        onPress={() => {
-          navigation.dispatch(
-            StackActions.replace('GoalsStack', { screen: 'GoalsList' }),
-          );
-        }}
-      />
 
       <Button
         title={'Metas concluídas'}
@@ -86,33 +74,8 @@ const Goals = () => {
         }}
       />
     </Container>
-=======
-        <Button
-          title={'Metas concluídas'}
-          style={{ marginTop: 20, backgroundColor: colors.lightGray }}
-          onPress={() => {
-            navigation.dispatch(
-              StackActions.replace('GoalsStack', { screen: 'GoalsList' }),
-            );
-          }}
-          color={colors.budGreen}
-        />
-
-        <Button
-          title={'Nova meta'}
-          style={{ marginTop: 20, backgroundColor: colors.lightGray }}
-          color={colors.battleGray}
-          onPress={() => {
-            navigation.dispatch(
-              StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
-            );
-          }}
-        />
-      </Container>
-
-      <ViewButtons />
-    </View>
->>>>>>> 855cddbb5e5ef6c9e2fd8dc1ccac8c8d97052e12
+  <ViewButtons />
+</View>
   );
 };
 

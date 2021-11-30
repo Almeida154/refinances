@@ -20,7 +20,7 @@ export const Title = styled.Text`
 `
 
 export const TextButton = styled.Text`
-    color: ${(props : any) => props.theme.colors.white};
+    color: ${(props : any) => props.theme.colors.silver};
     font-family: ${fonts.familyType.bold};
 `
 

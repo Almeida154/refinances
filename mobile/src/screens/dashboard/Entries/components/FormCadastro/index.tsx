@@ -377,6 +377,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({
           color={
             tipoLancamento == 'despesa' ? theme.colors.paradisePink : theme.colors.budGreen
           }
+          uncheckedColor={theme.colors.jet}
         />
         <Label
           style={{
@@ -543,7 +544,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({
           backgroundColor:
             tipoLancamento == 'despesa' ? theme.colors.paradisePink : theme.colors.budGreen,
         }}
-        color={theme.colors.white}
+        color={theme.colors.silver}
       />
     </ContainerForm>
   );

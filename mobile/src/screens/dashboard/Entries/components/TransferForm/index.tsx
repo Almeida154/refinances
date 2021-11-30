@@ -124,7 +124,7 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                     style={{
                         backgroundColor: theme.colors.jet
                     }}
-                    color={theme.colors.white}
+                    color={theme.colors.silver}
                 />
             </ContainerForm>
         </ScrollView>
