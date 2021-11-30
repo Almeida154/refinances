@@ -27,7 +27,7 @@ const FabButton = () => {
   const toggleMenu = () => {
     const toValue = isOpen ? 0 : 1;
 
-    setButtonIsEnabled(!isOpen)
+    setButtonIsEnabled(!isOpen);
 
     Animated.spring(animation, {
       toValue,
@@ -107,68 +107,66 @@ const FabButton = () => {
 
   return (
     <Container style={{ marginHorizontal: widthPixel(130) }}>
-        <Animated.View
-          style={[
-            styles.submenu,
-            styles.button,
-            formStyle,
-            shadowBox(20, 0.5),
-            { width: widthPixel(120), height: heightPixel(120) },
-          ]}>
-            <TouchableBtn onPress={() => console.log('form')}>
+      <Animated.View
+        style={[
+          styles.submenu,
+          styles.button,
+          formStyle,
+          shadowBox(20, 0.5),
+          { width: widthPixel(120), height: heightPixel(120) },
+        ]}>
+        <TouchableBtn onPress={() => console.log('form')}>
           <MaterialCommunity
             name="pencil"
             color={colors.redCrayola}
             size={widthPixel(50)}
-            />
-            </TouchableBtn>
-        </Animated.View>
+          />
+        </TouchableBtn>
+      </Animated.View>
 
-
-        <Animated.View
-          style={[
-            styles.submenu,
-            styles.button,
-            voiceStyle,
-            shadowBox(20, 0.5),
-            { width: widthPixel(120), height: heightPixel(120) },
-          ]}>
-                  <TouchableBtn activeOpacity={0.8} onPress={() => console.log('voice')}>
+      <Animated.View
+        style={[
+          styles.submenu,
+          styles.button,
+          voiceStyle,
+          shadowBox(20, 0.5),
+          { width: widthPixel(120), height: heightPixel(120) },
+        ]}>
+        <TouchableBtn activeOpacity={0.8} onPress={() => console.log('voice')}>
           <MaterialIcons
             name="keyboard-voice"
             color={colors.redCrayola}
             size={widthPixel(50)}
-            />
-      </TouchableBtn>
-            </Animated.View>
+          />
+        </TouchableBtn>
+      </Animated.View>
 
-        <Animated.View
-          style={[
-            styles.submenu,
-            styles.button,
-            cameraStyle,
-            shadowBox(20, 0.5),
-            { width: widthPixel(120), height: heightPixel(120) },
-          ]}>
-            <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.8}>
+      <Animated.View
+        style={[
+          styles.submenu,
+          styles.button,
+          cameraStyle,
+          shadowBox(20, 0.5),
+          { width: widthPixel(120), height: heightPixel(120) },
+        ]}>
+        <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.8}>
           <Entypo
             name="camera"
             color={colors.redCrayola}
             size={widthPixel(50)}
           />
-      </TouchableBtn>
-        </Animated.View>
+        </TouchableBtn>
+      </Animated.View>
 
       <TouchableBtn
         activeOpacity={0.8}
         onPress={toggleMenu}
-        style={[styles.btnPlus]}>
+        style={[styles.btnPlus, shadowBox(20, 0.4)]}>
         <Animated.View
           style={[
             styles.button,
             styles.menu,
             rotation,
-            shadowBox(14, 0.5),
             {
               backgroundColor: isOpen ? colors.redCrayola : colors.white,
             },
@@ -194,7 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: widthPixel(210 / 2),
     backgroundColor: colors.white,
-    position: 'absolute'
+    position: 'absolute',
   },
 
   submenu: {

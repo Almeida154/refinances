@@ -1,53 +1,64 @@
-import React from 'react'
-import {View, TouchableOpacity} from 'react-native'
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
 
-import {StackActions} from '@react-navigation/native'
-import {heightPixel, widthPixel} from '../../helpers/responsiveness'
-import {UseDadosTemp} from '../../contexts/TemporaryDataContext'
+import { StackActions } from '@react-navigation/native';
+import { heightPixel, widthPixel } from '../../helpers/responsiveness';
+import { UseDadosTemp } from '../../contexts/TemporaryDataContext';
+import { metrics } from '../../styles';
 
-const ViewButtons = () => {    
-    const {buttonIsEnabled, navigation} = UseDadosTemp()
+const ViewButtons = () => {
+  const { buttonIsEnabled, navigation } = UseDadosTemp();
+  return (
+    <View style={{ display: buttonIsEnabled ? 'flex' : 'none' }}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.dispatch(
+            StackActions.replace('Lancamentos', { screen: 'Main' }),
+          )
+        }
+        style={{
+          width: widthPixel(100),
+          height: widthPixel(100),
+          bottom: heightPixel(60),
+          borderRadius: widthPixel(100 / 2),
+          marginLeft:
+            (metrics.screen.width - widthPixel(100)) / 2 - widthPixel(150),
+          position: 'absolute',
+          backgroundColor: 'transparent',
+        }}
+      />
 
-    return (
-        <View style={{display: buttonIsEnabled ? 'flex' : 'none'}}>
-        <TouchableOpacity
-          onPress={() => navigation.dispatch(StackActions.replace("Lancamentos", {screen: "Main"}))}
-          style={{
-            width: 40,
-            height: 40,
-            backgroundColor: 'transparent',
-            position: 'absolute',
-            bottom: heightPixel(30),
-            marginLeft: widthPixel(290),
-            borderRadius: widthPixel(210 / 2)
-          }}
-        />
-        <TouchableOpacity
-          onPress={() => console.log('Camera')}
-          style={{
-            width: 40,
-            height: 40,
-            backgroundColor: 'transparent',
-            position: 'absolute',
-            bottom: heightPixel(130),
-            alignSelf: 'center',            
-            borderRadius: widthPixel(210 / 2)
-          }}
-        />
-        <TouchableOpacity
-          onPress={() => navigation.dispatch(StackActions.replace("Lancamentos", {screen: "RecognizeVoice"}))}
-          style={{
-            width: 40,
-            height: 40,
-            backgroundColor: 'transparent',
-            position: 'absolute',
-            bottom: heightPixel(30),
-            marginLeft: widthPixel(590),
-            borderRadius: widthPixel(210 / 2)
-          }}
-        />
-      </View>
-    )
-}
+      <TouchableOpacity
+        onPress={() => console.log('Camera')}
+        style={{
+          width: widthPixel(100),
+          height: widthPixel(100),
+          bottom: heightPixel(160),
+          borderRadius: widthPixel(210 / 2),
+          marginLeft: (metrics.screen.width - widthPixel(100)) / 2,
+          position: 'absolute',
+          backgroundColor: 'transparent',
+        }}
+      />
 
-export default ViewButtons
+      <TouchableOpacity
+        onPress={() =>
+          navigation.dispatch(
+            StackActions.replace('Lancamentos', { screen: 'RecognizeVoice' }),
+          )
+        }
+        style={{
+          width: widthPixel(100),
+          height: widthPixel(100),
+          bottom: heightPixel(60),
+          borderRadius: widthPixel(100 / 2),
+          marginLeft:
+            (metrics.screen.width - widthPixel(100)) / 2 + widthPixel(150),
+          backgroundColor: 'transparent',
+        }}
+      />
+    </View>
+  );
+};
+
+export default ViewButtons;
