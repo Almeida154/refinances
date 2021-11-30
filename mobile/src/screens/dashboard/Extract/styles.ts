@@ -1,13 +1,12 @@
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { heightPixel, widthPixel } from '../../../helpers/responsiveness';
 import { fonts, colors, metrics } from '../../../styles';
-import { Dimensions, PixelRatio, Platform } from 'react-native';
-const { width, height } = Dimensions.get('window');
 
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
-  background: ${(props : any) => props.theme.colors.back};
+  background: ${colors.cultured};
 `;
 
 // Header
@@ -17,6 +16,7 @@ export const Header = styled.View`
   height: ${`${heightPixel(220)}px`};
   justify-content: center;
   align-items: center;
+  background-color: ${colors.cultured};
 `;
 
 export const PeriodoAnterior = styled.TouchableOpacity`
@@ -34,80 +34,67 @@ export const PeriodoPosterior = styled.TouchableOpacity`
 
 export const LabelPeriodo = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
-  background-color: ${(props : any) => props.theme.colors.blackSilver};
+  background-color: ${(props: any) => props.theme.colors.blackSilver};
   padding-top: ${`${widthPixel(10)}px`};
   padding-bottom: ${`${widthPixel(10)}px`};
   padding-left: ${`${widthPixel(50)}px`};
   padding-right: ${`${widthPixel(50)}px`};
   border-radius: ${`${widthPixel(80)}px`};
   font-size: ${`${fonts.size.big}px`};
-  color: ${(props : any) => props.theme.colors.black};
+  color: ${(props: any) => props.theme.colors.black};
 `;
 
-export const CardItem = styled.View`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: gray;
-    margin-bottom: 40px;
-`
-
-export const Section = styled.View`
-    display: flex;    
-    flex-direction: column;
-`
-
-export const Footer = styled.View`
-    background-color: ${(props : any) => props.theme.colors.white};
-    flex-direction: row;
-    justify-content: space-between;
-    padding: ${`${metrics.default.boundaries / 1.6}px`};
-    padding-bottom: ${`${metrics.default.boundaries * 1.2}px`};
-    bottom: 0;
-    width: 100%;
-    height: auto;
-`
-export const CardBalance = styled.View`
-    width: 32%;
-    height: auto;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 10px;
-    background-color: ${(props : any) => props.theme.colors.back};
-    border-radius: 10px;
-`
-export const LabelBalance = styled.Text`
-    font-family: ${`${fonts.familyType.bold}`};
-    font-size: ${`${fonts.size.small}px`};
-    color: ${(props : any) => props.theme.colors.darkGray};
-`
-export const LabelValueBalance = styled.Text`
-    font-family: ${`${fonts.familyType.bold}`};
-    font-size: ${`${fonts.size.small}px`};
-`
-export const TextPicker = styled.Text`
-
-`
-
-export const ContainerPicker = styled.View`
-    padding-top: 60;
-    padding-bottom: 30;
-    flex: 1;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: ${(props : any) => props.theme.colors.aliceBlue};
-`
 export const Body = styled.View`
-  background-color: ${(props : any) => props.theme.colors.white};
   padding: ${`${metrics.default.boundaries / 1.6}px`};
 `;
 
-export const ScrollBody = styled.ScrollView`
-    height: ${`${Dimensions.get('window').height * 0.97}px`};
-    width: 100%;
-    background-color: ${(props : any) => props.theme.colors.back};
+export const Section = styled.View`
+  display: flex;
+  flex-direction: column;
 `;
 
+export const Footer = styled.View`
+  background-color: ${(props: any) => props.theme.colors.white};
+  flex-direction: row;
+  justify-content: space-between;
+  padding: ${`${metrics.default.boundaries / 1.6}px`};
+  padding-bottom: ${`${metrics.default.boundaries * 1.2}px`};
+  bottom: 0;
+  width: 100%;
+  height: auto;
+`;
+export const CardBalance = styled.View`
+  width: 32%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+  background-color: ${(props: any) => props.theme.colors.back};
+  border-radius: 10px;
+`;
+export const LabelBalance = styled.Text`
+  font-family: ${`${fonts.familyType.bold}`};
+  font-size: ${`${fonts.size.small}px`};
+  color: ${(props: any) => props.theme.colors.darkGray};
+`;
+export const LabelValueBalance = styled.Text`
+  font-family: ${`${fonts.familyType.bold}`};
+  font-size: ${`${fonts.size.small}px`};
+`;
+export const TextPicker = styled.Text``;
 
+export const ContainerPicker = styled.View`
+  padding-top: 60;
+  padding-bottom: 30;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: ${(props: any) => props.theme.colors.aliceBlue};
+`;
+
+export const ScrollBody = styled.ScrollView`
+  height: ${`${Dimensions.get('window').height * 0.97}px`};
+  width: 100%;
+  background-color: ${(props: any) => props.theme.colors.back};
+`;
