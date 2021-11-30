@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React from 'react'
+import { useTheme } from 'styled-components/native';
 // Styles
 import {
   Container,
@@ -13,7 +13,6 @@ import {
 } from './styles';
 
 import { colors } from '../../styles';
-
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
 
@@ -40,6 +39,8 @@ const Header: React.FC<IProps> = ({
   isShort,
   accent,
 }) => {
+  const themeContext = useTheme();
+
   return (
     <Container
       style={
