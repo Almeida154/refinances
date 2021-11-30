@@ -8,7 +8,7 @@ export const Container = styled.TouchableHighlight`
 `;
 
 export const Content = styled.View`
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   flex-direction: row;
   height: 80px;
   padding: 0 ${`${metrics.default.boundaries}px`};
@@ -23,7 +23,7 @@ interface DescriptionProps {
 export const Description = styled.Text<DescriptionProps>`
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.big}px`};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   opacity: ${props => (props.lowOpacity ? 0.25 : 1)};
   flex: 1;
 `;

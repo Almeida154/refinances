@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BackHandler, View } from 'react-native';
 
 import Button from '../../../../../components/Button';
-
+import { useTheme } from 'styled-components/native'; 
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 import {
   Container,
@@ -71,6 +71,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
     ref.current?.open()
   };
   const closeModalize = (ref: any) => ref.current?.close();
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -130,13 +131,13 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           <View style={{ paddingHorizontal: metrics.default.boundaries }}>
             <Button
               style={{
-                backgroundColor: colors.platinum,
+                backgroundColor: theme.colors.platinum,
               }}
               onPress={() =>
                 openModalize(newAccountModalizeRef, null)
               }
               title="Criar"
-              color={colors.davysGrey}
+              color={theme.colors.davysGrey}
             />
           </View>
         </Content>
@@ -145,7 +146,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
         ref={walletModalizeRef}
         title="Minha carteira 👀"
         subtitle="Seu dinheiro físico. Quanto tem na sua carteira agora?"
-        backgroundColor={colors.cultured}
+        backgroundColor={theme.colors.cultured}
         hasBodyBoundaries>
         <InputText
           label="Quanto tem?"
@@ -164,14 +165,14 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           // }}
         />
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Atualizar"
           onPress={() => {
             if(selectedCarteira)
               handleEditarConta(selectedCarteira)
             closeModalize(walletModalizeRef);
           }}
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
       </Modalize>
@@ -179,10 +180,10 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
       <Modalize
         ref={newAccountModalizeRef}
         title="Escolha o tipo da conta"
-        backgroundColor={colors.cultured}
+        backgroundColor={theme.colors.cultured}
         hasBodyBoundaries>
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Conta Poupança"
           onPress={() =>
             navigation.dispatch(
@@ -192,12 +193,12 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
               }),
             )
           }
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
 
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Conta Corrente"
           onPress={() =>
             navigation.dispatch(
@@ -207,11 +208,11 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
               }),
             )
           }
-          color={colors.silver}
+          color={theme.colors.silver}
         />
 
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Outro"
           onPress={() =>
             navigation.dispatch(
@@ -221,7 +222,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
               }),
             )
           }
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
       </Modalize>

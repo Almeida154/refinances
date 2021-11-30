@@ -7,7 +7,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import Atuais from '../screens/TabNavigator/Atuais';
 import Concluidas from '../screens/TabNavigator/Concluidas';
-
+import { useTheme } from 'styled-components/native'; 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import PropsMainRoutes, {
@@ -30,11 +30,13 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function TopBarNavigator({ navigation }: PropsNavigation) {
   const insets = useSafeAreaInsets();
+  const theme: any = useTheme()
+
   return (
     <View
       style={{
         paddingTop: metrics.default.statusBarHeight,
-        backgroundColor: colors.white,
+        backgroundColor: theme.colors.lightGray,
         flex: 1,
       }}>
       <StatusBar translucent={true} backgroundColor="transparent"/>
@@ -45,18 +47,19 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
         }
         title="Metas"
         isShort
+        color={theme.colors.davysGray}
       />
 
       <Tab.Navigator
         initialRouteName="Atuais"
         screenOptions={{
           tabBarStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: theme.colors.lightGray,
           },
           tabBarIndicatorStyle: {
-            backgroundColor: colors.lightGray,
+            backgroundColor: theme.colors.jet,
           },
-          tabBarActiveTintColor: colors.davysGray,
+          tabBarActiveTintColor: theme.colors.davysGray,
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,

@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, FlatList } from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { widthPixel } from '../../../helpers/responsiveness';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
   Transferencia,
@@ -22,12 +20,11 @@ import generateDates from '../../../helpers/generateDates';
 import DetailEntry from './components/DetailEntry';
 
 import Modalize from '../../../components/Modalize';
-import ViewButtons from '../../../components/ViewButtons';
 
 import { addMonths, toDate } from '../../../helpers/manipularDatas';
 
 import SectionByDate from './components/SectionByDate';
-
+import { useTheme } from 'styled-components/native';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import Feather from 'react-native-vector-icons/Feather';
 import {
@@ -49,6 +46,7 @@ import hexToRGB from '../../../helpers/hexToRgba';
 import shadowBox from '../../../helpers/shadowBox';
 import doubleToCurrency from '../../../helpers/doubleToCurrency';
 import ExtractPlaceholder from './components/ExtractPlaceholder';
+import ViewButtons from '../../../components/ViewButtons';
 
 interface PropsRenderSection {
   item: (ReadParcela[] | Transferencia[])[];
@@ -196,6 +194,7 @@ const Extrato = () => {
     loadParcelas(newDate);
     loadTransferencias(newDate);
   }
+  const theme: any = useTheme();
 
   return (
     <View style={{ flex: 1 }}>

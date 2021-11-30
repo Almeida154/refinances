@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { StatusBar, BackHandler, View } from 'react-native';
-
+import { useTheme } from 'styled-components/native'; 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
@@ -41,19 +41,20 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
     return true;
   };
+  const theme: any = useTheme()
 
   return (
     <Container
       style={{
         backgroundColor:
-          routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
+          routeName == 'Despesa' ? theme.colors.paradisePink : theme.colors.slimyGreen,
       }}>
       <StatusBar translucent={true} backgroundColor="transparent"/>
       <View style={{ elevation: 0 }}>
         <Header
           onBackButton={() => backNavAction()}
           title="Nova categoria"
-          color={colors.white}
+          color={theme.colors.white}
           isShort
         />
       </View>
@@ -63,7 +64,7 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
           swipeEnabled: false,
           tabBarStyle: {
             backgroundColor:
-              routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
+              routeName == 'Despesa' ? theme.colors.paradisePink : theme.colors.slimyGreen,
           },
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,
@@ -71,9 +72,9 @@ const TopBarNavigator = ({ navigation, route }: PropsNavigation) => {
             textTransform: 'capitalize',
           },
           tabBarIndicatorStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: theme.colors.white,
           },
-          tabBarActiveTintColor: colors.white,
+          tabBarActiveTintColor: theme.colors.white,
         }}
         screenListeners={({ route }) => ({
           state: e => setRouteName(route.name),

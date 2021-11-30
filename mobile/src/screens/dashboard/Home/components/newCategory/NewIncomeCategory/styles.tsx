@@ -6,7 +6,7 @@ import hexToRGB from '../../../../../../helpers/hexToRgba';
 export const Container = styled.View`
   padding: ${`${metrics.default.boundaries}px`};
   flex: 1;
-  background: ${colors.back};
+  background: ${(props : any) => props.theme.colors.back};
 `;
 
 export const Form = styled.View`
@@ -44,7 +44,7 @@ export const Icon = styled.TouchableOpacity<IconProps>`
   height: 60px;
   border-radius: 30px;
   border-width: 5px;
-  border-color: ${colors.platinum};
-  background-color: ${colors.diffWhite};
+  border-color: ${(props : any) => props.theme.colors.platinum};
+  background-color: ${(props : any) => props.theme.colors.diffWhite};
   margin-right: ${props => (props.mr ? '10px' : 0)};
 `;

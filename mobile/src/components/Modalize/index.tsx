@@ -1,5 +1,5 @@
 import React, { forwardRef, VoidFunctionComponent } from 'react';
-
+import { useTheme } from 'styled-components/native';
 import {
   Title,
   Subtitle,
@@ -48,13 +48,14 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
   },
   ref,
 ) => {
+  const theme: any = useTheme()
   return (
     <Modal
       ref={ref}
       adjustToContentHeight={!height && !snapPoint}
       snapPoint={snapPoint}
       modalHeight={height}
-      modalStyle={{ backgroundColor: backgroundColor || colors.white }}
+      modalStyle={{ backgroundColor: backgroundColor || theme.colors.white }}
       openAnimationConfig={{
         spring: {
           // speed: 3,
@@ -99,7 +100,8 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
                   onChangeText={txt => searchEvent(txt)}
                   value={searchValue}
                   placeholder="Buscar"
-                  placeholderTextColor={hexToRGB(colors.davysGrey, 0.4)}
+                  placeholderTextColor={hexToRGB(theme.colors.davysGrey, 0.4)}
+
                 />
                 <SearchDeleteButton activeOpacity={1} onPress={onClearSearch}>
                   <IonIcons

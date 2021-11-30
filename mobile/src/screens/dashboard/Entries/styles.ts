@@ -7,20 +7,20 @@ export const Container = styled.View`
     display: flex;
     align-items: center;
     flex: 1;
-    background-color: ${colors.white};
+    background-color: ${(props : any) => props.theme.colors.white};
 `
 
 export const Title = styled.Text`
     margin-top: 25px;
     margin-left: 15px;
     font-size: 40px;
-    color: ${colors.white};
+    color: ${(props : any) => props.theme.colors.white};
     padding: 20px;
     font-family: ${fonts.familyType.semiBold};
 `
 
 export const TextButton = styled.Text`
-    color: ${colors.white};
+    color: ${(props : any) => props.theme.colors.silver};
     font-family: ${fonts.familyType.bold};
 `
 
@@ -61,7 +61,7 @@ export const AlinhaParaDireita = styled.View`
 
 export const LabelCifrao = styled.Text`
     font-size: 20px;
-    color: ${colors.silver};
+    color: ${(props : any) => props.theme.colors.silver};
     top: 0;
     position: absolute;
     right: ${heightPixel(250)}px;
@@ -71,6 +71,6 @@ export const TextInputValue = styled.TextInput`
     opacity: 0.7;
     font-size: ${fonts.size.super + 20};
     font-family: ${fonts.familyType.semiBold};
-    color: ${colors.white};
+    color: ${(props : any) => props.theme.colors.white};
     width: auto;
 `

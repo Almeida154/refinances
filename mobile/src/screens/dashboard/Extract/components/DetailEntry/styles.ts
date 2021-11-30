@@ -41,7 +41,7 @@ export const Label = styled.Text`
 export const Value = styled.Text`
   font-size: ${`${fonts.size.small}px`};
   font-family: ${fonts.familyType.semiBold};
-  color: ${(props: any) => props.theme.colors.eerieBlack};
+  color: ${(props: any) => props.theme.colors.battleGray};
   opacity: 0.3;
 `;
 
@@ -65,7 +65,7 @@ export const SepareColumn = styled.View`
 `;
 
 export const CircleIcon = styled.TouchableOpacity`
-  background-color: ${colors.diffWhite};
+  background-color: ${(props: any) => props.theme.colors.white};
   width: ${`${widthPixel(100)}px`};
   height: ${`${widthPixel(100)}px`};
   border-radius: ${`${widthPixel(100 / 2)}px`};

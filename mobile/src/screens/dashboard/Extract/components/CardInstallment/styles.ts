@@ -11,6 +11,14 @@ export const ContainerItem = styled.TouchableOpacity`
   width: 100%;
 `;
 
+export const EditLabel = styled.Text`
+    font-size: ${`${fonts.size.small}px`};
+    line-height: ${`${fonts.size.small + widthPixel(10)}px`};
+    color: ${(props : any) => props.theme.colors.davysGrey};
+    fontFamily: ${`${fonts.familyType.semiBold}`};
+    opacity: 0.7;
+    margin-bottom: ${`${heightPixel(26)}px`};
+`
 export const SectionIcon = styled.View`
   width: ${`${widthPixel(140)}px`};
   height: ${`${widthPixel(140)}px`};
@@ -31,11 +39,10 @@ export const SectionLancamento = styled.View`
 `;
 
 export const LabelName = styled.Text`
-  font-size: ${`${fonts.size.medium}px`};
-  font-family: ${fonts.familyType.bold};
-  color: ${colors.darkGray};
-  opacity: 0.7;
-`;
+    fontSize: ${`${fonts.size.medium}px`};   
+    font-family: ${fonts.familyType.bold};
+    color: ${(props : any) => props.theme.colors.silver};
+`
 
 export const SectionValues = styled.View`
   flex-flow: column wrap;
@@ -49,7 +56,6 @@ export const LabelValue = styled.Text`
   font-family: ${fonts.familyType.bold};
   margin-bottom: ${`${heightPixel(-10)}px`};
 `;
-
 export const SectionCheck = styled.View`
   flex-flow: row;
   justify-content: center;
@@ -58,25 +64,22 @@ export const SectionCheck = styled.View`
   margin-top: ${`${heightPixel(-10)}px`};
 `;
 
-export const EditLabel = styled.Text`
-  font-size: ${`${fonts.size.small}px`};
-  line-height: ${`${fonts.size.small + widthPixel(10)}px`};
-  color: ${colors.davysGrey};
-  font-family: ${`${fonts.familyType.semiBold}`};
-  opacity: 0.7;
-`;
+
 
 export const LabelAccount = styled.Text`
-  font-size: ${`${fonts.size.small}px`};
-  font-family: ${fonts.familyType.semiBold};
-  color: ${colors.silver};
-`;
+    fontSize: ${`${fonts.size.small}px`};
+    font-family: ${fonts.familyType.semiBold};
+    color: ${(props : any) => props.theme.colors.silver}
+    
+`
 
 export const LabelIndex = styled.Text`
-  font-family: ${fonts.familyType.semiBold};
-  font-size: ${`${fonts.size.medium}px`};
-  margin-right: ${`${heightPixel(50)}px`};
-  color: ${colors.davysGrey};
-  margin-bottom: ${`${heightPixel(17)}px`};
-  background-color: brown;
+    font-family: ${fonts.familyType.semiBold};
+    fontSize: ${`${fonts.size.medium}px`};
+    margin-right: ${`${heightPixel(50)}px`};
+    color: ${(props : any) => props.theme.colors.davysGrey}
+    margin-bottom: ${`${heightPixel(17)}px`};
+    background-color: brown;
+
 `;
+  

@@ -32,7 +32,7 @@ import {
 import shadowBox from '../../../../../helpers/shadowBox';
 import Icon from '../../../../../helpers/gerarIconePelaString';
 import { widthPixel } from '../../../../../helpers/responsiveness';
-
+import { useTheme } from 'styled-components/native';
 type CategoryItem = {
   item: Categoria;
 };
@@ -67,7 +67,7 @@ const CategoriesCard = () => {
   const countbyentry = async function () {
     handleCountByEntry(await retornarIdDoUsuario(), 'despesa');
   };
-
+  const theme: any = useTheme()
   return (
     <Container style={shadowBox(30, 0.3)}>
       <TopSection>
@@ -90,7 +90,7 @@ const CategoriesCard = () => {
 
         <Button
           style={{
-            backgroundColor: colors.lightGray,
+            backgroundColor: theme.colors.lightGray,
           }}
           onPress={() =>
             navigation.dispatch(
@@ -100,7 +100,7 @@ const CategoriesCard = () => {
             )
           }
           title="Gerenciar"
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
       </CategoriesContainer>

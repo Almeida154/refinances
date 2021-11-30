@@ -28,6 +28,7 @@ import {
   Detail,
   CircleIcon,
 } from './styles';
+import { useTheme } from 'styled-components/native'; 
 import { Text } from 'react-native';
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import { widthPixel } from '../../../../../helpers/responsiveness';
@@ -115,6 +116,7 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
   }
 
   //console.log(item.lancamentoParcela)
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -134,8 +136,8 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
           <CircleIcon style={shadowBox(10, 0.3)} onPress={navigateEdit}>
             <Icon
               stringIcon="MaterialCommunityIcons:pencil"
+              color={theme.colors.black}
               size={widthPixel(45)}
-              color={colors.eerieBlack}
             />
           </CircleIcon>
           <CircleIcon
@@ -143,8 +145,8 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
             onPress={navigateDelete}>
             <Icon
               stringIcon="Ionicons:trash-bin-sharp"
+              color={theme.colors.black}
               size={widthPixel(45)}
-              color={colors.eerieBlack}
             />
           </CircleIcon>
         </SepareRow>

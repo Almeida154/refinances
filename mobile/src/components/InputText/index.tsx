@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 
 import { TextInput, TextInputProps, Image, Text, View } from 'react-native';
-
+import { useTheme } from 'styled-components/native';
 import {
   Container,
   Writting,
@@ -65,7 +65,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
   var instituition = global.DEFAULT_ICONS_CATEGORYACCOUNT.find(
     acc => acc.description == accountInstitution,
   );
-
+  const theme: any = useTheme()
   return (
     <>
       <Container
@@ -80,7 +80,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
             elevation: 20,
           },
         ]}
-        underlayColor={colors.white}
+        underlayColor={theme.colors.white}
         onPress={onPress != undefined ? onPress : () => ref?.current.focus()}>
         <>
           <Writting>
@@ -103,7 +103,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
                 />
                 <Label
                   style={{
-                    color: colors.davysGrey,
+                    color: theme.colors.davysGrey,
                     fontSize: fonts.size.medium,
                     marginLeft: widthPixel(40),
                   }}>
@@ -126,7 +126,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
                       />
                     ) : (
                       <IconByString
-                        color={icon.hex ?? colors.davysGrey}
+                        color={icon.hex ?? theme.colors.davysGrey}
                         stringIcon={icon.icon ?? 'Fontisto:blood-drop'}
                         size={20}
                       />
@@ -137,7 +137,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
                       style={{
                         flex: 1,
                         padding: 0,
-                        color: colors.davysGrey,
+                        color: theme.colors.davysGrey,
                         fontFamily: fonts.familyType.bold,
                         fontSize: fonts.size.medium,
                         marginTop: heightPixel(-14),
@@ -148,8 +148,8 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
                       precision={2}
                       placeholder="0,00"
                       maxValue={999999}
-                      placeholderTextColor={colors.platinum}
-                      selectionColor={colors.davysGrey}
+                      placeholderTextColor={theme.colors.platinum}
+                      selectionColor={theme.colors.davysGrey}
                       {...rest}
                     />
                   ) : (
@@ -159,9 +159,9 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
                           ? placeholder
                           : 'Sem placeholder'
                       }
-                      placeholderTextColor={colors.platinum}
+                      placeholderTextColor={theme.colors.platinum}
                       ref={ref}
-                      selectionColor={colors.davysGrey}
+                      selectionColor={theme.colors.davysGrey}
                       style={[
                         icon?.hex != null || icon?.icon != null
                           ? { marginLeft: widthPixel(30) }

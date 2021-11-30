@@ -4,7 +4,7 @@ import { BackHandler, View, processColor } from 'react-native';
 import api from '../../../../services/api';
 
 import global from '../../../../global';
-
+import { useTheme } from 'styled-components/native'; 
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { UseConfig } from '../../../../contexts/ConfigContext';
 import retornarIdDoUsuario from '../../../../helpers/retornarIdDoUsuario';
@@ -49,6 +49,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
   const [totalExpense, setTotalExpense] = useState(20);
 
   const [expensePercentage, setExpensePercentage] = useState<number>(0);
+  const theme: any = useTheme()
 
   const [data, setData] = useState({
     dataSets: [
@@ -59,15 +60,15 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
         ],
         config: {
           colors: [
-            processColor(colors.redCrayola),
-            processColor(colors.bigDipOruby),
+            processColor(theme.colors.redCrayola),
+            processColor(theme.colors.bigDipOruby),
           ],
           valueTextSize: 20,
-          valueTextColor: processColor(colors.white),
+          valueTextColor: processColor(theme.colors.white),
           sliceSpace: 5,
           selectionShift: 13,
           valueFormatter: "#.#'%'",
-          valueLineColor: processColor(colors.white),
+          valueLineColor: processColor(theme.colors.white),
           valueLinePart1Length: 0.5,
         },
         label: '',
@@ -116,8 +117,8 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
           label: '',
           config: {
             colors: [
-              processColor(colors.redCrayola),
-              processColor(colors.bigDipOruby),
+              processColor(theme.colors.redCrayola),
+              processColor(theme.colors.bigDipOruby),
             ],
             valueTextColor: processColor('transparent'),
             valueLineColor: processColor('transparent'),
@@ -269,7 +270,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
               chartDescription={{ text: '' }}
               holeColor={processColor('transparent')}
               transparentCircleRadius={45}
-              transparentCircleColor={processColor(hexToRGB(colors.white, 0.7))}
+              transparentCircleColor={processColor(hexToRGB(theme.colors.white, 0.7))}
               maxAngle={180}
             />
             <View
@@ -290,7 +291,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
                 <Pic
                   style={{
                     borderWidth: widthPixel(8),
-                    borderColor: colors.platinum,
+                    borderColor: theme.colors.platinum,
                   }}
                   source={{ uri: user.fotoPerfilUsuario }}
                 />
@@ -306,31 +307,31 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
               elevation: 30,
             }}>
             <LabelContainer>
-              <LabelIcon style={{ backgroundColor: colors.paradisePink }} />
+              <LabelIcon style={{ backgroundColor: theme.colors.paradisePink }} />
               <LabelSubtitle>
                 O que recebe | {doubleToCurrency(totalIncome, 'pt-br', 'BRL')}
               </LabelSubtitle>
             </LabelContainer>
 
             <LabelContainer>
-              <LabelIcon style={{ backgroundColor: colors.bigDipOruby }} />
+              <LabelIcon style={{ backgroundColor: theme.colors.bigDipOruby }} />
               <LabelSubtitle>
                 O que gasta | {doubleToCurrency(totalExpense, 'pt-br', 'BRL')}
               </LabelSubtitle>
             </LabelContainer>
           </LegendContainer>
           <SubTitle style={{ opacity: 1 }}>
-            <SubTitle style={{ color: hexToRGB(colors.eerieBlack, 0.3) }}>
+            <SubTitle style={{ color: hexToRGB(theme.colors.eerieBlack, 0.3) }}>
               Você gasta{' '}
             </SubTitle>
             <SubTitle
               style={{
-                color: hexToRGB(colors.eerieBlack, 0.5),
+                color: hexToRGB(theme.colors.eerieBlack, 0.5),
                 fontFamily: fonts.familyType.black,
               }}>
               {expensePercentage}%
             </SubTitle>
-            <SubTitle style={{ color: hexToRGB(colors.eerieBlack, 0.3) }}>
+            <SubTitle style={{ color: hexToRGB(theme.colors.eerieBlack, 0.3) }}>
               {' '}
               daquilo que recebe.
             </SubTitle>
@@ -341,8 +342,8 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
       <BottomNavigation
         onPress={() => register()}
         description="Quero começar"
-        color={colors.blackSilver}
-        backgroundColor={colors.paradisePink}
+        color={theme.colors.blackSilver}
+        backgroundColor={theme.colors.paradisePink}
         isCentered
       />
     </Container>

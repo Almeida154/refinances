@@ -7,7 +7,7 @@ import { UseAuth } from '../../../contexts/AuthContext';
 import { UseCategories } from '../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import { UseMetas } from '../../../contexts/GoalsContext';
-
+import { useTheme } from 'styled-components/native'; 
 import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
@@ -99,6 +99,8 @@ const Home = () => {
     return `Boa noite`;
   };
 
+  const theme : any = useTheme()
+
   return (
     <View style={{ flex: 1 }}>
       <Container>
@@ -119,7 +121,7 @@ const Home = () => {
               <Feather
                 name="settings"
                 size={widthPixel(50)}
-                color={colors.battleGray}
+                color={theme.colors.battleGray}
               />
             </ConfigContainer>
 
@@ -150,18 +152,21 @@ const Home = () => {
           {categorias != undefined && categorias.length > 0 && (
             <CategoriesCard />
           )}
-          <CreateCard
-            name="meta"
-            description="As metas são úteis para o seu avanço pessoal e financeiro."
-            onPress={() => {
-              navigation.dispatch(
-                StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
-              );
-            }}
-          />
-          {metas != undefined && metas?.length > 0 && <GoalsCard />}
-        </Content>
-      </Container>
+      
+        <CreateCard
+          name="meta"
+          description="As metas são úteis para o seu avanço pessoal e financeiro."
+          onPress={() => {
+            navigation.dispatch(
+              StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
+            );
+          }}
+        />
+        {metas != undefined && metas?.length > 0 && <GoalsCard />}
+      
+    </Content>
+        
+    </Container>
 
       {/* Gambiarra pro FAB Component funcionar */}
       <ViewButtons />

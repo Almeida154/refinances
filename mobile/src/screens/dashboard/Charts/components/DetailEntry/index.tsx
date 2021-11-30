@@ -4,7 +4,7 @@ import { ToastAndroid } from 'react-native';
 import { ReadParcela } from '../../../../../contexts/InstallmentContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 import { StackActions } from '@react-navigation/native';
-
+import { useTheme } from 'styled-components/native';
 import Icon from '../../../../../helpers/gerarIconePelaString';
 
 import {
@@ -56,7 +56,7 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
       }),
     );
   }
-
+  const theme: any = useTheme()
   return (
     <Container>
       <SepareRow style={{ justifyContent: 'space-between', marginBottom: 50 }}>

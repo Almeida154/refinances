@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { toDate } from '../../../../../helpers/manipularDatas';
 import { colors, fonts, metrics } from '../../../../../styles';
-
+import { useTheme } from 'styled-components/native'; 
 import { ProgressBar, Colors } from 'react-native-paper';
 
 import Button from '../../../../../components/Button';
@@ -31,7 +31,7 @@ import shadowBox from '../../../../../helpers/shadowBox';
 const GoalsCard = () => {
   const { navigation } = UseDadosTemp();
   const { metas, handleReadByUserMetas } = UseMetas();
-
+ const theme: any = useTheme()
   return (
     <Container style={shadowBox(30, 0.3)}>
       <TopSection>
@@ -52,14 +52,14 @@ const GoalsCard = () => {
       </GoalsContainer>
 
       <Button
-        style={{ backgroundColor: colors.lightGray }}
+        style={{ backgroundColor: theme.colors.lightGray }}
         onPress={() =>
           navigation.dispatch(
             StackActions.replace('GoalsStack', { screen: 'GoalList' }),
           )
         }
         title="Gerenciar"
-        color={colors.silver}
+        color={theme.colors.silver}
         lastOne
       />
     </Container>

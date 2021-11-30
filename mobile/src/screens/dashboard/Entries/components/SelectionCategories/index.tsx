@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import {Alert, TextInput, View} from 'react-native'
 import {Categoria, UseCategories} from '../../../../../contexts/CategoriesContext'
-
+import { useTheme } from 'styled-components/native'; 
 
 import {Searchbar} from 'react-native-paper'
 
@@ -142,6 +142,7 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
     }
 
     
+    const theme: any = useTheme()
     return (
         <Container>
 
@@ -152,8 +153,8 @@ const SelectionCategorias = ({categoria, tipoCategoria, setCategoria}: PropsSele
                     onPress={onOpen}
                     value={categoria ? categoria.nomeCategoria : ''}
                     placeholder="Selecione uma categoria"
-                    placeholderTextColor={colors.silver}
-                    colorLabel={tipoCategoria == 'despesa' ? colors.paradisePink : colors.budGreen} 
+                    placeholderTextColor={theme.colors.silver}
+                    colorLabel={tipoCategoria == 'despesa' ? theme.colors.paradisePink : theme.colors.budGreen} 
                     editable={false}
                 />
 

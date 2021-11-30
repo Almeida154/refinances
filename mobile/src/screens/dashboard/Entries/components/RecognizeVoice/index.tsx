@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 import {StackActions} from '@react-navigation/native'
-
+import { useTheme } from 'styled-components/native'; 
 import {UseCategories, Categoria} from '../../../../../contexts/CategoriesContext'
 import {UseContas, Conta} from '../../../../../contexts/AccountContext'
 import {toDate} from '../../../../../helpers/manipularDatas'
@@ -458,17 +458,19 @@ class VoiceTest extends Component<Props, State> {
   }
 
   render() {
+  const theme: any = useTheme()
+
     return (
       <Container>
 
        <Header>
           <ButtonRecord 
-          style={{backgroundColor: this.state.isRecording ? colors.white : colors.paradisePink , borderRadius: 50}}
+          style={{backgroundColor: this.state.isRecording ? theme.colors.white : theme.colors.paradisePink , borderRadius: 50}}
           onPress={this.state.isRecording ? this._stopRecognizing : this._startRecognizing}>
             <Icon 
               style={{width: 100, height: 100}} 
               name="keyboard-voice"
-              color={this.state.isRecording ? colors.paradisePink : colors.white}
+              color={this.state.isRecording ? theme.colors.paradisePink : theme.colors.white}
               size={100}
             />
           </ButtonRecord>          
@@ -501,8 +503,8 @@ class VoiceTest extends Component<Props, State> {
         <ButtonAdd
           title="Adicionar"
           onPress={() => this.handleItemCapture(this.state.itemNovo)}
-          style={{backgroundColor: colors.paradisePink}}
-          color={colors.white}
+          style={{backgroundColor: theme.colors.paradisePink}}
+          color={theme.colors.white}
         />
 
       </Container>

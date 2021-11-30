@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import {colors, fonts, metrics} from '../../../styles'
 
 export const Container = styled.View`
-    background-color: ${colors.paradisePink};
+    background-color: ${(props : any) => props.theme.colors.paradisePink};
     padding-top: ${`${StatusBar.currentHeight}px`};
     font-family: "Nunito-Italic";
     height: 100%;
@@ -14,7 +14,7 @@ export const Boundaries = styled.View`
     padding-right: 30px;
     padding-left: 30px;
     height: 100%;
-    background-color: ${colors.white};
+    background-color: ${(props : any) => props.theme.colors.white};
     border-top-right-radius: 22px;
     border-top-left-radius: 22px;
 `;
@@ -30,7 +30,7 @@ export const Header = styled.View`
 
 export const Title = styled.Text`
     font-size: 32px;
-    color: ${colors.white};
+    color: ${(props : any) => props.theme.colors.white};
     font-family: "Nunito-Black";
     line-height: 36px;
 `;
@@ -47,7 +47,7 @@ export const Content = styled.View`
 
 export const ButtonText = styled.Text`
     font-size: 20px;
-    color: ${colors.white};
+    color: ${(props : any) => props.theme.colors.white};
     font-family: "Nunito-Bold";
     text-align: center;
 `;
@@ -61,14 +61,14 @@ export const ContainerContentButtonGoogle = styled.View`
 `;
 
 export const ButtonTextGoogle = styled(ButtonText)`
-    color: ${colors.black};
+    color: ${(props : any) => props.theme.colors.black};
     opacity: .75;
     margin-left: 20px;
 `;
 
 export const Txt = styled.Text`
     font-size: 20px;
-    color: ${colors.navyBlue};
+    color: ${(props : any) => props.theme.colors.navyBlue};
     font-family: "Nunito-Italic";
     text-align: center;
 `;

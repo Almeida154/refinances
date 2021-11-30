@@ -5,7 +5,7 @@ import { colors, fonts, metrics } from '../../../../styles';
 
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
-  background-color: ${colors.diffWhite};
+  background-color: ${(props : any) => props.theme.colors.diffWhite};
   flex: 1;
 `;
 
@@ -25,7 +25,7 @@ export const PrefixReaisSymbol = styled.Text`
   font-size: ${`${fonts.size.super}px`};
   font-family: ${fonts.familyType.bold};
   align-self: flex-start;
-  color: ${colors.eerieBlack};
+  color: ${(props : any) => props.theme.colors.eerieBlack};
   opacity: 0.1;
   margin-right: 2%;
 `;
@@ -34,7 +34,7 @@ export const SmoothPickerContainer = styled.View`
   position: absolute;
   width: 100%;
   height: ${`${heightPixel(440)}px`};
-  background-color: ${hexToRGB(colors.slimyGreen, 0.8)};
+  background-color: ${(props: any) => hexToRGB(props.theme.colors.slimyGreen, 0.8)};
   bottom: 0;
 `;
 
@@ -52,5 +52,5 @@ export const SmoothPickerBottomDetail = styled.View`
   width: 3px;
   height: ${`${heightPixel(60)}px`};
   bottom: 0;
-  background-color: ${colors.lincolnGreen};
+  background-color: ${(props : any) => props.theme.colors.lincolnGreen};
 `;

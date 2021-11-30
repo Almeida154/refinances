@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { processColor } from 'react-native';
-
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import shadowBox from '../../../../../helpers/shadowBox';
 
 import { widthPixel } from '../../../../../helpers/responsiveness';
 import { colors, fonts } from '../../../../../styles';
-
+import { useTheme } from 'styled-components/native'; 
 import { PieChart } from 'react-native-charts-wrapper';
 
 import {
@@ -34,7 +33,10 @@ const GeneralCard: React.FC<IProps> = ({
   totalExpense,
   balance,
 }) => {
+const theme: any = useTheme()
+
   const [data, setData] = useState({
+    
     dataSets: [
       {
         values: [
@@ -43,15 +45,15 @@ const GeneralCard: React.FC<IProps> = ({
         ],
         config: {
           colors: [
-            processColor(colors.slimyGreen),
-            processColor(colors.redCrayola),
+            processColor(theme.colors.slimyGreen),
+            processColor(theme.colors.redCrayola),
           ],
           valueTextSize: 20,
           valueTextColor: processColor('transparent'),
           sliceSpace: 5,
           selectionShift: 13,
           valueFormatter: "#.#'%'",
-          valueLineColor: processColor(colors.white),
+          valueLineColor: processColor(theme.colors.white),
           valueLinePart1Length: 0.5,
         },
         label: '',
@@ -69,15 +71,15 @@ const GeneralCard: React.FC<IProps> = ({
           ],
           config: {
             colors: [
-              processColor(colors.slimyGreen),
-              processColor(colors.redCrayola),
+              processColor(theme.colors.slimyGreen),
+              processColor(theme.colors.redCrayola),
             ],
             valueTextSize: 20,
             valueTextColor: processColor('transparent'),
             sliceSpace: 5,
             selectionShift: 13,
             valueFormatter: "#.#'%'",
-            valueLineColor: processColor(colors.white),
+            valueLineColor: processColor(theme.colors.white),
             valueLinePart1Length: 0.5,
           },
           label: '',
@@ -117,13 +119,13 @@ const GeneralCard: React.FC<IProps> = ({
           chartDescription={{ text: '' }}
           holeColor={processColor('transparent')}
           transparentCircleRadius={45}
-          transparentCircleColor={processColor(hexToRGB(colors.white, 0.1))}
+          transparentCircleColor={processColor(hexToRGB(theme.colors.white, 0.1))}
           maxAngle={360}
         />
       </GeneralStatsBody>
       <GeneralStatsFooter style={shadowBox()}>
         <GeneralStatsFooterItem>
-          <GSFIBalance style={{ color: colors.slimyGreen }}>
+          <GSFIBalance style={{ color: theme.colors.slimyGreen }}>
             {doubleToCurrency(totalIncome || 0, 'pt-br', 'BRL', true)}
           </GSFIBalance>
           <GSFIDescription>de receitas</GSFIDescription>
@@ -131,17 +133,17 @@ const GeneralCard: React.FC<IProps> = ({
         <GeneralStatsFooterItem
           style={{
             borderLeftWidth: widthPixel(4),
-            borderLeftColor: colors.cultured,
+            borderLeftColor: theme.colors.cultured,
             borderRightWidth: widthPixel(4),
-            borderRightColor: colors.cultured,
+            borderRightColor: theme.colors.cultured,
           }}>
-          <GSFIBalance style={{ color: colors.redCrayola }}>
+          <GSFIBalance style={{ color: theme.colors.redCrayola }}>
             {doubleToCurrency(totalExpense || 0, 'pt-br', 'BRL', true)}
           </GSFIBalance>
           <GSFIDescription>de despesas</GSFIDescription>
         </GeneralStatsFooterItem>
         <GeneralStatsFooterItem>
-          <GSFIBalance style={{ color: colors.eerieBlack }}>
+          <GSFIBalance style={{ color: theme.colors.eerieBlack }}>
             {doubleToCurrency(balance || 0, 'pt-br', 'BRL', true)}
           </GSFIBalance>
           <GSFIDescription>de saldo</GSFIDescription>

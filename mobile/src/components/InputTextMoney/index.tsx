@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef } from 'react';
 
 import { TextInput, TextInputProps } from 'react-native';
-
+import { useTheme } from 'styled-components/native'; 
 import {
   Container,
   Writting,
@@ -12,7 +12,6 @@ import {
   Error,
 } from './styles';
 import { colors, fonts } from '../../styles';
-
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import IconByString from '../../helpers/gerarIconePelaString';
 import { heightPixel, widthPixel } from '../../helpers/responsiveness';
@@ -61,6 +60,7 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
   },
   ref: any,
 ) => {
+  const theme: any = useTheme()
   return (
     <>
       <Container
@@ -75,7 +75,7 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
             elevation: 20,
           },
         ]}
-        underlayColor={colors.white}
+        underlayColor={theme.colors.white}
         onPress={onPress != undefined ? onPress : () => ref?.current.focus()}>
         <>
           <Writting>
@@ -85,7 +85,7 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
             <RowAux>
               {(icon?.hex != null || icon?.icon != null) && (
                 <IconByString
-                  color={icon.hex ?? colors.davysGrey}
+                  color={icon.hex ?? theme.colors.davysGrey}
                   stringIcon={icon.icon ?? 'Fontisto:blood-drop'}
                   size={20}
                 />
@@ -99,7 +99,7 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
                     icon?.hex != null || icon?.icon != null
                       ? { color: icon.hex, opacity: 0.7 }
                       : {},
-                    inputColor ? { color: inputColor } : {color: colors.davysGrey},
+                    inputColor ? { color: inputColor } : {color: theme.colors.davysGrey},
                     {flex: 1,
                       padding: 0,
                       fontFamily: fonts.familyType.bold,
@@ -113,7 +113,7 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
                   }
                   maxValue={999999}
                   placeholderTextColor={'#000'}
-                  selectionColor={colors.davysGrey}
+                  selectionColor={theme.colors.davysGrey}
                   ref={inputRef}
                   value={value}
                   onChangeValue={setValue}

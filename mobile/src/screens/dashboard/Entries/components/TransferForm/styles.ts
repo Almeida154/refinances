@@ -6,7 +6,7 @@ export const ContainerForm = styled.View`
     display: flex;
     align-items: center;
     flex: 1;
-    background-color: ${colors.white};
+    background-color: ${(props : any) => props.theme.colors.white};
     padding: 7%;
 `
 
@@ -19,9 +19,9 @@ export const InputControl = styled.View`
 export const TextInput = styled.TextInput`
     border-bottom-width: 2px;
     width: 100%;
-    color: ${colors.battleGray};
+    color: ${(props : any) => props.theme.colors.battleGray};
     height: 40px;
-    border-color: ${colors.battleGray};
+    border-color: ${(props : any) => props.theme.colors.battleGray};
     opacity: 0.7;    
 
 `
@@ -29,9 +29,9 @@ export const TextInput = styled.TextInput`
 export const TextInputValor = styled.TextInput`
     border-bottom-width: 2px;
     width: 100%;
-    color: ${colors.battleGray};
+    color: ${(props : any) => props.theme.colors.battleGray};
     height: 60px;
-    border-color: ${colors.battleGray};
+    border-color: ${(props : any) => props.theme.colors.battleGray};
     opacity: 0.7;    
 
     font-size: 30px;
@@ -65,22 +65,22 @@ export const SectionCardsParcelas = styled.View`
 export const LabelView = styled.Text`
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.big}px`};
-  color: ${colors.redCrayola};
+  color: ${(props : any) => props.theme.colors.redCrayola};
   line-height: 28px;
 `;
 
 export const InputView = styled.View`  
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   padding: 0;
   margin-top: -4px;
 `;
 
 export const Container = styled.TouchableHighlight`
   width: 100%;
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   border-radius: ${`${metrics.inputText.radius}px`};
   padding: 8px 20px;
   flex-direction: row;
   border-width: 1px;
-  border-color: ${colors.white};
+  border-color: ${(props : any) => props.theme.colors.white};
 `;

@@ -4,7 +4,7 @@ import InputText from '../../../../../components/InputText';
 import Button from '../../../../../components/Button';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
-
+import { useTheme } from 'styled-components/native'; 
 import {
   DadosTempProvider,
   UseDadosTemp,
@@ -119,14 +119,15 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   };
 
   const teto = category?.tetoDeGastos || 0;
+  const theme: any = useTheme()
 
   return (
-    <ScrollView style={{backgroundColor: colors.cultured }}>
-       <Header style={{ backgroundColor: colors.paradisePink }}>
+    <ScrollView style={{backgroundColor: theme.colors.cultured }}>
+       <Header style={{ backgroundColor: theme.colors.paradisePink }}>
             <HeaderTop 
             backButton={backAction} 
             title='Teto de gastos' 
-            color={colors.silver}
+            color={theme.colors.silver}
             isShort={true}/>
           <AlinhaParaDireita>
           <LabelCifrao>R$</LabelCifrao> 
@@ -136,7 +137,7 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
               style={{
                   alignContent: 'flex-end',
                   alignItems: 'flex-end',
-                  color: colors.silver,
+                  color: theme.colors.silver,
                   fontFamily: fonts.familyType.bold,
                   fontSize: fonts.size.super +20,
                   opacity: 0.7,
@@ -148,8 +149,8 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
               separator=","
               precision={2}
               maxValue={999999}
-              placeholderTextColor={colors.lightGray}
-              selectionColor={colors.davysGrey}
+              placeholderTextColor={theme.colors.lightGray}
+              selectionColor={theme.colors.davysGrey}
               onChangeText={formattedValue => {
                   formattedValue == '' ? setTetoGastos((0).toString()) : setTetoGastos(tetoGastos);
               }}
@@ -169,8 +170,8 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
                 { screen:'ManageCategory'}))
               }}
               title="Salvar"
-              backgroundColor={colors.blackSilver}
-              color={colors.darkGray}
+              backgroundColor={theme.colors.blackSilver}
+              color={theme.colors.darkGray}
               lastOne={true}
             />
           </View>

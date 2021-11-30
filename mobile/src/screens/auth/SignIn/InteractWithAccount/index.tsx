@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // @ts-ignore
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
-
+import { useTheme } from 'styled-components/native'; 
 import { BackHandler, Keyboard, Text, View } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -134,6 +134,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
 
   const openModalize = () => modalizeRef.current?.open();
   const closeModalize = () => modalizeRef.current?.close();
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -180,7 +181,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
         ref={modalizeRef}
         title="Clique para selecionar"
         subtitle="Escolha uma instituição financeira"
-        backgroundColor={colors.cultured}
+        backgroundColor={theme.colors.cultured}
         height={metrics.screen.height - metrics.default.statusBarHeight * 2}
         snapPoint={
           metrics.screen.height / 1.4 - metrics.default.statusBarHeight * 2
@@ -228,11 +229,11 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
                 fontSize: fonts.size.small,
                 fontFamily: fonts.familyType.bold,
               }}>
-              <Text style={{ color: colors.darkGray }}>
+              <Text style={{ color: theme.colors.darkGray }}>
                 Nenhum resultado para:{' '}
               </Text>
 
-              <Text style={{ color: colors.redCrayola }}>"{search}"</Text>
+              <Text style={{ color: theme.colors.redCrayola }}>"{search}"</Text>
             </Text>
           </View>
         )}

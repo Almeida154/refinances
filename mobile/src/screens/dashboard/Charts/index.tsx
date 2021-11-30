@@ -44,6 +44,7 @@ import {
   CountDescription,
 } from './styles';
 
+import { useTheme } from 'styled-components/native'; 
 import { colors, metrics } from '../../../styles';
 import { ScrollView, View } from 'react-native';
 import { widthPixel } from '../../../helpers/responsiveness';
@@ -268,7 +269,7 @@ const Graficos = () => {
     loadParcelas(newDate);
     loadTransferencias(newDate);
   }
-
+  const theme: any = useTheme()
   return (
     <View style={{flex: 1}}>
     <Container>
@@ -277,7 +278,7 @@ const Graficos = () => {
           <Feather
             size={widthPixel(60)}
             name={'chevron-left'}
-            color={colors.darkGray}
+            color={theme.colors.darkGray}
           />
         </PeriodoAnterior>
 
@@ -294,7 +295,7 @@ const Graficos = () => {
           <Feather
             size={widthPixel(60)}
             name={'chevron-right'}
-            color={colors.darkGray}
+            color={theme.colors.darkGray}
           />
         </PeriodoPosterior>
       </Header>
@@ -303,11 +304,11 @@ const Graficos = () => {
         <TopDataItem
           style={{
             borderRightWidth: widthPixel(2),
-            borderRightColor: colors.cultured,
+            borderRightColor: theme.colors.cultured,
           }}>
           <View>
             <TopDataTitle>Maior receita</TopDataTitle>
-            <TopDataBalance style={{ color: colors.slimyGreen }}>
+            <TopDataBalance style={{ color: theme.colors.slimyGreen }}>
               {doubleToCurrency(maiorGanho.valor)}
             </TopDataBalance>
             <TopDataDescription>
@@ -320,11 +321,11 @@ const Graficos = () => {
         <TopDataItem
           style={{
             borderLeftWidth: widthPixel(2),
-            borderLeftColor: colors.cultured,
+            borderLeftColor: theme.colors.cultured,
           }}>
           <View>
             <TopDataTitle>Maior despesa</TopDataTitle>
-            <TopDataBalance style={{ color: colors.redCrayola }}>
+            <TopDataBalance style={{ color: theme.colors.redCrayola }}>
               {doubleToCurrency(maiorGasto.valor)}
             </TopDataBalance>
             <TopDataDescription numberOfLines={1}>

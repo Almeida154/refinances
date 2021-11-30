@@ -26,7 +26,7 @@ import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import { widthPixel } from '../../../../../helpers/responsiveness';
 import { colors } from '../../../../../styles';
 import shadowBox from '../../../../../helpers/shadowBox';
-
+import { useTheme } from 'styled-components/native';
 type CardAccount = {
   item: Conta;
 };
@@ -36,7 +36,7 @@ const CardAccount = ({ item }: CardAccount) => {
     acc => acc.description == item?.instituicao,
   );
   console.log(globalAccountIndex);
-
+  const theme: any = useTheme()
   return (
     <CardContainer>
       {globalAccountIndex == -1 ? (
@@ -111,6 +111,8 @@ const AccountsCard = () => {
       handleReadByUserContas(await retornarIdDoUsuario());
     })();
   }, []);
+ const theme: any = useTheme()
+
   return (
     <Container style={shadowBox(30, 0.3)}>
       <AccountsContainer>
@@ -124,7 +126,7 @@ const AccountsCard = () => {
 
         <Button
           style={{
-            backgroundColor: colors.lightGray,
+            backgroundColor: theme.colors.lightGray,
           }}
           onPress={() =>
             navigation.dispatch(
@@ -132,7 +134,7 @@ const AccountsCard = () => {
             )
           }
           title="Gerenciar"
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
       </AccountsContainer>

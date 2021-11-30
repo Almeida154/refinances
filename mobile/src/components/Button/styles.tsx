@@ -12,14 +12,14 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
   justify-content: center;
   align-items: center;
   font-family: ${fonts.familyType.bold};
-  background-color: ${colors.silver};
+  background-color: ${(props : any) => props.theme.colors.silver};
   border-radius: ${`${widthPixel(20)}px`};
   margin: ${props => (props.lastOne ? 0 : heightPixel(22))}px 0;
 `;
 
 export const Text = styled.Text`
   font-size: ${`${fonts.size.big}px`};
-  color: ${colors.white};
+  color: ${(props : any) => props.theme.colors.white};
   font-family: ${fonts.familyType.bold};
   text-align: center;
 `;
