@@ -176,6 +176,8 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
         />
       </Content>
       <Button
+        style={{backgroundColor: colors.culture}}
+        color={colors.silver}
         onPress={() => interact()}        
         title={receiveAccount ? 'Editar' : 'Adicionar'}        
       />

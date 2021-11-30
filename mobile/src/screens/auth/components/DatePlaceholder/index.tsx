@@ -14,7 +14,7 @@ const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
   return (
     <View
       style={{
-        opacity: 0.4,
+        opacity: 0.6,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -23,11 +23,11 @@ const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
       {/* First circle */}
       <SkeletonContent
         highlightColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          isIncome ? colors.lincolnGreen : colors.davysGray,
           0.7,
         )}
         boneColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          isIncome ? colors.lincolnGreen : colors.davysGray,
           0.7,
         )}
         animationDirection="horizontalLeft"
@@ -44,11 +44,11 @@ const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
       {/* Second circle */}
       <SkeletonContent
         highlightColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          isIncome ? colors.lincolnGreen : colors.davysGray,
           0.7,
         )}
         boneColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          isIncome ? colors.lincolnGreen : colors.davysGray,
           0.7,
         )}
         animationDirection="horizontalLeft"
@@ -65,11 +65,11 @@ const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
       {/* Third circle */}
       <SkeletonContent
         highlightColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          isIncome ? colors.lincolnGreen : colors.davysGray,
           0.7,
         )}
         boneColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          isIncome ? colors.lincolnGreen : colors.davysGray,
           0.7,
         )}
         animationDirection="horizontalLeft"

@@ -118,7 +118,7 @@ const Email = ({ navigation }: PropsNavigation) => {
         </Writting>
         {hasError && <Error>{errorMessage}</Error>}
       </Content>
-      <BottomNavigation onPress={() => next()} description="Próximo" />
+      <BottomNavigation color={colors.davysGray} onPress={() => next()} description="Próximo" />
     </Container>
   );
 };

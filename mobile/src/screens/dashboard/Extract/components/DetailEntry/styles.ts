@@ -9,12 +9,12 @@ export const Container = styled.View`
 export const LabelTitle = styled.Text`
     font-size: ${fonts.size.big};
     font-family: ${fonts.familyType.bold};
-    color: ${colors.platinum};
+    color: ${(props: any) => props.theme.colors.black};
 `
 export const LabelQuantity = styled.Text`
     font-size: ${fonts.size.small};
     font-family: ${fonts.familyType.regular};
-    color: ${colors.silver};
+    color: ${(props: any) => props.theme.colors.battleGray};
 `
 
 export const GroupLabel = styled.View`
@@ -24,13 +24,13 @@ export const GroupLabel = styled.View`
 export const Label = styled.Text`
     font-family: ${fonts.familyType.semiBold};
     font-size: ${fonts.size.medium};
-    color: ${colors.platinum};
+    color: ${(props: any) => props.theme.colors.black};
 `
 
 export const Value = styled.Text`
     font-family: ${fonts.familyType.light};
     font-size: ${fonts.size.small};
-    color: ${colors.silver};
+    color: ${colors.battleGray};
 `
 
 export const SectionDescription = styled.View`

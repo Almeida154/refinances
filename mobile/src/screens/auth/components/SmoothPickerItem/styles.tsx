@@ -11,7 +11,7 @@ interface DayProps {
 export const Container = styled.View<DayProps>`
   background-color: ${props =>
     props.isSelected
-      ? colors.diffWhite
+      ? colors.blackSilver
       : hexToRGB(
           props.isIncome ? colors.lincolnGreen : colors.bigDipOruby,
           0.15,
@@ -31,7 +31,7 @@ export const Day = styled.Text<DayProps>`
   color: ${props =>
     props.isSelected
       ? hexToRGB(props.isIncome ? colors.slimyGreen : colors.redCrayola, 0.8)
-      : hexToRGB(props.isIncome ? colors.lincolnGreen : colors.bigDipOruby)};
+      : hexToRGB(props.isIncome ? colors.lincolnGreen : colors.davysGray)};
   font-size: ${props =>
     props.isSelected ? `${fonts.size.bigger}px` : `${fonts.size.small}px`};
   font-family: ${props =>

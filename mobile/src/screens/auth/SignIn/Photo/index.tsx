@@ -116,7 +116,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
               <Pic
                 style={{
                   borderWidth: widthPixel(14),
-                  borderColor: colors.silver,
+                  borderColor: colors.platinum,
                 }}
                 source={{ uri: avatar.base64 }}
               />

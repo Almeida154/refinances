@@ -101,7 +101,7 @@ const Name = ({ navigation }: PropsNavigation) => {
         </Writting>
         {hasError && <Error>Preencha este campo!</Error>}
       </Content>
-      <BottomNavigation onPress={() => next()} description="Próximo" />
+      <BottomNavigation color={colors.davysGray} onPress={() => next()} description="Próximo" />
     </Container>
   );
 };
