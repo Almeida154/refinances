@@ -30,7 +30,7 @@ export const Label = styled.Text`
 export const Value = styled.Text`
     font-family: ${fonts.familyType.light};
     font-size: ${fonts.size.small};
-    color: ${colors.battleGray};
+    color: ${(props: any) => props.theme.colors.battleGray};
 `
 
 export const SectionDescription = styled.View`
@@ -54,7 +54,7 @@ export const SepareColumn  = styled.View`
 `
 
 export const CircleIcon = styled.TouchableOpacity`
-    background-color: ${colors.silver};
+    background-color: ${(props: any) => props.theme.colors.white};
     width: 40px;
     height: 40px;
 

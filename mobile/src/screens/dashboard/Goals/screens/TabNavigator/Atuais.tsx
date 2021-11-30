@@ -3,7 +3,7 @@ import { BackHandler, ScrollView, View } from 'react-native';
 
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
-
+import { useTheme } from 'styled-components/native'; 
 import { UseMetas } from '../../../../../contexts/GoalsContext';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
@@ -50,8 +50,10 @@ const Atuais = ({ navigation }: PropsGoals) => {
   };
 
   if (metas && metas.length > 0) {
+    const theme: any = useTheme()
+
     return (
-      <ScrollView style={{ backgroundColor: colors.white }}>
+      <ScrollView style={{ backgroundColor: theme.colors.white }}>
         <ScreenDescription>
           <Title>Bem vindo as suas contas!</Title>
           <Subtitle>

@@ -29,7 +29,7 @@ import {
   SepareColumn,
   CircleIcon,
 } from './styles';
-
+import { useTheme } from 'styled-components/native'; 
 interface PropsDetail {
   item: ReadParcela | null;
 }
@@ -111,6 +111,7 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
   }
 
   //console.log(item.lancamentoParcela)
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -129,14 +130,14 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
             <Icon
               stringIcon="MaterialCommunityIcons:pencil"
               size={25}
-              color={colors.black}
+              color={theme.colors.black}
             />
           </CircleIcon>
           <CircleIcon onPress={navigateDelete}>
             <Icon
               stringIcon="Ionicons:trash-bin-sharp"
               size={25}
-              color={colors.black}
+              color={theme.colors.black}
             />
           </CircleIcon>
         </SepareRow>

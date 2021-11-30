@@ -23,6 +23,7 @@ import {colors, fonts, metrics} from '../../../styles'
 
 // Components
 import Button from '../../../components/Button';
+import { useTheme } from 'styled-components/native'; 
 
 // Icons
 import BackArrowPink from '../../../assets/images/svg/arrow-back-pink.svg';
@@ -51,7 +52,7 @@ const RecuperarConta = ({navigation}: PropsNavigation) => {
 
     if (response != '') setErro(response);
   }*/
-  
+const theme: any = useTheme()
   return (
     <Container>
       <StatusBar backgroundColor="transparent" />
@@ -68,7 +69,7 @@ const RecuperarConta = ({navigation}: PropsNavigation) => {
             <Text style={styles.label}>Digite seu e-mail cadastrado</Text>
             <TextInput style={styles.textInput}
               placeholder="email@exemplo.com"
-              placeholderTextColor={colors.xiketic}
+              placeholderTextColor={theme.colors.xiketic}
               value={email}
               autoCapitalize="none"
               keyboardType="email-address"

@@ -4,7 +4,7 @@ import { TextInput, TextInputProps } from 'react-native';
 
 import { Container, Writting, IconClean, Input, Label, Error } from './styles';
 import { colors } from '../../../../../../../styles';
-
+import { useTheme } from 'styled-components/native'; 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 
 interface IProps extends TextInputProps {
@@ -36,6 +36,8 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
   ref: any,
 
 ) => {
+  const theme: any = useTheme()
+
   return (
     <>
       <Container
@@ -54,7 +56,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
             shadowRadius: 20,
           },
         ]}
-        underlayColor={colors.white}
+        underlayColor={theme.colors.white}
         onPress={onPress}>
         <>
           <Writting>
@@ -62,7 +64,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
               {label != undefined ? label : 'Sem label'}
             </Label>
             <Input>
-              <Label style={{color: colors.platinum}}>{placeholder != undefined && value == '' ? placeholder : value}</Label>
+              <Label style={{color: theme.colors.platinum}}>{placeholder != undefined && value == '' ? placeholder : value}</Label>
             </Input>
           </Writting>
           <IconClean>

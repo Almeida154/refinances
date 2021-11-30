@@ -7,7 +7,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
-
+import { useTheme } from 'styled-components/native'; 
 // Styles
 import { Container, Content, ButtonContainer } from './styles';
 import { colors, metrics } from '../../../../styles';
@@ -164,6 +164,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
       updateSetupUserProps(newSetupProps);
     }
   };
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -175,7 +176,7 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
         step={`${setupUser.incomeTagsCount + 1} de ${
           setupUser.incomeTags.length
         }`}
-        accent={colors.slimyGreen}
+        accent={theme.colors.slimyGreen}
         hasShadow
         subtitle="Clique para selecionar"
       />
@@ -218,13 +219,13 @@ const EachFixedIncomeCategory = ({ route, navigation }: PropsNavigation) => {
         <ButtonContainer>
           <Button
             style={{
-              backgroundColor: colors.platinum,
+              backgroundColor: theme.colors.platinum,
             }}
             onPress={() =>
               navigation.navigate('NewCategory', { screen: 'Receita' })
             }
             title="Nova"
-            color={colors.davysGrey}
+            color={theme.colors.davysGrey}
             lastOne
           />
         </ButtonContainer>

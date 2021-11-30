@@ -8,7 +8,7 @@ import {
   Categoria,
   UseCategories,
 } from '../../../../../../contexts/CategoriesContext';
-
+import { useTheme } from 'styled-components/native'; 
 import { ActivityIndicator } from 'react-native-paper';
 
 import retornarIdDoUsuario from '../../../../../../helpers/retornarIdDoUsuario';
@@ -72,11 +72,12 @@ const Receitas = ({ navigation }: PropsCategory) => {
     console.debug('useEffect[categorias] | aux', aux);
     setReceitasCategorias(aux);
   }, [categorias]);
+  const theme: any = useTheme()
 
   if (receitasCategorias != undefined && receitasCategorias?.length > 0) {
     return (
       <View>
-        <ScrollView style={{ backgroundColor: colors.cultured }}>
+        <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
           <ScreenDescription>
             <Content>
               Aqui estão suas categorias de receita, elas não recebem teto de
@@ -100,19 +101,19 @@ const Receitas = ({ navigation }: PropsCategory) => {
             );
           }}
           activeOpacity={0.8}
-          style={[shadowBox(), { backgroundColor: colors.slimyGreen }]}>
-          <Entypo name="plus" size={widthPixel(60)} color={colors.white} />
+          style={[shadowBox(), { backgroundColor: theme.colors.slimyGreen }]}>
+          <Entypo name="plus" size={widthPixel(60)} color={theme.colors.white} />
         </FAB>
       </View>
     );
   } else {
     return (
-      <ScrollView style={{ backgroundColor: colors.cultured }}>
+      <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
         <View style={{ margin: '10%', alignItems: 'center' }}>
           <Icon
             name="emoticon-sad-outline"
             size={50}
-            color={colors.davysGrey}
+            color={theme.colors.davysGrey}
             style={{
               alignItems: 'center',
               justifyContent: 'center',
@@ -129,7 +130,7 @@ const Receitas = ({ navigation }: PropsCategory) => {
 
           <Button
             title="Criar nova categoria"
-            backgroundColor={colors.paradisePink}
+            backgroundColor={theme.colors.paradisePink}
             onPress={() => {
               navigation.dispatch(StackActions.replace('CreateCategory'));
             }}></Button>

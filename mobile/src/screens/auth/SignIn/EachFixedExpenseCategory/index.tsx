@@ -17,7 +17,7 @@ import BottomNavigation from '../../components/BottomNavigation';
 import Button from '../../../../components/Button';
 import CategoryItem from '../../components/CategoryItem';
 import Placeholder from '../../components/CategoryPlaceholder';
-
+import { useTheme } from 'styled-components/native'; 
 import global from '../../../../global';
 import { Categoria } from '@contexts/CategoriesContext';
 
@@ -165,6 +165,7 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
       updateSetupUserProps(newSetupProps);
     }
   };
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -208,12 +209,12 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
 
             <ButtonContainer>
               <Button
-                style={{ backgroundColor: colors.platinum }}
+                style={{ backgroundColor: theme.colors.platinum }}
                 onPress={() =>
                   navigation.navigate('NewCategory', { screen: 'Despesa' })
                 }
                 title="Nova"
-                color={colors.davysGrey}
+                color={theme.colors.davysGrey}
                 lastOne
               />
             </ButtonContainer>

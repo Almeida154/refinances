@@ -76,7 +76,7 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
           }}>
           <Icon
             size={24}
-            color={'gray'}
+            color={theme.colors.black}
             stringIcon={
               typeof item.lancamentoParcela.categoryLancamento == 'string' ||
               !item.lancamentoParcela.categoryLancamento

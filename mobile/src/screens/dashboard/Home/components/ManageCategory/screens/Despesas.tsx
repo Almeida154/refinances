@@ -3,7 +3,7 @@ import { BackHandler, ScrollView, Text, View } from 'react-native';
 
 import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
-
+import { useTheme } from 'styled-components/native'; 
 import {
   Categoria,
   UseCategories,
@@ -69,11 +69,13 @@ const Despesas = ({ navigation }: PropsCategory) => {
 
     setDespesasCategorias(aux);
   }, [categorias]);
+  const theme: any = useTheme()
 
   if (despesasCategorias != null && despesasCategorias?.length > 0) {
+    
     return (
       <View>
-        <ScrollView style={{ backgroundColor: colors.cultured }}>
+        <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
           <ScreenDescription>
             <Content>
               Adicione teto de gastos às categorias para se manter
@@ -94,19 +96,19 @@ const Despesas = ({ navigation }: PropsCategory) => {
             );
           }}
           activeOpacity={0.8}
-          style={[shadowBox(), { backgroundColor: colors.redCrayola }]}>
-          <Entypo name="plus" size={widthPixel(60)} color={colors.white} />
+          style={[shadowBox(), { backgroundColor: theme.colors.redCrayola }]}>
+          <Entypo name="plus" size={widthPixel(60)} color={theme.colors.white} />
         </FAB>
       </View>
     );
   } else {
     return (
-      <ScrollView style={{ backgroundColor: colors.cultured }}>
+      <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
         <View style={{ margin: '10%', alignItems: 'center' }}>
           <Icon
             name="emoticon-sad-outline"
             size={50}
-            color={colors.davysGrey}
+            color={theme.colors.davysGrey}
             style={{
               alignItems: 'center',
               justifyContent: 'center',
@@ -123,7 +125,7 @@ const Despesas = ({ navigation }: PropsCategory) => {
 
           <Button
             title="Criar nova categoria"
-            backgroundColor={colors.paradisePink}
+            backgroundColor={theme.colors.paradisePink}
             onPress={() => {
               navigation.dispatch(StackActions.replace('CreateCategory'));
             }}></Button>

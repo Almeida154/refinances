@@ -22,6 +22,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Button from '../../../components/Button';
 import InputText from '../../../components/InputText';
 import { TextInput } from 'react-native';
+import { useTheme } from 'styled-components/native'; 
 
 // Icons
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -72,7 +73,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
       }
     }
   }
-
+  const theme: any = useTheme()
   return (
     <Container>
       <LinearGradient
@@ -80,13 +81,13 @@ const Entrar = ({ navigation }: PropsNavigation) => {
         start={{ x: 0.1, y: 0.1 }}
         end={{ x: 1, y: 0.3 }}
         locations={[0, 1.4]}
-        colors={[colors.paradisePink, colors.bigDipOruby]}>
+        colors={[theme.colors.paradisePink, theme.colors.bigDipOruby]}>
         <Header>
           <IonIcons
             style={{ position: 'absolute', left: 32, marginTop: 16 + 32 }}
             name="md-arrow-back-sharp"
             size={40}
-            color={colors.bigDipOruby}
+            color={theme.colors.bigDipOruby}
             onPress={() => console.log('back')}
           />
           <LoginIcon style={{ top: '10%' }} height={'20%'} />
@@ -153,7 +154,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
               lastOne
             />
             <TextForgotPassword
-              style={{ color: hexToRGB(colors.davysGrey, 0.3) }}
+              style={{ color: hexToRGB(theme.colors.davysGrey, 0.3) }}
               onPress={() => {
                 navigation.navigate('PasswordRecovery');
                 hideNiceToast();
@@ -166,7 +167,7 @@ const Entrar = ({ navigation }: PropsNavigation) => {
               start={{ x: 0, y: 2 }}
               end={{ x: 1, y: 3 }}
               locations={[0, 1]}
-              colors={[colors.paradisePink, colors.bigDipOruby]}>
+              colors={[theme.colors.paradisePink, theme.colors.bigDipOruby]}>
               <Button
                 style={{
                   backgroundColor: 'transparent',
@@ -174,13 +175,13 @@ const Entrar = ({ navigation }: PropsNavigation) => {
                 onPress={LoginUser}
                 title="Entrar"
                 lastOne
-                color={colors.white}
+                color={theme.colors.white}
               />
             </LinearGradient>
-            <TextNoAccount style={{ color: hexToRGB(colors.davysGrey, 0.3) }}>
+            <TextNoAccount style={{ color: hexToRGB(theme.colors.davysGrey, 0.3) }}>
               Não tem uma conta?{' '}
               <TextNoAccount
-                style={{ color: colors.redCrayola }}
+                style={{ color: theme.colors.redCrayola }}
                 onPress={() => {
                   navigation.dispatch(StackActions.replace('Name'));
                   hideNiceToast();

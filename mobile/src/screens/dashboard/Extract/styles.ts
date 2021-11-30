@@ -36,18 +36,18 @@ export const PeriodoPosterior = styled.TouchableOpacity`
 
 export const LabelPeriodo = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
-  background-color: ${(props : any) => props.theme.colors.platinum};
+  background-color: ${(props : any) => props.theme.colors.blackSilver};
   padding-top: ${`${widthPixel(10)}px`};
   padding-bottom: ${`${widthPixel(10)}px`};
   padding-left: ${`${widthPixel(50)}px`};
   padding-right: ${`${widthPixel(50)}px`};
   border-radius: ${`${widthPixel(80)}px`};
   font-size: ${`${fonts.size.big}px`};
-  color: ${(props : any) => props.theme.colors.darkGray};
+  color: ${(props : any) => props.theme.colors.black};
 `;
 
 export const Body = styled.View`
-    background-color: ${(props : any) => props.theme.colors.white};
+    background-color: ${(props : any) => props.theme.colors.back};
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 10px;
@@ -56,6 +56,7 @@ export const Body = styled.View`
 export const ScrollBody = styled.ScrollView`
     height: ${`${Dimensions.get('window').height * 0.97}px`};
     width: 100%;
+    background-color: ${(props : any) => props.theme.colors.back};
 `
 
 export const CardItem = styled.View`
@@ -83,12 +84,12 @@ export const Footer = styled.View`
     height: auto;
 `
 export const CardBalance = styled.View`
-    width: 30%;
+    width: 32%;
     height: auto;
     align-items: center;
     justify-content: center;
     padding: 20px 10px;
-    background-color: ${(props : any) => props.theme.colors.cultured};
+    background-color: ${(props : any) => props.theme.colors.back};
     border-radius: 10px;
 `
 export const LabelBalance = styled.Text`

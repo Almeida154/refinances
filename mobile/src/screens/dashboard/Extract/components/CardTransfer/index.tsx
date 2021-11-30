@@ -27,7 +27,7 @@ const CardTransfer = ({item}: CardTransferProps) => {
         <ContainerItem>
             <SectionTransfer>
                 <SectionIcon style={{borderColor: 'yellow'   }}>
-                    <Icon size={24} color='gray' name="bank-transfer"/>
+                    <Icon size={24} color={theme.colors.black} name="bank-transfer"/>
                 </SectionIcon>
                 <SectionDescription>
                     <LabelName>{item.descricaoTransferencia}</LabelName>

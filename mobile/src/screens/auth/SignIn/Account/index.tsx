@@ -22,7 +22,7 @@ import AccountItem from '../../../../components/AccountItem';
 import AccountsPlaceholder from '../../components/AccountsPlaceholder';
 import InputText from '../../../../components/InputText';
 import Modalize from '../../../../components/Modalize';
-
+import { useTheme } from 'styled-components/native'; 
 import { Modalize as Modal } from 'react-native-modalize';
 
 export type PropsNavigation = {
@@ -92,6 +92,7 @@ const Account = ({ navigation }: PropsNavigation) => {
 
   const openModalize = (ref: any) => ref.current?.open();
   const closeModalize = (ref: any) => ref.current?.close();
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -121,9 +122,9 @@ const Account = ({ navigation }: PropsNavigation) => {
             ))}
             {setupUser.accounts.length < 2 && (
               <Button
-                style={{ backgroundColor: colors.platinum }}
+                style={{ backgroundColor: theme.colors.platinum }}
                 title="Nova conta principal"
-                color={colors.silver}
+                color={theme.colors.silver}
                 onPress={() => openModalize(newAccountModalizeRef)}
               />
             )}
@@ -143,7 +144,7 @@ const Account = ({ navigation }: PropsNavigation) => {
         ref={walletModalizeRef}
         title="Minha carteira 👀"
         subtitle="Seu dinheiro físico. Quanto tem na sua carteira agora?"
-        backgroundColor={colors.cultured}
+        backgroundColor={theme.colors.cultured}
         hasBodyBoundaries>
         <InputText
           label="Quanto tem?"
@@ -156,7 +157,7 @@ const Account = ({ navigation }: PropsNavigation) => {
           }}
         />
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Atualizar"
           onPress={() => {
             setLoading(true);
@@ -168,7 +169,7 @@ const Account = ({ navigation }: PropsNavigation) => {
 
             closeModalize(walletModalizeRef);
           }}
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
       </Modalize>
@@ -176,10 +177,10 @@ const Account = ({ navigation }: PropsNavigation) => {
       <Modalize
         ref={newAccountModalizeRef}
         title="Escolha o tipo da conta"
-        backgroundColor={colors.cultured}
+        backgroundColor={theme.colors.cultured}
         hasBodyBoundaries>
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Conta Poupança"
           onPress={() =>
             navigation.dispatch(
@@ -188,12 +189,12 @@ const Account = ({ navigation }: PropsNavigation) => {
               }),
             )
           }
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
 
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Conta Corrente"
           onPress={() =>
             navigation.dispatch(
@@ -202,11 +203,11 @@ const Account = ({ navigation }: PropsNavigation) => {
               }),
             )
           }
-          color={colors.silver}
+          color={theme.colors.silver}
         />
 
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Outro"
           onPress={() =>
             navigation.dispatch(
@@ -215,7 +216,7 @@ const Account = ({ navigation }: PropsNavigation) => {
               }),
             )
           }
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
       </Modalize>

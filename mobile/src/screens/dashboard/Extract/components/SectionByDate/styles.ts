@@ -13,7 +13,7 @@ export const BodyEntries = styled.View`
 export const LabelDate = styled.Text`
     fontSize: ${`${fonts.size.medium}px`};
     fontFamily: ${`${fonts.familyType.semiBold}`};
-    color: ${colors.silver};
+    color: ${(props : any) => props.theme.colors.silver};
     font-size: 22px;
     margin-bottom: 10px;
 `

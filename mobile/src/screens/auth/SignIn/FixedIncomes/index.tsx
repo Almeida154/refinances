@@ -7,7 +7,7 @@ import { Lancamento } from '../../../../contexts/EntriesContext';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-
+import { useTheme } from 'styled-components/native'; 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -168,6 +168,7 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
 
   const openModalize = () => modalizeRef.current?.open();
   const closeModalize = () => modalizeRef.current?.close();
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -203,8 +204,8 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
                 },
                 selectedTags.includes(tag)
                   ? {
-                      backgroundColor: colors.slimyGreen,
-                      color: colors.white,
+                      backgroundColor: theme.colors.slimyGreen,
+                      color: theme.colors.white,
                     }
                   : {},
               ]}>
@@ -223,11 +224,11 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
         <ButtonContainer>
           <Button
             style={{
-              backgroundColor: colors.platinum,
+              backgroundColor: theme.colors.platinum,
             }}
             onPress={() => openModalize()}
             title="Outro"
-            color={colors.davysGrey}
+            color={theme.colors.davysGrey}
           />
         </ButtonContainer>
       </ScrollContainer>
@@ -235,18 +236,18 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
       <BottomNavigation
         onPress={() => next()}
         description={'Já selecionei!'}
-        iconColor={colors.slimyGreen}
+        iconColor={theme.colors.slimyGreen}
       />
 
       <Modalize
         ref={modalizeRef}
         hasBodyBoundaries
         title="Novo gasto fixo 💸"
-        backgroundColor={colors.cultured}>
+        backgroundColor={theme.colors.cultured}>
         <InputText
           label="Novo gasto"
           placeholder="Empreendimento..."
-          colorLabel={colors.slimyGreen}
+          colorLabel={theme.colors.slimyGreen}
           ref={newIncomeRef}
           value={newIncome}
           showClearIcon
@@ -264,11 +265,11 @@ const FixedIncomes = ({ navigation }: PropsNavigation) => {
         />
         <Button
           style={{
-            backgroundColor: colors.platinum,
+            backgroundColor: theme.colors.platinum,
           }}
           title="Adicionar"
           onPress={() => handleAddIncome()}
-          color={colors.davysGrey}
+          color={theme.colors.davysGrey}
         />
       </Modalize>
     </Container>

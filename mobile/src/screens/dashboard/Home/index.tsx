@@ -7,7 +7,7 @@ import { UseAuth } from '../../../contexts/AuthContext';
 import { UseCategories } from '../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import { UseMetas } from '../../../contexts/GoalsContext';
-
+import { useTheme } from 'styled-components/native'; 
 import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
@@ -35,7 +35,6 @@ import CreateCard from './components/CreateCard';
 import GoalsCard from './components/GoalsCard';
 import CategoriesCard from './components/CategoriesCard';
 import FabButton from '../../../navigation/TabNavigator/components/FabButton';
-import { useTheme } from 'styled-components/native';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();

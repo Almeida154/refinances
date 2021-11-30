@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-
+ import { useTheme } from 'styled-components/native'; 
 import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
@@ -186,14 +186,15 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               </TextProgress>
     }
   }
+  const theme: any = useTheme()
 
   return (
-    <ScrollView style={{ backgroundColor: colors.cultured }}>
+    <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
       <StatusBar translucent={true} backgroundColor="transparent"/>
-      <Header style={{ backgroundColor: colors.paradisePink }}>
+      <Header style={{ backgroundColor: theme.colors.paradisePink }}>
         <HeaderTop 
         backButton={backAction} 
-        color={colors.silver}
+        color={theme.colors.silver}
         title="" />
         <AlinhaParaDireita>
 
@@ -205,7 +206,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               style={{
                   alignContent: 'flex-end',
                   alignItems: 'flex-end',
-                  color: colors.silver,
+                  color: theme.colors.silver,
                   fontFamily: fonts.familyType.bold,
                   fontSize: fonts.size.super +20,
                   opacity: 0.7,
@@ -217,8 +218,8 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               separator=","
               precision={2}
               maxValue={999999}
-              placeholderTextColor={colors.lightGray}
-              selectionColor={colors.davysGrey}
+              placeholderTextColor={theme.colors.lightGray}
+              selectionColor={theme.colors.davysGrey}
               onChangeText={formattedValue => {
                   formattedValue == '' ? setValor((0).toString()) : setValor(valorDeposito);
               }}
@@ -238,7 +239,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
         <Button
           title={'Investir'}
-          style={{ marginTop: 30, backgroundColor: colors.culture }}
+          style={{ marginTop: 30, backgroundColor: theme.colors.culture }}
           onPress={handleUpdateGoal}></Button>
       </View>
       {/* @ts-ignore */}

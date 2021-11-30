@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar, BackHandler, ToastAndroid } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
+import { useTheme } from 'styled-components/native'; 
 import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -35,17 +35,18 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
     navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
+  const theme: any = useTheme()
 
   return (
     <Container
       style={{
         backgroundColor:
-          routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
+          routeName == 'Despesa' ? theme.colors.paradisePink : theme.colors.slimyGreen,
       }}>
       <Header
         backButton={() => backNavAction()}
         title="Nova categoria"
-        color={colors.silver}
+        color={theme.colors.silver}
         isShort={true}
       />
 
@@ -54,18 +55,19 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
         screenOptions={{
           tabBarStyle: {
             backgroundColor:
-              routeName == 'Despesa' ? colors.paradisePink : colors.slimyGreen,
+              routeName == 'Despesa' ? theme.colors.paradisePink : theme.colors.slimyGreen,
           },
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,
             textTransform: 'capitalize',
             justifyContent: 'center',
+            color: theme.colors.white,
           },
           tabBarIndicatorStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: theme.colors.white,
           },
-          tabBarActiveTintColor: colors.white,
+          tabBarActiveTintColor: theme.colors.white,
         }}
         screenListeners={({ route }) => ({
           state: e => {

@@ -5,12 +5,14 @@ import { widthPixel } from '../../../../helpers/responsiveness';
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 import { colors } from '../../../../styles';
 import hexToRGB from '../../../../helpers/hexToRgba';
-
+import { useTheme } from 'styled-components/native'; 
 interface IProps {
   isIncome?: boolean;
 }
 
 const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
+const theme: any = useTheme()
+
   return (
     <View
       style={{
@@ -23,11 +25,11 @@ const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
       {/* First circle */}
       <SkeletonContent
         highlightColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.davysGray,
+          isIncome ? theme.colors.lincolnGreen : theme.colors.davysGray,
           0.7,
         )}
         boneColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.davysGray,
+          isIncome ? theme.colors.lincolnGreen : theme.colors.davysGray,
           0.7,
         )}
         animationDirection="horizontalLeft"
@@ -44,11 +46,11 @@ const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
       {/* Second circle */}
       <SkeletonContent
         highlightColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.davysGray,
+          isIncome ? theme.colors.lincolnGreen : theme.colors.davysGray,
           0.7,
         )}
         boneColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.davysGray,
+          isIncome ? theme.colors.lincolnGreen : theme.colors.davysGray,
           0.7,
         )}
         animationDirection="horizontalLeft"
@@ -65,11 +67,11 @@ const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
       {/* Third circle */}
       <SkeletonContent
         highlightColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.davysGray,
+          isIncome ? theme.colors.lincolnGreen : theme.colors.davysGray,
           0.7,
         )}
         boneColor={hexToRGB(
-          isIncome ? colors.lincolnGreen : colors.davysGray,
+          isIncome ? theme.colors.lincolnGreen : theme.colors.davysGray,
           0.7,
         )}
         animationDirection="horizontalLeft"

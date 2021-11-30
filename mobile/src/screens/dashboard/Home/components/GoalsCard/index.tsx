@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { toDate } from '../../../../../helpers/manipularDatas';
 import { colors, fonts, metrics } from '../../../../../styles';
-
+import { useTheme } from 'styled-components/native'; 
 import { ProgressBar, Colors } from 'react-native-paper';
 
 import Button from '../../../../../components/Button';
@@ -27,7 +27,6 @@ import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 import { UseMetas } from '../../../../../contexts/GoalsContext';
 import { StackActions } from '@react-navigation/native';
 import shadowBox from '../../../../../helpers/shadowBox';
-import { useTheme } from 'styled-components/native';
 
 const GoalsCard = () => {
   const { navigation } = UseDadosTemp();

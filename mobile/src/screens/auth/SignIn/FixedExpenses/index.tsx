@@ -36,6 +36,7 @@ import { Modalize as Modal } from 'react-native-modalize';
 import global from '../../../../global';
 import removeAccents from '../../../../helpers/removeAccents';
 import capitalizeFirstLetter from '../../../../helpers/capitalizeFirstLetter';
+import { useTheme } from 'styled-components/native'; 
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'FixedExpenses'>;
@@ -164,7 +165,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
   const openModalize = () => modalizeRef.current?.open();
   const closeModalize = () => modalizeRef.current?.close();
-
+  const theme: any = useTheme()
   return (
     <Container>
       <ScrollContainer>
@@ -199,8 +200,8 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
                 },
                 selectedTags.includes(tag)
                   ? {
-                      backgroundColor: colors.paradisePink,
-                      color: colors.white,
+                      backgroundColor: theme.colors.paradisePink,
+                      color: theme.colors.white,
                     }
                   : {},
               ]}>
@@ -218,8 +219,8 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
 
         <ButtonContainer>
           <Button
-            style={{ backgroundColor: colors.platinum, marginBottom: 60 }}
-            color={colors.davysGrey}
+            style={{ backgroundColor: theme.colors.platinum, marginBottom: 60 }}
+            color={theme.colors.davysGrey}
             onPress={() => openModalize()}
             title="Outro"
             lastOne
@@ -233,7 +234,7 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
         ref={modalizeRef}
         hasBodyBoundaries
         title="Novo gasto fixo 💸"
-        backgroundColor={colors.cultured}>
+        backgroundColor={theme.colors.cultured}>
         <InputText
           label="Novo gasto"
           placeholder="Faculdade, Academia..."
@@ -254,11 +255,11 @@ const FixedExpenses = ({ navigation }: PropsNavigation) => {
         />
         <Button
           style={{
-            backgroundColor: colors.platinum,
+            backgroundColor: theme.colors.platinum,
           }}
           title="Adicionar"
           onPress={() => handleAddExpense()}
-          color={colors.davysGrey}
+          color={theme.colors.davysGrey}
         />
       </Modalize>
     </Container>

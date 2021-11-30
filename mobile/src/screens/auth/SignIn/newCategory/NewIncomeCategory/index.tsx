@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../../contexts/AuthContext';
-
+import { useTheme } from 'styled-components/native'; 
 import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -127,14 +127,15 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
       );
     }
   };
+  const theme: any = useTheme()
 
   return (
     <Container>
       <Form>
         <InputText
           label="Nome"
-          colorLabel={colors.davysGrey}
-          inputColor={hexToRGB(colors.davysGrey, 0.7)}
+          colorLabel={theme.colors.davysGrey}
+          inputColor={hexToRGB(theme.colors.davysGrey, 0.7)}
           placeholder="Biblioteca"
           value={name}
           error={nameError}
@@ -157,7 +158,7 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
         />
         <InputText
           label="Cor"
-          colorLabel={colors.davysGrey}
+          colorLabel={theme.colors.davysGrey}
           placeholder="Amarelo"
           value={color.name}
           error={colorError}
@@ -174,7 +175,7 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
         />
         <InputText
           label="Ícone"
-          colorLabel={colors.davysGrey}
+          colorLabel={theme.colors.davysGrey}
           placeholder="Avião"
           value={icon.description}
           error={iconError}
@@ -189,23 +190,23 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
         />
         <Button
           style={{
-            backgroundColor: colors.platinum,
+            backgroundColor: theme.colors.platinum,
           }}
           onPress={() => add()}
           title="Adicionar"
-          color={colors.davysGrey}
+          color={theme.colors.davysGrey}
         />
       </Form>
 
       <Modalize
         ref={colorModalizeRef}
         title="Escolha uma cor 🎨"
-        backgroundColor={colors.cultured}>
+        backgroundColor={theme.colors.cultured}>
         <ColorsContainer horizontal>
-          {modalizeColors.map((color, index) => (
+          {modalizetheme.colors.map((color, index) => (
             <Color
               key={index}
-              mr={index + 1 != modalizeColors.length}
+              mr={index + 1 != modalizetheme.colors.length}
               bg={color.hex}
               onPress={() => {
                 setColor(color);
@@ -219,18 +220,18 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
       <Modalize
         ref={iconModalizeRef}
         title="Escolha um ícone ✨"
-        backgroundColor={colors.cultured}>
+        backgroundColor={theme.colors.cultured}>
         <ColorsContainer horizontal>
           {modalizeIcons.map((icon, index) => (
             <Icon
               key={index}
-              mr={index + 1 != modalizeColors.length}
+              mr={index + 1 != modalizetheme.colors.length}
               onPress={() => {
                 setIcon(icon);
                 closeIconModalize();
               }}>
               <IconByString
-                color={colors.jet}
+                color={theme.colors.jet}
                 size={24}
                 stringIcon={icon.icon}
               />
