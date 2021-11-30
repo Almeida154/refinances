@@ -87,7 +87,7 @@ const PickerContas: React.FC<PropsPickerContas> = ({
             return (
               <Picker.Item
                 key={index}
-                style={{ color: theme.colors.white, fontFamily: fonts.familyType.semiBold, }}
+                style={{ color: theme.colors.black, fontFamily: fonts.familyType.semiBold, }}
                 label={item.descricao}
                 value={index}
               />
@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
     height: 50,
   },
   pickerItem: {
-    backgroundColor: 'white',
-    color: 'white',
+    backgroundColor: colors.blackSilver,
+    color: colors.silver,
   },
 });
 

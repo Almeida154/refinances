@@ -152,45 +152,7 @@ const Home = () => {
           {categorias != undefined && categorias.length > 0 && (
             <CategoriesCard />
           )}
-          <CreateCard
-            name="meta"
-            description="As metas são úteis para o seu avanço pessoal e financeiro."
-            onPress={() => {
-              navigation.dispatch(
-                StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
-              );
-            }}/>
-            <Feather
-              name="settings"
-              size={widthPixel(50)}
-              color={theme.colors.battleGray}
-            />
-            
-
-          <TouchableOpacity activeOpacity={0.8} style={shadowBox(10, 1)}>
-            {user.fotoPerfilUsuario == null ? (
-              <Photo
-                source={require('../../../assets/images/avatarDefault.png')}
-              />
-            ) : (
-              <Photo source={{ uri: `data:${mime}base64,${avatar}` }} />
-            )}
-          </TouchableOpacity>
-        
       
-      <Content>
-        <BalanceCard />
-        <AccountsCard />
-        <CreateCard
-          name="categoria"
-          description="Você pode criar categorias e definir limites para se organizar."
-          onPress={() =>
-            navigation.dispatch(
-              StackActions.replace('StackAccount', { screen: 'NewCategory' }),
-            )
-          }
-        />
-        {categorias != undefined && categorias.length > 0 && <CategoriesCard />}
         <CreateCard
           name="meta"
           description="As metas são úteis para o seu avanço pessoal e financeiro."
@@ -201,7 +163,7 @@ const Home = () => {
           }}
         />
         {metas != undefined && metas?.length > 0 && <GoalsCard />}
-      </Content>
+      
     </Content>
         
     </Container>

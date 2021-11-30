@@ -17,7 +17,6 @@ export const Header = styled.View`
   height: ${`${heightPixel(220)}px`};
   justify-content: center;
   align-items: center;
-  background-color: ${colors.white};
 `;
 
 export const PeriodoAnterior = styled.TouchableOpacity`
@@ -100,11 +99,8 @@ export const ContainerPicker = styled.View`
     align-items: center;
     background-color: ${(props : any) => props.theme.colors.aliceBlue};
 `
-
-
-///
 export const Body = styled.View`
-  background-color: ${(props : any) => props.theme.colors.back};
+  background-color: ${(props : any) => props.theme.colors.white};
   padding: ${`${metrics.default.boundaries / 1.6}px`};
 `;
 

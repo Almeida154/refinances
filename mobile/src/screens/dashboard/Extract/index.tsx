@@ -208,7 +208,7 @@ const Extrato = () => {
             <Feather
               size={widthPixel(60)}
               name={'chevron-left'}
-              color={colors.darkGray}
+              color={theme.colors.darkGray}
             />
           </PeriodoAnterior>
 
@@ -225,7 +225,7 @@ const Extrato = () => {
             <Feather
               size={widthPixel(60)}
               name={'chevron-right'}
-              color={colors.darkGray}
+              color={theme.colors.darkGray}
             />
           </PeriodoPosterior>
         </Header>
@@ -261,7 +261,7 @@ const Extrato = () => {
         </CardBalance>
       </Footer>
 
-      <Modalize ref={modalizeRefDetailEntry} backgroundColor={colors.cultured}>
+      <Modalize ref={modalizeRefDetailEntry} backgroundColor={theme.colors.cultured}>
         {/* @ts-ignore */}
         <DetailEntry item={selectedItemExtract} />
       </Modalize>

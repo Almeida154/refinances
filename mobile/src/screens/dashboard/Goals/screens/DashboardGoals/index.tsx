@@ -43,7 +43,7 @@ const Goals = () => {
 
         <Button
           title={'Metas atuais'}
-          style={{ marginTop: 20, backgroundColor: colors.lightGray }}
+          style={{ marginTop: 20, backgroundColor: theme.colors.lightGray }}
           color={colors.paradisePink}
           onPress={() => {
             navigation.dispatch(
