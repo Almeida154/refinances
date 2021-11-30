@@ -42,9 +42,10 @@ import {
   LabelBalance,
   LabelValueBalance,
   ScrollBody,
-  ButtonAccessDetail,
 } from './styles';
 import { colors } from '../../../styles';
+import hexToRGB from '../../../helpers/hexToRgba';
+import shadowBox from '../../../helpers/shadowBox';
 
 interface PropsRenderSection {
   item: (ReadParcela[] | Transferencia[])[];
@@ -201,8 +202,8 @@ const Extrato = () => {
 
   return (
     <Container>
-      <ScrollBody>
-        <Header>
+      <View style={{ elevation: 0 }}>
+        <Header style={shadowBox(20, 0.2)}>
           <PeriodoAnterior onPress={() => updateDate(-1)}>
             <Feather
               size={widthPixel(60)}
@@ -228,6 +229,8 @@ const Extrato = () => {
             />
           </PeriodoPosterior>
         </Header>
+      </View>
+      <ScrollBody>
         <Body>
           <FlatList
             data={allDatas}
@@ -237,28 +240,32 @@ const Extrato = () => {
           />
         </Body>
       </ScrollBody>
-      <Footer>
-        <CardBalance>
-          <LabelBalance> Ganhos </LabelBalance>
-          <LabelValueBalance style={{ color: colors.slimyGreen }}>
-            {ganho}
-          </LabelValueBalance>
-        </CardBalance>
 
-        <CardBalance>
-          <LabelBalance> Gastos </LabelBalance>
-          <LabelValueBalance style={{ color: colors.redCrayola }}>
-            {gasto}
-          </LabelValueBalance>
-        </CardBalance>
+      <View style={{ elevation: 0 }}>
+        <Footer style={shadowBox(10, 1)}>
+          <CardBalance style={shadowBox(16, 0.3)}>
+            <LabelBalance>Ganhos</LabelBalance>
+            <LabelValueBalance style={{ color: colors.slimyGreen }}>
+              {ganho}
+            </LabelValueBalance>
+          </CardBalance>
 
-        <CardBalance>
-          <LabelBalance> Saldo atual </LabelBalance>
-          <LabelValueBalance style={{ color: '#999' }}>
-            {saldo}
-          </LabelValueBalance>
-        </CardBalance>
-      </Footer>
+          <CardBalance style={shadowBox(16, 0.3)}>
+            <LabelBalance>Gastos</LabelBalance>
+            <LabelValueBalance style={{ color: colors.redCrayola }}>
+              {gasto}
+            </LabelValueBalance>
+          </CardBalance>
+
+          <CardBalance style={shadowBox(16, 0.3)}>
+            <LabelBalance>Saldo atual</LabelBalance>
+            <LabelValueBalance
+              style={{ color: hexToRGB(colors.eerieBlack, 0.3) }}>
+              {saldo}
+            </LabelValueBalance>
+          </CardBalance>
+        </Footer>
+      </View>
 
       <Modalize ref={modalizeRefDetailEntry} backgroundColor={colors.cultured}>
         {/* @ts-ignore */}

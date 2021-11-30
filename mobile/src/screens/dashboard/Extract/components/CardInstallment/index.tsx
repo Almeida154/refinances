@@ -28,6 +28,7 @@ import {
 } from './styles';
 import { Checkbox } from 'react-native-paper';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+import { widthPixel } from '../../../../../helpers/responsiveness';
 
 type PropsCardInstallment = {
   item: ReadParcela;
@@ -75,8 +76,9 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
                 : item.lancamentoParcela.categoryLancamento.corCategoria,
           }}>
           <Icon
-            size={24}
-            color={'gray'}
+            size={widthPixel(60)}
+            // @ts-ignore
+            color={item.lancamentoParcela.categoryLancamento.corCategoria}
             stringIcon={
               typeof item.lancamentoParcela.categoryLancamento == 'string' ||
               !item.lancamentoParcela.categoryLancamento
@@ -110,6 +112,7 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
 
         <SectionCheck>
           <Checkbox
+            theme={{ dark: false }}
             status={checked ? 'checked' : 'unchecked'}
             onPress={() => {
               setChecked(!checked);
@@ -127,8 +130,6 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
               ? 'pago'
               : 'recebido'}
           </EditLabel>
-
-          <EditLabel></EditLabel>
         </SectionCheck>
       </SectionValues>
     </ContainerItem>
