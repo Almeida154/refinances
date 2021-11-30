@@ -22,7 +22,6 @@ import generateDates from '../../../helpers/generateDates';
 import DetailEntry from './components/DetailEntry';
 
 import Modalize from '../../../components/Modalize';
-import ViewButtons from '../../../components/ViewButtons';
 
 import { addMonths, toDate } from '../../../helpers/manipularDatas';
 
@@ -202,35 +201,34 @@ const Extrato = () => {
   const theme: any = useTheme()
 
   return (
-  <View style={{flex: 1}}>
     <Container>
       <ScrollBody>
-      <Header>
-        <PeriodoAnterior onPress={() => updateDate(-1)}>
-          <Feather
-            size={widthPixel(60)}
-            name={'chevron-left'}
-            color={theme.colors.darkGray}
-          />
-        </PeriodoAnterior>
+        <Header>
+          <PeriodoAnterior onPress={() => updateDate(-1)}>
+            <Feather
+              size={widthPixel(60)}
+              name={'chevron-left'}
+              color={colors.darkGray}
+            />
+          </PeriodoAnterior>
 
-        <PeriodoAtual>
-          <LabelPeriodo>
-            {converterNumeroParaData(
-              dateCurrent,
-              !(yearCurrent == dateCurrent.split('/')[2]),
-            )}
-          </LabelPeriodo>
-        </PeriodoAtual>
+          <PeriodoAtual>
+            <LabelPeriodo>
+              {converterNumeroParaData(
+                dateCurrent,
+                !(yearCurrent == dateCurrent.split('/')[2]),
+              )}
+            </LabelPeriodo>
+          </PeriodoAtual>
 
-        <PeriodoPosterior onPress={() => updateDate(1)}>
-          <Feather
-            size={widthPixel(60)}
-            name={'chevron-right'}
-            color={theme.colors.darkGray}
-          />
-        </PeriodoPosterior>
-      </Header>
+          <PeriodoPosterior onPress={() => updateDate(1)}>
+            <Feather
+              size={widthPixel(60)}
+              name={'chevron-right'}
+              color={colors.darkGray}
+            />
+          </PeriodoPosterior>
+        </Header>
         <Body>
           <FlatList
             data={allDatas}
@@ -263,15 +261,11 @@ const Extrato = () => {
         </CardBalance>
       </Footer>
 
-
-      <Modalize ref={modalizeRefDetailEntry} backgroundColor={theme.colors.cultured}>
+      <Modalize ref={modalizeRefDetailEntry} backgroundColor={colors.cultured}>
         {/* @ts-ignore */}
         <DetailEntry item={selectedItemExtract} />
       </Modalize>
     </Container>
-
-    <ViewButtons />
-    </View>
   );
 };
 

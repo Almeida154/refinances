@@ -1,9 +1,8 @@
-import styled from 'styled-components/native'
-
+import styled from 'styled-components/native';
 import { heightPixel, widthPixel } from '../../../helpers/responsiveness';
-
-import { Dimensions } from 'react-native'
-import { fonts, colors, metrics } from '../../../styles'
+import { fonts, colors, metrics } from '../../../styles';
+import { Dimensions, PixelRatio, Platform } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
@@ -13,12 +12,12 @@ export const Container = styled.View`
 
 // Header
 
-
 export const Header = styled.View`
   flex-direction: row;
   height: ${`${heightPixel(220)}px`};
   justify-content: center;
   align-items: center;
+  background-color: ${colors.white};
 `;
 
 export const PeriodoAnterior = styled.TouchableOpacity`
@@ -46,19 +45,6 @@ export const LabelPeriodo = styled.Text`
   color: ${(props : any) => props.theme.colors.black};
 `;
 
-export const Body = styled.View`
-    background-color: ${(props : any) => props.theme.colors.back};
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 10px;
-`
-
-export const ScrollBody = styled.ScrollView`
-    height: ${`${Dimensions.get('window').height * 0.97}px`};
-    width: 100%;
-    background-color: ${(props : any) => props.theme.colors.back};
-`
-
 export const CardItem = styled.View`
     width: 100%;
     display: flex;
@@ -74,11 +60,11 @@ export const Section = styled.View`
 `
 
 export const Footer = styled.View`
-    display: flex;
     background-color: ${(props : any) => props.theme.colors.white};
     flex-direction: row;
     justify-content: space-between;
-    padding: 20px;
+    padding: ${`${metrics.default.boundaries / 1.6}px`};
+    padding-bottom: ${`${metrics.default.boundaries * 1.2}px`};
     bottom: 0;
     width: 100%;
     height: auto;
@@ -115,24 +101,17 @@ export const ContainerPicker = styled.View`
     background-color: ${(props : any) => props.theme.colors.aliceBlue};
 `
 
-export const WrapperHorizontal = styled.View`
-    height: 100;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    color: black;
-`
 
-export const ButtonAccessDetail = styled.TouchableHighlight`
-    justify-content: center;
-    align-items: center;
-    margin-top: 10;
-    margin-bottom: 10;
-    padding-top: 10;
-    padding-bottom: 10;
-    padding-left: 30;
-    padding-right: 30;
-    height: 50;
-    border-width: 3;
-    border-radius: 10;
-`
+///
+export const Body = styled.View`
+  background-color: ${(props : any) => props.theme.colors.back};
+  padding: ${`${metrics.default.boundaries / 1.6}px`};
+`;
+
+export const ScrollBody = styled.ScrollView`
+    height: ${`${Dimensions.get('window').height * 0.97}px`};
+    width: 100%;
+    background-color: ${(props : any) => props.theme.colors.back};
+`;
+
+
