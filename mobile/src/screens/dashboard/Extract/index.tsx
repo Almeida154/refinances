@@ -22,6 +22,7 @@ import generateDates from '../../../helpers/generateDates';
 import DetailEntry from './components/DetailEntry';
 
 import Modalize from '../../../components/Modalize';
+import ViewButtons from '../../../components/ViewButtons';
 
 import { addMonths, toDate } from '../../../helpers/manipularDatas';
 
@@ -200,6 +201,7 @@ const Extrato = () => {
   }
 
   return (
+  <View style={{flex: 1}}>
     <Container>
       <ScrollBody>
         <Header>
@@ -265,6 +267,9 @@ const Extrato = () => {
         <DetailEntry item={selectedItemExtract} />
       </Modalize>
     </Container>
+
+    <ViewButtons />
+    </View>
   );
 };
 
