@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import retornarIdDoUsuario from '../../../../helpers/retornarIdDoUsuario'
 
 import { Picker, PickerProps } from '@react-native-picker/picker';
-
+import { useTheme } from 'styled-components/native';
 import { StyleSheet, View } from 'react-native';
 
 import { Conta, UseContas } from '../../../../contexts/AccountContext';
@@ -60,6 +60,7 @@ const PickerContas: React.FC<PropsPickerContas> = ({
       console.log('Erro ao carregar as contas: ', error);
     }
   }, []);
+  const theme: any = useTheme()
 
   return (
     <View style={styles.containerPicker}>
@@ -70,8 +71,8 @@ const PickerContas: React.FC<PropsPickerContas> = ({
           label={label ? label : 'Conta'}
           value={conta == null ? '' : conta.descricao}
           placeholder="Selecione uma conta"
-          placeholderTextColor={colors.silver}
-          colorLabel={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}
+          placeholderTextColor={theme.colors.silver}
+          colorLabel={tipoLancamento == 'despesa' ? theme.colors.paradisePink : theme.colors.budGreen}
           editable={false}
         />
       <Picker
@@ -86,7 +87,7 @@ const PickerContas: React.FC<PropsPickerContas> = ({
             return (
               <Picker.Item
                 key={index}
-                style={{ color: colors.white, fontFamily: fonts.familyType.semiBold }}
+                style={{ color: theme.colors.white, fontFamily: fonts.familyType.semiBold, }}
                 label={item.descricao}
                 value={index}
               />
@@ -106,7 +107,6 @@ const styles = StyleSheet.create({
     display: 'none',
     width: '100%',
     height: 50,
-    color: colors.davysGrey,
   },
   pickerItem: {
     backgroundColor: 'white',

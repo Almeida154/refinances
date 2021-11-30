@@ -13,7 +13,7 @@ import Icon from '../../../../../helpers/gerarIconePelaString';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import { colors, fonts, metrics } from '../../../../../styles';
-
+import { useTheme } from 'styled-components/native';
 import {
   ContainerItem,
   SectionIcon,
@@ -62,7 +62,7 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
 
     await handleReadByUserContas(await retornarIdDoUsuario());
   }
-
+  const theme: any = useTheme()
   return (
     <ContainerItem onPress={openModalize}>
       <SectionLancamento>
@@ -102,8 +102,8 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
         <LabelValue
           style={
             item.lancamentoParcela.tipoLancamento == 'despesa'
-              ? { color: colors.paradisePink }
-              : { color: colors.budGreen }
+              ? { color: theme.colors.paradisePink }
+              : { color: theme.colors.budGreen }
           }>
           {item.valorParcela.toFixed(2).replace('.', ',')}
         </LabelValue>
@@ -117,10 +117,10 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
             }}
             color={
               item.lancamentoParcela.tipoLancamento == 'despesa'
-                ? colors.paradisePink
-                : colors.slimyGreen
+                ? theme.colors.paradisePink
+                : theme.colors.slimyGreen
             }
-            uncheckedColor={colors.jet}
+            uncheckedColor={theme.colors.jet}
           />
           <EditLabel>
             {item.lancamentoParcela.tipoLancamento == 'despesa'

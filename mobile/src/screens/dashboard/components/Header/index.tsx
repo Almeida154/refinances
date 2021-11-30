@@ -12,7 +12,7 @@ import {
 } from './styles';
 
 import { colors } from '../../../../styles';
-
+import { useTheme } from 'styled-components/native'; 
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
 
@@ -39,12 +39,14 @@ const Header: React.FC<IProps> = ({
   isShort,
   accent,
 }) => {
+  const theme: any = useTheme()
+
   return (
     <Container
       style={
         hasShadow
           ? {
-              backgroundColor: colors.white,
+              backgroundColor: theme.colors.white,
               shadowColor: 'rgba(0, 0, 0, .3)',
               shadowOffset: { width: 0, height: 0 },
               shadowOpacity: 0.08,
@@ -59,7 +61,7 @@ const Header: React.FC<IProps> = ({
             style={{ marginLeft: -6, opacity: 0.3 }}
             name="md-arrow-back-sharp"
             size={40}
-            color={colors.davysGrey}
+            color={theme.colors.davysGrey}
             onPress={onBackButton}
           />
           {step && <Step style={accent ? { color: accent } : {}}>{step}</Step>}

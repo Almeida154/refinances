@@ -8,7 +8,7 @@ export const Title = styled.Text`
   padding-bottom: 0;
   font-size: ${`${fonts.size.big}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
 `;
 
 export const Subtitle = styled.Text`
@@ -17,7 +17,7 @@ export const Subtitle = styled.Text`
   font-size: ${`${fonts.size.small}px`};
   font-family: ${fonts.familyType.semiBold};
   line-height: ${`${fonts.size.small + widthPixel(8)}px`};
-  color: ${hexToRGB(colors.davysGrey, 0.4)};
+  color: ${(props: any) => hexToRGB(props.theme.colors.davysGrey, 0.4)};
 `;
 
 interface BodyProps {
@@ -36,22 +36,22 @@ export const SearchContainer = styled.View`
 `;
 
 export const Search = styled.TextInput`
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   align-self: center;
   width: 100%;
   height: ${`${heightPixel(120)}px`};
   padding-left: ${`${widthPixel(48)}px`};
   padding-right: ${`${heightPixel(120 + 48)}px`};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   font-family: ${fonts.familyType.bold};
   border-bottom-width: ${`${heightPixel(6)}px`};
-  border-color: ${hexToRGB(colors.redCrayola, 0.4)};
+  border-color: ${(props: any) => hexToRGB(props.theme.colors.redCrayola, 0.4)};
 `;
 
 export const SearchDeleteButton = styled.TouchableOpacity`
   width: ${`${heightPixel(120)}px`};
   height: ${`${heightPixel(120)}px`};
-  background-color: ${hexToRGB(colors.diffWhite, 0.9)};
+  background-color: ${(props: any) => hexToRGB(props.theme.colors.diffWhite, 0.9)};
   position: absolute;
   right: 0;
   margin: 0 ${`${metrics.default.boundaries}px`};

@@ -5,7 +5,7 @@ import { fonts, colors, metrics } from '../../../../../styles';
 export const CategoryStatsCard = styled.View`
   margin-top: ${`${metrics.default.boundaries / 1.6}`};
   position: relative;
-  background-color: ${colors.diffWhite};
+  background-color: ${(props : any) => props.theme.colors.diffWhite};
   border-radius: ${`${widthPixel(24)}px`};
 `;
 
@@ -22,7 +22,7 @@ export const CategoryStatsHeader = styled.View`
 export const CategoryStatsName = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   opacity: 0.7;
 `;
 
@@ -34,13 +34,13 @@ export const CategoryStatsBody = styled.View`
 
 export const CategoriesContainer = styled.View`
   width: 100%;
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   border-radius: ${`${widthPixel(24)}px`};
 `;
 
 export const Category = styled.View`
   height: ${`${heightPixel(220)}px`};
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   flex-direction: row;
 
   padding: 0 ${`${metrics.default.boundaries / 1.6}px`};
@@ -65,7 +65,7 @@ export const CategoryName = styled.View`
 export const Name = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   opacity: 0.7;
 `;
 
@@ -79,12 +79,12 @@ export const CategoryData = styled.View`
 export const Total = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
   font-family: ${fonts.familyType.black};
-  color: ${colors.redCrayola};
+  color: ${(props : any) => props.theme.colors.redCrayola};
 `;
 
 export const Percent = styled.Text`
   font-size: ${`${fonts.size.small}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   opacity: 0.3;
 `;

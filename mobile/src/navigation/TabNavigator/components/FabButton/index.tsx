@@ -17,6 +17,7 @@ import shadowBox from '../../../../helpers/shadowBox';
 import { Container, TouchableBtn } from './styles';
 import { UseDadosTemp } from '../../../../contexts/TemporaryDataContext';
 import { StackActions } from 'react-navigation';
+import { useTheme } from 'styled-components/native';
 
 const FabButton = () => {
   const [animation] = useState(new Animated.Value(0));
@@ -102,6 +103,7 @@ const FabButton = () => {
       },
     ],
   };
+  const theme: any = useTheme()
 
   return (
     <Container style={{ marginHorizontal: widthPixel(130) }}>
@@ -116,7 +118,7 @@ const FabButton = () => {
             <TouchableBtn onPress={() => console.log('form')}>
           <MaterialCommunity
             name="pencil"
-            color={colors.redCrayola}
+            color={theme.colors.redCrayola}
             size={widthPixel(50)}
             />
             </TouchableBtn>
@@ -134,7 +136,7 @@ const FabButton = () => {
                   <TouchableBtn activeOpacity={0.8} onPress={() => console.log('voice')}>
           <MaterialIcons
             name="keyboard-voice"
-            color={colors.redCrayola}
+            color={theme.colors.redCrayola}
             size={widthPixel(50)}
             />
       </TouchableBtn>
@@ -151,7 +153,7 @@ const FabButton = () => {
             <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.8}>
           <Entypo
             name="camera"
-            color={colors.redCrayola}
+            color={theme.colors.redCrayola}
             size={widthPixel(50)}
           />
       </TouchableBtn>
@@ -168,12 +170,12 @@ const FabButton = () => {
             rotation,
             shadowBox(14, 0.5),
             {
-              backgroundColor: isOpen ? colors.redCrayola : colors.white,
+              backgroundColor: isOpen ? theme.colors.redCrayola : theme.colors.white,
             },
           ]}>
           <Entypo
             name="plus"
-            color={isOpen ? colors.white : colors.redCrayola}
+            color={isOpen ? theme.colors.white : theme.colors.redCrayola}
             size={widthPixel(80)}
           />
         </Animated.View>
@@ -181,7 +183,6 @@ const FabButton = () => {
     </Container>
   );
 };
-
 export default FabButton;
 
 const styles = StyleSheet.create({
@@ -191,7 +192,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: widthPixel(210 / 2),
-    backgroundColor: colors.white,
     position: 'absolute'
   },
 
@@ -203,7 +203,6 @@ const styles = StyleSheet.create({
 
   menu: {
     position: 'absolute',
-    backgroundColor: colors.white,
   },
 
   btnPlus: {

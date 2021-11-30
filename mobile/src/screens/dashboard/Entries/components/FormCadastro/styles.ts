@@ -8,7 +8,7 @@ export const ContainerForm = styled.View`
     flex-direction: column;
     width: 100%;
     padding: 5%;
-    background: ${colors.white};
+    background: ${(props : any) => props.theme.colors.white};
 `
 
 export const InputControl = styled.View`
@@ -29,9 +29,9 @@ export const InputControlCheckBox = styled.View`
 export const TextInput = styled.TextInput`
     border-bottom-width: 2px;
     width: 100%;
-    color: ${colors.battleGray};
+    color: ${(props : any) => props.theme.colors.battleGray};
     height: 40px;
-    border-color: ${colors.battleGray};
+    border-color: ${(props : any) => props.theme.colors.battleGray};
     opacity: 0.7;    
 
 `
@@ -39,9 +39,9 @@ export const TextInput = styled.TextInput`
 export const TextInputValor = styled.TextInput`
     border-bottom-width: 2px;
     width: 100%;
-    color: ${colors.battleGray};
+    color: ${(props : any) => props.theme.colors.battleGray};
     height: 60px;
-    border-color: ${colors.battleGray};
+    border-color: ${(props : any) => props.theme.colors.battleGray};
     opacity: 0.7;    
     font-size: 30px;
 `

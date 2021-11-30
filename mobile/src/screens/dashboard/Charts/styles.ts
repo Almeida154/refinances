@@ -5,7 +5,7 @@ import { fonts, colors, metrics } from '../../../styles';
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
-  background: ${colors.back};
+  background: ${(props : any) => props.theme.colors.back};
 `;
 
 // Header
@@ -32,19 +32,19 @@ export const PeriodoPosterior = styled.TouchableOpacity`
 
 export const LabelPeriodo = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
-  background-color: ${colors.platinum};
+  background-color: ${(props : any) => props.theme.colors.platinum};
   padding-top: ${`${widthPixel(10)}px`};
   padding-bottom: ${`${widthPixel(10)}px`};
   padding-left: ${`${widthPixel(50)}px`};
   padding-right: ${`${widthPixel(50)}px`};
   border-radius: ${`${widthPixel(80)}px`};
   font-size: ${`${fonts.size.big}px`};
-  color: ${colors.darkGray};
+  color: ${(props : any) => props.theme.colors.darkGray};
 `;
 
 export const TopData = styled.View`
   flex-direction: row;
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   height: ${`${heightPixel(280)}px`};
   border-radius: ${`${widthPixel(60)}px`};
 `;
@@ -58,14 +58,14 @@ export const TopDataItem = styled.View`
 export const TopDataTitle = styled.Text`
   font-size: ${`${fonts.size.big}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
 `;
 
 export const TopDataBalance = styled.Text`
   font-size: ${`${fonts.size.medium - widthPixel(8)}px`};
   font-family: ${fonts.familyType.black};
   margin-top: ${`${heightPixel(-18)}px`};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
 `;
 
 export const TopDataDescription = styled.Text`
@@ -73,7 +73,7 @@ export const TopDataDescription = styled.Text`
   font-family: ${fonts.familyType.bold};
   margin-top: ${`${heightPixel(20)}px`};
   opacity: 0.3;
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   margin-right: ${`${widthPixel(26)}px`};
 `;
 
@@ -90,7 +90,7 @@ export const CountCardsContainer = styled.View`
 
 export const CountCard = styled.View`
   margin-top: ${`${metrics.default.boundaries / 1.6}px`};
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   flex: 1;
   height: ${`${heightPixel(280)}px`};
   border-radius: ${`${widthPixel(24)}px`};
@@ -102,12 +102,12 @@ export const Count = styled.Text`
   font-size: ${`${fonts.size.super + widthPixel(18)}px`};
   font-family: ${fonts.familyType.light};
   opacity: 0.5;
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
 `;
 
 export const CountDescription = styled.Text`
   font-size: ${`${fonts.size.small}px`};
   font-family: ${fonts.familyType.bold};
   opacity: 0.3;
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
 `;

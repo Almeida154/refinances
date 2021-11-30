@@ -5,7 +5,7 @@ import { fonts, colors, metrics } from '../../../../../styles';
 export const GeneralStatsCard = styled.View`
   position: relative;
   height: ${`${heightPixel(1000)}px`};
-  background-color: ${colors.diffWhite};
+  background-color: ${(props : any) => props.theme.colors.diffWhite};
   border-radius: ${`${widthPixel(24)}px`};
 `;
 
@@ -22,7 +22,7 @@ export const GeneralStatsHeader = styled.View`
 export const GeneralStatsName = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   opacity: 0.7;
 `;
 
@@ -38,7 +38,7 @@ export const GeneralStatsFooter = styled(GeneralStatsCard)`
   bottom: 0;
   width: 100%;
   height: ${`${heightPixel(250)}px`};
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
 `;
 
 export const GeneralStatsFooterItem = styled.View`
@@ -55,7 +55,7 @@ export const GSFIBalance = styled.Text`
 export const GSFIDescription = styled.Text`
   font-size: ${`${fonts.size.small}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   margin-top: ${`${heightPixel(-10)}px`};
   opacity: 0.4;
 `;

@@ -26,7 +26,7 @@ import Modalize from '../../../components/Modalize';
 import { addMonths, toDate } from '../../../helpers/manipularDatas';
 
 import SectionByDate from './components/SectionByDate';
-
+import { useTheme } from 'styled-components/native'; 
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import Feather from 'react-native-vector-icons/Feather';
 import {
@@ -198,6 +198,7 @@ const Extrato = () => {
     loadParcelas(newDate);
     loadTransferencias(newDate);
   }
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -207,7 +208,7 @@ const Extrato = () => {
           <Feather
             size={widthPixel(60)}
             name={'chevron-left'}
-            color={colors.darkGray}
+            color={theme.colors.darkGray}
           />
         </PeriodoAnterior>
 
@@ -224,7 +225,7 @@ const Extrato = () => {
           <Feather
             size={widthPixel(60)}
             name={'chevron-right'}
-            color={colors.darkGray}
+            color={theme.colors.darkGray}
           />
         </PeriodoPosterior>
       </Header>
@@ -240,14 +241,14 @@ const Extrato = () => {
       <Footer>
         <CardBalance>
           <LabelBalance> Ganhos </LabelBalance>
-          <LabelValueBalance style={{ color: colors.slimyGreen }}>
+          <LabelValueBalance style={{ color: theme.colors.slimyGreen }}>
             {ganho}
           </LabelValueBalance>
         </CardBalance>
 
         <CardBalance>
           <LabelBalance> Gastos </LabelBalance>
-          <LabelValueBalance style={{ color: colors.redCrayola }}>
+          <LabelValueBalance style={{ color: theme.colors.redCrayola }}>
             {gasto}
           </LabelValueBalance>
         </CardBalance>
@@ -263,7 +264,7 @@ const Extrato = () => {
       <Modalize
         ref={modalizeRefDetailEntry}
         title=""
-        backgroundColor={colors.cultured}>
+        backgroundColor={theme.colors.cultured}>
         {/* @ts-ignore */}
         <DetailEntry item={selectedItemExtract} />
       </Modalize>
@@ -274,7 +275,6 @@ const Extrato = () => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
-    color: colors.white,
   },
 });
 export default Extrato;

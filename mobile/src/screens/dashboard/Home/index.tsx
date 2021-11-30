@@ -35,6 +35,7 @@ import CreateCard from './components/CreateCard';
 import GoalsCard from './components/GoalsCard';
 import CategoriesCard from './components/CategoriesCard';
 import FabButton from '../../../navigation/TabNavigator/components/FabButton';
+import { useTheme } from 'styled-components/native';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
@@ -99,6 +100,8 @@ const Home = () => {
     return `Boa noite`;
   };
 
+  const theme : any = useTheme()
+
   return (
     <Container>
       <Header>
@@ -118,7 +121,7 @@ const Home = () => {
             <Feather
               name="settings"
               size={widthPixel(50)}
-              color={colors.battleGray}
+              color={theme.colors.battleGray}
             />
           </ConfigContainer>
 

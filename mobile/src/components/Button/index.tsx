@@ -2,7 +2,7 @@ import React from 'react';
 import { colors } from '../../styles';
 import { Container, Text } from './styles';
 import { TouchableOpacityProps } from 'react-native';
-
+import { useTheme } from 'styled-components/native';
 interface IProps extends TouchableOpacityProps {
   onPress: () => void;
   title?: string;
@@ -19,9 +19,10 @@ const Button: React.FC<IProps> = ({
   lastOne,
   ...rest
 }) => {
+  const theme: any = useTheme()
   return (
     <Container {...rest} onPress={onPress} lastOne={lastOne != undefined}>
-      <Text style={color ? { color } : { color: colors.darkGray }}>
+      <Text style={color ? { color } : { color: theme.colors.darkGray }}>
         {title}
       </Text>
     </Container>

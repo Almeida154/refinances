@@ -27,11 +27,12 @@ import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 import { UseMetas } from '../../../../../contexts/GoalsContext';
 import { StackActions } from '@react-navigation/native';
 import shadowBox from '../../../../../helpers/shadowBox';
+import { useTheme } from 'styled-components/native';
 
 const GoalsCard = () => {
   const { navigation } = UseDadosTemp();
   const { metas, handleReadByUserMetas } = UseMetas();
-
+ const theme: any = useTheme()
   return (
     <Container style={shadowBox(30, 0.3)}>
       <TopSection>
@@ -52,14 +53,14 @@ const GoalsCard = () => {
       </GoalsContainer>
 
       <Button
-        style={{ backgroundColor: colors.lightGray }}
+        style={{ backgroundColor: theme.colors.lightGray }}
         onPress={() =>
           navigation.dispatch(
             StackActions.replace('GoalsStack', { screen: 'GoalList' }),
           )
         }
         title="Gerenciar"
-        color={colors.silver}
+        color={theme.colors.silver}
         lastOne
       />
     </Container>

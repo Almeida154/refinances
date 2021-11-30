@@ -13,7 +13,7 @@ export const ContainerCardParcela = styled.SafeAreaView`
 export const TituloCardParcela = styled.Text`
     font-size: 17px;
     font-family: ${fonts.familyType.bold};
-    color: ${colors.jet};
+    color: ${(props : any) => props.theme.colors.jet};
 `
 export const LabelCardParcela = styled.Text`
 
@@ -21,7 +21,7 @@ export const LabelCardParcela = styled.Text`
 
 export const InputCardParcela = styled.TextInput`
     font-size: 17px;
-    color: ${colors.jet};
+    color: ${(props : any) => props.theme.colors.jet};
 `
 
 export const InputControlStatus = styled.View`

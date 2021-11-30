@@ -6,7 +6,7 @@ import hexToRGB from '../../../../../helpers/hexToRgba';
 export const Container = styled.View`
     display: flex;
     
-    background-color: ${colors.culture};
+    background-color: ${(props : any) => props.theme.colors.culture};
     padding-top: 40%;
 `
 
@@ -16,22 +16,22 @@ export const Form = styled.View`
     height: 100%;
 `
 export const InputControl = styled.View`    
-    background-color: ${colors.white};
+    background-color: ${(props : any) => props.theme.colors.white};
     margin-bottom: 20px;
     border-radius: 10px;
     padding: 10px;
 `
 export const LabelForm = styled.Text`
-    color: ${colors.paradisePink};
+    color: ${(props : any) => props.theme.colors.paradisePink};
     font-weight: bold;
     font-size: 18px;
 `
 export const TextInputAdd = styled.TextInput`
-    color: ${colors.black};
+    color: ${(props : any) => props.theme.colors.black};
 `
 
 export const ButtonAdd = styled.TouchableHighlight`
-    background-color: ${colors.blackSilver};
+    background-color: ${(props : any) => props.theme.colors.blackSilver};
     width: 100%;
     height: 50px;
     justify-content: center;
@@ -39,7 +39,7 @@ export const ButtonAdd = styled.TouchableHighlight`
 `
 
 export const TextButton = styled.Text`
-    color: ${colors.black};
+    color: ${(props : any) => props.theme.colors.black};
     font-size: 18px;
 `
 
@@ -103,7 +103,7 @@ export const Icon = styled.TouchableOpacity<IconProps>`
   height: 60px;
   border-radius: 30px;
   border-width: 5px;
-  border-color: ${colors.platinum};
-  background-color: ${colors.diffWhite};
+  border-color: ${(props : any) => props.theme.colors.platinum};
+  background-color: ${(props : any) => props.theme.colors.diffWhite};
   margin-right: ${props => (props.mr ? '10px' : 0)};
 `;

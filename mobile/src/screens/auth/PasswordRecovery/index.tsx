@@ -54,7 +54,7 @@ const RecuperarConta = ({navigation}: PropsNavigation) => {
   
   return (
     <Container>
-      <StatusBar c backgroundColor="transparent" />
+      <StatusBar backgroundColor="transparent" />
       <Header>
         <BackArrowPink
           onPress={() => console.log('back')}
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     color: colors.battleGray,
     height: 40,
-    borderBottomColor: colors.oxfordGray
+    borderBottomColor: colors.oxfordBlue
   },
   inputControl: {
     display: 'flex',

@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef } from 'react';
 
 import { TextInput, TextInputProps } from 'react-native';
-
+import { useTheme } from 'styled-components/native'; 
 import {
   Container,
   Writting,
@@ -61,6 +61,7 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
   },
   ref: any,
 ) => {
+  const theme: any = useTheme()
   return (
     <>
       <Container

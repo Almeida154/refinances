@@ -23,7 +23,7 @@ import global from '../../global';
 import doubleToCurrency from '../../helpers/doubleToCurrency';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import shadowBox from '../../helpers/shadowBox';
-
+import { useTheme } from 'styled-components/native';
 interface IProps extends TouchableOpacityProps {
   account?: Conta;
   borderColor?: string;
@@ -34,6 +34,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
     acc => acc.description == account?.instituicao,
   );
 
+  const theme: any = useTheme()
   return (
     <Container style={shadowBox(10, 0.26)}>
       <Content {...rest} activeOpacity={1}>
@@ -77,7 +78,7 @@ const AccountItem: React.FC<IProps> = ({ account, ...rest }) => {
           <MaterialCommunityIcons
             name="lead-pencil"
             size={widthPixel(60)}
-            color={hexToRGB(colors.davysGrey, 0.2)}
+            color={hexToRGB(theme.colors.davysGrey, 0.2)}
           />
         </Icon>
       </Content>

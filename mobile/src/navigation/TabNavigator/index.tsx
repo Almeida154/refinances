@@ -36,6 +36,7 @@ import { StackActions } from '@react-navigation/native';
 import hexToRGB from '../../helpers/hexToRgba';
 
 import FabButton from './components/FabButton';
+import { useTheme } from 'styled-components/native';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
@@ -60,7 +61,7 @@ type PropsCustomBar = {
           width: widthPixel(200),
           height: widthPixel(200),
           borderRadius: widthPixel(200 / 2),
-          backgroundColor: colors.white,
+          backgroundColor: theme.colors.white,
           marginTop: widthPixel(-(200 / 2)),
         },
         shadowBox(14, 0.5),
@@ -84,7 +85,7 @@ const TabNavigator = () => {
   const closeModalize = () => {
     modalizeRef.current?.close();
   };
-
+  const theme: any = useTheme()
   return (
     <>
       <Modalize
@@ -98,8 +99,8 @@ const TabNavigator = () => {
               StackActions.replace('Lancamentos', { screen: 'Main' }),
             )
           }
-          backgroundColor={colors.platinum}
-          color={colors.darkGray}
+          backgroundColor={theme.colors.platinum}
+          color={theme.colors.darkGray}
         />
         <Button
           title="Inserção por voz"
@@ -109,15 +110,15 @@ const TabNavigator = () => {
             )
           }
           style={{ marginBottom: heightPixel(170) }}
-          backgroundColor={colors.platinum}
-          color={colors.darkGray}
+          backgroundColor={theme.colors.platinum}
+          color={theme.colors.darkGray}
         />
       </Modalize>
 
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: theme.colors.white,
             paddingBottom: 10,
             paddingTop: 10,
             height: heightPixel(200),
@@ -128,8 +129,8 @@ const TabNavigator = () => {
             marginTop: 0,
           },
           headerShown: false,
-          tabBarActiveTintColor: colors.redCrayola,
-          tabBarInactiveTintColor: colors.silver,
+          tabBarActiveTintColor: theme.colors.redCrayola,
+          tabBarInactiveTintColor: theme.colors.silver,
         }}>
         <Tab.Screen
           name="Home"
@@ -169,7 +170,7 @@ const TabNavigator = () => {
             tabBarIcon: () => (
               <Entypo
                 name="plus"
-                color={colors.redCrayola}
+                color={theme.colors.redCrayola}
                 size={widthPixel(65)}
               />
             ),

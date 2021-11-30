@@ -26,7 +26,7 @@ import {
 import hexToRGB from '../../../../../helpers/hexToRgba';
 import Icon from '../../../../../helpers/gerarIconePelaString';
 import Button from '../../../../../components/Button';
-
+import { useTheme } from 'styled-components/native'; 
 type CategoryStat = {
   accent: string;
   icon: string;
@@ -40,6 +40,8 @@ interface IProps {
 }
 
 const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
+  const theme: any = useTheme()
+
   const [data, setData] = useState({
     dataSets: [
       {
@@ -52,18 +54,18 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
         ],
         config: {
           colors: [
-            processColor(colors.deepSafron),
-            processColor(colors.fireBrick),
-            processColor(colors.rainsBlack),
-            processColor(colors.budGreen),
-            processColor(colors.battleGray),
+            processColor(theme.colors.deepSafron),
+            processColor(theme.colors.fireBrick),
+            processColor(theme.colors.rainsBlack),
+            processColor(theme.colors.budGreen),
+            processColor(theme.colors.battleGray),
           ],
           valueTextSize: 20,
           valueTextColor: processColor('transparent'),
           sliceSpace: 5,
           selectionShift: 13,
           valueFormatter: "#.#'%'",
-          valueLineColor: processColor(colors.white),
+          valueLineColor: processColor(theme.colors.white),
           valueLinePart1Length: 0.5,
         },
         label: '',
@@ -102,7 +104,7 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
           chartDescription={{ text: '' }}
           holeColor={processColor('transparent')}
           transparentCircleRadius={45}
-          transparentCircleColor={processColor(hexToRGB(colors.white, 0.1))}
+          transparentCircleColor={processColor(hexToRGB(theme.colors.white, 0.1))}
           maxAngle={360}
         />
       </CategoryStatsBody>
@@ -117,7 +119,7 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
                 borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
                 borderBottomWidth:
                   index + 1 != categories.length ? heightPixel(6) : 0,
-                borderBottomColor: colors.cultured,
+                borderBottomColor: theme.colors.cultured,
               }}>
               <CategoryIcon
                 style={{
@@ -150,9 +152,9 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
           <Button
             onPress={() => console.log('Vai pra todas')}
             style={{
-              backgroundColor: colors.lightGray,
+              backgroundColor: theme.colors.lightGray,
             }}
-            color={hexToRGB(colors.davysGrey, 0.5)}
+            color={hexToRGB(theme.colors.davysGrey, 0.5)}
             title="Ver tudo"
             lastOne
           />

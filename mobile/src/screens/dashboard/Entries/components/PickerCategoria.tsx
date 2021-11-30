@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Picker } from '@react-native-picker/picker'
 import {UseCategories} from '../../../../contexts/CategoriesContext'
-
+import { useTheme } from 'styled-components/native'; 
 import { StyleSheet, View } from 'react-native'
 import { color } from 'react-native-reanimated';
 import { colors } from '../../../../styles';
@@ -48,6 +48,7 @@ const PickerCategoria = ({categoria, setCategoria, tipoCategoria}: PropsPickerCa
             console.log('Erro ao carregar as categorias: ', error)
         }
     }, [])
+    const theme: any = useTheme()
 
     return (
         <View style={styles.containerPicker}>
@@ -81,13 +82,13 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 50,
         borderBottomWidth: 2,
-        borderColor: colors.battleGray,
+        borderColor: theme.colors.battleGray,
         opacity: 0.7
     },
     picker: {
         width: '100%',
         height: 50,
-        color: colors.davysGrey,
+        color: theme.colors.davysGrey,
 
     },
     pickerItem: {

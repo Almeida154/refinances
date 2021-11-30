@@ -8,7 +8,7 @@ import { fonts, colors, metrics } from '../../../styles'
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
-  background: ${colors.back};
+  background: ${(props : any) => props.theme.colors.back};
 `;
 
 // Header
@@ -36,18 +36,18 @@ export const PeriodoPosterior = styled.TouchableOpacity`
 
 export const LabelPeriodo = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
-  background-color: ${colors.platinum};
+  background-color: ${(props : any) => props.theme.colors.platinum};
   padding-top: ${`${widthPixel(10)}px`};
   padding-bottom: ${`${widthPixel(10)}px`};
   padding-left: ${`${widthPixel(50)}px`};
   padding-right: ${`${widthPixel(50)}px`};
   border-radius: ${`${widthPixel(80)}px`};
   font-size: ${`${fonts.size.big}px`};
-  color: ${colors.darkGray};
+  color: ${(props : any) => props.theme.colors.darkGray};
 `;
 
 export const Body = styled.View`
-    background-color: ${colors.white};
+    background-color: ${(props : any) => props.theme.colors.white};
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 10px;
@@ -74,7 +74,7 @@ export const Section = styled.View`
 
 export const Footer = styled.View`
     display: flex;
-    background-color: ${colors.white};
+    background-color: ${(props : any) => props.theme.colors.white};
     flex-direction: row;
     justify-content: space-between;
     padding: 20px;
@@ -88,13 +88,13 @@ export const CardBalance = styled.View`
     align-items: center;
     justify-content: center;
     padding: 20px 10px;
-    background-color: ${colors.cultured};
+    background-color: ${(props : any) => props.theme.colors.cultured};
     border-radius: 10px;
 `
 export const LabelBalance = styled.Text`
     font-family: ${`${fonts.familyType.bold}`};
     font-size: ${`${fonts.size.small}px`};
-    color: ${colors.darkGray};
+    color: ${(props : any) => props.theme.colors.darkGray};
 `
 export const LabelValueBalance = styled.Text`
     font-family: ${`${fonts.familyType.bold}`};
@@ -111,7 +111,7 @@ export const ContainerPicker = styled.View`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    background-color: ${colors.aliceBlue};
+    background-color: ${(props : any) => props.theme.colors.aliceBlue};
 `
 
 export const WrapperHorizontal = styled.View`
