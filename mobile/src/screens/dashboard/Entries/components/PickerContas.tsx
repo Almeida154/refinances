@@ -38,7 +38,6 @@ const PickerContas: React.FC<PropsPickerContas> = ({
 
   const onChangePicker = (index: number) => {
     
-    console.log("index,",index)
     setSelectedItem(index)
     changeAccount(contas == null ? null : contas[index]);
   };

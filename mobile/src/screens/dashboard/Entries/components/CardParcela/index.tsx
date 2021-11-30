@@ -54,7 +54,6 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
         const aux = dataParcelas.slice()
         aux[item.indexOfLancamento].valorParcela = text == '' ? NaN : parseFloat(text)
         
-        console.log(aux)
         setDataParcelas(aux)                
     }
 
@@ -72,7 +71,6 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
             const aux = dataParcelas.slice()
             aux[item.indexOfLancamento].contaParcela = conta        
             
-            console.log(aux)
             setDataParcelas(aux)
         }
     }

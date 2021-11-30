@@ -84,8 +84,6 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
     updateUserProps,
   } = UseAuth();
 
-  const { handleAdicionarConfigByUser } = UseConfig;
-
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backAction);
     return () =>

@@ -29,7 +29,7 @@ export type PropsNavigation = {
 };
 
 const ConfirmPassword = ({ navigation }: PropsNavigation) => {
-  const [confirmPassword, setConfirmPassword] = useState('ttt555');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [securePassword, setSecurePassword] = useState(true);

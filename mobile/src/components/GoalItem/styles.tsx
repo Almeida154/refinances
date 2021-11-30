@@ -3,7 +3,7 @@ import { heightPixel, widthPixel } from '../../helpers/responsiveness';
 import { fonts, colors, metrics } from '../../styles';
 
 export const Goal = styled.TouchableOpacity`
-  background-color: ${(props : any) => props.theme.colors.cultured};
+  background-color: ${(props : any) => props.theme.colors.culture};
   margin-bottom: ${`${heightPixel(60)}px`};
   padding: ${`${metrics.default.boundaries / 2}px`};
   border-radius: ${widthPixel(20)};

@@ -97,7 +97,6 @@ const Config = () => {
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
-      console.log(await retornarIdDoUsuario());
       // O avatar é a base64 da imagem
       setAvatar(base64?.slice(base64.indexOf(',') + 1));
 

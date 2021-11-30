@@ -90,7 +90,6 @@ const ControlPanel = () => {
         let aux = []
         let ponteiro = verba
 
-        console.log("Foi")
         for (var i = produtos.length; i >= 1; i--) {
             if (pd[i][ponteiro] != pd[i - 1][ponteiro]) {
                 aux.push(produtos[i - 1])

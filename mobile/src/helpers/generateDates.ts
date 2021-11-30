@@ -8,7 +8,6 @@ export default function generatedates() {
     let index = '01/01/2000'
 
     while(index.split('/')[1] != '12' || index.split('/')[2] != '2030') {
-        console.log(index)
         index = addMonths(toDate(index), 1).toLocaleDateString()
 
         dates.push(converterNumeroParaData(index, !(index.split('/')[2] == nowYear)))

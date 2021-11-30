@@ -87,7 +87,6 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
     if (entryIndex != -1) {
       var entry = setupUser.entries[entryIndex];
       if (entry.categoryLancamento != undefined) {
-        console.log('a entry da eachcategory: ', entry);
         const selectedI = ctgrs.findIndex(
           category =>
             // @ts-ignore
@@ -193,7 +192,6 @@ const EachFixedExpenseCategory = ({ route, navigation }: PropsNavigation) => {
                   clearSelectedCategories();
                   if (category == selectedCategory) {
                     setSelectedCategory({} as Categoria);
-                    console.log('já selecionada irmao');
                     return;
                   }
 

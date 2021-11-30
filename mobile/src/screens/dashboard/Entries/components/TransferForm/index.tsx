@@ -39,7 +39,6 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
-        console.log("Foi")
     };
 
     const handleConfirm = (date: Date) => {       
