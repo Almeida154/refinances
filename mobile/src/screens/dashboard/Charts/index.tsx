@@ -49,6 +49,8 @@ import { colors, metrics } from '../../../styles';
 import { ScrollView, View } from 'react-native';
 import { widthPixel } from '../../../helpers/responsiveness';
 
+import ViewButtons from '../../../components/ViewButtons'
+
 import doubleToCurrency from '../../../helpers/doubleToCurrency';
 import shadowBox from '../../../helpers/shadowBox';
 import GeneralCard from './components/GeneralCard';
@@ -269,6 +271,7 @@ const Graficos = () => {
   }
   const theme: any = useTheme()
   return (
+    <View style={{flex: 1}}>
     <Container>
       <Header>
         <PeriodoAnterior onPress={() => updateDate(-1)}>
@@ -371,6 +374,9 @@ const Graficos = () => {
         </Content>
       </ScrollView>
     </Container>
+
+    <ViewButtons />
+    </View>
   );
 };
 export default Graficos;

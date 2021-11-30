@@ -12,6 +12,7 @@ import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
 
+import ViewButtons from '../../../components/ViewButtons'
 import { colors, fonts, metrics } from '../../../styles';
 
 import {
@@ -26,7 +27,7 @@ import {
   Salutation,
 } from './styles';
 
-import { widthPixel } from '../../../helpers/responsiveness';
+import { widthPixel, heightPixel } from '../../../helpers/responsiveness';
 import shadowBox from '../../../helpers/shadowBox';
 
 import BalanceCard from './components/BalanceCard';
@@ -39,8 +40,8 @@ const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
   const { handleReadByUserCategorias, categorias, loading } = UseCategories();
   const { metas, handleReadByUserMetas } = UseMetas();
-  const { navigation } = UseDadosTemp();
-
+  const { navigation, buttonIsEnabled } = UseDadosTemp();
+  
   const [avatar, setAvatar] = useState<string | undefined | null>('');
   const [mime, setMime] = useState<string | undefined | null>('');
 
@@ -206,16 +207,7 @@ const Home = () => {
     </Container>
 
       {/* Gambiarra pro FAB Component funcionar */}
-      <TouchableOpacity
-        onPress={() => console.log('apertando')}
-        style={{
-          width: 100,
-          height: 100,
-          backgroundColor: 'green',
-          position: 'absolute',
-          bottom: 0,
-        }}
-      />
+      <ViewButtons />
     </View>
   );
 };

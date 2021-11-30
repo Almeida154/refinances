@@ -23,10 +23,12 @@ const FabButton = () => {
   const [animation] = useState(new Animated.Value(0));
   const [isOpen, setOpen] = useState(false);
 
-  const { navigation } = UseDadosTemp();
+  const { navigation, buttonIsEnabled, setButtonIsEnabled } = UseDadosTemp();
 
   const toggleMenu = () => {
     const toValue = isOpen ? 0 : 1;
+
+    setButtonIsEnabled(!isOpen)
 
     Animated.spring(animation, {
       toValue,
