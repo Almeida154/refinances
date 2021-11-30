@@ -1,5 +1,4 @@
 import React from 'react';
-import { ToastAndroid } from 'react-native';
 
 import {
   ReadParcela,
@@ -10,7 +9,6 @@ import {
   Lancamento,
 } from '../../../../../contexts/EntriesContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
-import { toDate } from '../../../../../helpers/manipularDatas';
 
 import { StackActions } from '@react-navigation/native';
 import { colors, fonts, metrics } from '../../../../../styles';
@@ -27,9 +25,15 @@ import {
   Row,
   SepareRow,
   SepareColumn,
+  Detail,
   CircleIcon,
 } from './styles';
 import { useTheme } from 'styled-components/native'; 
+import { Text } from 'react-native';
+import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
+import { widthPixel } from '../../../../../helpers/responsiveness';
+import shadowBox from '../../../../../helpers/shadowBox';
+
 interface PropsDetail {
   item: ReadParcela | null;
 }
@@ -79,6 +83,7 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
         } as Parcela;
 
         receiveEntry.parcelasLancamento = [parcelaUpdate];
+        // @ts-ignore
         receiveEntry.totalParcelas = item.valorParcela;
       }
       navigation.dispatch(
@@ -117,27 +122,31 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
     <Container>
       <SepareRow style={{ justifyContent: 'space-between', marginBottom: 10 }}>
         <SepareColumn>
-          <LabelTitle>{item.lancamentoParcela.descricaoLancamento}</LabelTitle>
+          <LabelTitle numberOfLines={1}>
+            {item.lancamentoParcela.descricaoLancamento}
+          </LabelTitle>
           <LabelQuantity>
-            {item.valorParcela.toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
-            })}
+            {item.lancamentoParcela.parcelaBaseada == -1 && (
+              <Detail>{item.totalParcelas}x </Detail>
+            )}
+            {doubleToCurrency(item.valorParcela, 'pt-br', 'BRL', true)}
           </LabelQuantity>
         </SepareColumn>
         <SepareRow>
-          <CircleIcon onPress={navigateEdit}>
+          <CircleIcon style={shadowBox(10, 0.3)} onPress={navigateEdit}>
             <Icon
               stringIcon="MaterialCommunityIcons:pencil"
-              size={25}
               color={theme.colors.black}
+              size={widthPixel(45)}
             />
           </CircleIcon>
-          <CircleIcon onPress={navigateDelete}>
+          <CircleIcon
+            style={[{ marginLeft: widthPixel(20) }, shadowBox(10, 0.3)]}
+            onPress={navigateDelete}>
             <Icon
               stringIcon="Ionicons:trash-bin-sharp"
-              size={25}
               color={theme.colors.black}
+              size={widthPixel(45)}
             />
           </CircleIcon>
         </SepareRow>
@@ -151,13 +160,13 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
 
           <GroupLabel>
             <Label>Categoria</Label>
-            <Value>
+            <Value numberOfLines={1}>
               {item.lancamentoParcela.categoryLancamento.nomeCategoria}
             </Value>
           </GroupLabel>
 
           <GroupLabel>
-            <Label>Sitaução</Label>
+            <Label>Situação</Label>
             <Value>
               {item.statusParcela
                 ? item.lancamentoParcela.tipoLancamento == 'despesa'
@@ -183,11 +192,9 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
             </Label>
             <Value>
               {item.lancamentoParcela.parcelaBaseada == -1
-                ? item.lancamentoParcela.valueLancamento.toLocaleString(
-                    'pt-br',
-                    { style: 'currency', currency: 'BRL' },
-                  )
-                : item.valorParcela}
+                ? // @ts-ignore
+                  doubleToCurrency(item.lancamentoParcela.valueLancamento)
+                : doubleToCurrency(item.valorParcela)}
             </Value>
           </GroupLabel>
         </Row>

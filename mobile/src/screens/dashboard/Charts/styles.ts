@@ -32,14 +32,14 @@ export const PeriodoPosterior = styled.TouchableOpacity`
 
 export const LabelPeriodo = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
-  background-color: ${(props : any) => props.theme.colors.platinum};
+  background-color: ${(props : any) => props.theme.colors.blackSilver};
   padding-top: ${`${widthPixel(10)}px`};
   padding-bottom: ${`${widthPixel(10)}px`};
   padding-left: ${`${widthPixel(50)}px`};
   padding-right: ${`${widthPixel(50)}px`};
   border-radius: ${`${widthPixel(80)}px`};
   font-size: ${`${fonts.size.big}px`};
-  color: ${(props : any) => props.theme.colors.darkGray};
+  color: ${(props : any) => props.theme.colors.black};
 `;
 
 export const TopData = styled.View`

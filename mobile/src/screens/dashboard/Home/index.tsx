@@ -34,7 +34,6 @@ import AccountsCard from './components/AccountsCard';
 import CreateCard from './components/CreateCard';
 import GoalsCard from './components/GoalsCard';
 import CategoriesCard from './components/CategoriesCard';
-import FabButton from '../../../navigation/TabNavigator/components/FabButton';
 
 const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
@@ -102,27 +101,70 @@ const Home = () => {
   const theme : any = useTheme()
 
   return (
-    <Container>
-      <Header>
-        <Greeting>
-          <Name numberOfLines={1}>Olá, {user.nomeUsuario}</Name>
-          <Salutation>{handleSalutation()}</Salutation>
-        </Greeting>
-        <ActionsAndAssets>
-          <ConfigContainer
-            activeOpacity={0.8}
-            style={shadowBox(14, 0.4)}
+    <View style={{ flex: 1 }}>
+      <Container>
+        <Header>
+          <Greeting>
+            <Name numberOfLines={1}>Olá, {user.nomeUsuario}</Name>
+            <Salutation>{handleSalutation()}</Salutation>
+          </Greeting>
+          <ActionsAndAssets>
+            <ConfigContainer
+              activeOpacity={0.8}
+              style={shadowBox(14, 0.4)}
+              onPress={() => {
+                navigation.dispatch(
+                  StackActions.replace('StackAccount', { screen: 'Config' }),
+                );
+              }}>
+              <Feather
+                name="settings"
+                size={widthPixel(50)}
+                color={theme.colors.battleGray}
+              />
+            </ConfigContainer>
+
+            <TouchableOpacity activeOpacity={0.8} style={shadowBox(10, 1)}>
+              {user.fotoPerfilUsuario == null ? (
+                <Photo
+                  source={require('../../../assets/images/avatarDefault.png')}
+                />
+              ) : (
+                <Photo source={{ uri: `data:${mime}base64,${avatar}` }} />
+              )}
+            </TouchableOpacity>
+          </ActionsAndAssets>
+        </Header>
+
+        <Content>
+          <BalanceCard />
+          <AccountsCard />
+          <CreateCard
+            name="categoria"
+            description="Você pode criar categorias e definir limites para se organizar."
+            onPress={() =>
+              navigation.dispatch(
+                StackActions.replace('StackAccount', { screen: 'NewCategory' }),
+              )
+            }
+          />
+          {categorias != undefined && categorias.length > 0 && (
+            <CategoriesCard />
+          )}
+          <CreateCard
+            name="meta"
+            description="As metas são úteis para o seu avanço pessoal e financeiro."
             onPress={() => {
               navigation.dispatch(
-                StackActions.replace('StackAccount', { screen: 'Config' }),
+                StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
               );
-            }}>
+            }}/>
             <Feather
               name="settings"
               size={widthPixel(50)}
               color={theme.colors.battleGray}
             />
-          </ConfigContainer>
+            
 
           <TouchableOpacity activeOpacity={0.8} style={shadowBox(10, 1)}>
             {user.fotoPerfilUsuario == null ? (
@@ -133,8 +175,7 @@ const Home = () => {
               <Photo source={{ uri: `data:${mime}base64,${avatar}` }} />
             )}
           </TouchableOpacity>
-        </ActionsAndAssets>
-      </Header>
+        
       
       <Content>
         <BalanceCard />
@@ -160,7 +201,22 @@ const Home = () => {
         />
         {metas != undefined && metas?.length > 0 && <GoalsCard />}
       </Content>
+    </Content>
+        
     </Container>
+
+      {/* Gambiarra pro FAB Component funcionar */}
+      <TouchableOpacity
+        onPress={() => console.log('apertando')}
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: 'green',
+          position: 'absolute',
+          bottom: 0,
+        }}
+      />
+    </View>
   );
 };
 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { processColor, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { processColor, Text, View } from 'react-native';
 
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import shadowBox from '../../../../../helpers/shadowBox';
@@ -27,38 +27,36 @@ import hexToRGB from '../../../../../helpers/hexToRgba';
 import Icon from '../../../../../helpers/gerarIconePelaString';
 import Button from '../../../../../components/Button';
 import { useTheme } from 'styled-components/native'; 
-type CategoryStat = {
-  accent: string;
-  icon: string;
-  name: string;
-  total: number;
+
+import { Categoria } from '../../../../../contexts/CategoriesContext';
+
+type GastosCategorias = {
+  totalGasto: number;
+  categoria: Categoria;
 };
 
 interface IProps {
   name?: string;
-  categories?: CategoryStat[];
+  gastosCategorias?: GastosCategorias[];
+  total?: number;
 }
 
-const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
-  const theme: any = useTheme()
+
+const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
+  const theme : any = useTheme()
 
   const [data, setData] = useState({
     dataSets: [
       {
         values: [
-          { value: 2400, label: 'Educação' },
-          { value: 235, label: 'Outfit' },
-          { value: 140, label: 'Saúde' },
-          { value: 480, label: 'Games' },
-          { value: 310, label: 'Mercado' },
+          { value: 10, label: 'Educação' },
+          { value: 10, label: 'Outfit' },
         ],
         config: {
           colors: [
-            processColor(theme.colors.deepSafron),
-            processColor(theme.colors.fireBrick),
-            processColor(theme.colors.rainsBlack),
-            processColor(theme.colors.budGreen),
-            processColor(theme.colors.battleGray),
+
+            processColor(theme.colors.culture),
+            processColor(theme.colors.eerieBlack),
           ],
           valueTextSize: 20,
           valueTextColor: processColor('transparent'),
@@ -73,6 +71,53 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
     ],
   });
 
+  useEffect(() => {
+    if (gastosCategorias == undefined) return;
+
+    var categorias = [];
+    var cores = [];
+
+    for (let i = 0; i < gastosCategorias?.length; i++) {
+      if (gastosCategorias[i].categoria != undefined) {
+        categorias.push({
+          value: gastosCategorias[i].totalGasto,
+          label: gastosCategorias[i].categoria.nomeCategoria,
+        });
+        cores.push(processColor(gastosCategorias[i].categoria.corCategoria));
+      }
+    }
+
+    setData({
+      dataSets: [
+        {
+          values:
+            categorias.length > 0
+              ? categorias
+              : [
+                  { value: 10, label: 'Default' },
+                  { value: 10, label: 'Default' },
+                ],
+          config: {
+            colors:
+              cores.length > 0
+                ? cores
+                : [
+                    processColor(theme.colors.rainsBlack),
+                    processColor(theme.colors.darkGray),
+                  ],
+            valueTextSize: 20,
+            valueTextColor: processColor('transparent'),
+            sliceSpace: 5,
+            selectionShift: 13,
+            valueFormatter: "#.#'%'",
+            valueLineColor: processColor(theme.colors.white),
+            valueLinePart1Length: 0.5,
+          },
+          label: '',
+        },
+      ],
+    });
+  }, [gastosCategorias]);
   return (
     <CategoryStatsCard style={shadowBox(20, 0.2)}>
       <CategoryStatsHeader>
@@ -109,56 +154,83 @@ const CategoryCard: React.FC<IProps> = ({ name, categories }) => {
         />
       </CategoryStatsBody>
       <CategoriesContainer style={shadowBox()}>
-        {categories?.map((category, index) => {
-          if (index > 2) return;
-          return (
-            <Category
-              key={index}
-              style={{
-                borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
-                borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
-                borderBottomWidth:
-                  index + 1 != categories.length ? heightPixel(6) : 0,
-                borderBottomColor: theme.colors.cultured,
-              }}>
-              <CategoryIcon
-                style={{
-                  borderWidth: widthPixel(10),
-                  borderColor: category.accent,
-                }}>
-                <Icon
-                  stringIcon={category.icon}
-                  color={category.accent}
-                  size={widthPixel(60)}
-                />
-              </CategoryIcon>
-              <CategoryName>
-                <Name numberOfLines={1}>{category.name}</Name>
-              </CategoryName>
-              <CategoryData>
-                <Total numberOfLines={1}>
-                  {doubleToCurrency(category.total, 'pt-br', 'BRL', true)}
-                </Total>
-                <Percent>85,8%</Percent>
-              </CategoryData>
-            </Category>
-          );
-        })}
-        <View
-          style={{
-            paddingHorizontal: metrics.default.boundaries / 1.6,
-            paddingBottom: metrics.default.boundaries / 1.6,
-          }}>
-          <Button
-            onPress={() => console.log('Vai pra todas')}
+        {gastosCategorias != undefined &&
+          gastosCategorias?.map((gastoCateg, index) => {
+            if (index < 2 && gastoCateg.categoria != undefined)
+              return (
+                <Category
+                  key={index}
+                  style={{
+                    borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
+                    borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
+                    borderBottomWidth:
+                      index + 1 != gastosCategorias.length ? heightPixel(6) : 0,
+                    borderBottomColor: theme.colors.cultured,
+                  }}>
+                  <CategoryIcon
+                    style={{
+                      borderWidth: widthPixel(10),
+                      borderColor: gastoCateg.categoria.corCategoria,
+                    }}>
+                    <Icon
+                      stringIcon={gastoCateg.categoria.iconeCategoria}
+                      color={gastoCateg.categoria.corCategoria || theme.colors.white}
+                      size={widthPixel(60)}
+                    />
+                  </CategoryIcon>
+                  <CategoryName>
+                    <Name numberOfLines={1}>
+                      {gastoCateg.categoria.nomeCategoria}
+                    </Name>
+                  </CategoryName>
+                  <CategoryData>
+                    <Total numberOfLines={1}>
+                      {doubleToCurrency(
+                        gastoCateg.totalGasto,
+                        'pt-br',
+                        'BRL',
+                        true,
+                      )}
+                    </Total>
+                    <Percent>
+                      {((gastoCateg.totalGasto * 100) / (total || 1)).toFixed(
+                        1,
+                      )}
+                      %
+                    </Percent>
+                  </CategoryData>
+                </Category>
+              );
+          })}
+        {gastosCategorias != undefined && gastosCategorias?.length < 1 && (
+          <Text
             style={{
-              backgroundColor: theme.colors.lightGray,
-            }}
-            color={hexToRGB(theme.colors.davysGrey, 0.5)}
-            title="Ver tudo"
-            lastOne
-          />
-        </View>
+              padding: metrics.default.boundaries / 1.6,
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.small,
+              color: theme.colors.davysGrey,
+              opacity: 0.3,
+            }}>
+            Nada encontrado
+          </Text>
+        )}
+        {gastosCategorias != undefined && gastosCategorias?.length > 1 && (
+          <View
+            style={{
+              paddingHorizontal: metrics.default.boundaries / 1.6,
+              paddingBottom: metrics.default.boundaries / 1.6,
+            }}>
+            <Button
+              onPress={() => console.log('Vai pra todas')}
+              style={{
+                backgroundColor: theme.colors.lightGray,
+              }}
+              color={hexToRGB(theme.colors.davysGrey, 0.5)}
+              title="Ver tudo"
+              lastOne
+            />
+          </View>
+        )}
       </CategoriesContainer>
     </CategoryStatsCard>
   );

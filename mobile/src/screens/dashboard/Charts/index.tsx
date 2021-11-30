@@ -23,6 +23,7 @@ import { addMonths, toDate } from '../../../helpers/manipularDatas';
 import SectionByDate from './components/SectionByDate';
 
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
+import { Categoria } from '../../../contexts/CategoriesContext';
 
 import {
   Header,
@@ -73,6 +74,11 @@ const RenderSection: React.FC<PropsRenderSection> = ({ item }) => {
   );
 };
 
+type GastosCategorias = {
+  totalGasto: number;
+  categoria: Categoria;
+};
+
 const Graficos = () => {
   const { readParcelas, handleInstallmentGroupByDate } = UseParcelas();
   const { readTransferencias, handleTransferGroupByDate } = UseTransferencias();
@@ -90,6 +96,7 @@ const Graficos = () => {
   const [gasto, setGasto] = useState(0);
   const [ganho, setGanho] = useState(0);
   const [saldo, setSaldo] = useState(0);
+
   const [maiorGasto, setMaiorGasto] = useState({
     valor: 0,
     descricao: '',
@@ -98,16 +105,22 @@ const Graficos = () => {
     valor: 0,
     descricao: '',
   });
+
   const [qntdGanhos, setQntdGanhos] = useState(0);
   const [qntdGastos, setQntdGastos] = useState(0);
 
+  const [gastosCategorias, setGastosCategorias] = useState([
+    {} as GastosCategorias,
+  ]);
+
   function calcStats(alldata: (ReadParcela[] | Transferencia[])[][]) {
-    let gastos = 0,
-      ganhos = 0,
-      maiorGasto = { valor: 0, descricao: '' },
-      maiorGanho = { valor: 0, descricao: '' },
-      qntdGastos = 0,
-      qntdGanhos = 0;
+    let gastos = 0;
+    let ganhos = 0;
+    let maiorGasto = { valor: 0, descricao: '' };
+    let maiorGanho = { valor: 0, descricao: '' };
+    let qntdGastos = 0;
+    let qntdGanhos = 0;
+    let gastosCategorias: GastosCategorias[] = [];
 
     alldata.map((item, index) => {
       const parcelas: ReadParcela[] = ConvertToParcela(item[0]);
@@ -118,13 +131,34 @@ const Graficos = () => {
             ? parcela.lancamentoParcela.tipoLancamento == 'despesa'
             : false
         ) {
+          gastos += parcela.valorParcela;
+          qntdGastos++;
+
           if (maiorGasto.valor < parcela.valorParcela) {
             maiorGasto.valor = parcela.valorParcela;
             maiorGasto.descricao =
               parcela.lancamentoParcela.descricaoLancamento;
           }
-          gastos += parcela.valorParcela;
-          qntdGastos++;
+
+          let category = parcela.lancamentoParcela
+            .categoryLancamento as Categoria;
+
+          var categIndex = gastosCategorias.findIndex(
+            gastoCategoia =>
+              gastoCategoia.categoria.nomeCategoria == category.nomeCategoria,
+          );
+
+          // console.log('o que ta vindo é', categIndex);
+
+          if (categIndex == -1) {
+            // console.log('if n achou');
+            gastosCategorias.push({
+              totalGasto: parcela.valorParcela,
+              categoria: parcela.lancamentoParcela
+                .categoryLancamento as Categoria,
+            });
+          } else
+            gastosCategorias[categIndex].totalGasto += parcela.valorParcela;
         } else if (
           typeof parcela.lancamentoParcela != 'number'
             ? parcela.lancamentoParcela.tipoLancamento == 'receita'
@@ -135,6 +169,7 @@ const Graficos = () => {
             maiorGanho.descricao =
               parcela.lancamentoParcela.descricaoLancamento;
           }
+
           ganhos += parcela.valorParcela;
           qntdGanhos++;
         }
@@ -150,6 +185,12 @@ const Graficos = () => {
 
     setQntdGanhos(qntdGanhos);
     setQntdGastos(qntdGastos);
+
+    // gastosCategorias.map(cat => {
+    //   console.log(`${cat.categoria.nomeCategoria} - ${cat.totalGasto}`);
+    // });
+
+    setGastosCategorias(gastosCategorias);
   }
 
   function loadInAllDatas() {
@@ -324,26 +365,8 @@ const Graficos = () => {
           </CountCardsContainer>
           <CategoryCard
             name="Gastos por categoria"
-            categories={[
-              {
-                accent: '#2a9d8f',
-                icon: 'Octicons:mortar-board',
-                name: 'Educação',
-                total: 2400,
-              },
-              {
-                accent: '#C5B400',
-                icon: 'MaterialCommunityIcons:hanger',
-                name: 'Outfit',
-                total: 235,
-              },
-              {
-                accent: '#778745',
-                icon: 'MaterialCommunityIcons:heart-pulse',
-                name: 'Saúde',
-                total: 140,
-              },
-            ]}
+            gastosCategorias={gastosCategorias}
+            total={gasto}
           />
         </Content>
       </ScrollView>

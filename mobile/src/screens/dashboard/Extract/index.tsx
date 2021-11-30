@@ -87,8 +87,8 @@ const Extrato = () => {
 
   function calcBalance(alldata: (ReadParcela[] | Transferencia[])[][]) {
     let gastos = 0,
-        ganhos = 0,
-        balance = 0;
+      ganhos = 0,
+      balance = 0;
 
     alldata.map((item, index) => {
       const parcelas: ReadParcela[] = ConvertToParcela(item[0]);
@@ -261,10 +261,8 @@ const Extrato = () => {
         </CardBalance>
       </Footer>
 
-      <Modalize
-        ref={modalizeRefDetailEntry}
-        title=""
-        backgroundColor={theme.colors.cultured}>
+
+      <Modalize ref={modalizeRefDetailEntry} backgroundColor={theme.colors.cultured}>
         {/* @ts-ignore */}
         <DetailEntry item={selectedItemExtract} />
       </Modalize>
@@ -272,9 +270,4 @@ const Extrato = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-  },
-});
 export default Extrato;

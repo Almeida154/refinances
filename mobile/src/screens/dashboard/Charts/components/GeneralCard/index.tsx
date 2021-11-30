@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { processColor } from 'react-native';
-
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import shadowBox from '../../../../../helpers/shadowBox';
 
@@ -67,8 +66,8 @@ const theme: any = useTheme()
       dataSets: [
         {
           values: [
-            { value: totalIncome || 10, label: 'Quanto ganha' },
-            { value: totalExpense || 10, label: 'Quanto gasta' },
+            { value: totalIncome || 10, label: 'Default' },
+            { value: totalExpense || 10, label: 'Default' },
           ],
           config: {
             colors: [
