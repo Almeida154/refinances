@@ -5,7 +5,7 @@ import { fonts, colors, metrics } from '../../../styles';
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
-  background: ${colors.back};
+  background: ${colors.cultured};
 `;
 
 // Header
@@ -15,7 +15,7 @@ export const Header = styled.View`
   height: ${`${heightPixel(220)}px`};
   justify-content: center;
   align-items: center;
-  background-color: ${colors.white};
+  background-color: ${colors.cultured};
 `;
 
 export const PeriodoAnterior = styled.TouchableOpacity`
@@ -44,7 +44,6 @@ export const LabelPeriodo = styled.Text`
 `;
 
 export const Body = styled.View`
-  background-color: ${colors.white};
   padding: ${`${metrics.default.boundaries / 1.6}px`};
 `;
 
