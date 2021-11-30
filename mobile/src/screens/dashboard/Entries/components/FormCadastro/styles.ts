@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import { heightPixel } from '../../../../../helpers/responsiveness'
 
 import {colors, fonts, metrics} from '../../../../../styles'
 
@@ -69,7 +70,7 @@ export const TextDetalhes = styled.Text`
 
 export const SectionCardsParcelas = styled.View`
     margin-top: 20px;
-    height: 250px;
+    height: ${heightPixel(900)}px;
 `
 
 export const ContainerDetalhes = styled.View`

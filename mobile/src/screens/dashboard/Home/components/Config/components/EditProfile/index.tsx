@@ -33,8 +33,8 @@ type PropsEditProfile = {
 
 const EditProfile = ({ route, navigation }: PropsEditProfile) => {
 
-  const { user, token } = UseAuth();
-  const [ atual, setAtual ] = useState('');
+  const { user } = UseAuth();
+  let atual = '';
 
   useEffect(() => {
     (async () => {
@@ -43,6 +43,8 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
       setEdit(edit);
 
       //console.log(novoValor)
+      atual = retornaValorAtual();
+      setNovoValor(atual)
     })();
   }, []);
 
@@ -51,12 +53,12 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
   const [valorError, setValorError] = useState<any | null>(null);
 
   const retornaValorAtual = () => {
-    if(edit == 'nome') setNovoValor (user.nomeUsuario);
-    else if (edit == 'email') console.log (user.emailUsuario);
-    else console.log ('');
+    if(edit == 'nome') return user.nomeUsuario;
+    else if (edit == 'email') return user.emailUsuario;
+    else return '';
   }
 
-  const [novoValor, setNovoValor] = useState('');
+  const [novoValor, setNovoValor] = useState(atual);
 
   /*async function handleUpdateGoal() {
     const newGoal = {
@@ -151,13 +153,5 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: '0%',
-    marginLeft: '10%',
-    marginRight: '10%',
-  },
-});
 
 export default EditProfile;

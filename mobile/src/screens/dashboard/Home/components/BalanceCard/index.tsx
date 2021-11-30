@@ -94,7 +94,7 @@ const BalanceCard = () => {
         }}
         onPress={() =>
           navigation.dispatch(
-            StackActions.replace('Main', { screen: 'Extrato' }),
+            StackActions.replace('Lancamentos', { screen: 'Main' }),
           )
         }
         title="Conferir Extrato"
