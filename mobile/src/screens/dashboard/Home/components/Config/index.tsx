@@ -88,7 +88,6 @@ const Config = () => {
      updateUserProps(user)
     })()
     
-    
     setIsDark(!isDark)
   };
 
@@ -184,7 +183,13 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Touchable>
+                  <Touchable
+                    onPress={() => {
+                      navigation.navigate('StackAccount', {
+                        screen: 'EditProfile',
+                        params: { route: 'nome' },
+                      });
+                    }}>
                     <Item>
                       <Title>Nome</Title>
                       <Subtitle>{user.nomeUsuario}</Subtitle>
@@ -222,7 +227,13 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Touchable>
+                  <Touchable
+                    onPress={() => {
+                      navigation.navigate('StackAccount', {
+                        screen: 'EditProfile',
+                        params: { route: 'email' },
+                      });
+                    }}>
                     <Item>
                     <Title>E-mail</Title>
                     <Subtitle>{user.emailUsuario}</Subtitle>
@@ -260,7 +271,13 @@ const Config = () => {
                     />
                   </SectionIconLeft>
 
-                  <Touchable>
+                  <Touchable
+                    onPress={() => {
+                      navigation.navigate('StackAccount', {
+                        screen: 'EditProfile',
+                        params: { route: 'senha' },
+                      });
+                    }}>
                     <Item>
                       <Title>Senha</Title>
                       <Subtitle>Alterar senha</Subtitle>
