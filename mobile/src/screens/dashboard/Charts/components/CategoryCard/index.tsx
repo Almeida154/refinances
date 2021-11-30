@@ -49,11 +49,8 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
         ],
         config: {
           colors: [
-            processColor(colors.deepSafron),
-            processColor(colors.fireBrick),
-            processColor(colors.rainsBlack),
-            processColor(colors.budGreen),
-            processColor(colors.battleGray),
+            processColor(colors.culture),
+            processColor(colors.eerieBlack),
           ],
           valueTextSize: 20,
           valueTextColor: processColor('transparent'),
@@ -69,14 +66,13 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
   });
 
   useEffect(() => {
+    if (gastosCategorias == undefined) return;
+
     var categorias = [];
     var cores = [];
 
-    if (
-      gastosCategorias != undefined &&
-      gastosCategorias[0].categoria != undefined
-    ) {
-      for (let i = 0; i < gastosCategorias?.length; i++) {
+    for (let i = 0; i < gastosCategorias?.length; i++) {
+      if (gastosCategorias[i].categoria != undefined) {
         categorias.push({
           value: gastosCategorias[i].totalGasto,
           label: gastosCategorias[i].categoria.nomeCategoria,
@@ -88,9 +84,21 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
     setData({
       dataSets: [
         {
-          values: categorias,
+          values:
+            categorias.length > 0
+              ? categorias
+              : [
+                  { value: 10, label: 'Default' },
+                  { value: 10, label: 'Default' },
+                ],
           config: {
-            colors: cores,
+            colors:
+              cores.length > 0
+                ? cores
+                : [
+                    processColor(colors.rainsBlack),
+                    processColor(colors.darkGray),
+                  ],
             valueTextSize: 20,
             valueTextColor: processColor('transparent'),
             sliceSpace: 5,
@@ -142,10 +150,8 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
       </CategoryStatsBody>
       <CategoriesContainer style={shadowBox()}>
         {gastosCategorias != undefined &&
-          gastosCategorias[0].categoria != undefined &&
           gastosCategorias?.map((gastoCateg, index) => {
-            console.log(gastoCateg.categoria);
-            if (index < 2)
+            if (index < 2 && gastoCateg.categoria != undefined)
               return (
                 <Category
                   key={index}
@@ -191,21 +197,35 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
                 </Category>
               );
           })}
-        <View
-          style={{
-            paddingHorizontal: metrics.default.boundaries / 1.6,
-            paddingBottom: metrics.default.boundaries / 1.6,
-          }}>
-          <Button
-            onPress={() => console.log('Vai pra todas')}
+        {gastosCategorias != undefined && gastosCategorias?.length < 1 && (
+          <Text
             style={{
-              backgroundColor: colors.lightGray,
-            }}
-            color={hexToRGB(colors.davysGrey, 0.5)}
-            title="Ver tudo"
-            lastOne
-          />
-        </View>
+              padding: metrics.default.boundaries / 1.6,
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.small,
+              color: colors.davysGrey,
+              opacity: 0.3,
+            }}>
+            Nada encontrado
+          </Text>
+        )}
+        {gastosCategorias != undefined && gastosCategorias?.length > 1 && (
+          <View
+            style={{
+              paddingHorizontal: metrics.default.boundaries / 1.6,
+              paddingBottom: metrics.default.boundaries / 1.6,
+            }}>
+            <Button
+              onPress={() => console.log('Vai pra todas')}
+              style={{
+                backgroundColor: colors.lightGray,
+              }}
+              color={hexToRGB(colors.davysGrey, 0.5)}
+              title="Ver tudo"
+              lastOne
+            />
+          </View>
+        )}
       </CategoriesContainer>
     </CategoryStatsCard>
   );
