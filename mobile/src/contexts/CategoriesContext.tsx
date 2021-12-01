@@ -9,7 +9,7 @@ import retornarIdDoUsuario from '../helpers/retornarIdDoUsuario';
 export type Categoria = {
   id: number;
   nomeCategoria: string;
-  tetoDeGastos: number | null;
+  tetoDeGastos: number;
   tipoCategoria: string;
   userCategoria: number;
   iconeCategoria: string;

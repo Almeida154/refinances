@@ -22,10 +22,8 @@ import { colors, fonts, metrics } from '../../../../../styles';
 
 import HeaderTop from '../../../../../components/Header';
 import {
-  AlinhaParaDireita,
-  InputControlValue,
-  LabelCifrao,
-  TextInputValue,
+  AlinhaParaDireita,  
+  LabelCifrao,  
   Header,
 } from '../../../Entries/styles';
 
@@ -38,6 +36,7 @@ import {
   UseCategories,
 } from '../../../../../contexts/CategoriesContext';
 import { EXPORTDECLARATION_TYPES } from '@babel/types';
+import { CategoryIcon } from '../CategoriesCard/styles';
 
 type PropsEditCategory = {
   navigation: StackNavigationProp<HomeAccountStack, 'EditCategory'>;
@@ -49,17 +48,19 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
 
   const { handleAtualizarCategoria, handleGetCategoryById } = UseCategories();
 
-  useEffect(() => {
-    (async () => {
-      const category = await handleGetCategoryById(route.params?.categoryId);
-
-      setCategory(category);
-    })();
-  }, []);
-
   const [tetoGastos, setTetoGastos] = useState('');
   const [valorError, setValorError] = useState<any | null>(null);
+  const [valueLancamentos, setValueLancamentos] = useState(0)
 
+  useEffect(() => {
+    (async () => {      
+      const category = route.params.category
+      
+      setCategory(category);      
+      setValueLancamentos(Math.abs(category.valueLancamentos))
+    })();
+  }, []);  
+  
   async function handleUpdateCategory() {
     if (!category) return console.log('category nulo');
     const newCategory = {
@@ -95,6 +96,12 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
             message: 'Teto de gastos adicionado com sucesso',
           },
         });
+
+        navigation.dispatch(
+          StackActions.replace('StackAccount', {
+            screen: 'ManageCategory',
+          }),
+        );
       }
     } else {
       Toast.show({
@@ -167,16 +174,15 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
         Teto de gastos atual:{' '}
         {teto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}{' '}
       </SubtitleT>
+      <SubtitleT style={{ display: valueLancamentos > 0 ? 'flex' : 'none' }}>
+        gastos atuais:{' '}
+        {valueLancamentos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}{' '}
+      </SubtitleT>
 
       <View style={{ paddingLeft: '10%', paddingRight: '10%' }}>
         <Button
           onPress={() => {
-            handleUpdateCategory();
-            navigation.dispatch(
-              StackActions.replace('StackAccount', {
-                screen: 'ManageCategory',
-              }),
-            );
+            handleUpdateCategory();            
           }}
           title="Salvar"
           backgroundColor={theme.colors.blackSilver}
