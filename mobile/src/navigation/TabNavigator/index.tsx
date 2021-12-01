@@ -40,39 +40,6 @@ import { useTheme } from 'styled-components/native';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
-type PropsCustomBar = {
-  children: React.ReactNode;
-  onPress:
-    | ((
-        e:
-          | React.MouseEvent<HTMLAnchorElement, MouseEvent>
-          | GestureResponderEvent,
-      ) => void)
-    | undefined;
-};
-
-/*const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.8}
-      style={[
-        {
-          width: widthPixel(200),
-          height: widthPixel(200),
-          borderRadius: widthPixel(200 / 2),
-          backgroundColor: theme.colors.white,
-          marginTop: widthPixel(-(200 / 2)),
-        },
-        shadowBox(14, 0.5),
-      ]}>
-      <Animated.View style={{position: 'absolute'}}>
-        {children}
-      </Animated.View>
-    </TouchableOpacity>
-  );
-};*/
-
 const TabNavigator = () => {
   const { navigation } = UseDadosTemp();
 
@@ -175,7 +142,9 @@ const TabNavigator = () => {
               />
             ),
             tabBarButton: props => {
-              return <FabButton />;
+              return (
+                <FabButton/>
+              );
             },
           }}
         />

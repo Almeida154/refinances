@@ -65,7 +65,6 @@ const GoalsAccomplished = ({ navigation }: PropsGoals) => {
           </Subtitle>
           {metas &&
             metas.map((item, index) => {
-              console.log('Item: ', UseMetas);
               if (item.saldoAtualMeta >= item.saldoFinalMeta)
                 return <GoalItem item={item} key={index} />;
             })}

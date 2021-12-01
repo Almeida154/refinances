@@ -37,7 +37,6 @@ const PickerCategoria = ({categoria, setCategoria, tipoCategoria}: PropsPickerCa
             async function loadCategorias() {
                 const getItem = await AsyncStorage.getItem('user')
                 const id = getItem == null ? 0 : JSON.parse(getItem).id
-                console.log(id)
                 handleReadByUserCategorias(id, tipoCategoria)
             }
             

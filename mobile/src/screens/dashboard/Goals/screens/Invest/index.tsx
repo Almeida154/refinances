@@ -48,6 +48,8 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import PickerContas from '../../../Entries/components/PickerContas';
 import { Conta } from '../../../../../contexts/AccountContext';
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+
 import {
   Parcela,
   UseParcelas,
@@ -68,6 +70,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
   const [goal, setGoal] = useState({} as Meta);
 
+  const {showNiceToast} = UseDadosTemp()
   const { handleGetGoalById } = UseMetas();
   const { handleAtualizarMeta } = UseMetas();
   const { handleAdicionarParcela } = UseParcelas();
@@ -84,7 +87,6 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
   }, []);
 
   async function handleUpdateGoal() {
-    console.log(goal.lancamentoMeta);
 
     const newGoal = {
       descMeta: goal.descMeta,
@@ -102,32 +104,19 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       dataParcela: new Date(Date.now()),
       lancamentoParcela: goal.lancamentoMeta.id,
       statusParcela: sttsParcela(),
-      valorParcela: novoSaldo(),
+      valorParcela: parseFloat(valorDeposito),
     } as Parcela;
 
     if (parseFloat(valorDeposito) <= 0 || valorDeposito == '') {
-      Toast.show({
-        type: 'niceToast',
-        props: {
-          type: 'error',
-          title: 'Erro!',
-          message: 'Insira os dados corretamente!',
-        },
-      });
+      showNiceToast("error", "Erro!", 'Insira os dados corretamente!')
+      
     } else {
       const responseMeta = await handleAtualizarMeta(newGoal, goal.id);
 
       const responseParcela = await handleAdicionarParcela([newParcela]);
 
       if (responseParcela == '') {
-        Toast.show({
-          type: 'niceToast',
-          props: {
-            type: 'success',
-            title: 'Foi!',
-            message: 'Depósito realizado com sucesso!',
-          },
-        });
+        showNiceToast('success', 'Foi!', 'Depósito realizado com sucesso!')        
         navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
       } else {
         ToastAndroid.show(responseParcela, ToastAndroid.SHORT);

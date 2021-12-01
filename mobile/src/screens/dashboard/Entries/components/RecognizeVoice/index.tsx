@@ -54,6 +54,7 @@ type Props = {
     navigation: any
     handleAdicionarLancamento: (lancamentoProps: Lancamento, idUser: number) => Promise<string>
     showNiceToast: any
+    theme: any
 };
 
 type State = {
@@ -457,20 +458,19 @@ class VoiceTest extends Component<Props, State> {
     }
   }
 
-  render() {
-  const theme: any = useTheme()
+  render() {  
 
     return (
       <Container>
 
        <Header>
           <ButtonRecord 
-          style={{backgroundColor: this.state.isRecording ? theme.colors.white : theme.colors.paradisePink , borderRadius: 50}}
+          style={{backgroundColor: this.state.isRecording ? this.props.theme.colors.white : this.props.theme.colors.paradisePink , borderRadius: 50}}
           onPress={this.state.isRecording ? this._stopRecognizing : this._startRecognizing}>
             <Icon 
               style={{width: 100, height: 100}} 
               name="keyboard-voice"
-              color={this.state.isRecording ? theme.colors.paradisePink : theme.colors.white}
+              color={this.state.isRecording ? this.props.theme.colors.paradisePink : this.props.theme.colors.white}
               size={100}
             />
           </ButtonRecord>          
@@ -503,8 +503,8 @@ class VoiceTest extends Component<Props, State> {
         <ButtonAdd
           title="Adicionar"
           onPress={() => this.handleItemCapture(this.state.itemNovo)}
-          style={{backgroundColor: theme.colors.paradisePink}}
-          color={theme.colors.white}
+          style={{backgroundColor: this.props.theme.colors.paradisePink}}
+          color={this.props.theme.colors.white}
         />
 
       </Container>
@@ -516,6 +516,7 @@ export default () => {
     const {categorias, handleReadByUserCategorias} = UseCategories()
     const {contas, handleReadByUserContas} = UseContas()
     const {handleAdicionarLancamento} = UseLancamentos()    
+    const theme: any = useTheme()
 
     const {navigation, showNiceToast} = UseDadosTemp()
 
@@ -545,6 +546,6 @@ export default () => {
 
 
     return (
-        <VoiceTest showNiceToast={showNiceToast} navigation={navigation} handleAdicionarLancamento={handleAdicionarLancamento} categorias={categorias ? categorias : []} contas={contas ? contas : []}/>
+        <VoiceTest showNiceToast={showNiceToast} theme={theme} navigation={navigation} handleAdicionarLancamento={handleAdicionarLancamento} categorias={categorias ? categorias : []} contas={contas ? contas : []}/>
     )
 };

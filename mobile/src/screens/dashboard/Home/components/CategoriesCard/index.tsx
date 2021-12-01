@@ -51,7 +51,8 @@ const Category = ({ item }: CategoryItem) => {
         <Name numberOfLines={1}>{item.nomeCategoria}</Name>
       </NameContainer>
       <CategoryAction>
-        <Limit style={shadowBox(10, 0.2)} numberOfLines={1}>
+        <Limit style={shadowBox(10, 0.2)} numberOfLines={1} 
+        >
           Limitar
         </Limit>
       </CategoryAction>

@@ -10,7 +10,7 @@ export const Button = styled.Image`
 
 export const Container = styled.View`
     flex: 1px;
-    background-color: ${(props : any) => props.theme.colors.aliceBlue};
+    background-color: ${(props : any) => props.theme.colors.white};
     font-family: ${fonts.familyType.regular};
     padding: 10%;
 `
@@ -41,7 +41,9 @@ export const Bold = styled.Text`
 `
 
 export const Stat = styled.Text`
+    padding: 10px;
     text-align: center;
+    font-family: ${`${fonts.familyType.semiBold}`};
     color: ${(props : any) => props.theme.colors.fireBrick};
     margin-bottom: 1px;
 `

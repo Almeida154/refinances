@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Not, Repository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { User } from "../entities/User";
 import bcrypt from "bcryptjs";
@@ -288,19 +288,19 @@ class UserController {
     if (emailUsuario == "") return response.send({ error: "Email em branco!" });
     if (senhaUsuario == "") return response.send({ error: "Senha em branco!" });
 
-    const userexists = await userRepository.find({
-      where: { emailUsuario },
-    });
-
-    console.log(id);
+    const userexists = await userRepository.findOne({
+      where: { emailUsuario, id: Not(id) },
+    });    
 
     if (
-      userexists.length > 1 ||
-      (userexists.length == 1 && userexists[0].id != id)
+      userexists
     )
       return response.send({ error: "Email já cadastrado" });
 
-    await userRepository.update(id, request.body);
+    const upUser = request.body
+    upUser.id = id
+
+    await userRepository.save(userRepository.create(upUser));
     const updatedUser = await userRepository.findOne({ where: { id } });
 
     return response.send({ updatedUser });

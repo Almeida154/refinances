@@ -13,7 +13,11 @@ import {
 
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { Container, Title, InputController } from './styles';
+import { 
+  Container, 
+  Requisit,
+  RequisitContainer,
+  InputController } from './styles';
 
 import global from '../../../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
@@ -26,6 +30,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeAccountStack } from '../../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+// Util
+import {
+  hasMinimum,
+  hasAtLeastOneNumber,
+  hasAtLeastOneLetter,
+  isValid,
+} from '../../../../../../../helpers/verifyPassword';
+
 type PropsEditProfile = {
   navigation: StackNavigationProp<HomeAccountStack, 'EditProfile'>;
   route: RouteProp<HomeAccountStack, 'EditProfile'>;
@@ -33,8 +45,8 @@ type PropsEditProfile = {
 
 const EditProfile = ({ route, navigation }: PropsEditProfile) => {
 
-  const { user, token } = UseAuth();
-  const [ atual, setAtual ] = useState('');
+  const { user, handleUpdateUser, updateSetupUserProps } = UseAuth();
+  let atual = '';
 
   useEffect(() => {
     (async () => {
@@ -43,63 +55,50 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
       setEdit(edit);
 
       //console.log(novoValor)
+      atual = retornaValorAtual();
+      setNovoValor(atual)
     })();
   }, []);
 
   const [ edit, setEdit ] = useState('');
-
-  const [valorError, setValorError] = useState<any | null>(null);
+  const [valorError, setValorError] = useState('');
 
   const retornaValorAtual = () => {
-    if(edit == 'nome') setNovoValor (user.nomeUsuario);
-    else if (edit == 'email') console.log (user.emailUsuario);
-    else console.log ('');
+    if(edit == 'nome') return user.nomeUsuario;
+    else if (edit == 'email') return user.emailUsuario;
+    else return '';
   }
 
-  const [novoValor, setNovoValor] = useState('');
+  const [novoValor, setNovoValor] = useState(atual);
 
-  /*async function handleUpdateGoal() {
-    const newGoal = {
-      descMeta: novoDesc(),
-      saldoFinalMeta: novoSaldoFinal(),
-      saldoAtualMeta: goal.saldoAtualMeta,
-      dataInicioMeta: goal.dataInicioMeta,
-      dataFimMeta: previsao.toLocaleDateString(),
-      realizacaoMeta: realizacao(),
-      userMetaId: await retornarIdDoUsuario(),
-    } as Meta;
+  async function handleAlterarUser() {
+    
+    if (valorError != '') {
 
-    if (meta != '' || (valorMeta) > 0 && valorMeta != undefined) {
-      goal.saldoAtualMeta >= (valorMeta)
-        ? console.log('deu true')
-        : setRealizado(false);
-
-      console.log('realizado: ', realizado);
-      handleAtualizarMeta(newGoal, goal.id);
-      console.log(newGoal);
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Erro!',
+          message: valorError,
+        },
+      });
+      //navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config' }),);
+    } 
+    else {
+      handleUpdateUser(editar(), user.id);
+      //console.log(editar());
 
       Toast.show({
         type: 'niceToast',
         props: {
           type: 'success',
           title: 'Foi!',
-          message: 'Meta atualizada com sucesso!',
-        },
-      });
-      navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
-    } else if (meta == '' || (valorMeta) <= 0 || valorMeta == 0) {
-      setdescError('Insira alguma descricao diferente!');
-      setvalorTError('Insira algum valor!');
-      Toast.show({
-        type: 'niceToast',
-        props: {
-          type: 'error',
-          title: 'Erro!',
-          message: 'Verifique se os dados estão corretos!',
+          message: edit+' alterado com sucesso!',
         },
       });
     }
-  }*/
+  }
 
   const backAction = () => {
     navigation.dispatch(
@@ -108,8 +107,40 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
     return true;
   };
 
+  const editar = () => {
+    var newUser = user;
+
+    if(edit == 'email'){
+      if(novoValor != 'pica'){
+        newUser.emailUsuario = novoValor
+      }else{
+        setValorError('ERRO NO EMAIL')
+      }
+    }
+    else if (edit == 'nome'){
+      if(novoValor != ''){
+        setValorError('Preencha o novo nome!');
+        console.log(valorError);
+      }
+      else{
+        newUser.nomeUsuario = novoValor
+      }
+    }
+    else {
+      if (hasAtLeastOneLetter(novoValor) && isValid(novoValor)
+      && hasAtLeastOneLetter(novoValor) && hasMinimum(novoValor)){
+          newUser.senhaUsuario = novoValor;
+        }
+      else {
+        setValorError('porraaaa ERRO ERRO ERRO ')
+      }
+    }
+
+    return newUser;
+  }
+
   return (
-    <ScrollView style={{ backgroundColor: colors.cultured }}>
+    <View style={{ backgroundColor: colors.cultured }}>
       <Container>
 
         <ShortHeader 
@@ -121,22 +152,28 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
               value={novoValor}
               label={edit == 'senha' ? 'Nova '+edit : 'Novo '+edit}
               placeholder={edit == 'senha' ? 'Nova '+edit : 'Novo '+edit}
-              error={valorError}
               showClearIcon={novoValor != ''}
               onClear={() => {
-                setValorError(null);
                 setNovoValor('');
               }}
               onChangeText={txt => {
-                setValorError(null);
                 setNovoValor(txt);
               }}
             />
           </InputController>
+
+          <RequisitContainer>
+            <Requisit style={edit == 'senha' ? { display: 'flex' } : { display: 'none' }}>
+              ● Pelo menos 6 caracteres
+            </Requisit>
+            <Requisit style={edit == 'senha' ? { display: 'flex' } : { display: 'none' }}>
+              ● Deve conter letras e números
+            </Requisit>
+          </RequisitContainer>
             
           <InputController>
           <Button
-            onPress={() => console.log('foi')}
+            onPress={handleAlterarUser}
             title="Salvar"
             style={{backgroundColor:colors.culture,}}
             color={colors.silver}
@@ -148,16 +185,8 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
 
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
-    </ScrollView>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: '0%',
-    marginLeft: '10%',
-    marginRight: '10%',
-  },
-});
 
 export default EditProfile;

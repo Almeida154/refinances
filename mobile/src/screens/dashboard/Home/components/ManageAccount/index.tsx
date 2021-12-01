@@ -52,7 +52,6 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
   };
 
   useEffect(() => {
-    console.log(contas);
     // Caso nenhuma conta foi carregada, recarregar
     if (!contas)
       (async function () {

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -57,6 +57,10 @@ import { colors } from '../../../../../styles';
 import api from '../../../../../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { Modalize as Modal } from 'react-native-modalize';
+import Modalize from '../../../../../components/Modalize';
+import Button from '../../../../../components/Button';
+
 const Config = () => {
   const { user, handleLogout, userAvatar, updateUserProps } = UseAuth();
   const { navigation, showNiceToast } = UseDadosTemp();
@@ -97,7 +101,6 @@ const Config = () => {
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
-      console.log(await retornarIdDoUsuario());
       // O avatar é a base64 da imagem
       setAvatar(base64?.slice(base64.indexOf(',') + 1));
 
@@ -118,6 +121,16 @@ const Config = () => {
     return true;
   };
   const theme: any = useTheme()
+
+  const modalizeRef = useRef<Modal>(null);
+
+  const openModalize = () => {
+    modalizeRef.current?.open();
+  };
+
+  const closeModalize = () => {
+    modalizeRef.current?.close();
+  };
 
   return (
     <ScrollView>
@@ -150,19 +163,20 @@ const Config = () => {
               title=""
               isShort
             />
-            
-            <ContainerProfile>
-              {user.fotoPerfilUsuario == null ? (
-                <Profile
-                  source={require('../../../../../assets/images/avatarDefault.png')}
-                />
-              ) : (
-                <Profile
-                  source={{ uri: `data:${mime}base64,${avatar}` }}
-                />
-              )}
+            <Touchable onPress={() => openModalize()}>
+              <ContainerProfile>
+                {user.fotoPerfilUsuario == null ? (
+                  <Profile
+                    source={require('../../../../../assets/images/avatarDefault.png')}
+                  />
+                ) : (
+                  <Profile
+                    source={{ uri: `data:${mime}base64,${avatar}` }}
+                  />
+                )}
 
-            </ContainerProfile>
+              </ContainerProfile>
+            </Touchable>
 
           </HeaderContainer>
           {/* Scrollable Content */}
@@ -768,7 +782,6 @@ const Config = () => {
 
             </ContainerBody>
           </ContainerScroll>
-
         </Container>
       )}
     </ScrollView>

@@ -161,7 +161,6 @@ const Account = ({ navigation }: PropsNavigation) => {
           title="Atualizar"
           onPress={() => {
             setLoading(true);
-            console.log(walletAmount);
 
             const newSetupProps = setupUser;
             newSetupProps.accounts[0].saldoConta = walletAmount || 0;
