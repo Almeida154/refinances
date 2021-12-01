@@ -21,6 +21,7 @@ import {
     LabelStatus
 } from './styles'
 import {colors, fonts, metrics} from '../../../../../styles'
+import CurrencyInput from 'react-native-currency-input';
 
 export type CardParcelaProps = {
     item: Parcela;
@@ -94,6 +95,7 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 value={isNaN(dataParcelas[item.indexOfLancamento].valorParcela) ? '' : String(dataParcelas[item.indexOfLancamento].valorParcela)}
                 onChangeText={onChangeValor}
             />
+
             <InputControlStatus>
                 <Checkbox 
                     status={dataParcelas[item.indexOfLancamento].statusParcela ? 'checked' : 'unchecked'}

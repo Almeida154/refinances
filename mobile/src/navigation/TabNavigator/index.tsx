@@ -40,6 +40,8 @@ import { useTheme } from 'styled-components/native';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
+<<<<<<< HEAD
+=======
 type PropsCustomBar = {
   children: React.ReactNode;
   onPress:
@@ -73,6 +75,7 @@ type PropsCustomBar = {
   );
 };*/
 
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
 const TabNavigator = () => {
   const { navigation } = UseDadosTemp();
 
@@ -167,6 +170,8 @@ const TabNavigator = () => {
           options={{
             tabBarLabel: () => null,
             headerShown: false,
+<<<<<<< HEAD
+=======
             tabBarIcon: () => (
               <Entypo
                 name="plus"
@@ -174,8 +179,11 @@ const TabNavigator = () => {
                 size={widthPixel(65)}
               />
             ),
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
             tabBarButton: props => {
-              return <FabButton />;
+              return (
+                <FabButton/>
+              );
             },
           }}
         />

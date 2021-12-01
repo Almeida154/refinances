@@ -16,10 +16,8 @@ import CurrencyInput from 'react-native-currency-input';
 
 import {
     Container,
-    InputControlValue,
     LabelCifrao,
     AlinhaParaDireita,
-    TextInputValue,
     Header,
     TextButton,
     Buttons,
@@ -32,6 +30,7 @@ import { Categoria } from '../../../contexts/CategoriesContext';
 import { Lancamento, UseLancamentos } from '../../../contexts/EntriesContext';
 import { ReadParcela } from '../../../contexts/InstallmentContext';
 import { Valor } from '../Goals/screens/Invest/styles';
+import { heightPixel } from '../../../helpers/responsiveness';
 
 export interface PropsNavigation {     
     tipoLancamento: string,
@@ -74,8 +73,12 @@ const FormLancamento = ({route}: any) => {
 
                     <HeaderTop 
                         backButton={backAction} 
+<<<<<<< HEAD
+                        title=""
+=======
                         title={selected == 0? 'Nova despesa' : selected == 1 ? 'Nova receita' : 'Nova transferência'}
                         color={theme.colors.silver}
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
                         isShort
                     />
 
@@ -87,22 +90,31 @@ const FormLancamento = ({route}: any) => {
                                 value={parseFloat(valor)}
                                 onChangeValue={txt => setValor(txt?.toString())}
                                 style={{
+<<<<<<< HEAD
+                                    color: colors.white,
+=======
                                     alignContent: 'flex-end',
                                     alignItems: 'flex-end',
                                     color: theme.colors.silver,
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
                                     fontFamily: fonts.familyType.bold,
                                     fontSize: fonts.size.super +20,
-                                    opacity: 0.7,
-                                    width: '100%',
-                                    marginLeft: 10,
+                                    opacity: 0.6,
+                                    position: 'absolute',
+                                    right: 0,
+                                    marginTop: heightPixel(200)
                                 }}
-                                textAlign="right"
                                 delimiter="."
                                 separator=","
                                 precision={2}
                                 maxValue={999999}
+<<<<<<< HEAD
+                                placeholderTextColor={colors.white}
+                                selectionColor={colors.white}
+=======
                                 placeholderTextColor={theme.colors.lightGray}
                                 selectionColor={theme.colors.davysGrey}
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
                                 onChangeText={formattedValue => {
                                     formattedValue == '' ? setValor((0).toString()) : setValor(valor);
                                 }}

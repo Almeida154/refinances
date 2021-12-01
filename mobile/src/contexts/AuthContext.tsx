@@ -179,16 +179,18 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function handleUpdateUser(user: User, id: number) {
     try {
-      const response = await api.put(`/goal/edit/${id}`, {
+      const response = await api.put(`/user/edit/${id}`, {
         nomeUsuario: user.nomeUsuario,
         emailUsuario: user.emailUsuario,
         senhaUsuario: user.senhaUsuario,
-        fotoPerfilUsuario: user.fotoPerfilUsuario,
       });
 
 
       if (response.data.error) console.log(response.data.error);
 
+<<<<<<< HEAD
+      console.log('response.data', response.data);
+=======
 
       //const updateUser = user == null ? null : user.slice();
 
@@ -202,6 +204,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         console.log('metas: ' + metas);
       }*/
 
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
       
     } catch (error) {
       console.log('AuthContext | handleUpdateUser(): ' + error);

@@ -33,8 +33,8 @@ type PropsEditProfile = {
 
 const EditProfile = ({ route, navigation }: PropsEditProfile) => {
 
-  const { user, token } = UseAuth();
-  const [ atual, setAtual ] = useState('');
+  const { user, handleUpdateUser, updateSetupUserProps } = UseAuth();
+  let atual = '';
 
   useEffect(() => {
     (async () => {
@@ -43,6 +43,8 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
       setEdit(edit);
 
       //console.log(novoValor)
+      atual = retornaValorAtual();
+      setNovoValor(atual)
     })();
   }, []);
 
@@ -51,55 +53,42 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
   const [valorError, setValorError] = useState<any | null>(null);
 
   const retornaValorAtual = () => {
-    if(edit == 'nome') setNovoValor (user.nomeUsuario);
-    else if (edit == 'email') console.log (user.emailUsuario);
-    else console.log ('');
+    if(edit == 'nome') return user.nomeUsuario;
+    else if (edit == 'email') return user.emailUsuario;
+    else return '';
   }
 
-  const [novoValor, setNovoValor] = useState('');
+  const [novoValor, setNovoValor] = useState(atual);
 
-  /*async function handleUpdateGoal() {
-    const newGoal = {
-      descMeta: novoDesc(),
-      saldoFinalMeta: novoSaldoFinal(),
-      saldoAtualMeta: goal.saldoAtualMeta,
-      dataInicioMeta: goal.dataInicioMeta,
-      dataFimMeta: previsao.toLocaleDateString(),
-      realizacaoMeta: realizacao(),
-      userMetaId: await retornarIdDoUsuario(),
-    } as Meta;
+  async function handleAlterarUser() {
+    
+    if (novoValor != '' && novoValor != atual) {
 
-    if (meta != '' || (valorMeta) > 0 && valorMeta != undefined) {
-      goal.saldoAtualMeta >= (valorMeta)
-        ? console.log('deu true')
-        : setRealizado(false);
-
-      console.log('realizado: ', realizado);
-      handleAtualizarMeta(newGoal, goal.id);
-      console.log(newGoal);
+      handleUpdateUser(editar(), user.id);
+      console.log(editar());
 
       Toast.show({
         type: 'niceToast',
         props: {
           type: 'success',
           title: 'Foi!',
-          message: 'Meta atualizada com sucesso!',
+          message: edit+' alterado com sucesso!',
         },
       });
-      navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
-    } else if (meta == '' || (valorMeta) <= 0 || valorMeta == 0) {
-      setdescError('Insira alguma descricao diferente!');
-      setvalorTError('Insira algum valor!');
+      navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config' }),);
+    } 
+    else {
+      setValorError('Preencha o campo!');
       Toast.show({
         type: 'niceToast',
         props: {
           type: 'error',
           title: 'Erro!',
-          message: 'Verifique se os dados estão corretos!',
+          message: 'Preencha o campo.',
         },
       });
     }
-  }*/
+  }
 
   const backAction = () => {
     navigation.dispatch(
@@ -108,8 +97,23 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
     return true;
   };
 
+  const editar = () => {
+    var newUser = user;
+
+    if(edit == 'email'){
+      newUser.emailUsuario = novoValor
+    }
+    else if (edit == 'nome'){
+      newUser.nomeUsuario = novoValor
+    }
+    else {
+      newUser.senhaUsuario = novoValor
+    }
+    return newUser;
+  }
+
   return (
-    <ScrollView style={{ backgroundColor: colors.cultured }}>
+    <View style={{ backgroundColor: colors.cultured }}>
       <Container>
 
         <ShortHeader 
@@ -136,7 +140,7 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
             
           <InputController>
           <Button
-            onPress={() => console.log('foi')}
+            onPress={handleAlterarUser}
             title="Salvar"
             style={{backgroundColor:colors.culture,}}
             color={colors.silver}
@@ -148,16 +152,8 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
 
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
-    </ScrollView>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: '0%',
-    marginLeft: '10%',
-    marginRight: '10%',
-  },
-});
 
 export default EditProfile;
