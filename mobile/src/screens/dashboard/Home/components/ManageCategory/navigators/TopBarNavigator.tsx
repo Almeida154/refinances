@@ -4,7 +4,7 @@ import { View, StatusBar, Text } from 'react-native';
 
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
+import { useTheme } from 'styled-components/native'; 
 import Despesas from '../screens/Despesas';
 import Receitas from '../screens/Receitas';
 
@@ -29,12 +29,13 @@ export type PropsNavigation = {
 
 export default function TopBarNavigator({ navigation }: PropsNavigation) {
   const insets = useSafeAreaInsets();
+  const theme: any = useTheme()
 
   return (
     <View
       style={{
         paddingTop: metrics.default.statusBarHeight,
-        backgroundColor: colors.white,
+        backgroundColor: theme.colors.white,
         flex: 1,
       }}>
       <StatusBar translucent={true} backgroundColor="transparent" />
@@ -57,12 +58,12 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
             justifyContent: 'center',
           },
           tabBarStyle: {
-            backgroundColor: colors.white,
+            backgroundColor: theme.colors.white,
           },
           tabBarIndicatorStyle: {
-            backgroundColor: colors.davysGrey,
+            backgroundColor: theme.colors.davysGrey,
           },
-          tabBarActiveTintColor: colors.davysGrey,
+          tabBarActiveTintColor: theme.colors.davysGrey,
         }}>
         <Tab.Screen name="Despesas" component={Despesas} />
         <Tab.Screen name="Receitas" component={Receitas} />

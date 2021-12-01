@@ -10,7 +10,7 @@ export const Button = styled.Image`
 
 export const Container = styled.View`
     flex: 1px;
-    background-color: ${colors.aliceBlue};
+    background-color: ${(props : any) => props.theme.colors.white};
     font-family: ${fonts.familyType.regular};
     padding: 10%;
 `
@@ -23,7 +23,7 @@ export const Welcome = styled.Text`
 
 export const Action = styled.Text`
     text-align: center;
-    color: ${colors.blue};
+    color: ${(props : any) => props.theme.colors.blue};
     margin: 5px 0;
     font-weight: bold;
 `
@@ -31,18 +31,20 @@ export const Action = styled.Text`
 export const Instructions = styled.Text`
     font-family: ${`${fonts.familyType.semiBold}`};
     font-size: ${`${fonts.size.medium - 1.5}px`};
-    color: ${colors.jet};
+    color: ${(props : any) => props.theme.colors.jet};
     width: 100%;
     padding: 20% 0 10% 0;
 `
 export const Bold = styled.Text`
     font-family: ${`${fonts.familyType.bold}`};
-    color: ${colors.jet};
+    color: ${(props : any) => props.theme.colors.jet};
 `
 
 export const Stat = styled.Text`
+    padding: 10px;
     text-align: center;
-    color: ${colors.fireBrick};
+    font-family: ${`${fonts.familyType.semiBold}`};
+    color: ${(props : any) => props.theme.colors.fireBrick};
     margin-bottom: 1px;
 `
 
@@ -58,7 +60,7 @@ export const ButtonRecord = styled.TouchableOpacity`
 export const ContainerResults = styled.ScrollView`
     width: 100%;
     height: auto;
-    background-color: ${colors.lightGray};
+    background-color: ${(props : any) => props.theme.colors.lightGray};
     margin-bottom: 10%;
 `
 

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View } from 'react-native';
-
+import { useTheme } from 'styled-components/native'; 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -20,19 +20,19 @@ interface IProps {
 const NiceToast: React.FC<IProps> = ({ type, title, message, detailed }) => {
   var backgroundColor;
   var icon;
-
+  const theme: any = useTheme()
   switch (type) {
     case 'success':
       backgroundColor = colors.slimyGreen;
-      icon = <AntDesign name="checkcircleo" size={24} color="#fff" />;
+      icon = <AntDesign name="checkcircleo" size={24} color={"#fff"} />;
       break;
     case 'error':
       backgroundColor = colors.redCrayola;
-      icon = <MaterialIcons name="error-outline" size={28} color="#fff" />;
+      icon = <MaterialIcons name="error-outline" size={28} color={"#fff"} />;
       break;
     case 'warning':
       backgroundColor = colors.deepSafron;
-      icon = <Ionicons name="warning-outline" size={26} color="#fff" />;
+      icon = <Ionicons name="warning-outline" size={26} color={"#fff"} />;
       break;
     case 'fake':
       backgroundColor = 'transparent';
@@ -40,7 +40,7 @@ const NiceToast: React.FC<IProps> = ({ type, title, message, detailed }) => {
       break;
     default:
       backgroundColor = colors.eerieBlack;
-      icon = <AntDesign name="questioncircleo" size={24} color="#fff" />;
+      icon = <AntDesign name="questioncircleo" size={24} color={"#fff"} />;
       break;
   }
 

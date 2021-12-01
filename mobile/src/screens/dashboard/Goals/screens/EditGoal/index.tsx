@@ -5,7 +5,7 @@ import Button from '../../../../../components/Button';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
-
+import { useTheme } from 'styled-components/native'; 
 import {
   DadosTempProvider,
   UseDadosTemp,
@@ -101,9 +101,7 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
         ? console.log('deu true')
         : setRealizado(false);
 
-      console.log('realizado: ', realizado);
       handleAtualizarMeta(newGoal, goal.id);
-      console.log(newGoal);
 
       Toast.show({
         type: 'niceToast',
@@ -133,7 +131,6 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
       ? setRealizado(true)
       : setRealizado(false);
 
-    console.log('realizado: ', realizado);
     return realizado;
   };
 
@@ -160,12 +157,13 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
     );
     return true;
   };
+  const theme: any = useTheme()
 
   return (
-    <ScrollView style={{ paddingTop: '8%', backgroundColor: colors.cultured }}>
+    <ScrollView style={{ paddingTop: '8%', backgroundColor: theme.colors.cultured }}>
       <Header 
       backButton={backAction} 
-      color={colors.silver}
+      color={theme.colors.silver}
       title="" />
 
       <View style={styles.container}>
@@ -202,8 +200,8 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
               error={valorTError}
               showClearIcon={valorMeta != 0}
               isCurrencyInput
-              placeholderTextColor={colors.platinum}
-              selectionColor={colors.davysGrey}
+              placeholderTextColor={theme.colors.platinum}
+              selectionColor={theme.colors.davysGrey}
               onClear={() => {
                 setvalorTError(null);
               }}
@@ -241,8 +239,8 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
           <Button
             onPress={handleUpdateGoal}
             title="Salvar"
-            style={{backgroundColor:colors.culture,}}
-            color={colors.silver}
+            style={{backgroundColor:theme.colors.culture,}}
+            color={theme.colors.silver}
             lastOne={true}
           />
         </View>

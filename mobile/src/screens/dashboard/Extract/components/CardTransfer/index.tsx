@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {Transferencia} from '../../../../../contexts/TransferContext'
-
+import { useTheme } from 'styled-components/native'; 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {colors, fonts, metrics} from '../../../../../styles'
 import {
@@ -21,12 +21,13 @@ type CardTransferProps = {
 
 const CardTransfer = ({item}: CardTransferProps) => {
     
+    const theme: any = useTheme()
     
     return(
         <ContainerItem>
             <SectionTransfer>
                 <SectionIcon style={{borderColor: 'yellow'   }}>
-                    <Icon size={24} color='gray' name="bank-transfer"/>
+                    <Icon size={24} color={theme.colors.black} name="bank-transfer"/>
                 </SectionIcon>
                 <SectionDescription>
                     <LabelName>{item.descricaoTransferencia}</LabelName>
@@ -36,7 +37,7 @@ const CardTransfer = ({item}: CardTransferProps) => {
 
             
             <SectionValues>
-                <LabelValue style={{color: colors.jet}}>{item.valorTransferencia}</LabelValue>                
+                <LabelValue style={{color: theme.colors.jet}}>{item.valorTransferencia}</LabelValue>                
             </SectionValues>
         </ContainerItem>
     )

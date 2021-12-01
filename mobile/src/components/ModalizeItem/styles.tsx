@@ -5,7 +5,7 @@ import { colors, fonts, metrics } from '../../styles';
 
 export const Container = styled.TouchableOpacity`
   flex-direction: row;
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   height: ${`${heightPixel(180)}px`};
   margin-bottom: ${`${heightPixel(20)}px`};
   padding: 0 ${`${metrics.default.boundaries}px`};
@@ -26,7 +26,7 @@ export const Image = styled.Image`
 
 export const Description = styled.Text`
   font-size: ${`${fonts.size.medium - widthPixel(8)}px`};
-  color: ${hexToRGB(colors.davysGrey, 0.5)};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   font-family: ${fonts.familyType.bold};
   margin-left: ${`${widthPixel(40)}px`};
 `;

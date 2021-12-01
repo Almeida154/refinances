@@ -7,11 +7,23 @@ export const Container = styled.View`
     display: flex;
     align-items: center;
     flex: 1;
-    background-color: ${colors.white};
+    background-color: ${(props : any) => props.theme.colors.white};
 `
 
+<<<<<<< HEAD
+=======
+export const Title = styled.Text`
+    margin-top: 25px;
+    margin-left: 15px;
+    font-size: 40px;
+    color: ${(props : any) => props.theme.colors.white};
+    padding: 20px;
+    font-family: ${fonts.familyType.semiBold};
+`
+
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
 export const TextButton = styled.Text`
-    color: ${colors.white};
+    color: ${(props : any) => props.theme.colors.silver};
     font-family: ${fonts.familyType.bold};
 `
 
@@ -47,9 +59,25 @@ export const AlinhaParaDireita = styled.View`
 `
 
 export const LabelCifrao = styled.Text`
+<<<<<<< HEAD
     font-size: ${fonts.size.big};
     color: ${colors.white};
     bottom: ${heightPixel(150)};
     left: ${widthPixel(30)}
     font-family: ${fonts.familyType.semiBold};
+=======
+    font-size: 20px;
+    color: ${(props : any) => props.theme.colors.silver};
+    top: 0;
+    position: absolute;
+    right: ${heightPixel(250)}px;
+    font-family: ${fonts.familyType.semiBold};
+`
+export const TextInputValue = styled.TextInput`
+    opacity: 0.7;
+    font-size: ${fonts.size.super + 20};
+    font-family: ${fonts.familyType.semiBold};
+    color: ${(props : any) => props.theme.colors.white};
+    width: auto;
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
 `

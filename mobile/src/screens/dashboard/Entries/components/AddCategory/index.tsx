@@ -8,7 +8,7 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 import { UseAuth } from '../../../../../contexts/AuthContext';
 
 import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
-
+import { useTheme } from 'styled-components/native'; 
 // Styles
 import { Container, Form, ColorsContainer, Color, Icon } from './styles';
 import { colors } from '../../../../../styles';
@@ -107,18 +107,20 @@ const NewExpenseCategory = ({ route }: { route: any }) => {
     );
     return true;
   };
+const theme: any = useTheme()
+
   return (
     <Container>
       <Header 
         backButton={backAction} 
         title={`Adicionar Categoria de ${tipoCategoria}`} 
-        color={colors.silver}
+        color={theme.colors.silver}
         isShort={true} />
       <Form>
         <InputText
           label="Nome"
-          colorLabel={colors.davysGrey}
-          inputColor={hexToRGB(colors.davysGrey, 0.7)}
+          colorLabel={theme.colors.davysGrey}
+          inputColor={hexToRGB(theme.colors.davysGrey, 0.7)}
           placeholder="Biblioteca"
           value={name}
           error={nameError}
@@ -141,7 +143,7 @@ const NewExpenseCategory = ({ route }: { route: any }) => {
         />
         <InputText
           label="Cor"
-          colorLabel={colors.davysGrey}
+          colorLabel={theme.colors.davysGrey}
           placeholder="Amarelo"
           value={color.name}
           error={colorError}
@@ -161,7 +163,7 @@ const NewExpenseCategory = ({ route }: { route: any }) => {
         />
         <InputText
           label="Ícone"
-          colorLabel={colors.davysGrey}
+          colorLabel={theme.colors.davysGrey}
           placeholder="Avião"
           value={icon.description}
           error={iconError}
@@ -180,20 +182,20 @@ const NewExpenseCategory = ({ route }: { route: any }) => {
         <Button
           onPress={() => add()}
           title="Adicionar"
-          backgroundColor={colors.platinum}
-          color={colors.davysGrey}
+          backgroundColor={theme.colors.platinum}
+          color={theme.colors.davysGrey}
         />
       </Form>
 
       <Modalize
         ref={colorModalizeRef}
         title="Escolha uma cor 🎨"
-        backgroundColor={colors.cultured}>
+        backgroundColor={theme.colors.cultured}>
         <ColorsContainer horizontal>
-          {modalizeColors.map((color, index) => (
+          {modalizetheme.colors.map((color, index) => (
             <Color
               key={index}
-              mr={index + 1 != modalizeColors.length}
+              mr={index + 1 != modalizetheme.colors.length}
               bg={color.hex}
               onPress={() => {
                 setColor(color);
@@ -207,18 +209,18 @@ const NewExpenseCategory = ({ route }: { route: any }) => {
       <Modalize
         ref={iconModalizeRef}
         title="Escolha um ícone ✨"
-        backgroundColor={colors.cultured}>
+        backgroundColor={theme.colors.cultured}>
         <ColorsContainer horizontal>
           {modalizeIcons.map((icon, index) => (
             <Icon
               key={index}
-              mr={index + 1 != modalizeColors.length}
+              mr={index + 1 != modalizetheme.colors.length}
               onPress={() => {
                 setIcon(icon);
                 closeIconModalize();
               }}>
               <IconByString
-                color={colors.jet}
+                color={theme.colors.jet}
                 size={24}
                 stringIcon={icon.icon}
               />

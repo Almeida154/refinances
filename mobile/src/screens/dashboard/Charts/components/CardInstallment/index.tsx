@@ -3,7 +3,7 @@ import React from 'react'
 import {ReadParcela, Parcela} from '../../../../../contexts/InstallmentContext'
 
 import {View, TouchableOpacity} from 'react-native'
-
+import { useTheme } from 'styled-components/native'; 
 import Icon from '../../../../../helpers/gerarIconePelaString'
 
 import {
@@ -34,11 +34,12 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
         modalizeRefDetailEntry.current?.open()
 
     }
+    const theme: any = useTheme()
     return (
         <ContainerItem onPress={openModalize}>
             <SectionLancamento>   
                 <SectionIcon style={{borderColor: typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento ? 'yellow' : item.lancamentoParcela.categoryLancamento.corCategoria   }}>
-                    <Icon size={24} color={colors.davysGrey} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
+                    <Icon size={24} color={theme.colors.davysGrey} stringIcon={typeof item.lancamentoParcela.categoryLancamento == 'string' || !item.lancamentoParcela.categoryLancamento? '' : item.lancamentoParcela.categoryLancamento.iconeCategoria}/>
                 </SectionIcon>
                 <SectionDescription>             
                     <LabelName>{item.lancamentoParcela.descricaoLancamento}</LabelName>
@@ -48,7 +49,7 @@ const CardInstallment = ({item}: PropsCardInstallment) => {
 
             
             <SectionValues >
-                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: colors.paradisePink} : {color: colors.budGreen}}>{(item.valorParcela).toFixed(2)}</LabelValue>                                                    
+                <LabelValue style={item.lancamentoParcela.tipoLancamento == 'despesa' ? {color: theme.colors.paradisePink} : {color: theme.colors.budGreen}}>{(item.valorParcela).toFixed(2)}</LabelValue>                                                    
                 <LabelIndex>{textParcela}</LabelIndex>                
             </SectionValues>
         </ContainerItem>

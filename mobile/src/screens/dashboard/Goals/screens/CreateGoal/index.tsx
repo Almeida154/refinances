@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import InputText from '../../../../../components/InputText';
 import Button from '../../../../../components/Button';
-
+import { useTheme } from 'styled-components/native'; 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 import { heightPixel, widthPixel } from '../../../../../helpers/responsiveness';
@@ -133,9 +133,7 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
         ? console.log('deu true')
         : setRealizado(false);
 
-      console.log('realizado: ', realizado);
       handleAdicionarMeta(newGoal);
-      console.log(newGoal);
 
       Toast.show({
         type: 'niceToast',
@@ -200,7 +198,6 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
       ? setRealizado(true)
       : setRealizado(false);
 
-    console.log('realizado: ', realizado);
     return realizado;
   };
 
@@ -220,16 +217,17 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
     navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
+  const theme: any = useTheme()
 
   return (
     <ScrollView
       style={{
-        backgroundColor: colors.cultured,
+        backgroundColor: theme.colors.cultured,
         paddingTop: metrics.default.statusBarHeight,
       }}>
       <ShortHeader onBackButton={backAction} title="Nova meta" />
 
-      <ScreenDescription style={{ backgroundColor: colors.culture }}>
+      <ScreenDescription style={{ backgroundColor: theme.colors.culture }}>
         <Title>Que bom que resolveu criar uma meta</Title>
         <Subtitle>
           Calcularemos seu investimento mensal e te notificaremos para não
@@ -261,8 +259,8 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
           // @ts-ignore
           value={parseFloat(valorMeta)}
           onChangeValue={(txt: string) => setValorMeta(txt?.toString() || '')}
-          placeholderTextColor={colors.platinum}
-          selectionColor={colors.davysGrey}
+          placeholderTextColor={theme.colors.platinum}
+          selectionColor={theme.colors.davysGrey}
           onChangeText={formattedValue => {
             setValorMeta(valorMeta);
           }}
@@ -274,7 +272,7 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
           // @ts-ignore
           value={parseFloat(investidoMeta)}
           onChangeValue={(txt: string) => setInvestido(txt?.toString() || '')}
-          selectionColor={colors.davysGrey}
+          selectionColor={theme.colors.davysGrey}
           onChangeText={formattedValue => {
             setInvestido(investidoMeta);
           }}
@@ -311,8 +309,8 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
         <Button
           onPress={handleCreateGoal}
           title="Criar"
-          color={colors.silver}
-          style={{ backgroundColor: colors.platinum }}
+          color={theme.colors.silver}
+          style={{ backgroundColor: theme.colors.platinum }}
         />
       </View>
       {/* @ts-ignore */}

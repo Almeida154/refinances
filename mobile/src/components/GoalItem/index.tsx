@@ -24,7 +24,7 @@ import hexToRGB from '../../helpers/hexToRgba';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import doubleToCurrency from '../../helpers/doubleToCurrency';
 import shadowBox from '../../helpers/shadowBox';
-
+import { useTheme } from 'styled-components/native';
 type PropsCardGoals = {
   item: Meta;
 };
@@ -43,7 +43,7 @@ const GoalItem = ({ item }: PropsCardGoals) => {
 
   // Algum cálculo para calcular a porcentagem aqui
   const percentageBalance = (item.saldoAtualMeta * 100) / item.saldoFinalMeta;
-
+  const theme: any = useTheme()
   return (
     <Goal
       activeOpacity={0.8}
@@ -60,7 +60,7 @@ const GoalItem = ({ item }: PropsCardGoals) => {
           <IconContainer>
             <MaterialCommunityIcons
               name="exclamation"
-              color={hexToRGB(colors.davysGrey)}
+              color={hexToRGB(theme.colors.davysGrey)}
               size={widthPixel(30)}
             />
           </IconContainer>
@@ -69,7 +69,7 @@ const GoalItem = ({ item }: PropsCardGoals) => {
 
         <ProgressBar
           progress={percentageBalance / 100}
-          color={colors.redCrayola}
+          color={theme.colors.redCrayola}
           style={{
             height: heightPixel(30),
             marginVertical: heightPixel(16),

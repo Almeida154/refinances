@@ -82,7 +82,6 @@ export const CategoriasProvider: React.FC = ({ children }) => {
 
   async function handleAdicionar(categoria: Categoria) {
     setLoading(true);
-    console.log('veio aqui no handleAdicionar');
     try {
       const response = await api.post('/category/create', {
         nomeCategoria: categoria.nomeCategoria,
@@ -93,7 +92,6 @@ export const CategoriasProvider: React.FC = ({ children }) => {
         corCategoria: categoria.corCategoria,
       });
 
-      console.log(response.data);
       if (response.data.error) {
         return response.data.error;
       }

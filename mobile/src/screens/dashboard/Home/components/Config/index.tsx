@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import Header from '../../../components/Header';
-
+import { useTheme } from 'styled-components/native'; 
 import {
   Container,
   ContainerBody,
@@ -101,7 +101,6 @@ const Config = () => {
   useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
-      console.log(await retornarIdDoUsuario());
       // O avatar é a base64 da imagem
       setAvatar(base64?.slice(base64.indexOf(',') + 1));
 
@@ -121,6 +120,7 @@ const Config = () => {
     navigation.dispatch(StackActions.replace('Main'))
     return true;
   };
+  const theme: any = useTheme()
 
   const modalizeRef = useRef<Modal>(null);
 
@@ -188,7 +188,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <Feather
                       name="user"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -214,7 +214,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -232,7 +232,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <MCicons
                       name="email-outline"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -258,7 +258,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -276,7 +276,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <Feather
                       name="lock"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -302,7 +302,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -322,7 +322,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <Entypo
                       name="credit-card"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -346,7 +346,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -364,7 +364,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <AntDesign
                       name="addfolder"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -388,7 +388,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -406,7 +406,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <Ionicons
                       name="medal-outline"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -430,7 +430,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -450,7 +450,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <Entypo
                       name="lock"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -471,7 +471,7 @@ const Config = () => {
                     <Switch value={isSenha} 
                       onValueChange={onSwitchSenha}
                       theme={{}}
-                      color={colors.paradisePink}
+                      color={theme.colors.paradisePink}
                     />
                   </SectionIconRight>
                 </ContainerItems>
@@ -483,7 +483,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <MaterialIcons
                       name="language"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -506,7 +506,7 @@ const Config = () => {
                         alignItems: 'center',
                         flex: 1}}
                       theme={{}}
-                      color={colors.paradisePink}
+                      color={theme.colors.paradisePink}
                      />
                   </SectionIconRight>
                 </ContainerItems>
@@ -520,7 +520,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <Entypo
                       name="brush"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -543,7 +543,7 @@ const Config = () => {
                         alignItems: 'center',
                         flex: 1}}
                       theme={{}}
-                      color={colors.paradisePink}
+                      color={theme.colors.paradisePink}
                      />
                   </SectionIconRight>
                 </ContainerItems>
@@ -555,7 +555,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <MaterialIcons
                       name="language"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -575,7 +575,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -595,7 +595,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <FontAwesome
                       name="share"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -615,7 +615,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -633,7 +633,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <AntDesign
                       name="star"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -653,7 +653,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -671,7 +671,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <FontAwesome
                       name="trash"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -691,7 +691,7 @@ const Config = () => {
                   <SectionIconRight>
                     <AntDesign
                       name="right"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -711,7 +711,7 @@ const Config = () => {
                   <SectionIconLeft>
                     <MCicons
                       name="logout"
-                      color={colors.silver}
+                      color={theme.colors.silver}
                       size={25}
                       style={{
                         justifyContent: 'center',
@@ -746,7 +746,7 @@ const Config = () => {
                       <Icon>
                         <AntDesign
                           name="instagram"
-                          color={colors.cultured}
+                          color={theme.colors.cultured}
                           size={25}
                         />
                       </Icon>
@@ -754,7 +754,7 @@ const Config = () => {
                       <Icon>
                         <Feather
                           name="github"
-                          color={colors.cultured}
+                          color={theme.colors.cultured}
                           size={25}
                         />
                       </Icon>
@@ -762,7 +762,7 @@ const Config = () => {
                       <Icon>
                         <AntDesign
                           name="twitter"
-                          color={colors.cultured}
+                          color={theme.colors.cultured}
                           size={25}
                         />
                       </Icon>
@@ -770,7 +770,7 @@ const Config = () => {
                       <Icon>
                         <AntDesign
                           name="iconfontdesktop"
-                          color={colors.cultured}
+                          color={theme.colors.cultured}
                           size={25}
                         />
                       </Icon>

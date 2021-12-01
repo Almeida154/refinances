@@ -7,7 +7,7 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 
 import FormCadastro from './components/FormCadastro'
 import FormTransferencia from './components/TransferForm'
-
+import { useTheme } from 'styled-components/native'; 
 import {colors, fonts, metrics} from '../../../styles'
 
 import HeaderTop from '../../../components/Header';
@@ -61,18 +61,24 @@ const FormLancamento = ({route}: any) => {
         navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}));
         return true;
       };
+      const theme: any = useTheme()
 
     return (
         <ScrollView
             style={{height: '100%', width: '100%'}}>
-            <StatusBar backgroundColor={selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}/>
+            <StatusBar backgroundColor={selected == 0? theme.colors.paradisePink : selected == 1 ? theme.colors.budGreen : theme.colors.jet}/>
             {
                 <Container>
-                    <Header style={{backgroundColor: selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}}>
+                    <Header style={{backgroundColor: selected == 0? theme.colors.paradisePink : selected == 1 ? theme.colors.budGreen : theme.colors.jet}}>
 
                     <HeaderTop 
                         backButton={backAction} 
+<<<<<<< HEAD
                         title=""
+=======
+                        title={selected == 0? 'Nova despesa' : selected == 1 ? 'Nova receita' : 'Nova transferência'}
+                        color={theme.colors.silver}
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
                         isShort
                     />
 
@@ -84,7 +90,13 @@ const FormLancamento = ({route}: any) => {
                                 value={parseFloat(valor)}
                                 onChangeValue={txt => setValor(txt?.toString())}
                                 style={{
+<<<<<<< HEAD
                                     color: colors.white,
+=======
+                                    alignContent: 'flex-end',
+                                    alignItems: 'flex-end',
+                                    color: theme.colors.silver,
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
                                     fontFamily: fonts.familyType.bold,
                                     fontSize: fonts.size.super +20,
                                     opacity: 0.6,
@@ -96,8 +108,13 @@ const FormLancamento = ({route}: any) => {
                                 separator=","
                                 precision={2}
                                 maxValue={999999}
+<<<<<<< HEAD
                                 placeholderTextColor={colors.white}
                                 selectionColor={colors.white}
+=======
+                                placeholderTextColor={theme.colors.lightGray}
+                                selectionColor={theme.colors.davysGrey}
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
                                 onChangeText={formattedValue => {
                                     formattedValue == '' ? setValor((0).toString()) : setValor(valor);
                                 }}
@@ -105,9 +122,9 @@ const FormLancamento = ({route}: any) => {
                         </AlinhaParaDireita>
 
                         <SectionButtons>
-                            <Buttons onPress={() => setSelected(0)} style={{backgroundColor: selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}}><TextButton>despesa</TextButton></Buttons>
-                            <Buttons onPress={() => setSelected(1)} style={{backgroundColor: selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}}><TextButton>receita</TextButton></Buttons>
-                            <Buttons onPress={() => setSelected(2)} style={{backgroundColor: selected == 0? colors.paradisePink : selected == 1 ? colors.budGreen : colors.jet}}><TextButton>transferência</TextButton></Buttons>
+                            <Buttons onPress={() => setSelected(0)} style={{backgroundColor: selected == 0? theme.colors.paradisePink : selected == 1 ? theme.colors.budGreen : theme.colors.jet}}><TextButton>despesa</TextButton></Buttons>
+                            <Buttons onPress={() => setSelected(1)} style={{backgroundColor: selected == 0? theme.colors.paradisePink : selected == 1 ? theme.colors.budGreen : theme.colors.jet}}><TextButton>receita</TextButton></Buttons>
+                            <Buttons onPress={() => setSelected(2)} style={{backgroundColor: selected == 0? theme.colors.paradisePink : selected == 1 ? theme.colors.budGreen : theme.colors.jet}}><TextButton>transferência</TextButton></Buttons>
                         </SectionButtons>
                     </Header>
                     

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacityProps, View } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { useTheme } from 'styled-components/native';
 import { colors } from '../../styles';
 import {
   Container,
@@ -32,6 +32,8 @@ interface IProps extends TouchableOpacityProps {
 
 const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
   const { navigation } = UseDadosTemp();
+  const theme: any = useTheme()
+
   return (
     <Container style={shadowBox(10, 0.2)}>
       <Content
@@ -76,7 +78,7 @@ const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
             <MaterialCommunityIcons
               name="lead-pencil"
               size={widthPixel(60)}
-              color={hexToRGB(colors.davysGrey, 0.2)}
+              color={hexToRGB(theme.colors.davysGrey, 0.2)}
             />
           </IconEdit>
         )}

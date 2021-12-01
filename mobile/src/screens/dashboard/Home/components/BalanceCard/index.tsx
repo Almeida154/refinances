@@ -23,6 +23,7 @@ import shadowBox from '../../../../../helpers/shadowBox';
 import Feather from 'react-native-vector-icons/Feather';
 import { widthPixel } from '../../../../../helpers/responsiveness';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTheme } from 'styled-components/native';
 
 const BalanceCard = () => {
   const [balance, setBalance] = useState('0');
@@ -31,6 +32,7 @@ const BalanceCard = () => {
   const { contas, handleReadByUserContas } = UseContas();
   const { navigation } = UseDadosTemp();
 
+  const theme: any = useTheme()
   useEffect(() => {
     (async () =>
       setBalanceVisible(
@@ -83,14 +85,14 @@ const BalanceCard = () => {
             }}
             name={isBalanceVisible ? 'eye' : 'eye-off'}
             size={widthPixel(70)}
-            color={colors.platinum}
+            color={theme.colors.platinum}
           />
         </View>
       </SectionBalance>
 
       <Button
         style={{
-          backgroundColor: colors.lightGray,
+          backgroundColor: theme.colors.lightGray,
         }}
         onPress={() =>
           navigation.dispatch(
@@ -98,7 +100,7 @@ const BalanceCard = () => {
           )
         }
         title="Conferir Extrato"
-        color={colors.silver}
+        color={theme.colors.silver}
         lastOne
       />
     </Container>

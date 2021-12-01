@@ -3,7 +3,7 @@ import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../../../styles';
 
 export const Container = styled.View`
-  background-color: ${colors.diffWhite};
+  background-color: ${(props : any) => props.theme.colors.diffWhite};
   flex: 1;
 `;
 
@@ -24,8 +24,8 @@ export const ButtonContainer = styled.View`
 `;
 
 export const Tag = styled.Text`
-  background-color: ${colors.white};
-  color: ${colors.paradisePink};
+  background-color: ${(props : any) => props.theme.colors.white};
+  color: ${(props : any) => props.theme.colors.paradisePink};
   font-size: ${`${fonts.size.medium}px`};
   font-family: ${`${fonts.familyType.bold}`};
   margin: ${`${heightPixel(14)}px`} ${`${widthPixel(28)}px`}
@@ -45,7 +45,7 @@ interface ICountProps {
 }
 
 export const Count = styled.Text<ICountProps>`
-  color: ${props => (props.counter ? colors.redCrayola : colors.davysGrey)};
+  color: ${props => (props.counter ? (props : any) => props.theme.colors.redCrayola : (props : any) => props.theme.colors.davysGrey)};
   font-size: ${`${fonts.size.medium}px`};
   font-family: ${`${fonts.familyType.bold}`};
 `;

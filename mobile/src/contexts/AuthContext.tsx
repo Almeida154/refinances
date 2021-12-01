@@ -185,11 +185,26 @@ export const AuthProvider: React.FC = ({ children }) => {
         senhaUsuario: user.senhaUsuario,
       });
 
-      console.log(response.data);
 
       if (response.data.error) console.log(response.data.error);
 
+<<<<<<< HEAD
       console.log('response.data', response.data);
+=======
+
+      //const updateUser = user == null ? null : user.slice();
+
+      /*if (!updateMetas) {
+        //Caso atualizou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
+        handleReadByUserMetas(await retornarIdDoUsuario());
+      } else {
+        console.log(response.data.metas);
+        setMetas(response.data.metas);
+
+        console.log('metas: ' + metas);
+      }*/
+
+>>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
       
     } catch (error) {
       console.log('AuthContext | handleUpdateUser(): ' + error);

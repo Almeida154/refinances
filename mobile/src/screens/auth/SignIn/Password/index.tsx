@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
-
+import { useTheme } from 'styled-components/native'; 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -43,7 +43,7 @@ export type PropsNavigation = {
 };
 
 const Password = ({ navigation }: PropsNavigation) => {
-  const [password, setPassword] = useState('ttt555');
+  const [password, setPassword] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [minimumRequisit, setMinimumRequisit] = useState(false);
@@ -121,6 +121,7 @@ const Password = ({ navigation }: PropsNavigation) => {
     console.debug('Password | next(): ', user);
     navigation.dispatch(StackActions.replace('ConfirmPassword'));
   }
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -131,7 +132,7 @@ const Password = ({ navigation }: PropsNavigation) => {
           <Input
             placeholder="Defina aqui"
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
-            selectionColor={colors.davysGrey}
+            selectionColor={theme.colors.davysGrey}
             value={password}
             autoCapitalize="none"
             textContentType="password"
@@ -153,7 +154,7 @@ const Password = ({ navigation }: PropsNavigation) => {
                 }}
                 name="close"
                 size={32}
-                color={colors.davysGray}
+                color={theme.colors.davysGray}
                 onPress={() => {
                   setPassword('');
                   setSecurePassword(true);
@@ -167,7 +168,7 @@ const Password = ({ navigation }: PropsNavigation) => {
                 }}
                 name={securePassword ? 'eye' : 'eye-off'}
                 size={28}
-                color={colors.davysGray}
+                color={theme.colors.davysGray}
                 onPress={() => setSecurePassword(!securePassword)}
               />
             </>

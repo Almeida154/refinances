@@ -12,7 +12,7 @@ export const Boundaries = styled.View`
 
 export const Title = styled.Text`
   font-family: ${fonts.familyType.black};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   margin-top: 10%;
   line-height: ${`${fonts.size.super + heightPixel(8)}px`};
   font-size: ${`${fonts.size.super}px`};
@@ -20,7 +20,7 @@ export const Title = styled.Text`
 
 export const Subtitle = styled.Text`
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   margin-top: 2%;
   line-height: 18px;
   font-size: ${`${fonts.size.small}px`};
@@ -35,11 +35,11 @@ export const TopContainer = styled.View`
 
 export const Step = styled.Text`
   font-family: ${fonts.familyType.black};
-  color: ${colors.paradisePink};
+  color: ${(props : any) => props.theme.colors.paradisePink};
   font-size: ${`${fonts.size.medium}px`};
   opacity: 0.7;
 `;
 
 export const LastWordAccent = styled.Text`
-  color: ${colors.paradisePink};
+  color: ${(props : any) => props.theme.colors.paradisePink};
 `;

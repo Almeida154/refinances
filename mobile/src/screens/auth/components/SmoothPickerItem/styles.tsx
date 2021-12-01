@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import hexToRGB from '../../../../helpers/hexToRgba';
 import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 import { colors, fonts, metrics } from '../../../../styles';
-
+import { useTheme } from 'styled-components/native'; 
 interface DayProps {
   isSelected?: boolean;
   isIncome?: boolean;
@@ -13,7 +13,7 @@ export const Container = styled.View<DayProps>`
     props.isSelected
       ? colors.blackSilver
       : hexToRGB(
-          props.isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          props.isIncome ? colors.lincolnGreen : colors.jet,
           0.15,
         )};
   width: ${props =>
@@ -31,7 +31,7 @@ export const Day = styled.Text<DayProps>`
   color: ${props =>
     props.isSelected
       ? hexToRGB(props.isIncome ? colors.slimyGreen : colors.redCrayola, 0.8)
-      : hexToRGB(props.isIncome ? colors.lincolnGreen : colors.davysGray)};
+      : hexToRGB(props.isIncome ? colors.lincolnGreen : colors.lightGray)};
   font-size: ${props =>
     props.isSelected ? `${fonts.size.bigger}px` : `${fonts.size.small}px`};
   font-family: ${props =>

@@ -7,11 +7,12 @@ import { UseAuth } from '../../../contexts/AuthContext';
 import { UseCategories } from '../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import { UseMetas } from '../../../contexts/GoalsContext';
-
+import { useTheme } from 'styled-components/native'; 
 import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
 
+import ViewButtons from '../../../components/ViewButtons'
 import { colors, fonts, metrics } from '../../../styles';
 
 import {
@@ -26,7 +27,7 @@ import {
   Salutation,
 } from './styles';
 
-import { widthPixel } from '../../../helpers/responsiveness';
+import { widthPixel, heightPixel } from '../../../helpers/responsiveness';
 import shadowBox from '../../../helpers/shadowBox';
 
 import BalanceCard from './components/BalanceCard';
@@ -39,8 +40,8 @@ const Home = () => {
   const { user, handleLogout, userAvatar } = UseAuth();
   const { handleReadByUserCategorias, categorias, loading } = UseCategories();
   const { metas, handleReadByUserMetas } = UseMetas();
-  const { navigation } = UseDadosTemp();
-
+  const { navigation, buttonIsEnabled } = UseDadosTemp();
+  
   const [avatar, setAvatar] = useState<string | undefined | null>('');
   const [mime, setMime] = useState<string | undefined | null>('');
 
@@ -98,6 +99,8 @@ const Home = () => {
     return `Boa noite`;
   };
 
+  const theme : any = useTheme()
+
   return (
     <View style={{ flex: 1 }}>
       <Container>
@@ -118,7 +121,7 @@ const Home = () => {
               <Feather
                 name="settings"
                 size={widthPixel(50)}
-                color={colors.battleGray}
+                color={theme.colors.battleGray}
               />
             </ConfigContainer>
 
@@ -149,30 +152,24 @@ const Home = () => {
           {categorias != undefined && categorias.length > 0 && (
             <CategoriesCard />
           )}
-          <CreateCard
-            name="meta"
-            description="As metas são úteis para o seu avanço pessoal e financeiro."
-            onPress={() => {
-              navigation.dispatch(
-                StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
-              );
-            }}
-          />
-          {metas != undefined && metas?.length > 0 && <GoalsCard />}
-        </Content>
-      </Container>
+      
+        <CreateCard
+          name="meta"
+          description="As metas são úteis para o seu avanço pessoal e financeiro."
+          onPress={() => {
+            navigation.dispatch(
+              StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
+            );
+          }}
+        />
+        {metas != undefined && metas?.length > 0 && <GoalsCard />}
+      
+    </Content>
+        
+    </Container>
 
       {/* Gambiarra pro FAB Component funcionar */}
-      <TouchableOpacity
-        onPress={() => console.log('apertando')}
-        style={{
-          width: 100,
-          height: 100,
-          backgroundColor: 'green',
-          position: 'absolute',
-          bottom: 0,
-        }}
-      />
+      <ViewButtons />
     </View>
   );
 };

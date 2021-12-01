@@ -14,7 +14,7 @@ export const Boundaries = styled.View`
 export const Title = styled.Text`
   opacity: 0.7;
   font-family: ${fonts.familyType.bold};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   line-height: ${`${fonts.size.big + widthPixel(18)}px`};
   font-size: ${`${fonts.size.big}px`};
   margin-left: ${`${metrics.default.boundaries / 2}px`};

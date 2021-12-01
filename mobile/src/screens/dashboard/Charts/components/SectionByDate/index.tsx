@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
-
+import { useTheme } from 'styled-components/native'; 
 import { ReadParcela } from '../../../../../contexts/InstallmentContext';
 import {
   UseTransferencias,
@@ -25,6 +25,8 @@ const SectionByDate = ({
   parcelas,
   transferencias,
 }: PropsSectionByDate) => {
+  const theme: any = useTheme()
+
   return (
     <Container>
       <HeaderDate>

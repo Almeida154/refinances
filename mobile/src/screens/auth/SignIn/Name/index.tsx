@@ -4,7 +4,7 @@ import { BackHandler, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-
+import { useTheme } from 'styled-components/native'; 
 import { UseAuth } from '../../../../contexts/AuthContext';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
@@ -28,7 +28,7 @@ export type PropsNavigation = {
 };
 
 const Name = ({ navigation }: PropsNavigation) => {
-  const [name, setName] = useState('Talisca');
+  const [name, setName] = useState('');
   const [hasError, setError] = useState(false);
 
   const { user, updateUserProps, showNiceToast, hideNiceToast } = UseAuth();
@@ -63,6 +63,7 @@ const Name = ({ navigation }: PropsNavigation) => {
     console.debug('Name | next(): ', user);
     navigation.dispatch(StackActions.replace('Email'));
   }
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -75,7 +76,7 @@ const Name = ({ navigation }: PropsNavigation) => {
           <Input
             placeholder="Seu nome"
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
-            selectionColor={colors.davysGrey}
+            selectionColor={theme.colors.davysGrey}
             keyboardType="default"
             autoCapitalize="words"
             value={name}
@@ -101,7 +102,7 @@ const Name = ({ navigation }: PropsNavigation) => {
         </Writting>
         {hasError && <Error>Preencha este campo!</Error>}
       </Content>
-      <BottomNavigation color={colors.davysGray} onPress={() => next()} description="Próximo" />
+      <BottomNavigation color={theme.colors.davysGray} onPress={() => next()} description="Próximo" />
     </Container>
   );
 };

@@ -17,15 +17,18 @@ import shadowBox from '../../../../helpers/shadowBox';
 import { Container, TouchableBtn } from './styles';
 import { UseDadosTemp } from '../../../../contexts/TemporaryDataContext';
 import { StackActions } from 'react-navigation';
+import { useTheme } from 'styled-components/native';
 
 const FabButton = () => {
   const [animation] = useState(new Animated.Value(0));
   const [isOpen, setOpen] = useState(false);
 
-  const { navigation } = UseDadosTemp();
+  const { navigation, buttonIsEnabled, setButtonIsEnabled } = UseDadosTemp();
 
   const toggleMenu = () => {
     const toValue = isOpen ? 0 : 1;
+
+    setButtonIsEnabled(!isOpen);
 
     Animated.spring(animation, {
       toValue,
@@ -102,60 +105,60 @@ const FabButton = () => {
       },
     ],
   };
+  const theme: any = useTheme()
 
   return (
     <Container style={{ marginHorizontal: widthPixel(130) }}>
-        <Animated.View
-          style={[
-            styles.submenu,
-            styles.button,
-            formStyle,
-            shadowBox(20, 0.5),
-            { width: widthPixel(120), height: heightPixel(120) },
-          ]}>
-            <TouchableBtn onPress={() => console.log('form')}>
+      <Animated.View
+        style={[
+          styles.submenu,
+          styles.button,
+          formStyle,
+          shadowBox(20, 0.5),
+          { width: widthPixel(120), height: heightPixel(120) },
+        ]}>
+        <TouchableBtn onPress={() => console.log('form')}>
           <MaterialCommunity
             name="pencil"
-            color={colors.redCrayola}
-            size={widthPixel(50)}
-            />
-            </TouchableBtn>
-        </Animated.View>
-
-
-        <Animated.View
-          style={[
-            styles.submenu,
-            styles.button,
-            voiceStyle,
-            shadowBox(20, 0.5),
-            { width: widthPixel(120), height: heightPixel(120) },
-          ]}>
-                  <TouchableBtn activeOpacity={0.8} onPress={() => console.log('voice')}>
-          <MaterialIcons
-            name="keyboard-voice"
-            color={colors.redCrayola}
-            size={widthPixel(50)}
-            />
-      </TouchableBtn>
-            </Animated.View>
-
-        <Animated.View
-          style={[
-            styles.submenu,
-            styles.button,
-            cameraStyle,
-            shadowBox(20, 0.5),
-            { width: widthPixel(120), height: heightPixel(120) },
-          ]}>
-            <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.8}>
-          <Entypo
-            name="camera"
-            color={colors.redCrayola}
+            color={theme.colors.redCrayola}
             size={widthPixel(50)}
           />
-      </TouchableBtn>
-        </Animated.View>
+        </TouchableBtn>
+      </Animated.View>
+
+      <Animated.View
+        style={[
+          styles.submenu,
+          styles.button,
+          voiceStyle,
+          shadowBox(20, 0.5),
+          { width: widthPixel(120), height: heightPixel(120) },
+        ]}>
+        <TouchableBtn activeOpacity={0.8} onPress={() => console.log('voice')}>
+          <MaterialIcons
+            name="keyboard-voice"
+            color={theme.colors.redCrayola}
+            size={widthPixel(50)}
+          />
+        </TouchableBtn>
+      </Animated.View>
+
+      <Animated.View
+        style={[
+          styles.submenu,
+          styles.button,
+          cameraStyle,
+          shadowBox(20, 0.5),
+          { width: widthPixel(120), height: heightPixel(120) },
+        ]}>
+        <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.5}>
+          <Entypo
+            name="camera"
+            color={theme.colors.redCrayola}
+            size={widthPixel(50)}
+          />
+        </TouchableBtn>
+      </Animated.View>
 
       <TouchableBtn
         activeOpacity={0.8}
@@ -166,14 +169,13 @@ const FabButton = () => {
             styles.button,
             styles.menu,
             rotation,
-            shadowBox(14, 0.5),
             {
-              backgroundColor: isOpen ? colors.redCrayola : colors.white,
+              backgroundColor: isOpen ? theme.colors.redCrayola : theme.colors.white,
             },
           ]}>
           <Entypo
             name="plus"
-            color={isOpen ? colors.white : colors.redCrayola}
+            color={isOpen ? theme.colors.white : theme.colors.redCrayola}
             size={widthPixel(80)}
           />
         </Animated.View>
@@ -181,7 +183,6 @@ const FabButton = () => {
     </Container>
   );
 };
-
 export default FabButton;
 
 const styles = StyleSheet.create({
@@ -191,19 +192,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: widthPixel(210 / 2),
-    backgroundColor: colors.white,
-    position: 'absolute'
+    position: 'absolute',
   },
 
   submenu: {
     width: widthPixel(100),
     height: widthPixel(100),
     borderRadius: widthPixel(100 / 2),
+    backgroundColor: colors.lightGray,
   },
 
   menu: {
     position: 'absolute',
-    backgroundColor: colors.white,
   },
 
   btnPlus: {

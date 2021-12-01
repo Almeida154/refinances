@@ -8,7 +8,7 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   border-radius: ${`${metrics.inputText.radius}px`};
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   flex: 1;
 `;
 
@@ -19,7 +19,7 @@ export const Data = styled.TouchableOpacity`
 `;
 
 export const Name = styled.Text`
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   opacity: 0.8;
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.big - 2}px`};
@@ -30,7 +30,7 @@ export const Name = styled.Text`
 `;
 
 export const IsSelected = styled.View`
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   flex: 1;
   height: ${`${heightPixel(45)}px`};
   border-radius: ${`${metrics.inputText.radius}px`};

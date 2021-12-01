@@ -5,12 +5,12 @@ import { colors, fonts, metrics } from '../../styles';
 export const Container = styled.TouchableHighlight`
   width: 100%;
   min-height: 68px;
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   border-radius: ${`${metrics.inputText.radius}px`};
   padding: ${`${heightPixel(20)}px`} ${`${widthPixel(48)}px`};
   flex-direction: row;
   border-width: ${`${widthPixel(4)}px`};
-  border-color: ${colors.white};
+  border-color: ${(props : any) => props.theme.colors.white};
 `;
 
 export const Writting = styled.View`
@@ -30,7 +30,7 @@ export const IconClean = styled.View`
 export const Label = styled.Text`
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.big}px`};
-  color: ${colors.redCrayola};
+  color: ${(props : any) => props.theme.colors.redCrayola};
   line-height: 28px;
 `;
 
@@ -38,7 +38,7 @@ export const Input = styled.TextInput`
   flex: 1;
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.medium}px`};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   padding: 0;
   margin-top: ${`${heightPixel(-14)}px`};
 `;
@@ -47,7 +47,7 @@ export const Error = styled.Text`
   margin-top: ${`${heightPixel(16)}px`};
   margin-bottom: ${`${heightPixel(32)}px`};
   font-family: ${fonts.familyType.bold};
-  color: ${colors.redCrayola};
+  color: ${(props : any) => props.theme.colors.redCrayola};
   padding: 0 ${`${widthPixel(48)}px`};
   opacity: 0.3;
 `;

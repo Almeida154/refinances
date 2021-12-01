@@ -4,7 +4,7 @@ import { BackHandler, StatusBar, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-
+import { useTheme } from 'styled-components/native'; 
 import { UseAuth } from '../../../../contexts/AuthContext';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
@@ -29,7 +29,7 @@ export type PropsNavigation = {
 };
 
 const Email = ({ navigation }: PropsNavigation) => {
-  const [email, setEmail] = useState('talisca@gmail.com');
+  const [email, setEmail] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -79,6 +79,7 @@ const Email = ({ navigation }: PropsNavigation) => {
     console.debug('Email | next(): ', user);
     navigation.dispatch(StackActions.replace('Password'));
   }
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -89,7 +90,7 @@ const Email = ({ navigation }: PropsNavigation) => {
           <Input
             placeholder="Email@exemplo.com"
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
-            selectionColor={colors.davysGrey}
+            selectionColor={theme.colors.davysGrey}
             keyboardType="default"
             autoCapitalize="words"
             value={email}
@@ -118,7 +119,7 @@ const Email = ({ navigation }: PropsNavigation) => {
         </Writting>
         {hasError && <Error>{errorMessage}</Error>}
       </Content>
-      <BottomNavigation color={colors.davysGray} onPress={() => next()} description="Próximo" />
+      <BottomNavigation color={theme.colors.davysGray} onPress={() => next()} description="Próximo" />
     </Container>
   );
 };

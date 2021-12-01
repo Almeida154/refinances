@@ -26,6 +26,8 @@ import {
 import hexToRGB from '../../../../../helpers/hexToRgba';
 import Icon from '../../../../../helpers/gerarIconePelaString';
 import Button from '../../../../../components/Button';
+import { useTheme } from 'styled-components/native'; 
+
 import { Categoria } from '../../../../../contexts/CategoriesContext';
 
 type GastosCategorias = {
@@ -39,7 +41,10 @@ interface IProps {
   total?: number;
 }
 
+
 const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
+  const theme : any = useTheme()
+
   const [data, setData] = useState({
     dataSets: [
       {
@@ -49,15 +54,16 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
         ],
         config: {
           colors: [
-            processColor(colors.culture),
-            processColor(colors.eerieBlack),
+
+            processColor(theme.colors.culture),
+            processColor(theme.colors.eerieBlack),
           ],
           valueTextSize: 20,
           valueTextColor: processColor('transparent'),
           sliceSpace: 5,
           selectionShift: 13,
           valueFormatter: "#.#'%'",
-          valueLineColor: processColor(colors.white),
+          valueLineColor: processColor(theme.colors.white),
           valueLinePart1Length: 0.5,
         },
         label: '',
@@ -96,15 +102,15 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
               cores.length > 0
                 ? cores
                 : [
-                    processColor(colors.rainsBlack),
-                    processColor(colors.darkGray),
+                    processColor(theme.colors.rainsBlack),
+                    processColor(theme.colors.darkGray),
                   ],
             valueTextSize: 20,
             valueTextColor: processColor('transparent'),
             sliceSpace: 5,
             selectionShift: 13,
             valueFormatter: "#.#'%'",
-            valueLineColor: processColor(colors.white),
+            valueLineColor: processColor(theme.colors.white),
             valueLinePart1Length: 0.5,
           },
           label: '',
@@ -112,7 +118,6 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
       ],
     });
   }, [gastosCategorias]);
-
   return (
     <CategoryStatsCard style={shadowBox(20, 0.2)}>
       <CategoryStatsHeader>
@@ -144,7 +149,7 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
           chartDescription={{ text: '' }}
           holeColor={processColor('transparent')}
           transparentCircleRadius={45}
-          transparentCircleColor={processColor(hexToRGB(colors.white, 0.1))}
+          transparentCircleColor={processColor(hexToRGB(theme.colors.white, 0.1))}
           maxAngle={360}
         />
       </CategoryStatsBody>
@@ -160,7 +165,7 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
                     borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
                     borderBottomWidth:
                       index + 1 != gastosCategorias.length ? heightPixel(6) : 0,
-                    borderBottomColor: colors.cultured,
+                    borderBottomColor: theme.colors.cultured,
                   }}>
                   <CategoryIcon
                     style={{
@@ -169,7 +174,7 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
                     }}>
                     <Icon
                       stringIcon={gastoCateg.categoria.iconeCategoria}
-                      color={gastoCateg.categoria.corCategoria || colors.white}
+                      color={gastoCateg.categoria.corCategoria || theme.colors.white}
                       size={widthPixel(60)}
                     />
                   </CategoryIcon>
@@ -203,7 +208,7 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
               padding: metrics.default.boundaries / 1.6,
               fontFamily: fonts.familyType.bold,
               fontSize: fonts.size.small,
-              color: colors.davysGrey,
+              color: theme.colors.davysGrey,
               opacity: 0.3,
             }}>
             Nada encontrado
@@ -218,9 +223,9 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
             <Button
               onPress={() => console.log('Vai pra todas')}
               style={{
-                backgroundColor: colors.lightGray,
+                backgroundColor: theme.colors.lightGray,
               }}
-              color={hexToRGB(colors.davysGrey, 0.5)}
+              color={hexToRGB(theme.colors.davysGrey, 0.5)}
               title="Ver tudo"
               lastOne
             />

@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
+import {View} from 'react-native'
+
 import { PropsMainRoutes } from '../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { IHandles } from 'react-native-modalize/lib/options';
@@ -29,6 +31,9 @@ interface DadosTempContextType {
   ): any;
 
   hideNiceToast(): any;
+
+  buttonIsEnabled: boolean,
+  setButtonIsEnabled: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const DadosTempContext = createContext<DadosTempContextType>(
@@ -46,6 +51,8 @@ export const DadosTempProvider: React.FC = ({ children }) => {
   const [selectedItemExtract, setSelectedItemExtract] = useState<ReadParcela | Transferencia | null>(null)
 
   const modalizeRefDetailEntry = useRef<Modalize>(null)
+  
+  const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
 
   function showNiceToast(
     type: string,
@@ -76,6 +83,8 @@ export const DadosTempProvider: React.FC = ({ children }) => {
   return (
     <DadosTempContext.Provider
       value={{
+        buttonIsEnabled,
+        setButtonIsEnabled,      
         showNiceToast,
         hideNiceToast,
         selectedItemExtract,

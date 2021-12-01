@@ -12,7 +12,7 @@ import {
   Valor,
   BtnGroup,
 } from './styles';
-
+import { useTheme } from 'styled-components/native'; 
 import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
@@ -111,13 +111,14 @@ const GoalDetails = ({ route, navigation }: Props) => {
       },
     });
   };
+  const theme: any = useTheme()
 
 return(
 
     <ScrollView
       style={{
         paddingTop: metrics.default.statusBarHeight,
-        backgroundColor: colors.back,
+        backgroundColor: theme.colors.back,
       }}>
       <ShortHeader onBackButton={backAction} title={goal.descMeta} />
 
@@ -133,7 +134,7 @@ return(
 
         <ProgressBar
           progress={percentageBalance / 100}
-          color={colors.redCrayola}
+          color={theme.colors.redCrayola}
           style={{
             height: 10,
             marginVertical: 8,
@@ -152,7 +153,7 @@ return(
 
         <View
           style={{
-            backgroundColor: hexToRGB(colors.platinum, 0.4),
+            backgroundColor: hexToRGB(theme.colors.platinum, 0.4),
             marginVertical: heightPixel(80),
             padding: metrics.default.boundaries / 1.6,
             borderRadius: widthPixel(20),
@@ -161,7 +162,7 @@ return(
             <IconContainer>
               <MaterialCommunityIcons
                 name="exclamation"
-                color={hexToRGB(colors.davysGrey)}
+                color={hexToRGB(theme.colors.davysGrey)}
                 size={widthPixel(30)}
               />
             </IconContainer>
@@ -189,9 +190,9 @@ return(
             );
           }}
           title="Depositar"
-          color={colors.budGreen}
+          color={theme.colors.budGreen}
           style={{
-            backgroundColor: colors.culture,
+            backgroundColor: theme.colors.culture,
           }}
         />
 
@@ -200,9 +201,9 @@ return(
             openModalize();
           }}
           title="Excluir"
-          color={colors.paradisePink}
+          color={theme.colors.paradisePink}
           style={{
-            backgroundColor: colors.culture,
+            backgroundColor: theme.colors.culture,
           }}
           lastOne
         />
@@ -217,9 +218,9 @@ return(
             );
           }}
           title="Editar"
-          color={colors.darkGray}
+          color={theme.colors.darkGray}
           style={{
-            backgroundColor: colors.culture,
+            backgroundColor: theme.colors.culture,
           }}
         />
       </View>
@@ -231,11 +232,11 @@ return(
           <Button
             title="Excluir"
             onPress={excluir}
-            color={colors.silver}
+            color={theme.colors.silver}
             style={{
               width: '50%',
               marginRight: '5%',
-              backgroundColor: colors.paradisePink,
+              backgroundColor: theme.colors.paradisePink,
             }}
           />
           <Button
@@ -243,9 +244,9 @@ return(
             onPress={() => {
               closeModalize();
             }}
-            backgroundColor={colors.lightGray}
-            color={colors.silver}
-            style={{ width: '50%', backgroundColor:colors.lightGray }}
+            backgroundColor={theme.colors.lightGray}
+            color={theme.colors.silver}
+            style={{ width: '50%', backgroundColor:theme.colors.lightGray }}
           />
         </BtnGroup>
       </Modalize>

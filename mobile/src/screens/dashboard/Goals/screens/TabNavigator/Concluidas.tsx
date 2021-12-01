@@ -5,7 +5,7 @@ import { GoalsStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { UseMetas } from '../../../../../contexts/GoalsContext';
-
+import { useTheme } from 'styled-components/native'; 
 import { ActivityIndicator } from 'react-native-paper';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
@@ -50,10 +50,12 @@ const GoalsAccomplished = ({ navigation }: PropsGoals) => {
     navigation.dispatch(StackActions.replace('Main', { screen: 'Home' }));
     return true;
   };
+  const theme: any = useTheme()
 
   if (metas && metas.length > 0) {
+
     return (
-      <ScrollView style={{ backgroundColor: colors.white }}>
+      <ScrollView style={{ backgroundColor: theme.colors.white }}>
         <View style={{ margin: '10%' }}>
           <Title>Parabéns!</Title>
 
@@ -63,7 +65,6 @@ const GoalsAccomplished = ({ navigation }: PropsGoals) => {
           </Subtitle>
           {metas &&
             metas.map((item, index) => {
-              console.log('Item: ', UseMetas);
               if (item.saldoAtualMeta >= item.saldoFinalMeta)
                 return <GoalItem item={item} key={index} />;
             })}
@@ -71,13 +72,14 @@ const GoalsAccomplished = ({ navigation }: PropsGoals) => {
       </ScrollView>
     );
   } else {
+
     return (
-      <ScrollView style={{ backgroundColor: colors.cultured }}>
+      <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
         <View style={{ margin: '10%', alignItems: 'center' }}>
           <Icon
             name="emoticon-sad-outline"
             size={50}
-            color={colors.davysGrey}
+            color={theme.colors.davysGrey}
             style={{
               alignItems: 'center',
               justifyContent: 'center',
@@ -94,7 +96,7 @@ const GoalsAccomplished = ({ navigation }: PropsGoals) => {
 
           <Button
             title="Criar nova meta"
-            backgroundColor={colors.blackSilver}
+            backgroundColor={theme.colors.blackSilver}
             onPress={() => {
               navigation.dispatch(StackActions.replace('CreateGoals'));
             }}

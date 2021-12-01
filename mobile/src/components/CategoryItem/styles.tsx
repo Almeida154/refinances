@@ -6,7 +6,7 @@ import { colors, fonts, metrics } from '../../styles';
 export const Container = styled.View`
   width: 100%;
   height: ${`${heightPixel(280)}px`};
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   border-radius: ${`${widthPixel(16)}px`};
   margin: ${`${heightPixel(22)}px`} 0;
 `;
@@ -14,7 +14,7 @@ export const Container = styled.View`
 export const Content = styled.TouchableOpacity`
   width: 100%;
   height: ${`${heightPixel(280 - 60)}px`};
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   border-top-right-radius: ${`${widthPixel(20)}px`};
   border-top-left-radius: ${`${widthPixel(20)}px`};
   padding: ${`${metrics.default.boundaries / 2}px`};
@@ -28,7 +28,7 @@ export const Data = styled.View`
   justify-content: center;
   width: 100%;
   height: ${`${heightPixel(60)}px`};
-  background-color: ${colors.diffWhite};
+  background-color: ${(props : any) => props.theme.colors.diffWhite};
   border-bottom-right-radius: ${`${widthPixel(20)}px`};
   border-bottom-left-radius: ${`${widthPixel(20)}px`};
 `;
@@ -51,13 +51,13 @@ export const Info = styled.View`
 
 export const Description = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
-  color: ${colors.davysGrey};
+  color: ${(props : any) => props.theme.colors.davysGrey};
   font-family: ${fonts.familyType.bold};
 `;
 
 export const Category = styled.Text`
   font-size: ${`${fonts.size.small}px`};
-  color: ${hexToRGB(colors.davysGrey, 0.4)};
+  color: ${(props: any) => hexToRGB(props.theme.colors.davysGrey, 0.4)};
   font-family: ${fonts.familyType.light};
 `;
 
@@ -70,7 +70,7 @@ export const IconEdit = styled.View`
 
 export const PercentDetail = styled.View`
   position: absolute;
-  background-color: ${colors.white};
+  background-color: ${(props : any) => props.theme.colors.white};
   top: ${`${widthPixel(-18)}px`};
   right: ${`${widthPixel(-18)}px`};
   width: ${`${widthPixel(65)}px`};
@@ -83,6 +83,6 @@ export const PercentDetail = styled.View`
 
 export const Percent = styled.Text`
   font-size: ${`${fonts.size.smaller}px`};
-  color: ${hexToRGB(colors.davysGrey, 0.7)};
+  color: ${(props: any) => hexToRGB(props.theme.colors.davysGrey, 0.7)};
   font-family: ${fonts.familyType.black};
 `;

@@ -7,7 +7,7 @@ import { Text } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 import {toDate} from '../../../../../helpers/manipularDatas'
-
+import { useTheme } from 'styled-components/native'; 
 import PickerContas from '../PickerContas'
 
 import {Checkbox} from 'react-native-paper'
@@ -55,7 +55,6 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
         const aux = dataParcelas.slice()
         aux[item.indexOfLancamento].valorParcela = text == '' ? NaN : parseFloat(text)
         
-        console.log(aux)
         setDataParcelas(aux)                
     }
 
@@ -73,14 +72,14 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
             const aux = dataParcelas.slice()
             aux[item.indexOfLancamento].contaParcela = conta        
             
-            console.log(aux)
             setDataParcelas(aux)
         }
     }
     
+    const theme: any = useTheme()
                 
     return (
-        <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}}>
+        <ContainerCardParcela style={{borderColor: tipoLancamento == 'despesa' ? theme.colors.paradisePink : theme.colors.budGreen}}>
             <TituloCardParcela onPress={showDatePicker}>Parcela de {item.dataParcela.toLocaleDateString()}</TituloCardParcela>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
@@ -101,9 +100,9 @@ const ItemCardParcela = ({item, dataParcelas, setDataParcelas, tipoLancamento}: 
                 <Checkbox 
                     status={dataParcelas[item.indexOfLancamento].statusParcela ? 'checked' : 'unchecked'}
                     onPress={changeSituation}
-                    color={tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}
+                    color={tipoLancamento == 'despesa' ? theme.colors.paradisePink : theme.colors.budGreen}
                 />
-                <LabelStatus style={{color: tipoLancamento == 'despesa' ? colors.paradisePink : colors.budGreen}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</LabelStatus>
+                <LabelStatus style={{color: tipoLancamento == 'despesa' ? theme.colors.paradisePink : theme.colors.budGreen}}>{tipoLancamento == 'despesa' ? 'Pago' : 'Recebido'}</LabelStatus>
             </InputControlStatus>
             <PickerContas conta={dataParcelas[item.indexOfLancamento].contaParcela} changeAccount={changeAccount} tipoLancamento={tipoLancamento}/>
         </ContainerCardParcela>

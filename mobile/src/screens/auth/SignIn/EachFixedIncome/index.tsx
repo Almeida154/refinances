@@ -15,7 +15,7 @@ import { Parcela } from '../../../../contexts/InstallmentContext';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-
+import { useTheme } from 'styled-components/native'; 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -212,11 +212,12 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
   }
+  const theme: any = useTheme()
 
   return (
     <Container>
       <Header
-        accent={colors.slimyGreen}
+        accent={theme.colors.slimyGreen}
         onBackButton={() => backAction()}
         title="Quanto ganha mensalmente com"
         lastWordAccent={`${setupUser.incomeTags[setupUser.incomeTagsCount]}?`}
@@ -236,7 +237,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
                   style={{
                     flex: 1,
                     padding: 0,
-                    color: colors.davysGrey,
+                    color: theme.colors.davysGrey,
                     fontFamily: fonts.familyType.bold,
                     fontSize: fonts.size.super + 14,
                   }}
@@ -248,18 +249,16 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
                   placeholder="0,00"
                   maxValue={999999}
                   placeholderTextColor={'rgba(52, 52, 52, .3)'}
-                  selectionColor={colors.davysGrey}
+                  selectionColor={theme.colors.davysGrey}
                   onChangeText={formattedValue => {
                     setFormattedIncomeAmount(formattedValue);
                     if (incomeAmount == null) setIncomeAmount(0.0);
                   }}
                   ref={inputRef}
                   onBlur={() => {
-                    console.log('bluou');
                     setFocused(false);
                   }}
                   onFocus={() => {
-                    console.log('focou');
                     setFocused(true);
                   }}
                 />
@@ -296,7 +295,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
               textAlign: 'center',
               fontFamily: fonts.familyType.bold,
               fontSize: fonts.size.small,
-              color: colors.davysGrey,
+              color: theme.colors.davysGrey,
             }}>
             Dia de recebimento
           </Text>
@@ -348,7 +347,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
             <AntDesign
               name="caretdown"
               size={widthPixel(40)}
-              color={colors.lincolnGreen}
+              color={theme.colors.lincolnGreen}
             />
           </SmoothPickerTopDetail>
           <SmoothPickerBottomDetail />
@@ -358,7 +357,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
       <BottomNavigation
         onPress={() => next()}
         description={'Escolher categoria'}
-        iconColor={colors.slimyGreen}
+        iconColor={theme.colors.slimyGreen}
         pickerOn={!isFocused}
       />
     </Container>

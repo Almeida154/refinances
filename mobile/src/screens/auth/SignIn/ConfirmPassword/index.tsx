@@ -17,6 +17,7 @@ import { colors } from '../../../../styles';
 // Icons
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
+import { useTheme } from 'styled-components/native'; 
 
 // Components
 import Header from '../../components/Header';
@@ -28,7 +29,7 @@ export type PropsNavigation = {
 };
 
 const ConfirmPassword = ({ navigation }: PropsNavigation) => {
-  const [confirmPassword, setConfirmPassword] = useState('ttt555');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [securePassword, setSecurePassword] = useState(true);
@@ -65,7 +66,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
     console.debug('ConfirmPassword | next(): ', user);
     navigation.dispatch(StackActions.replace('Photo'));
   }
-
+  const theme: any = useTheme()
   return (
     <Container>
       <StatusBar translucent={true} backgroundColor="transparent"/>
@@ -75,7 +76,7 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
           <Input
             placeholder="Confirme aqui"
             placeholderTextColor={'rgba(52, 52, 52, .3)'}
-            selectionColor={colors.davysGrey}
+            selectionColor={theme.colors.davysGrey}
             value={confirmPassword}
             autoCapitalize="none"
             textContentType="password"

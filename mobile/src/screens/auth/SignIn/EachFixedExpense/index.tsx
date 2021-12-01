@@ -43,6 +43,7 @@ import CurrencyInput from 'react-native-currency-input';
 import Picker from 'react-native-picker-horizontal';
 import EntryPlaceholder from '../../components/EntryPlaceholder';
 import DatePlaceholder from '../../components/DatePlaceholder';
+import { useTheme } from 'styled-components/native'; 
 
 import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 
@@ -194,7 +195,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     updateSetupUserProps(newSetupProps);
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
   }
-
+  const theme: any = useTheme()
   return (
     <Container>
       <Header
@@ -216,7 +217,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
                   style={{
                     flex: 1,
                     padding: 0,
-                    color: colors.davysGrey,
+                    color: theme.colors.davysGrey,
                     fontFamily: fonts.familyType.bold,
                     fontSize: fonts.size.super + 14,
                   }}
@@ -228,18 +229,16 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
                   placeholder="0,00"
                   maxValue={999999}
                   placeholderTextColor={'rgba(52, 52, 52, .3)'}
-                  selectionColor={colors.davysGrey}
+                  selectionColor={theme.colors.davysGrey}
                   onChangeText={formattedValue => {
                     setFormattedExpenseAmount(formattedValue);
                     if (expenseAmount == null) setExpenseAmount(0.0);
                   }}
                   ref={inputRef}
                   onBlur={() => {
-                    console.log('bluou');
                     setFocused(false);
                   }}
                   onFocus={() => {
-                    console.log('focou');
                     setFocused(true);
                   }}
                 />
@@ -276,7 +275,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
               textAlign: 'center',
               fontFamily: fonts.familyType.bold,
               fontSize: fonts.size.small,
-              color: colors.davysGrey,
+              color: theme.colors.davysGrey,
             }}>
             Dia de vencimento
           </Text>
@@ -328,7 +327,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
             <AntDesign
               name="caretdown"
               size={widthPixel(40)}
-              color={colors.bigDipOruby}
+              color={theme.colors.bigDipOruby}
             />
           </SmoothPickerTopDetail>
           <SmoothPickerBottomDetail />

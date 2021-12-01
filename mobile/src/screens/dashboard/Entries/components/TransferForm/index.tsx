@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, ScrollView} from 'react-native'
-
+import { useTheme } from 'styled-components/native'; 
 import {
     ContainerForm,
     InputControl,
@@ -39,7 +39,6 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
-        console.log("Foi")
     };
 
     const handleConfirm = (date: Date) => {       
@@ -77,6 +76,7 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
             ToastAndroid.show(message, ToastAndroid.SHORT)            
         }
     }
+    const theme: any = useTheme()
   
     return (
         <ScrollView style={{width: '100%'}}>
@@ -86,10 +86,10 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                         onClear={() => {}}
                         showClearIcon={false}
                         label="Descrição"
-                        colorLabel={colors.jet}
+                        colorLabel={theme.colors.jet}
                         value={descricao}
                         onChangeText={setDescricao}                
-                        placeholderTextColor={colors.silver}
+                        placeholderTextColor={theme.colors.silver}
                         placeholder="Descrição de sua transferência"></InputText>
                 </InputControl>
 
@@ -105,7 +105,7 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                     <InputTextView
                         value={dataPagamento.toLocaleDateString()}
                         label="Data de Efetuação"
-                        colorLabel={colors.jet}
+                        colorLabel={theme.colors.jet}
                         onPress={showDatePicker}
                     />
                 <DateTimePickerModal
@@ -121,9 +121,9 @@ const FormTransferencia= ({route, valor, setValor, navigation}: PropsNavigation)
                     title="Adicionar" 
                     onPress={handleSubmit}
                     style={{
-                        backgroundColor: colors.jet
+                        backgroundColor: theme.colors.jet
                     }}
-                    color={colors.white}
+                    color={theme.colors.silver}
                 />
             </ContainerForm>
         </ScrollView>

@@ -4,7 +4,7 @@ import { BackHandler, StatusBar } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-
+import { useTheme } from 'styled-components/native'; 
 import { UseAuth } from '../../../../contexts/AuthContext';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
@@ -72,7 +72,6 @@ const Photo = ({ navigation }: PropsNavigation) => {
   const openCamera = () => {
     ImagePicker.openCamera(global.IMAGE_CROP_PICKER_OPTIONS as {}).then(
       image => {
-        console.log(image);
         // @ts-ignore
         setAvatar({ base64: `data:${image?.mime};base64,${image?.data}` });
       },
@@ -82,7 +81,6 @@ const Photo = ({ navigation }: PropsNavigation) => {
   const openGallery = () => {
     ImagePicker.openPicker(global.IMAGE_CROP_PICKER_OPTIONS as {}).then(
       image => {
-        console.log(image);
         // @ts-ignore
         setAvatar({ base64: `data:${image.mime};base64,${image?.data}` });
       },
@@ -91,6 +89,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
 
   const openModalize = () => modalizeRef.current?.open();
   const closeModalize = () => modalizeRef.current?.close();
+  const theme: any = useTheme()
 
   return (
     <Container>
@@ -108,7 +107,7 @@ const Photo = ({ navigation }: PropsNavigation) => {
               <Pic
                 style={{
                   borderWidth: widthPixel(14),
-                  borderColor: colors.silver,
+                  borderColor: theme.colors.silver,
                 }}
                 source={require('../../../../assets/images/avatarDefault.png')}
               />
@@ -116,20 +115,20 @@ const Photo = ({ navigation }: PropsNavigation) => {
               <Pic
                 style={{
                   borderWidth: widthPixel(14),
-                  borderColor: colors.platinum,
+                  borderColor: theme.colors.platinum,
                 }}
                 source={{ uri: avatar.base64 }}
               />
             )}
             <CameraDetail
               onPress={() => openModalize()}
-              underlayColor={colors.paradisePink}>
-              <Feather name="camera" size={20} color={colors.white} />
+              underlayColor={theme.colors.paradisePink}>
+              <Feather name="camera" size={20} color={theme.colors.white} />
             </CameraDetail>
           </PhotoContainer>
           <Button
-            style={{ marginBottom: 80, backgroundColor: colors.platinum }}
-            color={colors.silver}
+            style={{ marginBottom: 80, backgroundColor: theme.colors.platinum }}
+            color={theme.colors.silver}
             title="Escolher"
             onPress={() => openModalize()}
           />
@@ -144,25 +143,25 @@ const Photo = ({ navigation }: PropsNavigation) => {
       <Modalize
         ref={modalizeRef}
         title="Escolha uma opção"
-        backgroundColor={colors.cultured}
+        backgroundColor={theme.colors.cultured}
         hasBodyBoundaries>
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Abrir a câmera"
           onPress={() => {
             openCamera();
             closeModalize();
           }}
-          color={colors.silver}
+          color={theme.colors.silver}
         />
         <Button
-          style={{ backgroundColor: colors.platinum }}
+          style={{ backgroundColor: theme.colors.platinum }}
           title="Abrir a galeria"
           onPress={() => {
             openGallery();
             closeModalize();
           }}
-          color={colors.silver}
+          color={theme.colors.silver}
           lastOne
         />
       </Modalize>

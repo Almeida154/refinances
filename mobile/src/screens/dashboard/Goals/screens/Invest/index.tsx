@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-
+ import { useTheme } from 'styled-components/native'; 
 import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
@@ -48,6 +48,8 @@ import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import PickerContas from '../../../Entries/components/PickerContas';
 import { Conta } from '../../../../../contexts/AccountContext';
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
+
 import {
   Parcela,
   UseParcelas,
@@ -68,6 +70,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
   const [goal, setGoal] = useState({} as Meta);
 
+  const {showNiceToast} = UseDadosTemp()
   const { handleGetGoalById } = UseMetas();
   const { handleAtualizarMeta } = UseMetas();
   const { handleAdicionarParcela } = UseParcelas();
@@ -84,7 +87,6 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
   }, []);
 
   async function handleUpdateGoal() {
-    console.log(goal.lancamentoMeta);
 
     const newGoal = {
       descMeta: goal.descMeta,
@@ -102,32 +104,19 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
       dataParcela: new Date(Date.now()),
       lancamentoParcela: goal.lancamentoMeta.id,
       statusParcela: sttsParcela(),
-      valorParcela: novoSaldo(),
+      valorParcela: parseFloat(valorDeposito),
     } as Parcela;
 
     if (parseFloat(valorDeposito) <= 0 || valorDeposito == '') {
-      Toast.show({
-        type: 'niceToast',
-        props: {
-          type: 'error',
-          title: 'Erro!',
-          message: 'Insira os dados corretamente!',
-        },
-      });
+      showNiceToast("error", "Erro!", 'Insira os dados corretamente!')
+      
     } else {
       const responseMeta = await handleAtualizarMeta(newGoal, goal.id);
 
       const responseParcela = await handleAdicionarParcela([newParcela]);
 
       if (responseParcela == '') {
-        Toast.show({
-          type: 'niceToast',
-          props: {
-            type: 'success',
-            title: 'Foi!',
-            message: 'Depósito realizado com sucesso!',
-          },
-        });
+        showNiceToast('success', 'Foi!', 'Depósito realizado com sucesso!')        
         navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
       } else {
         ToastAndroid.show(responseParcela, ToastAndroid.SHORT);
@@ -186,14 +175,15 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               </TextProgress>
     }
   }
+  const theme: any = useTheme()
 
   return (
-    <ScrollView style={{ backgroundColor: colors.cultured }}>
+    <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
       <StatusBar translucent={true} backgroundColor="transparent"/>
-      <Header style={{ backgroundColor: colors.paradisePink }}>
+      <Header style={{ backgroundColor: theme.colors.paradisePink }}>
         <HeaderTop 
         backButton={backAction} 
-        color={colors.silver}
+        color={theme.colors.silver}
         title="" />
         <AlinhaParaDireita>
 
@@ -205,7 +195,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               style={{
                   alignContent: 'flex-end',
                   alignItems: 'flex-end',
-                  color: colors.silver,
+                  color: theme.colors.silver,
                   fontFamily: fonts.familyType.bold,
                   fontSize: fonts.size.super +20,
                   opacity: 0.7,
@@ -217,8 +207,8 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
               separator=","
               precision={2}
               maxValue={999999}
-              placeholderTextColor={colors.lightGray}
-              selectionColor={colors.davysGrey}
+              placeholderTextColor={theme.colors.lightGray}
+              selectionColor={theme.colors.davysGrey}
               onChangeText={formattedValue => {
                   formattedValue == '' ? setValor((0).toString()) : setValor(valorDeposito);
               }}
@@ -238,7 +228,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
         <Button
           title={'Investir'}
-          style={{ marginTop: 30, backgroundColor: colors.culture }}
+          style={{ marginTop: 30, backgroundColor: theme.colors.culture }}
           onPress={handleUpdateGoal}></Button>
       </View>
       {/* @ts-ignore */}

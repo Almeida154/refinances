@@ -52,11 +52,9 @@ export const MetasProvider: React.FC = ({ children }) => {
         lancamentoMeta: meta.lancamentoMeta
       });
 
-      console.log(response.data);
 
       if (response.data.error) console.log(response.data.error);
 
-      console.log('response.data', response.data);
 
       const newMetas = metas == null ? null : metas.slice();
 
@@ -81,11 +79,7 @@ export const MetasProvider: React.FC = ({ children }) => {
       if (response.data.error) {
         ToastAndroid.show(response.data.error, ToastAndroid.SHORT);
       }
-      console.log(response.data.metas);
       setMetas(response.data.metas);
-
-      console.log(response.data.metas[0])
-      console.log('metas: ' + metas);
     } catch (error) {
       console.log('Erro na leitura das metas: ' + error);
     }
@@ -105,8 +99,6 @@ export const MetasProvider: React.FC = ({ children }) => {
         // eu troquei o método 'one' lá no GoalController, pq tava vindo junto com o usuário e a foto de perfil é absurdamente grande, agora só vem a meta mesmo, em vez desse userMetaId receber da meta, ele pode receber daquela função 'retornarIdDoUsuario';
       });
 
-      console.log(response.data);
-
       if (response.data.error) console.log(response.data.error);
 
       console.log('response.data', response.data);
@@ -117,7 +109,6 @@ export const MetasProvider: React.FC = ({ children }) => {
         //Caso atualizou e não tinha nenhuma outras metas carregadas, carregar todas contando com a atual
         handleReadByUserMetas(await retornarIdDoUsuario());
       } else {
-        console.log(response.data.metas);
         setMetas(response.data.metas);
 
         console.log('metas: ' + metas);
