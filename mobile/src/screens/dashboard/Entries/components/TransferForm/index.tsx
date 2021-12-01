@@ -28,13 +28,12 @@ import { Text, ToastAndroid } from 'react-native';
 import PickerContas from '../PickerContas';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FAB } from 'react-native-paper';
-import { Conta } from '@contexts/AccountContext';
+import { Conta } from '../../../../../contexts/AccountContext';
+import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
 const FormTransferencia = ({
-  route,
   valor,
   setValor,
-  navigation,
 }: PropsNavigation) => {
   const [selectedContaOrigem, setSelectedContaOrigem] = useState<Conta | null>(
     null,
@@ -48,6 +47,8 @@ const FormTransferencia = ({
 
   const { handleAdicionarTransferencia, handleLoadTransferencias } =
     UseTransferencias();
+
+  const {showNiceToast} = UseDadosTemp()
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -80,12 +81,10 @@ const FormTransferencia = ({
     const message = await handleAdicionarTransferencia(newTransferencia);
 
     if (message == '') {
-      ToastAndroid.show('Transferencia adicionada', ToastAndroid.SHORT);
-      setDescricao('');
-      setSelectedContaDestino(null);
-      setSelectedContaOrigem(null);
+      showNiceToast('success', 'Transferencia adicionada')
+      setDescricao('');     
     } else {
-      ToastAndroid.show(message, ToastAndroid.SHORT);
+      showNiceToast('error', message)
     }
   };
   const theme: any = useTheme();
