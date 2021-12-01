@@ -1,15 +1,7 @@
-import { RouteProp } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-
-import { toDate } from '../../../../../helpers/manipularDatas';
-import { colors, fonts, metrics } from '../../../../../styles';
-import { useTheme } from 'styled-components/native'; 
-import { ProgressBar, Colors } from 'react-native-paper';
+import { useTheme } from 'styled-components/native';
 
 import Button from '../../../../../components/Button';
-
-import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
 import {
   Container,
@@ -30,8 +22,9 @@ import shadowBox from '../../../../../helpers/shadowBox';
 
 const GoalsCard = () => {
   const { navigation } = UseDadosTemp();
-  const { metas, handleReadByUserMetas } = UseMetas();
- const theme: any = useTheme()
+  const { metas } = UseMetas();
+  const theme: any = useTheme();
+
   return (
     <Container style={shadowBox(30, 0.3)}>
       <TopSection>

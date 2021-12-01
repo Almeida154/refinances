@@ -28,7 +28,7 @@ export const Description = styled.Text`
   font-family: ${`${fonts.familyType.bold}`};
   line-height: ${`${fonts.size.small + widthPixel(8)}px`};
   color: ${(props: any) => props.theme.colors.davysGrey};
-  opacity: 0.3;
+  opacity: 0.7;
 `;
 
 export const Separator = styled.View`

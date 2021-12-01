@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import Feather from 'react-native-vector-icons/Feather';
 
 import {
@@ -12,15 +10,12 @@ import { ReadParcela, UseParcelas } from '../../../contexts/InstallmentContext';
 
 import { Modalize as Modal } from 'react-native-modalize';
 
-import { ConvertToParcela, ConvertToTransferencia } from './typecast';
+import { ConvertToParcela } from './typecast';
 
 import { converterNumeroParaData } from '../../../helpers/converterDataParaManuscrito';
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
-import generateDates from '../../../helpers/generateDates';
 
 import { addMonths, toDate } from '../../../helpers/manipularDatas';
-
-import SectionByDate from './components/SectionByDate';
 
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import { Categoria } from '../../../contexts/CategoriesContext';
@@ -45,7 +40,7 @@ import {
 } from './styles';
 
 import { useTheme } from 'styled-components/native';
-import { colors, metrics } from '../../../styles';
+import { metrics } from '../../../styles';
 import { ScrollView, View } from 'react-native';
 import { widthPixel } from '../../../helpers/responsiveness';
 
@@ -55,26 +50,8 @@ import doubleToCurrency from '../../../helpers/doubleToCurrency';
 import shadowBox from '../../../helpers/shadowBox';
 import GeneralCard from './components/GeneralCard';
 import CategoryCard from './components/CategoryCard';
-
-interface PropsRenderSection {
-  item: (ReadParcela[] | Transferencia[])[];
-}
-const RenderSection: React.FC<PropsRenderSection> = ({ item }) => {
-  let readByParcelas: ReadParcela[] = ConvertToParcela(item[0]);
-  let readByTransferencias: Transferencia[] = ConvertToTransferencia(item[1]);
-
-  const date: Date = !readByParcelas[0]
-    ? new Date(readByTransferencias[0].dataTransferencia)
-    : new Date(readByParcelas[0].dataParcela);
-
-  return (
-    <SectionByDate
-      date={date.toLocaleDateString()}
-      parcelas={readByParcelas}
-      transferencias={readByTransferencias}
-    />
-  );
-};
+import CardPlaceholder from './components/CardPlaceholder';
+import DetailPlaceholder from './components/DetailPlaceholder';
 
 type GastosCategorias = {
   totalGasto: number;
@@ -114,6 +91,8 @@ const Graficos = () => {
   const [gastosCategorias, setGastosCategorias] = useState([
     {} as GastosCategorias,
   ]);
+
+  const [isLoading, setLoading] = useState(true);
 
   function calcStats(alldata: (ReadParcela[] | Transferencia[])[][]) {
     let gastos = 0;
@@ -188,10 +167,6 @@ const Graficos = () => {
     setQntdGanhos(qntdGanhos);
     setQntdGastos(qntdGastos);
 
-    // gastosCategorias.map(cat => {
-    //   console.log(`${cat.categoria.nomeCategoria} - ${cat.totalGasto}`);
-    // });
-
     setGastosCategorias(gastosCategorias);
   }
 
@@ -246,10 +221,12 @@ const Graficos = () => {
   }
 
   async function loadParcelas(date: Date) {
-    handleInstallmentGroupByDate(
+    await handleInstallmentGroupByDate(
       await retornarIdDoUsuario(),
       date.toISOString(),
     );
+
+    setTimeout(() => setLoading(false), 200);
   }
 
   useEffect(() => {
@@ -263,13 +240,17 @@ const Graficos = () => {
   }, [readTransferencias, readParcelas]);
 
   function updateDate(action: number) {
+    setLoading(true);
+
     const newDate = addMonths(toDate(dateCurrent), action);
     setDateCurrent(newDate.toLocaleDateString());
 
     loadParcelas(newDate);
     loadTransferencias(newDate);
   }
+
   const theme: any = useTheme();
+
   return (
     <View style={{ flex: 1 }}>
       <Container>
@@ -306,44 +287,56 @@ const Graficos = () => {
               borderRightWidth: widthPixel(2),
               borderRightColor: theme.colors.cultured,
             }}>
-            <View>
-              <TopDataTitle>Maior receita</TopDataTitle>
-              <TopDataBalance style={{ color: theme.colors.slimyGreen }}>
-                {doubleToCurrency(maiorGanho.valor)}
-              </TopDataBalance>
-              <TopDataDescription>
-                {maiorGanho.descricao != ''
-                  ? maiorGanho.descricao
-                  : 'Nada encontrado'}
-              </TopDataDescription>
-            </View>
+            {!isLoading ? (
+              <View>
+                <TopDataTitle>Maior receita</TopDataTitle>
+                <TopDataBalance style={{ color: theme.colors.slimyGreen }}>
+                  {doubleToCurrency(maiorGanho.valor)}
+                </TopDataBalance>
+                <TopDataDescription>
+                  {maiorGanho.descricao != ''
+                    ? maiorGanho.descricao
+                    : 'Nada encontrado'}
+                </TopDataDescription>
+              </View>
+            ) : (
+              <DetailPlaceholder />
+            )}
           </TopDataItem>
           <TopDataItem
             style={{
               borderLeftWidth: widthPixel(2),
               borderLeftColor: theme.colors.cultured,
             }}>
-            <View>
-              <TopDataTitle>Maior despesa</TopDataTitle>
-              <TopDataBalance style={{ color: theme.colors.redCrayola }}>
-                {doubleToCurrency(maiorGasto.valor)}
-              </TopDataBalance>
-              <TopDataDescription numberOfLines={1}>
-                {maiorGasto.descricao != ''
-                  ? maiorGasto.descricao
-                  : 'Nada encontrado'}
-              </TopDataDescription>
-            </View>
+            {!isLoading ? (
+              <View>
+                <TopDataTitle>Maior despesa</TopDataTitle>
+                <TopDataBalance style={{ color: theme.colors.redCrayola }}>
+                  {doubleToCurrency(maiorGasto.valor)}
+                </TopDataBalance>
+                <TopDataDescription numberOfLines={1}>
+                  {maiorGasto.descricao != ''
+                    ? maiorGasto.descricao
+                    : 'Nada encontrado'}
+                </TopDataDescription>
+              </View>
+            ) : (
+              <DetailPlaceholder />
+            )}
           </TopDataItem>
         </TopData>
         <ScrollView>
           <Content>
-            <GeneralCard
-              name="Geral"
-              totalIncome={ganho}
-              totalExpense={gasto}
-              balance={saldo}
-            />
+            {!isLoading ? (
+              <GeneralCard
+                name="Geral"
+                totalIncome={ganho}
+                totalExpense={gasto}
+                balance={saldo}
+              />
+            ) : (
+              <CardPlaceholder />
+            )}
             <CountCardsContainer>
               <CountCard
                 style={[
@@ -352,8 +345,14 @@ const Graficos = () => {
                   },
                   shadowBox(),
                 ]}>
-                <Count>{qntdGanhos}</Count>
-                <CountDescription>Receitas lançadas</CountDescription>
+                {!isLoading ? (
+                  <>
+                    <Count>{qntdGanhos}</Count>
+                    <CountDescription>Receitas lançadas</CountDescription>
+                  </>
+                ) : (
+                  <DetailPlaceholder />
+                )}
               </CountCard>
               <CountCard
                 style={[
@@ -362,15 +361,28 @@ const Graficos = () => {
                   },
                   shadowBox(),
                 ]}>
-                <Count>{qntdGastos}</Count>
-                <CountDescription>Despesas lançadas</CountDescription>
+                {!isLoading ? (
+                  <>
+                    <Count>{qntdGastos}</Count>
+                    <CountDescription>Despesas lançadas</CountDescription>
+                  </>
+                ) : (
+                  <DetailPlaceholder />
+                )}
               </CountCard>
             </CountCardsContainer>
-            <CategoryCard
-              name="Gastos por categoria"
-              gastosCategorias={gastosCategorias}
-              total={gasto}
-            />
+            {!isLoading ? (
+              <CategoryCard
+                name="Gastos por categoria"
+                gastosCategorias={gastosCategorias}
+                total={gasto}
+              />
+            ) : (
+              <View
+                style={{ marginVertical: metrics.default.boundaries / 1.6 }}>
+                <CardPlaceholder />
+              </View>
+            )}
           </Content>
         </ScrollView>
       </Container>
