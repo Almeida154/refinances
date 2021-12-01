@@ -88,11 +88,11 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
           />
         </SectionIcon>
         <SectionDescription>
-          <LabelName>
+          <LabelName numberOfLines={1}>
             {item.lancamentoParcela.descricaoLancamento +
               (item.lancamentoParcela.parcelaBaseada == -1 ? textParcela : '')}
           </LabelName>
-          <LabelAccount>
+          <LabelAccount numberOfLines={1}>
             {item.contaParcela == null
               ? 'Conta não identificada'
               : item.contaParcela.descricao}

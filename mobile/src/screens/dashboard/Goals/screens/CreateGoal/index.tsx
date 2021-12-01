@@ -32,6 +32,14 @@ import {
   Title,
 } from '../../../Home/components/ManageAccount/styles';
 
+import Icon from 'react-native-vector-icons/AntDesign';
+
+import {
+  SectionDetalhes,
+  TextDetalhes,
+  ContainerDetalhes,
+} from '../../../Entries/components/FormCadastro/styles'
+
 import { Conta } from '../../../../../contexts/AccountContext';
 import {
   Parcela,
@@ -53,6 +61,8 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
   const [previsao, setPrevisao] = useState(new Date());
   const [realizado, setRealizado] = useState(false);
 
+  const [detalhes, setDetalhes] = useState(false);
+
   //erros
   const [descError, setdescError] = useState<any | null>(null);
   const [valorTError, setvalorTError] = useState<any | null>(null);
@@ -66,6 +76,10 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
   const dataAtual = new Date();
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  function DefinirDetalhes() {
+    setDetalhes(detalhes => (detalhes ? false : true));
+  }
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -125,13 +139,9 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
     if (
       meta != '' &&
       parseFloat(valorMeta) > 0 &&
-      valorMeta != undefined &&
-      parseFloat(investidoMeta) >= 0 &&
+      valorMeta != undefined && 
       investidoMeta != undefined
     ) {
-      parseFloat(investidoMeta) >= parseFloat(valorMeta)
-        ? console.log('deu true')
-        : setRealizado(false);
 
       handleAdicionarMeta(newGoal);
 
@@ -150,7 +160,8 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
       setValorMeta('');
       setInvestido('');
       setPrevisao(dataAtual);
-    } else if (meta == '') {
+    } 
+    else if (meta == '') {
       setdescError('Descrição obrigatória!');
       Toast.show({
         type: 'niceToast',
@@ -168,18 +179,7 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
         props: {
           type: 'error',
           title: 'Erro!',
-          message: 'Verifique se o valor estão corretos!',
-        },
-      });
-    }
-    if (parseFloat(investidoMeta) < 0.0 || investidoMeta == '') {
-      setinvestidoError('Insira um valor válido!');
-      Toast.show({
-        type: 'niceToast',
-        props: {
-          type: 'error',
-          title: 'Erro!',
-          message: 'Verifique se o vslor investido estão corretos!',
+          message: 'Verifique se o valor está correto.',
         },
       });
     }
@@ -266,18 +266,6 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
           }}
         />
 
-        <InputText
-          label="Valor já investido"
-          isCurrencyInput
-          // @ts-ignore
-          value={parseFloat(investidoMeta)}
-          onChangeValue={(txt: string) => setInvestido(txt?.toString() || '')}
-          selectionColor={theme.colors.davysGrey}
-          onChangeText={formattedValue => {
-            setInvestido(investidoMeta);
-          }}
-        />
-
         {/* DatePicker */}
         <InputText
           label="Previsão conclusão"
@@ -298,6 +286,32 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
+
+      <SectionDetalhes onPress={DefinirDetalhes}>
+        <Icon
+          name={detalhes ? 'caretup' : 'caretdown'}
+          size={20}
+          color={theme.colors.davysGrey}
+          style={{}}
+        />
+
+        <TextDetalhes style={{opacity: 0.5}}>{detalhes ? 'Menos' : 'Mais'} detalhes</TextDetalhes>
+      </SectionDetalhes>
+
+      <ContainerDetalhes style={{ display: detalhes ? 'flex' : 'none' }}>
+
+        <InputText
+          label="Valor já investido"
+          isCurrencyInput
+          // @ts-ignore
+          value={parseFloat(investidoMeta)}
+          onChangeValue={(txt: string) => setInvestido(txt?.toString() || '')}
+          selectionColor={theme.colors.davysGrey}
+          onChangeText={formattedValue => {
+            setInvestido(investidoMeta);
+          }}
+        />
+
         <View
           style={{ display: parseFloat(investidoMeta) > 0 ? 'flex' : 'none' }}>
           <PickerContas
@@ -306,6 +320,10 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
             tipoLancamento="despesa"
           />
         </View>
+      </ContainerDetalhes>
+
+        
+
         <Button
           onPress={handleCreateGoal}
           title="Criar"

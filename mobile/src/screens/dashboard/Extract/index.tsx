@@ -290,7 +290,7 @@ const Extrato = () => {
           <CardBalance style={shadowBox(16, 0.3)}>
             {!isLoading ? (
               <>
-                <LabelBalance>Saldo atual</LabelBalance>
+                <LabelBalance>Saldo mensal</LabelBalance>
                 <LabelValueBalance
                   style={{ color: hexToRGB(theme.colors.eerieBlack, 0.3) }}>
                   {saldo}
