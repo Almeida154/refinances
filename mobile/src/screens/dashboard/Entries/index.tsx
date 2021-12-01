@@ -73,12 +73,7 @@ const FormLancamento = ({route}: any) => {
 
                     <HeaderTop 
                         backButton={backAction} 
-<<<<<<< HEAD
                         title=""
-=======
-                        title={selected == 0? 'Nova despesa' : selected == 1 ? 'Nova receita' : 'Nova transferência'}
-                        color={theme.colors.silver}
->>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
                         isShort
                     />
 
@@ -90,13 +85,7 @@ const FormLancamento = ({route}: any) => {
                                 value={parseFloat(valor)}
                                 onChangeValue={txt => setValor(txt?.toString())}
                                 style={{
-<<<<<<< HEAD
-                                    color: colors.white,
-=======
-                                    alignContent: 'flex-end',
-                                    alignItems: 'flex-end',
-                                    color: theme.colors.silver,
->>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
+                                    color: theme.colors.white,
                                     fontFamily: fonts.familyType.bold,
                                     fontSize: fonts.size.super +20,
                                     opacity: 0.6,
@@ -108,13 +97,8 @@ const FormLancamento = ({route}: any) => {
                                 separator=","
                                 precision={2}
                                 maxValue={999999}
-<<<<<<< HEAD
-                                placeholderTextColor={colors.white}
-                                selectionColor={colors.white}
-=======
-                                placeholderTextColor={theme.colors.lightGray}
-                                selectionColor={theme.colors.davysGrey}
->>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
+                                placeholderTextColor={theme.colors.white}
+                                selectionColor={theme.colors.white}
                                 onChangeText={formattedValue => {
                                     formattedValue == '' ? setValor((0).toString()) : setValor(valor);
                                 }}

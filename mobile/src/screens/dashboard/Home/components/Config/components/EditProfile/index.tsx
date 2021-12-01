@@ -13,7 +13,11 @@ import {
 
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { Container, Title, InputController } from './styles';
+import { 
+  Container, 
+  Requisit,
+  RequisitContainer,
+  InputController } from './styles';
 
 import global from '../../../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
@@ -25,6 +29,14 @@ import ShortHeader from '../../../../../../../components/ShortHeader';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeAccountStack } from '../../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
+
+// Util
+import {
+  hasMinimum,
+  hasAtLeastOneNumber,
+  hasAtLeastOneLetter,
+  isValid,
+} from '../../../../../../../helpers/verifyPassword';
 
 type PropsEditProfile = {
   navigation: StackNavigationProp<HomeAccountStack, 'EditProfile'>;
@@ -49,8 +61,7 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
   }, []);
 
   const [ edit, setEdit ] = useState('');
-
-  const [valorError, setValorError] = useState<any | null>(null);
+  const [valorError, setValorError] = useState('');
 
   const retornaValorAtual = () => {
     if(edit == 'nome') return user.nomeUsuario;
@@ -62,10 +73,21 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
 
   async function handleAlterarUser() {
     
-    if (novoValor != '' && novoValor != atual) {
+    if (valorError != '') {
 
+      Toast.show({
+        type: 'niceToast',
+        props: {
+          type: 'error',
+          title: 'Erro!',
+          message: valorError,
+        },
+      });
+      //navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config' }),);
+    } 
+    else {
       handleUpdateUser(editar(), user.id);
-      console.log(editar());
+      //console.log(editar());
 
       Toast.show({
         type: 'niceToast',
@@ -73,18 +95,6 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
           type: 'success',
           title: 'Foi!',
           message: edit+' alterado com sucesso!',
-        },
-      });
-      navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config' }),);
-    } 
-    else {
-      setValorError('Preencha o campo!');
-      Toast.show({
-        type: 'niceToast',
-        props: {
-          type: 'error',
-          title: 'Erro!',
-          message: 'Preencha o campo.',
         },
       });
     }
@@ -101,14 +111,31 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
     var newUser = user;
 
     if(edit == 'email'){
-      newUser.emailUsuario = novoValor
+      if(novoValor != 'pica'){
+        newUser.emailUsuario = novoValor
+      }else{
+        setValorError('ERRO NO EMAIL')
+      }
     }
     else if (edit == 'nome'){
-      newUser.nomeUsuario = novoValor
+      if(novoValor != ''){
+        setValorError('Preencha o novo nome!');
+        console.log(valorError);
+      }
+      else{
+        newUser.nomeUsuario = novoValor
+      }
     }
     else {
-      newUser.senhaUsuario = novoValor
+      if (hasAtLeastOneLetter(novoValor) && isValid(novoValor)
+      && hasAtLeastOneLetter(novoValor) && hasMinimum(novoValor)){
+          newUser.senhaUsuario = novoValor;
+        }
+      else {
+        setValorError('porraaaa ERRO ERRO ERRO ')
+      }
     }
+
     return newUser;
   }
 
@@ -125,18 +152,24 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
               value={novoValor}
               label={edit == 'senha' ? 'Nova '+edit : 'Novo '+edit}
               placeholder={edit == 'senha' ? 'Nova '+edit : 'Novo '+edit}
-              error={valorError}
               showClearIcon={novoValor != ''}
               onClear={() => {
-                setValorError(null);
                 setNovoValor('');
               }}
               onChangeText={txt => {
-                setValorError(null);
                 setNovoValor(txt);
               }}
             />
           </InputController>
+
+          <RequisitContainer>
+            <Requisit style={edit == 'senha' ? { display: 'flex' } : { display: 'none' }}>
+              ● Pelo menos 6 caracteres
+            </Requisit>
+            <Requisit style={edit == 'senha' ? { display: 'flex' } : { display: 'none' }}>
+              ● Deve conter letras e números
+            </Requisit>
+          </RequisitContainer>
             
           <InputController>
           <Button

@@ -40,42 +40,6 @@ import { useTheme } from 'styled-components/native';
 
 const Tab = createBottomTabNavigator<RootStackParamApp>();
 
-<<<<<<< HEAD
-=======
-type PropsCustomBar = {
-  children: React.ReactNode;
-  onPress:
-    | ((
-        e:
-          | React.MouseEvent<HTMLAnchorElement, MouseEvent>
-          | GestureResponderEvent,
-      ) => void)
-    | undefined;
-};
-
-/*const CustomTabBarButton = ({ children, onPress }: PropsCustomBar) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.8}
-      style={[
-        {
-          width: widthPixel(200),
-          height: widthPixel(200),
-          borderRadius: widthPixel(200 / 2),
-          backgroundColor: theme.colors.white,
-          marginTop: widthPixel(-(200 / 2)),
-        },
-        shadowBox(14, 0.5),
-      ]}>
-      <Animated.View style={{position: 'absolute'}}>
-        {children}
-      </Animated.View>
-    </TouchableOpacity>
-  );
-};*/
-
->>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
 const TabNavigator = () => {
   const { navigation } = UseDadosTemp();
 
@@ -170,8 +134,6 @@ const TabNavigator = () => {
           options={{
             tabBarLabel: () => null,
             headerShown: false,
-<<<<<<< HEAD
-=======
             tabBarIcon: () => (
               <Entypo
                 name="plus"
@@ -179,7 +141,6 @@ const TabNavigator = () => {
                 size={widthPixel(65)}
               />
             ),
->>>>>>> 5e2505b146d27647fd0fb4e7093834f30fb3bd91
             tabBarButton: props => {
               return (
                 <FabButton/>
