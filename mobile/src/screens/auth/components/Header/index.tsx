@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 
 // Styles
 import {
@@ -41,7 +41,7 @@ const Header: React.FC<IProps> = ({
   isShort,
   accent,
 }) => {
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <Container
       style={

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import { StatusBar, BackHandler, ToastAndroid } from 'react-native';
+import { BackHandler } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { HomeAccountStack } from '../../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -12,7 +12,7 @@ import NewExpenseCategory from '../NewExpenseCategory';
 import NewIncomeCategory from '../NewIncomeCategory';
 
 import { Container } from './styles';
-import { colors, fonts } from '../../../../../../styles';
+import { fonts } from '../../../../../../styles';
 import Header from '../../../../../../components/Header';
 
 const Tab = createMaterialTopTabNavigator();
@@ -35,13 +35,15 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
     navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container
       style={{
         backgroundColor:
-          routeName == 'Despesa' ? theme.colors.paradisePink : theme.colors.slimyGreen,
+          routeName == 'Despesa'
+            ? theme.colors.paradisePink
+            : theme.colors.slimyGreen,
       }}>
       <Header
         backButton={() => backNavAction()}
@@ -55,7 +57,9 @@ const TopBarNavigator = ({ navigation, route }: PropsCategory) => {
         screenOptions={{
           tabBarStyle: {
             backgroundColor:
-              routeName == 'Despesa' ? theme.colors.paradisePink : theme.colors.slimyGreen,
+              routeName == 'Despesa'
+                ? theme.colors.paradisePink
+                : theme.colors.slimyGreen,
           },
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,

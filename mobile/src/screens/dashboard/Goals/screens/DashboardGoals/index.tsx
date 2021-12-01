@@ -3,13 +3,13 @@ import React from 'react';
 import PropsNavigationApp from '../../../../../@types/RootStackParamApp';
 import Button from '../../../../../components/Button';
 import GoalsIcon from '../../../../../assets/images/svg/goalsIcon.svg';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 import { StackActions } from '@react-navigation/native';
 import Header from '../../../../../components/Header';
 
-import {View} from 'react-native'
+import { View } from 'react-native';
 
 import ViewButtons from '../../../../../components/ViewButtons';
 
@@ -28,7 +28,7 @@ const Goals = () => {
     );
     return true;
   };
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <View>
@@ -52,30 +52,30 @@ const Goals = () => {
           }}
         />
 
-      <Button
-        title={'Metas concluídas'}
-        style={{ marginTop: 20, backgroundColor: theme.colors.lightGray }}
-        onPress={() => {
-          navigation.dispatch(
-            StackActions.replace('GoalsStack', { screen: 'GoalsList' }),
-          );
-        }}
-        color={theme.colors.budGreen}
-      />
+        <Button
+          title={'Metas concluídas'}
+          style={{ marginTop: 20, backgroundColor: theme.colors.lightGray }}
+          onPress={() => {
+            navigation.dispatch(
+              StackActions.replace('GoalsStack', { screen: 'GoalsList' }),
+            );
+          }}
+          color={theme.colors.budGreen}
+        />
 
-      <Button
-        title={'Nova meta'}
-        style={{ marginTop: 20, backgroundColor: theme.colors.lightGray }}
-        color={theme.colors.battleGray}
-        onPress={() => {
-          navigation.dispatch(
-            StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
-          );
-        }}
-      />
-    </Container>
-  <ViewButtons />
-</View>
+        <Button
+          title={'Nova meta'}
+          style={{ marginTop: 20, backgroundColor: theme.colors.lightGray }}
+          color={theme.colors.battleGray}
+          onPress={() => {
+            navigation.dispatch(
+              StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
+            );
+          }}
+        />
+      </Container>
+      <ViewButtons />
+    </View>
   );
 };
 

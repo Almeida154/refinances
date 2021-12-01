@@ -6,7 +6,7 @@ export const Container = styled.View`
   width: 100%;
   padding: ${`${metrics.default.boundaries / 1.4}px`};
   background-color: ${(props: any) => props.theme.colors.white};
-  border-radius: ${widthPixel(40)};
+  border-radius: ${`${widthPixel(40)}px`};
   margin-bottom: ${`${metrics.default.boundaries / 1.4}px`};
 `;
 
@@ -72,7 +72,7 @@ export const NameContainer = styled.View`
 `;
 
 export const Name = styled.Text`
-  font-size: ${`${fonts.size.medium}`};
+  font-size: ${`${fonts.size.medium}px`};
   font-family: ${`${fonts.familyType.bold}`};
   color: ${(props: any) => props.theme.colors.davysGrey};
   opacity: 0.7;

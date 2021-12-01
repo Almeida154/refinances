@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { View, StatusBar, Text } from 'react-native';
+import { View, StatusBar } from 'react-native';
 
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import Despesas from '../screens/Despesas';
 import Receitas from '../screens/Receitas';
 
@@ -20,7 +20,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import PropsMainRoutes, {
   HomeAccountStack,
 } from '../../../../../../@types/RootStackParamApp';
-import ShortHeader from '../../../../../../components/ShortHeader';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<HomeAccountStack, 'ManageCategory'>;
@@ -29,7 +28,7 @@ export type PropsNavigation = {
 
 export default function TopBarNavigator({ navigation }: PropsNavigation) {
   const insets = useSafeAreaInsets();
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <View

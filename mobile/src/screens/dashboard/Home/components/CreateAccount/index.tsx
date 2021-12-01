@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // @ts-ignore
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { BackHandler, Keyboard, Text, View } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -11,7 +11,7 @@ import { RouteProp, StackActions } from '@react-navigation/native';
 import { Conta, UseContas } from '../../../../../contexts/AccountContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
-import {HomeAccountStack} from '../../../../../@types/RootStackParamApp';
+import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 
 // Styles
 import { Container, Content } from './styles';
@@ -46,17 +46,17 @@ interface InstituitionProps {
 }
 
 const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
-  const {showNiceToast, hideNiceToast} = UseDadosTemp()
-  const {handleAdicionarConta, handleEditarConta} = UseContas()
+  const { showNiceToast, hideNiceToast } = UseDadosTemp();
+  const { handleAdicionarConta, handleEditarConta } = UseContas();
 
   const [search, setSearch] = useState('');
   const [instituitions, setInstituitions] = useState<InstituitionProps[]>([{}]);
   const [instituition, setInstituition] = useState('');
   const [desc, setDesc] = useState('');
   const [amount, setAmount] = useState<number | null>(0);
-  
+
   const modalizeRef = useRef<Modal>(null);
-  const receiveAccount = route.params?.receiveAccount
+  const receiveAccount = route.params?.receiveAccount;
 
   useEffect(() => {
     AndroidKeyboardAdjust.setAdjustPan();
@@ -78,7 +78,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
   }, [search]);
 
   useEffect(() => {
-    if (receiveAccount) {        
+    if (receiveAccount) {
       setDesc(receiveAccount.descricao || '');
       setAmount(receiveAccount.saldoConta);
       setInstituition(receiveAccount.instituicao || '');
@@ -86,7 +86,9 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
   }, []);
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('StackAccount', {screen: "ManageAccount"}));
+    navigation.dispatch(
+      StackActions.replace('StackAccount', { screen: 'ManageAccount' }),
+    );
     AndroidKeyboardAdjust.setAdjustResize();
     return true;
   };
@@ -97,21 +99,25 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
     if (desc == '') return showNiceToast('error', 'Preecha a descrição');
     hideNiceToast();
 
-    if (receiveAccount) {  
+    if (receiveAccount) {
       receiveAccount.descricao = desc;
-      receiveAccount.saldoConta = amount || 0;      
+      receiveAccount.saldoConta = amount || 0;
       receiveAccount.instituicao = instituition;
-      receiveAccount.userConta = await retornarIdDoUsuario()
+      receiveAccount.userConta = await retornarIdDoUsuario();
 
-      const response = await handleEditarConta(receiveAccount)
-      if(response == '') {
-        navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}));
+      const response = await handleEditarConta(receiveAccount);
+      if (response == '') {
+        navigation.dispatch(
+          StackActions.replace('StackAccount', { screen: 'ManageAccount' }),
+        );
         showNiceToast('success', 'Tudo certo!', 'Conta criada com sucesso :)');
       } else {
         showNiceToast('error', response);
       }
-      
-      navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}));
+
+      navigation.dispatch(
+        StackActions.replace('StackAccount', { screen: 'ManageAccount' }),
+      );
 
       return showNiceToast(
         'success',
@@ -125,12 +131,14 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
       descricao: desc,
       saldoConta: amount,
       instituicao: instituition,
-      userConta: await retornarIdDoUsuario()
-    } as Conta;            
+      userConta: await retornarIdDoUsuario(),
+    } as Conta;
 
-    const response = await handleAdicionarConta(newAccount)
-    if(response == '') {
-      navigation.dispatch(StackActions.replace('StackAccount', {screen: 'ManageAccount'}));
+    const response = await handleAdicionarConta(newAccount);
+    if (response == '') {
+      navigation.dispatch(
+        StackActions.replace('StackAccount', { screen: 'ManageAccount' }),
+      );
       showNiceToast('success', 'Tudo certo!', 'Conta criada com sucesso :)');
     } else {
       showNiceToast('error', response);
@@ -139,7 +147,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
 
   const openModalize = () => modalizeRef.current?.open();
   const closeModalize = () => modalizeRef.current?.close();
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>
@@ -177,10 +185,10 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
         />
       </Content>
       <Button
-        style={{backgroundColor: theme.colors.culture}}
+        style={{ backgroundColor: theme.colors.culture }}
         color={theme.colors.silver}
-        onPress={() => interact()}        
-        title={receiveAccount ? 'Editar' : 'Adicionar'}        
+        onPress={() => interact()}
+        title={receiveAccount ? 'Editar' : 'Adicionar'}
       />
 
       <Modalize

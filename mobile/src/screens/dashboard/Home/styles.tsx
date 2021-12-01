@@ -41,9 +41,9 @@ export const ActionsAndAssets = styled.View`
 
 export const ConfigContainer = styled.TouchableOpacity`
   background-color: ${(props: any) => props.theme.colors.culture};
-  width: ${`${widthPixel(140)}`};
-  height: ${`${widthPixel(140)}`};
-  border-radius: ${`${widthPixel(35)}`};
+  width: ${`${widthPixel(140)}px`};
+  height: ${`${widthPixel(140)}px`};
+  border-radius: ${`${widthPixel(35)}px`};
   margin-right: ${`${metrics.default.boundaries / 5}px`};
   justify-content: center;
   align-items: center;
@@ -51,9 +51,9 @@ export const ConfigContainer = styled.TouchableOpacity`
 
 export const Photo = styled.Image`
   background-color: ${(props: any) => props.theme.colors.white};
-  width: ${`${widthPixel(140)}`};
-  height: ${`${widthPixel(140)}`};
-  border-radius: ${`${widthPixel(35)}`};
+  width: ${`${widthPixel(140)}px`};
+  height: ${`${widthPixel(140)}px`};
+  border-radius: ${`${widthPixel(35)}px`};
 `;
 
 export const Content = styled.View`

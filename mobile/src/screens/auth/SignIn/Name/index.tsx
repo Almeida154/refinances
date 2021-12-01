@@ -4,7 +4,7 @@ import { BackHandler, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { UseAuth } from '../../../../contexts/AuthContext';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
@@ -63,7 +63,7 @@ const Name = ({ navigation }: PropsNavigation) => {
     console.debug('Name | next(): ', user);
     navigation.dispatch(StackActions.replace('Email'));
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>
@@ -102,7 +102,11 @@ const Name = ({ navigation }: PropsNavigation) => {
         </Writting>
         {hasError && <Error>Preencha este campo!</Error>}
       </Content>
-      <BottomNavigation color={theme.colors.davysGray} onPress={() => next()} description="Próximo" />
+      <BottomNavigation
+        color={theme.colors.davysGray}
+        onPress={() => next()}
+        description="Próximo"
+      />
     </Container>
   );
 };

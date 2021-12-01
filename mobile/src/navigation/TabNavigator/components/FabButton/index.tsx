@@ -105,7 +105,7 @@ const FabButton = () => {
       },
     ],
   };
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container style={{ marginHorizontal: widthPixel(130) }}>
@@ -170,7 +170,9 @@ const FabButton = () => {
             styles.menu,
             rotation,
             {
-              backgroundColor: isOpen ? theme.colors.redCrayola : theme.colors.white,
+              backgroundColor: isOpen
+                ? theme.colors.redCrayola
+                : theme.colors.white,
             },
           ]}>
           <Entypo

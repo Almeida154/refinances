@@ -228,78 +228,79 @@ const Extrato = () => {
             </PeriodoPosterior>
           </Header>
         </View>
-        <ScrollBody>
-          {!isLoading ? (
-            <Body>
-              <FlatList
-                data={allDatas}
-                renderItem={({ item }) => <RenderSection item={item} />}
-                keyExtractor={(item, index) => String(index)}
-                extraData={allDatas}
-              />
-            </Body>
-          ) : (
-            <View style={{ padding: metrics.default.boundaries / 1.6 }}>
-              <RowPlaceholder />
-              <ExtractPlaceholder />
-              <ExtractPlaceholder />
-              <RowPlaceholder />
-              <ExtractPlaceholder />
-              <ExtractPlaceholder />
-              <ExtractPlaceholder />
-            </View>
-          )}
-        </ScrollBody>
-
-        <View style={{ elevation: 0 }}>
-          <Footer style={shadowBox(10, 1)}>
-            <CardBalance style={shadowBox(16, 0.3)}>
-              {!isLoading ? (
-                <>
-                  <LabelBalance>Ganhos</LabelBalance>
-                  <LabelValueBalance style={{ color: colors.slimyGreen }}>
-                    {ganho}
-                  </LabelValueBalance>
-                </>
-              ) : (
-                <BalancePlaceholder />
-              )}
-            </CardBalance>
-
-            <CardBalance style={shadowBox(16, 0.3)}>
-              {!isLoading ? (
-                <>
-                  <LabelBalance>Gastos</LabelBalance>
-                  <LabelValueBalance style={{ color: colors.redCrayola }}>
-                    {gasto}
-                  </LabelValueBalance>
-                </>
-              ) : (
-                <BalancePlaceholder />
-              )}
-            </CardBalance>
-
-            <CardBalance style={shadowBox(16, 0.3)}>
-              {!isLoading ? (
-                <>
-                  <LabelBalance>Saldo atual</LabelBalance>
-                  <LabelValueBalance
-                    style={{ color: hexToRGB(theme.colors.eerieBlack, 0.3) }}>
-                    {saldo}
-                  </LabelValueBalance>
-                </>
-              ) : (
-                <BalancePlaceholder />
-              )}
-            </CardBalance>
-          </Footer>
-        </View>
-
+        {!isLoading ? (
+          <Body>
+            <FlatList
+              style={{
+                padding: metrics.default.boundaries / 1.6,
+                marginBottom: heightPixel(224),
+              }}
+              data={allDatas}
+              renderItem={({ item }) => <RenderSection item={item} />}
+              keyExtractor={(item, index) => String(index)}
+              extraData={allDatas}
+            />
+          </Body>
+        ) : (
+          <View style={{ flex: 1, padding: metrics.default.boundaries / 1.6 }}>
+            <RowPlaceholder />
+            <ExtractPlaceholder />
+            <ExtractPlaceholder />
+            <RowPlaceholder />
+            <ExtractPlaceholder />
+            <ExtractPlaceholder />
+            <ExtractPlaceholder />
+          </View>
+        )}
         <Modalize ref={modalizeRefDetailEntry}>
           {/* @ts-ignore */}
           <DetailEntry item={selectedItemExtract} />
         </Modalize>
       </Container>
+
+      <View style={{ elevation: 10 }}>
+        <Footer style={shadowBox(10, 1)}>
+          <CardBalance style={shadowBox(16, 0.3)}>
+            {!isLoading ? (
+              <>
+                <LabelBalance>Ganhos</LabelBalance>
+                <LabelValueBalance style={{ color: colors.slimyGreen }}>
+                  {ganho}
+                </LabelValueBalance>
+              </>
+            ) : (
+              <BalancePlaceholder />
+            )}
+          </CardBalance>
+
+          <CardBalance style={shadowBox(16, 0.3)}>
+            {!isLoading ? (
+              <>
+                <LabelBalance>Gastos</LabelBalance>
+                <LabelValueBalance style={{ color: colors.redCrayola }}>
+                  {gasto}
+                </LabelValueBalance>
+              </>
+            ) : (
+              <BalancePlaceholder />
+            )}
+          </CardBalance>
+
+          <CardBalance style={shadowBox(16, 0.3)}>
+            {!isLoading ? (
+              <>
+                <LabelBalance>Saldo atual</LabelBalance>
+                <LabelValueBalance
+                  style={{ color: hexToRGB(theme.colors.eerieBlack, 0.3) }}>
+                  {saldo}
+                </LabelValueBalance>
+              </>
+            ) : (
+              <BalancePlaceholder />
+            )}
+          </CardBalance>
+        </Footer>
+      </View>
 
       <ViewButtons />
     </View>

@@ -4,7 +4,7 @@ import { TextInput, TextInputProps } from 'react-native';
 
 import { Container, Writting, IconClean, Input, Label, Error } from './styles';
 import { colors } from '../../../../../../../styles';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 
 interface IProps extends TextInputProps {
@@ -16,7 +16,7 @@ interface IProps extends TextInputProps {
   showClearIcon: boolean;
   onClear?: () => void;
   onPress?: () => void;
-  ComponentShow?: any
+  ComponentShow?: any;
 }
 
 const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
@@ -27,16 +27,15 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
     colorLabel,
     error,
     showClearIcon,
-    onClear,    
+    onClear,
     onPress,
     value,
     ComponentShow,
     ...rest
   },
   ref: any,
-
 ) => {
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <>
@@ -64,14 +63,12 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
               {label != undefined ? label : 'Sem label'}
             </Label>
             <Input>
-              <Label style={{color: theme.colors.platinum}}>{placeholder != undefined && value == '' ? placeholder : value}</Label>
+              <Label style={{ color: theme.colors.platinum }}>
+                {placeholder != undefined && value == '' ? placeholder : value}
+              </Label>
             </Input>
           </Writting>
-          <IconClean>
-                      
-              
-            
-          </IconClean>
+          <IconClean></IconClean>
         </>
       </Container>
       {error && <Error>{error}</Error>}

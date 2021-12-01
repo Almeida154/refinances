@@ -6,7 +6,7 @@ import { colors, fonts, metrics } from '../../styles';
 export const Container = styled.View`
   width: 100%;
   height: ${`${heightPixel(340)}px`};
-  background-color: ${(props : any) => props.theme.colors.white};
+  background-color: ${(props: any) => props.theme.colors.white};
   border-radius: ${`${widthPixel(16)}px`};
   margin: ${`${heightPixel(22)}px`} 0;
 `;
@@ -14,7 +14,7 @@ export const Container = styled.View`
 export const Content = styled.TouchableOpacity`
   width: 100%;
   height: ${`${heightPixel(340 - 120)}px`};
-  background-color: ${(props : any) => props.theme.colors.white};
+  background-color: ${(props: any) => props.theme.colors.white};
   border-top-right-radius: ${`${widthPixel(20)}px`};
   border-top-left-radius: ${`${widthPixel(20)}px`};
   padding: ${`${metrics.default.boundaries / 2}px`};
@@ -28,7 +28,7 @@ export const Data = styled.View`
   justify-content: center;
   width: 100%;
   height: ${`${heightPixel(120)}px`};
-  background-color: ${(props : any) => props.theme.colors.diffWhite};
+  background-color: ${(props: any) => props.theme.colors.diffWhite};
   border-bottom-right-radius: ${`${widthPixel(20)}px`};
   border-bottom-left-radius: ${`${widthPixel(20)}px`};
   padding: 0 ${`${metrics.default.boundaries / 2}px`};
@@ -55,13 +55,13 @@ export const Info = styled.View`
 
 export const Description = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
-  color: ${(props : any) => props.theme.colors.davysGrey};
+  color: ${(props: any) => props.theme.colors.davysGrey};
   font-family: ${fonts.familyType.bold};
 `;
 
 export const Category = styled.Text`
   font-size: ${`${fonts.size.small}px`};
-  color: ${(props: any) => hexToRGB(props.theme.colors.davysGrey, 0.4)}};
+  color: ${(props: any) => hexToRGB(props.theme.colors.davysGrey, 0.4)};
   font-family: ${fonts.familyType.light};
 `;
 

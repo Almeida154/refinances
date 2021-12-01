@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef } from 'react';
 
 import { TextInput, TextInputProps } from 'react-native';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import {
   Container,
   Writting,
@@ -60,7 +60,7 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
   },
   ref: any,
 ) => {
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <>
       <Container
@@ -91,34 +91,36 @@ const InputTextMoney: React.ForwardRefRenderFunction<TextInput, IProps> = (
                 />
               )}
 
-                <CurrencyInput
-                  style={[
-                    icon?.hex != null || icon?.icon != null
-                      ? { marginLeft: widthPixel(30) }
-                      : {},
-                    icon?.hex != null || icon?.icon != null
-                      ? { color: icon.hex, opacity: 0.7 }
-                      : {},
-                    inputColor ? { color: inputColor } : {color: theme.colors.davysGrey},
-                    {flex: 1,
-                      padding: 0,
-                      fontFamily: fonts.familyType.bold,
-                      fontSize: fonts.size.big,}
-                  ]}
-                  delimiter="."
-                  separator=","
-                  precision={2}
-                  placeholder={
-                    placeholder != undefined ? placeholder : 'R$ 0,00'
-                  }
-                  maxValue={999999}
-                  placeholderTextColor={'#000'}
-                  selectionColor={theme.colors.davysGrey}
-                  ref={inputRef}
-                  value={value}
-                  onChangeValue={setValue}
-                  {...rest}
-                />
+              <CurrencyInput
+                style={[
+                  icon?.hex != null || icon?.icon != null
+                    ? { marginLeft: widthPixel(30) }
+                    : {},
+                  icon?.hex != null || icon?.icon != null
+                    ? { color: icon.hex, opacity: 0.7 }
+                    : {},
+                  inputColor
+                    ? { color: inputColor }
+                    : { color: theme.colors.davysGrey },
+                  {
+                    flex: 1,
+                    padding: 0,
+                    fontFamily: fonts.familyType.bold,
+                    fontSize: fonts.size.big,
+                  },
+                ]}
+                delimiter="."
+                separator=","
+                precision={2}
+                placeholder={placeholder != undefined ? placeholder : 'R$ 0,00'}
+                maxValue={999999}
+                placeholderTextColor={'#000'}
+                selectionColor={theme.colors.davysGrey}
+                ref={inputRef}
+                value={value}
+                onChangeValue={setValue}
+                {...rest}
+              />
             </RowAux>
           </Writting>
           <IconClean>

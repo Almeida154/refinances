@@ -5,7 +5,7 @@ import Button from '../../../../../components/Button';
 
 import { Meta, UseMetas } from '../../../../../contexts/GoalsContext';
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import {
   DadosTempProvider,
   UseDadosTemp,
@@ -20,7 +20,7 @@ import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
-import {fonts, colors} from '../../../../../styles';
+import { fonts, colors } from '../../../../../styles';
 import { RouteProp, StackActions } from '@react-navigation/native';
 import Header from '../../../../../components/Header';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -96,8 +96,8 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
       userMetaId: await retornarIdDoUsuario(),
     } as Meta;
 
-    if (meta != '' || (valorMeta) > 0 && valorMeta != undefined) {
-      goal.saldoAtualMeta >= (valorMeta)
+    if (meta != '' || (valorMeta > 0 && valorMeta != undefined)) {
+      goal.saldoAtualMeta >= valorMeta
         ? console.log('deu true')
         : setRealizado(false);
 
@@ -111,8 +111,10 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
           message: 'Meta atualizada com sucesso!',
         },
       });
-      navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
-    } else if (meta == '' || (valorMeta) <= 0 || valorMeta == 0) {
+      navigation.dispatch(
+        StackActions.replace('GoalsStack', { screen: 'GoalsList' }),
+      );
+    } else if (meta == '' || valorMeta <= 0 || valorMeta == 0) {
       setdescError('Insira alguma descricao diferente!');
       setvalorTError('Insira algum valor!');
       Toast.show({
@@ -127,25 +129,23 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
   }
 
   const realizacao = () => {
-    goal.saldoAtualMeta >= valorMeta
-      ? setRealizado(true)
-      : setRealizado(false);
+    goal.saldoAtualMeta >= valorMeta ? setRealizado(true) : setRealizado(false);
 
     return realizado;
   };
 
   const novoDesc = () => {
-    if(meta != ''){
+    if (meta != '') {
       return meta;
-    }else{
+    } else {
       return goal.descMeta;
     }
   };
 
   const novoSaldoFinal = () => {
-    if(valorMeta >= 0 && valorMeta != 0){
+    if (valorMeta >= 0 && valorMeta != 0) {
       return valorMeta;
-    }else{
+    } else {
       return goal.saldoFinalMeta;
     }
   };
@@ -157,14 +157,12 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
     );
     return true;
   };
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
-    <ScrollView style={{ paddingTop: '8%', backgroundColor: theme.colors.cultured }}>
-      <Header 
-      backButton={backAction} 
-      color={theme.colors.silver}
-      title="" />
+    <ScrollView
+      style={{ paddingTop: '8%', backgroundColor: theme.colors.cultured }}>
+      <Header backButton={backAction} color={theme.colors.silver} title="" />
 
       <View style={styles.container}>
         <View style={{ marginTop: '15%' }}>
@@ -239,7 +237,7 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
           <Button
             onPress={handleUpdateGoal}
             title="Salvar"
-            style={{backgroundColor:theme.colors.culture,}}
+            style={{ backgroundColor: theme.colors.culture }}
             color={theme.colors.silver}
             lastOne={true}
           />

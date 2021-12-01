@@ -7,7 +7,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import Atuais from '../screens/TabNavigator/Atuais';
 import Concluidas from '../screens/TabNavigator/Concluidas';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import PropsMainRoutes, {
@@ -30,7 +30,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function TopBarNavigator({ navigation }: PropsNavigation) {
   const insets = useSafeAreaInsets();
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <View
@@ -39,7 +39,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
         backgroundColor: theme.colors.lightGray,
         flex: 1,
       }}>
-      <StatusBar translucent={true} backgroundColor="transparent"/>
+      <StatusBar translucent={true} backgroundColor="transparent" />
 
       <Header
         onBackButton={() =>

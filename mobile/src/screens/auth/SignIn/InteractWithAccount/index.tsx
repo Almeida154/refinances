@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // @ts-ignore
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { BackHandler, Keyboard, Text, View } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -134,7 +134,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
 
   const openModalize = () => modalizeRef.current?.open();
   const closeModalize = () => modalizeRef.current?.close();
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>

@@ -43,7 +43,7 @@ export const Icon = styled.TouchableOpacity<IconProps>`
   height: 60px;
   border-radius: 30px;
   border-width: 5px;
-  border-color: ${(props : any) => props.theme.colors.platinum};
-  background-color: ${(props : any) => props.theme.colors.diffWhite};
+  border-color: ${(props: any) => props.theme.colors.platinum};
+  background-color: ${(props: any) => props.theme.colors.diffWhite};
   margin-right: ${props => (props.mr ? '10px' : 0)};
 `;

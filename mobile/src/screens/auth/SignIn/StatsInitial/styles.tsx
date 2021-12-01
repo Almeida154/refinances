@@ -4,7 +4,7 @@ import { colors, fonts, metrics } from '../../../../styles';
 
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
-  background-color: ${(props : any) => props.theme.colors.diffWhite};
+  background-color: ${(props: any) => props.theme.colors.diffWhite};
   flex: 1;
 `;
 
@@ -15,7 +15,7 @@ export const Content = styled.ScrollView`
 `;
 
 export const Title = styled.Text`
-  color: ${(props : any) => props.theme.colors.black};
+  color: ${(props: any) => props.theme.colors.black};
   text-align: center;
   font-family: ${fonts.familyType.black};
   font-size: ${`${fonts.size.medium}px`};
@@ -26,7 +26,7 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  color: ${(props : any) => props.theme.colors.davysGrey};
+  color: ${(props: any) => props.theme.colors.davysGrey};
   text-align: center;
   font-family: ${fonts.familyType.bold};
   font-size: ${`${fonts.size.small}px`};
@@ -52,7 +52,7 @@ export const Pic = styled.Image`
 
 export const LegendContainer = styled.View`
   border-radius: ${`${widthPixel(20)}px`};
-  background-color: ${(props : any) => props.theme.colors.white};
+  background-color: ${(props: any) => props.theme.colors.white};
   margin: 0 ${`${metrics.default.boundaries}px`};
 
   padding-top: ${`${metrics.default.boundaries / 2}px`};
@@ -76,6 +76,6 @@ export const LabelSubtitle = styled.Text`
   margin-left: ${`${widthPixel(20)}px`};
   font-family: ${fonts.familyType.black};
   font-size: ${`${fonts.size.small}px`};
-  color: ${(props : any) => props.theme.colors.davysGrey};
+  color: ${(props: any) => props.theme.colors.davysGrey};
   opacity: 0.7;
 `;

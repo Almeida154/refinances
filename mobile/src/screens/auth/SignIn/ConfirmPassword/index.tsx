@@ -17,7 +17,7 @@ import { colors } from '../../../../styles';
 // Icons
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 
 // Components
 import Header from '../../components/Header';
@@ -66,10 +66,10 @@ const ConfirmPassword = ({ navigation }: PropsNavigation) => {
     console.debug('ConfirmPassword | next(): ', user);
     navigation.dispatch(StackActions.replace('Photo'));
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <Container>
-      <StatusBar translucent={true} backgroundColor="transparent"/>
+      <StatusBar translucent={true} backgroundColor="transparent" />
       <Header onBackButton={() => backAction()} title="Confirme sua senha" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>

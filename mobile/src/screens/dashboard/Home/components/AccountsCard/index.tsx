@@ -35,7 +35,7 @@ const CardAccount = ({ item }: CardAccount) => {
   let globalAccountIndex = global.DEFAULT_ICONS_CATEGORYACCOUNT.findIndex(
     acc => acc.description == item?.instituicao,
   );
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <CardContainer>
       {globalAccountIndex == -1 ? (
@@ -110,7 +110,7 @@ const AccountsCard = () => {
       handleReadByUserContas(await retornarIdDoUsuario());
     })();
   }, []);
- const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container style={shadowBox(30, 0.3)}>

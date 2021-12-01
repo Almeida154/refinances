@@ -15,7 +15,7 @@ import { Parcela } from '../../../../contexts/InstallmentContext';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -212,7 +212,7 @@ const EachFixedIncome = ({ navigation }: PropsNavigation) => {
 
     navigation.dispatch(StackActions.replace('EachFixedIncomeCategory'));
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>

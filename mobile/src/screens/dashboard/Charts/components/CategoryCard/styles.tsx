@@ -3,7 +3,7 @@ import { heightPixel, widthPixel } from '../../../../../helpers/responsiveness';
 import { fonts, colors, metrics } from '../../../../../styles';
 
 export const CategoryStatsCard = styled.View`
-  margin-top: ${`${metrics.default.boundaries / 1.6}`};
+  margin-top: ${`${metrics.default.boundaries / 1.6}px`};
   position: relative;
   background-color: ${(props: any) => props.theme.colors.diffWhite};
   border-radius: ${`${widthPixel(24)}px`};

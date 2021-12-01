@@ -52,7 +52,7 @@ const TabNavigator = () => {
   const closeModalize = () => {
     modalizeRef.current?.close();
   };
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <>
       <Modalize
@@ -142,9 +142,7 @@ const TabNavigator = () => {
               />
             ),
             tabBarButton: props => {
-              return (
-                <FabButton/>
-              );
+              return <FabButton />;
             },
           }}
         />

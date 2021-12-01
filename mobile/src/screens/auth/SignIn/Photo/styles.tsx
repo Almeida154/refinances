@@ -4,7 +4,7 @@ import { colors, fonts, metrics } from '../../../../styles';
 
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
-  background-color: ${(props : any) => props.theme.colors.diffWhite};
+  background-color: ${(props: any) => props.theme.colors.diffWhite};
   flex: 1;
 `;
 
@@ -24,14 +24,14 @@ export const PhotoContainer = styled.View`
 `;
 
 export const Pic = styled.Image`
-  background-color: ${(props : any) => props.theme.colors.diffWhite};
+  background-color: ${(props: any) => props.theme.colors.diffWhite};
   width: ${`${widthPixel(280)}px`};
   height: ${`${widthPixel(280)}px`};
   border-radius: ${`${widthPixel(80 - 18)}px`};
 `;
 
 export const CameraDetail = styled.TouchableHighlight`
-  background-color: ${(props : any) => props.theme.colors.paradisePink};
+  background-color: ${(props: any) => props.theme.colors.paradisePink};
   position: absolute;
   border-radius: ${`${widthPixel(120 / 3)}px`};
   width: ${`${widthPixel(120)}px`};

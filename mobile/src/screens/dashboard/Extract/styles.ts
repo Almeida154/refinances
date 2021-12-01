@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 import { heightPixel, widthPixel } from '../../../helpers/responsiveness';
-import { fonts, colors, metrics } from '../../../styles';
+import { fonts, metrics } from '../../../styles';
 
 export const Container = styled.View`
-  padding-top: ${`${metrics.default.statusBarHeight}px`};
   flex: 1;
+  padding-top: ${`${metrics.default.statusBarHeight}px`};
   background: ${(props: any) => props.theme.colors.back};
 `;
 
@@ -43,9 +43,7 @@ export const LabelPeriodo = styled.Text`
   color: ${(props: any) => props.theme.colors.davysGrey};
 `;
 
-export const Body = styled.View`
-  padding: ${`${metrics.default.boundaries / 1.6}px`};
-`;
+export const Body = styled.View``;
 
 export const Footer = styled.View`
   background-color: ${(props: any) => props.theme.colors.diffWhite};

@@ -4,7 +4,7 @@ import { BackHandler, StatusBar, TextInput } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { UseAuth } from '../../../../contexts/AuthContext';
 
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
@@ -79,11 +79,11 @@ const Email = ({ navigation }: PropsNavigation) => {
     console.debug('Email | next(): ', user);
     navigation.dispatch(StackActions.replace('Password'));
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>
-      <StatusBar translucent={true} backgroundColor="transparent"/>
+      <StatusBar translucent={true} backgroundColor="transparent" />
       <Header onBackButton={() => backAction()} title="Qual seu e-mail?" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>
@@ -119,7 +119,11 @@ const Email = ({ navigation }: PropsNavigation) => {
         </Writting>
         {hasError && <Error>{errorMessage}</Error>}
       </Content>
-      <BottomNavigation color={theme.colors.davysGray} onPress={() => next()} description="Próximo" />
+      <BottomNavigation
+        color={theme.colors.davysGray}
+        onPress={() => next()}
+        description="Próximo"
+      />
     </Container>
   );
 };

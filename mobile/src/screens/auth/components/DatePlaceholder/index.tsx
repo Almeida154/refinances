@@ -5,13 +5,13 @@ import { widthPixel } from '../../../../helpers/responsiveness';
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 import { colors } from '../../../../styles';
 import hexToRGB from '../../../../helpers/hexToRgba';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 interface IProps {
   isIncome?: boolean;
 }
 
 const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
-const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <View

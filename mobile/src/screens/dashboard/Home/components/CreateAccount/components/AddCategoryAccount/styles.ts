@@ -1,75 +1,70 @@
-import styled from 'styled-components/native'
+import styled from 'styled-components/native';
 
-import {colors, metrics, fonts} from '../../../../../../../styles'
+import { colors, metrics, fonts } from '../../../../../../../styles';
 import hexToRGB from '../../../../../../../helpers/hexToRgba';
 
 export const Container = styled.View`
-    display: flex;
-    background-color: ${(props : any) => props.theme.colors.culture};
-    
-`
+  display: flex;
+  background-color: ${(props: any) => props.theme.colors.culture};
+`;
 
 export const Form = styled.View`
-    padding: 10%;
-    width: 100%;
-    height: 100%;
-`
-export const InputControl = styled.View`    
-    background-color: ${(props : any) => props.theme.colors.white};
-    margin-bottom: 20px;
-    border-radius: 10px;
-    padding: 10px;
-`
+  padding: 10%;
+  width: 100%;
+  height: 100%;
+`;
+export const InputControl = styled.View`
+  background-color: ${(props: any) => props.theme.colors.white};
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 10px;
+`;
 export const LabelForm = styled.Text`
-    color: ${(props : any) => props.theme.colors.paradisePink};
-    font-weight: bold;
-    font-size: 18px;
-`
+  color: ${(props: any) => props.theme.colors.paradisePink};
+  font-weight: bold;
+  font-size: 18px;
+`;
 export const TextInputAdd = styled.TextInput`
-    color: ${(props : any) => props.theme.colors.black};
-`
+  color: ${(props: any) => props.theme.colors.black};
+`;
 
 export const ButtonAdd = styled.TouchableHighlight`
-    background-color: ${(props : any) => props.theme.colors.blackSilver};
-    width: 100%;
-    height: 50px;
-    justify-content: center;
-    align-items: center;
-`
+  background-color: ${(props: any) => props.theme.colors.blackSilver};
+  width: 100%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const TextButton = styled.Text`
-    color: ${(props : any) => props.theme.colors.black};
-    font-size: 18px;
-`
+  color: ${(props: any) => props.theme.colors.black};
+  font-size: 18px;
+`;
 
-export const ButtonPress = styled.TouchableHighlight`
-
-`
+export const ButtonPress = styled.TouchableHighlight``;
 
 export const Circle = styled.View`
-    width: 60px;
-    height: 60px;
-    margin: 10px;
+  width: 60px;
+  height: 60px;
+  margin: 10px;
 
-    border-radius: 50px;
-`
+  border-radius: 50px;
+`;
 
 export const BodyModalize = styled.View`
-    display: flex;
-    width: 100%;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 
-    flex-direction: column;
-    padding: 50px;
-
-`
+  flex-direction: column;
+  padding: 50px;
+`;
 
 export const RowColor = styled.View`
-    display: flex;
+  display: flex;
 
-    flex-direction: row;
-`
-
+  flex-direction: row;
+`;
 
 export const ColorsContainer = styled.ScrollView`
   flex: 1;
@@ -102,7 +97,7 @@ export const Icon = styled.TouchableOpacity<IconProps>`
   height: 60px;
   border-radius: 30px;
   border-width: 5px;
-  border-color: ${(props : any) => props.theme.colors.platinum};
-  background-color: ${(props : any) => props.theme.colors.diffWhite};
+  border-color: ${(props: any) => props.theme.colors.platinum};
+  background-color: ${(props: any) => props.theme.colors.diffWhite};
   margin-right: ${props => (props.mr ? '10px' : 0)};
 `;

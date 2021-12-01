@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../contexts/AuthContext';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import RootStackParamAuth from '../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -121,11 +121,11 @@ const Password = ({ navigation }: PropsNavigation) => {
     console.debug('Password | next(): ', user);
     navigation.dispatch(StackActions.replace('ConfirmPassword'));
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>
-      <StatusBar translucent={true} backgroundColor="transparent"/>
+      <StatusBar translucent={true} backgroundColor="transparent" />
       <Header onBackButton={() => backAction()} title="Insira uma senha" />
       <Content onPress={() => inputRef.current?.focus()} activeOpacity={1}>
         <Writting>

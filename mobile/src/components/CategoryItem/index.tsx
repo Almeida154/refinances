@@ -32,7 +32,7 @@ interface IProps extends TouchableOpacityProps {
 
 const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
   const { navigation } = UseDadosTemp();
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container style={shadowBox(10, 0.2)}>

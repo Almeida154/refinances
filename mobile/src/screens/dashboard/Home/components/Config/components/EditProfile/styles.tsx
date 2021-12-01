@@ -1,23 +1,24 @@
-import styled from "styled-components/native"
+import styled from 'styled-components/native';
 
-import {fonts, colors, metrics} from "../../../../../../../styles"
-import { widthPixel, heightPixel } from "../../../../../../../helpers/responsiveness"
+import { fonts, colors, metrics } from '../../../../../../../styles';
+import { heightPixel } from '../../../../../../../helpers/responsiveness';
 
-export const Title = styled.Text `
-    marginTop: ${heightPixel(100)};
-    fontSize: ${`${fonts.size.super}px`};
-    color: ${colors.davysGrey};
-    fontFamily: ${`${fonts.familyType.bold}`};
-    textAlign: center;
-`
+export const Title = styled.Text`
+  margin-top: ${`${heightPixel(100)}px`};
+  font-size: ${`${fonts.size.super}px`};
+  color: ${colors.davysGrey};
+  font-family: ${`${fonts.familyType.bold}`};
+  text-align: center;
+`;
+
 export const Container = styled.View`
-    padding-top: ${`${metrics.default.statusBarHeight}px`};
-    height: 100%;
-`
+  padding-top: ${`${metrics.default.statusBarHeight}px`};
+  height: 100%;
+`;
 
-export const InputController = styled.View `
-    padding: 10% 10% 0 10%;
-`
+export const InputController = styled.View`
+  padding: 10% 10% 0 10%;
+`;
 
 export const RequisitContainer = styled.View`
   left: ${`${metrics.default.boundaries}px`};
@@ -27,7 +28,7 @@ export const RequisitContainer = styled.View`
 
 export const Requisit = styled.Text`
   font-size: ${`${fonts.size.small}px`};
-  font-family: ${fonts.familyType.regular}
-  color: ${(props : any) => props.theme.colors.davysGrey};
+  font-family: ${fonts.familyType.regular};
+  color: ${(props: any) => props.theme.colors.davysGrey};
   opacity: 0.7;
 `;

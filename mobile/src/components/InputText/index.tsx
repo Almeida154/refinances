@@ -65,7 +65,7 @@ const InputText: React.ForwardRefRenderFunction<TextInput, IProps> = (
   var instituition = global.DEFAULT_ICONS_CATEGORYACCOUNT.find(
     acc => acc.description == accountInstitution,
   );
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <>
       <Container

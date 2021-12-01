@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
- import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
@@ -25,7 +25,7 @@ import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 
-import {colors, fonts, metrics} from '../../../../../styles'
+import { colors, fonts, metrics } from '../../../../../styles';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
@@ -70,7 +70,7 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
 
   const [goal, setGoal] = useState({} as Meta);
 
-  const {showNiceToast} = UseDadosTemp()
+  const { showNiceToast } = UseDadosTemp();
   const { handleGetGoalById } = UseMetas();
   const { handleAtualizarMeta } = UseMetas();
   const { handleAdicionarParcela } = UseParcelas();
@@ -87,7 +87,6 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
   }, []);
 
   async function handleUpdateGoal() {
-
     const newGoal = {
       descMeta: goal.descMeta,
       saldoFinalMeta: goal.saldoFinalMeta,
@@ -108,32 +107,32 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
     } as Parcela;
 
     if (parseFloat(valorDeposito) <= 0 || valorDeposito == '') {
-      showNiceToast("error", "Erro!", 'Insira os dados corretamente!')
-      
+      showNiceToast('error', 'Erro!', 'Insira os dados corretamente!');
     } else {
       const responseMeta = await handleAtualizarMeta(newGoal, goal.id);
 
       const responseParcela = await handleAdicionarParcela([newParcela]);
 
       if (responseParcela == '') {
-        showNiceToast('success', 'Foi!', 'Depósito realizado com sucesso!')        
-        navigation.dispatch(StackActions.replace('GoalsStack', { screen: 'GoalsList' }),);
+        showNiceToast('success', 'Foi!', 'Depósito realizado com sucesso!');
+        navigation.dispatch(
+          StackActions.replace('GoalsStack', { screen: 'GoalsList' }),
+        );
       } else {
         ToastAndroid.show(responseParcela, ToastAndroid.SHORT);
       }
     }
   }
-  const sttsParcela = () =>{
-    if(novoSaldo() < goal.saldoFinalMeta){
+  const sttsParcela = () => {
+    if (novoSaldo() < goal.saldoFinalMeta) {
       //se nao concluiu continua false
       return false;
-    }
-    else if(novoSaldo() >= goal.saldoFinalMeta){
+    } else if (novoSaldo() >= goal.saldoFinalMeta) {
       //se concluiu manda true
       return true;
     }
-  }
-  const novoSaldo = () => { 
+  };
+  const novoSaldo = () => {
     return goal.saldoAtualMeta + parseFloat(valorDeposito);
   };
 
@@ -146,79 +145,84 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
   function changeAccount(conta: Conta | null) {
     setSelectedConta(conta);
   }
-  const saldoA = goal.saldoAtualMeta
-  const saldoF = goal.saldoFinalMeta
-  const saldoD = (goal.saldoFinalMeta - goal.saldoAtualMeta)
+  const saldoA = goal.saldoAtualMeta;
+  const saldoF = goal.saldoFinalMeta;
+  const saldoD = goal.saldoFinalMeta - goal.saldoAtualMeta;
 
-  function testeConcluido(){
-    if(goal.saldoFinalMeta > goal.saldoAtualMeta){
-      return <TextProgress>
-                Faltam
-                <TextGoals style={{ left: '40%' }}>
-                  {' R$ '}
-                  {saldoD.toFixed(2)}{' '}
-                </TextGoals>
-                para concluir { goal.descMeta }
-              </TextProgress>
-    }else{
-      return <TextProgress>
-                Parabens por concluir a meta { goal.descMeta } de
-                <TextGoals style={{ left: '40%' }}>
-                  {' R$ '}
-                  {saldoF}{' '}
-                </TextGoals>
-                sendo investido um total de 
-                <TextGoals style={{ left: '40%' }}>
-                  {' R$ '}
-                  {saldoA}{' '}
-                </TextGoals>
-              </TextProgress>
+  function testeConcluido() {
+    if (goal.saldoFinalMeta > goal.saldoAtualMeta) {
+      return (
+        <TextProgress>
+          Faltam
+          <TextGoals style={{ left: '40%' }}>
+            {' R$ '}
+            {saldoD.toFixed(2)}{' '}
+          </TextGoals>
+          para concluir {goal.descMeta}
+        </TextProgress>
+      );
+    } else {
+      return (
+        <TextProgress>
+          Parabens por concluir a meta {goal.descMeta} de
+          <TextGoals style={{ left: '40%' }}>
+            {' R$ '}
+            {saldoF}{' '}
+          </TextGoals>
+          sendo investido um total de
+          <TextGoals style={{ left: '40%' }}>
+            {' R$ '}
+            {saldoA}{' '}
+          </TextGoals>
+        </TextProgress>
+      );
     }
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
-      <StatusBar translucent={true} backgroundColor="transparent"/>
+      <StatusBar translucent={true} backgroundColor="transparent" />
       <Header style={{ backgroundColor: theme.colors.paradisePink }}>
-        <HeaderTop 
-        backButton={backAction} 
-        color={theme.colors.silver}
-        title="" />
+        <HeaderTop
+          backButton={backAction}
+          color={theme.colors.silver}
+          title=""
+        />
         <AlinhaParaDireita>
-
-          <LabelCifrao>R$</LabelCifrao> 
+          <LabelCifrao>R$</LabelCifrao>
 
           <CurrencyInput
-              value={parseFloat(valorDeposito)}
-              onChangeValue={txt => setValor(txt?.toString())}
-              style={{
-                  alignContent: 'flex-end',
-                  alignItems: 'flex-end',
-                  color: theme.colors.silver,
-                  fontFamily: fonts.familyType.bold,
-                  fontSize: fonts.size.super +20,
-                  opacity: 0.7,
-                  width: '100%',
-                  marginLeft: 10,
-              }}
-              textAlign="right"
-              delimiter="."
-              separator=","
-              precision={2}
-              maxValue={999999}
-              placeholderTextColor={theme.colors.lightGray}
-              selectionColor={theme.colors.davysGrey}
-              onChangeText={formattedValue => {
-                  formattedValue == '' ? setValor((0).toString()) : setValor(valorDeposito);
-              }}
-              />
-          </AlinhaParaDireita>
-
+            value={parseFloat(valorDeposito)}
+            onChangeValue={txt => setValor(txt?.toString())}
+            style={{
+              alignContent: 'flex-end',
+              alignItems: 'flex-end',
+              color: theme.colors.silver,
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.super + 20,
+              opacity: 0.7,
+              width: '100%',
+              marginLeft: 10,
+            }}
+            textAlign="right"
+            delimiter="."
+            separator=","
+            precision={2}
+            maxValue={999999}
+            placeholderTextColor={theme.colors.lightGray}
+            selectionColor={theme.colors.davysGrey}
+            onChangeText={formattedValue => {
+              formattedValue == ''
+                ? setValor((0).toString())
+                : setValor(valorDeposito);
+            }}
+          />
+        </AlinhaParaDireita>
       </Header>
 
       <View style={styles.container}>
-          {testeConcluido()}
+        {testeConcluido()}
 
         <PickerContas
           conta={selectedConta}

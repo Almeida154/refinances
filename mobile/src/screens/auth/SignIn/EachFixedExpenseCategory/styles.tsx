@@ -3,7 +3,7 @@ import { colors, metrics } from '../../../../styles';
 
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
-  background-color: ${(props : any) => props.theme.colors.diffWhite};
+  background-color: ${(props: any) => props.theme.colors.diffWhite};
   flex: 1;
 `;
 

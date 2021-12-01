@@ -12,7 +12,7 @@ import {
 } from './styles';
 
 import { colors } from '../../../../styles';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
 
@@ -39,7 +39,7 @@ const Header: React.FC<IProps> = ({
   isShort,
   accent,
 }) => {
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container

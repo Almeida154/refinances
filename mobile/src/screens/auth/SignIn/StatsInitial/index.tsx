@@ -4,7 +4,7 @@ import { BackHandler, View, processColor } from 'react-native';
 import api from '../../../../services/api';
 
 import global from '../../../../global';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { UseAuth } from '../../../../contexts/AuthContext';
 import { UseConfig } from '../../../../contexts/ConfigContext';
 import retornarIdDoUsuario from '../../../../helpers/retornarIdDoUsuario';
@@ -49,7 +49,7 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
   const [totalExpense, setTotalExpense] = useState(20);
 
   const [expensePercentage, setExpensePercentage] = useState<number>(0);
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   const [data, setData] = useState({
     dataSets: [
@@ -202,8 +202,6 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
       accounts: setupUser.accounts,
     });
 
-
-
     logUser.signed = true;
     updateUserProps(logUser);
   };
@@ -268,7 +266,9 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
               chartDescription={{ text: '' }}
               holeColor={processColor('transparent')}
               transparentCircleRadius={45}
-              transparentCircleColor={processColor(hexToRGB(theme.colors.white, 0.7))}
+              transparentCircleColor={processColor(
+                hexToRGB(theme.colors.white, 0.7),
+              )}
               maxAngle={180}
             />
             <View
@@ -305,14 +305,18 @@ const StatsInitial = ({ route, navigation }: PropsNavigation) => {
               elevation: 30,
             }}>
             <LabelContainer>
-              <LabelIcon style={{ backgroundColor: theme.colors.paradisePink }} />
+              <LabelIcon
+                style={{ backgroundColor: theme.colors.paradisePink }}
+              />
               <LabelSubtitle>
                 O que recebe | {doubleToCurrency(totalIncome, 'pt-br', 'BRL')}
               </LabelSubtitle>
             </LabelContainer>
 
             <LabelContainer>
-              <LabelIcon style={{ backgroundColor: theme.colors.bigDipOruby }} />
+              <LabelIcon
+                style={{ backgroundColor: theme.colors.bigDipOruby }}
+              />
               <LabelSubtitle>
                 O que gasta | {doubleToCurrency(totalExpense, 'pt-br', 'BRL')}
               </LabelSubtitle>

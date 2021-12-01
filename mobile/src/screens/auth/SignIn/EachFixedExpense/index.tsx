@@ -43,7 +43,7 @@ import CurrencyInput from 'react-native-currency-input';
 import Picker from 'react-native-picker-horizontal';
 import EntryPlaceholder from '../../components/EntryPlaceholder';
 import DatePlaceholder from '../../components/DatePlaceholder';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 
 import { heightPixel, widthPixel } from '../../../../helpers/responsiveness';
 
@@ -195,7 +195,7 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
     updateSetupUserProps(newSetupProps);
     navigation.dispatch(StackActions.replace('EachFixedExpenseCategory'));
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <Container>
       <Header

@@ -7,7 +7,7 @@ export const Container = styled.View`
   width: 100%;
   padding: ${`${metrics.default.boundaries / 1.6}px`};
   background-color: ${(props: any) => props.theme.colors.white};
-  border-radius: ${widthPixel(40)};
+  border-radius: ${`${widthPixel(40)}px`};
   margin-bottom: ${`${metrics.default.boundaries / 1.4}px`};
 `;
 

@@ -8,14 +8,14 @@ import { colors } from '../../styles';
 // Icon
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import { widthPixel } from '../../helpers/responsiveness';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 interface IProps {
   onBackButton: () => void;
   title?: string;
 }
 
 const ShortHeader: React.FC<IProps> = ({ onBackButton, title }) => {
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <View
       style={{

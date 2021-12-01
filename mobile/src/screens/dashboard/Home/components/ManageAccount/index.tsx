@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BackHandler, View } from 'react-native';
 
 import Button from '../../../../../components/Button';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 import {
   Container,
@@ -35,7 +35,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
   const { contas, handleReadByUserContas, handleEditarConta } = UseContas();
   const [stateReload, setStateReload] = useState(false);
   const [selectedCarteira, setSelectedCarteira] = useState<Conta | null>(null);
-  const [walletAmount, setWalletAmmount] = useState(0)
+  const [walletAmount, setWalletAmmount] = useState(0);
 
   const walletModalizeRef = useRef<Modal>(null);
   const newAccountModalizeRef = useRef<Modal>(null);
@@ -61,16 +61,16 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
   }, []);
 
   const openModalize = (ref: any, conta: Conta | null) => {
-    if(conta?.tipo == 'carteira') {
+    if (conta?.tipo == 'carteira') {
       // @ts-ignore
-      conta.userConta = conta.userConta.id
-      setSelectedCarteira(conta)
-      setWalletAmmount(conta.saldoConta)
+      conta.userConta = conta.userConta.id;
+      setSelectedCarteira(conta);
+      setWalletAmmount(conta.saldoConta);
     }
-    ref.current?.open()
+    ref.current?.open();
   };
   const closeModalize = (ref: any) => ref.current?.close();
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>
@@ -119,7 +119,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
                       : navigation.dispatch(
                           StackActions.replace('StackAccount', {
                             screen: 'CreateAccount',
-                            params: {receiveAccount: item},
+                            params: { receiveAccount: item },
                           }),
                         );
                   }}
@@ -132,9 +132,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
               style={{
                 backgroundColor: theme.colors.platinum,
               }}
-              onPress={() =>
-                openModalize(newAccountModalizeRef, null)
-              }
+              onPress={() => openModalize(newAccountModalizeRef, null)}
               title="Criar"
               color={theme.colors.davysGrey}
             />
@@ -153,11 +151,11 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           // @ts-ignore
           value={walletAmount}
           onChangeValue={(amt: number) => {
-            if(selectedCarteira) {
-              selectedCarteira.saldoConta = amt
-              setWalletAmmount(amt)
+            if (selectedCarteira) {
+              selectedCarteira.saldoConta = amt;
+              setWalletAmmount(amt);
             }
-            setSelectedCarteira(selectedCarteira)
+            setSelectedCarteira(selectedCarteira);
           }}
           // onChangeText={() => {
           //   if (walletAmount == null) setWalletAmount(0.0);
@@ -167,8 +165,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
           style={{ backgroundColor: theme.colors.platinum }}
           title="Atualizar"
           onPress={() => {
-            if(selectedCarteira)
-              handleEditarConta(selectedCarteira)
+            if (selectedCarteira) handleEditarConta(selectedCarteira);
             closeModalize(walletModalizeRef);
           }}
           color={theme.colors.silver}
@@ -188,7 +185,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
             navigation.dispatch(
               StackActions.replace('StackAccount', {
                 screen: 'CreateAccount',
-                params: {accountType: 'conta poupança'},
+                params: { accountType: 'conta poupança' },
               }),
             )
           }
@@ -203,7 +200,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
             navigation.dispatch(
               StackActions.replace('StackAccount', {
                 screen: 'CreateAccount',
-                params: {accountType: 'conta corrente'},
+                params: { accountType: 'conta corrente' },
               }),
             )
           }
@@ -217,7 +214,7 @@ const ManageAccount = ({ navigation }: PropsManageAccount) => {
             navigation.dispatch(
               StackActions.replace('StackAccount', {
                 screen: 'CreateAccount',
-                params: {accountType: 'outro'},
+                params: { accountType: 'outro' },
               }),
             )
           }

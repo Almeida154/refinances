@@ -4,7 +4,7 @@ import InputText from '../../../../../components/InputText';
 import Button from '../../../../../components/Button';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import {
   DadosTempProvider,
   UseDadosTemp,
@@ -12,14 +12,13 @@ import {
 
 import { ScrollView, StyleSheet, View, StatusBar } from 'react-native';
 
-import {  Title, Subtitle,  SubtitleT} from './styles';
+import { Title, Subtitle, SubtitleT } from './styles';
 
 import global from '../../../../../global';
 import Toast from '@zellosoft.com/react-native-toast-message';
 import NiceToast from '../../../../../components/NiceToast';
 import CurrencyInput from 'react-native-currency-input';
-import {colors, fonts, metrics} from '../../../../../styles'
-
+import { colors, fonts, metrics } from '../../../../../styles';
 
 import HeaderTop from '../../../../../components/Header';
 import {
@@ -28,14 +27,16 @@ import {
   LabelCifrao,
   TextInputValue,
   Header,
-
 } from '../../../Entries/styles';
 
 import { RouteProp, StackActions } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeAccountStack } from '../../../../../@types/RootStackParamApp';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Categoria, UseCategories } from '../../../../../contexts/CategoriesContext';
+import {
+  Categoria,
+  UseCategories,
+} from '../../../../../contexts/CategoriesContext';
 import { EXPORTDECLARATION_TYPES } from '@babel/types';
 
 type PropsEditCategory = {
@@ -51,18 +52,16 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
   useEffect(() => {
     (async () => {
       const category = await handleGetCategoryById(route.params?.categoryId);
-      
+
       setCategory(category);
     })();
   }, []);
-  
+
   const [tetoGastos, setTetoGastos] = useState('');
   const [valorError, setValorError] = useState<any | null>(null);
 
-  
   async function handleUpdateCategory() {
-    if(!category)
-      return console.log("category nulo")
+    if (!category) return console.log('category nulo');
     const newCategory = {
       nomeCategoria: category.nomeCategoria,
       iconeCategoria: category.iconeCategoria,
@@ -74,12 +73,11 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
     } as Categoria;
 
     if (parseFloat(tetoGastos) > 0 && tetoGastos != undefined) {
-
       const response = await handleAtualizarCategoria(newCategory, category.id);
-      console.debug("handleUpdateCategory | response", response);
+      console.debug('handleUpdateCategory | response', response);
 
-
-      if(response != '') { //Se teve algum erro ao atualizar
+      if (response != '') {
+        //Se teve algum erro ao atualizar
         Toast.show({
           type: 'niceToast',
           props: {
@@ -87,94 +85,105 @@ const EditCategory = ({ route, navigation }: PropsEditCategory) => {
             title: 'Aconteceu um erro',
             message: response,
           },
-        }); 
-  
+        });
       } else {
         Toast.show({
-         type: 'niceToast',
-         props: {
-           type: 'success',
-           title: 'Foi!',
-           message: 'Teto de gastos adicionado com sucesso',
-         },
-       }); 
-      }      
+          type: 'niceToast',
+          props: {
+            type: 'success',
+            title: 'Foi!',
+            message: 'Teto de gastos adicionado com sucesso',
+          },
+        });
+      }
     } else {
       Toast.show({
         type: 'niceToast',
         props: {
           type: 'error',
           title: 'Erro!',
-          message: 'Dado inválido'
+          message: 'Dado inválido',
         },
       });
-
     }
-  }  
+  }
 
   const backAction = () => {
-    navigation.dispatch(StackActions.replace('StackAccount', 
-    { screen:'ManageCategory'}))
+    navigation.dispatch(
+      StackActions.replace('StackAccount', { screen: 'ManageCategory' }),
+    );
     return true;
   };
 
   const teto = category?.tetoDeGastos || 0;
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
-    <ScrollView style={{backgroundColor: theme.colors.cultured }}>
-       <Header style={{ backgroundColor: theme.colors.paradisePink }}>
-            <HeaderTop 
-            backButton={backAction} 
-            title='Teto de gastos' 
-            color={theme.colors.silver}
-            isShort={true}/>
-          <AlinhaParaDireita>
-          <LabelCifrao>R$</LabelCifrao> 
-            <CurrencyInput
-              value={parseFloat(tetoGastos)}
-              onChangeValue={txt => setTetoGastos(txt?.toString())}
-              style={{
-                  alignContent: 'flex-end',
-                  alignItems: 'flex-end',
-                  color: theme.colors.silver,
-                  fontFamily: fonts.familyType.bold,
-                  fontSize: fonts.size.super +20,
-                  opacity: 0.7,
-                  width: '100%',
-                  marginLeft: 10,
-              }}
-              textAlign="right"
-              delimiter="."
-              separator=","
-              precision={2}
-              maxValue={999999}
-              placeholderTextColor={theme.colors.lightGray}
-              selectionColor={theme.colors.davysGrey}
-              onChangeText={formattedValue => {
-                  formattedValue == '' ? setTetoGastos((0).toString()) : setTetoGastos(tetoGastos);
-              }}
-              />
-          </AlinhaParaDireita>
-          </Header>
-          <Title>{category?.nomeCategoria}</Title>
-          <Subtitle>É importante adicionar limites aos seus gastos para se manter sempre na linha! </Subtitle>
-          
-          <SubtitleT style={{display: teto > 0? 'flex' : 'none'}}>Teto de gastos atual: {teto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})} </SubtitleT>
-          
-          <View style={{paddingLeft: '10%', paddingRight: '10%'}}>
-            <Button
-              onPress={() =>{
-                handleUpdateCategory();
-                navigation.dispatch(StackActions.replace('StackAccount', 
-                { screen:'ManageCategory'}))
-              }}
-              title="Salvar"
-              backgroundColor={theme.colors.blackSilver}
-              color={theme.colors.darkGray}
-              lastOne={true}
-            />
-          </View>
+    <ScrollView style={{ backgroundColor: theme.colors.cultured }}>
+      <Header style={{ backgroundColor: theme.colors.paradisePink }}>
+        <HeaderTop
+          backButton={backAction}
+          title="Teto de gastos"
+          color={theme.colors.silver}
+          isShort={true}
+        />
+        <AlinhaParaDireita>
+          <LabelCifrao>R$</LabelCifrao>
+          <CurrencyInput
+            value={parseFloat(tetoGastos)}
+            onChangeValue={txt => setTetoGastos(txt?.toString())}
+            style={{
+              alignContent: 'flex-end',
+              alignItems: 'flex-end',
+              color: theme.colors.silver,
+              fontFamily: fonts.familyType.bold,
+              fontSize: fonts.size.super + 20,
+              opacity: 0.7,
+              width: '100%',
+              marginLeft: 10,
+            }}
+            textAlign="right"
+            delimiter="."
+            separator=","
+            precision={2}
+            maxValue={999999}
+            placeholderTextColor={theme.colors.lightGray}
+            selectionColor={theme.colors.davysGrey}
+            onChangeText={formattedValue => {
+              formattedValue == ''
+                ? setTetoGastos((0).toString())
+                : setTetoGastos(tetoGastos);
+            }}
+          />
+        </AlinhaParaDireita>
+      </Header>
+      <Title>{category?.nomeCategoria}</Title>
+      <Subtitle>
+        É importante adicionar limites aos seus gastos para se manter sempre na
+        linha!{' '}
+      </Subtitle>
+
+      <SubtitleT style={{ display: teto > 0 ? 'flex' : 'none' }}>
+        Teto de gastos atual:{' '}
+        {teto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}{' '}
+      </SubtitleT>
+
+      <View style={{ paddingLeft: '10%', paddingRight: '10%' }}>
+        <Button
+          onPress={() => {
+            handleUpdateCategory();
+            navigation.dispatch(
+              StackActions.replace('StackAccount', {
+                screen: 'ManageCategory',
+              }),
+            );
+          }}
+          title="Salvar"
+          backgroundColor={theme.colors.blackSilver}
+          color={theme.colors.darkGray}
+          lastOne={true}
+        />
+      </View>
       {/* @ts-ignore */}
       <Toast topOffset={0} config={global.TOAST_CONFIG} />
     </ScrollView>

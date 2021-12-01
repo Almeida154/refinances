@@ -43,7 +43,7 @@ const GoalItem = ({ item }: PropsCardGoals) => {
 
   // Algum cálculo para calcular a porcentagem aqui
   const percentageBalance = (item.saldoAtualMeta * 100) / item.saldoFinalMeta;
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <Goal
       activeOpacity={0.8}
