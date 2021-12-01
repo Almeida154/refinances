@@ -43,7 +43,7 @@ interface IProps {
 
 const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
   const theme: any = useTheme();
-
+  const [sortedVet, setSortedVet] = useState<GastosCategorias[]>();
   const [data, setData] = useState({
     dataSets: [
       {
@@ -115,7 +115,17 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
         },
       ],
     });
-  }, [gastosCategorias]);
+
+    var sortedVet = gastosCategorias.sort((a, b) => {
+      if (a.totalGasto > b.totalGasto) return 1;
+      if (a.totalGasto < b.totalGasto) return -1;
+      return 0;
+    });
+
+    setSortedVet(sortedVet);
+
+    sortedVet.reverse().map(sv => console.log(sv.totalGasto));
+  }, [gastosCategorias, sortedVet]);
   return (
     <CategoryStatsCard style={shadowBox(20, 0.2)}>
       <CategoryStatsHeader>
@@ -155,54 +165,62 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
       </CategoryStatsBody>
       <CategoriesContainer style={shadowBox()}>
         {gastosCategorias != undefined &&
-          gastosCategorias?.map((gastoCateg, index) => {
-            if (index < 2 && gastoCateg.categoria != undefined)
-              return (
-                <Category
-                  key={index}
-                  style={{
-                    borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
-                    borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
-                    borderBottomWidth: index < 1 ? heightPixel(6) : 0,
-                    borderBottomColor: theme.colors.cultured,
-                  }}>
-                  <CategoryIcon
+          gastosCategorias
+            .sort((a, b) => {
+              if (a.totalGasto > b.totalGasto) return 1;
+              if (a.totalGasto < b.totalGasto) return -1;
+              return 0;
+            })
+            .reverse()
+            .map((gastoCateg, index) => {
+              if (index < 2 && gastoCateg.categoria != undefined)
+                return (
+                  <Category
+                    key={index}
                     style={{
-                      borderWidth: widthPixel(10),
-                      borderColor: gastoCateg.categoria.corCategoria,
+                      borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
+                      borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
+                      borderBottomWidth: index < 1 ? heightPixel(6) : 0,
+                      borderBottomColor: theme.colors.cultured,
                     }}>
-                    <Icon
-                      stringIcon={gastoCateg.categoria.iconeCategoria}
-                      color={
-                        gastoCateg.categoria.corCategoria || theme.colors.white
-                      }
-                      size={widthPixel(60)}
-                    />
-                  </CategoryIcon>
-                  <CategoryName>
-                    <Name numberOfLines={1}>
-                      {gastoCateg.categoria.nomeCategoria}
-                    </Name>
-                  </CategoryName>
-                  <CategoryData>
-                    <Total numberOfLines={1}>
-                      {doubleToCurrency(
-                        gastoCateg.totalGasto,
-                        'pt-br',
-                        'BRL',
-                        true,
-                      )}
-                    </Total>
-                    <Percent>
-                      {((gastoCateg.totalGasto * 100) / (total || 1)).toFixed(
-                        1,
-                      )}
-                      %
-                    </Percent>
-                  </CategoryData>
-                </Category>
-              );
-          })}
+                    <CategoryIcon
+                      style={{
+                        borderWidth: widthPixel(10),
+                        borderColor: gastoCateg.categoria.corCategoria,
+                      }}>
+                      <Icon
+                        stringIcon={gastoCateg.categoria.iconeCategoria}
+                        color={
+                          gastoCateg.categoria.corCategoria ||
+                          theme.colors.white
+                        }
+                        size={widthPixel(60)}
+                      />
+                    </CategoryIcon>
+                    <CategoryName>
+                      <Name numberOfLines={1}>
+                        {gastoCateg.categoria.nomeCategoria}
+                      </Name>
+                    </CategoryName>
+                    <CategoryData>
+                      <Total numberOfLines={1}>
+                        {doubleToCurrency(
+                          gastoCateg.totalGasto,
+                          'pt-br',
+                          'BRL',
+                          true,
+                        )}
+                      </Total>
+                      <Percent>
+                        {((gastoCateg.totalGasto * 100) / (total || 1)).toFixed(
+                          1,
+                        )}
+                        %
+                      </Percent>
+                    </CategoryData>
+                  </Category>
+                );
+            })}
         {gastosCategorias != undefined && gastosCategorias?.length < 1 && (
           <Text
             style={{
