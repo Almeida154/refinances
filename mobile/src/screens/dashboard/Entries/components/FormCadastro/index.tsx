@@ -464,7 +464,7 @@ const FormCadastro: React.FC<PropsNavigation> = ({
       <SectionDetalhes onPress={DefinirDetalhes}>
         <Icon
           name={detalhes ? 'caretup' : 'caretdown'}
-          size={25}
+          size={20}
           color={theme.colors.davysGrey}
           style={{}}
         />

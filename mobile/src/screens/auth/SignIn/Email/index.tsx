@@ -21,7 +21,7 @@ import Header from '../../components/Header';
 import BottomNavigation from '../../components/BottomNavigation';
 
 // Util
-import { isValid } from '../../../../helpers/verifyEmail';
+import { isEmailValid } from '../../../../helpers/verifyEmail';
 
 export type PropsNavigation = {
   navigation: StackNavigationProp<RootStackParamAuth, 'Email'>;
@@ -59,7 +59,7 @@ const Email = ({ navigation }: PropsNavigation) => {
       showNiceToast('error', 'Não esqueça seu email!');
       return;
     }
-    if (!isValid(email)) {
+    if (!isEmailValid(email)) {
       // setError(true);
       // setErrorMessage('E-mail inválido, tente novamente!');
       showNiceToast('error', 'Email inválido!');
