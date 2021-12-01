@@ -16,8 +16,6 @@ import { converterNumeroParaData } from '../../../helpers/converterDataParaManus
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
 
 import { addMonths, toDate } from '../../../helpers/manipularDatas';
-
-import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import { Categoria } from '../../../contexts/CategoriesContext';
 
 import {
@@ -39,10 +37,21 @@ import {
   CountDescription,
 } from './styles';
 
+import {
+  Category,
+  CategoryData,
+  CategoryIcon,
+  CategoryName,
+  Name,
+  Percent,
+  Total,
+} from './components/CategoryCard/styles';
+
 import { useTheme } from 'styled-components/native';
 import { metrics } from '../../../styles';
-import { ScrollView, View } from 'react-native';
-import { widthPixel } from '../../../helpers/responsiveness';
+import { ScrollView, Text, View } from 'react-native';
+import { heightPixel, widthPixel } from '../../../helpers/responsiveness';
+import Icon from '../../../helpers/gerarIconePelaString';
 
 import ViewButtons from '../../../components/ViewButtons';
 
@@ -52,6 +61,7 @@ import GeneralCard from './components/GeneralCard';
 import CategoryCard from './components/CategoryCard';
 import CardPlaceholder from './components/CardPlaceholder';
 import DetailPlaceholder from './components/DetailPlaceholder';
+import Modalize from '../../../components/Modalize';
 
 type GastosCategorias = {
   totalGasto: number;
@@ -93,6 +103,8 @@ const Graficos = () => {
   ]);
 
   const [isLoading, setLoading] = useState(true);
+
+  const modalizeRef = useRef<Modal>(null);
 
   function calcStats(alldata: (ReadParcela[] | Transferencia[])[][]) {
     let gastos = 0;
@@ -376,6 +388,7 @@ const Graficos = () => {
                 name="Gastos por categoria"
                 gastosCategorias={gastosCategorias}
                 total={gasto}
+                modalizeRef={modalizeRef}
               />
             ) : (
               <View
@@ -386,6 +399,78 @@ const Graficos = () => {
           </Content>
         </ScrollView>
       </Container>
+
+      <Modalize
+        ref={modalizeRef}
+        title="Todos"
+        height={
+          metrics.screen.height / 1.2 - metrics.default.statusBarHeight * 2
+        }
+        snapPoint={
+          metrics.screen.height / 1.4 - metrics.default.statusBarHeight * 2
+        }
+        headerHasFullBoundaries>
+        {gastosCategorias != undefined &&
+          gastosCategorias
+            .sort((a, b) => {
+              if (a.totalGasto > b.totalGasto) return 1;
+              if (a.totalGasto < b.totalGasto) return -1;
+              return 0;
+            })
+            .reverse()
+            .map((gastoCateg, index) => {
+              if (gastoCateg.categoria != undefined)
+                return (
+                  <Category
+                    key={index}
+                    style={{
+                      borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
+                      borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
+                      borderBottomWidth:
+                        index != gastosCategorias.length - 1
+                          ? heightPixel(6)
+                          : 0,
+                      borderBottomColor: theme.colors.cultured,
+                    }}>
+                    <CategoryIcon
+                      style={{
+                        borderWidth: widthPixel(10),
+                        borderColor: gastoCateg.categoria.corCategoria,
+                      }}>
+                      <Icon
+                        stringIcon={gastoCateg.categoria.iconeCategoria}
+                        color={
+                          gastoCateg.categoria.corCategoria ||
+                          theme.colors.white
+                        }
+                        size={widthPixel(60)}
+                      />
+                    </CategoryIcon>
+                    <CategoryName>
+                      <Name numberOfLines={1}>
+                        {gastoCateg.categoria.nomeCategoria}
+                      </Name>
+                    </CategoryName>
+                    <CategoryData>
+                      <Total numberOfLines={1}>
+                        {doubleToCurrency(
+                          gastoCateg.totalGasto,
+                          'pt-br',
+                          'BRL',
+                          true,
+                        )}
+                      </Total>
+                      <Percent>
+                        {((gastoCateg.totalGasto * 100) / (gasto || 1)).toFixed(
+                          1,
+                        )}
+                        %
+                      </Percent>
+                    </CategoryData>
+                  </Category>
+                );
+            })}
+      </Modalize>
 
       <ViewButtons />
     </View>
