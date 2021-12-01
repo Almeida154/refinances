@@ -39,9 +39,15 @@ interface IProps {
   name?: string;
   gastosCategorias?: GastosCategorias[];
   total?: number;
+  modalizeRef?: any;
 }
 
-const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
+const CategoryCard: React.FC<IProps> = ({
+  name,
+  gastosCategorias,
+  total,
+  modalizeRef,
+}) => {
   const theme: any = useTheme();
   const [sortedVet, setSortedVet] = useState<GastosCategorias[]>();
   const [data, setData] = useState({
@@ -240,7 +246,7 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
               paddingBottom: metrics.default.boundaries / 1.6,
             }}>
             <Button
-              onPress={() => console.log('Vai pra todas')}
+              onPress={() => modalizeRef?.current?.open()}
               style={{
                 backgroundColor: theme.colors.lightGray,
               }}
