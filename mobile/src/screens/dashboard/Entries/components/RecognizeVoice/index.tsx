@@ -181,10 +181,7 @@ class VoiceTest extends Component<Props, State> {
 
   _stopRecognizing = async () => {      
     try {
-      await Voice.stop();
-       this.setState({
-         results: ["Eu comprei uma bazuca por r$ 4 no dia 5 de janeiro de 2022"]
-       })
+      await Voice.stop();       
       
       this.setState({
         isRecording: false
