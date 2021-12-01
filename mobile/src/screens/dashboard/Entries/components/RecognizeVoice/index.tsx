@@ -503,8 +503,8 @@ class VoiceTest extends Component<Props, State> {
 
        <Header>
          <Header2 
-            backButton={this.props.navigation.dispatch(StackActions.replace(
-              'StackAccount', { screen: 'Main'}
+            backButton={() => this.props.navigation.dispatch(StackActions.replace(
+              'Main', { screen: 'Home'}
             ))}
             title=""
             />

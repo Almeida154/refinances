@@ -81,7 +81,7 @@ const FormTransferencia = ({
     const message = await handleAdicionarTransferencia(newTransferencia);
 
     if (message == '') {
-      showNiceToast('success', 'Transferencia adicionada')
+      showNiceToast('success', 'Transferência adicionada')
       setDescricao('');     
     } else {
       showNiceToast('error', message)
