@@ -163,8 +163,7 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
                   style={{
                     borderTopLeftRadius: index == 0 ? widthPixel(24) : 0,
                     borderTopRightRadius: index == 0 ? widthPixel(24) : 0,
-                    borderBottomWidth:
-                      index + 1 != gastosCategorias.length ? heightPixel(6) : 0,
+                    borderBottomWidth: index < 1 ? heightPixel(6) : 0,
                     borderBottomColor: theme.colors.cultured,
                   }}>
                   <CategoryIcon
