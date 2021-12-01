@@ -11,11 +11,9 @@ export const HeaderDate = styled.View``;
 export const BodyEntries = styled.View``;
 
 export const LabelDate = styled.Text`
-    fontSize: ${`${fonts.size.medium}px`};
-    fontFamily: ${`${fonts.familyType.semiBold}`};
-    color: ${(props : any) => props.theme.colors.silver};
-    font-size: 22px;
-    margin-bottom: ${`${heightPixel(40)}px`};
-    opacity: 0.5;
-
+  font-family: ${`${fonts.familyType.bold}`};
+  color: ${(props: any) => props.theme.colors.silver};
+  font-size: ${`${fonts.size.medium}px`};
+  margin-bottom: ${`${heightPixel(40)}px`};
+  opacity: 0.4;
 `;

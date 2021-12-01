@@ -26,7 +26,7 @@ import {
 import hexToRGB from '../../../../../helpers/hexToRgba';
 import Icon from '../../../../../helpers/gerarIconePelaString';
 import Button from '../../../../../components/Button';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 
 import { Categoria } from '../../../../../contexts/CategoriesContext';
 
@@ -41,9 +41,8 @@ interface IProps {
   total?: number;
 }
 
-
 const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
-  const theme : any = useTheme()
+  const theme: any = useTheme();
 
   const [data, setData] = useState({
     dataSets: [
@@ -54,7 +53,6 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
         ],
         config: {
           colors: [
-
             processColor(theme.colors.culture),
             processColor(theme.colors.eerieBlack),
           ],
@@ -149,7 +147,9 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
           chartDescription={{ text: '' }}
           holeColor={processColor('transparent')}
           transparentCircleRadius={45}
-          transparentCircleColor={processColor(hexToRGB(theme.colors.white, 0.1))}
+          transparentCircleColor={processColor(
+            hexToRGB(theme.colors.white, 0.1),
+          )}
           maxAngle={360}
         />
       </CategoryStatsBody>
@@ -174,7 +174,9 @@ const CategoryCard: React.FC<IProps> = ({ name, gastosCategorias, total }) => {
                     }}>
                     <Icon
                       stringIcon={gastoCateg.categoria.iconeCategoria}
-                      color={gastoCateg.categoria.corCategoria || theme.colors.white}
+                      color={
+                        gastoCateg.categoria.corCategoria || theme.colors.white
+                      }
                       size={widthPixel(60)}
                     />
                   </CategoryIcon>

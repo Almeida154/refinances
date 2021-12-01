@@ -1,8 +1,8 @@
-import hexToRGB from "./hexToRgba";
-import {colors} from '../styles'
-import { useTheme } from 'styled-components/native'; 
+import hexToRGB from './hexToRgba';
+import { useTheme } from 'styled-components/native';
+
 const shadowBox = (elevation: number = 20, opacity: number = 0.4) => {
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return {
     shadowColor: hexToRGB(theme.colors.black, opacity),

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { heightPixel, widthPixel } from '../../../../../helpers/responsiveness';
 
-import { colors, fonts, metrics } from '../../../../../styles/';
+import { fonts, metrics } from '../../../../../styles/';
 
 export const Container = styled.View`
   padding: ${`${metrics.default.boundaries}px`};

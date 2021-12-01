@@ -10,7 +10,7 @@ import {
 } from './styles';
 import { Modalize as Modal } from 'react-native-modalize';
 import { ModalizeProps } from 'react-native-modalize'; // Deviamos ter usado as props :|
-import { colors, metrics } from '../../styles';
+import { metrics } from '../../styles';
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import hexToRGB from '../../helpers/hexToRgba';
@@ -48,7 +48,7 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
   },
   ref,
 ) => {
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
     <Modal
       ref={ref}
@@ -101,7 +101,6 @@ const Modalize: React.ForwardRefRenderFunction<Modal, IProps> = (
                   value={searchValue}
                   placeholder="Buscar"
                   placeholderTextColor={hexToRGB(theme.colors.davysGrey, 0.4)}
-
                 />
                 <SearchDeleteButton activeOpacity={1} onPress={onClearSearch}>
                   <IonIcons

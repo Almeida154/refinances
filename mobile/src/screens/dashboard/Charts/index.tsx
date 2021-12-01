@@ -44,12 +44,12 @@ import {
   CountDescription,
 } from './styles';
 
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { colors, metrics } from '../../../styles';
 import { ScrollView, View } from 'react-native';
 import { widthPixel } from '../../../helpers/responsiveness';
 
-import ViewButtons from '../../../components/ViewButtons'
+import ViewButtons from '../../../components/ViewButtons';
 
 import doubleToCurrency from '../../../helpers/doubleToCurrency';
 import shadowBox from '../../../helpers/shadowBox';
@@ -269,113 +269,113 @@ const Graficos = () => {
     loadParcelas(newDate);
     loadTransferencias(newDate);
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
-    <View style={{flex: 1}}>
-    <Container>
-      <Header>
-        <PeriodoAnterior onPress={() => updateDate(-1)}>
-          <Feather
-            size={widthPixel(60)}
-            name={'chevron-left'}
-            color={theme.colors.darkGray}
-          />
-        </PeriodoAnterior>
+    <View style={{ flex: 1 }}>
+      <Container>
+        <Header>
+          <PeriodoAnterior onPress={() => updateDate(-1)}>
+            <Feather
+              size={widthPixel(60)}
+              name={'chevron-left'}
+              color={theme.colors.darkGray}
+            />
+          </PeriodoAnterior>
 
-        <PeriodoAtual>
-          <LabelPeriodo>
-            {converterNumeroParaData(
-              dateCurrent,
-              !(yearCurrent == dateCurrent.split('/')[2]),
-            )}
-          </LabelPeriodo>
-        </PeriodoAtual>
+          <PeriodoAtual>
+            <LabelPeriodo>
+              {converterNumeroParaData(
+                dateCurrent,
+                !(yearCurrent == dateCurrent.split('/')[2]),
+              )}
+            </LabelPeriodo>
+          </PeriodoAtual>
 
-        <PeriodoPosterior onPress={() => updateDate(1)}>
-          <Feather
-            size={widthPixel(60)}
-            name={'chevron-right'}
-            color={theme.colors.darkGray}
-          />
-        </PeriodoPosterior>
-      </Header>
+          <PeriodoPosterior onPress={() => updateDate(1)}>
+            <Feather
+              size={widthPixel(60)}
+              name={'chevron-right'}
+              color={theme.colors.darkGray}
+            />
+          </PeriodoPosterior>
+        </Header>
 
-      <TopData style={shadowBox(20, 0.42)}>
-        <TopDataItem
-          style={{
-            borderRightWidth: widthPixel(2),
-            borderRightColor: theme.colors.cultured,
-          }}>
-          <View>
-            <TopDataTitle>Maior receita</TopDataTitle>
-            <TopDataBalance style={{ color: theme.colors.slimyGreen }}>
-              {doubleToCurrency(maiorGanho.valor)}
-            </TopDataBalance>
-            <TopDataDescription>
-              {maiorGanho.descricao != ''
-                ? maiorGanho.descricao
-                : 'Nada encontrado'}
-            </TopDataDescription>
-          </View>
-        </TopDataItem>
-        <TopDataItem
-          style={{
-            borderLeftWidth: widthPixel(2),
-            borderLeftColor: theme.colors.cultured,
-          }}>
-          <View>
-            <TopDataTitle>Maior despesa</TopDataTitle>
-            <TopDataBalance style={{ color: theme.colors.redCrayola }}>
-              {doubleToCurrency(maiorGasto.valor)}
-            </TopDataBalance>
-            <TopDataDescription numberOfLines={1}>
-              {maiorGasto.descricao != ''
-                ? maiorGasto.descricao
-                : 'Nada encontrado'}
-            </TopDataDescription>
-          </View>
-        </TopDataItem>
-      </TopData>
-      <ScrollView>
-        <Content>
-          <GeneralCard
-            name="Geral"
-            totalIncome={ganho}
-            totalExpense={gasto}
-            balance={saldo}
-          />
-          <CountCardsContainer>
-            <CountCard
-              style={[
-                {
-                  marginRight: metrics.default.boundaries / 1.6 / 2,
-                },
-                shadowBox(),
-              ]}>
-              <Count>{qntdGanhos}</Count>
-              <CountDescription>Receitas lançadas</CountDescription>
-            </CountCard>
-            <CountCard
-              style={[
-                {
-                  marginLeft: metrics.default.boundaries / 1.6 / 2,
-                },
-                shadowBox(),
-              ]}>
-              <Count>{qntdGastos}</Count>
-              <CountDescription>Despesas lançadas</CountDescription>
-            </CountCard>
-          </CountCardsContainer>
-          <CategoryCard
-            name="Gastos por categoria"
-            gastosCategorias={gastosCategorias}
-            total={gasto}
-          />
-        </Content>
-      </ScrollView>
-    </Container>
+        <TopData style={shadowBox(20, 0.42)}>
+          <TopDataItem
+            style={{
+              borderRightWidth: widthPixel(2),
+              borderRightColor: theme.colors.cultured,
+            }}>
+            <View>
+              <TopDataTitle>Maior receita</TopDataTitle>
+              <TopDataBalance style={{ color: theme.colors.slimyGreen }}>
+                {doubleToCurrency(maiorGanho.valor)}
+              </TopDataBalance>
+              <TopDataDescription>
+                {maiorGanho.descricao != ''
+                  ? maiorGanho.descricao
+                  : 'Nada encontrado'}
+              </TopDataDescription>
+            </View>
+          </TopDataItem>
+          <TopDataItem
+            style={{
+              borderLeftWidth: widthPixel(2),
+              borderLeftColor: theme.colors.cultured,
+            }}>
+            <View>
+              <TopDataTitle>Maior despesa</TopDataTitle>
+              <TopDataBalance style={{ color: theme.colors.redCrayola }}>
+                {doubleToCurrency(maiorGasto.valor)}
+              </TopDataBalance>
+              <TopDataDescription numberOfLines={1}>
+                {maiorGasto.descricao != ''
+                  ? maiorGasto.descricao
+                  : 'Nada encontrado'}
+              </TopDataDescription>
+            </View>
+          </TopDataItem>
+        </TopData>
+        <ScrollView>
+          <Content>
+            <GeneralCard
+              name="Geral"
+              totalIncome={ganho}
+              totalExpense={gasto}
+              balance={saldo}
+            />
+            <CountCardsContainer>
+              <CountCard
+                style={[
+                  {
+                    marginRight: metrics.default.boundaries / 1.6 / 2,
+                  },
+                  shadowBox(),
+                ]}>
+                <Count>{qntdGanhos}</Count>
+                <CountDescription>Receitas lançadas</CountDescription>
+              </CountCard>
+              <CountCard
+                style={[
+                  {
+                    marginLeft: metrics.default.boundaries / 1.6 / 2,
+                  },
+                  shadowBox(),
+                ]}>
+                <Count>{qntdGastos}</Count>
+                <CountDescription>Despesas lançadas</CountDescription>
+              </CountCard>
+            </CountCardsContainer>
+            <CategoryCard
+              name="Gastos por categoria"
+              gastosCategorias={gastosCategorias}
+              total={gasto}
+            />
+          </Content>
+        </ScrollView>
+      </Container>
 
-    <ViewButtons />
+      <ViewButtons />
     </View>
   );
 };

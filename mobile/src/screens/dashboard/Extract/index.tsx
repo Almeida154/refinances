@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList } from 'react-native';
 
-import { widthPixel } from '../../../helpers/responsiveness';
+import { heightPixel, widthPixel } from '../../../helpers/responsiveness';
 
 import {
   Transferencia,
@@ -9,13 +9,10 @@ import {
 } from '../../../contexts/TransferContext';
 import { ReadParcela, UseParcelas } from '../../../contexts/InstallmentContext';
 
-import { Modalize as Modal } from 'react-native-modalize';
-
 import { ConvertToParcela, ConvertToTransferencia } from './typecast';
 
 import { converterNumeroParaData } from '../../../helpers/converterDataParaManuscrito';
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
-import generateDates from '../../../helpers/generateDates';
 
 import DetailEntry from './components/DetailEntry';
 
@@ -47,6 +44,9 @@ import shadowBox from '../../../helpers/shadowBox';
 import doubleToCurrency from '../../../helpers/doubleToCurrency';
 import ExtractPlaceholder from './components/ExtractPlaceholder';
 import ViewButtons from '../../../components/ViewButtons';
+import SkeletonContent from 'react-native-skeleton-content-nonexpo';
+import RowPlaceholder from './components/RowPlaceholder';
+import BalancePlaceholder from './components/BalancePlaceholder';
 
 interface PropsRenderSection {
   item: (ReadParcela[] | Transferencia[])[];
@@ -194,6 +194,7 @@ const Extrato = () => {
     loadParcelas(newDate);
     loadTransferencias(newDate);
   }
+
   const theme: any = useTheme();
 
   return (
@@ -239,10 +240,10 @@ const Extrato = () => {
             </Body>
           ) : (
             <View style={{ padding: metrics.default.boundaries / 1.6 }}>
+              <RowPlaceholder />
               <ExtractPlaceholder />
               <ExtractPlaceholder />
-              <ExtractPlaceholder />
-              <ExtractPlaceholder />
+              <RowPlaceholder />
               <ExtractPlaceholder />
               <ExtractPlaceholder />
               <ExtractPlaceholder />
@@ -253,32 +254,48 @@ const Extrato = () => {
         <View style={{ elevation: 0 }}>
           <Footer style={shadowBox(10, 1)}>
             <CardBalance style={shadowBox(16, 0.3)}>
-              <LabelBalance>Ganhos</LabelBalance>
-              <LabelValueBalance style={{ color: colors.slimyGreen }}>
-                {ganho}
-              </LabelValueBalance>
+              {!isLoading ? (
+                <>
+                  <LabelBalance>Ganhos</LabelBalance>
+                  <LabelValueBalance style={{ color: colors.slimyGreen }}>
+                    {ganho}
+                  </LabelValueBalance>
+                </>
+              ) : (
+                <BalancePlaceholder />
+              )}
             </CardBalance>
 
             <CardBalance style={shadowBox(16, 0.3)}>
-              <LabelBalance>Gastos</LabelBalance>
-              <LabelValueBalance style={{ color: colors.redCrayola }}>
-                {gasto}
-              </LabelValueBalance>
+              {!isLoading ? (
+                <>
+                  <LabelBalance>Gastos</LabelBalance>
+                  <LabelValueBalance style={{ color: colors.redCrayola }}>
+                    {gasto}
+                  </LabelValueBalance>
+                </>
+              ) : (
+                <BalancePlaceholder />
+              )}
             </CardBalance>
 
             <CardBalance style={shadowBox(16, 0.3)}>
-              <LabelBalance>Saldo atual</LabelBalance>
-              <LabelValueBalance
-                style={{ color: hexToRGB(colors.eerieBlack, 0.3) }}>
-                {saldo}
-              </LabelValueBalance>
+              {!isLoading ? (
+                <>
+                  <LabelBalance>Saldo atual</LabelBalance>
+                  <LabelValueBalance
+                    style={{ color: hexToRGB(theme.colors.eerieBlack, 0.3) }}>
+                    {saldo}
+                  </LabelValueBalance>
+                </>
+              ) : (
+                <BalancePlaceholder />
+              )}
             </CardBalance>
           </Footer>
         </View>
 
-        <Modalize
-          ref={modalizeRefDetailEntry}
-          backgroundColor={colors.cultured}>
+        <Modalize ref={modalizeRefDetailEntry}>
           {/* @ts-ignore */}
           <DetailEntry item={selectedItemExtract} />
         </Modalize>

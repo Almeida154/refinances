@@ -5,7 +5,7 @@ import shadowBox from '../../../../../helpers/shadowBox';
 
 import { widthPixel } from '../../../../../helpers/responsiveness';
 import { colors, fonts } from '../../../../../styles';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { PieChart } from 'react-native-charts-wrapper';
 
 import {
@@ -33,10 +33,9 @@ const GeneralCard: React.FC<IProps> = ({
   totalExpense,
   balance,
 }) => {
-const theme: any = useTheme()
+  const theme: any = useTheme();
 
   const [data, setData] = useState({
-    
     dataSets: [
       {
         values: [
@@ -119,7 +118,9 @@ const theme: any = useTheme()
           chartDescription={{ text: '' }}
           holeColor={processColor('transparent')}
           transparentCircleRadius={45}
-          transparentCircleColor={processColor(hexToRGB(theme.colors.white, 0.1))}
+          transparentCircleColor={processColor(
+            hexToRGB(theme.colors.white, 0.1),
+          )}
           maxAngle={360}
         />
       </GeneralStatsBody>

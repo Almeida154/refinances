@@ -4,10 +4,7 @@ import {
   ReadParcela,
   Parcela,
 } from '../../../../../contexts/InstallmentContext';
-import {
-  UseLancamentos,
-  Lancamento,
-} from '../../../../../contexts/EntriesContext';
+import { UseLancamentos } from '../../../../../contexts/EntriesContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 
 import { StackActions } from '@react-navigation/native';
@@ -28,8 +25,7 @@ import {
   Detail,
   CircleIcon,
 } from './styles';
-import { useTheme } from 'styled-components/native'; 
-import { Text } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import doubleToCurrency from '../../../../../helpers/doubleToCurrency';
 import { widthPixel } from '../../../../../helpers/responsiveness';
 import shadowBox from '../../../../../helpers/shadowBox';
@@ -116,7 +112,7 @@ const DetailEntry: React.FC<PropsDetail> = ({ item }) => {
   }
 
   //console.log(item.lancamentoParcela)
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>

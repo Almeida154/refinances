@@ -63,9 +63,9 @@ const CardInstallment = ({ item }: PropsCardInstallment) => {
 
     await handleReadByUserContas(await retornarIdDoUsuario());
   }
-  const theme: any = useTheme()
+  const theme: any = useTheme();
   return (
-    <ContainerItem onPress={openModalize}>
+    <ContainerItem activeOpacity={0.8} onPress={openModalize}>
       <SectionLancamento>
         <SectionIcon
           style={{

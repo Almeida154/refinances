@@ -1,7 +1,6 @@
-
 export default {
   eerieBlack: false ? '#f2f2f2' : '#1c1c1c',
-  back: false ? '#333333' : '#ffffff',
+  back: false ? '#333333' : '#f6f6f6',
   jet: false ? '#909090' : '#292929',
   davysGrey: false ? '#f3f3f3' : '#525252',
   silver: false ? '#f6f6f6' : '#c4c4c4',
