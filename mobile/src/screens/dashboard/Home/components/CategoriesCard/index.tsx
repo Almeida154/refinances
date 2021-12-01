@@ -1,7 +1,4 @@
-import { RouteProp } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-
 import Button from '../../../../../components/Button';
 
 import { StackActions } from '@react-navigation/native';
@@ -51,8 +48,7 @@ const Category = ({ item }: CategoryItem) => {
         <Name numberOfLines={1}>{item.nomeCategoria}</Name>
       </NameContainer>
       <CategoryAction>
-        <Limit style={shadowBox(10, 0.2)} numberOfLines={1} 
-        >
+        <Limit style={shadowBox(10, 0.2)} numberOfLines={1}>
           Limitar
         </Limit>
       </CategoryAction>
@@ -62,13 +58,9 @@ const Category = ({ item }: CategoryItem) => {
 
 const CategoriesCard = () => {
   const { navigation } = UseDadosTemp();
-  const { categorias, handleReadByUserCategorias, handleCountByEntry } =
-    UseCategories();
+  const { categorias } = UseCategories();
+  const theme: any = useTheme();
 
-  const countbyentry = async function () {
-    handleCountByEntry(await retornarIdDoUsuario(), 'despesa');
-  };
-  const theme: any = useTheme()
   return (
     <Container style={shadowBox(30, 0.3)}>
       <TopSection>

@@ -51,7 +51,6 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
   useEffect(() => {
     (async () => {
       const edit = (route.params?.route);
-      //console.log(edit);
       setEdit(edit);
 
       //console.log(novoValor)
@@ -72,23 +71,30 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
   const [novoValor, setNovoValor] = useState(atual);
 
   async function handleAlterarUser() {
-    
-    if (valorError != '') {
-
+    if (novoValor == '' ) {
+      console.log(novoValor);
       Toast.show({
         type: 'niceToast',
         props: {
           type: 'error',
           title: 'Erro!',
-          message: valorError,
+          message: edit+' não foi preenchido corretamente',
         },
       });
-      //navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config' }),);
-    } 
-    else {
+    }
+    else if(novoValor == user.nomeUsuario || novoValor == user.emailUsuario || novoValor == user.senhaUsuario){
+        Toast.show({
+          type: 'niceToast',
+          props: {
+            type: 'error',
+            title: 'Erro!',
+            message: 'Esse '+edit+' ja esta cadastrado',
+          },
+        });
+      }
+ else {
       handleUpdateUser(editar(), user.id);
-      //console.log(editar());
-
+      navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config' }),);
       Toast.show({
         type: 'niceToast',
         props: {
@@ -108,19 +114,21 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
   };
 
   const editar = () => {
-    var newUser = user;
+    var newUser = user;4
 
     if(edit == 'email'){
-      if(novoValor != 'pica'){
-        newUser.emailUsuario = novoValor
+      if(novoValor == ''){
+        setValorError('Preencha o novo email')
+        //console.log(valorError);
+        
       }else{
-        setValorError('ERRO NO EMAIL')
+        newUser.emailUsuario = novoValor
       }
     }
     else if (edit == 'nome'){
-      if(novoValor != ''){
+      if(novoValor === ''){
         setValorError('Preencha o novo nome!');
-        console.log(valorError);
+        //console.log(valorError);
       }
       else{
         newUser.nomeUsuario = novoValor
@@ -132,7 +140,7 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
           newUser.senhaUsuario = novoValor;
         }
       else {
-        setValorError('porraaaa ERRO ERRO ERRO ')
+        setValorError('Preencha os valores corretamente')
       }
     }
 
@@ -175,7 +183,7 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
           <Button
             onPress={handleAlterarUser}
             title="Salvar"
-            style={{backgroundColor:colors.culture,}}
+            style={{backgroundColor:colors.davysGrey,}}
             color={colors.silver}
             lastOne={true}
           />

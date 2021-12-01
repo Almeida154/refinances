@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -7,13 +7,12 @@ import { UseAuth } from '../../../contexts/AuthContext';
 import { UseCategories } from '../../../contexts/CategoriesContext';
 import { UseDadosTemp } from '../../../contexts/TemporaryDataContext';
 import { UseMetas } from '../../../contexts/GoalsContext';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../helpers/retornarIdDoUsuario';
 
-import ViewButtons from '../../../components/ViewButtons'
-import { colors, fonts, metrics } from '../../../styles';
+import ViewButtons from '../../../components/ViewButtons';
 
 import {
   ActionsAndAssets,
@@ -37,11 +36,11 @@ import GoalsCard from './components/GoalsCard';
 import CategoriesCard from './components/CategoriesCard';
 
 const Home = () => {
-  const { user, handleLogout, userAvatar } = UseAuth();
+  const { user, userAvatar } = UseAuth();
   const { handleReadByUserCategorias, categorias, loading } = UseCategories();
   const { metas, handleReadByUserMetas } = UseMetas();
   const { navigation, buttonIsEnabled } = UseDadosTemp();
-  
+
   const [avatar, setAvatar] = useState<string | undefined | null>('');
   const [mime, setMime] = useState<string | undefined | null>('');
 
@@ -99,7 +98,7 @@ const Home = () => {
     return `Boa noite`;
   };
 
-  const theme : any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <View style={{ flex: 1 }}>
@@ -149,24 +148,24 @@ const Home = () => {
               )
             }
           />
+
           {categorias != undefined && categorias.length > 0 && (
             <CategoriesCard />
           )}
-      
-        <CreateCard
-          name="meta"
-          description="As metas são úteis para o seu avanço pessoal e financeiro."
-          onPress={() => {
-            navigation.dispatch(
-              StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
-            );
-          }}
-        />
-        {metas != undefined && metas?.length > 0 && <GoalsCard />}
-      
-    </Content>
-        
-    </Container>
+
+          <CreateCard
+            name="meta"
+            description="As metas são úteis para o seu avanço pessoal e financeiro."
+            onPress={() => {
+              navigation.dispatch(
+                StackActions.replace('GoalsStack', { screen: 'CreateGoals' }),
+              );
+            }}
+          />
+
+          {metas != undefined && metas?.length > 0 && <GoalsCard />}
+        </Content>
+      </Container>
 
       {/* Gambiarra pro FAB Component funcionar */}
       <ViewButtons />
