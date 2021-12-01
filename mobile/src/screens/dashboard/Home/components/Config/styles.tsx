@@ -4,19 +4,18 @@ import { colors, fonts, metrics } from '../../../../../styles';
 import { widthPixel, heightPixel } from '../../../../../helpers/responsiveness';
 
 export const Container = styled.View`
-  height: auto;
+  flex: 1;
   background: ${(props: any) => props.theme.colors.back};
 `;
 
 export const ContainerBody = styled.View`
   width: 100%;
-  height: auto;
+  flex: 1;
 `;
 
 export const ContainerScroll = styled.ScrollView`
-  height: 100%;
+  flex: 1;
   color: ${(props: any) => props.theme.colors.cultured};
-  height: auto;
 `;
 
 export const ContainerProfile = styled.View`
@@ -43,6 +42,7 @@ export const TitleFooter = styled.Text`
   font-size: ${`${fonts.size.big}px`};
   color: ${(props: any) => props.theme.colors.paradisePink};
   font-family: ${`${fonts.familyType.bold}`};
+  margin-bottom: ${`${heightPixel(30)}px`};
 `;
 
 export const Title = styled.Text`
@@ -64,14 +64,15 @@ export const Subtitle = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
   color: ${(props: any) => props.theme.colors.darkGray};
   font-family: ${`${fonts.familyType.bold}`};
-  opacity: 0.5;
+  opacity: 0.4;
 `;
 
 export const SubtitleFooter = styled.Text`
   font-size: ${`${fonts.size.medium}px`};
+  line-height: ${`${fonts.size.medium + widthPixel(8)}px`};
   color: ${(props: any) => props.theme.colors.darkGray};
   font-family: ${`${fonts.familyType.bold}`};
-  opacity: 0.5;
+  opacity: 0.3;
   text-align: center;
 `;
 
@@ -79,7 +80,8 @@ export const Copyright = styled.Text`
   font-size: ${`${fonts.size.small}px`};
   color: ${(props: any) => props.theme.colors.darkGray};
   font-family: ${`${fonts.familyType.bold}`};
-  opacity: 0.5;
+  opacity: 0.1;
+  margin-top: ${`${heightPixel(60)}px`};
 `;
 
 export const ContainerItems = styled.View`
@@ -106,6 +108,7 @@ export const Footer = styled.View`
   width: 100%;
   height: ${`${heightPixel(700)}px`};
   bottom: ${`${widthPixel(30)}px`};
+  padding: ${`${metrics.default.boundaries / 1.6}px`};
   justify-content: center;
   align-items: center;
   background-color: ${(props: any) => props.theme.colors.lightGray};

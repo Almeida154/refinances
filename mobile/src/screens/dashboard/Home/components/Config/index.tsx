@@ -5,6 +5,7 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 
 import Header from '../../../components/Header';
@@ -115,10 +116,17 @@ const Config = () => {
     })();
   });
 
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Main'));
     return true;
   };
+
   const theme: any = useTheme();
 
   const modalizeRef = useRef<Modal>(null);
@@ -742,7 +750,7 @@ const Config = () => {
                   elaborado pela Evoke, empresa desenvolvedora de software.
                 </SubtitleFooter>
 
-                <SectionIcons>
+                {/* <SectionIcons>
                   <Icon>
                     <AntDesign
                       name="instagram"
@@ -774,7 +782,7 @@ const Config = () => {
                       size={25}
                     />
                   </Icon>
-                </SectionIcons>
+                </SectionIcons> */}
 
                 <Copyright>Evoke © Copyright 2021</Copyright>
               </Footer>

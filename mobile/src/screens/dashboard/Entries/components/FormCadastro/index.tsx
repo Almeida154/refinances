@@ -250,28 +250,35 @@ const FormCadastro: React.FC<PropsNavigation> = ({
         showNiceToast('error', message);
       }
     } else {
-      const message = await handleAdicionarLancamento(newLancamento, idUser);
-
-      if (message == '') {
-        // showNiceToast('success', 'Lançamento adicionado');
-        setDescricao('');
-        setValor('');
-        setSelectedCategoria(categorias ? categorias[0] : null);
-        setSelectedConta(contas ? contas[0] : null);
-        setParcelas('1');
-        setDataParcelas([
-          {
-            id: 0,
-            contaParcela: selectedConta,
-            valorParcela: valor == '' ? 0 : parseFloat(valor),
-            dataParcela: new Date(dataPagamento),
-            statusParcela: status,
-            lancamentoParcela: -1,
-            indexOfLancamento: 0,
-          },
-        ]);
+      console.log(selectedCategoria)
+      if(selectedCategoria.tetoDeGastos == 0 || Math.abs(selectedCategoria.valueLancamentos) + parseFloat(valor) <= selectedCategoria.tetoDeGastos) {        
+        const message = await handleAdicionarLancamento(newLancamento, idUser);
+  
+        if (message == '') {
+          // showNiceToast('success', 'Lançamento adicionado');
+          setDescricao('');
+          setValor('');
+          setSelectedCategoria(categorias ? categorias[0] : null);
+          setSelectedConta(contas ? contas[0] : null);
+          setParcelas('1');
+          setDataParcelas([
+            {
+              id: 0,
+              contaParcela: selectedConta,
+              valorParcela: valor == '' ? 0 : parseFloat(valor),
+              dataParcela: new Date(dataPagamento),
+              statusParcela: status,
+              lancamentoParcela: -1,
+              indexOfLancamento: 0,
+            },
+          ]);
+        } else {
+          showNiceToast('error', message);
+        }
       } else {
-        showNiceToast('error', message);
+        const sobra = selectedCategoria.tetoDeGastos - Math.abs(selectedCategoria.valueLancamentos)
+
+        showNiceToast("error", "Atenção", `Não ultrapasse o teto de gastos, você pode gastar mais ${sobra == 0 ? 'nada' : sobra}`)
       }
     }
   }

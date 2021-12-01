@@ -44,7 +44,7 @@ const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
             ? () => {
                 navigation.navigate('StackAccount', {
                   screen: 'EditCategory',
-                  params: { categoryId: category.id },
+                  params: { category: category },
                 });
               }
             : () => {}
@@ -55,14 +55,14 @@ const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
             size={widthPixel(70)}
             stringIcon={category.iconeCategoria}
           />
-          {category.tetoDeGastos != 0 && (
+          {category?.tetoDeGastos != 0 && (
             <PercentDetail
               style={[
                 shadowBox(20, 0.6),
                 { borderColor: category.corCategoria },
-              ]}>
+              ]}>                
               <Percent>
-                90<Text style={{ fontSize: widthPixel(15) }}>%</Text>
+                {Math.abs(category.valueLancamentos) / category.tetoDeGastos * 100}<Text style={{ fontSize: widthPixel(15) }}>%</Text>
               </Percent>
             </PercentDetail>
           )}
@@ -93,7 +93,7 @@ const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
               borderBottomRightRadius: widthPixel(20),
             }}
             color={category.corCategoria}
-            progress={0.7}
+            progress={Math.abs(category.valueLancamentos) / category.tetoDeGastos}
           />
         )}
       </Data>

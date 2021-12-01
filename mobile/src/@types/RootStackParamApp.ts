@@ -1,6 +1,7 @@
 import react from 'react';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import {Conta} from '../contexts/AccountContext'
+import {Categoria} from '../contexts/CategoriesContext'
 
 export type HomeAccountStack = {
   ManageAccount: undefined;
@@ -8,7 +9,7 @@ export type HomeAccountStack = {
   AddCategoryAccount: undefined;
   ManageCategory: undefined;
   NewCategory: undefined;
-  EditCategory: { categoryId: number };
+  EditCategory: { category: Categoria };
   Config: undefined;
   EditProfile: { route: string };
 };

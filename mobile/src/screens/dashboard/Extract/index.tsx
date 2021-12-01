@@ -188,6 +188,7 @@ const Extrato = () => {
 
   function updateDate(action: number) {
     setLoading(true);
+
     const newDate = addMonths(toDate(dateCurrent), action);
     setDateCurrent(newDate.toLocaleDateString());
 

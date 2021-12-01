@@ -184,13 +184,13 @@ class VoiceTest extends Component<Props, State> {
     try {
       await Voice.stop();
       // this.setState({
-      //   results: ["Eu comprei uma bazuca por r$ 4"]
+      //   results: ["Eu comprei uma bazuca por r$ 4 no dia 5 de janeiro de 2022"]
       // })
-
+      
+      this.setState({
+        isRecording: false
+      })
        this.generatePrincipal(this.tratoNoTexto(this.state.results[0]))      
-       this.setState({
-         isRecording: false
-       })
 
     } catch (e) {
       console.error(e);
@@ -223,10 +223,41 @@ class VoiceTest extends Component<Props, State> {
     });
   };
 
+  
+  ConvertMonthIntoNumber(letters: string) {
+    switch(letters) {
+        case 'janeiro':
+          return 1
+        case 'feveiro':
+          return 2
+        case 'março':
+          return 3
+        case 'abril':
+          return 4
+        case 'maio':
+          return 5
+        case 'junho':
+          return 6
+        case 'julho':
+          return 7
+        case 'agosto':
+          return 8
+        case 'setembro':
+          return 9
+        case 'outubro':
+          return 10
+        case 'novembro':
+          return 11
+        case 'dezembro':
+          return 12
+        default:
+          return 12
+    }
+  }
 
   primeiroComando(texto: string) {
     
-    const acaoFluxoReceita = ['vendi', 'vendi um', 'vendi uma', 'recebi uma', 'recebi', 'vendido', 'recebido']
+    const acaoFluxoReceita = ['vendi', 'vendi um', 'vendi uma', 'recebi uma', 'recebi', 'recebi um', 'vendido', 'recebido']
     const acaoFluxoDespesa = ['comprei ', 'comprei um', , 'comprei uma', 'comprado', 'torrei']
     
     const actions = texto.split('vírgula');
@@ -329,16 +360,24 @@ class VoiceTest extends Component<Props, State> {
   
       const cacarDatas = aux.split(' ')        
   
+      // console.log(cacarDatas)
       for(var index = 0;index < cacarDatas.length-4;index++) {        
           
   
+        // console.debug("dia", parseInt(cacarDatas[index]))
+        // console.debug("de", cacarDatas[index+1])
+        // console.debug("mes", cacarDatas[index+2])
+        // console.debug("de", cacarDatas[index+3])
+        // console.debug("ano", cacarDatas[index+4])
+        // console.log()
+
           if(!isNaN(parseInt(cacarDatas[index])) &&
-             cacarDatas[index+1] == 'do' &&
-             !isNaN(parseInt(cacarDatas[index+2])) &&
+             cacarDatas[index+1] == 'de' &&
+             !isNaN(this.ConvertMonthIntoNumber(cacarDatas[index+2])) &&
              cacarDatas[index+3] == 'de' &&
              !isNaN(parseInt(cacarDatas[index+4]))
              ) {
-              const dataLocalAux = cacarDatas[index] + '/' + cacarDatas[index+2] + '/' + cacarDatas[index+4]
+              const dataLocalAux = cacarDatas[index] + '/' + this.ConvertMonthIntoNumber(cacarDatas[index+2]) + '/' + cacarDatas[index+4]
               
               captureLancamento[j].parcelasLancamento[0].dataParcela = toDate(dataLocalAux)
              }
@@ -347,7 +386,7 @@ class VoiceTest extends Component<Props, State> {
       if(!captureLancamento[j].parcelasLancamento[0].dataParcela)
         captureLancamento[j].parcelasLancamento[0].dataParcela = new Date(Date.now())
       
-        
+        console.log("O lancamento", captureLancamento[j])
       this.setState({
         itemNovo: [...this.state.itemNovo,captureLancamento[j]]
       })      
