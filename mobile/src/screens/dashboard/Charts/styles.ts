@@ -64,7 +64,7 @@ export const TopDataTitle = styled.Text`
 export const TopDataBalance = styled.Text`
   font-size: ${`${fonts.size.medium - widthPixel(8)}px`};
   font-family: ${fonts.familyType.black};
-  margin-top: ${`${heightPixel(-18)}px`};
+  margin-top: ${`${heightPixel(-10)}px`};
   color: ${(props: any) => props.theme.colors.davysGrey};
 `;
 
