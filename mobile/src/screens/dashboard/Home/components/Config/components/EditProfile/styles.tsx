@@ -14,6 +14,7 @@ export const Title = styled.Text`
 export const Container = styled.View`
   padding-top: ${`${metrics.default.statusBarHeight}px`};
   height: 100%;
+  background-color: ${(props : any) => props.theme.colors.back};
 `;
 
 export const InputController = styled.View`

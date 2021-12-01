@@ -47,7 +47,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
         }
         title="Metas"
         isShort
-        color={theme.colors.davysGray}
+        color={theme.colors.davysGrey}
       />
 
       <Tab.Navigator
@@ -59,7 +59,7 @@ export default function TopBarNavigator({ navigation }: PropsNavigation) {
           tabBarIndicatorStyle: {
             backgroundColor: theme.colors.jet,
           },
-          tabBarActiveTintColor: theme.colors.davysGray,
+          tabBarActiveTintColor: theme.colors.davysGrey,
           tabBarLabelStyle: {
             fontSize: fonts.size.medium,
             fontFamily: fonts.familyType.bold,
