@@ -43,7 +43,7 @@ export type PropsNavigation = {
 };
 
 const Password = ({ navigation }: PropsNavigation) => {
-  const [password, setPassword] = useState('ttt555');
+  const [password, setPassword] = useState('');
   const [hasError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [minimumRequisit, setMinimumRequisit] = useState(false);

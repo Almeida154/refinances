@@ -27,7 +27,7 @@ export const Description = styled.Text`
   font-size: ${`${fonts.size.small}px`};
   font-family: ${`${fonts.familyType.bold}`};
   line-height: ${`${fonts.size.small + widthPixel(8)}px`};
-  color: ${(props: any) => props.theme.colors.blackSilver};
+  color: ${(props: any) => props.theme.colors.davysGrey};
   opacity: 0.3;
 `;
 

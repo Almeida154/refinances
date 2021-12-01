@@ -236,11 +236,9 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
                   }}
                   ref={inputRef}
                   onBlur={() => {
-                    console.log('bluou');
                     setFocused(false);
                   }}
                   onFocus={() => {
-                    console.log('focou');
                     setFocused(true);
                   }}
                 />

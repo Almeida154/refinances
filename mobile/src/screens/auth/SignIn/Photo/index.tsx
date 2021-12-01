@@ -72,7 +72,6 @@ const Photo = ({ navigation }: PropsNavigation) => {
   const openCamera = () => {
     ImagePicker.openCamera(global.IMAGE_CROP_PICKER_OPTIONS as {}).then(
       image => {
-        console.log(image);
         // @ts-ignore
         setAvatar({ base64: `data:${image?.mime};base64,${image?.data}` });
       },
@@ -82,7 +81,6 @@ const Photo = ({ navigation }: PropsNavigation) => {
   const openGallery = () => {
     ImagePicker.openPicker(global.IMAGE_CROP_PICKER_OPTIONS as {}).then(
       image => {
-        console.log(image);
         // @ts-ignore
         setAvatar({ base64: `data:${image.mime};base64,${image?.data}` });
       },

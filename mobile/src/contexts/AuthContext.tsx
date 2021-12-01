@@ -186,11 +186,9 @@ export const AuthProvider: React.FC = ({ children }) => {
         fotoPerfilUsuario: user.fotoPerfilUsuario,
       });
 
-      console.log(response.data);
 
       if (response.data.error) console.log(response.data.error);
 
-      console.log('response.data', response.data);
 
       //const updateUser = user == null ? null : user.slice();
 

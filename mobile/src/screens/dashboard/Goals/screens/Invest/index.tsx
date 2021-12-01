@@ -87,7 +87,6 @@ const Invest = ({ navigation, route }: PropsNavigation) => {
   }, []);
 
   async function handleUpdateGoal() {
-    console.log(goal.lancamentoMeta);
 
     const newGoal = {
       descMeta: goal.descMeta,

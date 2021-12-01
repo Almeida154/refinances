@@ -133,9 +133,7 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
         ? console.log('deu true')
         : setRealizado(false);
 
-      console.log('realizado: ', realizado);
       handleAdicionarMeta(newGoal);
-      console.log(newGoal);
 
       Toast.show({
         type: 'niceToast',
@@ -200,7 +198,6 @@ const CreateGoal = ({ navigation }: PropsGoals) => {
       ? setRealizado(true)
       : setRealizado(false);
 
-    console.log('realizado: ', realizado);
     return realizado;
   };
 

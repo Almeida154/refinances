@@ -101,9 +101,7 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
         ? console.log('deu true')
         : setRealizado(false);
 
-      console.log('realizado: ', realizado);
       handleAtualizarMeta(newGoal, goal.id);
-      console.log(newGoal);
 
       Toast.show({
         type: 'niceToast',
@@ -133,7 +131,6 @@ const EditGoal = ({ route, navigation }: PropsEditGoals) => {
       ? setRealizado(true)
       : setRealizado(false);
 
-    console.log('realizado: ', realizado);
     return realizado;
   };
 

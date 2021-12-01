@@ -151,7 +151,7 @@ const FabButton = () => {
           shadowBox(20, 0.5),
           { width: widthPixel(120), height: heightPixel(120) },
         ]}>
-        <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.8}>
+        <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.5}>
           <Entypo
             name="camera"
             color={theme.colors.redCrayola}
@@ -163,7 +163,7 @@ const FabButton = () => {
       <TouchableBtn
         activeOpacity={0.8}
         onPress={toggleMenu}
-        style={[styles.btnPlus, shadowBox(20, 0.4)]}>
+        style={[styles.btnPlus]}>
         <Animated.View
           style={[
             styles.button,
@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
     width: widthPixel(100),
     height: widthPixel(100),
     borderRadius: widthPixel(100 / 2),
+    backgroundColor: colors.lightGray,
   },
 
   menu: {
