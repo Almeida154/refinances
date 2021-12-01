@@ -4,7 +4,7 @@ import InputText from '../../../../../../../components/InputText';
 import Button from '../../../../../../../components/Button';
 
 import { UseAuth, User } from '../../../../../../../contexts/AuthContext';
-import retornarIdDoUsuario from '../../../../../../../helpers/retornarIdDoUsuario';
+import { isEmailValid } from '../../../../../../../helpers/verifyEmail';
 
 import {
   DadosTempProvider,
@@ -45,7 +45,7 @@ type PropsEditProfile = {
 
 const EditProfile = ({ route, navigation }: PropsEditProfile) => {
 
-  const { user, handleUpdateUser, updateSetupUserProps } = UseAuth();
+  const { user, handleUpdateUser, emailExists } = UseAuth();
   let atual = '';
 
   useEffect(() => {
@@ -71,29 +71,23 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
   const [novoValor, setNovoValor] = useState(atual);
 
   async function handleAlterarUser() {
-    if (novoValor == '' ) {
-      console.log(novoValor);
+    
+    editar()
+
+    if (novoValor == '' || valorError != '') {
+      console.warn('erro', valorError);
       Toast.show({
         type: 'niceToast',
         props: {
           type: 'error',
           title: 'Erro!',
-          message: edit+' não foi preenchido corretamente',
+          message: ' '+valorError,
         },
       });
     }
-    else if(novoValor == user.nomeUsuario || novoValor == user.emailUsuario || novoValor == user.senhaUsuario){
-        Toast.show({
-          type: 'niceToast',
-          props: {
-            type: 'error',
-            title: 'Erro!',
-            message: 'Esse '+edit+' ja esta cadastrado',
-          },
-        });
-      }
- else {
+    else {
       handleUpdateUser(editar(), user.id);
+      console.warn('erro: ', valorError)
       navigation.dispatch(StackActions.replace('StackAccount', { screen: 'Config' }),);
       Toast.show({
         type: 'niceToast',
@@ -114,36 +108,40 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
   };
 
   const editar = () => {
-    var newUser = user;4
+    var newUser = user;
 
     if(edit == 'email'){
-      if(novoValor == ''){
-        setValorError('Preencha o novo email')
-        //console.log(valorError);
+      if(novoValor == '' || (!isEmailValid(novoValor) || (emailExists(novoValor)))){
+        setValorError('Preencha o email corretamente!')
+        console.log('email: ',valorError);
         
       }else{
+        setValorError('')
         newUser.emailUsuario = novoValor
+        
       }
     }
     else if (edit == 'nome'){
-      if(novoValor === ''){
+      if(novoValor == ''){
         setValorError('Preencha o novo nome!');
-        //console.log(valorError);
+        console.log('nome: ',valorError);
       }
       else{
+        setValorError('')
         newUser.nomeUsuario = novoValor
       }
     }
     else {
       if (hasAtLeastOneLetter(novoValor) && isValid(novoValor)
-      && hasAtLeastOneLetter(novoValor) && hasMinimum(novoValor)){
+      && hasAtLeastOneNumber(novoValor) && hasMinimum(novoValor)){
+          setValorError('');
           newUser.senhaUsuario = novoValor;
         }
       else {
-        setValorError('Preencha os valores corretamente')
+        setValorError('Preencha a senha corretamente');
+        console.log('senha: ', valorError);
       }
     }
-
     return newUser;
   }
 
@@ -157,6 +155,8 @@ const EditProfile = ({ route, navigation }: PropsEditProfile) => {
 
           <InputController>
             <InputText
+              secureTextEntry={edit == 'senha'}
+              keyboardType={edit == 'email' ? 'email-address' : 'default'}
               value={novoValor}
               label={edit == 'senha' ? 'Nova '+edit : 'Novo '+edit}
               placeholder={edit == 'senha' ? 'Nova '+edit : 'Novo '+edit}
