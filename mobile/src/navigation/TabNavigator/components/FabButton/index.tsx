@@ -63,14 +63,14 @@ const FabButton = () => {
       {
         translateY: animation.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, heightPixel(-180)],
+          outputRange: [0, heightPixel(-200)],
         }),
       },
 
       {
         translateX: animation.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, widthPixel(150)],
+          outputRange: [0, widthPixel(70)],
         }),
       },
     ],
@@ -93,14 +93,14 @@ const FabButton = () => {
       {
         translateY: animation.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, heightPixel(-180)],
+          outputRange: [0, heightPixel(-200)],
         }),
       },
 
       {
         translateX: animation.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, widthPixel(-150)],
+          outputRange: [0, widthPixel(-70)],
         }),
       },
     ],
@@ -137,23 +137,6 @@ const FabButton = () => {
         <TouchableBtn activeOpacity={0.8} onPress={() => console.log('voice')}>
           <MaterialIcons
             name="keyboard-voice"
-            color={theme.colors.redCrayola}
-            size={widthPixel(50)}
-          />
-        </TouchableBtn>
-      </Animated.View>
-
-      <Animated.View
-        style={[
-          styles.submenu,
-          styles.button,
-          cameraStyle,
-          shadowBox(20, 0.5),
-          { width: widthPixel(120), height: heightPixel(120) },
-        ]}>
-        <TouchableBtn onPress={() => console.log('camera')} activeOpacity={0.5}>
-          <Entypo
-            name="camera"
             color={theme.colors.redCrayola}
             size={widthPixel(50)}
           />

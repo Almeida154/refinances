@@ -44,9 +44,8 @@ import { Parcela, ReadParcela } from '../../../../../contexts/InstallmentContext
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import CardInstallment from '../../../Extract/components/CardInstallment'
-import { FAB, Text } from 'react-native-paper';
-import { colors } from '../../../../../styles';
 
+import Header2 from '../../../../../components/Header';
 
 type Props = {
     categorias: Categoria[],
@@ -183,9 +182,9 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
-      // this.setState({
-      //   results: ["Eu comprei uma bazuca por r$ 4 no dia 5 de janeiro de 2022"]
-      // })
+       this.setState({
+         results: ["Eu comprei uma bazuca por r$ 4 no dia 5 de janeiro de 2022"]
+       })
       
       this.setState({
         isRecording: false
@@ -503,6 +502,12 @@ class VoiceTest extends Component<Props, State> {
       <Container>
 
        <Header>
+         <Header2 
+            backButton={this.props.navigation.dispatch(StackActions.replace(
+              'StackAccount', { screen: 'Main'}
+            ))}
+            title=""
+            />
           <ButtonRecord 
           style={{backgroundColor: this.state.isRecording ? this.props.theme.colors.white : this.props.theme.colors.paradisePink , borderRadius: 50}}
           onPress={this.state.isRecording ? this._stopRecognizing : this._startRecognizing}>
@@ -579,7 +584,6 @@ export default () => {
 
     const backAction = () => {
       navigation.dispatch(StackActions.replace('Main', {screen: 'Home'}));
-      
       return true;
     };
 

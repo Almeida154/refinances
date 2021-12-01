@@ -11,10 +11,10 @@ interface DayProps {
 export const Container = styled.View<DayProps>`
   background-color: ${props =>
     props.isSelected
-      ? colors.blackSilver
+      ? colors.diffWhite
       : hexToRGB(
-          props.isIncome ? colors.lincolnGreen : colors.jet,
-          0.15,
+          props.isIncome ? colors.lincolnGreen : colors.bigDipOruby,
+          0.4,
         )};
   width: ${props =>
     props.isSelected ? `${widthPixel(140)}px` : `${widthPixel(120)}px`};

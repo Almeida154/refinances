@@ -274,8 +274,8 @@ const EachFixedExpense = ({ navigation }: PropsNavigation) => {
             style={{
               textAlign: 'center',
               fontFamily: fonts.familyType.bold,
-              fontSize: fonts.size.small,
-              color: theme.colors.davysGrey,
+              fontSize: fonts.size.small+3,
+              color: theme.colors.white,
             }}>
             Dia de vencimento
           </Text>

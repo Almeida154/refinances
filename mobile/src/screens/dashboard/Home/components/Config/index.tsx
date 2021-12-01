@@ -446,78 +446,6 @@ const Config = () => {
                 </SectionIconRight>
               </ContainerItems>
 
-              <Separator />
-
-              <MainTitle>Segurança</MainTitle>
-
-              {/* SENHA NO APP */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <Entypo
-                    name="lock"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable>
-                  <Item>
-                    <Title>Ativar senha</Title>
-                    <Subtitle>Defina uma senha</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <Switch
-                    value={isSenha}
-                    onValueChange={onSwitchSenha}
-                    theme={{}}
-                    color={theme.colors.paradisePink}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              {/* TOUCH ID */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <MaterialIcons
-                    name="language"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Item>
-                  <Title>Touch ID</Title>
-                  <Subtitle>Desbloqueie com a digital</Subtitle>
-                </Item>
-
-                <SectionIconRight>
-                  <Switch
-                    value={isTouch}
-                    onValueChange={onSwitchTouch}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                    theme={{}}
-                    color={theme.colors.paradisePink}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
 
               <Separator />
 
@@ -554,44 +482,6 @@ const Config = () => {
                     }}
                     theme={{}}
                     color={theme.colors.paradisePink}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              {/* IDIOMA */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <MaterialIcons
-                    name="language"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable>
-                  <Item>
-                    <Title>Idioma</Title>
-                    <Subtitle>pt-br</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
                   />
                 </SectionIconRight>
               </ContainerItems>

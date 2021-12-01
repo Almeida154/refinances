@@ -54,33 +54,6 @@ const TabNavigator = () => {
   };
   const theme: any = useTheme();
   return (
-    <>
-      <Modalize
-        ref={modalizeRef}
-        title="Escolha uma opção para adicionar o lançamento"
-        hasBodyBoundaries>
-        <Button
-          title="Inserção por formulário"
-          onPress={() =>
-            navigation.dispatch(
-              StackActions.replace('Lancamentos', { screen: 'Main' }),
-            )
-          }
-          backgroundColor={theme.colors.platinum}
-          color={theme.colors.darkGray}
-        />
-        <Button
-          title="Inserção por voz"
-          onPress={() =>
-            navigation.dispatch(
-              StackActions.replace('Lancamentos', { screen: 'RecognizeVoice' }),
-            )
-          }
-          style={{ marginBottom: heightPixel(170) }}
-          backgroundColor={theme.colors.platinum}
-          color={theme.colors.darkGray}
-        />
-      </Modalize>
 
       <Tab.Navigator
         screenOptions={{
@@ -176,7 +149,6 @@ const TabNavigator = () => {
           }}
         />
       </Tab.Navigator>
-    </>
   );
 };
 

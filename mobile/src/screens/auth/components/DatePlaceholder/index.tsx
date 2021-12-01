@@ -25,11 +25,11 @@ const DatePlaceholder: React.FC<IProps> = ({ isIncome }) => {
       {/* First circle */}
       <SkeletonContent
         highlightColor={hexToRGB(
-          isIncome ? theme.colors.lincolnGreen : theme.colors.davysGray,
+          isIncome ? theme.colors.lincolnGreen : theme.colors.diffWhite,
           0.7,
         )}
         boneColor={hexToRGB(
-          isIncome ? theme.colors.lincolnGreen : theme.colors.davysGray,
+          isIncome ? theme.colors.lincolnGreen : theme.colors.diffWhite,
           0.7,
         )}
         animationDirection="horizontalLeft"
