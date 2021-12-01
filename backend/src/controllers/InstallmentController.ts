@@ -110,6 +110,8 @@ class ParcelaController {
         const firstDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth(), 1)
         const lastDayOfMonth = new Date(rawDate.getFullYear(), rawDate.getMonth() + 1, 0)        
 
+        lastDayOfMonth.setHours(23, 59, 59)
+        console.log(firstDayOfMonth.toISOString(), lastDayOfMonth.toISOString())
         const user = await userRepository.findOne({where: {id: request.params.iduser}})        
 
         if(!user) {
@@ -268,7 +270,6 @@ class ParcelaController {
             await parcelaRepository.save(updateParcela);              
 
             parcelas.push(updateParcela)
-            console.log("updateParcela", updateParcela)
         }
 
         return response.send({ message: parcelas });
@@ -297,7 +298,6 @@ class ParcelaController {
 
         const {dataParcela, statusParcela, contaParcela, lancamentoParcela, valorParcela} = request.body
 
-        console.log(statusParcela)
         const id = parseInt(request.params.id)
 
         if(!dataParcela) {

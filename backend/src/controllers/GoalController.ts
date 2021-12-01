@@ -137,6 +137,7 @@ class MetaController {
   async edit(request: Request, response: Response, next: NextFunction) {
     const metaRepository = getRepository(Meta);
     const userRepository = getRepository(User);
+    const parcelaRepository = getRepository(Parcela);
 
     const {
       descMeta,
@@ -176,8 +177,26 @@ class MetaController {
     updateMeta.userMeta = userExists;
 
     await metaRepository.update(id, updateMeta);
-    const meta = await metaRepository.findOne({ where: { id } });
+    const meta = await metaRepository.findOne({ 
+      where: { id } ,
+      join: {
+        alias: 'meta',
+        leftJoinAndSelect: {
+          lancamento: "meta.lancamentoMeta"
+        }
+      }
+    });
 
+    const updatesParcela = await parcelaRepository.createQueryBuilder("parcela")      
+      .leftJoinAndSelect("parcela.lancamentoParcela", "lancamento")
+      .where("lancamento.id = :id", {id: meta.lancamentoMeta.id})
+      .getMany()
+
+      updatesParcela.map(item => {
+        item.statusParcela = true
+
+        parcelaRepository.update(item.id, item)
+      })
     return response.send({ message: "atualizou a meta " + meta });
   }
 

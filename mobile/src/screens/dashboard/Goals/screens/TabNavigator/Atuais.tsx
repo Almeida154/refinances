@@ -26,6 +26,8 @@ type PropsGoals = {
 const Atuais = ({ navigation }: PropsGoals) => {
   const { metas, handleReadByUserMetas } = UseMetas();
 
+  const theme: any = useTheme()
+
   useEffect(() => {
     // Caso nenhuma meta seja carregada, recarregar
     if (!metas)
@@ -47,10 +49,7 @@ const Atuais = ({ navigation }: PropsGoals) => {
   const backAction = () => {
     navigation.dispatch(StackActions.replace('Main', { screen: 'Home' }));
     return true;
-  };
-
-  if (metas && metas.length > 0) {
-    const theme: any = useTheme()
+  };  
 
     return (
       <ScrollView style={{ backgroundColor: theme.colors.white }}>
@@ -70,7 +69,7 @@ const Atuais = ({ navigation }: PropsGoals) => {
         </View>
       </ScrollView>
     );
-  }
+  
 };
 
 export default Atuais;

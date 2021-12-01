@@ -183,9 +183,9 @@ class VoiceTest extends Component<Props, State> {
   _stopRecognizing = async () => {      
     try {
       await Voice.stop();
-      this.setState({
-        results: ["Eu comprei uma bazuca por r$ 4"]
-      })
+      // this.setState({
+      //   results: ["Eu comprei uma bazuca por r$ 4"]
+      // })
 
        this.generatePrincipal(this.tratoNoTexto(this.state.results[0]))      
        this.setState({
