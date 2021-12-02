@@ -63,14 +63,6 @@ const CategoriesCard = () => {
 
   return (
     <Container style={shadowBox(30, 0.3)}>
-      <TopSection>
-        <Detail />
-        <Description>
-          Para controlar melhor seus gastos, defina limites às categorias.
-        </Description>
-      </TopSection>
-
-      <Separator />
       <Title>Minhas categorias</Title>
 
       <CategoriesContainer>

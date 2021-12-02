@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../../contexts/AuthContext';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -127,7 +127,7 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
       );
     }
   };
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>
@@ -203,10 +203,10 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
         title="Escolha uma cor 🎨"
         backgroundColor={theme.colors.cultured}>
         <ColorsContainer horizontal>
-          {modalizetheme.colors.map((color, index) => (
+          {global.DEFAULT_COLORS.map((color, index) => (
             <Color
               key={index}
-              mr={index + 1 != modalizetheme.colors.length}
+              mr={index + 1 != global.DEFAULT_COLORS.length}
               bg={color.hex}
               onPress={() => {
                 setColor(color);
@@ -225,7 +225,7 @@ const NewIncomeCategory = ({ navigation }: PropsNavigation) => {
           {modalizeIcons.map((icon, index) => (
             <Icon
               key={index}
-              mr={index + 1 != modalizetheme.colors.length}
+              mr={index + 1 != modalizeColors.length}
               onPress={() => {
                 setIcon(icon);
                 closeIconModalize();

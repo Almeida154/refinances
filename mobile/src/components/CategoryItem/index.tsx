@@ -60,9 +60,14 @@ const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
               style={[
                 shadowBox(20, 0.6),
                 { borderColor: category.corCategoria },
-              ]}>                
+              ]}>
               <Percent>
-                {Math.abs(category.valueLancamentos) / category.tetoDeGastos * 100}<Text style={{ fontSize: widthPixel(15) }}>%</Text>
+                {(
+                  (Math.abs(category.valueLancamentos) /
+                    category.tetoDeGastos) *
+                  100
+                ).toFixed(0)}
+                <Text style={{ fontSize: widthPixel(15) }}>%</Text>
               </Percent>
             </PercentDetail>
           )}
@@ -93,7 +98,9 @@ const CategoryItem: React.FC<IProps> = ({ category, ...rest }) => {
               borderBottomRightRadius: widthPixel(20),
             }}
             color={category.corCategoria}
-            progress={Math.abs(category.valueLancamentos) / category.tetoDeGastos}
+            progress={
+              Math.abs(category.valueLancamentos) / category.tetoDeGastos
+            }
           />
         )}
       </Data>

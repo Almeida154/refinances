@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, StackActions } from '@react-navigation/native';
 
 import { UseAuth } from '../../../../../contexts/AuthContext';
-import { useTheme } from 'styled-components/native'; 
+import { useTheme } from 'styled-components/native';
 import RootStackParamAuth from '../../../../../@types/RootStackParamAuth';
 
 // Styles
@@ -127,7 +127,7 @@ const NewExpenseCategory = ({ navigation, route }: PropsNavigation) => {
       );
     }
   };
-  const theme: any = useTheme()
+  const theme: any = useTheme();
 
   return (
     <Container>
