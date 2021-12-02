@@ -116,7 +116,7 @@ const InteractWithAccount = ({ navigation, route }: PropsNavigation) => {
       }
 
       navigation.dispatch(
-        StackActions.replace('StackAccount', { screen: 'ManageAccount' }),
+        StackActions.replace('Main', { screen: 'Home' }),
       );
 
       return showNiceToast(
