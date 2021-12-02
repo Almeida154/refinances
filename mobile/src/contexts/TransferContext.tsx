@@ -47,18 +47,18 @@ export const TransferenciaProvider: React.FC = ({ children }) => {
             
             
 
+            console.debug("Valor do response", response)
             if(response.data.error) {                
                 return response.data.error
             }
-            const newTransferencia: Transferencia = response.data.message
-            
-            console.debug("Valor do response", newTransferencia)
+                const newTransferencia: Transferencia = response.data.message
+
             if(readTransferencias) {
-                const [dayRead, monthRead, yearRead] = new Date(readTransferencias[0][0].dataTransferencia).toLocaleDateString().split('/')
-                const [day, month, year] = new Date(newTransferencia.dataTransferencia).toLocaleDateString().split('/')
+                const [dayRead, monthRead, yearRead] = new Date(readTransferencias[0][0].dataTransferencia).toLocaleDateString('pt-BR').split('/')
+                const [day, month, year] = new Date(newTransferencia.dataTransferencia).toLocaleDateString('pt-BR').split('/')
                 
                 if(month == month && year == yearRead) {
-                    
+                    await handleTransferGroupByDate(await retornarIdDoUsuario(), new Date(newTransferencia.dataTransferencia).toISOString())
                 }
             }
 
