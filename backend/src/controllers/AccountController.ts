@@ -141,17 +141,17 @@ class ContaController {
               : item.valorParcela;
       });
 
-      conta.transferenciasRecebidas.map((transferenciaRecebida) => {
-        contasRecebidas[index].saldoConta +=
-          transferenciaRecebida.valorTransferencia;
-      });
+      // conta.transferenciasRecebidas.map((transferenciaRecebida) => {
+      //   contasRecebidas[index].saldoConta +=
+      //     transferenciaRecebida.valorTransferencia;
+      // });
 
-      contasEnviadas[index].transferenciasEnviadas.map(
-        (transferenciaEnviada) => {
-          contasRecebidas[index].saldoConta -=
-            transferenciaEnviada.valorTransferencia;
-        }
-      );
+      // contasEnviadas[index].transferenciasEnviadas.map(
+      //   (transferenciaEnviada) => {
+      //     contasRecebidas[index].saldoConta -=
+      //       transferenciaEnviada.valorTransferencia;
+      //   }
+      // );
     });
 
     return response.send({ contas: contasRecebidas });
