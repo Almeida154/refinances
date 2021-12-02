@@ -86,9 +86,6 @@ class TransferenciaController {
         const transferencia = transferenciaRepository.create(newTransferencia);
         await transferenciaRepository.save(transferencia);
 
-        await contaRepository.update(contaOrigemExists.id, contaOrigemExists)
-        await contaRepository.update(contaDestinoExists.id, contaDestinoExists)
-
         return response.send({ message: transferencia });
     }
 

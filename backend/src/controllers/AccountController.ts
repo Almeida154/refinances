@@ -132,7 +132,7 @@ class ContaController {
       .where("user.id = :id", { id: user.id })
       .getMany();
 
-    contasRecebidas.map((conta, index) => {
+      contasRecebidas.map((conta, index) => {
       conta.parcelasConta.map((item) => {
         if (item.statusParcela)
           contasRecebidas[index].saldoConta +=
@@ -141,13 +141,13 @@ class ContaController {
               : item.valorParcela;
       });
 
-      conta.transferenciasRecebidas.map((transferenciaRecebida, index) => {
+      conta.transferenciasRecebidas.map((transferenciaRecebida) => {
         contasRecebidas[index].saldoConta +=
           transferenciaRecebida.valorTransferencia;
       });
 
       contasEnviadas[index].transferenciasEnviadas.map(
-        (transferenciaEnviada, index) => {
+        (transferenciaEnviada) => {
           contasRecebidas[index].saldoConta -=
             transferenciaEnviada.valorTransferencia;
         }
