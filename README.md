@@ -14,7 +14,7 @@
   <a href="https://evoke.com">
     <img alt="Feito pela EVOKE" src="https://img.shields.io/static/v1?label=made%20by&message=Evoke&color=EE4266">
   </a>
-  <img alt="Progresso" src="https://img.shields.io/static/v1?label=progress&message=48%&color=EE4266">
+  <img alt="Progresso" src="https://img.shields.io/static/v1?label=progress&message=75%&color=EE4266">
   <a href="https://github.com/Almeida154/refinances/stargazers">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/Almeida154/refinances?style=social">
   </a>
@@ -48,6 +48,12 @@
 <p>Um planejamento financeiro estruturado auxilia a ter noção exata das despesas e dos ganhos, tornando de fácil entendimento a realidade na qual as finanças estão.</p>
 <p>Uma gestão financeira simples é suficiente, já que garante ao usuário um panorama necessário que permite manter as contas em ordem.</p>
 <p>É otimo também para poupar dinheiro, tanto para eventuais imprevistos quanto para um determinado objetivo, somado às facilidades que o aplicativo traz para registrar e exibir tais gastos e ganhos.</p>
+
+##### 💄 **_Protótipo (FIGMA):_**
+
+```bash
+https://www.figma.com/file/l6NjNdvmTZ3H7ttO5mG8Pz/Evoke-team-library?node-id=0%3A1
+```
 
 <br>
 
@@ -146,7 +152,7 @@ $ yarn install
 Rode o aplicativo:
 
 ```bash
-  yarn android
+$ yarn android
 ```
 
 ##### 👉 **_Web:_**
@@ -158,10 +164,10 @@ $ cd web
 $ yarn install
 ```
 
-Rode o site:
+Rode o website:
 
 ```bash
-  yarn start
+$ yarn start
 ```
 
 <br>

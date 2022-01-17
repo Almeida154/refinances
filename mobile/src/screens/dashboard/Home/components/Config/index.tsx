@@ -1,47 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
-  BackHandler,
-} from 'react-native';
+import { BackHandler } from 'react-native';
 
-import Header from '../../../components/Header';
 import { useTheme } from 'styled-components/native';
-import {
-  Container,
-  ContainerBody,
-  ContainerScroll,
-  Profile,
-  ContainerProfile,
-  HeaderContainer,
-  ContainerItems,
-  Item,
-  Title,
-  Subtitle,
-  SectionIconRight,
-  SectionIconLeft,
-  Separator,
-  MainTitle,
-  Footer,
-  TitleFooter,
-  SubtitleFooter,
-  SectionIcons,
-  Copyright,
-  Icon,
-  Touchable,
-} from './styles';
 
+import IonIcons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MCicons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import EvilIcon from 'react-native-vector-icons/EvilIcons';
 
 import { Switch } from 'react-native-paper';
 
@@ -53,13 +17,30 @@ import { StackActions } from '@react-navigation/native';
 
 import retornarIdDoUsuario from '../../../../../helpers/retornarIdDoUsuario';
 
-import { colors } from '../../../../../styles';
+import { colors, metrics } from '../../../../../styles';
 import api from '../../../../../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Modalize as Modal } from 'react-native-modalize';
 import Modalize from '../../../../../components/Modalize';
 import Button from '../../../../../components/Button';
+
+import {
+  AvatarContainer,
+  Avatar,
+  Container,
+  Header,
+  ImageBg,
+  AvatarIcon,
+  BlockTitle,
+  CreditsTitle,
+  CreditsDescription,
+  CreditsCopy,
+  CreditsSocialContainer,
+  CreditsSocialItem,
+} from './styles';
+import { widthPixel } from '../../../../../helpers/responsiveness';
+import BlockItem from './components/BlockItem';
 
 const Config = () => {
   const { user, handleLogout, userAvatar, updateUserProps } = UseAuth();
@@ -96,9 +77,6 @@ const Config = () => {
   };
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
-  useEffect(() => {
     (async () => {
       const base64 = await userAvatar();
       // O avatar é a base64 da imagem
@@ -130,557 +108,184 @@ const Config = () => {
   const theme: any = useTheme();
 
   const modalizeRef = useRef<Modal>(null);
-
-  const openModalize = () => {
-    modalizeRef.current?.open();
-  };
-
-  const closeModalize = () => {
-    modalizeRef.current?.close();
-  };
+  const openModalize = () => modalizeRef.current?.open();
+  const closeModalize = () => modalizeRef.current?.close();
 
   return (
-    <ScrollView>
-      {stateReload ? (
-        <View
+    <Container>
+      <Header>
+        <ImageBg source={require('../../../../../assets/images/mdchefe.jpg')} />
+        <AvatarContainer>
+          <Avatar
+            source={require('../../../../../assets/images/mdchefe.jpg')}
+          />
+          <AvatarIcon>
+            <MaterialCommunityIcons
+              name="pencil-outline"
+              size={widthPixel(50)}
+              color={colors.white}
+            />
+          </AvatarIcon>
+        </AvatarContainer>
+        <IonIcons
           style={{
-            alignSelf: 'center',
-            height: '100%',
-            justifyContent: 'center',
-          }}>
-          <ActivityIndicator size="large" color="#EE4266" />
-          <Text
-            style={{
-              color: '#183153',
-              fontSize: 22,
-              fontFamily: 'Poppins-Bold',
-              marginTop: 20,
-            }}>
-            Carregando...
-          </Text>
-        </View>
-      ) : (
-        <Container>
-          <HeaderContainer>
-            <Header onBackButton={backAction} title="" isShort />
-            <Touchable onPress={() => openModalize()}>
-              <ContainerProfile>
-                {user.fotoPerfilUsuario == null ? (
-                  <Profile
-                    source={require('../../../../../assets/images/avatarDefault.png')}
-                  />
-                ) : (
-                  <Profile source={{ uri: `data:${mime}base64,${avatar}` }} />
-                )}
-              </ContainerProfile>
-            </Touchable>
-          </HeaderContainer>
-          {/* Scrollable Content */}
+            marginLeft: metrics.default.boundaries - 6,
+            marginTop:
+              metrics.default.boundaries / 2 + metrics.default.statusBarHeight,
+            opacity: 0.5,
+          }}
+          name="md-arrow-back-sharp"
+          size={widthPixel(70)}
+          color={theme.colors.black}
+          onPress={backAction}
+        />
+      </Header>
 
-          <ContainerScroll>
-            <ContainerBody>
-              {/* NOME */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <Feather
-                    name="user"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
+      <BlockTitle>Perfil</BlockTitle>
+      <BlockItem
+        title="Nome"
+        description="Peter Parker"
+        icon="Feather:user"
+        onPress={() => console.log('Nome')}
+      />
+      <BlockItem
+        title="Email"
+        description="peterparker@gmail.com"
+        icon="MaterialIcons:alternate-email"
+        onPress={() => console.log('Nome')}
+      />
+      <BlockItem
+        title="Senha"
+        description="Altere sua senha"
+        icon="SimpleLineIcons:lock"
+        onPress={() => console.log('Nome')}
+        isTheLastOne
+      />
 
-                <Touchable
-                  onPress={() => {
-                    navigation.navigate('StackAccount', {
-                      screen: 'EditProfile',
-                      params: { route: 'nome' },
-                    });
-                  }}>
-                  <Item>
-                    <Title>Nome</Title>
-                    <Subtitle>{user.nomeUsuario}</Subtitle>
-                  </Item>
-                </Touchable>
+      <BlockTitle>Conta</BlockTitle>
+      <BlockItem
+        title="Contas"
+        description="Veja suas contas"
+        icon="MaterialIcons:account-balance"
+        onPress={() => console.log('Nome')}
+      />
+      <BlockItem
+        title="Categorias"
+        description="Veja suas categorias"
+        icon="FontAwesome:star-o"
+        onPress={() => console.log('Nome')}
+      />
+      <BlockItem
+        title="Metas"
+        description="Veja suas metas"
+        icon="Ionicons:car-sport-outline"
+        onPress={() => console.log('Nome')}
+        isTheLastOne
+      />
 
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
+      <BlockTitle>Segurança</BlockTitle>
+      <BlockItem
+        title="Ativar senha"
+        description="Use uma senha para desbloquear"
+        icon="MaterialCommunityIcons:safe-square-outline"
+        onPress={() => console.log('Nome')}
+      />
+      <BlockItem
+        title="Touch ID"
+        description="Use o TouchID para desbloquear"
+        icon="Ionicons:ios-finger-print-outline"
+        onPress={() => console.log('Nome')}
+        isTheLastOne
+      />
 
-              <Separator />
+      <BlockTitle>Geral</BlockTitle>
+      <BlockItem
+        title="Tema"
+        description="Light"
+        icon="MaterialCommunityIcons:theme-light-dark"
+        onPress={() => console.log('Nome')}
+      />
+      <BlockItem
+        title="Idioma"
+        description="pt-br"
+        icon="Entypo:language"
+        onPress={() => console.log('Nome')}
+        isTheLastOne
+      />
 
-              {/* EMAIL */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <MCicons
-                    name="email-outline"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
+      <BlockTitle>Outras opções</BlockTitle>
+      <BlockItem
+        title="Compartilhar"
+        description="Convide os amigos"
+        icon="Ionicons:share-social-outline"
+        onPress={() => console.log('Nome')}
+      />
+      <BlockItem
+        title="Avaliar"
+        description="Avalie o projeto"
+        icon="Feather:heart"
+        onPress={() => console.log('Nome')}
+      />
+      <BlockItem
+        title="Limpar dados"
+        description="Limpe todas as transações"
+        icon="Feather:trash-2"
+        onPress={() => console.log('Nome')}
+        isTheLastOne
+      />
 
-                <Touchable
-                  onPress={() => {
-                    navigation.navigate('StackAccount', {
-                      screen: 'EditProfile',
-                      params: { route: 'email' },
-                    });
-                  }}>
-                  <Item>
-                    <Title>E-mail</Title>
-                    <Subtitle>{user.emailUsuario}</Subtitle>
-                  </Item>
-                </Touchable>
+      <BlockTitle>Sair</BlockTitle>
+      <BlockItem
+        title="Sair"
+        titleColor={colors.paradisePink}
+        description="Saia da sua conta"
+        icon="MaterialIcons:logout"
+        onPress={() => console.log('Nome')}
+      />
 
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
+      <CreditsTitle>Refinances</CreditsTitle>
+      <CreditsDescription>
+        O Refinances é um aplicativo que gerencia seu dinheiro, elaborado pela
+        Evoke, empresa desenvolvedora de software.
+      </CreditsDescription>
 
-              <Separator />
+      <CreditsSocialContainer>
+        <CreditsSocialItem onPress={() => console.log('social')}>
+          <Feather
+            style={{ opacity: 0.6 }}
+            name="facebook"
+            size={widthPixel(45)}
+            color={theme.colors.davysGray}
+          />
+        </CreditsSocialItem>
+        <CreditsSocialItem onPress={() => console.log('social')}>
+          <Feather
+            style={{ opacity: 0.6 }}
+            name="instagram"
+            size={widthPixel(45)}
+            color={theme.colors.davysGray}
+          />
+        </CreditsSocialItem>
+        <CreditsSocialItem onPress={() => console.log('social')}>
+          <Feather
+            style={{ opacity: 0.6 }}
+            name="github"
+            size={widthPixel(45)}
+            color={theme.colors.davysGray}
+          />
+        </CreditsSocialItem>
+        <CreditsSocialItem isTheLastItem onPress={() => console.log('social')}>
+          <Feather
+            style={{ opacity: 0.6 }}
+            name="twitter"
+            size={widthPixel(45)}
+            color={theme.colors.davysGray}
+          />
+        </CreditsSocialItem>
+      </CreditsSocialContainer>
 
-              {/* SENHA */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <Feather
-                    name="lock"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable
-                  onPress={() => {
-                    navigation.navigate('StackAccount', {
-                      screen: 'EditProfile',
-                      params: { route: 'senha' },
-                    });
-                  }}>
-                  <Item>
-                    <Title>Senha</Title>
-                    <Subtitle>Alterar senha</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              <MainTitle>Conta</MainTitle>
-
-              {/* Contas */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <Entypo
-                    name="credit-card"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable
-                  onPress={() => {
-                    navigation.dispatch(
-                      StackActions.replace('StackAccount', {
-                        screen: 'ManageAccount',
-                      }),
-                    );
-                  }}>
-                  <Item>
-                    <Title>Contas</Title>
-                    <Subtitle>Veja suas contas</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              {/* CATEGORIAS */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <AntDesign
-                    name="addfolder"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable
-                  onPress={() => {
-                    navigation.dispatch(
-                      StackActions.replace('StackAccount', {
-                        screen: 'ManageCategory',
-                      }),
-                    );
-                  }}>
-                  <Item>
-                    <Title>Categorias</Title>
-                    <Subtitle>Veja suas categorias</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              {/* METAS */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <Ionicons
-                    name="medal-outline"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable
-                  onPress={() => {
-                    navigation.dispatch(
-                      StackActions.replace('GoalsStack', {
-                        screen: 'GoalsList',
-                      }),
-                    );
-                  }}>
-                  <Item>
-                    <Title>Metas</Title>
-                    <Subtitle>Veja suas metas</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-
-              <Separator />
-
-              <MainTitle>Geral</MainTitle>
-
-              {/* TEMA */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <Entypo
-                    name="brush"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Item>
-                  <Title>Tema</Title>
-                  <Subtitle>{isDark ? 'dark' : 'light'}</Subtitle>
-                </Item>
-
-                <SectionIconRight>
-                  <Switch
-                    value={isDark}
-                    onValueChange={onSwitchDark}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                    theme={{}}
-                    color={theme.colors.paradisePink}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              <MainTitle>Outras opções</MainTitle>
-
-              {/* CPMPARTILHAR */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <FontAwesome
-                    name="share"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable>
-                  <Item>
-                    <Title>Compartilhar</Title>
-                    <Subtitle>Mostre para seus amigos</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              {/* AVALIAR */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <AntDesign
-                    name="star"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable>
-                  <Item>
-                    <Title>Avaliar</Title>
-                    <Subtitle>Avalie o aplicativo</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              {/* LIMPAR DADOS */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <FontAwesome
-                    name="trash"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable>
-                  <Item>
-                    <Title>Limpar dados</Title>
-                    <Subtitle>Excluir todas as transações</Subtitle>
-                  </Item>
-                </Touchable>
-
-                <SectionIconRight>
-                  <AntDesign
-                    name="right"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconRight>
-              </ContainerItems>
-
-              <Separator />
-
-              <MainTitle>Sair</MainTitle>
-
-              {/* SAIR */}
-              <ContainerItems>
-                <SectionIconLeft>
-                  <MCicons
-                    name="logout"
-                    color={theme.colors.silver}
-                    size={25}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                    }}
-                  />
-                </SectionIconLeft>
-
-                <Touchable onPress={handleLogout}>
-                  <Item>
-                    <Title>Sair</Title>
-                    <Subtitle>Saia da sua conta</Subtitle>
-                  </Item>
-                </Touchable>
-              </ContainerItems>
-
-              <Separator />
-              <Separator />
-
-              <Footer>
-                <TitleFooter>Refinances</TitleFooter>
-
-                <SubtitleFooter>
-                  O Refinances é um aplicativo que gerencia seu dinheiro,
-                  elaborado pela Evoke, empresa desenvolvedora de software.
-                </SubtitleFooter>
-
-                {/* <SectionIcons>
-                  <Icon>
-                    <AntDesign
-                      name="instagram"
-                      color={theme.colors.cultured}
-                      size={25}
-                    />
-                  </Icon>
-
-                  <Icon>
-                    <Feather
-                      name="github"
-                      color={theme.colors.cultured}
-                      size={25}
-                    />
-                  </Icon>
-
-                  <Icon>
-                    <AntDesign
-                      name="twitter"
-                      color={theme.colors.cultured}
-                      size={25}
-                    />
-                  </Icon>
-
-                  <Icon>
-                    <AntDesign
-                      name="iconfontdesktop"
-                      color={theme.colors.cultured}
-                      size={25}
-                    />
-                  </Icon>
-                </SectionIcons> */}
-
-                <Copyright>Evoke © Copyright 2021</Copyright>
-              </Footer>
-            </ContainerBody>
-          </ContainerScroll>
-        </Container>
-      )}
-    </ScrollView>
+      <CreditsCopy>Evoke © Copyright 2022</CreditsCopy>
+    </Container>
   );
 };
 
