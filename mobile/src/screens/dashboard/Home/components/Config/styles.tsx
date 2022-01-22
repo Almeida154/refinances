@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import LinearGradient from 'react-native-linear-gradient';
+
 import { colors, fonts, metrics } from '../../../../../styles';
 import { widthPixel, heightPixel } from '../../../../../helpers/responsiveness';
 
@@ -22,12 +24,24 @@ export const ImageBg = styled.Image.attrs({
   position: absolute;
   height: ${`${heightPixel(400)}px`};
   width: 100%;
-  opacity: 0.4;
+  opacity: 0.25;
+`;
+
+export const LinearGrad = styled(LinearGradient).attrs({
+  locations: [0, 1],
+  start: { x: 0, y: 0 },
+  end: { x: 0, y: 1 },
+})`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 export const AvatarContainer = styled.View`
   position: absolute;
-  bottom: ${`${-widthPixel(260 / 2)}px`};
+  bottom: ${`${-widthPixel(260 / 3)}px`};
   width: ${`${widthPixel(260)}px`};
   height: ${`${widthPixel(260)}px`};
   align-self: center;
@@ -39,7 +53,7 @@ export const Avatar = styled.Image`
   height: ${`${widthPixel(260)}px`};
   border-radius: ${`${widthPixel(260 / 2)}px`};
   border-width: 2px;
-  border-color: ${(props: any) => props.theme.colors.back};
+  border-color: ${(props: any) => props.theme.colors.cultured};
 `;
 
 export const AvatarIcon = styled.View`
@@ -69,7 +83,7 @@ export const BlockTitle = styled.Text`
 
 export const CreditsTitle = styled.Text`
   font-family: ${fonts.familyType.bold};
-  font-size: ${`${fonts.size.bigger}px`};
+  font-size: ${`${fonts.size.big}px`};
   text-align: center;
   margin-top: ${`${heightPixel(150)}px`};
   color: ${`${colors.redCrayola}`};
@@ -77,14 +91,14 @@ export const CreditsTitle = styled.Text`
 
 export const CreditsDescription = styled.Text`
   font-family: ${fonts.familyType.semiBold};
-  font-size: ${`${fonts.size.medium}px`};
+  font-size: ${`${fonts.size.small}px`};
   text-align: center;
   margin-top: ${`${heightPixel(50)}px`};
   padding-left: ${`${metrics.default.boundaries}px`};
   padding-right: ${`${metrics.default.boundaries}px`};
-  line-height: ${`${fonts.size.medium + widthPixel(8)}px`};
+  line-height: ${`${fonts.size.small + widthPixel(8)}px`};
   color: ${(props: any) => props.theme.colors.black};
-  opacity: 0.3;
+  opacity: 0.2;
 `;
 
 export const CreditsSocialContainer = styled.View`
@@ -111,7 +125,7 @@ export const CreditsSocialItem = styled.TouchableOpacity.attrs({
 
 export const CreditsCopy = styled.Text`
   font-family: ${fonts.familyType.bold};
-  font-size: ${`${fonts.size.small}px`};
+  font-size: ${`${fonts.size.smaller}px`};
   text-align: center;
   margin-top: ${`${metrics.default.boundaries}px`};
   margin-bottom: ${`${metrics.default.boundaries}px`};

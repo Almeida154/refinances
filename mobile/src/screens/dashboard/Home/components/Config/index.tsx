@@ -7,8 +7,6 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 
-import { Switch } from 'react-native-paper';
-
 import { UseAuth } from '../../../../../contexts/AuthContext';
 import { UseDadosTemp } from '../../../../../contexts/TemporaryDataContext';
 import { UseConfig } from '../../../../../contexts/ConfigContext';
@@ -38,16 +36,16 @@ import {
   CreditsCopy,
   CreditsSocialContainer,
   CreditsSocialItem,
+  LinearGrad,
 } from './styles';
 import { widthPixel } from '../../../../../helpers/responsiveness';
 import BlockItem from './components/BlockItem';
+import hexToRGB from '../../../../../helpers/hexToRgba';
 
 const Config = () => {
   const { user, handleLogout, userAvatar, updateUserProps } = UseAuth();
   const { navigation, showNiceToast } = UseDadosTemp();
   const { isDark, setIsDark } = UseConfig();
-
-  const [stateReload, setStateReload] = useState(false);
 
   const [avatar, setAvatar] = useState<string | undefined | null>('');
   const [mime, setMime] = useState<string | undefined | null>('');
@@ -58,23 +56,24 @@ const Config = () => {
   const [isTouch, setIsTouch] = React.useState(false);
   const onSwitchTouch = () => setIsTouch(!isTouch);
 
-  const onSwitchDark = () => {
+  function handleSwitchTheme(theme: string) {
     (async function () {
       const response = await api.put(`/config/edit/${user.id}`, {
-        theme: isDark ? 'light' : 'dark',
+        theme: theme,
       });
 
       if (response.data.error) {
         return showNiceToast('error', response.data.error);
       }
 
-      user.config.theme = isDark ? 'light' : 'dark';
+      user.config.theme = theme;
       await AsyncStorage.setItem('user', JSON.stringify(user));
       updateUserProps(user);
     })();
 
-    setIsDark(!isDark);
-  };
+    if (theme == 'dark') setIsDark(true);
+    else setIsDark(false);
+  }
 
   useEffect(() => {
     (async () => {
@@ -107,185 +106,226 @@ const Config = () => {
 
   const theme: any = useTheme();
 
-  const modalizeRef = useRef<Modal>(null);
-  const openModalize = () => modalizeRef.current?.open();
-  const closeModalize = () => modalizeRef.current?.close();
+  const exitModalize = useRef<Modal>(null);
+  const switchThemeModalize = useRef<Modal>(null);
 
   return (
-    <Container>
-      <Header>
-        <ImageBg source={require('../../../../../assets/images/mdchefe.jpg')} />
-        <AvatarContainer>
-          <Avatar
+    <>
+      <Container>
+        <Header>
+          <ImageBg
             source={require('../../../../../assets/images/mdchefe.jpg')}
           />
-          <AvatarIcon>
-            <MaterialCommunityIcons
-              name="pencil-outline"
-              size={widthPixel(50)}
-              color={colors.white}
+          <LinearGrad colors={['transparent', theme.colors.cultured]} />
+          <AvatarContainer>
+            <Avatar
+              source={require('../../../../../assets/images/mdchefe.jpg')}
             />
-          </AvatarIcon>
-        </AvatarContainer>
-        <IonIcons
-          style={{
-            marginLeft: metrics.default.boundaries - 6,
-            marginTop:
-              metrics.default.boundaries / 2 + metrics.default.statusBarHeight,
-            opacity: 0.5,
-          }}
-          name="md-arrow-back-sharp"
-          size={widthPixel(70)}
-          color={theme.colors.black}
-          onPress={backAction}
+            <AvatarIcon>
+              <MaterialCommunityIcons
+                name="pencil-outline"
+                size={widthPixel(50)}
+                color={colors.white}
+              />
+            </AvatarIcon>
+          </AvatarContainer>
+          <IonIcons
+            style={{
+              marginLeft: metrics.default.boundaries - 6,
+              marginTop:
+                metrics.default.boundaries / 2 +
+                metrics.default.statusBarHeight,
+              opacity: 0.5,
+            }}
+            name="md-arrow-back-sharp"
+            size={widthPixel(70)}
+            color={theme.colors.black}
+            onPress={backAction}
+          />
+        </Header>
+
+        <BlockTitle>Perfil</BlockTitle>
+        <BlockItem
+          title="Nome"
+          description="Peter Parker"
+          icon="Feather:user"
+          onPress={() => console.log('Nome')}
         />
-      </Header>
+        <BlockItem
+          title="Email"
+          description="peterparker@gmail.com"
+          icon="MaterialIcons:alternate-email"
+          onPress={() => console.log('Nome')}
+        />
+        <BlockItem
+          title="Senha"
+          description="Altere sua senha"
+          icon="SimpleLineIcons:lock"
+          onPress={() => console.log('Nome')}
+          isTheLastOne
+        />
 
-      <BlockTitle>Perfil</BlockTitle>
-      <BlockItem
-        title="Nome"
-        description="Peter Parker"
-        icon="Feather:user"
-        onPress={() => console.log('Nome')}
-      />
-      <BlockItem
-        title="Email"
-        description="peterparker@gmail.com"
-        icon="MaterialIcons:alternate-email"
-        onPress={() => console.log('Nome')}
-      />
-      <BlockItem
-        title="Senha"
-        description="Altere sua senha"
-        icon="SimpleLineIcons:lock"
-        onPress={() => console.log('Nome')}
-        isTheLastOne
-      />
+        <BlockTitle>Conta</BlockTitle>
+        <BlockItem
+          title="Contas"
+          description="Veja suas contas"
+          icon="MaterialIcons:account-balance"
+          onPress={() => console.log('Nome')}
+        />
+        <BlockItem
+          title="Categorias"
+          description="Veja suas categorias"
+          icon="FontAwesome:star-o"
+          onPress={() => console.log('Nome')}
+        />
+        <BlockItem
+          title="Metas"
+          description="Veja suas metas"
+          icon="Ionicons:car-sport-outline"
+          onPress={() => console.log('Nome')}
+          isTheLastOne
+        />
 
-      <BlockTitle>Conta</BlockTitle>
-      <BlockItem
-        title="Contas"
-        description="Veja suas contas"
-        icon="MaterialIcons:account-balance"
-        onPress={() => console.log('Nome')}
-      />
-      <BlockItem
-        title="Categorias"
-        description="Veja suas categorias"
-        icon="FontAwesome:star-o"
-        onPress={() => console.log('Nome')}
-      />
-      <BlockItem
-        title="Metas"
-        description="Veja suas metas"
-        icon="Ionicons:car-sport-outline"
-        onPress={() => console.log('Nome')}
-        isTheLastOne
-      />
+        <BlockTitle>Segurança</BlockTitle>
+        <BlockItem
+          title="Ativar senha"
+          description="Use uma senha para desbloquear"
+          icon="MaterialCommunityIcons:safe-square-outline"
+          onPress={() => console.log('Nome')}
+        />
+        <BlockItem
+          title="Touch ID"
+          description="Use o TouchID para desbloquear"
+          icon="Ionicons:ios-finger-print-outline"
+          onPress={() => console.log('Nome')}
+          isTheLastOne
+        />
 
-      <BlockTitle>Segurança</BlockTitle>
-      <BlockItem
-        title="Ativar senha"
-        description="Use uma senha para desbloquear"
-        icon="MaterialCommunityIcons:safe-square-outline"
-        onPress={() => console.log('Nome')}
-      />
-      <BlockItem
-        title="Touch ID"
-        description="Use o TouchID para desbloquear"
-        icon="Ionicons:ios-finger-print-outline"
-        onPress={() => console.log('Nome')}
-        isTheLastOne
-      />
+        <BlockTitle>Geral</BlockTitle>
+        <BlockItem
+          title="Tema"
+          description="Light"
+          icon="MaterialCommunityIcons:theme-light-dark"
+          onPress={() => switchThemeModalize.current?.open()}
+        />
+        <BlockItem
+          title="Idioma"
+          description="pt-br"
+          icon="Entypo:language"
+          onPress={() => console.log('Nome')}
+          isTheLastOne
+        />
 
-      <BlockTitle>Geral</BlockTitle>
-      <BlockItem
-        title="Tema"
-        description="Light"
-        icon="MaterialCommunityIcons:theme-light-dark"
-        onPress={() => console.log('Nome')}
-      />
-      <BlockItem
-        title="Idioma"
-        description="pt-br"
-        icon="Entypo:language"
-        onPress={() => console.log('Nome')}
-        isTheLastOne
-      />
+        <BlockTitle>Outras opções</BlockTitle>
+        <BlockItem
+          title="Compartilhar"
+          description="Convide os amigos"
+          icon="Ionicons:share-social-outline"
+          onPress={() => console.log('Nome')}
+        />
+        <BlockItem
+          title="Avaliar"
+          description="Avalie o projeto"
+          icon="Feather:heart"
+          onPress={() => console.log('Nome')}
+        />
+        <BlockItem
+          title="Limpar dados"
+          description="Limpe todas as transações"
+          icon="Feather:trash-2"
+          onPress={() => console.log('Nome')}
+          isTheLastOne
+        />
 
-      <BlockTitle>Outras opções</BlockTitle>
-      <BlockItem
-        title="Compartilhar"
-        description="Convide os amigos"
-        icon="Ionicons:share-social-outline"
-        onPress={() => console.log('Nome')}
-      />
-      <BlockItem
-        title="Avaliar"
-        description="Avalie o projeto"
-        icon="Feather:heart"
-        onPress={() => console.log('Nome')}
-      />
-      <BlockItem
-        title="Limpar dados"
-        description="Limpe todas as transações"
-        icon="Feather:trash-2"
-        onPress={() => console.log('Nome')}
-        isTheLastOne
-      />
+        <BlockTitle>Sair</BlockTitle>
+        <BlockItem
+          title="Sair"
+          titleColor={colors.paradisePink}
+          description="Saia da sua conta"
+          icon="MaterialIcons:logout"
+          onPress={() => exitModalize.current?.open()}
+        />
 
-      <BlockTitle>Sair</BlockTitle>
-      <BlockItem
-        title="Sair"
-        titleColor={colors.paradisePink}
-        description="Saia da sua conta"
-        icon="MaterialIcons:logout"
-        onPress={() => console.log('Nome')}
-      />
+        <CreditsTitle>Refinances</CreditsTitle>
+        <CreditsDescription>
+          O Refinances é um aplicativo que gerencia seu dinheiro, elaborado pela
+          Evoke, empresa desenvolvedora de software.
+        </CreditsDescription>
 
-      <CreditsTitle>Refinances</CreditsTitle>
-      <CreditsDescription>
-        O Refinances é um aplicativo que gerencia seu dinheiro, elaborado pela
-        Evoke, empresa desenvolvedora de software.
-      </CreditsDescription>
+        <CreditsSocialContainer>
+          <CreditsSocialItem onPress={() => console.log('social')}>
+            <Feather
+              style={{ opacity: 0.6 }}
+              name="facebook"
+              size={widthPixel(45)}
+              color={theme.colors.davysGray}
+            />
+          </CreditsSocialItem>
+          <CreditsSocialItem onPress={() => console.log('social')}>
+            <Feather
+              style={{ opacity: 0.6 }}
+              name="instagram"
+              size={widthPixel(45)}
+              color={theme.colors.davysGray}
+            />
+          </CreditsSocialItem>
+          <CreditsSocialItem onPress={() => console.log('social')}>
+            <Feather
+              style={{ opacity: 0.6 }}
+              name="github"
+              size={widthPixel(45)}
+              color={theme.colors.davysGray}
+            />
+          </CreditsSocialItem>
+          <CreditsSocialItem
+            isTheLastItem
+            onPress={() => console.log('social')}>
+            <Feather
+              style={{ opacity: 0.6 }}
+              name="twitter"
+              size={widthPixel(45)}
+              color={theme.colors.davysGray}
+            />
+          </CreditsSocialItem>
+        </CreditsSocialContainer>
 
-      <CreditsSocialContainer>
-        <CreditsSocialItem onPress={() => console.log('social')}>
-          <Feather
-            style={{ opacity: 0.6 }}
-            name="facebook"
-            size={widthPixel(45)}
-            color={theme.colors.davysGray}
-          />
-        </CreditsSocialItem>
-        <CreditsSocialItem onPress={() => console.log('social')}>
-          <Feather
-            style={{ opacity: 0.6 }}
-            name="instagram"
-            size={widthPixel(45)}
-            color={theme.colors.davysGray}
-          />
-        </CreditsSocialItem>
-        <CreditsSocialItem onPress={() => console.log('social')}>
-          <Feather
-            style={{ opacity: 0.6 }}
-            name="github"
-            size={widthPixel(45)}
-            color={theme.colors.davysGray}
-          />
-        </CreditsSocialItem>
-        <CreditsSocialItem isTheLastItem onPress={() => console.log('social')}>
-          <Feather
-            style={{ opacity: 0.6 }}
-            name="twitter"
-            size={widthPixel(45)}
-            color={theme.colors.davysGray}
-          />
-        </CreditsSocialItem>
-      </CreditsSocialContainer>
+        <CreditsCopy>Evoke © Copyright 2022</CreditsCopy>
+      </Container>
 
-      <CreditsCopy>Evoke © Copyright 2022</CreditsCopy>
-    </Container>
+      <Modalize
+        ref={switchThemeModalize}
+        backgroundColor={theme.colors.cultured}
+        hasBodyBoundaries>
+        <Button
+          style={{ backgroundColor: theme.colors.platinum }}
+          title="Dark"
+          onPress={() => handleSwitchTheme('dark')}
+          color={theme.colors.silver}
+        />
+        <Button
+          style={{ backgroundColor: theme.colors.platinum }}
+          title="Light"
+          onPress={() => handleSwitchTheme('light')}
+          color={theme.colors.silver}
+          lastOne
+        />
+      </Modalize>
+
+      <Modalize
+        ref={exitModalize}
+        title="Deseja mesmo sair?"
+        subtitle="Precisará fazer login para entrar novamente."
+        backgroundColor={theme.colors.cultured}
+        hasBodyBoundaries>
+        <Button
+          style={{ backgroundColor: hexToRGB(colors.paradisePink, 0.8) }}
+          title="Sair"
+          onPress={handleLogout}
+          color={theme.colors.white}
+          lastOne
+        />
+      </Modalize>
+    </>
   );
 };
 

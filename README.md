@@ -49,11 +49,9 @@
 <p>Uma gestão financeira simples é suficiente, já que garante ao usuário um panorama necessário que permite manter as contas em ordem.</p>
 <p>É otimo também para poupar dinheiro, tanto para eventuais imprevistos quanto para um determinado objetivo, somado às facilidades que o aplicativo traz para registrar e exibir tais gastos e ganhos.</p>
 
-##### 💄 **_Protótipo (FIGMA):_**
+##### **_Protótipo (FIGMA):_**
 
-```bash
 https://www.figma.com/file/l6NjNdvmTZ3H7ttO5mG8Pz/Evoke-team-library?node-id=0%3A1
-```
 
 <br>
 
